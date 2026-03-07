@@ -9,6 +9,7 @@ model = os.getenv("ANTHROPIC_MODEL")
 
 if not api_key:
     raise RuntimeError("Missing ANTHROPIC_API_KEY in .env")
+
 if not model:
     raise RuntimeError("Missing ANTHROPIC_MODEL in .env")
 
@@ -21,14 +22,12 @@ history = []
 
 while True:
     task = input("Task> ").strip()
-    
     if task.lower() in {"exit", "quit"}:
         break
     if not task:
         continue
 
     history.append({"role": "user", "content": task})
-    history = history[-10:]  # Keep last 10 messages (5 turns)
 
     try:
         response = client.messages.create(
@@ -37,16 +36,18 @@ while True:
             messages=history,
         )
 
-        parts = [
-            block.text
-            for block in (response.content or [])
-            if hasattr(block, "text") and block.text
-        ]
-        answer = "\n".join(parts).strip() or "[No text returned]"
+        parts = []
+        for block in getattr(response, "content", []):
+            text = getattr(block, "text", None)
+            if text:
+                parts.append(text)
 
+        answer = "\n".join(parts).strip() or "[No text returned]"
         print(f"\nAgent:\n{answer}\n")
+
         history.append({"role": "assistant", "content": answer})
 
     except Exception as e:
         print(f"\nERROR: {e}\n")
+
 
