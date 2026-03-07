@@ -5,30 +5,45 @@ gpu-learning-lab is a repository for CUDA, GPU Computing, RunPod experiments, an
 
 ## Repository Structure
 ```
-├── runpod/          # Cloud agent — interactive CLI powered by Claude API
-├── src/core/        # Agent internals: context builder, orchestrator, repo scanner
-├── tutorials/       # Accelerated Python notebooks (NumPy, CUDA, etc.)
-├── notes/           # Learning notes
-├── web/             # Frontend for the FastAPI chat UI
-└── main.py          # FastAPI web server entry point
+├── agents/
+│   ├── base.py              # BaseAgent ABC — lifecycle, pub/sub, skill dispatch
+│   ├── orchestrator/        # OrchestratorAgent — job/step state machines + planner
+│   ├── repo_analyst/        # RepoAnalystAgent — file listing, code explanation
+│   ├── coder/               # CoderAgent — read/write/patch/generate code files
+│   ├── infra_manager/       # InfraManagerAgent — GPU/CPU/RAM/Docker/Redis health
+│   ├── integration/         # IntegrationAgent — HTTP, RunPod GraphQL, webhooks
+│   └── ui/                  # UIAgent — SSE broadcast, dashboard state snapshot
+├── core/
+│   ├── event_bus.py         # In-memory pub/sub (fnmatch wildcards); Redis Streams ready
+│   └── state_store.py       # In-memory KV store with TTL; Redis ready
+├── skills/
+│   ├── base.py              # BaseSkill ABC, SkillResult, SkillContext, RetryPolicy
+│   ├── registry.py          # Auto-discovery from skills.builtin + skills.custom
+│   └── builtin/
+│       └── file_manager.py  # read/write/list/exists/delete with traversal guard
+├── tests/                   # pytest-asyncio suite — 74 tests, all green
+├── tutorials/               # Accelerated Python notebooks (NumPy, CUDA, etc.)
+├── web/index.html           # Mission Control dashboard (SSE, 5-panel grid)
+└── main.py                  # FastAPI server — all 6 agents, SSE, REST API
 ```
 
 ## Key Commands
 
-### Run the AI agent (interactive CLI)
-```bash
-.venv\Scripts\python runpod\agent.py
-# or double-click run_agent.bat
-```
-
-### Run the FastAPI web server
+### Run the Mission Control server
 ```bash
 uvicorn main:app --reload --port 8000
+# Dashboard: http://localhost:8000
+```
+
+### Run tests
+```bash
+pytest tests/ -v
 ```
 
 ### Install dependencies
 ```bash
-pip install -r requirements.txt
+pip install -e ".[dev]"
+# or: pip install -r requirements.txt
 ```
 
 ## Environment Setup
@@ -40,25 +55,41 @@ ANTHROPIC_MODEL=claude-opus-4-5
 The agent checks project root first, then falls back to `.venv/.env`.
 
 ## Architecture Notes
-- **repo_scanner.py** — walks the project tree, skips `.git`, `.venv`, `__pycache__`. Reads text files under 50KB.
-- **context_builder.py** — assembles a full system prompt from the scanned structure and file contents. Priority files: README, requirements.txt, main.py.
-- **orchestrator.py** — wraps the Anthropic client; maintains conversation history across turns via a stateful `send()` closure.
-- **agent.py** — resolves project root from `__file__`, loads `.env`, scans repo, creates orchestrator, runs interactive loop.
+- **Event bus** — in-memory asyncio pub/sub with fnmatch wildcards; drop-in Redis Streams swap via `REDIS_URL` env var
+- **State store** — in-memory KV with TTL; same Redis swap path
+- **Planner** — regex fast-path (5 patterns, no API cost) → LLM fallback (Claude in thread executor, non-blocking)
+- **Skill plugin system** — drop a file in `skills/builtin/` or `skills/custom/`; auto-discovered at startup
+- **UIAgent** — starts FIRST in lifespan so it catches all agent.started events; bootstraps from state store on restart
+- **SSE** — 20s heartbeat keepalive; snapshot sent immediately on connect
 
 ## Code Conventions
 - Python 3.10+, UTF-8 everywhere
+- `asyncio_mode = "auto"` in pyproject.toml — all test classes use `async def` methods
 - Notebooks live under `tutorials/<topic>/notebooks/<level>/`
-- Add new file types to `TEXT_EXTENSIONS` in `repo_scanner.py` to include them in AI context
-- Adjust `MAX_FILE_SIZE` (default 50KB) in `repo_scanner.py` for larger files
+- New skills: subclass `BaseSkill`, set `name`/`description`, implement `async execute()`, drop in `skills/builtin/`
+
+## Infrastructure
+- Redis: `docker compose up redis -d` (port 6379)
+- `docker-compose.yml` at project root — Redis + API containers
+- `pyproject.toml` replaces `requirements.txt` as source of truth for deps
+- New deps added: `pydantic-settings`, `redis`, `httpx`
 
 ## Current Status
 | Area | Status |
 |------|--------|
-| CLI Agent (Mission Control) | Working |
-| Repo context injection | Working |
-| FastAPI web server | Stub — not connected to Claude yet |
-| GPU/CUDA tutorial content | Starting — one NumPy notebook |
-| RunPod integration | Not yet implemented |
+| FastAPI server + REST API | Working |
+| Mission Control dashboard (SSE) | Working |
+| BaseAgent + skill dispatch | Working |
+| OrchestratorAgent + Job/Step state machines | Working |
+| Planner (regex fast-path + LLM fallback) | Working |
+| RepoAnalystAgent | Working |
+| CoderAgent (read/write/patch/generate) | Working |
+| InfraManagerAgent (GPU/CPU/RAM/Docker/Redis) | Working |
+| IntegrationAgent (HTTP/RunPod GraphQL/webhooks) | Working |
+| UIAgent (SSE broadcast + state bootstrap) | Working |
+| Test suite | 74 tests, all green |
+| RunPod skill (builtin plugin) | Working |
+| GPU/CUDA tutorial content | One NumPy notebook |
 
 ## User Preferences
 - Direct, concise communication — no filler
