@@ -1,0 +1,13 @@
+#usda 1.0
+(
+    doc = "AIDO segment overlay: seg_06_future_watch"
+)
+
+over "World" {
+    over "SegmentOverlay" {
+        string primvars:segmentId = "seg_06_future_watch"
+        string primvars:segmentType = "future_watch"
+        string primvars:segmentTitle = "Future Watch"
+        double primvars:durationHint = 30.0
+    }
+}

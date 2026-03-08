@@ -50,6 +50,9 @@ from agents.infra_manager import InfraManagerAgent
 from agents.integration import IntegrationAgent
 from agents.ui import UIAgent
 from agents.notion_sync import NotionSyncAgent
+from agents.news_scout import NewsScoutAgent
+from agents.publisher import PublisherAgent
+from agents.social import SocialAgent
 
 bus   = EventBus(redis_url=settings.redis_url)
 store = StateStore(redis_url=settings.redis_url)
@@ -80,8 +83,22 @@ ui_agent       = UIAgent(
 notion_sync    = NotionSyncAgent(
     bus=bus, store=store, registry=registry, project_root=str(ROOT),
 )
+news_scout     = NewsScoutAgent(
+    llm_client=anthropic_async_client, llm_model=MODEL,
+    bus=bus, store=store, registry=registry, project_root=str(ROOT),
+)
+publisher      = PublisherAgent(
+    bus=bus, store=store, registry=registry, project_root=str(ROOT),
+)
+social         = SocialAgent(
+    bus=bus, store=store, registry=registry, project_root=str(ROOT),
+)
 
-_ALL_AGENTS = [orchestrator, repo_analyst, coder, infra_manager, integration, ui_agent, notion_sync]
+_ALL_AGENTS = [
+    orchestrator, repo_analyst, coder, infra_manager,
+    integration, ui_agent, notion_sync,
+    news_scout, publisher, social,
+]
 
 # ---------------------------------------------------------------------------
 # Lifespan — start/stop all agents with the server
@@ -92,7 +109,8 @@ async def lifespan(app: FastAPI):
     await store.connect()
     # UIAgent starts first so it is subscribed before other agents emit events
     await ui_agent.start()
-    for agent in [orchestrator, repo_analyst, coder, infra_manager, integration, notion_sync]:
+    for agent in [orchestrator, repo_analyst, coder, infra_manager, integration, notion_sync,
+                  news_scout, publisher, social]:
         await agent.start()
     yield
     for agent in reversed(_ALL_AGENTS):

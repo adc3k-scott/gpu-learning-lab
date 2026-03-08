@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls -la /c/Users/adhsc/OneDrive/Documents/GitHub/gpu-learning-lab/skills/*/)"
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
     ]
   }
 }
