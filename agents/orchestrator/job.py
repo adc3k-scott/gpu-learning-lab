@@ -125,6 +125,14 @@ class Job:
     def retryable_steps(self) -> list[Step]:
         return [s for s in self.steps if s.can_retry()]
 
+    def results_by_name(self) -> dict[str, Any]:
+        """Return {step_name: result} for every completed step."""
+        return {
+            s.name: s.result
+            for s in self.steps
+            if s.status == StepStatus.COMPLETED
+        }
+
     def is_done(self) -> bool:
         return all(
             s.status in (StepStatus.COMPLETED, StepStatus.FAILED, StepStatus.SKIPPED)

@@ -20,8 +20,11 @@ gpu-learning-lab is a repository for CUDA, GPU Computing, RunPod experiments, an
 │   ├── base.py              # BaseSkill ABC, SkillResult, SkillContext, RetryPolicy
 │   ├── registry.py          # Auto-discovery from skills.builtin + skills.custom
 │   └── builtin/
-│       └── file_manager.py  # read/write/list/exists/delete with traversal guard
-├── tests/                   # pytest-asyncio suite — 74 tests, all green
+│       ├── file_manager.py  # read/write/list/exists/delete with traversal guard
+│       ├── runpod.py        # list/start/stop/terminate RunPod cloud GPU pods
+│       ├── http_client.py   # GET/POST/ping outbound HTTP with JSON parsing
+│       └── notion.py        # Notion workspace — pages, databases, blocks
+├── tests/                   # pytest-asyncio suite — 145 tests, all green
 ├── tutorials/               # Accelerated Python notebooks (NumPy, CUDA, etc.)
 ├── web/index.html           # Mission Control dashboard (SSE, 5-panel grid)
 └── main.py                  # FastAPI server — all 6 agents, SSE, REST API
@@ -31,9 +34,11 @@ gpu-learning-lab is a repository for CUDA, GPU Computing, RunPod experiments, an
 
 ### Run the Mission Control server
 ```bash
-uvicorn main:app --reload --port 8000
+uvicorn main:app --port 8000
 # Dashboard: http://localhost:8000
 ```
+> **Note:** Do NOT use `--reload` when testing SSE features (`/events`, `/chat/stream`, `/tasks/{id}/stream`).
+> StatReload kills in-flight SSE connections on every file save.
 
 ### Run tests
 ```bash
@@ -61,6 +66,8 @@ The agent checks project root first, then falls back to `.venv/.env`.
 - **Skill plugin system** — drop a file in `skills/builtin/` or `skills/custom/`; auto-discovered at startup
 - **UIAgent** — starts FIRST in lifespan so it catches all agent.started events; bootstraps from state store on restart
 - **SSE** — 20s heartbeat keepalive; snapshot sent immediately on connect
+- **Streaming chat** (`/chat/stream`) — SSE endpoint; smart-routes action verbs to orchestrator, streams Claude response in parallel, appends agent result inline when job finishes
+- **Job-specific SSE** (`/tasks/{id}/stream`) — live step/job events via `_job_waiters` queues in `OrchestratorAgent`; `subscribe_job`/`unsubscribe_job` API
 
 ## Code Conventions
 - Python 3.10+, UTF-8 everywhere
@@ -87,8 +94,11 @@ The agent checks project root first, then falls back to `.venv/.env`.
 | InfraManagerAgent (GPU/CPU/RAM/Docker/Redis) | Working |
 | IntegrationAgent (HTTP/RunPod GraphQL/webhooks) | Working |
 | UIAgent (SSE broadcast + state bootstrap) | Working |
-| Test suite | 74 tests, all green |
+| Test suite | 160 tests, all green |
 | RunPod skill (builtin plugin) | Working |
+| HTTP client skill (builtin plugin) | Working |
+| Notion skill (builtin plugin) | Working — needs NOTION_API_KEY in .env |
+| NotionSyncAgent (work folder) | Working — set NOTION_WORK_DB_ID in .env or via POST /config |
 | GPU/CUDA tutorial content | One NumPy notebook |
 
 ## User Preferences

@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     # Redis (optional — in-memory fallback used when not set)
     redis_url: str | None = None
 
+    # RunPod
+    runpod_api_key: str = ""
+
+    # Notion
+    notion_api_key: str = ""
+    notion_work_db_id: str = ""   # Notion database ID used as the work folder
+
     # API server
     api_host: str = "0.0.0.0"
     api_port: int = 8000

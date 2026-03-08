@@ -104,6 +104,16 @@
   .bar-wrap { background: var(--bg); border-radius: 2px; height: 5px; margin-top: 4px; }
   .bar-fill  { height: 5px; border-radius: 2px; transition: width .4s; }
 
+  /* Upload bar */
+  .upload-bar { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-top: 1px solid var(--border); flex-shrink: 0; background: rgba(0,255,136,.03); }
+  .upload-btn { background: none; border: 1px solid var(--green); border-radius: 4px; color: var(--green); font-family: var(--font); font-size: 11px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
+  .upload-btn:hover { background: rgba(0,255,136,.1); }
+  .upload-name { color: var(--muted); font-size: 11px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .upload-status { font-size: 10px; white-space: nowrap; }
+  .upload-status.ok  { color: var(--green); }
+  .upload-status.err { color: var(--red); }
+  .upload-status.busy { color: var(--yellow); }
+
   /* Task form */
   .task-form { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
 
@@ -124,6 +134,28 @@
   .step-result { margin-top: 6px; color: var(--muted); font-size: 11px; white-space: pre-wrap; word-break: break-all; max-height: 140px; overflow-y: auto; }
   .close-btn { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; padding: 0 4px; }
   .close-btn:hover { color: var(--text); }
+
+  /* Settings */
+  .settings-btn { background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-family: var(--font); font-size: 11px; padding: 4px 10px; cursor: pointer; letter-spacing: 1px; }
+  .settings-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .settings-box { width: 480px; }
+  .cfg-section { margin-bottom: 20px; }
+  .cfg-section-title { color: var(--accent); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+  .cfg-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .cfg-label { color: var(--muted); font-size: 11px; min-width: 120px; flex-shrink: 0; }
+  .cfg-input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: var(--font); font-size: 12px; padding: 5px 8px; outline: none; }
+  .cfg-input:focus { border-color: var(--accent); }
+  .cfg-input[type=password] { letter-spacing: 2px; }
+  .cfg-input[type=password]::placeholder { letter-spacing: 0; }
+  .cfg-save-btn { background: var(--green); color: var(--bg); border: none; border-radius: 4px; padding: 5px 12px; font-family: var(--font); font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+  .cfg-save-btn:hover { opacity: .85; }
+  .cfg-save-btn:disabled { opacity: .4; cursor: not-allowed; }
+  .cfg-status { font-size: 10px; min-width: 40px; }
+  .cfg-status.ok  { color: var(--green); }
+  .cfg-status.err { color: var(--red); }
+  .cfg-pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: bold; }
+  .cfg-pill-yes { background: rgba(0,255,136,.15); color: var(--green); }
+  .cfg-pill-no  { background: rgba(255,215,0,.1);  color: var(--yellow); }
 </style>
 </head>
 <body>
@@ -132,6 +164,7 @@
   <div class="logo">MISSION <span>CONTROL</span></div>
   <div class="header-right">
     <span><span class="conn-dot" id="connDot"></span><span id="connLabel">connecting…</span></span>
+    <button class="settings-btn" onclick="openSettings()">CONFIG</button>
     <span class="ts" id="clockEl"></span>
   </div>
 </header>
@@ -149,6 +182,12 @@
     <div class="panel-title">Jobs</div>
     <div class="panel-body" id="jobList" style="padding:0">
       <div style="color:var(--muted);padding:12px">No jobs yet — submit a task below</div>
+    </div>
+    <div class="upload-bar">
+      <input type="file" id="fileInput" style="display:none" onchange="uploadFile()" />
+      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">+ Upload</button>
+      <span class="upload-name" id="uploadName">Single file or .zip folder archive</span>
+      <span class="upload-status" id="uploadStatus"></span>
     </div>
     <div class="task-form">
       <input id="taskInput" placeholder="Describe a task… (Enter to run)" />
@@ -190,9 +229,64 @@
         <div id="ovTitle" style="font-size:14px;color:var(--accent)"></div>
         <div id="ovMeta" style="font-size:11px;color:var(--muted);margin-top:2px"></div>
       </div>
-      <button class="close-btn" onclick="document.getElementById('overlay').classList.remove('show')">&#x2715;</button>
+      <button class="close-btn" onclick="document.getElementById('overlay').classList.remove('show'); if(_jobStreamES){_jobStreamES.close();_jobStreamES=null;}">&#x2715;</button>
     </div>
     <div class="overlay-body" id="ovBody"></div>
+  </div>
+</div>
+
+<!-- Settings overlay -->
+<div class="overlay" id="settingsOverlay" onclick="closeSettings(event)">
+  <div class="overlay-box settings-box" onclick="event.stopPropagation()">
+    <div class="overlay-header">
+      <div style="color:var(--accent);font-size:13px;letter-spacing:1px">CONFIGURATION</div>
+      <button class="close-btn" onclick="document.getElementById('settingsOverlay').classList.remove('show')">&#x2715;</button>
+    </div>
+    <div class="overlay-body">
+
+      <div class="cfg-section">
+        <div class="cfg-section-title">Notion Work Folder</div>
+        <div class="cfg-row">
+          <span class="cfg-label">Database ID</span>
+          <input class="cfg-input" id="cfgNotionDbId" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+          <button class="cfg-save-btn" onclick="saveCfg('notion_work_db_id','cfgNotionDbId','cfgNotionDbStatus')">Save</button>
+          <span class="cfg-status" id="cfgNotionDbStatus"></span>
+        </div>
+        <div class="cfg-row">
+          <span class="cfg-label">API Key</span>
+          <input class="cfg-input" id="cfgNotionKey" type="password" placeholder="secret_…" />
+          <button class="cfg-save-btn" onclick="saveCfg('notion_api_key','cfgNotionKey','cfgNotionKeyStatus')">Save</button>
+          <span class="cfg-status" id="cfgNotionKeyStatus"></span>
+        </div>
+        <div class="cfg-row" style="margin-top:4px">
+          <span class="cfg-label" style="color:var(--dim);font-size:10px">Status</span>
+          <span id="cfgNotionSyncStatus" style="font-size:11px;color:var(--muted)">Loading…</span>
+        </div>
+      </div>
+
+      <div class="cfg-section">
+        <div class="cfg-section-title">RunPod</div>
+        <div class="cfg-row">
+          <span class="cfg-label">API Key</span>
+          <input class="cfg-input" id="cfgRunpodKey" type="password" placeholder="rp_…" />
+          <button class="cfg-save-btn" onclick="saveCfg('runpod_api_key','cfgRunpodKey','cfgRunpodStatus')">Save</button>
+          <span class="cfg-status" id="cfgRunpodStatus"></span>
+        </div>
+        <div class="cfg-row" style="margin-top:4px">
+          <span class="cfg-label" style="color:var(--dim);font-size:10px">Status</span>
+          <span id="cfgRunpodApiStatus" style="font-size:11px;color:var(--muted)">Loading…</span>
+        </div>
+      </div>
+
+      <div class="cfg-section">
+        <div class="cfg-section-title">Model</div>
+        <div class="cfg-row">
+          <span class="cfg-label">Active Model</span>
+          <span id="cfgModelName" style="color:var(--text);font-size:12px">—</span>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -317,16 +411,18 @@ function renderEvents(events) {
   ).join('');
 }
 
-// Job overlay
-async function showJob(jobId) {
-  let job = (latestSnap.jobs||[]).find(j => j.job_id === jobId);
-  if (!job) { try { job = await (await fetch(API+'/tasks/'+jobId)).json(); } catch {} }
-  if (!job) return;
+// Job overlay — subscribes to live SSE stream for running jobs
+let _jobStreamES = null;
+
+function renderJobOverlay(job) {
   document.getElementById('ovTitle').textContent = job.title || job.job_id;
-  document.getElementById('ovMeta').textContent = `${job.status} · ${job.job_id} · steps: ${(job.steps||[]).length}`;
+  document.getElementById('ovMeta').textContent =
+    `${job.status} · ${job.job_id.slice(0,8)} · ${(job.steps||[]).length} step(s)`;
   document.getElementById('ovBody').innerHTML = (job.steps||[]).map(s => {
-    const res = s.result != null ? (typeof s.result === 'object' ? JSON.stringify(s.result,null,2) : String(s.result)) : (s.error||'');
-    return `<div class="step-row">
+    const res = s.result != null
+      ? (typeof s.result === 'object' ? JSON.stringify(s.result, null, 2) : String(s.result))
+      : (s.error || '');
+    return `<div class="step-row" id="step-${esc(s.step_id)}">
       <div style="display:flex;justify-content:space-between">
         <span class="step-name">${esc(s.name)}</span>
         <span class="badge badge-${s.status}">${s.status}</span>
@@ -335,9 +431,64 @@ async function showJob(jobId) {
       ${res ? `<div class="step-result">${esc(res)}</div>` : ''}
     </div>`;
   }).join('') || '<div style="color:var(--muted)">No steps</div>';
-  document.getElementById('overlay').classList.add('show');
 }
-function closeOverlay(e) { if (e.target.id==='overlay') document.getElementById('overlay').classList.remove('show'); }
+
+function updateStepInOverlay(step) {
+  const el = document.getElementById('step-' + step.step_id);
+  if (!el) return;
+  el.querySelector('.badge').className = 'badge badge-' + step.status;
+  el.querySelector('.badge').textContent = step.status;
+  const res = step.result != null
+    ? (typeof step.result === 'object' ? JSON.stringify(step.result, null, 2) : String(step.result))
+    : (step.error || '');
+  let resEl = el.querySelector('.step-result');
+  if (res) {
+    if (!resEl) { resEl = document.createElement('div'); resEl.className = 'step-result'; el.appendChild(resEl); }
+    resEl.textContent = res;
+  }
+}
+
+async function showJob(jobId) {
+  // Close any existing job stream
+  if (_jobStreamES) { _jobStreamES.close(); _jobStreamES = null; }
+
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('show');
+
+  // Connect to live job stream
+  const es = new EventSource(API + '/tasks/' + jobId + '/stream');
+  _jobStreamES = es;
+
+  es.onmessage = e => {
+    try {
+      const d = JSON.parse(e.data);
+      if (d.error) { document.getElementById('ovBody').textContent = d.error; return; }
+      if (d.type === 'snapshot' || d.type === 'job.done') {
+        renderJobOverlay(d.job);
+        if (d.type === 'job.done') { es.close(); _jobStreamES = null; }
+      } else if (d.type === 'step.completed' || d.type === 'step.failed') {
+        updateStepInOverlay(d.step);
+        // Update meta status
+        const meta = document.getElementById('ovMeta');
+        if (meta) {
+          const parts = meta.textContent.split(' · ');
+          const done = document.querySelectorAll('.badge-completed, .badge-failed, .badge-skipped').length;
+          const total = document.querySelectorAll('[id^="step-"]').length;
+          if (parts.length > 0) parts[0] = done >= total ? 'completed' : 'running';
+          meta.textContent = parts.join(' · ');
+        }
+      }
+    } catch {}
+  };
+  es.onerror = () => { es.close(); _jobStreamES = null; };
+}
+
+function closeOverlay(e) {
+  if (e.target.id === 'overlay') {
+    document.getElementById('overlay').classList.remove('show');
+    if (_jobStreamES) { _jobStreamES.close(); _jobStreamES = null; }
+  }
+}
 
 // Task submit
 document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key==='Enter') submitTask(); });
@@ -355,14 +506,30 @@ async function submitTask() {
 }
 
 // Chat
-function addMsg(role, text) {
+function addMsg(role, text, id) {
   const el  = document.getElementById('chatMessages');
   const div = document.createElement('div');
-  div.className = 'msg msg-'+role;
-  div.innerHTML = `<div class="msg-role">${role==='user'?'YOU':'MISSION CONTROL'}</div>`
-    + esc(text).replace(/\n/g,'<br>');
-  el.appendChild(div); el.scrollTop = el.scrollHeight;
+  div.className = 'msg msg-' + role;
+  if (id) div.id = id;
+  const label = document.createElement('div');
+  label.className = 'msg-role';
+  label.textContent = role === 'user' ? 'YOU' : 'MISSION CONTROL';
+  const body = document.createElement('span');
+  body.className = 'msg-body';
+  body.textContent = text;
+  div.appendChild(label);
+  div.appendChild(body);
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  return div;
 }
+function appendMsg(id, text) {
+  const div  = document.getElementById(id);
+  if (!div) return;
+  div.querySelector('.msg-body').textContent += text;
+  document.getElementById('chatMessages').scrollTop = 99999;
+}
+
 async function sendChat() {
   const inp = document.getElementById('chatInput');
   const btn = document.getElementById('chatBtn');
@@ -370,17 +537,53 @@ async function sendChat() {
   addMsg('user', txt);
   chatHistory.push({role:'user', content:txt});
   inp.value = ''; btn.disabled = true;
+
+  const msgId = 'ai-' + Date.now();
+  addMsg('ai', '', msgId);
+  let fullReply = '';
+
   try {
-    const res  = await fetch(API+'/chat', {
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const res = await fetch(API + '/chat/stream', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({messages: chatHistory}),
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail||'Server error');
-    const reply = data.content||'';
-    chatHistory.push({role:'assistant', content:reply});
-    addMsg('ai', reply);
-  } catch(err) { addMsg('ai','Error: '+err.message); }
+    if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Server error'); }
+
+    const reader = res.body.getReader();
+    const dec    = new TextDecoder();
+    let buf = '';
+
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, {stream: true});
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+          const d = JSON.parse(line.slice(6));
+          if (d.error) throw new Error(d.error);
+          if (d.delta) { appendMsg(msgId, d.delta); fullReply += d.delta; }
+          if (d.job_id) {
+            const aiDiv = document.getElementById(msgId);
+            if (aiDiv && !aiDiv.querySelector('.job-link')) {
+              const lnk = document.createElement('span');
+              lnk.className = 'job-link';
+              lnk.style.cssText = 'display:block;margin-top:6px;color:var(--accent);cursor:pointer;font-size:11px;text-decoration:underline';
+              lnk.textContent = '→ View job ' + d.job_id.slice(0, 8);
+              lnk.onclick = () => showJob(d.job_id);
+              aiDiv.appendChild(lnk);
+            }
+          }
+        } catch(e) {
+          if (e.message !== 'Unexpected end of JSON input')
+            appendMsg(msgId, '\n[Error: ' + e.message + ']');
+        }
+      }
+    }
+    chatHistory.push({role: 'assistant', content: fullReply});
+  } catch(err) { appendMsg(msgId, 'Error: ' + err.message); }
   finally { btn.disabled = false; inp.focus(); }
 }
 
@@ -390,6 +593,110 @@ function esc(s) {
 
 // Initial poll fallback
 fetch(API+'/snapshot').then(r=>r.json()).then(renderAll).catch(()=>{});
+
+// -------------------------------------------------------------------------
+// File upload
+// -------------------------------------------------------------------------
+async function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const nameEl   = document.getElementById('uploadName');
+  const statusEl = document.getElementById('uploadStatus');
+  const taskInput = document.getElementById('taskInput');
+  nameEl.textContent   = file.name;
+  statusEl.textContent = 'uploading…';
+  statusEl.className   = 'upload-status busy';
+
+  const form = new FormData();
+  form.append('file', file);
+
+  try {
+    const res = await fetch(API + '/upload', { method: 'POST', body: form });
+    const d   = await res.json();
+    if (!res.ok) throw new Error(d.detail || 'Upload failed');
+
+    if (d.zip) {
+      // Zip was extracted — show file count and suggest listing workspace
+      const count = (d.files || []).length;
+      statusEl.textContent = `${count} file${count !== 1 ? 's' : ''} extracted`;
+      statusEl.className   = 'upload-status ok';
+      // Find the deepest common folder prefix to suggest a targeted analysis
+      const firstFile = (d.files || [])[0] || 'workspace';
+      const folder = firstFile.split('/').slice(0, -1).join('/') || 'workspace';
+      taskInput.value = `list workspace files`;
+    } else {
+      // Single file
+      statusEl.textContent = `${(d.size / 1024).toFixed(1)} KB`;
+      statusEl.className   = 'upload-status ok';
+      taskInput.value = `analyse file ${d.path}`;
+    }
+    taskInput.focus();
+  } catch(e) {
+    statusEl.textContent = e.message.slice(0, 40);
+    statusEl.className   = 'upload-status err';
+  } finally {
+    fileInput.value = '';  // allow re-uploading same file
+  }
+}
+
+// -------------------------------------------------------------------------
+// Settings modal
+// -------------------------------------------------------------------------
+async function openSettings() {
+  document.getElementById('settingsOverlay').classList.add('show');
+  // Clear previous statuses
+  ['cfgNotionDbStatus','cfgNotionKeyStatus','cfgRunpodStatus'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.className = 'cfg-status'; }
+  });
+  try {
+    const cfg = await fetch(API + '/config').then(r => r.json());
+    // Notion
+    const dbId = cfg.notion_work_db_id || '';
+    document.getElementById('cfgNotionDbId').value = dbId;
+    const keySet = cfg.notion_api_key_set === 'yes';
+    document.getElementById('cfgNotionSyncStatus').innerHTML =
+      `DB: <span class="cfg-pill ${dbId ? 'cfg-pill-yes' : 'cfg-pill-no'}">${dbId ? 'configured' : 'not set'}</span>` +
+      `&nbsp;&nbsp;Key: <span class="cfg-pill ${keySet ? 'cfg-pill-yes' : 'cfg-pill-no'}">${keySet ? 'set' : 'not set'}</span>`;
+    // RunPod
+    const rpSet = cfg.runpod_api_key_set === 'yes';
+    document.getElementById('cfgRunpodApiStatus').innerHTML =
+      `<span class="cfg-pill ${rpSet ? 'cfg-pill-yes' : 'cfg-pill-no'}">${rpSet ? 'configured' : 'not set'}</span>`;
+    // Model
+    document.getElementById('cfgModelName').textContent = cfg.model || '—';
+  } catch (e) {
+    document.getElementById('cfgNotionSyncStatus').textContent = 'Failed to load config';
+  }
+}
+
+function closeSettings(e) {
+  if (e.target.id === 'settingsOverlay')
+    document.getElementById('settingsOverlay').classList.remove('show');
+}
+
+async function saveCfg(key, inputId, statusId) {
+  const val    = document.getElementById(inputId).value.trim();
+  const statEl = document.getElementById(statusId);
+  if (!val) { statEl.textContent = 'empty'; statEl.className = 'cfg-status err'; return; }
+  statEl.textContent = '…'; statEl.className = 'cfg-status';
+  try {
+    const res = await fetch(API + '/config', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({key, value: val}),
+    });
+    if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'error'); }
+    statEl.textContent = 'saved'; statEl.className = 'cfg-status ok';
+    // Mask password fields after save
+    const inp = document.getElementById(inputId);
+    if (inp.type === 'password') inp.value = '';
+    // Refresh status pills
+    await openSettings();
+  } catch(e) {
+    statEl.textContent = 'fail'; statEl.className = 'cfg-status err';
+  }
+}
 </script>
 </body>
 </html>

@@ -8,6 +8,7 @@ from core.state_store import StateStore
 from skills.registry import SkillRegistry, registry as global_registry
 from agents.base import AgentStatus, BaseAgent
 from agents.orchestrator import OrchestratorAgent
+from agents.orchestrator.agent import _resolve_params
 from agents.orchestrator.job import Job, JobStatus, Step, StepStatus
 from agents.orchestrator.planner import plan
 from agents.repo_analyst import RepoAnalystAgent
@@ -173,6 +174,71 @@ class TestJobModel:
 
 
 # ---------------------------------------------------------------------------
+# Step output passing
+# ---------------------------------------------------------------------------
+
+class TestResolveParams:
+    def test_exact_reference_preserves_type(self):
+        result = _resolve_params({"data": "{{step_a}}"}, {"step_a": {"key": "val"}})
+        assert result["data"] == {"key": "val"}
+
+    def test_exact_reference_string_result(self):
+        result = _resolve_params({"content": "{{read_file}}"}, {"read_file": "hello\n"})
+        assert result["content"] == "hello\n"
+
+    def test_partial_reference_interpolated(self):
+        result = _resolve_params(
+            {"prompt": "Summarise this: {{read_file}}"},
+            {"read_file": "file contents here"},
+        )
+        assert result["prompt"] == "Summarise this: file contents here"
+
+    def test_unknown_reference_left_unchanged(self):
+        result = _resolve_params({"x": "{{unknown}}"}, {})
+        assert result["x"] == "{{unknown}}"
+
+    def test_nested_dict(self):
+        result = _resolve_params(
+            {"outer": {"inner": "{{step_a}}"}},
+            {"step_a": 42},
+        )
+        assert result["outer"]["inner"] == 42
+
+    def test_list_values(self):
+        result = _resolve_params(
+            {"items": ["{{step_a}}", "{{step_b}}"]},
+            {"step_a": "x", "step_b": "y"},
+        )
+        assert result["items"] == ["x", "y"]
+
+    def test_non_string_values_passthrough(self):
+        result = _resolve_params({"n": 99, "flag": True}, {"step_a": "x"})
+        assert result["n"] == 99
+        assert result["flag"] is True
+
+    def test_step_name_dot_result_notation(self):
+        """{{step_name.result}} should work the same as {{step_name}}."""
+        result = _resolve_params({"val": "{{step_a.result}}"}, {"step_a": "output"})
+        assert result["val"] == "output"
+
+
+class TestResultsByName:
+    def test_returns_completed_only(self):
+        job = Job(title="t")
+        s1 = Step(name="s1"); s2 = Step(name="s2"); s3 = Step(name="s3")
+        job.add_step(s1).add_step(s2).add_step(s3)
+        s1.complete("out1")
+        s2.fail("boom")
+        # s3 still pending
+        assert job.results_by_name() == {"s1": "out1"}
+
+    def test_empty_when_none_complete(self):
+        job = Job(title="t")
+        job.add_step(Step(name="s1"))
+        assert job.results_by_name() == {}
+
+
+# ---------------------------------------------------------------------------
 # Planner
 # ---------------------------------------------------------------------------
 
@@ -192,6 +258,35 @@ class TestPlanner:
     async def test_explain_pattern(self):
         job = await plan("explain what the codebase does")
         assert job.steps[0].assigned_role == "repo_analyst"
+
+    async def test_terminate_pod_pattern(self):
+        job = await plan("terminate pod abc123def")
+        assert len(job.steps) == 1
+        assert job.steps[0].skill == "runpod"
+        assert job.steps[0].params.get("action") == "terminate_pod"
+
+    async def test_write_file_pattern(self):
+        job = await plan("write file hello.py with the content")
+        assert len(job.steps) == 1
+        assert job.steps[0].assigned_role == "coder"
+        assert job.steps[0].params.get("action") == "write"
+
+    async def test_generate_code_pattern(self):
+        job = await plan("generate a Python script to parse JSON")
+        assert len(job.steps) == 1
+        assert job.steps[0].assigned_role == "coder"
+        assert job.steps[0].params.get("action") == "generate"
+
+    async def test_webhook_pattern(self):
+        job = await plan("send webhook to http://example.com/hook with payload")
+        assert len(job.steps) == 1
+        assert job.steps[0].assigned_role == "integration"
+        assert job.steps[0].params.get("action") == "webhook"
+
+    async def test_http_pattern(self):
+        job = await plan("fetch http://api.example.com/data")
+        assert len(job.steps) == 1
+        assert job.steps[0].skill == "http_client"
 
     async def test_unknown_falls_back_to_single_step(self):
         job = await plan("do something completely unrecognised xyz123")
@@ -260,8 +355,96 @@ class TestOrchestratorAgent:
 
 
 # ---------------------------------------------------------------------------
-# CoderAgent
+# OrchestratorAgent — job waiter / SSE pub-sub
 # ---------------------------------------------------------------------------
+
+class TestJobWaiter:
+    async def test_subscribe_returns_queue(self, infra, reg):
+        bus, store = infra
+        orch = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=".")
+        await orch.start()
+        q = orch.subscribe_job("job-1")
+        assert q is not None
+        await orch.stop()
+
+    async def test_unsubscribe_removes_queue(self, infra, reg):
+        bus, store = infra
+        orch = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=".")
+        await orch.start()
+        q = orch.subscribe_job("job-1")
+        orch.unsubscribe_job("job-1", q)
+        assert "job-1" not in orch._job_waiters
+        await orch.stop()
+
+    async def test_push_event_delivers_to_all_waiters(self, infra, reg):
+        bus, store = infra
+        orch = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=".")
+        await orch.start()
+        q1 = orch.subscribe_job("job-x")
+        q2 = orch.subscribe_job("job-x")
+        orch._push_job_event("job-x", {"type": "test"})
+        assert q1.get_nowait() == {"type": "test"}
+        assert q2.get_nowait() == {"type": "test"}
+        await orch.stop()
+
+    async def test_push_event_ignores_unknown_job(self, infra, reg):
+        """Pushing to a job with no waiters should not raise."""
+        bus, store = infra
+        orch = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=".")
+        await orch.start()
+        orch._push_job_event("no-such-job", {"type": "test"})  # should not raise
+        await orch.stop()
+
+    async def test_job_done_event_received_via_waiter(self, infra, reg, tmp_path):
+        """End-to-end: waiter receives job.done after task completes."""
+        bus, store = infra
+        orch    = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=str(tmp_path))
+        analyst = RepoAnalystAgent(bus=bus, store=store, registry=reg, project_root=str(tmp_path))
+        await orch.start(); await analyst.start()
+
+        job_id = await orch.submit_task("list the files in the project")
+        q = orch.subscribe_job(job_id)
+
+        # Drain events until job.done (with a time cap)
+        done_event = None
+        for _ in range(20):
+            await asyncio.sleep(0.1)
+            while not q.empty():
+                ev = q.get_nowait()
+                if ev.get("type") == "job.done":
+                    done_event = ev
+        assert done_event is not None
+        assert done_event["job"]["job_id"] == job_id
+        assert done_event["job"]["status"] == "completed"
+
+        orch.unsubscribe_job(job_id, q)
+        await analyst.stop(); await orch.stop()
+
+    async def test_step_events_delivered_before_job_done(self, infra, reg, tmp_path):
+        """step.completed events should arrive before job.done."""
+        bus, store = infra
+        orch    = OrchestratorAgent(bus=bus, store=store, registry=reg, project_root=str(tmp_path))
+        analyst = RepoAnalystAgent(bus=bus, store=store, registry=reg, project_root=str(tmp_path))
+        await orch.start(); await analyst.start()
+
+        job_id = await orch.submit_task("list the files in the project")
+        q = orch.subscribe_job(job_id)
+
+        events = []
+        for _ in range(20):
+            await asyncio.sleep(0.1)
+            while not q.empty():
+                events.append(q.get_nowait())
+
+        types = [e.get("type") for e in events]
+        assert "job.done" in types
+        # step.completed arrives before job.done
+        if "step.completed" in types:
+            assert types.index("step.completed") < types.index("job.done")
+
+        orch.unsubscribe_job(job_id, q)
+        await analyst.stop(); await orch.stop()
+
 
 class TestCoderAgent:
     async def test_write_and_read_via_event(self, infra, reg, tmp_path):

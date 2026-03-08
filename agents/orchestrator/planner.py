@@ -40,6 +40,19 @@ def _extract_url(description: str) -> str:
 
 
 _POD_ID_RE = re.compile(r"\bpod[_\s-]?id[:\s=]+([a-z0-9_-]+)\b|pod\s+([a-z0-9]{8,})\b", re.I)
+_WORKSPACE_FILE_RE = re.compile(r"workspace[\\/]([\w.\-]+)", re.I)
+
+
+def _extract_workspace_file(description: str) -> str:
+    """Return 'workspace/<name>' if a workspace path is mentioned, else ''."""
+    m = _WORKSPACE_FILE_RE.search(description)
+    return f"workspace/{m.group(1)}" if m else ""
+_NOTION_ID_RE = re.compile(
+    r"(?:page|database|block)[_\s-]?id[:\s=]+([a-f0-9-]{32,36})"  # explicit id= form
+    r"|([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})",  # bare UUID
+    re.I,
+)
+_NOTION_QUERY_RE = re.compile(r'"([^"]{2,})"', re.I)  # quoted search term
 
 
 def _extract_pod_id(description: str) -> str:
@@ -47,6 +60,18 @@ def _extract_pod_id(description: str) -> str:
     if m:
         return m.group(1) or m.group(2) or ""
     return ""
+
+
+def _extract_notion_id(description: str) -> str:
+    m = _NOTION_ID_RE.search(description)
+    if m:
+        return (m.group(1) or m.group(2) or "").replace("-", "")
+    return ""
+
+
+def _extract_notion_query(description: str) -> str:
+    m = _NOTION_QUERY_RE.search(description)
+    return m.group(1) if m else description
 
 
 _PATTERNS: list[dict[str, Any]] = [
@@ -75,11 +100,19 @@ _PATTERNS: list[dict[str, Any]] = [
         ],
     },
     {
-        "match": re.compile(r"\bping\b|\bcheck.*url\b|url.*reachable", re.I),
+        "match": re.compile(r"\bping\b|\bcheck.*url\b|url.*reachable|is.*up\b|health.?check", re.I),
         "steps": lambda desc: [
-            {"name": "ping_url", "skill": "", "assigned_role": "integration",
-             "description": desc,
+            {"name": "ping_url", "skill": "http_client", "assigned_role": "integration",
+             "description": "Ping URL and return reachability + latency",
              "params": {"action": "ping", "url": _extract_url(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bhttp\s+(get|post|put|delete|patch)\b|fetch\s+https?://|curl\s+https?://", re.I),
+        "steps": lambda desc: [
+            {"name": "http_request", "skill": "http_client", "assigned_role": "integration",
+             "description": "Make an HTTP request",
+             "params": {"action": "http", "method": "GET", "url": _extract_url(desc)}},
         ],
     },
     {
@@ -112,6 +145,131 @@ _PATTERNS: list[dict[str, Any]] = [
             {"name": "stop_pod", "skill": "runpod", "assigned_role": "integration",
              "description": "Stop a RunPod pod",
              "params": {"action": "stop_pod", "pod_id": _extract_pod_id(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bterminate.*pod\b|destroy.*pod\b|delete.*pod\b", re.I),
+        "steps": lambda desc: [
+            {"name": "terminate_pod", "skill": "runpod", "assigned_role": "integration",
+             "description": "Terminate (permanently delete) a RunPod pod",
+             "params": {"action": "terminate_pod", "pod_id": _extract_pod_id(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bwrite\b.+file|create\b.+file|save\b.+file", re.I),
+        "steps": lambda desc: [
+            {"name": "write_file", "skill": "file_manager", "assigned_role": "coder",
+             "description": "Write content to a file",
+             "params": {"action": "write", "path": _extract_path(desc), "content": ""}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bgenerate\b.+(code|script|function|class|module)|write\b.+(script|function|class)\b", re.I),
+        "steps": lambda desc: [
+            {"name": "generate_code", "skill": "", "assigned_role": "coder",
+             "description": desc,
+             "params": {"action": "generate", "path": _extract_path(desc), "prompt": desc}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bsend.*webhook\b|post.*webhook\b|webhook.*url\b|notify.*https?://", re.I),
+        "steps": lambda desc: [
+            {"name": "send_webhook", "skill": "", "assigned_role": "integration",
+             "description": "Deliver webhook payload",
+             "params": {"action": "webhook", "url": _extract_url(desc), "payload": {}}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bnotion\b.*(search|find|look\s*up)\b|search\s+notion\b", re.I),
+        "steps": lambda desc: [
+            {"name": "notion_search", "skill": "notion", "assigned_role": "integration",
+             "description": "Search Notion workspace",
+             "params": {"action": "search", "query": _extract_notion_query(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\b(get|read|fetch|show|open)\b.*(notion\s+page|notion\s+doc)\b", re.I),
+        "steps": lambda desc: [
+            {"name": "get_notion_page", "skill": "notion", "assigned_role": "integration",
+             "description": "Get a Notion page",
+             "params": {"action": "get_page", "page_id": _extract_notion_id(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bcreate\b.*(notion\s+page|page\s+in\s+notion)\b|add.*page.*notion\b", re.I),
+        "steps": lambda desc: [
+            {"name": "create_notion_page", "skill": "notion", "assigned_role": "integration",
+             "description": "Create a new Notion page",
+             "params": {"action": "create_page", "parent_id": _extract_notion_id(desc), "title": desc[:80]}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bquery\b.*(notion\s+database|notion\s+db)\b|list.*rows.*notion\b", re.I),
+        "steps": lambda desc: [
+            {"name": "query_notion_db", "skill": "notion", "assigned_role": "integration",
+             "description": "Query a Notion database",
+             "params": {"action": "query_database", "database_id": _extract_notion_id(desc)}},
+        ],
+    },
+    {
+        "match": re.compile(r"\bappend\b.*(notion|block)\b|add.*block.*notion\b|write.*to.*notion\b", re.I),
+        "steps": lambda desc: [
+            {"name": "append_notion_blocks", "skill": "notion", "assigned_role": "integration",
+             "description": "Append content blocks to a Notion page",
+             "params": {"action": "append_blocks", "page_id": _extract_notion_id(desc), "blocks": []}},
+        ],
+    },
+    {
+        "match": re.compile(r"\blist\b.+workspace\b|list.*uploads?\b|workspace\s+files?\b|what.*uploaded\b", re.I),
+        "steps": lambda desc: [
+            {"name": "list_workspace", "skill": "file_manager", "assigned_role": "repo_analyst",
+             "description": "List uploaded files in workspace",
+             "params": {"action": "list", "path": "workspace"}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\banalyse?\b.+file|\binspect\b.+file"
+            r"|\banalyse?\b.+(data|csv|json|iot|sensor|log)\b"
+            r"|\binspect\b.+(data|csv|json|iot|sensor)\b",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "read_data_file", "skill": "file_manager", "assigned_role": "coder",
+             "description": "Read the data file",
+             "params": {"action": "read", "path": _extract_path(desc) or _extract_workspace_file(desc) or "workspace"}},
+            {"name": "analyse_data", "skill": "", "assigned_role": "coder",
+             "description": desc,
+             "params": {"action": "analyse", "prompt": desc, "content": "{{read_data_file}}"},
+             "depends_on": ["read_data_file"]},
+        ],
+    },
+    {
+        "match": re.compile(r"\bparse\b.+(csv|json|tsv|log|ndjson)\b|\bload\b.+(csv|json|dataset)\b", re.I),
+        "steps": lambda desc: [
+            {"name": "read_file", "skill": "file_manager", "assigned_role": "coder",
+             "description": "Read the data file",
+             "params": {"action": "read", "path": _extract_path(desc) or _extract_workspace_file(desc)}},
+            {"name": "parse_data", "skill": "", "assigned_role": "coder",
+             "description": desc,
+             "params": {"action": "analyse", "prompt": desc, "content": "{{read_file}}"},
+             "depends_on": ["read_file"]},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\bcompute\b.+stats?\b|\bcalculate\b.+stats?\b|\bstatistics\b"
+            r"|\bsummary\b.+data\b|\bdata\b.+summary\b|\bsummarise?\b.+data\b",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "read_file", "skill": "file_manager", "assigned_role": "coder",
+             "description": "Read the target data file",
+             "params": {"action": "read", "path": _extract_path(desc) or _extract_workspace_file(desc)}},
+            {"name": "compute_stats", "skill": "", "assigned_role": "coder",
+             "description": desc,
+             "params": {"action": "analyse", "prompt": desc, "content": "{{read_file}}"},
+             "depends_on": ["read_file"]},
         ],
     },
     {
@@ -149,22 +307,45 @@ _SYSTEM_PROMPT = (
     "\n"
     "AVAILABLE SKILLS AND PARAMS:\n"
     "  file_manager (roles: coder, repo_analyst)\n"
-    "    action=read,   path=<relative path>\n"
+    "    action=read,   path=<relative path>   -- reads text/CSV/JSON/log files\n"
     "    action=write,  path=<relative path>, content=<string>\n"
     "    action=list,   path=<relative path, default '.'>\n"
     "    action=exists, path=<relative path>\n"
     "    action=delete, path=<relative path>\n"
+    "    NOTE: uploaded IoT/sensor files land in workspace/ (e.g. workspace/data.csv)\n"
     "\n"
-    "  integration role -- HTTP/ping (skill=''):\n"
-    "    action=ping,  url=<url>\n"
-    "    action=http,  method=GET|POST, url=<url>, headers={}, body={}\n"
+    "  http_client (role: integration) -- outbound HTTP:\n"
+    "    action=ping,  url=<url>                           (reachability check)\n"
+    "    action=get,   url=<url>, headers={}, params={}    (HTTP GET)\n"
+    "    action=post,  url=<url>, headers={}, body={}      (HTTP POST JSON)\n"
+    "    action=http,  method=GET|POST|PUT|DELETE, url=<url>, headers={}, body={}\n"
     "\n"
-    "  integration role -- RunPod (skill='runpod'):\n"
+    "  runpod (role: integration) -- RunPod GPU cloud:\n"
     "    action=list_pods\n"
     "    action=pod_status,    pod_id=<id>\n"
     "    action=start_pod,     pod_id=<id>\n"
     "    action=stop_pod,      pod_id=<id>\n"
-    "    action=terminate_pod, pod_id=<id>\n"
+    "    action=terminate_pod, pod_id=<id>   (permanent — use with caution)\n"
+    "\n"
+    "  notion (role: integration) -- Notion workspace:\n"
+    "    action=search,           query=<str>\n"
+    "    action=get_page,         page_id=<uuid>\n"
+    "    action=get_page_blocks,  page_id=<uuid>\n"
+    "    action=create_page,      parent_id=<uuid>, parent_type='database_id'|'page_id',\n"
+    "                             title=<str>, properties={}, blocks=[]\n"
+    "    action=update_page,      page_id=<uuid>, properties={}\n"
+    "    action=append_blocks,    page_id=<uuid>, blocks=[<block_obj_or_plain_str>]\n"
+    "    action=query_database,   database_id=<uuid>, filter={}, sorts=[], page_size=50\n"
+    "\n"
+    "  integration role -- webhook (skill=''):\n"
+    "    action=webhook, url=<url>, payload=<dict>, secret=<str optional>\n"
+    "\n"
+    "  coder role -- LLM-assisted coding and data analysis (skill=''):\n"
+    "    action=generate, path=<output file>, prompt=<what to generate>\n"
+    "    action=review,   path=<file to review>, prompt=<review instructions>\n"
+    "    action=patch,    path=<file>, diff=<unified diff string>\n"
+    "    action=analyse,  prompt=<question>, content=<data or {{prior_step}}>\n"
+    "      -- use for: CSV parsing, IoT data stats, anomaly detection, summarising logs\n"
     "\n"
     "  infra_manager role (skill='', use params):\n"
     "    action=health | gpu | system | docker | redis | process\n"
@@ -188,6 +369,8 @@ _SYSTEM_PROMPT = (
     "- 1-3 steps unless genuinely multi-stage\n"
     "- depends_on uses step NAMES from this same plan\n"
     "- Never invent roles or skills not listed above\n"
+    "- To pass a prior step's result into a later step's param, use {{step_name}} as the value\n"
+    "  e.g. {\"content\": \"{{read_file}}\"} passes the read_file step result as the content param\n"
 )
 
 

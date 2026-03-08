@@ -28,7 +28,9 @@ Emits:
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
+import re
 from typing import Any
 
 from agents.base import BaseAgent
@@ -41,6 +43,45 @@ logger = logging.getLogger(__name__)
 # StateStore key prefix for jobs
 _JOB_KEY = "jobs:{job_id}"
 
+# Matches {{step_name}} or {{step_name.result}} in param string values
+_TEMPLATE_RE = re.compile(r"\{\{([\w.]+)\}\}")
+
+
+def _resolve_params(params: dict[str, Any], results: dict[str, Any]) -> dict[str, Any]:
+    """
+    Substitute {{step_name}} references in param values with prior step results.
+
+    Rules:
+    - If a string value is exactly "{{step_name}}", it is replaced with the raw result
+      (which may be any JSON-serialisable type).
+    - If a string value contains "{{step_name}}" alongside other text, the result is
+      JSON-serialised and interpolated into the string.
+    - Nested dicts and lists are traversed recursively.
+    - Unknown references are left as-is.
+    """
+    def _sub(value: Any) -> Any:
+        if isinstance(value, str):
+            # Exact match — return the raw result value (preserves type)
+            m = _TEMPLATE_RE.fullmatch(value.strip())
+            if m:
+                key = m.group(1).split(".")[0]   # {{step_name}} or {{step_name.result}}
+                return results.get(key, value)
+            # Partial match — stringify the result into the template
+            def _replace(match: re.Match) -> str:
+                key = match.group(1).split(".")[0]
+                val = results.get(key)
+                if val is None:
+                    return match.group(0)   # leave unchanged
+                return val if isinstance(val, str) else json.dumps(val)
+            return _TEMPLATE_RE.sub(_replace, value)
+        if isinstance(value, dict):
+            return {k: _sub(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [_sub(v) for v in value]
+        return value
+
+    return {k: _sub(v) for k, v in params.items()}
+
 
 class OrchestratorAgent(BaseAgent):
     role = "orchestrator"
@@ -49,8 +90,9 @@ class OrchestratorAgent(BaseAgent):
         super().__init__(**kwargs)
         self._llm_client = llm_client
         self._llm_model = llm_model
-        self._jobs: dict[str, Job] = {}   # in-process job cache
+        self._jobs: dict[str, Job] = {}                      # in-process job cache
         self._step_lock = asyncio.Lock()
+        self._job_waiters: dict[str, list[asyncio.Queue]] = {}  # job_id → SSE queues
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -81,6 +123,10 @@ class OrchestratorAgent(BaseAgent):
             llm_model=self._llm_model,
         )
 
+        # Honour a pre-assigned job_id from submit_task() so callers can track immediately
+        if preset_id := payload.get("job_id"):
+            job.job_id = preset_id
+
         await self._register_job(job)
         await self.publish("job.created", {
             "job_id": job.job_id,
@@ -104,6 +150,7 @@ class OrchestratorAgent(BaseAgent):
             if step:
                 step.complete(result)
                 logger.info("[%s] Step %s completed in job %s", self.agent_id, step_id, job_id)
+                self._push_job_event(job_id, {"type": "step.completed", "step": step.to_dict()})
 
             await self._persist_job(job)
 
@@ -123,6 +170,7 @@ class OrchestratorAgent(BaseAgent):
             if step:
                 step.fail(error)
                 logger.warning("[%s] Step %s failed: %s", self.agent_id, step_id, error)
+                self._push_job_event(job_id, {"type": "step.failed", "step": step.to_dict()})
 
             await self._persist_job(job)
 
@@ -153,6 +201,9 @@ class OrchestratorAgent(BaseAgent):
         step.start()
         await self._persist_job(job)
 
+        # Resolve {{step_name}} template references in params using prior results
+        resolved_params = _resolve_params(step.params, job.results_by_name())
+
         logger.info(
             "[%s] Dispatching step %r (role=%s skill=%s) for job %s",
             self.agent_id, step.name, step.assigned_role, step.skill, job.job_id,
@@ -162,7 +213,7 @@ class OrchestratorAgent(BaseAgent):
             "step_id": step.step_id,
             "assigned_role": step.assigned_role,
             "skill": step.skill,
-            "params": step.params,
+            "params": resolved_params,
             "description": step.description,
         })
 
@@ -182,6 +233,24 @@ class OrchestratorAgent(BaseAgent):
                     "error": result.error,
                 })
 
+    def _push_job_event(self, job_id: str, event: dict) -> None:
+        """Push a job-level event dict to all SSE waiters for this job."""
+        for q in self._job_waiters.get(job_id, []):
+            q.put_nowait(event)
+
+    def subscribe_job(self, job_id: str) -> asyncio.Queue:
+        """Return a queue that will receive job progress events until unsubscribed."""
+        q: asyncio.Queue = asyncio.Queue()
+        self._job_waiters.setdefault(job_id, []).append(q)
+        return q
+
+    def unsubscribe_job(self, job_id: str, q: asyncio.Queue) -> None:
+        waiters = self._job_waiters.get(job_id, [])
+        if q in waiters:
+            waiters.remove(q)
+        if not waiters:
+            self._job_waiters.pop(job_id, None)
+
     async def _finalise_job(self, job: Job) -> None:
         if job.has_failures():
             failed = [s.name for s in job.steps if s.status == StepStatus.FAILED]
@@ -199,6 +268,8 @@ class OrchestratorAgent(BaseAgent):
             logger.info("[%s] Job %s COMPLETED", self.agent_id, job.job_id)
 
         await self._persist_job(job)
+        # Signal all waiters that the job is done
+        self._push_job_event(job.job_id, {"type": "job.done", "job": job.to_dict()})
 
     # ------------------------------------------------------------------
     # Persistence helpers
@@ -220,16 +291,15 @@ class OrchestratorAgent(BaseAgent):
         Programmatic shortcut — submit a task without going through the event bus.
         Returns the job_id.
         """
+        from uuid import uuid4
+        preset_job_id = str(uuid4())
         await self.publish("task.requested", {
             "description": description,
             "title": title,
             "requested_by": requested_by,
+            "job_id": preset_job_id,
         })
-        # Give the event loop a tick to process the publish
-        await asyncio.sleep(0)
-        # Find the most recently created job
-        job_ids = [j for j in self._jobs]
-        return job_ids[-1] if job_ids else ""
+        return preset_job_id
 
     async def get_job(self, job_id: str) -> dict[str, Any] | None:
         """Return the persisted job dict from the state store."""
