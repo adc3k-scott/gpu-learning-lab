@@ -139,6 +139,14 @@ def root():
     return FileResponse(str(index))
 
 
+@app.get("/mobile")
+def mobile():
+    page = ROOT / "web" / "mobile.html"
+    if not page.exists():
+        raise HTTPException(status_code=404, detail="web/mobile.html not found")
+    return FileResponse(str(page))
+
+
 # ---------------------------------------------------------------------------
 # Routes — SSE live dashboard stream
 # ---------------------------------------------------------------------------
@@ -422,6 +430,32 @@ _ALLOWED_CONFIG_KEYS = {
     "runpod_api_key",
 }
 
+_ENV_KEY_MAP = {
+    "notion_api_key":    "NOTION_API_KEY",
+    "notion_work_db_id": "NOTION_WORK_DB_ID",
+    "runpod_api_key":    "RUNPOD_API_KEY",
+}
+
+
+def _persist_to_env(key: str, value: str) -> None:
+    """Write or update a KEY=value line in the project .env file."""
+    env_file = ROOT / ".env"
+    lines = env_file.read_text(encoding="utf-8").splitlines() if env_file.exists() else []
+    upper = key.upper()
+    found = False
+    new_lines = []
+    for line in lines:
+        if line.startswith(f"{upper}=") or line.startswith(f"{upper} ="):
+            new_lines.append(f"{upper}={value}")
+            found = True
+        else:
+            new_lines.append(line)
+    if not found:
+        new_lines.append(f"{upper}={value}")
+    sep = chr(10)
+    env_file.write_text(sep.join(new_lines) + sep, encoding="utf-8")
+    os.environ[upper] = value  # apply to running process too
+
 
 class ConfigRequest(BaseModel):
     key: str
@@ -431,7 +465,6 @@ class ConfigRequest(BaseModel):
 @app.get("/config")
 async def get_config():
     """Return current runtime configuration (sensitive values masked)."""
-    notion_key_stored = await store.get("config:notion_api_key") or ""
     runpod_key_stored = await store.get("config:runpod_api_key") or ""
     return {
         "notion_work_db_id":  notion_sync.get_config()["notion_work_db_id"],
@@ -443,12 +476,17 @@ async def get_config():
 
 @app.post("/config")
 async def set_config(req: ConfigRequest):
-    """Set a runtime config value. Stored in StateStore; persists until server restart."""
+    """Set a runtime config value. Stored in StateStore and persisted to .env."""
     if req.key not in _ALLOWED_CONFIG_KEYS:
         raise HTTPException(status_code=400, detail=f"Unknown config key {req.key!r}")
 
     store_key = f"config:{req.key}"
     await store.set(store_key, req.value)
+
+    # Persist to .env so the value survives server restarts
+    env_var = _ENV_KEY_MAP.get(req.key)
+    if env_var:
+        _persist_to_env(env_var, req.value)
 
     # Notify agents so they pick up the change immediately
     await bus.publish(Event(event_type="config.updated", payload={"key": store_key, "value": req.value}, source="api"))

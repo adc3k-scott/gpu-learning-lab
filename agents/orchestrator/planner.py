@@ -47,6 +47,7 @@ def _extract_workspace_file(description: str) -> str:
     """Return 'workspace/<name>' if a workspace path is mentioned, else ''."""
     m = _WORKSPACE_FILE_RE.search(description)
     return f"workspace/{m.group(1)}" if m else ""
+
 _NOTION_ID_RE = re.compile(
     r"(?:page|database|block)[_\s-]?id[:\s=]+([a-f0-9-]{32,36})"  # explicit id= form
     r"|([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})",  # bare UUID
@@ -63,10 +64,15 @@ def _extract_pod_id(description: str) -> str:
 
 
 def _extract_notion_id(description: str) -> str:
+    """Return a properly-hyphenated Notion UUID, or '' if none found."""
     m = _NOTION_ID_RE.search(description)
-    if m:
-        return (m.group(1) or m.group(2) or "").replace("-", "")
-    return ""
+    if not m:
+        return ""
+    raw = (m.group(1) or m.group(2) or "").replace("-", "")
+    if len(raw) == 32:
+        # Re-insert hyphens: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        return f"{raw[:8]}-{raw[8:12]}-{raw[12:16]}-{raw[16:20]}-{raw[20:]}"
+    return raw
 
 
 def _extract_notion_query(description: str) -> str:
@@ -216,7 +222,8 @@ _PATTERNS: list[dict[str, Any]] = [
         "steps": lambda desc: [
             {"name": "append_notion_blocks", "skill": "notion", "assigned_role": "integration",
              "description": "Append content blocks to a Notion page",
-             "params": {"action": "append_blocks", "page_id": _extract_notion_id(desc), "blocks": []}},
+             "params": {"action": "append_blocks", "page_id": _extract_notion_id(desc),
+                        "blocks": [_extract_notion_query(desc)]}},
         ],
     },
     {

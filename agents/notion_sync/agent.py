@@ -109,6 +109,11 @@ class NotionSyncAgent(BaseAgent):
         # Fetch full job dict from state store
         job = await self.store.get(f"jobs:{job_id}")
         if not job:
+            logger.warning("[%s] Could not fetch job %s from store — skipping Notion sync", self.agent_id, job_id)
+            await self.publish("notion.sync.skipped", {
+                "job_id": job_id,
+                "reason": "Job not found in state store",
+            })
             return
 
         try:

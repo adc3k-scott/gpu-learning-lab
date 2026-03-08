@@ -115,7 +115,14 @@ class NotionSkill(BaseSkill):
             body["page_size"] = min(int(params.get("page_size", 50)), _MAX_RESULTS)
             if params.get("start_cursor"):
                 body["start_cursor"] = params["start_cursor"]
-            return await client.post(f"databases/{db_id}/query", body)
+            data = await client.post(f"databases/{db_id}/query", body)
+            # Surface pagination info so callers know if more pages exist
+            return {
+                "results": data.get("results", []),
+                "has_more": data.get("has_more", False),
+                "next_cursor": data.get("next_cursor"),
+                "result_count": len(data.get("results", [])),
+            }
 
         if action == "search":
             q = params.get("query", "")

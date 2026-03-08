@@ -48,6 +48,7 @@ action=ping:
 from __future__ import annotations
 
 import logging
+import os
 import time
 from typing import Any
 
@@ -68,19 +69,30 @@ class IntegrationAgent(BaseAgent):
     def __init__(self, *, runpod_api_key: str = "", **kwargs):
         super().__init__(**kwargs)
         self._runpod_key = runpod_api_key
+        self._notion_key: str = ""
 
     # ------------------------------------------------------------------
     # Lifecycle
     # ------------------------------------------------------------------
 
     async def _setup(self) -> None:
-        # Pull RunPod key from state store secrets if not passed directly
         if not self._runpod_key:
             stored = await self.store.get("secrets:runpod_api_key")
             if stored:
                 self._runpod_key = stored
+        stored_notion = await self.store.get("config:notion_api_key")
+        self._notion_key = stored_notion or os.environ.get("NOTION_API_KEY", "")
         self.bus.subscribe("step.dispatched", self._on_step_dispatched)
+        self.bus.subscribe("config.updated", self._on_config_updated)
         logger.info("[%s] IntegrationAgent ready", self.agent_id)
+
+    async def _on_config_updated(self, event: Event) -> None:
+        key   = event.payload.get("key", "")
+        value = event.payload.get("value", "")
+        if key == "config:notion_api_key":
+            self._notion_key = value
+        elif key == "config:runpod_api_key":
+            self._runpod_key = value
 
     # ------------------------------------------------------------------
     # Event handler
@@ -100,7 +112,10 @@ class IntegrationAgent(BaseAgent):
 
         try:
             if skill_name:
-                result_obj = await self.run_skill(skill_name, params, job_id=job_id)
+                extra: dict = {}
+                if skill_name == "notion" and self._notion_key:
+                    extra = {"notion_api_key": self._notion_key}
+                result_obj = await self.run_skill(skill_name, params, job_id=job_id, extra_metadata=extra)
                 if not result_obj.success:
                     raise RuntimeError(result_obj.error)
                 result = result_obj.output
