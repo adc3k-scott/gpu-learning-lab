@@ -13,9 +13,13 @@
       "title": "Cold Open",
       "narration": "The machines are learning faster than ever. Welcome to AI Daily Omniverse \u2014 your front-row seat to the technologies reshaping civilization. I'm your host. Let's go.",
       "duration_hint": 18.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "technology city lights",
+        "futuristic skyline",
+        "digital network"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_01_cold_open.mp3",
       "render_path": ""
     },
     {
@@ -24,9 +28,13 @@
       "title": "AI Headline",
       "narration": "This week's headline: Anthropic's Claude 4.6 achieved state-of-the-art performance on every major reasoning benchmark, while simultaneously demonstrating real-time tool use at enterprise scale. The gap between frontier models and everything else just got wider.",
       "duration_hint": 30.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "artificial intelligence",
+        "neural network",
+        "machine learning"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_02_ai_headline.mp3",
       "render_path": ""
     },
     {
@@ -35,9 +43,13 @@
       "title": "Tech Breakthrough",
       "narration": "In hardware news \u2014 NVIDIA's Blackwell B200 GPUs are shipping to hyperscalers at 700 teraflops FP8. That's three times Hopper. RunPod has confirmed B200 pods will be available at twelve dollars an hour. For small studios and indie developers, that's a game changer.",
       "duration_hint": 35.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "server room data center",
+        "GPU computing",
+        "technology hardware"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_03_tech_breakthrough.mp3",
       "render_path": ""
     },
     {
@@ -46,9 +58,13 @@
       "title": "Global AI Map",
       "narration": "On the geopolitical map this week \u2014 the EU AI Act enforcement phase begins. High-risk AI systems must now carry certification marks. Meanwhile, China deployed a national AI infrastructure backbone connecting forty data centers across twelve provinces. The race is very much on.",
       "duration_hint": 35.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "world map globe",
+        "international network",
+        "satellite view earth"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_04_global_map.mp3",
       "render_path": ""
     },
     {
@@ -57,9 +73,13 @@
       "title": "Infrastructure Watch",
       "narration": "Infrastructure Watch: Internet of Things sensor networks are integrating edge AI at a record pace. Seventy percent of new industrial IoT deployments now include on-device inference \u2014 eliminating cloud round-trips and cutting latency by ninety percent. Our Mission Control subscribers are already getting daily JSON feeds of these signals.",
       "duration_hint": 35.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "industrial IoT sensors",
+        "smart factory",
+        "network infrastructure"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_05_infrastructure_watch.mp3",
       "render_path": ""
     },
     {
@@ -68,14 +88,19 @@
       "title": "Future Watch",
       "narration": "Looking ahead \u2014 agentic AI systems will be running entire business workflows without human-in-the-loop checkpoints by Q4 2026. The organizations building orchestration infrastructure today will own the operating system of tomorrow. Stay sharp. Stay subscribed. See you tomorrow.",
       "duration_hint": 30.0,
-      "b_roll_tags": [],
+      "b_roll_tags": [
+        "robot automation future",
+        "autonomous technology",
+        "innovation laboratory"
+      ],
       "usd_overrides": {},
-      "audio_path": "",
+      "audio_path": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\audio\\seg_06_future_watch.mp3",
       "render_path": ""
     }
   ],
   "notion_page_id": "",
   "youtube_playlist_id": "",
+  "youtube_video_id": "CtpyLnwmBzo",
   "output_dir": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001",
-  "final_mp4": ""
+  "final_mp4": "C:\\Users\\adhsc\\OneDrive\\Documents\\GitHub\\gpu-learning-lab\\output\\EP001\\EP001_final.mp4"
 }

@@ -29,11 +29,11 @@ logger = logging.getLogger("aido.tts")
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 
 _ELEVENLABS_BASE = "https://api.elevenlabs.io/v1"
-_DEFAULT_MODEL = "eleven_turbo_v2_5"
+_DEFAULT_MODEL = "eleven_multilingual_v2"   # higher quality, more natural than turbo
 _DEFAULT_VOICE_SETTINGS = {
-    "stability": 0.55,
-    "similarity_boost": 0.80,
-    "style": 0.30,
+    "stability": 0.32,          # lower = more expressive variation, less robotic
+    "similarity_boost": 0.75,
+    "style": 0.55,              # higher = more dynamic delivery
     "use_speaker_boost": True,
 }
 

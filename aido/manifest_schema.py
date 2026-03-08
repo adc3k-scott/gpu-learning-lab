@@ -48,6 +48,7 @@ class EpisodeManifest:
     segments: list[Segment]
     notion_page_id: str = ""
     youtube_playlist_id: str = ""
+    youtube_video_id: str = ""    # filled by upload_youtube.py
     output_dir: str = ""          # filled at pipeline start
     final_mp4: str = ""           # filled by assemble.py
 
@@ -57,8 +58,17 @@ class EpisodeManifest:
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> "EpisodeManifest":
-        segs = [Segment(**s) for s in d.pop("segments", [])]
-        return cls(segments=segs, **d)
+        import dataclasses
+        known = {f.name for f in dataclasses.fields(cls)}
+        # Use .get not .pop — don't mutate d (callers may write it back to disk)
+        segs_raw = d.get("segments", [])
+        segs = []
+        for s in segs_raw:
+            seg_known = {f.name for f in dataclasses.fields(Segment)}
+            segs.append(Segment(**{k: v for k, v in s.items() if k in seg_known}))
+        # Exclude 'segments' from filtered since we handle it explicitly
+        filtered = {k: v for k, v in d.items() if k in known and k != "segments"}
+        return cls(segments=segs, **filtered)
 
 
 # ---------------------------------------------------------------------------
@@ -87,6 +97,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "I'm your host. Let's go."
             ),
             duration_hint=18.0,
+            b_roll_tags=["technology city lights", "futuristic skyline", "digital network"],
         ),
         Segment(
             id="seg_02_ai_headline",
@@ -99,6 +110,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "The gap between frontier models and everything else just got wider."
             ),
             duration_hint=30.0,
+            b_roll_tags=["artificial intelligence", "neural network", "machine learning"],
         ),
         Segment(
             id="seg_03_tech_breakthrough",
@@ -111,6 +123,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "For small studios and indie developers, that's a game changer."
             ),
             duration_hint=35.0,
+            b_roll_tags=["server room data center", "GPU computing", "technology hardware"],
         ),
         Segment(
             id="seg_04_global_map",
@@ -124,6 +137,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "The race is very much on."
             ),
             duration_hint=35.0,
+            b_roll_tags=["world map globe", "international network", "satellite view earth"],
         ),
         Segment(
             id="seg_05_infrastructure_watch",
@@ -137,6 +151,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "Our Mission Control subscribers are already getting daily JSON feeds of these signals."
             ),
             duration_hint=35.0,
+            b_roll_tags=["industrial IoT sensors", "smart factory", "network infrastructure"],
         ),
         Segment(
             id="seg_06_future_watch",
@@ -150,6 +165,7 @@ EP001: EpisodeManifest = EpisodeManifest(
                 "Stay sharp. Stay subscribed. See you tomorrow."
             ),
             duration_hint=30.0,
+            b_roll_tags=["robot automation future", "autonomous technology", "innovation laboratory"],
         ),
     ],
 )

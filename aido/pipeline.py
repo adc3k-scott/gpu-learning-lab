@@ -45,6 +45,10 @@ logging.basicConfig(
 )
 
 STAGES = ("tts", "inject", "render", "assemble", "upload")
+# render modes
+_RENDER_OMNIVERSE = "omniverse"   # RunPod GPU — NVIDIA Omniverse Kit headless
+_RENDER_LOCAL = "local"           # CPU — Pexels B-roll + ffmpeg news template
+_RENDER_SKIP = "skip"             # Static dark background (original fallback)
 
 
 def _banner(msg: str) -> None:
@@ -62,6 +66,7 @@ def run_pipeline(
     from_stage: str = "tts",
     privacy: str = "private",
     fps: int = 24,
+    render_mode: str = _RENDER_SKIP,
 ) -> None:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -108,28 +113,40 @@ def run_pipeline(
         logger.info("Master USD: %s", master_usd)
 
     # ------------------------------------------------------------------
-    # Stage 3: Omniverse Render (optional / RunPod)
+    # Stage 3: Render  (Omniverse / Local B-roll / Skip)
     # ------------------------------------------------------------------
     if "render" in active_stages:
-        if skip_render:
-            _banner("Stage 3/5 — Omniverse Render [SKIPPED]")
-            logger.info("Skipping render — will use static background in assemble step.")
-        else:
-            _banner("Stage 3/5 — Omniverse Render")
+        # Backward-compat: --skip-render forces skip mode
+        effective_mode = _RENDER_SKIP if skip_render else render_mode
+
+        if effective_mode == _RENDER_LOCAL:
+            _banner("Stage 3/5 — Local Render (Pexels + ffmpeg)")
+            from aido.render_local import run as local_render_run
+            final_mp4 = local_render_run(
+                manifest_path=str(manifest_path),
+                out_dir=str(out),
+            )
+            logger.info("Final MP4: %s", final_mp4)
+            # local render produces the final MP4 directly — skip assemble stage
+            if "assemble" in active_stages:
+                active_stages = [s for s in active_stages if s != "assemble"]
+
+        elif effective_mode == _RENDER_OMNIVERSE:
+            _banner("Stage 3/5 — Omniverse Render (RunPod)")
             master_usd_path = str(out / "usd" / f"{episode_id}_master.usda")
             frames_dir = str(out / "frames")
             from aido.render_episode import render_headless
-            rc = render_headless(
-                master_usd=master_usd_path,
-                out_dir=frames_dir,
-                fps=fps,
-            )
+            rc = render_headless(master_usd=master_usd_path, out_dir=frames_dir, fps=fps)
             if rc != 0:
                 logger.error("Render failed with code %d — aborting.", rc)
                 sys.exit(rc)
 
+        else:  # skip
+            _banner("Stage 3/5 — Omniverse Render [SKIPPED]")
+            logger.info("Skipping render — will use static background in assemble step.")
+
     # ------------------------------------------------------------------
-    # Stage 4: FFmpeg Assembly
+    # Stage 4: FFmpeg Assembly (skipped when local render already produced final MP4)
     # ------------------------------------------------------------------
     if "assemble" in active_stages:
         _banner("Stage 4/5 — FFmpeg Assembly")
@@ -167,12 +184,20 @@ def main() -> None:
     p = argparse.ArgumentParser(description="AIDO full render pipeline")
     p.add_argument("--episode", default="EP001", help="Episode ID")
     p.add_argument("--out-dir", default=None, help="Output directory (default: output/<episode_id>)")
-    p.add_argument("--skip-render", action="store_true", help="Skip Omniverse render (use static bg)")
+    p.add_argument("--skip-render", action="store_true", help="Skip render entirely (static dark background)")
+    p.add_argument("--local-render", action="store_true", help="Use local Pexels B-roll renderer (no GPU needed)")
     p.add_argument("--no-upload", action="store_true", help="Skip YouTube upload")
     p.add_argument("--from-stage", default="tts", choices=STAGES, help="Resume from stage")
     p.add_argument("--privacy", default="private", choices=["private", "unlisted", "public"])
     p.add_argument("--fps", type=int, default=24)
     args = p.parse_args()
+
+    if args.local_render:
+        render_mode = _RENDER_LOCAL
+    elif args.skip_render:
+        render_mode = _RENDER_SKIP
+    else:
+        render_mode = _RENDER_OMNIVERSE
 
     out_dir = args.out_dir or f"output/{args.episode}"
     run_pipeline(
@@ -183,6 +208,7 @@ def main() -> None:
         from_stage=args.from_stage,
         privacy=args.privacy,
         fps=args.fps,
+        render_mode=render_mode,
     )
 
 

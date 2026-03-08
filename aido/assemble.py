@@ -33,7 +33,21 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 def _require_ffmpeg() -> str:
     ff = shutil.which("ffmpeg")
     if not ff:
-        logger.error("ffmpeg not found on PATH. Install it: https://ffmpeg.org/download.html")
+        # Search WinGet install location on Windows
+        import glob
+        patterns = [
+            r"C:\Users\*\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg*\ffmpeg-*\bin\ffmpeg.exe",
+            r"C:\ProgramData\chocolatey\bin\ffmpeg.exe",
+            r"C:\ffmpeg\bin\ffmpeg.exe",
+        ]
+        for pattern in patterns:
+            matches = glob.glob(pattern, recursive=False)
+            if matches:
+                ff = matches[0]
+                logger.info("Found ffmpeg at: %s", ff)
+                break
+    if not ff:
+        logger.error("ffmpeg not found. Install it: https://ffmpeg.org/download.html")
         sys.exit(1)
     return ff
 

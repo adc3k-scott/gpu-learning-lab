@@ -183,7 +183,7 @@ def run(manifest_path: str, mp4_path: str | None, privacy: str = "private") -> N
 
 def main() -> None:
     p = argparse.ArgumentParser(description="AIDO YouTube uploader")
-    p.add_argument("--manifest", required=True)
+    p.add_argument("--manifest", required=False, default="")
     p.add_argument("--mp4", help="Override MP4 path from manifest")
     p.add_argument("--privacy", default="private", choices=["private", "unlisted", "public"])
     p.add_argument("--auth-only", action="store_true", help="Just authenticate, don't upload")
@@ -193,6 +193,9 @@ def main() -> None:
         _get_youtube_client()
         logger.info("Authentication complete.")
         return
+
+    if not args.manifest:
+        p.error("--manifest is required when not using --auth-only")
 
     run(args.manifest, args.mp4, args.privacy)
 
