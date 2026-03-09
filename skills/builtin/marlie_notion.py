@@ -118,6 +118,7 @@ def _root_blocks() -> list[dict]:
         _bullet("06 — ADC3K Credentials"),
         _bullet("07 — Multi-Site Vision: Louisiana AI Network"),
         _bullet("08 — Contact & CTA"),
+        _bullet("09 — Financial Architecture & ROI"),
     ]
 
 
@@ -382,6 +383,63 @@ def _vision_blocks() -> list[dict]:
     ]
 
 
+def _financial_blocks() -> list[dict]:
+    return [
+        _callout(
+            "This is not a data center. This is a money machine. "
+            "Every watt generates revenue. Every dollar goes to compute. The comparison is not close.",
+            emoji="💰", color="yellow_background"
+        ),
+        _divider(),
+        _h2("Capital Stack"),
+        _bullet("Infrastructure raise: ~$1.17M — covers facility buildout (electrical, cooling, fiber, power distribution, commissioning)"),
+        _bullet("GPU hardware financed separately: equipment financing + NVIDIA Capital programs + SBA facilities"),
+        _bullet("EBITDA figures below = facility-level operating cash flow"),
+        _bullet("Full investor pro forma with hardware financing and debt service available upon request"),
+        _divider(),
+        _h2("MARLIE I vs Legacy Data Center — Key Comparison"),
+        _bullet("PUE: Legacy 1.4–1.8 (40–80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)"),
+        _bullet("Energy cost: Legacy $0.10–$0.18/kWh national avg vs MARLIE I $0.065/kWh Louisiana industrial"),
+        _bullet("Cooling: Legacy air (CRAC units, chillers) vs MARLIE I 100% direct-to-chip liquid"),
+        _bullet("Revenue per rack per year: Legacy $200K–$500K (colo) vs MARLIE I $3M–$5M+ (AI compute)"),
+        _bullet("Operations: Legacy 20–50 FTE manual ops vs MARLIE I 3–5 FTE Mission Control AI"),
+        _bullet("On-site generation: Legacy none (grid dependent) vs MARLIE I Bloom Energy fuel cells + gas generators"),
+        _bullet("Domestic content: Legacy mixed overseas vs MARLIE I 100% USA — OBBBA compliant"),
+        _divider(),
+        _h2("Revenue Model — AI Compute Rental (Conservative Basis)"),
+        _bullet("Rate basis: $6/GPU/hr conservative (H100 market: $2.50–$3.50). Vera Rubin 2.5x FP4 density — premium tier justified"),
+        _bullet("At $8/GPU/hr mid estimate, Year 3 two-floor gross reaches $121.5M. OPEX stays flat. Upside is asymmetric."),
+        _h3("Year 1 — 4 Racks Live, 40% Utilization"),
+        _bullet("288 GPUs online (Floor 1 ramp)"),
+        _bullet("Gross revenue: $6.1M"),
+        _bullet("OPEX: ~$1.29M (4-rack scale)"),
+        _bullet("EBITDA: ~$4.78M"),
+        _h3("Year 2 — 8 Racks Live, 65% Utilization"),
+        _bullet("1,728 GPUs online (24 racks — Floor 1 full + Floor 2 partial)"),
+        _bullet("Gross revenue: $44.5M"),
+        _bullet("OPEX: ~$3.0M (24-rack scale)"),
+        _bullet("EBITDA: ~$41.5M"),
+        _h3("Year 3 — 16 Racks Live, 75% Utilization"),
+        _bullet("2,304 GPUs online (32 racks — both floors full)"),
+        _bullet("Gross revenue: $91.1M"),
+        _bullet("OPEX: ~$3.68M (full two-floor scale)"),
+        _bullet("EBITDA: ~$87.4M"),
+        _divider(),
+        _h2("Power Resilience — 5 Independent Layers"),
+        _bullet("Layer 1: LUS Grid — primary utility ($0.065/kWh industrial)"),
+        _bullet("Layer 2: Bloom Energy fuel cells — 300 kW continuous, $0.07–$0.09/kWh effective, 60%+ efficiency, Newark Delaware"),
+        _bullet("Layer 3: Cat G3520H natural gas prime power (PARALLEL N+1) — 2x 2.5MW = 5MW total installed. Both units run in parallel at moderate load. True N+1 — if one requires service, the other carries full facility."),
+        _bullet("Layer 4: UPS battery ride-through — millisecond switchover, protects compute hardware from power transients"),
+        _bullet("Layer 5: Diesel emergency backup — Cat C175-16, 3,365kW. 30,000-gal on-site tank, 110+ hours runtime. Hurricane layer."),
+        _bullet("5 independent power layers — 0 single points of failure — 96+ hour on-site fuel reserve"),
+        _divider(),
+        _h2("Investor Benefits"),
+        _bullet("Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K–$500K/month compute credit."),
+        _bullet("Early mover rate lock: investors before first rack goes live receive locked GPU rental rates below market for 24 months"),
+        _bullet("Ring Power dealer relationship: single service contract covers entire Cat generator fleet (nat gas + diesel)"),
+    ]
+
+
 def _contact_blocks() -> list[dict]:
     return [
         _h2("ADC3K — Advantage Design Construction"),
@@ -412,6 +470,7 @@ _SECTIONS: dict[str, dict] = {
     "credentials": {"title": "06 — ADC3K Credentials",                   "icon": "🎓", "blocks": _credentials_blocks},
     "vision":      {"title": "07 — Louisiana AI Network: Multi-Site Vision", "icon": "🌐", "blocks": _vision_blocks},
     "contact":     {"title": "08 — Contact & Next Steps",                "icon": "📞", "blocks": _contact_blocks},
+    "financial":   {"title": "09 — Financial Architecture & ROI",        "icon": "💰", "blocks": _financial_blocks},
 }
 
 

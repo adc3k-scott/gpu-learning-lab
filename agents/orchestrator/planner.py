@@ -344,6 +344,24 @@ _PATTERNS: list[dict[str, Any]] = [
                         )}},
         ],
     },
+    # ------------------------------------------------------------------
+    # Browser automation
+    # ------------------------------------------------------------------
+    {
+        "match": re.compile(
+            r"\b(navigate|open browser|go to url|browse to|screenshot page|"
+            r"click button|fill form|browser automation|playwright)\b", re.I
+        ),
+        "steps": lambda desc: [
+            {
+                "name": "browser_session",
+                "skill": "browser",
+                "assigned_role": "integration",
+                "description": desc,
+                "params": {"action": "navigate", "url": ""},
+            }
+        ],
+    },
 ]
 
 
