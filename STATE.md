@@ -1,35 +1,40 @@
 # Mission Control — Project State
 Last updated: 2026-03-09
 
-## Session Summary (March 8–9, 2026)
-This session was focused entirely on Notion content management and project knowledge organization.
-No code changes were made to the repo. All work executed via Notion API calls (temp Python scripts, run, delete).
+## Session Summary (March 9, 2026)
+Focused on onboarding Mission Control HD (vehicle diagnostics SaaS) into the Mission Control knowledge system and building Notion Command Centers for both Mission Control HD and Ground Zero. No changes to repo code. All work via Notion API and memory files.
 
 ---
 
 ## What Was Done This Session
 
-### ADC 3K — Second Investor Review Implemented
-- Fixed CDU Cooling Schematics page: removed 3M Novec reference, committed to Engineered Fluids EC-110 (single-phase immersion), added full ADC 3K immersion cooling spec and remote ops model
-- Updated ADC 3K Project Command Center: inserted two-product model callout (MARLIE I vs ADC 3K) as first visible block
-- Appended 7-item second investor review gap section: unit economics, remote ops model, competitive landscape, exit strategy, management team, 3-scenario model, dielectric fluid (resolved)
+### Mission Control HD — Loaded and Organized
+- Loaded 2-document backup (Session 3 backup + Session 4 instructions) from previous Claude unit
+- Read and analyzed full project state: live at missioncontrolhd.com, Next.js 15 + Supabase + Stripe + Claude AI
+- Confirmed most critical bugs already fixed since Feb 23 backup: build error, forgot password, Stripe userId, live keys
+- Created `memory/projects/missioncontrolhd.md` — full project snapshot: stack, pricing, Stripe IDs, accounts, DNS, open issues
+- Added missioncontrolhd.md reference to MEMORY.md
 
-### Notion Workspace — Full Tree Pulled (124 objects)
-- Ran full paginated tree query — 124 objects confirmed across Mission Control HQ and AI Daily Omniverse roots
-- Identified new project: KLFT 1.1 (autonomous airspace ops hub) — not previously tracked
+### Notion — Mission Control HD Command Center Built
+- Created root page + 5 sub-pages under Mission Control HQ:
+  - Project Overview & Tech Stack
+  - Stripe & Payments Config (all price IDs, webhook issue flagged red)
+  - Infrastructure & Auth Config (all 14 env vars, Supabase issue flagged)
+  - Launch Roadmap & Open Issues (what's done, what's open)
+  - Session Log
+- Confirmed ID: 31e88f09-7e31-8182-900a-cac36f525edc
 
-### KLFT 1.1 — First Full Inspection and Corrections
-- Read all 10 sub-pages in full (SkyCommand platform, MVP spec, tech stack, CONOPS, system architecture, ICD, facility/hardware spec, Phase 1 spec, AIKCC)
-- **DJI removed entirely**: deleted DJI BOM table (DRN-A01 through DRN-A05), deleted DJI vs Skydio comparison table, updated all table cells referencing DJI across Facility Spec and Phase 1 Spec, updated section headings, rewrote recommendation paragraph
-- **Platform committed**: Skydio X10 + Skydio Dock is now the sole committed platform
-- **GPU spec updated**: A4000 deprecated → NVIDIA L40S (Ada Lovelace, 48GB) for Phase 3 inference. Jetson Orin NX (edge) confirmed current.
-- **AIKCC noted**: separate SaaS product (AI knowledge website) incorrectly filed under KLFT 1.1
+### Notion — Ground Zero Command Center Built
+- Created root page + 4 sub-pages under Mission Control HQ:
+  - Episode Production Guide (full AIDO workflow, blockers flagged)
+  - AIDO Pipeline Reference (all modules + commands)
+  - Social & Distribution (accounts needed flagged red)
+  - Episode Archive (EP001, EP002, 5 pipeline stories)
+- Initial build had bad ID (404); rebuilt and confirmed ID: 31e88f09-7e31-81f9-b372-fbfb99c995ed
 
-### Memory System — Reorganized and Expanded
-- MEMORY.md condensed: investor items section reduced to 1-line pointer to adc3k.md
-- `memory/projects/adc3k.md` updated: EC-110 committed, 12-item investor action list (was 5), Remote Operations Model section added
-- `memory/projects/klft.md` created: full KLFT project snapshot, hardware decisions, phase roadmap
-- MEMORY.md workspace tree updated to 124 objects with KLFT 1.1 added
+### Workspace — 135 Objects
+- Both Command Centers nested under Mission Control HQ (API cannot move to workspace root — hard Notion limitation)
+- Workspace root has: Mission Control HQ + AI Daily Omniverse
 
 ---
 
@@ -37,18 +42,24 @@ No code changes were made to the repo. All work executed via Notion API calls (t
 
 | Project | Status | Next Action |
 |---------|--------|-------------|
-| **MARLIE I** | Engineering complete. Investor outreach active. | No blockers in Notion. Scott to continue investor meetings. |
-| **ADC 3K** | 12 open investor items. Notion content corrected. | Scott: fix financial model (tax rate, CapEx, scenarios), add deck slides (team, exit, competitive) |
+| **MARLIE I** | Engineering complete. Investor outreach active. | Scott to continue investor meetings. |
+| **ADC 3K** | 12 open investor items. Notion content corrected. | Scott: fix financial model (tax rate, CapEx, scenarios), add deck slides |
 | **Trappeys** | Concept/planning. First ADC 3K deployment site. | Pending ADC 3K investor close + site LOI |
-| **KLFT 1.1** | Engineering package complete (Feb 2026). Not in active development. DJI removed, Skydio committed. | If activating: Month 1 = Skydio SDK sprint, facility lease |
-| **Ground Zero** | EP001 published (private). EP002 story in pipeline. | Pexels API key needed for B-roll. Social accounts needed. |
+| **KLFT 1.1** | Engineering package complete. Not in active development. | If activating: Month 1 = Skydio SDK sprint, facility lease |
+| **Mission Control HD** | Live at missioncontrolhd.com. Most bugs fixed. | Fix Stripe live webhook + Supabase auth URLs. Then marketing launch. |
+| **Ground Zero** | EP001 private. EP002 in pipeline. Command Center built. | Pexels API key, social accounts (@GroundZeroAI), then EP002 run |
 | **Mission Control (this repo)** | 160 tests green. All agents operational. Notion sync working. | No active blockers. |
 
 ---
 
 ## Open Blockers (Require Scott Action)
 
-### ADC 3K — Investor-Critical (before next investor meeting)
+### Mission Control HD — Pre-Launch Critical
+1. Stripe live webhook — create endpoint at https://missioncontrolhd.com/api/stripe/webhook in Stripe dashboard (live mode), update STRIPE_WEBHOOK_SECRET in Vercel
+2. Supabase auth redirect URLs — add https://missioncontrolhd.com/** + set Site URL in Supabase → Authentication → URL Configuration
+3. Verify Premium ($9.99) button works end-to-end after auth lock fix deployed
+
+### ADC 3K — Investor-Critical
 1. Customer LOI — zero signed anchor tenants
 2. NVIDIA TDP — Vera Rubin NVL72 TDP unpublished; engage NVIDIA Enterprise Sales
 3. HB 827 → replace with parish-level PILOT agreement
@@ -60,34 +71,38 @@ No code changes were made to the repo. All work executed via Notion API calls (t
 - PEXELS_API_KEY not set (B-roll falls back to noise)
 - RUNPOD_POD_IP not set (Omniverse render blocked)
 - Social accounts: TikTok, Instagram, X/Twitter, LinkedIn as @GroundZeroAI
+- groundzeroai.com domain — verify ownership
 
 ---
 
-## Notion API Patterns (established this session)
-- All Notion edits: write temp Python script → `python script.py` → delete script
-- Full tree query: paginated search (pages + databases) → build parent/child map → print indented tree
+## Notion API Patterns (confirmed working)
+- All Notion edits: write temp Python script → run → delete
+- Use `notion_util.py` for all new scripts — eliminates auth/pagination boilerplate
+- Full tree: `from skills.builtin.notion_util import print_tree; print_tree(encode="utf-8")`
+- Page move to workspace root: NOT POSSIBLE via API — silently rejected. UI only.
+- Always verify page ID immediately after creation with `nc.get_page(id)` — creation output can truncate IDs
 - Block inspection: `GET /blocks/{id}/children` with pagination
-- Append blocks: `PATCH /blocks/{id}/children` with `after` param for insertion position
-- Update blocks: `PATCH /blocks/{id}` with block type payload
-- Delete blocks: `DELETE /blocks/{id}`
-- Table row update: `PATCH /blocks/{row_id}` with `table_row.cells` — list of list of rich_text objects
-- **Caution**: bulk text replacement scripts will mangle blocks that reference the search term — whitelist known-good block IDs or use exact match
+- Table row update: `PATCH /blocks/{row_id}` with `table_row.cells`
+- Bulk text replace: dangerous — mangles blocks that reference the keyword. Use exact block ID targeting.
 
 ---
 
 ## Key IDs (confirmed)
 ```
-Mission Control HQ:     31288f09-7e31-81a5-bf43-e2af16379346
-MARLIE I root:          31e88f09-7e31-8121-b4d2-d96b0084cc50
-Trappeys AI Center:     31288f09-7e31-80a2-8712-ef09878afd53
-ADC 3K Command Center:  31488f09-7e31-816d-9fdc-c6aabba4e3fa
-KLFT 1.1:               31d88f09-7e31-80ec-b055-f69b9108355e
-AI Daily Omniverse:     31988f09-7e31-81a5-b33c-f57653d42863
+Mission Control HQ:           31288f09-7e31-81a5-bf43-e2af16379346
+MARLIE I root:                31e88f09-7e31-8121-b4d2-d96b0084cc50
+Trappeys AI Center:           31288f09-7e31-80a2-8712-ef09878afd53
+ADC 3K Command Center:        31488f09-7e31-816d-9fdc-c6aabba4e3fa
+KLFT 1.1:                     31d88f09-7e31-80ec-b055-f69b9108355e
+AI Daily Omniverse:           31988f09-7e31-81a5-b33c-f57653d42863
+Mission Control HD CC:        31e88f09-7e31-8182-900a-cac36f525edc
+Ground Zero CC:               31e88f09-7e31-81f9-b372-fbfb99c995ed
 ```
 
 ---
 
 ## Next Session — Recommended Starting Points
-1. ADC 3K financial model fixes (Scott shares updated file → review + flag remaining errors)
-2. Ground Zero EP002 pipeline run
-3. KLFT AIKCC — move to own Notion page if Scott wants to develop it separately
+1. Mission Control HD — fix Stripe live webhook (2 steps: Stripe dashboard + Vercel env var update)
+2. Mission Control HD — fix Supabase auth redirect URLs (2 steps: Supabase dashboard)
+3. Ground Zero — EP002 pipeline run once Pexels key is set
+4. ADC 3K financial model — Scott shares updated file → review + flag remaining errors
