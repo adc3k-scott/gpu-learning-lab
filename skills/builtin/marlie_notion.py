@@ -17,12 +17,14 @@ ADC 3K    = manufactured containerized pod product line. Deployed to remote site
             Page ID: 31488f09-7e31-816d-9fdc-c6aabba4e3fa
 
 === ALL PROJECT Notion IDs ===
-HQ root:       31288f09-7e31-81a5-bf43-e2af16379346
-MARLIE I root: 31e88f09-7e31-8121-b4d2-d96b0084cc50
-Trappeys root: 31288f09-7e31-80a2-8712-ef09878afd53
-ADC 3K root:   31488f09-7e31-816d-9fdc-c6aabba4e3fa
-KLFT 1.1:      31d88f09-7e31-80ec-b055-f69b9108355e
-AI Omniverse:  31988f09-7e31-81a5-b33c-f57653d42863
+HQ root:           31288f09-7e31-81a5-bf43-e2af16379346
+MARLIE I root:     31e88f09-7e31-8121-b4d2-d96b0084cc50
+Trappeys root:     31288f09-7e31-80a2-8712-ef09878afd53
+ADC 3K root:       31488f09-7e31-816d-9fdc-c6aabba4e3fa
+KLFT 1.1:          31d88f09-7e31-80ec-b055-f69b9108355e
+AI Omniverse:      31988f09-7e31-81a5-b33c-f57653d42863
+MCHD Command Ctr:  31e88f09-7e31-8182-900a-cac36f525edc
+Ground Zero CC:    31e88f09-7e31-81f9-b372-fbfb99c995ed
 
 === ADC 3K PRODUCT SPECS (confirmed March 2026) ===
 Cooling fluid: Engineered Fluids EC-110 (single-phase immersion). NEVER reference 3M Novec — discontinued.

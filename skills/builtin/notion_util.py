@@ -13,6 +13,13 @@ Or standalone:
 
 All methods are synchronous (requests-based) for use in temp scripts.
 For async skill use, see the async client in marlie_notion.py.
+
+KNOWN API LIMITATIONS:
+- Workspace root moves: PATCH {"parent": {"type": "workspace"}} is silently rejected.
+  Pages can only be moved to workspace root via Notion UI (right-click → Move To).
+- Always verify page ID after create_page(): call nc.get_page(id) to confirm.
+  Build script stdout can truncate IDs (Windows cp1252 encoding), causing 404s later.
+- Always use encode="utf-8" in print_tree() on Windows: print_tree(encode="utf-8")
 """
 
 from __future__ import annotations
