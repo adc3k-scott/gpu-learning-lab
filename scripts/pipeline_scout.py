@@ -308,7 +308,8 @@ def _enrich_site(raw: dict, corridor: dict) -> dict:
     }
 
     scored = score_site(site)
-    print(f"      Score: {scored['score']} Tier {scored['tier']} | Flood: {flood_info['zone']} | Pipe: {pipe_miles}")
+    pipe_str = f"{pipe_miles:.1f} mi" if pipe_miles is not None else "unknown"
+    print(f"      Score: {scored['score']} Tier {scored['tier']} | Flood: {flood_info['zone']} | Pipe: {pipe_str}")
     return scored
 
 
@@ -316,20 +317,34 @@ def _enrich_site(raw: dict, corridor: dict) -> dict:
 # OUTPUT
 # ─────────────────────────────────────────────────────────────────────────────
 def save_json(sites: list, path: str):
-    """Save in site-intel.html localStorage format."""
+    """Save in site-intel.html localStorage format. Merges with existing file."""
+    # Load existing sites
+    existing = []
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        except Exception:
+            existing = []
+
+    existing_ids = {s.get("id") for s in existing}
+
     # Strip internal _ fields for the HTML tool
-    clean = []
+    clean = list(existing)
+    added = 0
     for s in sites:
+        if s.get("id") in existing_ids:
+            continue
         c = {k: v for k, v in s.items() if not k.startswith("_")}
-        # Remove scoring breakdown (not needed in HTML)
         c.pop("breakdown", None)
         c.pop("tier_label", None)
         clean.append(c)
+        added += 1
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(clean, f, indent=2)
-    print(f"\nJSON saved: {path}  ({len(clean)} sites)")
+    print(f"\nJSON saved: {path}  ({len(clean)} total sites, {added} new)")
 
 
 def save_csv(sites: list, path: str):
