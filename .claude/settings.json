@@ -14,7 +14,11 @@
       "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\site-intel.html\")",
       "Bash(python -c \"import anthropic; print\\(anthropic.__version__\\)\")",
       "Bash(python -c \"import requests; print\\(''requests ok''\\)\")",
-      "Bash(python -c \"import json; print\\(''json ok''\\)\")"
+      "Bash(python -c \"import json; print\\(''json ok''\\)\")",
+      "Bash(mkdir -p data)",
+      "Bash(python scripts/pipeline_scout.py --corridors \"Henry Hub\" \"Tennessee Gas\" --max-sites 4)",
+      "Bash(python -u scripts/pipeline_scout.py --corridors \"Henry Hub\" --max-sites 3)",
+      "Bash(python -u scripts/pipeline_scout.py --corridors \"Henry Hub\" \"Tennessee Gas\" \"Southern Natural\" --max-sites 4)"
     ]
   }
 }
