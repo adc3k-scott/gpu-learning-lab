@@ -1,24 +1,55 @@
 {
   "permissions": {
     "allow": [
-      "Bash(*)",
       "Read(*)",
       "Edit(*)",
       "Write(*)",
       "WebFetch(*)",
       "WebSearch(*)",
-      "Bash(python -c \":*)",
-      "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\infrastructure-layers.html\")",
-      "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\adc3k-site.html\")",
-      "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\klft-deck.html\")",
-      "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\site-intel.html\")",
-      "Bash(python -c \"import anthropic; print\\(anthropic.__version__\\)\")",
-      "Bash(python -c \"import requests; print\\(''requests ok''\\)\")",
-      "Bash(python -c \"import json; print\\(''json ok''\\)\")",
-      "Bash(mkdir -p data)",
-      "Bash(python scripts/pipeline_scout.py --corridors \"Henry Hub\" \"Tennessee Gas\" --max-sites 4)",
-      "Bash(python -u scripts/pipeline_scout.py --corridors \"Henry Hub\" --max-sites 3)",
-      "Bash(python -u scripts/pipeline_scout.py --corridors \"Henry Hub\" \"Tennessee Gas\" \"Southern Natural\" --max-sites 4)"
+
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(python -u *)",
+      "Bash(python -c *)",
+      "Bash(python -m *)",
+
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git pull*)",
+      "Bash(git branch*)",
+      "Bash(git checkout*)",
+      "Bash(git show*)",
+      "Bash(git stash*)",
+
+      "Bash(pip *)",
+      "Bash(pip3 *)",
+      "Bash(uvicorn *)",
+      "Bash(pytest *)",
+
+      "Bash(start *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(ls)",
+      "Bash(cat *)",
+      "Bash(type *)",
+      "Bash(cd *)",
+      "Bash(rm *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(echo *)",
+      "Bash(curl *)",
+
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+
+      "Bash(docker *)",
+      "Bash(redis-cli *)",
+      "Bash(gh *)"
     ]
   }
 }
