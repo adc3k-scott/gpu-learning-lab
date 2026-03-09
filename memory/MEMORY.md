@@ -53,11 +53,9 @@ Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`
 
 ## Notion Integration
 - Key: `.env` or `.venv/.env` as `NOTION_API_KEY`
-- **"Show me Notion files"** = FULL paginated tree query always. Never partial.
-- Edits: write temp Python script → run → delete. Use `notion_util.py`.
-- **BASH EFFICIENCY — ALWAYS combine run + delete into ONE bash call:**
-  `python _script.py 2>&1 && rm _script.py` — never two separate approvals for run then delete
-- **BASH EFFICIENCY — chain git operations:** `git add FILE && git commit -m "..."` — one approval not two
+- **"Show me Notion files"** = use WebFetch → `http://localhost:8000/notion/tree` (NO bash needed). Falls back to bash only if server is not running.
+- Edits: write temp Python script → run → delete in ONE bash call: `python _script.py 2>&1 && rm _script.py`
+- **Chain git operations:** `git add FILE && git commit -m "..."` — one approval not two
 - Workspace root moves: NOT POSSIBLE via API — UI only.
 - Always verify page ID after creation: `nc.get_page(id)` — output can truncate IDs.
 - IDs in session summaries can be truncated — search Notion to confirm before scripting.

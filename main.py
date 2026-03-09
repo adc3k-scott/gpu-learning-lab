@@ -647,3 +647,34 @@ async def list_workspace_files():
 async def get_snapshot():
     """Return the current UIAgent dashboard snapshot."""
     return ui_agent.snapshot()
+
+# ---------------------------------------------------------------------------
+# Notion tree — no bash needed, call via WebFetch when server is running
+# ---------------------------------------------------------------------------
+@app.get("/notion/tree")
+async def notion_tree():
+    """Return the full Notion workspace tree as structured JSON + plain text."""
+    try:
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from skills.builtin.notion_util import NotionClient
+        nc = NotionClient()
+        tree = nc.full_tree()
+        lines = []
+        def _walk(nodes, depth=0):
+            for n in nodes:
+                indent = "  " * depth
+                ntype = n.get("type", "PAGE")
+                title = n.get("title", "(untitled)")
+                nid   = n.get("id", "")[:8]
+                lines.append(f"{indent}[{ntype}] {title}  ({nid})")
+                if n.get("children"):
+                    _walk(n["children"], depth + 1)
+        _walk(tree)
+        return {
+            "total": sum(1 for _ in lines),
+            "tree": tree,
+            "text": "\n".join(lines),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
