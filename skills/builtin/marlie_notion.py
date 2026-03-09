@@ -25,6 +25,11 @@ KLFT 1.1:          31d88f09-7e31-80ec-b055-f69b9108355e
 AI Omniverse:      31988f09-7e31-81a5-b33c-f57653d42863
 MCHD Command Ctr:  31e88f09-7e31-8182-900a-cac36f525edc
 Ground Zero CC:    31e88f09-7e31-81f9-b372-fbfb99c995ed
+Site Acq Pipeline: 31e88f09-7e31-8136-9d4f-dbc128f55757
+  Coteau LA:       31e88f09-7e31-8186-b2f2-eee7d2ef394c
+  Airport Frontage:31e88f09-7e31-81fb-825a-f733cc0a93ae
+  Pinhook Hotel:   31e88f09-7e31-81d2-bbde-f1400136190a
+  Site Eval Frame: 31e88f09-7e31-8128-864e-d8f088c423a9
 
 === ADC 3K PRODUCT SPECS (confirmed March 2026) ===
 Cooling fluid: Engineered Fluids EC-110 (single-phase immersion). NEVER reference 3M Novec — discontinued.
@@ -39,6 +44,9 @@ Drone (KLFT): Skydio X10 + Skydio Dock ONLY. DJI removed — Countering CCP Dron
 - Table rows:    GET /blocks/{table_id}/children → each row is table_row block with "cells" list
 - Update row:    PATCH /blocks/{row_id} {"table_row": {"cells": [[{rich_text}], ...]}}
 - CAUTION: bulk text replace scripts mangle blocks referencing the search term. Use exact block ID targeting.
+- Use get_blocks() not get_block_children() — method name in notion_util.py
+- IDs in session summaries can be truncated — always search Notion to confirm before scripting
+- Site Acquisition Pipeline: Type A=Full Factory(CDU), B=Pod(immersion), C=Mixed, D=EV/Drone only
 
 === Supported actions ===
   sync_full       — rebuild the entire MARLIE I workbook from scratch (all 9 sections)
