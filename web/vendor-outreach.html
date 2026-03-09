@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARLIE I — Vendor Outreach Command Center</title>
+<style>
+  :root {
+    --bg: #080c12; --surface: #0d1520; --card: #111d2e; --border: #1e3450;
+    --accent: #00e0ff; --green: #00e87a; --amber: #f5a623; --red: #ff4d6d;
+    --text: #e8f0fe; --muted: #7a9abf; --nvidia: #76b900;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* HEADER */
+  .header { background: rgba(8,12,18,0.97); border-bottom: 1px solid var(--border); padding: 1rem 3%; display: flex; align-items: center; gap: 1.5rem; position: sticky; top: 0; z-index: 100; }
+  .header-brand { font-weight: 700; font-size: 1rem; letter-spacing: 2px; color: var(--accent); }
+  .header-brand span { color: var(--text); }
+  .header-sub { color: var(--muted); font-size: 0.85rem; }
+  .header-badge { margin-left: auto; background: rgba(255,77,109,0.15); color: var(--red); border: 1px solid rgba(255,77,109,0.3); font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; padding: 4px 12px; border-radius: 20px; }
+
+  /* LAYOUT */
+  .page { max-width: 1300px; margin: 0 auto; padding: 2rem 3% 4rem; }
+
+  /* RISK DASHBOARD */
+  .risk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .risk-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem; text-align: center; }
+  .risk-card.critical { border-color: rgba(255,77,109,0.5); background: rgba(255,77,109,0.06); }
+  .risk-card.high { border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.06); }
+  .risk-card.medium { border-color: rgba(0,224,255,0.3); background: rgba(0,224,255,0.05); }
+  .risk-card.low { border-color: rgba(0,232,122,0.3); background: rgba(0,232,122,0.05); }
+  .risk-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .risk-card.critical .risk-label { color: var(--red); }
+  .risk-card.high .risk-label { color: var(--amber); }
+  .risk-card.medium .risk-label { color: var(--accent); }
+  .risk-card.low .risk-label { color: var(--green); }
+  .risk-time { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .risk-card.critical .risk-time { color: var(--red); }
+  .risk-card.high .risk-time { color: var(--amber); }
+  .risk-card.medium .risk-time { color: var(--accent); }
+  .risk-card.low .risk-time { color: var(--green); }
+  .risk-desc { font-size: 0.78rem; color: var(--muted); }
+
+  /* SECTION */
+  .section-title { font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.3rem; letter-spacing: 0.5px; }
+  .section-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
+  .label { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+
+  /* VENDOR CARD */
+  .vendor-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 1.2rem; overflow: hidden; }
+  .vendor-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; cursor: pointer; user-select: none; }
+  .vendor-header:hover { background: rgba(255,255,255,0.02); }
+  .vendor-priority { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .p-critical { background: var(--red); box-shadow: 0 0 6px rgba(255,77,109,0.6); }
+  .p-high { background: var(--amber); box-shadow: 0 0 6px rgba(245,166,35,0.5); }
+  .p-medium { background: var(--accent); box-shadow: 0 0 6px rgba(0,224,255,0.4); }
+  .p-low { background: var(--green); box-shadow: 0 0 6px rgba(0,232,122,0.4); }
+  .vendor-name { font-weight: 700; font-size: 1rem; flex: 1; }
+  .vendor-item { font-size: 0.83rem; color: var(--muted); flex: 1; }
+  .vendor-lead { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+  .p-critical-text { color: var(--red); }
+  .p-high-text { color: var(--amber); }
+  .p-medium-text { color: var(--accent); }
+  .p-low-text { color: var(--green); }
+  .vendor-status { display: flex; align-items: center; gap: 0.5rem; margin-left: 1rem; }
+  .status-check { width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+  .status-check.done { background: rgba(0,232,122,0.2); border-color: var(--green); }
+  .status-check.done::after { content: '✓'; font-size: 11px; color: var(--green); font-weight: 700; }
+  .chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; margin-left: 0.5rem; }
+  .vendor-card.open .chevron { transform: rotate(180deg); }
+
+  .vendor-body { display: none; padding: 0 1.2rem 1.2rem; border-top: 1px solid var(--border); }
+  .vendor-card.open .vendor-body { display: block; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .info-block h5 { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .info-block p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .info-block ul { padding-left: 1.1rem; }
+  .info-block li { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+  /* EMAIL TEMPLATE */
+  .email-wrap { background: #060d17; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; }
+  .email-header { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+  .email-header span { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .copy-btn { background: var(--accent); color: #000; border: none; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; padding: 4px 12px; border-radius: 3px; cursor: pointer; transition: opacity 0.15s; }
+  .copy-btn:hover { opacity: 0.85; }
+  .copy-btn.copied { background: var(--green); }
+  .email-body { padding: 1rem; font-size: 0.84rem; color: var(--text); line-height: 1.8; white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; }
+
+  /* SEQUENCE */
+  .seq-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid rgba(30,52,80,0.5); }
+  .seq-row:last-child { border-bottom: none; }
+  .seq-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .seq-num.s-red { background: rgba(255,77,109,0.2); color: var(--red); border: 1px solid rgba(255,77,109,0.4); }
+  .seq-num.s-amber { background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .seq-num.s-blue { background: rgba(0,224,255,0.1); color: var(--accent); border: 1px solid rgba(0,224,255,0.25); }
+  .seq-num.s-green { background: rgba(0,232,122,0.1); color: var(--green); border: 1px solid rgba(0,232,122,0.25); }
+  .seq-content h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .seq-content p { font-size: 0.83rem; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .risk-grid { grid-template-columns: 1fr 1fr; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-brand">MARLIE I <span>— Vendor Outreach</span></div>
+    <div class="header-sub">Phase 1 · 16 NVL72 Racks · ~2 MW · Lafayette, Louisiana · H2 2026 Target</div>
+  </div>
+  <div class="header-badge">ACT NOW — LEAD TIMES ARE THE CRITICAL PATH</div>
+</div>
+
+<div class="page">
+
+  <!-- RISK DASHBOARD -->
+  <div class="label">Lead Time Risk Dashboard</div>
+  <div class="risk-grid">
+    <div class="risk-card critical">
+      <div class="risk-label">Critical Risk</div>
+      <div class="risk-time">18–24 mo</div>
+      <div class="risk-desc">Switchgear & MV transformer — engage electrical PE this week</div>
+    </div>
+    <div class="risk-card high">
+      <div class="risk-label">High Risk</div>
+      <div class="risk-time">12–18 mo</div>
+      <div class="risk-desc">NVIDIA allocation · Gensets · Bloom Energy fuel cell</div>
+    </div>
+    <div class="risk-card medium">
+      <div class="risk-label">Medium Risk</div>
+      <div class="risk-time">4–6 mo</div>
+      <div class="risk-desc">CDU cooling systems · Starline busway · Dry coolers</div>
+    </div>
+    <div class="risk-card low">
+      <div class="risk-label">Low Risk</div>
+      <div class="risk-time">Weeks</div>
+      <div class="risk-desc">Starlink Business · Fire detection · NOC hardware</div>
+    </div>
+  </div>
+
+  <!-- ENGAGEMENT SEQUENCE -->
+  <div class="section-title">Engagement Sequence</div>
+  <div class="section-sub">Order of outreach based on lead time risk. Do not wait for LOI to start conversations — getting on lists IS the goal right now.</div>
+
+  <div class="vendor-card">
+    <div style="padding:1rem 1.2rem;">
+      <div class="seq-row">
+        <div class="seq-num s-red">1</div>
+        <div class="seq-content"><h4>This Week — Electrical PE + Switchgear vendors</h4><p>Switchgear & transformers are 18–24 months. This is the longest lead item. An electrical PE must spec it before any vendor will quote. Call ABB, Eaton, Schneider Electric (Square D) for preliminary availability discussion.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-red">2</div>
+        <div class="seq-content"><h4>This Week — NVIDIA Enterprise Sales</h4><p>Get on the NVL72 allocation list now. Production H2 2026 — lists are forming. Use the 1-page project summary. Ask about NVIDIA Inception program and NDA path to TDP specs.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-amber">3</div>
+        <div class="seq-content"><h4>Next 2 Weeks — Natural Gas Gensets</h4><p>CAT, Cummins, Kohler. 1–1.5 MW per unit, N+1 pair. Confirm 6-month availability or get on production schedule. Lead times vary widely right now.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-amber">4</div>
+        <div class="seq-content"><h4>Next 2 Weeks — Bloom Energy</h4><p>Fuel cell supplemental baseload. 12–18 month lead time, engineered-to-order. Intro meeting to get in their pipeline. Henry Hub proximity = strong cost case.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-amber">5</div>
+        <div class="seq-content"><h4>After NVIDIA TDP Confirmed — CDU Cooling RFQs</h4><p>CoolIT Systems, Vertiv, Motivair. Cannot finalize CDU spec without NVL72 TDP. As soon as NVIDIA provides TDP under NDA, issue RFQs same day.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-blue">6</div>
+        <div class="seq-content"><h4>Parallel — LUS Utility Capacity</h4><p>Call (337) 291-5577. Confirm 2 MW capacity at 1201 SE Evangeline. This unlocks the electrical PE's service entrance design.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-blue">7</div>
+        <div class="seq-content"><h4>Parallel — Starline T5 Busway</h4><p>480V distribution spine. 3–6 month lead. Get preliminary quote and confirm availability window.</p></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-num s-green">8</div>
+        <div class="seq-content"><h4>When Ready — Starlink Business</h4><p>Remote pod connectivity for ADC 3K deployments. No waiting list. Activate when first pod site is confirmed.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAST LEAD ALTERNATIVES -->
+  <div class="section-title">Fast-Lead Alternatives — Gensets &amp; Switchgear</div>
+  <div class="section-sub">Standard OEM gensets: 6–18 months. Custom switchgear: 18–24 months. These alternatives get you operational in weeks while permanent gear is on order.</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+
+    <!-- GENSET ALTERNATIVES -->
+    <div>
+      <div class="label" style="margin-bottom:0.8rem;">Generator Fast-Lead Options</div>
+
+      <div class="vendor-card" id="v-aggreko-gen">
+        <div class="vendor-header" onclick="toggle('v-aggreko-gen')">
+          <div class="vendor-priority p-low"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">Aggreko / United Rentals / HERC</div>
+          <div class="vendor-lead p-low-text">Days–2 weeks</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Rental nat gas generators</b> — trailer-mounted, 200 kW–1.5 MW per unit. 2 MW containerized units available from Aggreko. Full fuel delivery, 24/7 monitoring included. Deploy in days. Best used as <b style="color:var(--amber);">bridge power</b> while permanent gensets are on order.<br><br>
+            <b>Cost:</b> ~$20,000–$60,000+/month per MW-class unit. OPEX only, no CAPEX.<br>
+            <b>Downside:</b> Ongoing monthly cost; not permanent. Model carefully vs. purchasing.<br><br>
+            <b>Contacts:</b> aggreko.com/en-us/sectors/data-centres &nbsp;|&nbsp; unitedrentals.com &nbsp;|&nbsp; sunbeltrentals.com
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-used-gen">
+        <div class="vendor-header" onclick="toggle('v-used-gen')">
+          <div class="vendor-priority p-low"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">USP&amp;E / LEL Critical / Generator Source</div>
+          <div class="vendor-lead p-low-text">2–8 weeks (in stock)</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Used &amp; refurbished nat gas gensets</b> — CAT, Cummins, Waukesha, MTU in 1–1.5 MW range. In-stock units available now. Example: 2010 refurbished CAT G3516C 1.5 MW (480V 60Hz) at USP&E. Waukesha VHP7104GSI 1,150 kW surplus-new with factory warranty.<br><br>
+            <b>Cost:</b> 30–60% below new equivalent. Some with 1-year warranty.<br>
+            <b>Spec when calling:</b> 60 Hz, 480V, nat gas, 1,000–1,500 kW, Louisiana delivery.<br>
+            <b>Downside:</b> Verify emissions compliance (Louisiana DEQ/EPA). Hours and maintenance history required.<br><br>
+            <b>Contacts:</b> uspeglobal.com/natural-gas-generators/1-9-mw &nbsp;|&nbsp; lelcritical.com &nbsp;|&nbsp; generatorsource.com &nbsp;|&nbsp; wpowerproducts.com
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-generac">
+        <div class="vendor-header" onclick="toggle('v-generac')">
+          <div class="vendor-priority p-medium"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">Generac Industrial / Depco Power</div>
+          <div class="vendor-lead p-medium-text">Shorter than CAT/Cummins</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Generac Industrial</b> is actively positioning as the data center lead-time alternative to CAT/Cummins. CEO has stated data center is their "inflection point." Active hyperscaler partnerships. Depco Power Systems carries Generac inventory with regional support.<br><br>
+            <b>Cost:</b> Comparable to standard OEM — advantage is availability, not cost.<br>
+            <b>Downside:</b> Smaller installed base in mission-critical vs. CAT. Verify Louisiana service network.<br><br>
+            <b>Contacts:</b> generac.com/Industrial &nbsp;|&nbsp; depco.com/generac-generator-sets
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-mtu">
+        <div class="vendor-header" onclick="toggle('v-mtu')">
+          <div class="vendor-priority p-medium"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">MTU / Rolls-Royce — 20V4000 Fast-Start</div>
+          <div class="vendor-lead p-medium-text">2026 rollout — verify availability</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Rolls-Royce mtu 20V4000</b> — announced Feb 2025 specifically targeting U.S. data centers. 45-second fast-start, 84,000-hour overhaul interval, containerized option, hydrogen-ready. UK fleet of 500+ units establishes supply chain.<br><br>
+            <b>Cost:</b> 10–20% premium over CAT, offset by longer service intervals.<br>
+            <b>Downside:</b> New model in early 2026 rollout — exact U.S. availability unclear. Smaller U.S. dealer network.<br><br>
+            <b>Contacts:</b> mtu-solutions.com/na &nbsp;|&nbsp; rolls-royce.com/power-systems
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWITCHGEAR ALTERNATIVES -->
+    <div>
+      <div class="label" style="margin-bottom:0.8rem;">Switchgear Fast-Lead Options</div>
+
+      <div class="vendor-card" id="v-rental-swgr">
+        <div class="vendor-header" onclick="toggle('v-rental-swgr')">
+          <div class="vendor-priority p-low"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">Aggreko / RESA Power — Rental Switchgear</div>
+          <div class="vendor-lead p-low-text">Days–2 weeks</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Rental switchgear is real</b> — Aggreko has 480V, 600V, 2,400V, and 4,160V switchgear in rental fleet. 1.2M kVA in transformers, 1.5M amps in breakers. RESA Power offers Siemens/GE MV switches with fast nationwide delivery. United Rentals deployed 5 MW at 480V as bridge power for data center construction.<br><br>
+            <b>Use case:</b> Bridge the 18–24 month wait for permanent switchgear. Enables construction and commissioning to proceed.<br>
+            <b>Downside:</b> Utility may not permanently interconnect to rental gear. Coordinate with AHJ and LUS.<br><br>
+            <b>Contacts:</b> aggreko.com/en-us/products/electrical-distribution &nbsp;|&nbsp; resapower.com/systems/switchgear-rentals &nbsp;|&nbsp; hightolowrentals.com
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-surplus-swgr">
+        <div class="vendor-header" onclick="toggle('v-surplus-swgr')">
+          <div class="vendor-priority p-low"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">EMSCO / IPS / Surplus Record</div>
+          <div class="vendor-lead p-low-text">In-stock to 4 weeks</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Used &amp; reconditioned 480V switchgear</b> — Square D, GE/ABB, Eaton Cutler-Hammer, Siemens, Westinghouse. 800A–6,000A available. EMSCO (72 years) carries 1-year warranty. IPS and MIDWEST handle both LV and MV.<br><br>
+            <b>Sample pricing:</b> Siemens 1,200A 480V switchboard ~$42K | Eaton 4,000A 480V ~$250K | Square D 4,000A 480V ~$136K. 40–70% below new.<br>
+            <b>Downside:</b> Always require current test reports, maintenance history, breaker test results. Pre-2000 gear may need arc flash upgrades.<br><br>
+            <b>Contacts:</b> emscomn.com &nbsp;|&nbsp; ips.us &nbsp;|&nbsp; surplusrecord.com/electrical-power/switchgear &nbsp;|&nbsp; hightolowvoltage.com
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-schneider-quick">
+        <div class="vendor-header" onclick="toggle('v-schneider-quick')">
+          <div class="vendor-priority p-low"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">Schneider Electric — Quick Ship Power Module</div>
+          <div class="vendor-lead p-low-text">Under 8 weeks (select SKUs)</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Pre-engineered factory-assembled power modules</b> — integrates service entrance switchgear, UPS, PDUs, transfer switches, monitoring. 250 kW–2 MW increments. Quick Ship Program delivers under 8 weeks on specific catalog SKUs vs. 18–24 months for custom switchgear.<br><br>
+            <b>Cost:</b> 20–30% premium over custom equivalent, offset by no installation labor and faster commissioning.<br>
+            <b>Standard (non-Quick Ship):</b> 12–16 weeks — still dramatically faster than custom.<br>
+            <b>Downside:</b> Quick Ship applies to specific catalog items only; not fully custom configurations.<br><br>
+            <b>Contact:</b> se.com/us/en/work/solutions/data-centers/modular
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor-card" id="v-eaton-prefab">
+        <div class="vendor-header" onclick="toggle('v-eaton-prefab')">
+          <div class="vendor-priority p-medium"></div>
+          <div class="vendor-name" style="font-size:0.9rem;">Eaton MITS / ABB eHouse / Vertiv PowerModule</div>
+          <div class="vendor-lead p-medium-text">16–26 weeks (LV config)</div>
+          <div class="vendor-status"><div class="status-check" onclick="toggleCheck(this,event)"></div></div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="vendor-body">
+          <div style="font-size:0.84rem;color:var(--muted);margin-top:0.8rem;">
+            <b style="color:var(--text);">Containerized prefab substations</b> — complete pre-assembled MV transformer + switchgear + protection/controls in an enclosure. Reduces conventional substation lead time by 30–40%. ABB eHouse used with VoltaGrid at Oracle/Vantage hyperscale deployments. Vertiv PowerModule claims 50% reduction vs. traditional builds.<br><br>
+            <b>Cost:</b> 20–30% higher upfront; ROI through faster deployment and reduced site labor.<br>
+            <b>Downside:</b> MV configurations still require months for permitting and utility coordination regardless of hardware lead time. For 480V-only service entrance, Schneider Quick Ship is simpler and faster.<br><br>
+            <b>Contacts:</b> eaton.com/mits &nbsp;|&nbsp; hitachienergy.com/containerized-substations &nbsp;|&nbsp; vertiv.com/PowerModule
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDED ACTION -->
+  <div class="card" style="border-color:rgba(0,232,122,0.3);background:rgba(0,232,122,0.04);margin-bottom:2rem;">
+    <div class="label" style="color:var(--green);">Recommended Fast-Track Sequence</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:0.8rem;">
+      <div style="font-size:0.85rem;color:var(--muted);">
+        <b style="color:var(--text);">This week:</b> Call Aggreko and RESA Power — rental genset + rental switchgear availability in Louisiana. Use rental gear to enable construction and commissioning without waiting on permanent equipment orders.<br><br>
+        <b style="color:var(--text);">Week 1–4:</b> Engage USP&E Global, LEL Critical, Surplus Record for 1–1.5 MW used nat gas gensets. Spec: 60 Hz, 480V, nat gas, Louisiana delivery. Parallel: call EMSCO and IPS for reconditioned 480V 3-phase switchgear 2,000–4,000A.
+      </div>
+      <div style="font-size:0.85rem;color:var(--muted);">
+        <b style="color:var(--text);">Week 4–12:</b> Contact Schneider Electric Quick Ship for Power Skid/Module. Contact Generac Industrial / Depco for new genset lead time quote — compare against used pricing.<br><br>
+        <b style="color:var(--text);">Parallel:</b> VoltaGrid — worth a call given Gulf Coast proximity (Houston HQ). May not engage a 2 MW standalone site but the modular microgrid approach is worth understanding for Phase 2 ADC 3K deployments.
+      </div>
+    </div>
+  </div>
+
+  <!-- VENDOR CARDS -->
+  <div class="section-title">Vendor Files</div>
+  <div class="section-sub">Click any vendor to expand. All email templates are copy-ready.</div>
+
+  <!-- NVIDIA -->
+  <div class="vendor-card" id="v-nvidia">
+    <div class="vendor-header" onclick="toggle('v-nvidia')">
+      <div class="vendor-priority p-critical"></div>
+      <div class="vendor-name">NVIDIA Enterprise Sales</div>
+      <div class="vendor-item">NVL72 Rack Allocation + TDP Specs + Inception</div>
+      <div class="vendor-lead p-high-text">H2 2026 production</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Place on NVL72 allocation list</li>
+            <li>NDA path to TDP specifications</li>
+            <li>NVIDIA Inception enrollment</li>
+            <li>Pricing guidance (Phase 1: 16 racks)</li>
+            <li>Facility power/cooling requirements doc</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Our Position</h5>
+          <p>16 NVL72 racks, Phase 1. Committed site, owner-controlled. H2 2026 target. Louisiana AI infrastructure corridor. ADC 3K statewide pod network is Phase 2 — Vera Rubin platform throughout. Long-term relationship.</p>
+        </div>
+        <div class="info-block">
+          <h5>Contact Path</h5>
+          <p>nvidia.com/en-us/data-center/enterprise/ → "Contact Sales" → select Data Center Infrastructure. Mention NVL72, H2 2026 deployment, Louisiana. Ask to be routed to an Enterprise Sales rep for South Central region.</p>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — NVIDIA Enterprise Sales</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-nvidia')">Copy</button>
+        </div>
+        <div class="email-body" id="email-nvidia">Subject: NVL72 Allocation Inquiry — MARLIE I AI Factory, Lafayette Louisiana (H2 2026 Deployment)
+
+To the NVIDIA Enterprise Sales Team,
+
+My name is Scott Tomsu. I am the project lead for MARLIE I, a purpose-built AI compute facility at 1201 SE Evangeline Thruway, Lafayette, Louisiana. We are targeting a Phase 1 deployment of 16 NVIDIA Vera Rubin NVL72 rack systems with a go-live date in H2 2026.
+
+Site overview:
+- Owner-controlled industrial site, 3-phase LUS power, natural gas, LUS Fiber conduit path all at property line
+- Phase 1 footprint: 22×35 ft compute floor (770 sq ft), expandable to full site
+- Cooling: rear-door CDU liquid cooling with glycol loop to exterior dry coolers
+- MARLIE I serves as headquarters and NOC for the ADC 3K statewide edge compute network
+
+I am reaching out for three specific purposes:
+1. To understand the current NVL72 allocation process and how to secure placement for H2 2026
+2. To obtain facility power and cooling specifications under NDA so we can finalize our CDU system selection and 480V distribution design
+3. To discuss the NVIDIA Inception program and any additional support available for Louisiana AI infrastructure deployments
+
+We are serious and committed. This is not a speculative inquiry — we have a site, an engineering plan, and we are actively engaging our supply chain now to meet the H2 2026 timeline.
+
+I would welcome a 30-minute call at your convenience.
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SWITCHGEAR / ELECTRICAL PE -->
+  <div class="vendor-card" id="v-switchgear">
+    <div class="vendor-header" onclick="toggle('v-switchgear')">
+      <div class="vendor-priority p-critical"></div>
+      <div class="vendor-name">Switchgear & MV Transformer</div>
+      <div class="vendor-item">ABB / Eaton / Schneider Electric (Square D)</div>
+      <div class="vendor-lead p-critical-text">18–24 months — CRITICAL</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Current lead time for 480V 2MW service entrance switchgear</li>
+            <li>MV transformer availability (LUS will spec voltage)</li>
+            <li>Preliminary quote for budgeting</li>
+            <li>Production slot reservation process</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Electrical PE First</h5>
+          <p>Engage a licensed Louisiana Electrical PE before calling switchgear vendors. The PE specs the service entrance design, which determines exact switchgear requirements. Without the PE's spec, vendors cannot quote accurately.</p>
+          <p style="margin-top:0.5rem;color:var(--amber);font-size:0.82rem;">PE engagement = Week 1 action.</p>
+        </div>
+        <div class="info-block">
+          <h5>Vendors to Contact</h5>
+          <ul>
+            <li><b>ABB</b> — abb.com/electrical-distribution</li>
+            <li><b>Eaton</b> — eaton.com → Power Distribution → Data Centers</li>
+            <li><b>Schneider Electric</b> — se.com → Square D switchgear</li>
+            <li><b>Siemens</b> — siemens.com/us → Energy → MV switchgear</li>
+          </ul>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — Switchgear / Electrical Equipment</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-switchgear')">Copy</button>
+        </div>
+        <div class="email-body" id="email-switchgear">Subject: 480V Switchgear & MV Transformer Inquiry — 2MW Data Center, Lafayette Louisiana
+
+To whom it may concern,
+
+I am the project lead for MARLIE I, a 2MW AI compute facility under development in Lafayette, Louisiana. We are targeting a Phase 1 go-live in H2 2026 and are beginning our electrical procurement process now.
+
+We are looking for preliminary information on the following:
+- 480V 3-phase service entrance switchgear for approximately 2MW load
+- Medium voltage transformer (LUS utility feed — voltage to be confirmed with LUS)
+- Current lead times and production slot reservation process
+
+We understand that electrical distribution equipment lead times are currently 18–24 months in many cases, which is precisely why we are reaching out now, ahead of our LOI execution.
+
+We have a licensed Electrical PE being engaged to finalize the service entrance design. Once we have the PE's specification, we will issue a formal RFQ. We want to establish a relationship now so we understand availability windows and can sequence our procurement correctly.
+
+Can you connect me with a regional sales representative for the Lafayette, Louisiana area?
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NATURAL GAS GENSETS -->
+  <div class="vendor-card" id="v-genset">
+    <div class="vendor-header" onclick="toggle('v-genset')">
+      <div class="vendor-priority p-high"></div>
+      <div class="vendor-name">Natural Gas Generators</div>
+      <div class="vendor-item">Caterpillar / Cummins / Kohler — N+1 pair, ~1–1.5 MW each</div>
+      <div class="vendor-lead p-high-text">6–18 months</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>N+1 pair of natural gas gensets, ~1–1.5 MW each</li>
+            <li>Exterior pad-mount, auto-start &lt;15 seconds</li>
+            <li>Current lead time and production availability</li>
+            <li>Preliminary pricing for budgeting</li>
+            <li>Fuel consumption rate at full load (BTU/hr)</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Our Advantage</h5>
+          <p>Henry Hub is 40 miles from site — lowest natural gas input cost in the country. Natural gas is already at the property line. No propane, no diesel storage. We are in an ideal location for nat gas generation. Lead time is the only variable.</p>
+        </div>
+        <div class="info-block">
+          <h5>Vendors to Contact</h5>
+          <ul>
+            <li><b>Caterpillar</b> — cat.com/electric-power → find local dealer (Louisiana)</li>
+            <li><b>Cummins</b> — cummins.com/generators → find local distributor</li>
+            <li><b>Kohler Power</b> — kohlerpower.com → Industrial Generators</li>
+          </ul>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — Natural Gas Generator Inquiry</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-genset')">Copy</button>
+        </div>
+        <div class="email-body" id="email-genset">Subject: Natural Gas Generator Inquiry — N+1 Pair, ~1–1.5 MW Each, Lafayette Louisiana
+
+To whom it may concern,
+
+I am the project lead for MARLIE I, a 2MW AI compute facility under development at 1201 SE Evangeline Thruway, Lafayette, Louisiana. We are targeting H2 2026 go-live and are evaluating emergency backup generation options now.
+
+Our requirement:
+- (2) natural gas standby generators, N+1 configuration
+- Approximate capacity: 1–1.5 MW each (final load calculation pending electrical PE engagement)
+- Exterior pad mount, auto-start under 15 seconds
+- Natural gas fuel source (Henry Hub pipeline — gas is at property line)
+- ATS (automatic transfer switch) included or sourced separately
+
+I am reaching out at this stage to understand current lead times and whether we need to reserve production capacity now to meet our H2 2026 timeline. We understand industrial generator lead times have extended significantly and want to make sure we are not caught short.
+
+Can you provide:
+1. Current estimated lead time for this configuration
+2. Process for reserving production capacity before issuing a formal PO
+3. Ballpark pricing range for budgeting purposes
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOOM ENERGY -->
+  <div class="vendor-card" id="v-bloom">
+    <div class="vendor-header" onclick="toggle('v-bloom')">
+      <div class="vendor-priority p-high"></div>
+      <div class="vendor-name">Bloom Energy</div>
+      <div class="vendor-item">Solid Oxide Fuel Cell — Supplemental Baseload, ~300 kW stackable</div>
+      <div class="vendor-lead p-high-text">12–18 months</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Intro meeting — get into their pipeline</li>
+            <li>Pricing for 300 kW unit (stackable)</li>
+            <li>Lead time and installation timeline</li>
+            <li>Henry Hub nat gas rate compatibility</li>
+            <li>Incentive programs for Louisiana deployments</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Our Case for Bloom</h5>
+          <p>Bloom Energy Server runs on natural gas at ~60% efficiency vs 35% for a genset. Henry Hub proximity = $2–3/MMBtu input cost. Continuous baseload — not backup. Reduces grid dependency. Ideal for AI workloads that run 24/7.</p>
+        </div>
+        <div class="info-block">
+          <h5>Contact</h5>
+          <p>bloomenergy.com → "Contact Us" → Data Centers & AI. Mention Louisiana, Henry Hub proximity, and Phase 1 scale (~300 kW). Ask for a South Central region representative.</p>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — Bloom Energy</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-bloom')">Copy</button>
+        </div>
+        <div class="email-body" id="email-bloom">Subject: Bloom Energy Server Inquiry — AI Data Center, Lafayette Louisiana (Henry Hub Proximity)
+
+To the Bloom Energy Data Center Team,
+
+I am the project lead for MARLIE I, a purpose-built AI compute facility at 1201 SE Evangeline Thruway, Lafayette, Louisiana. We are planning a Phase 1 deployment of 16 NVIDIA Vera Rubin NVL72 racks at approximately 2MW load, targeting H2 2026 go-live.
+
+Our site has a unique characteristic that makes Bloom Energy a compelling fit: we are 40 miles from the Henry Hub natural gas interchange, giving us among the lowest natural gas input costs in the country. Natural gas is already at the property line.
+
+We are evaluating a Bloom Energy Server for continuous baseload supplemental generation (~300 kW, Phase 1) to reduce grid dependency for our always-on AI workloads. Our AI compute facility runs 24/7 — Bloom's continuous output model is a better fit than standby generation for our baseload requirements.
+
+I would like to schedule an introductory call to discuss:
+1. Availability and lead time for a Phase 1 deployment
+2. Pricing and total cost of ownership at our natural gas input rates
+3. Any Louisiana-specific incentive programs or utility coordination support
+
+We are actively building our supply chain now to meet our H2 2026 timeline.
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CDU COOLING -->
+  <div class="vendor-card" id="v-cdu">
+    <div class="vendor-header" onclick="toggle('v-cdu')">
+      <div class="vendor-priority p-medium"></div>
+      <div class="vendor-name">CDU Liquid Cooling</div>
+      <div class="vendor-item">CoolIT Systems / Vertiv / Motivair — Rear-door CDU + glycol loop</div>
+      <div class="vendor-lead p-medium-text">4–6 months (after NVIDIA TDP)</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Rear-door CDU for NVL72 racks (TDP pending)</li>
+            <li>Glycol loop to exterior dry coolers</li>
+            <li>RFQ — 16-rack system, Phase 1</li>
+            <li>Lead time and installation support</li>
+            <li>No chiller at Phase 1 — dry cooler only</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Gating Factor</h5>
+          <p>Cannot finalize CDU spec without NVL72 TDP from NVIDIA. As soon as NVIDIA provides TDP under NDA — issue RFQs to all three vendors same day. Do not wait. Get competing quotes.</p>
+        </div>
+        <div class="info-block">
+          <h5>Vendors</h5>
+          <ul>
+            <li><b>CoolIT Systems</b> — coolitsystems.com</li>
+            <li><b>Vertiv</b> — vertiv.com → Thermal Management</li>
+            <li><b>Motivair</b> — motivaircorp.com → Data Center Cooling</li>
+          </ul>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — CDU Cooling RFQ</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-cdu')">Copy</button>
+        </div>
+        <div class="email-body" id="email-cdu">Subject: RFQ — Rear-Door CDU Liquid Cooling System, 16-Rack NVIDIA NVL72 Deployment, Lafayette Louisiana
+
+To the [Vendor] Data Center Cooling Team,
+
+I am issuing an RFQ for a rear-door CDU liquid cooling system for a 16-rack NVIDIA Vera Rubin NVL72 deployment at our facility in Lafayette, Louisiana.
+
+Project specifications:
+- 16 NVIDIA Vera Rubin NVL72 racks (72 Rubin GPUs + 36 Vera CPUs per rack)
+- Rack TDP: pending NVIDIA NDA disclosure — estimated ~2MW total facility load
+- Cooling approach: rear-door CDU liquid cooling with glycol loop to exterior dry coolers
+- No chiller at Phase 1 — dry cooler only, Louisiana climate
+- Target go-live: H2 2026
+
+Please provide:
+1. Recommended CDU configuration for this rack type when TDP is confirmed
+2. Estimated pricing for a 16-rack system
+3. Current lead time from PO to delivery + commissioning
+4. Any NVIDIA Vera Rubin NVL72 compatibility documentation or reference deployments
+
+I will provide confirmed TDP specifications as soon as they are available from NVIDIA under NDA. I want to establish a vendor relationship now so we are ready to issue a formal PO immediately upon TDP confirmation.
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARLINE -->
+  <div class="vendor-card" id="v-starline">
+    <div class="vendor-header" onclick="toggle('v-starline')">
+      <div class="vendor-priority p-medium"></div>
+      <div class="vendor-name">Starline / Legrand</div>
+      <div class="vendor-item">T5 Busway — 480V 3-phase distribution spine</div>
+      <div class="vendor-lead p-medium-text">3–6 months</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>T5 busway system for 16-rack row, 480V 3-phase</li>
+            <li>Tap box configuration per rack</li>
+            <li>Preliminary quote and lead time</li>
+            <li>Installation support available in Louisiana</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Why T5</h5>
+          <p>Starline T5 busway is the standard for high-density data center power distribution. Plug-and-play tap boxes, no conduit runs per rack. Clean, serviceable, expandable. Standard choice for NVL72 deployments.</p>
+        </div>
+        <div class="info-block">
+          <h5>Contact</h5>
+          <p>starlinepower.com (now Legrand) → Data Center → T5 Busway. Request a regional rep for Louisiana / Gulf Coast.</p>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — Starline T5 Busway</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-starline')">Copy</button>
+        </div>
+        <div class="email-body" id="email-starline">Subject: T5 Busway Inquiry — 480V 3-Phase, 16-Rack AI Deployment, Lafayette Louisiana
+
+To the Starline Sales Team,
+
+I am the project lead for MARLIE I, a 16-rack NVIDIA AI compute facility under development in Lafayette, Louisiana with a H2 2026 go-live target.
+
+I am evaluating the Starline T5 busway system for our 480V 3-phase power distribution spine. Our configuration is a single 16-rack NVL72 row in a 22×35 ft compute floor.
+
+Please provide:
+1. Recommended T5 configuration for a 16-rack high-density AI row (NVIDIA NVL72 — TDP pending)
+2. Tap box specification per rack
+3. Preliminary pricing estimate
+4. Current lead time from order to delivery
+5. Installation support availability in the Lafayette, Louisiana area
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LUS -->
+  <div class="vendor-card" id="v-lus">
+    <div class="vendor-header" onclick="toggle('v-lus')">
+      <div class="vendor-priority p-critical"></div>
+      <div class="vendor-name">LUS — Lafayette Utilities System</div>
+      <div class="vendor-item">2MW utility capacity confirmation — 1201 SE Evangeline Thruway</div>
+      <div class="vendor-lead p-critical-text">CALL THIS WEEK</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Confirm 2MW capacity available at site</li>
+            <li>Service voltage (sets electrical PE spec)</li>
+            <li>Dual feed availability (LUS + SLEMCO)</li>
+            <li>Timeline for service upgrade if needed</li>
+            <li>Interconnection process for Bloom Energy fuel cell</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Why This Is Critical</h5>
+          <p>Every downstream vendor spec — switchgear, transformer, CDU sizing, genset ATS — depends on confirmed utility voltage and capacity. This is a phone call, not a formal RFQ. Call (337) 291-5577, ask for the commercial/industrial new service department.</p>
+        </div>
+        <div class="info-block">
+          <h5>Contact</h5>
+          <p><b>LUS Direct: (337) 291-5577</b><br>Ask for: Commercial/Industrial New Service<br>Have ready: site address (1201 SE Evangeline Thruway), estimated load (~2MW), target date (H2 2026)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARLINK -->
+  <div class="vendor-card" id="v-starlink">
+    <div class="vendor-header" onclick="toggle('v-starlink')">
+      <div class="vendor-priority p-low"></div>
+      <div class="vendor-name">Starlink Business</div>
+      <div class="vendor-item">SpaceX — Remote ADC 3K pod connectivity backup</div>
+      <div class="vendor-lead p-low-text">Available now — no wait</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>Use Case</h5>
+          <ul>
+            <li>Backup WAN for remote ADC 3K pod sites</li>
+            <li>Sites that have fiber as primary — Starlink as failover</li>
+            <li>Rural Louisiana sites with limited fiber options</li>
+            <li>Hardware: Flat High Performance dish per pod</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Pricing (as of early 2026)</h5>
+          <p>Starlink Business: ~$500/mo + $2,500 hardware per site. Priority data, 100–500 Mbps typical. No contracts. Activate per site when pod is deployed.</p>
+        </div>
+        <div class="info-block">
+          <h5>Action</h5>
+          <p>No urgency — activate per site at deployment. Get enterprise account now at starlink.com/business to lock business pricing. No lead time, ships within days.</p>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Contact Path — Starlink Business</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-starlink')">Copy</button>
+        </div>
+        <div class="email-body" id="email-starlink">Starlink Business — No email needed. Self-serve signup.
+
+1. Go to starlink.com/business
+2. Create business account
+3. Add service address for each ADC 3K pod deployment location
+4. Select "Business" tier — Priority data, higher speeds
+
+Hardware: Flat High Performance dish — best for permanent installations
+Order hardware now for first Trappeys pod deployment even if not activating yet.
+
+Pricing reference: ~$500/month per site + $2,500 hardware (confirm current pricing at signup)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LED -->
+  <div class="vendor-card" id="v-led">
+    <div class="vendor-header" onclick="toggle('v-led')">
+      <div class="vendor-priority p-high"></div>
+      <div class="vendor-name">LED — Louisiana Economic Development</div>
+      <div class="vendor-item">Act 730 AI Infrastructure Certification + ITEP</div>
+      <div class="vendor-lead p-high-text">Must happen BEFORE groundbreaking</div>
+      <div class="vendor-status">
+        <div class="status-check" onclick="toggleCheck(this, event)" title="Mark contacted"></div>
+        <span style="font-size:0.72rem;color:var(--muted)">Contacted</span>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="vendor-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <h5>What We Need</h5>
+          <ul>
+            <li>Act 730 pre-application meeting (AI/digital infrastructure)</li>
+            <li>ITEP filing — must file BEFORE breaking ground. Non-negotiable.</li>
+            <li>Parish-level PILOT discussion (HB 827 alternative)</li>
+            <li>Industrial Tax Exemption guidance for compute hardware</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h5>Why Critical</h5>
+          <p>ITEP filing cannot happen after groundbreaking — that window closes permanently. This incentive alone can be worth millions over the project life. LED pre-application meetings are free and they want to help. Schedule this week.</p>
+        </div>
+        <div class="info-block">
+          <h5>Contact</h5>
+          <p>opportunitylouisiana.com → "Contact LED" → Business Development<br>Or call: (225) 342-3000<br>Ask for: Act 730 / Digital Infrastructure team + ITEP pre-application</p>
+        </div>
+      </div>
+      <div class="email-wrap">
+        <div class="email-header">
+          <span>Email Template — LED Pre-Application Meeting</span>
+          <button class="copy-btn" onclick="copyEmail(this, 'email-led')">Copy</button>
+        </div>
+        <div class="email-body" id="email-led">Subject: Act 730 Pre-Application Meeting Request — AI Compute Facility, Lafayette Louisiana
+
+To the Louisiana Economic Development Business Development Team,
+
+I am the project lead for MARLIE I, a purpose-built AI compute facility at 1201 SE Evangeline Thruway, Lafayette, Louisiana. We are planning a Phase 1 deployment of 16 NVIDIA Vera Rubin NVL72 rack systems, representing approximately $30–50M in capital investment with a target go-live of H2 2026.
+
+I am requesting a pre-application meeting to discuss:
+1. Louisiana Act 730 — AI and digital infrastructure certification for our facility
+2. ITEP (Industrial Tax Exemption Program) — timing requirements relative to our LOI and groundbreaking schedule
+3. Parish-level PILOT agreement options as an alternative to HB 827 for our Phase 1 investment level
+4. Any additional incentive programs applicable to AI infrastructure and data center development in Lafayette Parish
+
+We are an owner-controlled site with industrial zoning, 3-phase LUS power, natural gas, and LUS Fiber conduit all confirmed at property line. We are very serious about this project and want to ensure we are filing all incentive applications correctly and on time.
+
+I would welcome a 30-minute call or meeting at your convenience.
+
+Scott Tomsu
+Project Lead — MARLIE I / ADC 3K
+Lafayette, Louisiana
+info@adc3k.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggle(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  function toggleCheck(el, e) {
+    e.stopPropagation();
+    el.classList.toggle('done');
+  }
+
+  function copyEmail(btn, id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>

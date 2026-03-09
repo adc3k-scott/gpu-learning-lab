@@ -6,13 +6,11 @@
       "Write(*)",
       "WebFetch(*)",
       "WebSearch(*)",
-
       "Bash(python *)",
       "Bash(python3 *)",
       "Bash(python -u *)",
       "Bash(python -c *)",
       "Bash(python -m *)",
-
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
@@ -24,12 +22,10 @@
       "Bash(git checkout*)",
       "Bash(git show*)",
       "Bash(git stash*)",
-
       "Bash(pip *)",
       "Bash(pip3 *)",
       "Bash(uvicorn *)",
       "Bash(pytest *)",
-
       "Bash(start *)",
       "Bash(mkdir *)",
       "Bash(ls *)",
@@ -42,14 +38,21 @@
       "Bash(mv *)",
       "Bash(echo *)",
       "Bash(curl *)",
-
       "Bash(node *)",
       "Bash(npm *)",
       "Bash(npx *)",
-
       "Bash(docker *)",
       "Bash(redis-cli *)",
-      "Bash(gh *)"
+      "Bash(gh *)",
+      "WebFetch(domain:www.acres.com)",
+      "WebFetch(domain:app.regrid.com)",
+      "WebFetch(domain:iberiaparishgovernment.com)",
+      "Bash(python -c \"open\\(''web/adc3k-site.html''\\).read\\(\\); print\\(''ok''\\)\")",
+      "Bash(start \"\" \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\web\\\\marlie-phase1.html\")",
+      "Bash(start explorer \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\marlie\")",
+      "Bash(start explorer \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\")",
+      "Bash(start cmd /k \"cd /d c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab && dir /s /b *.jpg *.JPG *.jpeg *.JPEG *.png *.PNG *.heic *.HEIC *.webp *.WEBP 2>nul\")",
+      "Bash(python -c \":*)"
     ]
   }
 }

@@ -153,6 +153,11 @@
   .op-ask h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 1px; text-transform: uppercase; }
   .op-ask p { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
   .copy-onepager { background: var(--accent); color: #000; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-top: 1.5rem; }
+  .site-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+  .facility-photo { width: 100%; height: 280px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); display: block; }
+  .site-plan-wrap { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #060d17; }
+  .facility-photo-caption { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; text-align: center; }
+  @media (max-width: 700px) { .site-visual { grid-template-columns: 1fr; } }
 
   @media (max-width: 800px) {
     .grid2, .grid3, .op-grid { grid-template-columns: 1fr; }
@@ -1116,6 +1121,121 @@ Lafayette, Louisiana<br>
     <div class="label">CONFIDENTIAL — Project Overview</div>
     <h2>MARLIE I</h2>
     <div class="tagline">Lafayette AI Factory — Phase 1 | 1201 SE Evangeline Thruway, Lafayette, Louisiana</div>
+
+    <!-- FACILITY PHOTO + SITE PLAN side by side -->
+    <div class="site-visual">
+      <div>
+        <!-- replace with cleaned version when signage removed — source: marlie/Store_Front_Pic.jpg -->
+        <img class="facility-photo" src="../marlie/Store_Front_Pic.jpg" alt="MARLIE I Facility exterior">
+        <div class="facility-photo-caption">Facility exterior — 1201 SE Evangeline Thruway &nbsp;|&nbsp; Direct road frontage, industrial corridor</div>
+      </div>
+      <div class="site-plan-wrap">
+        <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:280px;display:block;">
+          <defs>
+            <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#1e3450" stroke-width="1.5"/>
+            </pattern>
+          </defs>
+
+          <!-- Background -->
+          <rect width="420" height="280" fill="#060d17"/>
+
+          <!-- Street fills -->
+          <rect x="0" y="240" width="420" height="40" fill="#0a1525"/>
+          <rect x="0" y="0" width="32" height="280" fill="#0a1525"/>
+
+          <!-- Street labels -->
+          <text x="210" y="264" fill="#4a6a8f" font-size="9" font-family="monospace" text-anchor="middle" letter-spacing="2">SE EVANGELINE THRUWAY</text>
+          <text x="16" y="140" fill="#4a6a8f" font-size="8" font-family="monospace" text-anchor="middle" transform="rotate(-90,16,140)" letter-spacing="1.5">CHAG ST</text>
+
+          <!-- Street center lines -->
+          <line x1="32" y1="260" x2="420" y2="260" stroke="#1e3450" stroke-width="1" stroke-dasharray="8,6"/>
+          <line x1="20" y1="0" x2="20" y2="240" stroke="#1e3450" stroke-width="1" stroke-dasharray="8,6"/>
+
+          <!-- Parcel outline — 3 parcels ~0.60 acres total -->
+          <rect x="44" y="20" width="360" height="210" fill="url(#hatch)" stroke="#1e3450" stroke-width="1" rx="1"/>
+
+          <!-- Parcel division lines -->
+          <line x1="164" y1="20" x2="164" y2="230" stroke="#1a2e45" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="284" y1="20" x2="284" y2="230" stroke="#1a2e45" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <!-- Parcel labels -->
+          <text x="104" y="240" fill="#2a4a6f" font-size="7.5" font-family="monospace" text-anchor="middle">PARCEL 1</text>
+          <text x="224" y="240" fill="#2a4a6f" font-size="7.5" font-family="monospace" text-anchor="middle">PARCEL 2</text>
+          <text x="344" y="240" fill="#2a4a6f" font-size="7.5" font-family="monospace" text-anchor="middle">PARCEL 3</text>
+
+          <!-- Fence line -->
+          <rect x="50" y="26" width="348" height="198" fill="none" stroke="#1e3450" stroke-width="1.5" stroke-dasharray="5,3" rx="1"/>
+
+          <!-- Adjacent commercial facility (NOC/ops base) — right side -->
+          <rect x="300" y="40" width="88" height="70" fill="#0d1e30" stroke="#1e3450" stroke-width="1.5" rx="2"/>
+          <text x="344" y="72" fill="#4a6a8f" font-size="7.5" font-family="monospace" text-anchor="middle">ADJACENT</text>
+          <text x="344" y="83" fill="#4a6a8f" font-size="7.5" font-family="monospace" text-anchor="middle">COMM. BLDG</text>
+          <text x="344" y="94" fill="#2a4060" font-size="6.5" font-family="monospace" text-anchor="middle">(INTERIM NOC)</text>
+
+          <!-- MARLIE I main building -->
+          <rect x="68" y="50" width="195" height="130" fill="#0d2035" stroke="#1e4878" stroke-width="2" rx="2"/>
+          <text x="165" y="106" fill="#1a6abf" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold" letter-spacing="1">MARLIE I</text>
+          <text x="165" y="120" fill="#4a6a8f" font-size="7.5" font-family="monospace" text-anchor="middle">MAIN STRUCTURE</text>
+          <text x="165" y="133" fill="#2a4060" font-size="6.5" font-family="monospace" text-anchor="middle">Steel · 2004–05 · ~8,000 sq ft</text>
+
+          <!-- Phase 1 compute floor highlight -->
+          <rect x="90" y="62" width="75" height="55" fill="rgba(0,100,200,0.18)" stroke="#00e0ff" stroke-width="1.5" stroke-dasharray="3,2" rx="1"/>
+          <text x="127" y="83" fill="#00e0ff" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">PHASE 1</text>
+          <text x="127" y="93" fill="#00e0ff" font-size="7" font-family="monospace" text-anchor="middle">COMPUTE</text>
+          <text x="127" y="103" fill="#5ab0cc" font-size="6.5" font-family="monospace" text-anchor="middle">22×35 ft</text>
+          <text x="127" y="113" fill="#5ab0cc" font-size="6.5" font-family="monospace" text-anchor="middle">16 NVL72 racks</text>
+
+          <!-- Roll-up door -->
+          <rect x="148" y="178" width="40" height="6" fill="#0a3060" stroke="#1e4878" stroke-width="1"/>
+          <line x1="158" y1="178" x2="158" y2="184" stroke="#1e4878" stroke-width="0.8"/>
+          <line x1="168" y1="178" x2="168" y2="184" stroke="#1e4878" stroke-width="0.8"/>
+          <line x1="178" y1="178" x2="178" y2="184" stroke="#1e4878" stroke-width="0.8"/>
+          <text x="168" y="198" fill="#2a4060" font-size="6.5" font-family="monospace" text-anchor="middle">ROLL-UP</text>
+
+          <!-- Dry cooler pad (exterior) -->
+          <rect x="68" y="185" width="52" height="28" fill="#060d17" stroke="#1e3450" stroke-width="1" stroke-dasharray="3,2" rx="1"/>
+          <text x="94" y="197" fill="#4a6a8f" font-size="6.5" font-family="monospace" text-anchor="middle">DRY</text>
+          <text x="94" y="207" fill="#4a6a8f" font-size="6.5" font-family="monospace" text-anchor="middle">COOLERS</text>
+
+          <!-- Genset pad -->
+          <rect x="68" y="168" width="15" height="15" fill="#060d17" stroke="#f5a623" stroke-width="1" stroke-dasharray="2,2" rx="1"/>
+          <text x="60" y="163" fill="#f5a623" font-size="6" font-family="monospace">GEN</text>
+
+          <!-- LUS utility entry -->
+          <line x1="44" y1="90" x2="68" y2="90" stroke="#00e87a" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <circle cx="44" cy="90" r="4" fill="none" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="36" y="86" fill="#00e87a" font-size="6" font-family="monospace" text-anchor="middle">LUS</text>
+          <text x="36" y="96" fill="#00e87a" font-size="6" font-family="monospace" text-anchor="middle">3Ø</text>
+
+          <!-- Gas line -->
+          <line x1="44" y1="120" x2="68" y2="120" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <circle cx="44" cy="120" r="4" fill="none" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="36" y="116" fill="#f5a623" font-size="6" font-family="monospace" text-anchor="middle">GAS</text>
+
+          <!-- Fiber conduit -->
+          <line x1="44" y1="150" x2="68" y2="150" stroke="#a259ff" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <circle cx="44" cy="150" r="4" fill="none" stroke="#a259ff" stroke-width="1.5"/>
+          <text x="36" y="146" fill="#a259ff" font-size="6" font-family="monospace" text-anchor="middle">LUS</text>
+          <text x="36" y="156" fill="#a259ff" font-size="6" font-family="monospace" text-anchor="middle">FIBER</text>
+
+          <!-- North arrow -->
+          <g transform="translate(390,35)">
+            <circle cx="0" cy="0" r="14" fill="none" stroke="#1e3450" stroke-width="1"/>
+            <polygon points="0,-10 4,2 0,-1 -4,2" fill="#00e0ff"/>
+            <text x="0" y="20" fill="#4a6a8f" font-size="8" font-family="monospace" text-anchor="middle">N</text>
+          </g>
+
+          <!-- Scale note -->
+          <text x="56" y="275" fill="#2a4060" font-size="6.5" font-family="monospace">NOT TO SCALE — ~0.60 ACRES PHASE 1 FOOTPRINT</text>
+
+          <!-- Title bar -->
+          <rect x="44" y="20" width="360" height="14" fill="#060d17" stroke="none"/>
+          <text x="224" y="30" fill="#3a6a9f" font-size="7.5" font-family="monospace" text-anchor="middle" letter-spacing="1.5">SITE PLAN — 1201 SE EVANGELINE THRUWAY, LAFAYETTE LA</text>
+        </svg>
+        <div class="facility-photo-caption" style="padding:0 0.5rem 0.5rem;">Site plan — 3 parcels, ~0.60 acres &nbsp;|&nbsp; LUS 3-phase · natural gas · fiber all at property line</div>
+      </div>
+    </div>
 
     <div class="op-stats">
       <div class="op-stat"><div class="val">16</div><div class="lbl">NVL72 Racks</div></div>
