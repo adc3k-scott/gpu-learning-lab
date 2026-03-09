@@ -7,7 +7,8 @@ All content lives under the Mission Control HQ page.
 === PRODUCT ARCHITECTURE (critical — do not conflate) ===
 MARLIE I  = permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette LA.
             Building-based. NVL72 racks inside existing structure.
-            HQ + NOC + primary compute. CDU liquid cooling + Bloom Energy + LUS grid.
+            HQ + NOC + primary compute. CDU liquid cooling. 4-layer power:
+            L1=Nat gas gensets (PRIMARY) L2=Diesel (hurricane) L3=Solar+battery L4=LUS grid (last resort).
             This skill manages MARLIE I Notion content ONLY.
 
 ADC 3K    = manufactured containerized pod product line. Deployed to remote sites.
@@ -469,13 +470,12 @@ def _financial_blocks() -> list[dict]:
         _bullet("OPEX: ~$3.68M (full two-floor scale)"),
         _bullet("EBITDA: ~$87.4M"),
         _divider(),
-        _h2("Power Resilience — 5 Independent Layers"),
-        _bullet("Layer 1: LUS Grid — primary utility ($0.065/kWh industrial)"),
-        _bullet("Layer 2: Bloom Energy fuel cells — 300 kW continuous, $0.07–$0.09/kWh effective, 60%+ efficiency, Newark Delaware"),
-        _bullet("Layer 3: Cat G3520H natural gas prime power (PARALLEL N+1) — 2x 2.5MW = 5MW total installed. Both units run in parallel at moderate load. True N+1 — if one requires service, the other carries full facility."),
-        _bullet("Layer 4: UPS battery ride-through — millisecond switchover, protects compute hardware from power transients"),
-        _bullet("Layer 5: Diesel emergency backup — Cat C175-16, 3,365kW. 30,000-gal on-site tank, 110+ hours runtime. Hurricane layer."),
-        _bullet("5 independent power layers — 0 single points of failure — 96+ hour on-site fuel reserve"),
+        _h2("Power Resilience — 4-Layer Stack (Off-Grid by Design)"),
+        _bullet("Layer 1 — Nat Gas Gensets (PRIMARY): prime-rated, 24/7 continuous. Two units N+1. Henry Hub pricing (~40 mi) = lowest fuel cost in country. No grid rate exposure, no demand charges."),
+        _bullet("Layer 2 — Diesel Gensets (Hurricane Backup): on-site fuel = pipeline-independent. Hurricane Ida proved nat gas pipelines can fail for weeks. Diesel carries load regardless of gas supply."),
+        _bullet("Layer 3 — Solar + Battery (Supplement): 300 kW solar offsets ~3.4% of daily load. 600 kWh LFP battery = instant ATS bridge during any switchover. Reduces genset fuel burn during daylight."),
+        _bullet("Layer 4 — LUS Grid (Last Resort): backup only. Never primary. Eliminates grid rate exposure, demand charge risk, and utility reliability dependency."),
+        _bullet("Off-grid by design: Nat gas + diesel + solar/battery = fully islanded microgrid. Grid is insurance, not a dependency."),
         _divider(),
         _h2("Investor Benefits"),
         _bullet("Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K–$500K/month compute credit."),
