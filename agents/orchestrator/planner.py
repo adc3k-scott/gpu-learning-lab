@@ -287,6 +287,63 @@ _PATTERNS: list[dict[str, Any]] = [
              "params": {"action": "health"}},
         ],
     },
+    # ── MARLIE I Notion sync ────────────────────────────────────────────
+    {
+        "match": re.compile(
+            r"\bmarlie\b.*(sync|push|notion|update|export)\b"
+            r"|\b(sync|push|export)\b.*marlie\b"
+            r"|sync.*notion.*workbook|push.*notion.*workbook"
+            r"|rebuild.*marlie.*notion|marlie.*full.*sync",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "marlie_sync_full", "skill": "marlie_notion", "assigned_role": "integration",
+             "description": "Sync full MARLIE I workbook to Notion",
+             "params": {"action": "sync_full"}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\bmarlie\b.*(status|where|notion.*page|find.*notion)\b"
+            r"|notion.*marlie.*status|find.*marlie.*notion",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "marlie_status", "skill": "marlie_notion", "assigned_role": "integration",
+             "description": "Get MARLIE I Notion workbook status and URLs",
+             "params": {"action": "get_status"}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\bmarlie\b.*(note|update|log|add)\b.*(notion)?"
+            r"|\bappend.*marlie\b|add.*note.*marlie\b",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "marlie_append_note", "skill": "marlie_notion", "assigned_role": "integration",
+             "description": "Append a note to the MARLIE I Notion page",
+             "params": {"action": "append_note", "text": desc}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\bsync\b.*(thesis|hardware|site|funding|partners?|credentials?|vision|contact)\b.*\b(marlie|notion)\b"
+            r"|\bmarlie\b.*(thesis|hardware|site|funding|partners?|credentials?|vision|contact).*\b(sync|push|update)\b"
+            r"|\bpush\b.*(thesis|hardware|site|funding|partners?|credentials?|vision|contact)\b.*notion",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "marlie_sync_section", "skill": "marlie_notion", "assigned_role": "integration",
+             "description": f"Sync MARLIE I section to Notion: {desc}",
+             "params": {"action": "sync_section",
+                        "section": next(
+                            (s for s in ["thesis", "hardware", "site", "funding",
+                                         "partners", "credentials", "vision", "contact"]
+                             if re.search(s.rstrip("s"), desc, re.I)), "thesis"
+                        )}},
+        ],
+    },
 ]
 
 
@@ -343,6 +400,12 @@ _SYSTEM_PROMPT = (
     "    action=update_page,      page_id=<uuid>, properties={}\n"
     "    action=append_blocks,    page_id=<uuid>, blocks=[<block_obj_or_plain_str>]\n"
     "    action=query_database,   database_id=<uuid>, filter={}, sorts=[], page_size=50\n"
+    "\n"
+    "  marlie_notion (role: integration) -- MARLIE I Lafayette AI Factory Notion workbook:\n"
+    "    action=sync_full                              -- rebuild entire 8-section workbook\n"
+    "    action=sync_section, section=<name>          -- push one section (thesis|hardware|site|funding|partners|credentials|vision|contact)\n"
+    "    action=get_status                            -- find MARLIE I pages in Notion, return URLs\n"
+    "    action=append_note, text=<str>              -- append timestamped note to root MARLIE I page\n"
     "\n"
     "  integration role -- webhook (skill=''):\n"
     "    action=webhook, url=<url>, payload=<dict>, secret=<str optional>\n"
