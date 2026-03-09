@@ -13,21 +13,24 @@ Owner: **Scott Tomsu** — ADC3K, MARLIE I project lead, 1201 SE Evangeline Thru
 - `memory/projects/missioncontrolhd.md` — Mission Control HD: vehicle diagnostics SaaS, missioncontrolhd.com
 
 ## ADC Infrastructure — Core Architecture
-- **MARLIE I** = permanent AI Factory, 1201 SE Evangeline Thruway. CDU cold plate cooling. NVL72 racks. HQ + NOC.
+- **MARLIE I** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
 - **ADC 3K** = manufactured containerized pods. EC-110 full immersion. No HVAC. Deployed remotely, managed from MARLIE I.
-- **KLFT 1.1** = Gulf Coast Emergency Drone Hub. First live ADC 3K node. Skydio X10 + Dock + SkyCommand pod.
-- **Trappeys Cannery** = first planned ADC 3K pod site. Metal warehouse, Vermilion River frontage.
-- **New Iberia Solar Factory** = renewable energy partner (~30 mi). Site 2 ADC candidate. Solar PPA path.
+- **KLFT 1.1** = Gulf Coast Emergency Drone Hub. Lafayette Regional Airport. GPS: 30.21256N, 91.99069W. Skydio X10 + Dock + SkyCommand.
+- **Trappeys Cannery** = first planned ADC 3K pod site. GPS: 30.21356N, 92.00163W. Metal warehouse, Vermilion River frontage. SEPARATE site from MARLIE I.
+- **New Iberia Solar Factory** = renewable energy partner. GPS: 30.03768N, 91.87524W. Site 2 ADC candidate.
 - **ADC 3K geography**: pods follow Louisiana natural gas pipeline map — Henry Hub corridor, Gulf Coast industrial belt.
 - NEVER conflate MARLIE I (CDU, permanent building) with ADC 3K (immersion, field pod). Different products.
 
-## Site Acquisition Pipeline (NEW — 2026-03-09)
+## Site Acquisition Pipeline (GPS verified 2026-03-09)
 Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`
-- **Coteau LA** `31e88f09-7e31-8186` — PRIORITY 1. Sugar cane field, clean slate, pipeline + solar proximity. Full AI Factory / Omniverse candidate. Owner meeting scheduled. Get: acreage, FEMA zone, 3-phase confirmation, gas proximity, owner terms.
-- **Airport Frontage** `31e88f09-7e31-81fb` — Former Alpha office, Hwy 90, for sale. CDU rack facility. Airport AI + KLFT hub.
-- **Pinhook & Hwy 90** `31e88f09-7e31-81d2` — Former hotel base. ADC 3K pods + EV charging. Urban core.
+- **Coteau LA** `31e88f09-7e31-8186` — GPS: 30.04182N, 91.95573W. PRIORITY 1. Sugar cane field, south of Lafayette. Full AI Factory candidate. Get: acreage, FEMA zone, 3-phase, gas proximity, owner terms.
+- **Airport Frontage** `31e88f09-7e31-81fb` — GPS: 30.20146N, 91.99873W. Former Alpha office, Hwy 90. CDU rack + KLFT integration.
+- **Pinhook Urban** `31e88f09-7e31-81d2` — GPS: 30.21749N, 92.00325W. 1421 SE Evangeline Thruway. ADC 3K pods + EV charging.
 - **Site Eval Framework** `31e88f09-7e31-8128` — Type A/B/C/D + 7-factor scoring. Score 28+ = Priority 1.
 - EV charging standard: every site, DC fast charge + Level 2, utility substation aesthetic.
+
+## Network Visualization Map
+`web/network-map.html` — interactive Louisiana AI Infrastructure map. All 7 nodes GPS-locked. Public/Technical view toggle. Community services + energy layers. Opens as standalone HTML.
 
 ## ADC 3K Investor Review — Open Items
 12 items in `memory/projects/adc3k.md`. Key: Customer LOI (none), NVIDIA TDP (unpublished), CapEx ($33.2M vs ~$110M), tax rate (5.5% not 25%), unit economics per pod, competitive landscape, team slide, 3-scenario model.

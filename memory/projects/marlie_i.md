@@ -1,5 +1,5 @@
 # MARLIE I — Lafayette AI Factory
-Last updated: 2026-03-08
+Last updated: 2026-03-09
 
 ## What MARLIE I Is
 Permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette, Louisiana.
@@ -8,6 +8,7 @@ It is also the factory/home base from which ADC 3K pods are deployed.
 
 ## Site
 - Address: 1201 SE Evangeline Thruway, Lafayette, Louisiana
+- GPS: 30.21975 N, 92.00645 W (corner of Evangeline Thruway & 16th Street)
 - Parcels: 3 adjacent parcels on Chag Street — ~0.60 acres Phase 1 footprint
 - Land debt: $15,000 — effectively debt-free. Owner-controlled. No lease risk.
 - Adjacent: Borrower-owned commercial facility (interim ops base, NOC, storage)

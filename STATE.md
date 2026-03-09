@@ -1,5 +1,5 @@
 # Mission Control — Project State
-Last updated: 2026-03-09
+Last updated: 2026-03-09 (updated post-network-map session)
 
 ## Session Summary (March 9, 2026)
 Three major threads: (1) Onboarded Mission Control HD + built Notion Command Centers for MCHD and Ground Zero. (2) Full Notion ecosystem audit — all 6 project folders cross-referenced with new strategic context. (3) Site Acquisition Pipeline — new Notion system for tracking potential Louisiana AI infrastructure locations; Coteau LA (full AI factory candidate) loaded with meeting prep for tomorrow. No local repo code changes — all work via Notion API.
@@ -91,6 +91,17 @@ Built from scratch: root + 4 pages under Mission Control HQ
 - IDs in session summaries can be truncated — always search Notion to confirm before scripting
 
 ---
+
+## Confirmed GPS Coordinates (verified by Scott 2026-03-09)
+```
+MARLIE I:         30.21975 N, 92.00645 W  — 1201 SE Evangeline Thruway (corner 16th St)
+Trappeys:         30.21356 N, 92.00163 W  — SE Evangeline Thruway corridor (separate from MARLIE I)
+KLFT Hub:         30.21256 N, 91.99069 W  — Lafayette Regional Airport
+Airport Frontage: 30.20146 N, 91.99873 W  — Hwy 90 frontage
+Pinhook Urban:    30.21749 N, 92.00325 W  — 1421 SE Evangeline Thruway
+Coteau LA:        30.04182 N, 91.95573 W  — Priority 1 site, south of Lafayette
+NI Solar:         30.03768 N, 91.87524 W  — New Iberia Solar Factory
+```
 
 ## Key IDs (confirmed)
 ```

@@ -1,9 +1,11 @@
 # Trappeys Cannery — ADC 3K Deployment Site
-Last updated: 2026-03-08
+Last updated: 2026-03-09
 
 ## What It Is
 First remote deployment site for ADC 3K containerized pods.
-Historic cannery site — metal warehouse structures.
+Historic cannery site — metal warehouse structures. SEPARATE site from MARLIE I.
+Address: SE Evangeline Thruway corridor, Lafayette, LA
+GPS: 30.21356 N, 92.00163 W
 NOT a building-based compute facility — ADC 3K pods drop in as manufactured units.
 
 ## Why Trappeys Works for ADC 3K
