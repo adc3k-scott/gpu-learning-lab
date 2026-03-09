@@ -83,6 +83,8 @@ Built from scratch: root + 4 pages under Mission Control HQ
 ## Notion API Patterns (confirmed working)
 - All edits: write temp Python script → run → delete. Use `notion_util.py`.
 - Full tree: `from skills.builtin.notion_util import print_tree; print_tree(encode="utf-8")`
+- **ALWAYS combine run + delete:** `python _script.py 2>&1 && rm _script.py` — one bash approval, not two
+- **ALWAYS chain git:** `git add FILE && git commit -m "..."` — one approval, not two
 - Page move to workspace root: NOT POSSIBLE via API — silently rejected. UI only.
 - Always verify page ID after creation: `nc.get_page(id)` — creation output can truncate IDs → 404s
 - `get_blocks()` not `get_block_children()` — check method signatures before scripting
