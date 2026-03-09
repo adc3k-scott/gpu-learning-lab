@@ -4,14 +4,32 @@ Built-in skill: marlie_notion
 Sync the MARLIE I — Lafayette AI Factory project to the Notion workspace.
 All content lives under the Mission Control HQ page.
 
-Supported actions:
-  sync_full       — rebuild the entire MARLIE I workbook from scratch (all 8 sections)
+=== PRODUCT ARCHITECTURE (critical — do not conflate) ===
+MARLIE I  = permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette LA.
+            Building-based. NVL72 racks inside existing structure.
+            HQ + NOC + primary compute. CDU liquid cooling + Bloom Energy + LUS grid.
+            This skill manages MARLIE I Notion content ONLY.
+
+ADC 3K    = manufactured containerized pod product line. Deployed to remote sites.
+            Immersion cooling (no HVAC). Networked back to MARLIE I.
+            First deployment: Trappeys Cannery (metal warehouse, immersion pods).
+            ADC 3K Notion content lives under ADC 3K — Project Command Center.
+            Page ID: 31488f09-7e31-816d-9fdc-c6aabba4e3fa
+
+=== MARLIE I Notion IDs ===
+HQ root:       31288f09-7e31-81a5-bf43-e2af16379346
+MARLIE I root: 31e88f09-7e31-8121-b4d2-d96b0084cc50
+Trappeys root: 31288f09-7e31-80a2-8712-ef09878afd53
+ADC 3K root:   31488f09-7e31-816d-9fdc-c6aabba4e3fa
+
+=== Supported actions ===
+  sync_full       — rebuild the entire MARLIE I workbook from scratch (all 9 sections)
   sync_section    — push a single named section (requires: section)
   get_status      — return URLs and IDs of all existing MARLIE I pages
   append_note     — append a quick note/update to the root MARLIE I page (requires: text)
 
 Sections (for sync_section):
-  thesis | hardware | site | funding | partners | credentials | vision | contact
+  thesis | hardware | site | funding | partners | credentials | vision | contact | financial
 
 Credentials:
   Reads NOTION_API_KEY from env.  HQ page ID is hardcoded to the Mission Control HQ.
