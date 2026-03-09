@@ -3,1075 +3,723 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADC 3K — Advanced Data Center Infrastructure</title>
+<title>ADC 3K — Edge AI Infrastructure</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #04080f;
-    --panel: #08111e;
-    --border: #0f2035;
-    --border2: #1a3a5c;
+    --bg: #080c12;
+    --surface: #0d1520;
+    --card: #111d2e;
+    --border: #1e3450;
+    --accent: #00e0ff;
     --green: #00e87a;
-    --gold: #f5a623;
-    --blue: #3b9eff;
-    --blue2: #00c8ff;
-    --purple: #9b6dff;
-    --text: #e8f0fc;
-    --muted: #4a6480;
-    --muted2: #7a9ab8;
+    --amber: #f5a623;
+    --red: #ff4d6d;
+    --text: #e8f0fe;
+    --muted: #7a9abf;
+    --nvidia: #76b900;
   }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.6; }
 
-  /* ── NAV ── */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 60px;
-    height: 68px;
-    background: rgba(4,8,15,0.85);
-    backdrop-filter: blur(20px);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(8,12,18,0.92); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 60px;
   }
-  .nav-logo {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .nav-logo-main {
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    color: var(--green);
-    text-transform: uppercase;
-  }
-  .nav-logo-sep { color: var(--border2); font-size: 16px; }
-  .nav-logo-sub {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--muted2);
-    text-transform: uppercase;
-  }
-  .nav-links { display: flex; gap: 36px; align-items: center; }
-  .nav-links a {
-    color: var(--muted2);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
+  .nav-logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 2px; color: var(--accent); }
+  .nav-logo span { color: var(--text); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    padding: 9px 22px;
-    border-radius: 6px;
-    background: var(--green);
-    color: #000;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .nav-cta:hover { background: #00ffaa; color: #000; }
+  .nav-cta { background: var(--accent); color: #000; border: none; padding: 8px 20px; border-radius: 4px; font-weight: 600; font-size: 0.85rem; cursor: pointer; letter-spacing: 0.5px; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.85; }
 
-  /* ── HERO ── */
+  section { padding: 100px 5%; }
+  .section-label { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.15; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; }
+  h3 { font-size: 1.2rem; font-weight: 600; }
+  .max-w { max-width: 1200px; margin: 0 auto; }
+
+  /* HERO */
   #hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 40px 80px;
-    position: relative;
-    overflow: hidden;
+    min-height: 100vh; display: flex; align-items: center; padding-top: 120px;
+    background: radial-gradient(ellipse at 60% 40%, rgba(0,224,255,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(0,232,122,0.04) 0%, transparent 50%);
   }
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 100%);
-  }
-  .hero-glow {
-    position: absolute;
-    width: 800px; height: 500px;
-    top: 10%; left: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse, rgba(0,200,255,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid rgba(0,232,122,0.3);
-    background: rgba(0,232,122,0.06);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 28px;
-  }
-  .hero-tag-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s infinite;
-  }
+  .hero-content { max-width: 680px; }
+  .hero-tag { display: inline-block; background: rgba(0,224,255,0.1); border: 1px solid rgba(0,224,255,0.3); color: var(--accent); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 2rem; }
+  .hero-title { margin-bottom: 1.5rem; }
+  .hero-title .line2 { color: var(--accent); }
+  .hero-sub { font-size: 1.15rem; color: var(--muted); max-width: 540px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #000; border: none; padding: 14px 32px; border-radius: 4px; font-weight: 700; font-size: 0.95rem; cursor: pointer; letter-spacing: 0.5px; transition: all 0.2s; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 14px 32px; border-radius: 4px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* PRODUCTS */
+  #products { background: var(--surface); }
+  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2.5rem; }
+  .product-card { background: var(--card); padding: 3rem; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .product-card.marlie::before { background: linear-gradient(90deg, var(--accent), var(--green)); }
+  .product-card.pods::before { background: linear-gradient(90deg, var(--green), var(--amber)); }
+  .product-badge { display: inline-block; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 3px; margin-bottom: 1.5rem; font-weight: 600; }
+  .badge-hq { background: rgba(0,224,255,0.15); color: var(--accent); }
+  .badge-pod { background: rgba(0,232,122,0.15); color: var(--green); }
+  .product-card h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+  .product-card p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .spec-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .spec-row .spec-label { color: var(--muted); }
+  .spec-row .spec-val { color: var(--text); font-weight: 500; }
+  .product-visual { margin-top: 2rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: var(--muted); line-height: 1.9; }
+  .product-visual .hl { color: var(--accent); }
+  .product-visual .hl-g { color: var(--green); }
+
+  /* APPLICATIONS */
+  #applications { background: var(--bg); }
+  .apps-intro { max-width: 600px; margin-bottom: 3rem; }
+  .apps-intro p { color: var(--muted); margin-top: 1rem; line-height: 1.8; }
+  .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .app-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; transition: border-color 0.3s, transform 0.2s; }
+  .app-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .app-icon { width: 48px; height: 48px; border-radius: 8px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .icon-blue { background: rgba(0,224,255,0.15); }
+  .icon-green { background: rgba(0,232,122,0.15); }
+  .icon-amber { background: rgba(245,166,35,0.15); }
+  .icon-purple { background: rgba(167,139,250,0.15); }
+  .icon-red { background: rgba(255,77,109,0.15); }
+  .icon-nvidia { background: rgba(118,185,0,0.15); }
+  .app-card h3 { margin-bottom: 0.75rem; font-size: 1.05rem; }
+  .app-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+  .app-tag { display: inline-block; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-top: 1rem; font-weight: 600; }
+  .tag-live { background: rgba(0,232,122,0.15); color: var(--green); }
+  .tag-build { background: rgba(0,224,255,0.15); color: var(--accent); }
+  .tag-coming { background: rgba(245,166,35,0.15); color: var(--amber); }
+
+  /* LOUISIANA */
+  #louisiana { background: var(--surface); }
+  .la-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .la-content h2 { margin-bottom: 1rem; }
+  .la-content .lead { color: var(--muted); margin-bottom: 2rem; line-height: 1.8; }
+  .la-pillars { display: flex; flex-direction: column; gap: 1rem; }
+  .pillar { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 4px; }
+  .pillar-icon { font-size: 1.3rem; min-width: 36px; }
+  .pillar-text h4 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .pillar-text p { font-size: 0.85rem; color: var(--muted); }
+  .la-visual { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; }
+  .la-visual-title { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .la-metric { margin-bottom: 1.5rem; }
+  .la-metric-val { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .la-metric-label { font-size: 0.8rem; color: var(--muted); }
+  .la-bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.5rem; overflow: hidden; }
+  .la-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); }
+  hr.la-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+  /* TECHNOLOGY */
+  #technology { background: var(--bg); }
+  .tech-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .tech-sub { color: var(--muted); max-width: 480px; }
+  .nvidia-badge { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--nvidia); border: 1px solid rgba(118,185,0,0.3); padding: 8px 16px; border-radius: 4px; background: rgba(118,185,0,0.05); }
+  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .tech-tile { background: var(--card); padding: 1.75rem; transition: background 0.2s; }
+  .tech-tile:hover { background: var(--surface); }
+  .tech-tile-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+  .tech-tile h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .tech-tile p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .tech-source { font-size: 0.72rem; color: var(--nvidia); margin-top: 0.75rem; font-weight: 600; letter-spacing: 0.5px; }
+
+  /* NETWORK */
+  #network { background: var(--surface); }
+  .network-content { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+  .network-text h2 { margin-bottom: 1rem; }
+  .network-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .network-tiers { display: flex; flex-direction: column; gap: 1rem; }
+  .tier-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 4px; }
+  .tier-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .tier-dot.t1 { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .tier-dot.t2 { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .tier-dot.t3 { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+  .tier-row h4 { font-size: 0.9rem; margin-bottom: 0.1rem; }
+  .tier-row p { font-size: 0.8rem; color: var(--muted); }
+  .network-map-box { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; min-height: 360px; display: flex; flex-direction: column; }
+  .map-label { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .la-outline { flex: 1; position: relative; background: rgba(0,0,0,0.3); border-radius: 4px; overflow: hidden; min-height: 280px; }
+  .node-pulse { width: 12px; height: 12px; border-radius: 50%; animation: pulse 2s infinite; display: inline-block; }
+  .node-pulse.blue { background: var(--accent); }
+  .node-pulse.green { background: var(--green); animation-delay: 0.5s; }
+  .node-pulse.amber { background: var(--amber); animation-delay: 1s; }
   @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.4); }
+    0% { box-shadow: 0 0 0 0 rgba(0,224,255,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(0,224,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,224,255,0); }
   }
-  .hero-h1 {
-    font-size: clamp(40px, 6vw, 78px);
-    font-weight: 900;
-    line-height: 1.08;
-    letter-spacing: -1px;
-    margin-bottom: 24px;
-    max-width: 900px;
-  }
-  .hero-h1 .accent { color: var(--green); }
-  .hero-h1 .accent2 { color: var(--blue2); }
-  .hero-sub {
-    font-size: clamp(16px, 2vw, 20px);
-    color: var(--muted2);
-    max-width: 620px;
-    margin-bottom: 48px;
-    line-height: 1.7;
-  }
-  .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary {
-    padding: 14px 36px;
-    border-radius: 8px;
-    background: var(--green);
-    color: #000;
-    font-weight: 800;
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover { background: #00ffaa; transform: translateY(-1px); }
-  .btn-outline {
-    padding: 14px 36px;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--border2);
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+  .node-label { font-size: 0.65rem; color: var(--text); white-space: nowrap; font-weight: 500; }
+  .node-sub { font-size: 0.6rem; color: var(--muted); white-space: nowrap; }
 
-  .hero-stats {
-    display: flex;
-    gap: 60px;
-    margin-top: 80px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .hero-stat { text-align: center; }
-  .hero-stat-val {
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
-  }
-  .hero-stat-lbl {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
+  /* ACCESS */
+  #access { background: var(--bg); }
+  .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .access-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; position: relative; overflow: hidden; }
+  .access-card.investor { border-color: rgba(0,224,255,0.3); }
+  .access-card.partner { border-color: rgba(0,232,122,0.3); }
+  .access-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .access-card.investor::before { background: var(--accent); }
+  .access-card.partner::before { background: var(--green); }
+  .access-icon { font-size: 2rem; margin-bottom: 1.5rem; }
+  .access-card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .access-card p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .access-items { list-style: none; margin-bottom: 2rem; }
+  .access-items li { padding: 6px 0; font-size: 0.9rem; color: var(--muted); display: flex; align-items: center; gap: 0.75rem; }
+  .access-items li::before { content: '->'; color: var(--accent); font-weight: 700; }
+  .access-card.partner .access-items li::before { color: var(--green); }
+  .btn-investor { background: var(--accent); color: #000; border: none; padding: 12px 28px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; width: 100%; }
+  .btn-investor:hover { opacity: 0.88; }
+  .btn-partner { background: var(--green); color: #000; border: none; padding: 12px 28px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; width: 100%; }
+  .btn-partner:hover { opacity: 0.88; }
+  .security-note { margin-top: 3rem; padding: 1.5rem 2rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 4px; display: flex; gap: 1rem; align-items: flex-start; }
+  .security-note p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+  .security-note strong { color: var(--text); }
 
-  /* ── SECTION BASE ── */
-  section { padding: 100px 60px; }
-  .section-tag {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .section-h2 {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-    margin-bottom: 16px;
-  }
-  .section-desc {
-    font-size: 16px;
-    color: var(--muted2);
-    max-width: 560px;
-    line-height: 1.7;
-  }
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border2), transparent);
-    margin: 0 60px;
-  }
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 2.5rem; max-width: 480px; width: 90%; position: relative; animation: modal-in 0.2s ease; }
+  @keyframes modal-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; }
+  .modal-close:hover { color: var(--text); }
+  .modal h3 { margin-bottom: 0.5rem; }
+  .modal .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+  .form-row { margin-bottom: 1rem; }
+  .form-row label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; letter-spacing: 0.5px; }
+  .form-row input, .form-row select { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 4px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+  .form-row input:focus, .form-row select:focus { border-color: var(--accent); }
+  .form-row select option { background: var(--card); }
+  .modal-submit { width: 100%; margin-top: 1.5rem; }
+  .modal-success { display: none; text-align: center; padding: 2rem 0; }
+  .modal-success .check { font-size: 3rem; margin-bottom: 1rem; }
+  .modal-success h4 { margin-bottom: 0.5rem; }
+  .modal-success p { color: var(--muted); font-size: 0.9rem; }
 
-  /* ── MARLIE I ── */
-  #marlie {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .marlie-visual {
-    position: relative;
-    aspect-ratio: 4/3;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--border2);
-    background: var(--panel);
-  }
-  .marlie-visual-inner {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .facility-diagram {
-    width: 100%;
-    height: 100%;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .fac-row {
-    display: flex;
-    gap: 10px;
-    flex: 1;
-  }
-  .fac-block {
-    border-radius: 8px;
-    border: 1px solid var(--border2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    gap: 6px;
-    flex: 1;
-    transition: all 0.3s;
-    cursor: default;
-    padding: 8px;
-    text-align: center;
-  }
-  .fac-block:hover { border-color: var(--green); background: rgba(0,232,122,0.05); }
-  .fac-block .fac-icon { font-size: 22px; }
-  .fac-block .fac-label { color: var(--muted2); font-size: 9px; }
-  .fac-noc { background: rgba(0,232,122,0.06); border-color: rgba(0,232,122,0.3); color: var(--green); flex: 2; }
-  .fac-gpu { background: rgba(59,158,255,0.06); border-color: rgba(59,158,255,0.3); color: var(--blue); flex: 3; }
-  .fac-cdu { background: rgba(0,200,255,0.06); border-color: rgba(0,200,255,0.3); color: var(--blue2); }
-  .fac-power { background: rgba(245,166,35,0.06); border-color: rgba(245,166,35,0.3); color: var(--gold); }
-  .fac-badge {
-    position: absolute;
-    bottom: 16px; left: 16px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    background: rgba(0,232,122,0.12);
-    border: 1px solid rgba(0,232,122,0.3);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--green);
-    text-transform: uppercase;
-  }
-  .marlie-detail { display: flex; flex-direction: column; gap: 0; }
-  .marlie-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
-  .spec-card {
-    padding: 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-  }
-  .spec-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .spec-val { font-size: 15px; font-weight: 700; }
-
-  /* ── POD ── */
-  #pod { background: var(--panel); }
-  .pod-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .pod-visual {
-    position: relative;
-    border-radius: 16px;
-    border: 1px solid var(--border2);
-    background: var(--bg);
-    overflow: hidden;
-    padding: 40px;
-  }
-  .container-3d {
-    width: 100%;
-    aspect-ratio: 2/1;
-    border-radius: 8px;
-    border: 2px solid var(--blue);
-    background: linear-gradient(135deg, rgba(59,158,255,0.1), rgba(0,200,255,0.05));
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .container-label {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: var(--blue2);
-    text-transform: uppercase;
-  }
-  .container-dims {
-    position: absolute;
-    bottom: 8px; right: 12px;
-    font-size: 10px;
-    color: var(--muted2);
-    font-family: monospace;
-  }
-  .container-stripe {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 6px;
-    background: var(--blue);
-  }
-  .pod-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 24px;
-  }
-  .flow-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .flow-icon { font-size: 16px; }
-  .flow-label { flex: 1; }
-  .flow-val { color: var(--muted2); font-size: 11px; font-family: monospace; }
-  .pod-features { display: flex; flex-direction: column; gap: 0; }
-  .pod-feature-item {
-    display: flex;
-    gap: 16px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .pod-feature-item:last-child { border-bottom: none; }
-  .feature-num {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--blue);
-    letter-spacing: 1px;
-    min-width: 28px;
-    padding-top: 2px;
-  }
-  .feature-body {}
-  .feature-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .feature-desc { font-size: 13px; color: var(--muted2); line-height: 1.6; }
-
-  /* ── NETWORK ── */
-  #network { max-width: 1200px; margin: 0 auto; }
-  .network-header { margin-bottom: 60px; }
-  .sites-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .site-card {
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    padding: 24px;
-    transition: all 0.3s;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-  }
-  .site-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-  .site-card.flagship::before { background: var(--green); }
-  .site-card.priority::before { background: var(--blue); }
-  .site-card.planned::before { background: var(--purple); }
-  .site-card.concept::before { background: var(--muted); }
-  .site-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-  .site-status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .site-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .site-status-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .flagship .site-status-dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
-  .priority .site-status-dot { background: var(--blue); }
-  .planned .site-status-dot { background: var(--purple); }
-  .concept .site-status-dot { background: var(--muted); }
-  .site-type-badge {
-    font-size: 9px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .flagship .site-type-badge { background: rgba(0,232,122,0.12); color: var(--green); }
-  .priority .site-type-badge { background: rgba(59,158,255,0.12); color: var(--blue); }
-  .planned .site-type-badge { background: rgba(155,109,255,0.12); color: var(--purple); }
-  .concept .site-type-badge { background: rgba(74,100,128,0.2); color: var(--muted2); }
-  .site-name { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
-  .site-loc { font-size: 12px; color: var(--muted2); margin-bottom: 12px; font-family: monospace; }
-  .site-desc { font-size: 12px; color: var(--muted2); line-height: 1.6; margin-bottom: 16px; }
-  .site-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .site-tag {
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid var(--border2);
-    color: var(--muted2);
-    font-weight: 600;
-  }
-  .site-stakeholder {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    font-size: 11px;
-    color: var(--muted2);
-  }
-  .site-stakeholder strong { color: var(--gold); }
-
-  /* ── TECH STACK ── */
-  #tech { background: var(--panel); }
-  .tech-inner { max-width: 1200px; margin: 0 auto; }
-  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
-  .tech-card {
-    padding: 28px 24px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    text-align: center;
-    transition: all 0.3s;
-  }
-  .tech-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-  .tech-logo { font-size: 32px; margin-bottom: 12px; }
-  .tech-name { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
-  .tech-role { font-size: 11px; color: var(--muted2); line-height: 1.5; }
-  .tech-link { margin-top: 10px; font-size: 10px; letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
-  .tech-link.green { color: var(--green); }
-  .tech-link.blue { color: var(--blue); }
-  .tech-link.gold { color: var(--gold); }
-  .tech-link.purple { color: var(--purple); }
-
-  /* ── VISION ── */
-  #vision {
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .vision-layers {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin: 48px 0;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  .vision-layer {
-    display: grid;
-    grid-template-columns: 80px 1fr auto;
-    align-items: center;
-    gap: 24px;
-    padding: 20px 32px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s;
-  }
-  .vision-layer:last-child { border-bottom: none; }
-  .vision-layer:hover { background: rgba(255,255,255,0.02); }
-  .vl-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-align: right; }
-  .vl-body { text-align: left; }
-  .vl-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-  .vl-desc { font-size: 13px; color: var(--muted2); }
-  .vl-status { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
-
-  /* ── CONTACT ── */
-  #contact {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-    padding-bottom: 120px;
-  }
-  .contact-card {
-    margin-top: 48px;
-    padding: 48px;
-    border-radius: 16px;
-    border: 1px solid var(--border2);
-    background: var(--panel);
-    position: relative;
-    overflow: hidden;
-  }
-  .contact-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top, rgba(0,200,255,0.06) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .contact-location {
-    font-size: 13px;
-    color: var(--muted2);
-    font-family: monospace;
-    margin-bottom: 8px;
-  }
-  .contact-name { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
-  .contact-title { font-size: 14px; color: var(--muted2); margin-bottom: 32px; }
-  .contact-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .footer-logo { font-weight: 900; letter-spacing: 2px; color: var(--green); }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  /* FOOTER */
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-brand { font-weight: 700; letter-spacing: 2px; font-size: 1rem; color: var(--accent); }
+  .footer-brand span { color: var(--text); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text); }
+  .footer-legal { color: var(--muted); font-size: 0.8rem; }
 
-  /* Responsive */
   @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    section { padding: 60px 24px; }
-    #marlie, .pod-inner { grid-template-columns: 1fr; gap: 40px; }
-    .sites-grid { grid-template-columns: 1fr 1fr; }
-    .tech-grid { grid-template-columns: 1fr 1fr; }
-    .hero-stats { gap: 32px; }
+    .products-grid, .apps-grid, .access-grid, .la-grid, .network-content { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
     .nav-links { display: none; }
-    .divider { margin: 0 24px; }
-    footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
-  }
-  @media (max-width: 600px) {
-    .sites-grid { grid-template-columns: 1fr; }
-    .tech-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <span class="nav-logo-main">ADC 3K</span>
-    <span class="nav-logo-sep">|</span>
-    <span class="nav-logo-sub">Advanced Data Center</span>
-  </div>
-  <div class="nav-links">
-    <a href="#marlie">MARLIE I</a>
-    <a href="#pod">The Pod</a>
-    <a href="#network">Network</a>
-    <a href="#tech">Technology</a>
-    <a href="#vision">Vision</a>
-    <a href="#contact" class="nav-cta">Contact</a>
-  </div>
+  <div class="nav-logo">ADC<span> 3K</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#applications">Applications</a></li>
+    <li><a href="#louisiana">Louisiana</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#network">Network</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal('investor')">Request Access</button>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-tag">
-    <div class="hero-tag-dot"></div>
-    Lafayette, Louisiana — Gulf Coast AI Infrastructure
-  </div>
-  <h1 class="hero-h1">
-    The <span class="accent">Intelligent</span> Infrastructure<br>
-    Stack for the <span class="accent2">AI Era</span>
-  </h1>
-  <p class="hero-sub">
-    From ground-level compute to autonomous airspace — ADC 3K is building the first fully integrated AI infrastructure network in the American South.
-  </p>
-  <div class="hero-actions">
-    <a href="#marlie" class="btn-primary">See the Flagship</a>
-    <a href="#network" class="btn-outline">View the Network</a>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-val" style="color:var(--green)">6</div>
-      <div class="hero-stat-lbl">Deployment Sites</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val" style="color:var(--blue2)">NVL72</div>
-      <div class="hero-stat-lbl">NVIDIA Platform</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val" style="color:var(--gold)">4</div>
-      <div class="hero-stat-lbl">Infrastructure Layers</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val" style="color:var(--purple)">10mi</div>
-      <div class="hero-stat-lbl">Autonomous Airspace</div>
+  <div class="max-w">
+    <div class="hero-content">
+      <div class="hero-tag">Louisiana-Built Edge AI Infrastructure</div>
+      <h1 class="hero-title">
+        The AI Factory<br>
+        <span class="line2">Built for the Gulf Coast</span>
+      </h1>
+      <p class="hero-sub">
+        From a permanent AI supercomputing headquarters in Lafayette to deployable edge compute pods across Louisiana's industrial corridor — ADC 3K is building the infrastructure backbone for autonomous AI operations.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView()">Explore the Platform</button>
+        <button class="btn-outline" onclick="openModal('investor')">Investor Access</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">MARLIE I</div><div class="stat-label">Lafayette AI Factory HQ</div></div>
+        <div><div class="stat-val">ADC 3K</div><div class="stat-label">Deployable Edge Pod</div></div>
+        <div><div class="stat-val">KLFT</div><div class="stat-label">Autonomous Airspace Hub</div></div>
+        <div><div class="stat-val">24/7</div><div class="stat-label">Autonomous Operations</div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- MARLIE I -->
-<section>
-  <div id="marlie">
-    <div class="marlie-visual">
-      <div class="facility-diagram">
-        <div class="fac-row">
-          <div class="fac-block fac-noc">
-            <div class="fac-icon">⬡</div>
-            <div>Mission Control NOC</div>
-            <div class="fac-label">6 Agents Live</div>
-          </div>
-          <div class="fac-block fac-gpu">
-            <div class="fac-icon">▦</div>
-            <div>NVIDIA Vera Rubin</div>
-            <div class="fac-label">NVL72 Rack Array</div>
-          </div>
-        </div>
-        <div class="fac-row">
-          <div class="fac-block fac-cdu">
-            <div class="fac-icon">◈</div>
-            <div>CDU Liquid Cooling</div>
-            <div class="fac-label">Direct to Chip</div>
-          </div>
-          <div class="fac-block fac-power">
-            <div class="fac-icon">⚡</div>
-            <div>LUS Grid</div>
-            <div class="fac-label">City-Owned Utility</div>
-          </div>
-          <div class="fac-block fac-power">
-            <div class="fac-icon">◎</div>
-            <div>Bloom Energy</div>
-            <div class="fac-label">SOFC Supplemental</div>
-          </div>
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="max-w">
+    <div class="section-label">What We Build</div>
+    <h2>Two Products. One Network.</h2>
+    <div class="products-grid">
+      <div class="product-card marlie">
+        <span class="product-badge badge-hq">Headquarters</span>
+        <h3>MARLIE I</h3>
+        <p>The Lafayette AI Factory. A permanent, purpose-built AI supercomputing facility housing NVIDIA's most advanced hardware. Operates as the NOC and command center for the entire ADC 3K network.</p>
+        <div class="spec-row"><span class="spec-label">Platform</span><span class="spec-val">NVIDIA Vera Rubin NVL72</span></div>
+        <div class="spec-row"><span class="spec-label">Cooling</span><span class="spec-val">CDU Liquid Cold Plate</span></div>
+        <div class="spec-row"><span class="spec-label">Power</span><span class="spec-val">Grid + Supplemental + N+1 Backup</span></div>
+        <div class="spec-row"><span class="spec-label">Location</span><span class="spec-val">Lafayette, Louisiana</span></div>
+        <div class="spec-row"><span class="spec-label">Role</span><span class="spec-val">HQ + NOC + Primary Compute</span></div>
+        <div class="product-visual">
+          <span class="hl">MARLIE I</span> — Permanent AI Factory<br>
+          +-- <span class="hl-g">NVL72 racks</span> — peak inference + training<br>
+          +-- <span class="hl">NOC</span> — manages full pod network<br>
+          +-- <span class="hl-g">CDU cooling</span> — enterprise cold plate<br>
+          +-- <span class="hl">Power</span> — grid primary + N+1 diesel backup
         </div>
       </div>
-      <div class="fac-badge">● Live — 1201 SE Evangeline Thruway</div>
-    </div>
-    <div class="marlie-detail">
-      <div class="section-tag" style="color:var(--green)">Layer 2 — Core Compute</div>
-      <h2 class="section-h2">MARLIE I<br>The Flagship AI Factory</h2>
-      <p class="section-desc">Lafayette's first purpose-built AI compute facility. The hub that powers and manages the entire ADC 3K pod network across the Gulf Coast region.</p>
-      <div class="marlie-specs">
-        <div class="spec-card">
-          <div class="spec-label">Location</div>
-          <div class="spec-val">1201 SE Evangeline Thruway</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-label">GPU Platform</div>
-          <div class="spec-val" style="color:var(--green)">Vera Rubin NVL72</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-label">Cooling</div>
-          <div class="spec-val">CDU Liquid — Direct to Chip</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-label">Power</div>
-          <div class="spec-val">LUS Grid + Bloom + N+1 Diesel</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-label">Incentives</div>
-          <div class="spec-val" style="color:var(--gold)">Act 730 + PILOT</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-label">Role</div>
-          <div class="spec-val">Network Hub + NOC</div>
+      <div class="product-card pods">
+        <span class="product-badge badge-pod">Field Deployable</span>
+        <h3>ADC 3K Pod</h3>
+        <p>A manufactured 40-ft ISO container housing GPU compute with full-immersion dielectric cooling. No HVAC required. Deploy inside any metal structure and connect back to MARLIE I NOC anywhere in the network.</p>
+        <div class="spec-row"><span class="spec-label">Form Factor</span><span class="spec-val">40-ft ISO Container</span></div>
+        <div class="spec-row"><span class="spec-label">Cooling</span><span class="spec-val">EC-110 Full Immersion Dielectric</span></div>
+        <div class="spec-row"><span class="spec-label">Infrastructure</span><span class="spec-val">Power + Fiber only — no HVAC</span></div>
+        <div class="spec-row"><span class="spec-label">Management</span><span class="spec-val">Remote via MARLIE I NOC</span></div>
+        <div class="spec-row"><span class="spec-label">Deployment</span><span class="spec-val">Any industrial or warehouse site</span></div>
+        <div class="product-visual">
+          <span class="hl-g">ADC 3K Pod</span> — Deployable Edge Unit<br>
+          +-- <span class="hl">GPU array</span> — NVIDIA accelerated compute<br>
+          +-- <span class="hl-g">Immersion tank</span> — EC-110 dielectric<br>
+          +-- <span class="hl">No HVAC</span> — drop in any metal structure<br>
+          +-- <span class="hl-g">NOC link</span> — managed from MARLIE I
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- THE POD -->
-<section id="pod">
-  <div class="pod-inner">
-    <div class="pod-features">
-      <div class="section-tag" style="color:var(--blue)">Layer 3 — Edge AI Network</div>
-      <h2 class="section-h2">The ADC 3K Pod</h2>
-      <p class="section-desc" style="margin-bottom:0">A manufactured compute unit that drops into any metal structure. No HVAC. No raised floor. No data center build-out required.</p>
-      <div style="margin-top:32px;">
-        <div class="pod-feature-item">
-          <div class="feature-num">01</div>
-          <div class="feature-body">
-            <div class="feature-title">Full Immersion Cooling</div>
-            <div class="feature-desc">EC-110 dielectric fluid. Every server submerged. No air cooling — works in any warehouse, cannery, or industrial structure without modification.</div>
-          </div>
-        </div>
-        <div class="pod-feature-item">
-          <div class="feature-num">02</div>
-          <div class="feature-body">
-            <div class="feature-title">40-ft ISO Container</div>
-            <div class="feature-desc">Standard shipping container form factor. Drop in by crane, connect power and network, commission remotely from MARLIE I. No local construction crew needed long-term.</div>
-          </div>
-        </div>
-        <div class="pod-feature-item">
-          <div class="feature-num">03</div>
-          <div class="feature-body">
-            <div class="feature-title">Remote Operations</div>
-            <div class="feature-desc">All pods managed from Mission Control NOC at MARLIE I. Infrastructure agents monitor GPU health, thermals, power, and network fabric in real time.</div>
-          </div>
-        </div>
-        <div class="pod-feature-item">
-          <div class="feature-num">04</div>
-          <div class="feature-body">
-            <div class="feature-title">480V 3-Phase + N+1 Backup</div>
-            <div class="feature-desc">Industrial power input. Generator backup standard. Each pod is a self-contained, fault-tolerant compute unit.</div>
-          </div>
-        </div>
+<!-- APPLICATIONS -->
+<section id="applications">
+  <div class="max-w">
+    <div class="section-label">Applications</div>
+    <div class="apps-intro">
+      <h2>What the Platform Powers</h2>
+      <p>MARLIE I and the ADC 3K pod network are purpose-built to run the most demanding autonomous AI workloads — from emergency response to industrial process AI to defense-grade compute.</p>
+    </div>
+    <div class="apps-grid">
+      <div class="app-card">
+        <div class="app-icon icon-blue">&#x1F681;</div>
+        <h3>Emergency Response &amp; First Responders</h3>
+        <p>Autonomous drone deployment for fire, flood, and disaster response. The KLFT hub at Lafayette Regional Airport delivers Class C airspace operations and 90-second response deployment for first responders across the Gulf Coast.</p>
+        <span class="app-tag tag-build">In Development</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon icon-green">&#x26A1;</div>
+        <h3>Industrial AI &amp; Energy Sector</h3>
+        <p>Edge compute deployed to Louisiana's industrial and energy corridor. Process AI, predictive maintenance, and real-time operational intelligence — running on-site with NOC management from MARLIE I.</p>
+        <span class="app-tag tag-build">Active Deployment</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon icon-amber">&#x1F6E1;</div>
+        <h3>Defense &amp; Government AI</h3>
+        <p>Louisiana's energy independence and industrial base position ADC 3K as a strategic asset for defense and government AI workloads requiring on-premise, air-gapped, or hardened compute solutions.</p>
+        <span class="app-tag tag-coming">Pipeline</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon icon-purple">&#x1F393;</div>
+        <h3>University &amp; Research Partnerships</h3>
+        <p>GPU compute access for UL Lafayette, LSU, and Southern University — joint research programs and workforce development for Louisiana's emerging AI talent pipeline.</p>
+        <span class="app-tag tag-coming">Forming</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon icon-nvidia">&#x1F916;</div>
+        <h3>Autonomous Vehicle &amp; Fleet AI</h3>
+        <p>Edge inference for autonomous ground and aerial vehicles. Real-time NVIDIA-accelerated processing at the point of operation, with low-latency NOC connection to MARLIE I for model updates and coordination.</p>
+        <span class="app-tag tag-coming">Pipeline</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon icon-red">&#x1F4E1;</div>
+        <h3>Media, Broadcast &amp; Content AI</h3>
+        <p>AI-accelerated content creation and autonomous media production infrastructure. Supporting Louisiana's growing film and media industry with on-demand GPU compute and real-time broadcast enhancement.</p>
+        <span class="app-tag tag-coming">Pipeline</span>
       </div>
     </div>
-    <div class="pod-visual">
-      <div class="container-3d">
-        <div class="container-stripe"></div>
-        <div class="container-label">ADC 3K POD</div>
-        <div class="container-dims">40ft × 8ft × 9.5ft</div>
+  </div>
+</section>
+
+<!-- LOUISIANA -->
+<section id="louisiana">
+  <div class="max-w">
+    <div class="la-grid">
+      <div class="la-content">
+        <div class="section-label">Why Louisiana</div>
+        <h2>The Strategic Advantage</h2>
+        <p class="lead">Louisiana's combination of energy infrastructure, government incentives, industrial land, and geographic position makes it uniquely suited for next-generation AI compute infrastructure.</p>
+        <div class="la-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">&#x26A1;</div>
+            <div class="pillar-text">
+              <h4>Energy Infrastructure</h4>
+              <p>Direct access to natural gas infrastructure, LUS municipal power, and regional solar manufacturing. Lowest-cost energy position for 24/7 AI compute operations.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">&#x1F3ED;</div>
+            <div class="pillar-text">
+              <h4>Industrial Land Availability</h4>
+              <p>I-1 industrial-zoned land in Louisiana's energy corridor — priced below comparable markets and positioned directly on existing infrastructure networks.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">&#x1F3DB;</div>
+            <div class="pillar-text">
+              <h4>Government Incentives</h4>
+              <p>LED Act 730, PILOT frameworks, and Louisiana's AI policy environment create a stacked incentive structure unmatched in the Southeast for AI infrastructure investment.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">&#x1F30A;</div>
+            <div class="pillar-text">
+              <h4>Gulf Coast Position</h4>
+              <p>Port of Iberia access, I-49 / Hwy 90 corridor, and Lafayette Regional Airport (KLFT) provide logistics, transportation, and airspace for full autonomous operations.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="pod-flow">
-        <div class="flow-item">
-          <div class="flow-icon">⚡</div>
-          <div class="flow-label">Power Input</div>
-          <div class="flow-val">480V 3-Phase</div>
+      <div class="la-visual">
+        <div class="la-visual-title">Louisiana AI Infrastructure — Key Metrics</div>
+        <div class="la-metric">
+          <div class="la-metric-val">#1</div>
+          <div class="la-metric-label">Natural gas production state — Henry Hub anchor</div>
+          <div class="la-bar"><div class="la-bar-fill" style="width:100%"></div></div>
         </div>
-        <div class="flow-item">
-          <div class="flow-icon">◈</div>
-          <div class="flow-label">Cooling</div>
-          <div class="flow-val">EC-110 Immersion</div>
+        <hr class="la-divider">
+        <div class="la-metric">
+          <div class="la-metric-val">5.5 hrs</div>
+          <div class="la-metric-label">Peak solar hours/day — Lafayette region</div>
+          <div class="la-bar"><div class="la-bar-fill" style="width:78%"></div></div>
         </div>
-        <div class="flow-item">
-          <div class="flow-icon">▦</div>
-          <div class="flow-label">Compute</div>
-          <div class="flow-val">Vera Rubin NVL72</div>
+        <hr class="la-divider">
+        <div class="la-metric">
+          <div class="la-metric-val">Act 730</div>
+          <div class="la-metric-label">LED AI + digital infrastructure certification</div>
+          <div class="la-bar"><div class="la-bar-fill" style="width:85%"></div></div>
         </div>
-        <div class="flow-item">
-          <div class="flow-icon">⬡</div>
-          <div class="flow-label">Management</div>
-          <div class="flow-val">MARLIE I NOC</div>
+        <hr class="la-divider">
+        <div class="la-metric">
+          <div class="la-metric-val">I-49 / Hwy 90</div>
+          <div class="la-metric-label">Major industrial corridor — Port of Iberia access</div>
+          <div class="la-bar"><div class="la-bar-fill" style="width:90%"></div></div>
         </div>
-        <div class="flow-item">
-          <div class="flow-icon">◉</div>
-          <div class="flow-label">Backup</div>
-          <div class="flow-val">N+1 Generator</div>
+        <hr class="la-divider">
+        <div class="la-metric">
+          <div class="la-metric-val">Class C</div>
+          <div class="la-metric-label">KLFT airspace — autonomous UAS operations hub</div>
+          <div class="la-bar"><div class="la-bar-fill" style="width:70%"></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- TECHNOLOGY -->
+<section id="technology">
+  <div class="max-w">
+    <div class="tech-header">
+      <div>
+        <div class="section-label">Technology Stack</div>
+        <h2>End-to-End NVIDIA Architecture</h2>
+        <p class="tech-sub" style="margin-top:0.5rem;">From the data center to the edge to the sky — every layer of the ADC 3K stack runs on NVIDIA silicon. No integration gaps.</p>
+      </div>
+      <div class="nvidia-badge">NVIDIA End-to-End Platform</div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F5A5;</div>
+        <h4>NVIDIA Vera Rubin</h4>
+        <p>Next-generation GPU architecture powering MARLIE I. NVL72 rack-scale configuration for peak AI inference and training throughput.</p>
+        <div class="tech-source">NVIDIA HGX Platform</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x2744;</div>
+        <h4>CDU Liquid Cooling</h4>
+        <p>Direct liquid cooling for MARLIE I rack infrastructure. Precision temperature management for sustained high-density GPU operation.</p>
+        <div class="tech-source">Enterprise Data Center</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F4E6;</div>
+        <h4>EC-110 Immersion</h4>
+        <p>Full dielectric immersion cooling for ADC 3K pods. Operates in any metal structure, any climate — zero HVAC dependency.</p>
+        <div class="tech-source">ADC 3K Pod Platform</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F681;</div>
+        <h4>Skydio X10</h4>
+        <p>NVIDIA Jetson Orin-powered autonomous drones for KLFT operations. Fully autonomous UAS platform for Class C airspace deployment.</p>
+        <div class="tech-source">NVIDIA Jetson Orin</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F4E1;</div>
+        <h4>SkyCommand Platform</h4>
+        <p>ADC 3K's proprietary airspace operations software. Real-time fleet management, FAA coordination, and mission dispatch for autonomous operations.</p>
+        <div class="tech-source">ADC 3K Proprietary</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F50C;</div>
+        <h4>Power Architecture</h4>
+        <p>Natural gas generation, solar integration, municipal grid, and N+1 diesel backup. Engineered for 100% uptime across all deployment types.</p>
+        <div class="tech-source">Multi-Source Resilience</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F310;</div>
+        <h4>Mission Control NOC</h4>
+        <p>24/7 autonomous operations command center at MARLIE I. Manages all remote pods, drone fleets, and edge infrastructure from a single control plane.</p>
+        <div class="tech-source">ADC 3K Proprietary</div>
+      </div>
+      <div class="tech-tile">
+        <div class="tech-tile-icon">&#x1F512;</div>
+        <h4>Secure Infrastructure</h4>
+        <p>Air-gap capable deployment. On-premise compute with no mandatory cloud dependency. Hardened for defense, government, and critical infrastructure clients.</p>
+        <div class="tech-source">Enterprise Security</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- NETWORK -->
-<section>
-  <div id="network">
-    <div class="network-header">
-      <div class="section-tag" style="color:var(--purple)">The Louisiana AI Network</div>
-      <h2 class="section-h2">Six Sites.<br>One Network.</h2>
-      <p class="section-desc">Each site in the ADC 3K network is a node — managed remotely, powered locally, connected to MARLIE I as the hub.</p>
-    </div>
-    <div class="sites-grid">
-
-      <div class="site-card flagship">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--green)"><div class="site-status-dot"></div>Active / Permitting</div>
-          <div class="site-type-badge">Flagship</div>
+<section id="network">
+  <div class="max-w">
+    <div class="network-content">
+      <div class="network-text">
+        <div class="section-label">The Network</div>
+        <h2>Louisiana AI Infrastructure Corridor</h2>
+        <p>ADC 3K is building a statewide network of AI compute nodes anchored at MARLIE I in Lafayette, with deployable pods positioned across Louisiana's industrial and energy corridor.</p>
+        <p>Each site connects back to MARLIE I for NOC management, model updates, and fleet coordination — a resilient, distributed AI infrastructure network with no single point of failure.</p>
+        <div class="network-tiers">
+          <div class="tier-row">
+            <div class="tier-dot t1"></div>
+            <div><h4>Tier 1 — MARLIE I HQ</h4><p>Lafayette AI Factory. NOC + primary compute. NVL72 racks.</p></div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-dot t2"></div>
+            <div><h4>Tier 2 — ADC 3K Pod Sites</h4><p>Industrial deployments across the Louisiana energy corridor.</p></div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-dot t3"></div>
+            <div><h4>Tier 3 — Autonomous Operations</h4><p>KLFT drone hub + future autonomous field deployment sites.</p></div>
+          </div>
         </div>
-        <div class="site-name">MARLIE I</div>
-        <div class="site-loc">30.21975°N  92.00645°W</div>
-        <div class="site-desc">Permanent AI factory. Core compute hub. Mission Control NOC. Powers and manages the entire network.</div>
-        <div class="site-tags">
-          <span class="site-tag">NVL72</span>
-          <span class="site-tag">CDU Cooling</span>
-          <span class="site-tag">NOC</span>
-          <span class="site-tag">HQ</span>
+      </div>
+      <div class="network-map-box">
+        <div class="map-label">Louisiana AI Network — Active and Planned Nodes</div>
+        <div class="la-outline">
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; gap:1rem; padding:1.5rem; justify-content:space-around;">
+            <div style="display:flex; justify-content:space-around; align-items:center;">
+              <div style="text-align:center;">
+                <div class="node-pulse blue" style="margin:0 auto 6px;"></div>
+                <div class="node-label">MARLIE I</div>
+                <div class="node-sub">Lafayette HQ</div>
+              </div>
+              <div style="text-align:center;">
+                <div class="node-pulse blue" style="margin:0 auto 6px;"></div>
+                <div class="node-label">KLFT</div>
+                <div class="node-sub">Airspace Hub</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-around; align-items:center;">
+              <div style="text-align:center;">
+                <div class="node-pulse green" style="margin:0 auto 6px;"></div>
+                <div class="node-label">Trappeys</div>
+                <div class="node-sub">Pod Site 1</div>
+              </div>
+              <div style="text-align:center;">
+                <div class="node-pulse green" style="margin:0 auto 6px;"></div>
+                <div class="node-label">New Iberia</div>
+                <div class="node-sub">Pod Site 2</div>
+              </div>
+              <div style="text-align:center;">
+                <div class="node-pulse green" style="margin:0 auto 6px;"></div>
+                <div class="node-label">Coteau LA</div>
+                <div class="node-sub">Candidate</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-around; align-items:center;">
+              <div style="text-align:center;">
+                <div class="node-pulse amber" style="margin:0 auto 6px;"></div>
+                <div class="node-label">Lake Charles</div>
+                <div class="node-sub">Industrial Corridor</div>
+              </div>
+              <div style="text-align:center;">
+                <div class="node-pulse amber" style="margin:0 auto 6px;"></div>
+                <div class="node-label">Kinder / Iowa</div>
+                <div class="node-sub">Energy Corridor</div>
+              </div>
+            </div>
+            <div style="font-size:0.68rem; color:var(--muted); text-align:center;">
+              Tier 1: HQ &nbsp;|&nbsp; Tier 2: Pod Deployment &nbsp;|&nbsp; Tier 3: Planned
+            </div>
+          </div>
         </div>
-        <div class="site-stakeholder">Key: <strong>LUS + LED Act 730</strong></div>
-      </div>
-
-      <div class="site-card priority">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--blue)"><div class="site-status-dot"></div>Priority 2</div>
-          <div class="site-type-badge">Drone Hub</div>
-        </div>
-        <div class="site-name">KLFT 1.1</div>
-        <div class="site-loc">30.21256°N  91.99069°W</div>
-        <div class="site-desc">Lafayette Regional Airport. 12,000 sq ft. ADC 3K pods + Skydio drone fleet. SkyCommand operations center. Mobile deployment units.</div>
-        <div class="site-tags">
-          <span class="site-tag">Skydio X10</span>
-          <span class="site-tag">SkyCommand</span>
-          <span class="site-tag">Part 108</span>
-          <span class="site-tag">First Responder</span>
-        </div>
-        <div class="site-stakeholder">Key: <strong>FAA + Airport Authority</strong></div>
-      </div>
-
-      <div class="site-card planned">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--purple)"><div class="site-status-dot"></div>Planned — Large Site</div>
-          <div class="site-type-badge">Research Hub</div>
-        </div>
-        <div class="site-name">Trappeys Cannery</div>
-        <div class="site-loc">30.21356°N  92.00163°W</div>
-        <div class="site-desc">Historic cannery. Largest planned ADC 3K deployment. Metal warehouse — pods drop in. Vermilion River frontage. Federal historic tax credits eligible.</div>
-        <div class="site-tags">
-          <span class="site-tag">Immersion Pods</span>
-          <span class="site-tag">Historic Tax Credits</span>
-          <span class="site-tag">Research Compute</span>
-        </div>
-        <div class="site-stakeholder">Key: <strong>UL Lafayette</strong></div>
-      </div>
-
-      <div class="site-card concept">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--muted2)"><div class="site-status-dot"></div>Priority 1 Concept</div>
-          <div class="site-type-badge">Rural Edge</div>
-        </div>
-        <div class="site-name">Coteau LA</div>
-        <div class="site-loc">30.04182°N  91.95573°W</div>
-        <div class="site-desc">Sugar cane field site south of Lafayette. Owner meeting completed. Site plan pending. Rural edge deployment candidate.</div>
-        <div class="site-tags">
-          <span class="site-tag">Rural Edge</span>
-          <span class="site-tag">Site Plan Pending</span>
-        </div>
-        <div class="site-stakeholder">Key: <strong>SLEMCO + Parish</strong></div>
-      </div>
-
-      <div class="site-card concept">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--muted2)"><div class="site-status-dot"></div>Concept</div>
-          <div class="site-type-badge">Urban Edge</div>
-        </div>
-        <div class="site-name">Pinhook Urban</div>
-        <div class="site-loc">30.21749°N  92.00325°W</div>
-        <div class="site-desc">1421 SE Evangeline Thruway. Former hotel base structure. Urban site. Municipal compute contract candidate.</div>
-        <div class="site-tags">
-          <span class="site-tag">Urban</span>
-          <span class="site-tag">City Contracts</span>
-        </div>
-        <div class="site-stakeholder">Key: <strong>City of Lafayette</strong></div>
-      </div>
-
-      <div class="site-card concept">
-        <div class="site-status-row">
-          <div class="site-status" style="color:var(--muted2)"><div class="site-status-dot"></div>Concept</div>
-          <div class="site-type-badge">Renewable</div>
-        </div>
-        <div class="site-name">New Iberia Solar</div>
-        <div class="site-loc">30.03768°N  91.87524°W</div>
-        <div class="site-desc">Solar partner site. ADC 3K pods collocated with renewable generation. Clean energy narrative. Grant-eligible infrastructure.</div>
-        <div class="site-tags">
-          <span class="site-tag">Solar</span>
-          <span class="site-tag">Renewable</span>
-          <span class="site-tag">Grant Eligible</span>
-        </div>
-        <div class="site-stakeholder">Key: <strong>Iberia Parish + DOE</strong></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- TECH STACK -->
-<section id="tech">
-  <div class="tech-inner">
-    <div class="section-tag" style="color:var(--gold)">Technology Stack</div>
-    <h2 class="section-h2">Built on the Best.</h2>
-    <p class="section-desc">Every component chosen for coherence. NVIDIA end-to-end — from the data center rack to the autonomous drone in the sky.</p>
-    <div class="tech-grid">
-      <div class="tech-card">
-        <div class="tech-logo">▦</div>
-        <div class="tech-name">NVIDIA Vera Rubin</div>
-        <div class="tech-role">NVL72 rack systems. Current generation. Powers MARLIE I and all ADC 3K pods.</div>
-        <div class="tech-link green">Core Compute</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">◉</div>
-        <div class="tech-name">Skydio X10</div>
-        <div class="tech-role">NVIDIA-powered autonomous drone. Integrates directly with ADC 3K inference layer. Zero integration gap.</div>
-        <div class="tech-link blue">Autonomous Fleet</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">⬡</div>
-        <div class="tech-name">Mission Control</div>
-        <div class="tech-role">FastAPI multi-agent platform. 6 live agents. Manages all pods, drones, and infrastructure from MARLIE I NOC.</div>
-        <div class="tech-link green">Operations Layer</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">◈</div>
-        <div class="tech-name">SkyCommand</div>
-        <div class="tech-role">Autonomous airspace management. Mission planning, first responder dispatch, Part 108 compliance logging.</div>
-        <div class="tech-link purple">Airspace Control</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">◑</div>
-        <div class="tech-name">EC-110 Immersion</div>
-        <div class="tech-role">Dielectric fluid immersion cooling. No HVAC required. Works in any metal structure. Pod-native solution.</div>
-        <div class="tech-link blue">Cooling System</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">⚡</div>
-        <div class="tech-name">Bloom Energy SOFC</div>
-        <div class="tech-role">Solid oxide fuel cell supplemental generation. On-site clean power. Reduces peak grid dependency.</div>
-        <div class="tech-link gold">Power Infrastructure</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">◎</div>
-        <div class="tech-name">LUS City Grid</div>
-        <div class="tech-role">City-owned utility. Aligned incentives. Direct partnership path. All Lafayette sites on LUS territory.</div>
-        <div class="tech-link gold">Primary Power</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-logo">◬</div>
-        <div class="tech-name">Act 730 + PILOT</div>
-        <div class="tech-role">Louisiana LED incentive stack. Sales tax exemption + property tax abatement. Cost structure no other state matches.</div>
-        <div class="tech-link gold">Financial Stack</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- VISION -->
-<section>
-  <div id="vision">
-    <div class="section-tag" style="color:var(--blue2); text-align:center">The Closed-Loop Vision</div>
-    <h2 class="section-h2" style="text-align:center">Power to Sky.<br>One Operator.</h2>
-    <p class="section-desc" style="margin:0 auto 0; text-align:center">
-      Lafayette becomes the first mid-size American city with a vertically integrated AI infrastructure stack — from grid power to autonomous airspace. Every layer connected. Every stakeholder aligned.
-    </p>
-    <div class="vision-layers">
-      <div class="vision-layer" style="background:rgba(155,109,255,0.04)">
-        <div class="vl-num">LAYER 4</div>
-        <div class="vl-body">
-          <div class="vl-title" style="color:var(--purple)">Autonomous Airspace</div>
-          <div class="vl-desc">KLFT 1.1 — Skydio fleet — SkyCommand — Part 108 AUV corridor — First responders — Medical delivery — Amazon last mile</div>
-        </div>
-        <div class="vl-status" style="color:var(--purple)">In Build</div>
+<!-- ACCESS -->
+<section id="access">
+  <div class="max-w">
+    <div class="section-label">Get Involved</div>
+    <h2 style="margin-bottom:2.5rem;">Two Paths Forward</h2>
+    <div class="access-grid">
+      <div class="access-card investor">
+        <div class="access-icon">&#x1F4BC;</div>
+        <h3>Investor Access</h3>
+        <p>ADC 3K is raising to acquire and develop Louisiana AI infrastructure sites along the industrial energy corridor. Opportunities start at land acquisition and scale through full pod deployment and NOC operations.</p>
+        <ul class="access-items">
+          <li>Confidential financial architecture and ROI model</li>
+          <li>Site portfolio with development plans</li>
+          <li>NVIDIA hardware procurement roadmap</li>
+          <li>LED incentive stack and government funding details</li>
+          <li>Exit strategy and comparable market transactions</li>
+        </ul>
+        <button class="btn-investor" onclick="openModal('investor')">Request Investor Deck</button>
       </div>
-      <div class="vision-layer" style="background:rgba(59,158,255,0.04)">
-        <div class="vl-num">LAYER 3</div>
-        <div class="vl-body">
-          <div class="vl-title" style="color:var(--blue)">Edge AI Network</div>
-          <div class="vl-desc">6 ADC 3K pod sites — Trappeys — KLFT — Coteau — Pinhook — New Iberia — All managed from MARLIE I</div>
-        </div>
-        <div class="vl-status" style="color:var(--blue)">Deploying</div>
-      </div>
-      <div class="vision-layer" style="background:rgba(0,232,122,0.04)">
-        <div class="vl-num">LAYER 2</div>
-        <div class="vl-body">
-          <div class="vl-title" style="color:var(--green)">Core Compute</div>
-          <div class="vl-desc">MARLIE I — NVL72 — Mission Control NOC — 6-agent platform — Network operations for all sites</div>
-        </div>
-        <div class="vl-status" style="color:var(--green)">Active</div>
-      </div>
-      <div class="vision-layer" style="background:rgba(245,166,35,0.04)">
-        <div class="vl-num">LAYER 1</div>
-        <div class="vl-body">
-          <div class="vl-title" style="color:var(--gold)">Power & Grid</div>
-          <div class="vl-desc">LUS city-owned grid — Bloom Energy SOFC — New Iberia Solar — Act 730 + PILOT incentive stack</div>
-        </div>
-        <div class="vl-status" style="color:var(--gold)">Established</div>
+      <div class="access-card partner">
+        <div class="access-icon">&#x1F91D;</div>
+        <h3>Partner and Public Sector</h3>
+        <p>First responders, municipalities, universities, and industrial operators — ADC 3K is building the infrastructure that powers your AI mission. Let's talk about how we can serve you.</p>
+        <ul class="access-items">
+          <li>First responder and emergency services partnership</li>
+          <li>University research compute access programs</li>
+          <li>Municipal AI infrastructure initiatives</li>
+          <li>Industrial edge deployment partnerships</li>
+          <li>Government and defense compute solutions</li>
+        </ul>
+        <button class="btn-partner" onclick="openModal('partner')">Start a Conversation</button>
       </div>
     </div>
-    <p style="font-size:14px;color:var(--muted2);line-height:1.8;margin-top:0">
-      Lafayette's city-owned utility, state incentive stack, and Class C airspace create a regulatory and financial environment that cannot be replicated in Dallas, Atlanta, or Houston. The window to build this is open now.
-    </p>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section>
-  <div id="contact">
-    <div class="section-tag" style="color:var(--green); text-align:center">Ready to Move</div>
-    <h2 class="section-h2" style="text-align:center">Let's Build Lafayette's Future.</h2>
-    <p class="section-desc" style="margin:0 auto; text-align:center">
-      MARLIE I is the first conversation. KLFT and Trappeys are already in motion. If you're a city official, university partner, infrastructure investor, or federal agency — your entry point is already built.
-    </p>
-    <div class="contact-card">
-      <div class="contact-location">Lafayette, Louisiana — 1201 SE Evangeline Thruway</div>
-      <div class="contact-name">Scott Tomsu</div>
-      <div class="contact-title">Founder — ADC 3K / MARLIE I</div>
-      <div class="contact-actions">
-        <a href="#" class="btn-primary">Schedule a Meeting</a>
-        <a href="#vision" class="btn-outline">View the Infrastructure Map</a>
-      </div>
+    <div class="security-note">
+      <div style="font-size:1.2rem; flex-shrink:0;">&#x1F512;</div>
+      <p>
+        <strong>Confidentiality notice:</strong> ADC 3K maintains strict information security across all investor and partner communications. Detailed site intelligence, acquisition strategy, financial models, and operational plans are shared only under NDA with verified counterparties. What you see on this page is the public-facing story. The full picture is available by request to qualified investors and partners only.
+      </p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">ADC 3K</div>
-  <div style="color:var(--muted);font-size:11px">Lafayette, Louisiana — Gulf Coast AI Infrastructure</div>
+  <div class="footer-brand">ADC<span> 3K</span></div>
   <div class="footer-links">
-    <a href="#marlie">MARLIE I</a>
-    <a href="#network">Network</a>
-    <a href="#contact">Contact</a>
+    <a href="#products">Products</a>
+    <a href="#applications">Applications</a>
+    <a href="#access">Investors</a>
+    <a href="mailto:info@adc3k.com">Contact</a>
   </div>
+  <div class="footer-legal">2026 ADC 3K. Lafayette, Louisiana. All rights reserved.</div>
 </footer>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">x</button>
+    <div id="modal-form-content">
+      <h3 id="modal-title">Request Investor Access</h3>
+      <p class="modal-sub" id="modal-sub">We will review your request and follow up within 24 hours with access instructions.</p>
+      <div class="form-row">
+        <label>FULL NAME</label>
+        <input type="text" id="field-name" placeholder="Your name">
+      </div>
+      <div class="form-row">
+        <label>ORGANIZATION</label>
+        <input type="text" id="field-org" placeholder="Company, fund, or agency">
+      </div>
+      <div class="form-row">
+        <label>EMAIL</label>
+        <input type="email" id="field-email" placeholder="your@email.com">
+      </div>
+      <div class="form-row">
+        <label>I AM A</label>
+        <select id="field-role">
+          <option value="">Select your role</option>
+          <option>Investor / Fund</option>
+          <option>Strategic Partner</option>
+          <option>First Responder / Public Safety</option>
+          <option>University / Research</option>
+          <option>Government / Municipal</option>
+          <option>Industrial / Energy Sector</option>
+          <option>Media / Press</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button class="btn-investor modal-submit" id="modal-submit-btn" onclick="submitModal()">Submit Request</button>
+    </div>
+    <div class="modal-success" id="modal-success">
+      <div class="check">&#x2713;</div>
+      <h4>Request Received</h4>
+      <p>We will follow up at the email you provided within 24 hours.<br>Thank you for your interest in ADC 3K.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentModalType = 'investor';
+
+  function openModal(type) {
+    currentModalType = type;
+    const title = document.getElementById('modal-title');
+    const sub = document.getElementById('modal-sub');
+    const btn = document.getElementById('modal-submit-btn');
+    document.getElementById('modal-form-content').style.display = 'block';
+    document.getElementById('modal-success').style.display = 'none';
+    if (type === 'investor') {
+      title.textContent = 'Request Investor Access';
+      sub.textContent = 'We will review your request and follow up within 24 hours with the confidential deck.';
+      btn.textContent = 'Submit Request';
+      btn.className = 'btn-investor modal-submit';
+    } else {
+      title.textContent = 'Start a Conversation';
+      sub.textContent = 'Tell us about your organization and what you are looking to accomplish.';
+      btn.textContent = 'Send Message';
+      btn.className = 'btn-partner modal-submit';
+    }
+    document.getElementById('modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  function submitModal() {
+    const name = document.getElementById('field-name').value.trim();
+    const email = document.getElementById('field-email').value.trim();
+    if (!name || !email) { alert('Please enter your name and email.'); return; }
+    const org = document.getElementById('field-org').value;
+    const role = document.getElementById('field-role').value;
+    const subject = currentModalType === 'investor' ? 'ADC 3K Investor Access Request' : 'ADC 3K Partner Inquiry';
+    const body = 'Name: ' + name + '\nOrg: ' + org + '\nRole: ' + role + '\nEmail: ' + email;
+    window.location.href = 'mailto:info@adc3k.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    document.getElementById('modal-form-content').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  }
+
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+</script>
 </body>
 </html>
