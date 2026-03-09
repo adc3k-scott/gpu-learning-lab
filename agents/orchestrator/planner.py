@@ -344,6 +344,22 @@ _PATTERNS: list[dict[str, Any]] = [
                         )}},
         ],
     },
+    # ── Pipeline site scout ────────────────────────────────────────────
+    {
+        "match": re.compile(
+            r"\b(scout|scan|search).*(pipeline|sites?|corridor)\b"
+            r"|\bpipeline.*(scout|scan|find|search)\b"
+            r"|\bsite.?intel\b|find.*sites.*near.*pipeline"
+            r"|\bsabine|henry hub|teche|southern natural|tennessee gas\b",
+            re.I,
+        ),
+        "steps": lambda desc: [
+            {"name": "run_pipeline_scout", "skill": "", "assigned_role": "coder",
+             "description": "Run pipeline site scout agent to find and score land listings",
+             "params": {"action": "generate", "prompt": desc,
+                        "path": "scripts/pipeline_scout.py"}},
+        ],
+    },
     # ------------------------------------------------------------------
     # Browser automation
     # ------------------------------------------------------------------
@@ -424,6 +440,13 @@ _SYSTEM_PROMPT = (
     "    action=sync_section, section=<name>          -- push one section (thesis|hardware|site|funding|partners|credentials|vision|contact)\n"
     "    action=get_status                            -- find MARLIE I pages in Notion, return URLs\n"
     "    action=append_note, text=<str>              -- append timestamped note to root MARLIE I page\n"
+    "\n"
+    "  site_scout -- pipeline site intelligence (scripts/pipeline_scout.py):\n"
+    "    Run as coder role with action=generate, prompt=<user request>, path=scripts/pipeline_scout.py\n"
+    "    Corridors: 'Henry Hub' | 'Tennessee Gas' | 'Southern Natural' | 'Teche' | 'Sabine'\n"
+    "    Output: data/pipeline_sites.json (16 sites already), data/pipeline_sites_import.js\n"
+    "    FEMA endpoint: hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query\n"
+    "    Scoring: pipeline(25%) + flood(20%) + size(15%) + power(15%) + zoning(15%) + road(10%)\n"
     "\n"
     "  integration role -- webhook (skill=''):\n"
     "    action=webhook, url=<url>, payload=<dict>, secret=<str optional>\n"
