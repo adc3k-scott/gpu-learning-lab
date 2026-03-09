@@ -2,7 +2,7 @@
 Last updated: 2026-03-09
 
 ## Session Summary (March 9, 2026)
-Focused on onboarding Mission Control HD (vehicle diagnostics SaaS) into the Mission Control knowledge system and building Notion Command Centers for both Mission Control HD and Ground Zero. No changes to repo code. All work via Notion API and memory files.
+Two major threads: (1) Onboarded Mission Control HD into the knowledge system and built Notion Command Centers for MCHD and Ground Zero. (2) Full Notion ecosystem audit — updated all 6 project folders with new strategic context: cooling architecture distinction (MARLIE I CDU vs ADC 3K immersion), Gulf Coast Emergency Drone Hub framing for KLFT, New Iberia Solar Factory as energy/deployment partner, natural gas pipeline deployment geography for ADC 3K, ADC ecosystem cross-references throughout. No local repo code changes — all work via Notion API.
 
 ---
 
@@ -24,17 +24,40 @@ Focused on onboarding Mission Control HD (vehicle diagnostics SaaS) into the Mis
   - Session Log
 - Confirmed ID: 31e88f09-7e31-8182-900a-cac36f525edc
 
-### Notion — Ground Zero Command Center Built
-- Created root page + 4 sub-pages under Mission Control HQ:
-  - Episode Production Guide (full AIDO workflow, blockers flagged)
-  - AIDO Pipeline Reference (all modules + commands)
-  - Social & Distribution (accounts needed flagged red)
-  - Episode Archive (EP001, EP002, 5 pipeline stories)
+### Notion — Ground Zero Command Center Built + Updated
+- Created root page + 5 sub-pages (added Content Strategy & Mission page)
 - Initial build had bad ID (404); rebuilt and confirmed ID: 31e88f09-7e31-81f9-b372-fbfb99c995ed
+- Added strategic role framing, launch checklist, ADC ecosystem episode plan (8 episodes), monetization roadmap
 
-### Workspace — 135 Objects
-- Both Command Centers nested under Mission Control HQ (API cannot move to workspace root — hard Notion limitation)
-- Workspace root has: Mission Control HQ + AI Daily Omniverse
+### Notion — Full Ecosystem Audit (6 Folders Updated)
+**Edge AI Infrastructure Documents:**
+- New page: System Architecture Overview — full cross-reference all projects, cooling distinction, New Iberia Solar
+- Part 2 updated: KLFT Emergency Hub + New Iberia Solar sections
+- Part 3 updated: cooling architecture distinction (cold plate vs immersion + Louisiana rationale)
+- Part 4 updated: KLFT terminology, deployment geography strategy, energy hierarchy
+
+**KLFT 1.1:**
+- README: Gulf Coast Emergency Drone Deployment Hub framing + MARLIE I NOC + ADC 3K ecosystem
+- SkyCommand MVP: patched 2 DJI/DJI Pilot 2 references → Skydio Fleet Manager
+- Platform Architecture: MARLIE I NOC integration + ADC 3K edge pod section
+- CONOPS: Gulf Coast operational theater + multi-site expansion model (New Iberia → Lake Charles → Morgan City)
+
+**MARLIE I:**
+- Infrastructure Partners: New Iberia Solar Factory added as 5th energy partner
+- Louisiana AI Network: KLFT as first live node + ADC 3K gas pipeline geography + Ground Zero media arm
+- Site & Building Specs: CDU cold plate clarification (MARLIE I CDU ≠ ADC 3K immersion)
+
+**Mission Control HD:**
+- Session Log updated with Session 5 (March 9, 2026) — onboarding + CC build
+
+**Trappeys AI Center:**
+- New page: Trappeys Cannery ADC 3K Deployment Plan (ID: 31e88f09-7e31-81ab-b6a1-cc47c81d1324)
+  - Why immersion works here, pod configuration, MARLIE I NOC role, deployment trigger conditions
+- Hardware Evolution Log: MARLIE I CDU vs ADC 3K immersion clarification note
+
+**ADC 3K Command Center:**
+- Root page: natural gas pipeline deployment geography, ecosystem network map, cooling distinction, New Iberia Solar
+- CDU Liquid Cooling Schematics: scope clarification (MARLIE I only — NOT ADC 3K remote pods)
 
 ---
 
