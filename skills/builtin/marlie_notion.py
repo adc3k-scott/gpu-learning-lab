@@ -16,11 +16,27 @@ ADC 3K    = manufactured containerized pod product line. Deployed to remote site
             ADC 3K Notion content lives under ADC 3K — Project Command Center.
             Page ID: 31488f09-7e31-816d-9fdc-c6aabba4e3fa
 
-=== MARLIE I Notion IDs ===
+=== ALL PROJECT Notion IDs ===
 HQ root:       31288f09-7e31-81a5-bf43-e2af16379346
 MARLIE I root: 31e88f09-7e31-8121-b4d2-d96b0084cc50
 Trappeys root: 31288f09-7e31-80a2-8712-ef09878afd53
 ADC 3K root:   31488f09-7e31-816d-9fdc-c6aabba4e3fa
+KLFT 1.1:      31d88f09-7e31-80ec-b055-f69b9108355e
+AI Omniverse:  31988f09-7e31-81a5-b33c-f57653d42863
+
+=== ADC 3K PRODUCT SPECS (confirmed March 2026) ===
+Cooling fluid: Engineered Fluids EC-110 (single-phase immersion). NEVER reference 3M Novec — discontinued.
+Remote ops: MARLIE I NOC manages all pods remotely. No on-site staff at remote sites.
+Drone (KLFT): Skydio X10 + Skydio Dock ONLY. DJI removed — Countering CCP Drones Act risk.
+
+=== NOTION API PATTERNS ===
+- Full tree query: paginated POST /search (pages + databases) → build parent map → print indented tree
+- Append blocks: PATCH /blocks/{id}/children — use "after" param for insert position
+- Update block:  PATCH /blocks/{id} with block type payload
+- Delete block:  DELETE /blocks/{id}
+- Table rows:    GET /blocks/{table_id}/children → each row is table_row block with "cells" list
+- Update row:    PATCH /blocks/{row_id} {"table_row": {"cells": [[{rich_text}], ...]}}
+- CAUTION: bulk text replace scripts mangle blocks referencing the search term. Use exact block ID targeting.
 
 === Supported actions ===
   sync_full       — rebuild the entire MARLIE I workbook from scratch (all 9 sections)
