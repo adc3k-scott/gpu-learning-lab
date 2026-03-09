@@ -52,7 +52,8 @@
       "Bash(start explorer \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\\\\marlie\")",
       "Bash(start explorer \"c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab\")",
       "Bash(start cmd /k \"cd /d c:\\\\Users\\\\adhsc\\\\OneDrive\\\\Documents\\\\GitHub\\\\gpu-learning-lab && dir /s /b *.jpg *.JPG *.jpeg *.JPEG *.png *.PNG *.heic *.HEIC *.webp *.WEBP 2>nul\")",
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(npx vercel --prod --yes)"
     ]
   }
 }
