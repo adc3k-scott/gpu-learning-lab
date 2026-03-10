@@ -2,701 +2,1408 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mission Control</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC3K — Louisiana's AI Infrastructure Company</title>
+<meta name="description" content="ADC3K designs, builds, and operates AI compute infrastructure across Louisiana. MARLIE I AI Factory · ADC 3K Pod Network · KLFT Autonomous Airspace Hub.">
+<meta property="og:title" content="ADC3K — Louisiana's AI Infrastructure Company">
+<meta property="og:description" content="From flagship AI factory to modular edge pods and autonomous airspace operations — ADC3K builds Louisiana's AI infrastructure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:      #0a0e1a;
-    --panel:   #0f1525;
-    --border:  #1e2d50;
-    --accent:  #00d4ff;
-    --green:   #00ff88;
-    --yellow:  #ffd700;
-    --red:     #ff4444;
-    --dim:     #4a5568;
-    --text:    #c8d6f0;
-    --muted:   #6b7fa8;
-    --font:    'Courier New', monospace;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg); color: var(--text);
-    font-family: var(--font); font-size: 13px;
-    height: 100vh; display: flex; flex-direction: column; overflow: hidden;
-  }
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 16px; border-bottom: 1px solid var(--border);
-    background: var(--panel); flex-shrink: 0;
-  }
-  .logo { color: var(--accent); font-size: 16px; font-weight: bold; letter-spacing: 2px; }
-  .logo span { color: var(--green); }
-  .header-right { display: flex; gap: 16px; align-items: center; }
-  .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dim); display: inline-block; margin-right: 4px; }
-  .conn-dot.live { background: var(--green); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .ts { color: var(--muted); font-size: 11px; }
-
-  .workspace {
-    display: grid;
-    grid-template-columns: 240px 1fr 300px;
-    grid-template-rows: 1fr 200px;
-    gap: 1px; background: var(--border); flex: 1; overflow: hidden;
-  }
-  .panel { background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
-  .panel-title {
-    padding: 6px 12px; font-size: 10px; letter-spacing: 1.5px;
-    color: var(--accent); border-bottom: 1px solid var(--border);
-    text-transform: uppercase; flex-shrink: 0;
-  }
-  .panel-body { flex: 1; overflow-y: auto; padding: 8px; }
-  .panel-body::-webkit-scrollbar { width: 4px; }
-  .panel-body::-webkit-scrollbar-thumb { background: var(--border); }
-  .span-row { grid-row: span 2; }
-
-  /* Agents */
-  .agent-card { border: 1px solid var(--border); border-radius: 4px; padding: 8px; margin-bottom: 6px; }
-  .agent-card .role { color: var(--accent); font-size: 11px; letter-spacing: 1px; }
-  .agent-card .id { color: var(--muted); font-size: 10px; margin-top: 2px; }
-  .status-running { color: var(--green); }
-  .status-busy    { color: var(--yellow); }
-  .status-stopped { color: var(--dim); }
-  .status-error   { color: var(--red); }
-
-  /* Jobs */
-  .job-row { border-bottom: 1px solid var(--border); padding: 7px 8px; cursor: pointer; transition: background .1s; }
-  .job-row:hover { background: rgba(0,212,255,.05); }
-  .job-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .job-meta { color: var(--muted); font-size: 10px; margin-top: 2px; display: flex; gap: 8px; }
-  .badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; }
-  .badge-completed { background: rgba(0,255,136,.15); color: var(--green); }
-  .badge-running   { background: rgba(0,212,255,.15); color: var(--accent); }
-  .badge-failed    { background: rgba(255,68,68,.15);  color: var(--red); }
-  .badge-pending, .badge-created { background: rgba(255,215,0,.1); color: var(--yellow); }
-
-  /* Chat */
-  .chat-messages { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
-  .msg { max-width: 92%; padding: 7px 10px; border-radius: 6px; line-height: 1.5; font-size: 12px; word-break: break-word; }
-  .msg-user { align-self: flex-end; background: rgba(0,212,255,.12); border: 1px solid rgba(0,212,255,.2); }
-  .msg-ai   { align-self: flex-start; background: rgba(255,255,255,.04); border: 1px solid var(--border); }
-  .msg-role { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
-  .chat-input-row { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
-  .chat-input-row input, .task-form input {
-    flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    border-radius: 4px; color: var(--text); font-family: var(--font);
-    font-size: 12px; padding: 6px 10px; outline: none;
-  }
-  .chat-input-row input:focus { border-color: var(--accent); }
-  .task-form input:focus { border-color: var(--green); }
-  .btn {
-    background: var(--accent); color: var(--bg); border: none; border-radius: 4px;
-    padding: 6px 12px; font-family: var(--font); font-size: 12px;
-    font-weight: bold; cursor: pointer; white-space: nowrap;
-  }
-  .btn:hover { opacity: .85; }
-  .btn:disabled { opacity: .4; cursor: not-allowed; }
-
-  /* Infra */
-  .infra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .infra-box { border: 1px solid var(--border); border-radius: 4px; padding: 8px; }
-  .infra-box .label { color: var(--muted); font-size: 10px; margin-bottom: 4px; letter-spacing: 1px; }
-  .infra-box .value { font-size: 12px; }
-  .bar-wrap { background: var(--bg); border-radius: 2px; height: 5px; margin-top: 4px; }
-  .bar-fill  { height: 5px; border-radius: 2px; transition: width .4s; }
-
-  /* Upload bar */
-  .upload-bar { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-top: 1px solid var(--border); flex-shrink: 0; background: rgba(0,255,136,.03); }
-  .upload-btn { background: none; border: 1px solid var(--green); border-radius: 4px; color: var(--green); font-family: var(--font); font-size: 11px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
-  .upload-btn:hover { background: rgba(0,255,136,.1); }
-  .upload-name { color: var(--muted); font-size: 11px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .upload-status { font-size: 10px; white-space: nowrap; }
-  .upload-status.ok  { color: var(--green); }
-  .upload-status.err { color: var(--red); }
-  .upload-status.busy { color: var(--yellow); }
-
-  /* Task form */
-  .task-form { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
-
-  /* Events */
-  .event-row { font-size: 10px; border-bottom: 1px solid rgba(30,45,80,.5); padding: 3px 6px; display: flex; gap: 6px; }
-  .event-type { color: var(--accent); min-width: 130px; flex-shrink: 0; }
-  .event-src  { color: var(--muted); min-width: 70px; flex-shrink: 0; }
-  .event-preview { color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-  /* Overlay */
-  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 100; align-items: center; justify-content: center; }
-  .overlay.show { display: flex; }
-  .overlay-box { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; width: 640px; max-height: 80vh; display: flex; flex-direction: column; }
-  .overlay-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .overlay-body { overflow-y: auto; padding: 12px 16px; flex: 1; }
-  .step-row { border: 1px solid var(--border); border-radius: 4px; padding: 8px; margin-bottom: 8px; }
-  .step-name { color: var(--accent); }
-  .step-result { margin-top: 6px; color: var(--muted); font-size: 11px; white-space: pre-wrap; word-break: break-all; max-height: 140px; overflow-y: auto; }
-  .close-btn { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; padding: 0 4px; }
-  .close-btn:hover { color: var(--text); }
-
-  /* Settings */
-  .settings-btn { background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--muted); font-family: var(--font); font-size: 11px; padding: 4px 10px; cursor: pointer; letter-spacing: 1px; }
-  .settings-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .settings-box { width: 480px; }
-  .cfg-section { margin-bottom: 20px; }
-  .cfg-section-title { color: var(--accent); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
-  .cfg-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .cfg-label { color: var(--muted); font-size: 11px; min-width: 120px; flex-shrink: 0; }
-  .cfg-input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: var(--font); font-size: 12px; padding: 5px 8px; outline: none; }
-  .cfg-input:focus { border-color: var(--accent); }
-  .cfg-input[type=password] { letter-spacing: 2px; }
-  .cfg-input[type=password]::placeholder { letter-spacing: 0; }
-  .cfg-save-btn { background: var(--green); color: var(--bg); border: none; border-radius: 4px; padding: 5px 12px; font-family: var(--font); font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap; }
-  .cfg-save-btn:hover { opacity: .85; }
-  .cfg-save-btn:disabled { opacity: .4; cursor: not-allowed; }
-  .cfg-status { font-size: 10px; min-width: 40px; }
-  .cfg-status.ok  { color: var(--green); }
-  .cfg-status.err { color: var(--red); }
-  .cfg-pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: bold; }
-  .cfg-pill-yes { background: rgba(0,255,136,.15); color: var(--green); }
-  .cfg-pill-no  { background: rgba(255,215,0,.1);  color: var(--yellow); }
+:root{--bg:#060a10;--bg2:#0a1018;--surface:#0e1520;--surface2:#141e2c;--border:#1a2840;--text:#8fa4bc;--text-dim:#4a6078;--text-bright:#d0dce8;--text-white:#f0f4f8;--accent:#3b9eff;--accent-soft:rgba(59,158,255,0.08);--green:#00d68f;--green-soft:rgba(0,214,143,0.08);--cyan:#00d4ff;--purple:#a855f7;--amber:#f5a623;--red:#ff6b7a;--nav-h:56px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(6,10,16,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;color:var(--text-white);letter-spacing:1.5px;cursor:pointer}
+.nav-logo span{color:var(--accent)}
+.nav-center{display:flex;gap:0;align-items:center}
+.nav-center a{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--text-bright);text-decoration:none;padding:18px 12px;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;position:relative;cursor:pointer;white-space:nowrap}
+.nav-center a::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--accent);transition:all 0.3s;transform:translateX(-50%)}
+.nav-center a:hover,.nav-center a.active{color:var(--accent)}
+.nav-center a:hover::after,.nav-center a.active::after{width:80%}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--bg);background:var(--accent);padding:7px 16px;border-radius:4px;letter-spacing:0.8px;border:none;cursor:pointer;transition:background 0.2s}
+.nav-cta:hover{background:#5aafff}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(6,10,16,0.97);backdrop-filter:blur(24px);z-index:998;flex-direction:column;align-items:center;justify-content:center}
+.mobile-overlay.open{display:flex}
+.mobile-overlay a{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500;color:var(--text);text-decoration:none;padding:16px 40px;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;width:100%;text-align:center;cursor:pointer}
+.mobile-overlay a:hover{color:var(--accent)}
+.mobile-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
+.pad{max-width:1200px;margin:0 auto;padding:120px 40px 80px}
+.pad-sm{max-width:960px;margin:0 auto;padding:100px 40px 80px}
+.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active,#pg-klft.active,#pg-skydio.active{display:block;height:100vh;min-height:0;overflow:hidden}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+.eyebrow.green{color:var(--green)}.eyebrow.green::before{background:var(--green)}
+.eyebrow.purple{color:var(--purple)}.eyebrow.purple::before{background:var(--purple)}
+.stitle{font-size:42px;font-weight:700;color:var(--text-white);line-height:1.15;margin-bottom:20px;max-width:700px}
+.ssub{font-size:16px;color:var(--text);line-height:1.7;max-width:700px;margin-bottom:32px}
+h2.sh{font-size:26px;font-weight:700;color:var(--text-white);margin:40px 0 14px}
+h2.sh:first-of-type{margin-top:0}
+.sn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:1.5px;margin-bottom:8px}
+p.bd{font-size:15px;line-height:1.8;margin-bottom:14px}
+.hl{color:var(--green);font-weight:600}.ha{color:var(--accent);font-weight:600}.hr{color:var(--red);font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;transition:all 0.3s}
+.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 32px rgba(59,158,255,0.08)}
+.card h3{font-size:16px;font-weight:600;color:var(--text-white);margin-bottom:8px}
+.card p{font-size:13px;color:var(--text-dim);line-height:1.6}
+.ctag{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.ctag.g{color:var(--green)}.ctag.b{color:var(--accent)}.ctag.p{color:var(--purple)}.ctag.a{color:var(--amber)}
+.srow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0}
+.sv{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center;border-top:3px solid var(--accent);transition:all 0.3s}
+.sv:hover{transform:translateY(-2px)}.sv.g{border-top-color:var(--green)}
+.svv{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--text-white)}
+.svl{font-size:10px;color:var(--text-dim);margin-top:4px}
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#hcanvas{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hi{position:relative;z-index:1;padding:0 40px}
+.hey{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;animation:fu 0.8s ease 0.3s both}
+.htitle{font-size:88px;font-weight:700;color:var(--text-white);line-height:0.95;margin-bottom:8px;animation:fu 0.8s ease 0.5s both}
+.htitle .k3{color:var(--accent)}
+.hclass{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:3px;margin-bottom:28px;animation:fu 0.8s ease 0.7s both}
+.hdesc{font-size:17px;color:var(--text);max-width:620px;margin:0 auto 40px;line-height:1.7;animation:fu 0.8s ease 0.9s both}
+.hstats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;animation:fu 0.8s ease 1.1s both}
+.hsv{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:700;color:var(--text-white)}
+.hsv .u{font-size:14px;color:var(--accent);font-weight:500}
+.hsl{font-size:10px;color:var(--text-dim);margin-top:2px}
+.hcta{display:flex;gap:12px;justify-content:center;animation:fu 0.8s ease 1.3s both}
+.btn1{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--bg);background:var(--accent);padding:12px 28px;border-radius:5px;border:none;cursor:pointer;letter-spacing:0.8px;transition:background 0.2s}
+.btn1:hover{background:#5aafff}
+.btn2{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:transparent;padding:12px 28px;border-radius:5px;border:1px solid var(--accent);cursor:pointer;letter-spacing:0.8px;transition:all 0.2s}
+.btn2:hover{background:var(--accent-soft)}
+.ec{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+.ecard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all 0.3s;cursor:pointer}
+.ecard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.ecard.m:hover{border-color:var(--accent)}.ecard.p:hover{border-color:var(--green)}.ecard.k:hover{border-color:var(--purple)}
+.enum{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;margin-bottom:14px}
+.enum.b{color:var(--accent)}.enum.g{color:var(--green)}.enum.p{color:var(--purple)}
+.ecard h3{font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:4px}
+.esub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:14px}
+.ecard p{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:16px}
+.estats{display:flex;gap:16px;flex-wrap:wrap}
+.estat{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim)}
+.estat strong{color:var(--text-bright);display:block;font-size:13px}
+.elink{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:inline-block}
+.elink.b{color:var(--accent)}.elink.g{color:var(--green)}.elink.p{color:var(--purple)}
+.layers{display:flex;flex-direction:column;margin:24px 0}
+.layer{display:grid;grid-template-columns:200px 1fr auto;border:1px solid var(--border);border-bottom:none;background:var(--surface);padding:16px 20px;transition:background 0.2s;align-items:center;gap:16px}
+.layer:first-child{border-radius:8px 8px 0 0}.layer:last-child{border-radius:0 0 8px 8px;border-bottom:1px solid var(--border)}
+.layer:hover{background:var(--surface2)}
+.lnum{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;display:flex;align-items:center;gap:8px}
+.ldot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ldesc{font-size:13px;color:var(--text);line-height:1.5}
+.lbadge{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.lbadge.pr{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,214,143,0.2)}
+.lbadge.bk{background:rgba(245,166,35,0.08);color:var(--amber);border:1px solid rgba(245,166,35,0.2)}
+.lbadge.sp{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(59,158,255,0.2)}
+.lbadge.lr{background:rgba(255,107,122,0.08);color:var(--red);border:1px solid rgba(255,107,122,0.2)}
+.faq{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:8px;overflow:hidden}
+.faq-q{padding:16px 18px;font-size:14px;font-weight:600;color:var(--text-white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q:hover{background:rgba(255,255,255,0.02)}
+.faq-q::after{content:'+';font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--accent);transition:transform 0.2s;flex-shrink:0;margin-left:12px}
+.faq.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{padding:0 18px 16px;font-size:13px;color:var(--text);line-height:1.7;display:none}
+.faq.open .faq-a{display:block}
+.ana{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px 28px;margin:24px 0;border-left:4px solid var(--accent)}
+.ana p{font-size:14px;line-height:1.7;color:var(--text-bright)}.ana strong{color:var(--accent)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.vc{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px}
+.vc.old{border-top:3px solid var(--red)}.vc.nw{border-top:3px solid var(--green)}
+.vtag{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.vtag.ot{color:var(--red)}.vtag.nt{color:var(--green)}
+.vc h3{font-size:18px;font-weight:600;color:var(--text-white);margin-bottom:8px}
+.vc p{font-size:13px;color:var(--text-dim);line-height:1.6}
+.callout{background:linear-gradient(135deg,rgba(59,158,255,0.06),rgba(0,214,143,0.06));border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center;margin:32px 0}
+.callout h3{font-size:22px;font-weight:700;color:var(--text-white);margin-bottom:8px}
+.callout p{font-size:14px;color:var(--text);max-width:600px;margin:0 auto;line-height:1.7}
+.callout .cta{display:inline-block;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--bg);background:var(--accent);padding:10px 24px;border-radius:5px;cursor:pointer;transition:background 0.2s;border:none}
+.callout .cta:hover{background:#5aafff}
+.note{padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--amber);font-size:12px;color:var(--text-dim);line-height:1.6;margin:20px 0}
+.note strong{color:var(--amber)}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
+.iitem{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center;transition:all 0.3s}
+.iitem:hover{border-color:var(--accent);transform:translateY(-2px)}
+.iemoji{font-size:32px;margin-bottom:8px}
+.iitem h4{font-size:13px;font-weight:600;color:var(--text-white);margin-bottom:4px}
+.iitem p{font-size:11px;color:var(--text-dim);line-height:1.5}
+.sbadge{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;padding:5px 12px;border-radius:20px;margin-bottom:16px}
+.sbadge.p1{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(59,158,255,0.2)}
+.sbadge.pl{background:rgba(168,85,247,0.08);color:var(--purple);border:1px solid rgba(168,85,247,0.2)}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:16px}
+.pcard h3{font-size:20px;font-weight:700;color:var(--text-white);margin-bottom:4px}
+.ploc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.5px;margin-bottom:16px}
+.pspecs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.spec{background:var(--surface2);border-radius:6px;padding:12px}
+.slbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.sval{font-size:13px;font-weight:600;color:var(--text-bright)}
+.prow{display:grid;grid-template-columns:60px 50px 1fr 110px 1fr;gap:12px;align-items:center;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:12px}
+.prow.hdr{background:var(--surface2);font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+.sa{color:var(--green);font-family:'IBM Plex Mono',monospace;font-weight:600}
+.sb{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-weight:600}
+.ta{background:var(--green-soft);color:var(--green);font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:3px 8px;border-radius:3px}
+.tb{background:rgba(245,166,35,0.08);color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:3px 8px;border-radius:3px}
+.rgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0}
+.rbtn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.2s}
+.rbtn:hover,.rbtn.sel{border-color:var(--accent);background:var(--accent-soft)}
+.rico{font-size:24px;margin-bottom:6px}
+.rlbl{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+.rbtn.sel .rlbl{color:var(--accent)}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.fg input,.fg textarea{width:100%;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text-white);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color 0.2s}
+.fg input:focus,.fg textarea:focus{border-color:var(--accent)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text-dim)}
+.fg textarea{resize:vertical;min-height:100px}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fsub{width:100%;padding:14px;background:var(--accent);color:var(--bg);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:1px;border:none;border-radius:6px;cursor:pointer;transition:background 0.2s;margin-top:8px}
+.fsub:hover{background:#5aafff}
+.fnote{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);text-align:center;margin-top:10px;line-height:1.6}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim)}
+.flinks{display:flex;gap:20px}
+.flinks a{color:var(--text-dim);text-decoration:none;transition:color 0.2s;cursor:pointer}
+.flinks a:hover{color:var(--accent)}
+.loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.5s ease}
+.loader.done{opacity:0;pointer-events:none}
+.ltxt{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;color:var(--text-white);letter-spacing:3px}
+.ltxt span{color:var(--accent)}
+.lbar{width:120px;height:2px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.lfill{height:100%;background:var(--accent);border-radius:2px;animation:lg 0.8s ease-out forwards}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lg{from{width:0}to{width:100%}}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.stat-live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:6px;animation:pulse 2s infinite;vertical-align:middle}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.1s}.d2{transition-delay:0.2s}
+/* Project Deck Pages */
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;background:none;border:none;cursor:pointer;margin-bottom:32px;transition:color 0.2s;padding:0}
+.back-btn:hover{color:var(--accent)}.back-btn::before{content:'←';font-size:14px}
+.deck-hero{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:36px;margin:0 0 32px;position:relative;overflow:hidden}
+.deck-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.deck-hero.blue::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.deck-hero.green::before{background:linear-gradient(90deg,var(--green),transparent)}
+.deck-hero.purple::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.deck-hero.amber::before{background:linear-gradient(90deg,var(--amber),transparent)}
+.deck-title{font-size:32px;font-weight:700;color:var(--text-white);margin:12px 0 6px;line-height:1.2}
+.deck-loc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.5px;margin-bottom:18px}
+.deck-desc{font-size:15px;color:var(--text);line-height:1.7;max-width:700px}
+.dstats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0 0;padding:20px 0 0;border-top:1px solid var(--border)}
+.dstat{text-align:center}
+.dstat-v{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--text-white);line-height:1.2}
+.dstat-l{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.tm{position:relative;margin:28px 0;padding-left:28px}
+.tm::before{content:'';position:absolute;left:8px;top:6px;bottom:0;width:1px;background:var(--border)}
+.tm-item{position:relative;margin-bottom:24px}
+.tm-dot{width:17px;height:17px;border-radius:50%;border:2px solid var(--border);background:var(--bg2);position:absolute;left:-28px;top:2px;flex-shrink:0;z-index:1}
+.tm-item.done .tm-dot{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(0,214,143,0.3)}
+.tm-item.active .tm-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(59,158,255,0.4);animation:pulse 2s infinite}
+.tm-item.pending .tm-dot{background:var(--surface2);border-color:var(--border)}
+.tm-step{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
+.tm-item.done .tm-step{color:var(--green)}.tm-item.active .tm-step{color:var(--accent)}.tm-item.pending .tm-step{color:var(--text-dim)}
+.tm-name{font-size:14px;font-weight:600;color:var(--text-white);margin-bottom:2px}
+.tm-item.pending .tm-name{color:var(--text)}
+.tm-note{font-size:12px;color:var(--text-dim);line-height:1.5}
+.use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.use-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;transition:all 0.3s}
+.use-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.use-icon{font-size:28px;margin-bottom:8px}
+.use-title{font-size:13px;font-weight:600;color:var(--text-white);margin-bottom:4px}
+.use-desc{font-size:11px;color:var(--text-dim);line-height:1.5}
+.spec-row{display:grid;grid-template-columns:160px 1fr;gap:0;border-bottom:1px solid var(--border);padding:10px 0}
+.spec-row:last-child{border-bottom:none}
+.spec-k{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim)}
+.spec-v{font-size:13px;color:var(--text-bright);font-weight:500}
+.spec-table{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin:20px 0}
+.dual-cta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.cta-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px}
+.cta-card h4{font-size:14px;font-weight:600;color:var(--text-white);margin-bottom:6px}
+.cta-card p{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:14px}
+.cta-card .cta{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--bg);background:var(--accent);padding:8px 20px;border-radius:4px;cursor:pointer;transition:background 0.2s;border:none}
+.cta-card .cta:hover{background:#5aafff}
+.cta-card .cta.out{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.cta-card .cta.out:hover{background:var(--accent-soft)}
+.deck-link{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:8px 18px;border-radius:4px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all 0.2s;color:var(--text-bright)}
+.deck-link:hover{border-color:var(--accent);color:var(--accent)}
+/* Photo hero */
+.ph{position:relative;width:100%;height:440px;border-radius:12px;overflow:hidden;margin:0 0 36px}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.38)}
+.ph-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:40px;background:linear-gradient(to bottom,transparent 5%,rgba(6,10,16,0.98) 100%)}
+.ph-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ph-badge::before{content:'';width:20px;height:1px;background:currentColor}
+.ph-badge.b{color:var(--accent)}.ph-badge.p{color:var(--purple)}.ph-badge.a{color:var(--amber)}
+.ph-title{font-size:36px;font-weight:700;color:var(--text-white);margin-bottom:6px;line-height:1.1}
+.ph-sub{font-size:13px;color:var(--text);margin-bottom:24px}
+.ph-stats{display:flex;gap:36px;flex-wrap:wrap;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07)}
+.ph-sv{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white)}
+.ph-sl{font-size:10px;color:var(--text-dim);margin-top:2px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.5px}
+/* Split layout */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;margin:32px 0;border:1px solid var(--border)}
+.split img{width:100%;height:100%;object-fit:cover;min-height:280px;display:block}
+.split img.contain{object-fit:contain;background:var(--surface2);padding:20px}
+.split-text{background:var(--surface);padding:36px;display:flex;flex-direction:column;justify-content:center}
+.split-text h3{font-size:20px;font-weight:700;color:var(--text-white);margin-bottom:12px;line-height:1.3}
+.split-text p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:10px}
+.split-text ul{margin:10px 0 10px 16px;font-size:13px;color:var(--text);line-height:1.8}
+.split-text li{margin-bottom:4px}
+.split-text li strong{color:var(--text-bright)}
+/* Big stat bar */
+.bstats{display:grid;grid-template-columns:repeat(4,1fr);margin:32px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.bstat{padding:24px 16px;text-align:center;border-right:1px solid var(--border)}
+.bstat:last-child{border-right:none}
+.bstat-v{font-family:'IBM Plex Mono',monospace;font-size:34px;font-weight:700;color:var(--text-white);line-height:1}
+.bstat-l{font-size:10px;color:var(--text-dim);margin-top:6px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.5px}
+/* Image grid */
+.img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.img-row.g3{grid-template-columns:repeat(3,1fr)}
+.img-row img{width:100%;border-radius:8px;height:200px;display:block;background:var(--surface2);object-fit:contain;padding:12px}
+.img-row img.cover{object-fit:cover;padding:0}
+.full-img{width:100%;border-radius:12px;height:300px;object-fit:cover;display:block;background:var(--surface2);margin:28px 0}
+.img-caption{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);text-align:center;margin:-20px 0 24px;letter-spacing:1px;text-transform:uppercase}
+/* KLFT Radar hero */
+.radar-hero{position:relative;width:100%;height:360px;background:radial-gradient(ellipse at center,#0d0720 0%,#060a10 70%);border-radius:12px;overflow:hidden;margin:0 0 36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(168,85,247,0.15)}
+.radar-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.rring{position:absolute;border-radius:50%;border:1px solid rgba(168,85,247,0.25);animation:rexp 6s ease-out infinite}
+.rring:nth-child(1){width:100px;height:100px;animation-delay:0s}
+.rring:nth-child(2){width:200px;height:200px;animation-delay:1.2s}
+.rring:nth-child(3){width:320px;height:320px;animation-delay:2.4s}
+.rring:nth-child(4){width:460px;height:460px;animation-delay:3.6s}
+.rring:nth-child(5){width:620px;height:620px;animation-delay:4.8s}
+@keyframes rexp{0%{opacity:0.7;transform:scale(0.7)}100%{opacity:0;transform:scale(1.1)}}
+.radar-dot{width:10px;height:10px;border-radius:50%;background:var(--purple);box-shadow:0 0 24px var(--purple),0 0 48px rgba(168,85,247,0.3);z-index:2;position:relative}
+.radar-content{position:relative;z-index:2;text-align:center;padding:40px}
+.radar-content .ph-badge{justify-content:center}
+.radar-content .ph-title{font-size:32px}
+.radar-content .ph-sub{max-width:560px;margin:0 auto 24px}
+.radar-ph-stats{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;padding-top:20px;border-top:1px solid rgba(168,85,247,0.15);margin-top:0}
+@media(max-width:900px){.split{grid-template-columns:1fr;}.split img{min-height:220px}.ph{height:320px}.ph-title{font-size:26px}.ph-stats{gap:20px}.ph-sv{font-size:18px}.bstats{grid-template-columns:1fr 1fr}.bstat-v{font-size:26px}.img-row,.img-row.g3{grid-template-columns:1fr}.radar-hero{height:280px}}
+@media(max-width:900px){
+.htitle{font-size:56px}.hstats{gap:20px}.hsv{font-size:26px}
+.ec,.g2,.g3,.g4,.srow,.igrid,.vs,.rgrid,.use-grid,.dual-cta{grid-template-columns:1fr}
+.rgrid{grid-template-columns:repeat(3,1fr)}
+.pad,.pad-sm{padding:80px 16px 60px}
+nav{padding:0 16px}.nav-center{display:none!important}.nav-right{display:none}.hamburger{display:block}
+.stitle{font-size:32px}
+.layer{grid-template-columns:1fr;gap:4px}.lbadge{width:fit-content}
+.pspecs{grid-template-columns:1fr 1fr}
+.prow{grid-template-columns:50px 40px 1fr 80px;font-size:11px}.prow>:last-child{display:none}
+footer{flex-direction:column;gap:10px;text-align:center}
+.fg2{grid-template-columns:1fr}.hi{padding:0 20px}
+.dstats{grid-template-columns:repeat(3,1fr)}.deck-title{font-size:24px}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">MISSION <span>CONTROL</span></div>
-  <div class="header-right">
-    <span><span class="conn-dot" id="connDot"></span><span id="connLabel">connecting…</span></span>
-    <button class="settings-btn" onclick="openSettings()">CONFIG</button>
-    <span class="ts" id="clockEl"></span>
-  </div>
-</header>
-
-<div class="workspace">
-
-  <!-- Agents panel -->
-  <div class="panel">
-    <div class="panel-title">Agents</div>
-    <div class="panel-body" id="agentList"><div style="color:var(--muted);padding:8px">Waiting…</div></div>
-  </div>
-
-  <!-- Jobs panel -->
-  <div class="panel">
-    <div class="panel-title">Jobs</div>
-    <div class="panel-body" id="jobList" style="padding:0">
-      <div style="color:var(--muted);padding:12px">No jobs yet — submit a task below</div>
-    </div>
-    <div class="upload-bar">
-      <input type="file" id="fileInput" style="display:none" onchange="uploadFile()" />
-      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">+ Upload</button>
-      <span class="upload-name" id="uploadName">Single file or .zip folder archive</span>
-      <span class="upload-status" id="uploadStatus"></span>
-    </div>
-    <div class="task-form">
-      <input id="taskInput" placeholder="Describe a task… (Enter to run)" />
-      <button class="btn" id="taskBtn" onclick="submitTask()">Run</button>
-    </div>
-  </div>
-
-  <!-- Chat panel (spans 2 rows) -->
-  <div class="panel span-row">
-    <div class="panel-title">Chat — Claude</div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-row">
-      <input id="chatInput" placeholder="Ask Mission Control…" onkeydown="if(event.key==='Enter')sendChat()" />
-      <button class="btn" id="chatBtn" onclick="sendChat()">Send</button>
-    </div>
-  </div>
-
-  <!-- Infra panel -->
-  <div class="panel">
-    <div class="panel-title">Infrastructure</div>
-    <div class="panel-body" id="infraPanel"><div style="color:var(--muted)">Loading…</div></div>
-  </div>
-
-  <!-- Event log panel -->
-  <div class="panel">
-    <div class="panel-title">Event Log</div>
-    <div class="panel-body" id="eventLog" style="padding:0">
-      <div style="color:var(--muted);padding:8px">Waiting for events…</div>
-    </div>
-  </div>
-
+<div class="loader" id="loader">
+  <div class="ltxt"><span>ADC</span>3K</div>
+  <div class="lbar"><div class="lfill"></div></div>
 </div>
 
-<!-- Job detail overlay -->
-<div class="overlay" id="overlay" onclick="closeOverlay(event)">
-  <div class="overlay-box">
-    <div class="overlay-header">
+<div class="mobile-overlay" id="mobileNav">
+  <button class="mobile-close" onclick="closeMobile()">&#x2715;</button>
+  <a onclick="showPage('home');closeMobile()">Home</a>
+  <a onclick="showPage('ecosystem');closeMobile()">Ecosystem</a>
+  <a onclick="showPage('technology');closeMobile()">Technology</a>
+  <a onclick="showPage('louisiana');closeMobile()">Louisiana</a>
+  <a onclick="showPage('projects');closeMobile()">Projects</a>
+  <a onclick="showPage('learn');closeMobile()">Learn</a>
+  <a onclick="showPage('connect');closeMobile()">Connect</a>
+</div>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')"><span>ADC</span>3K</div>
+  <div class="nav-center">
+    <a id="nav-home" onclick="showPage('home')" class="active">Home</a>
+    <a id="nav-ecosystem" onclick="showPage('ecosystem')">Ecosystem</a>
+    <a id="nav-technology" onclick="showPage('technology')">Technology</a>
+    <a id="nav-louisiana" onclick="showPage('louisiana')">Louisiana</a>
+    <a id="nav-projects" onclick="showPage('projects')">Projects</a>
+    <a id="nav-learn" onclick="showPage('learn')">Learn</a>
+    <a id="nav-connect" onclick="showPage('connect')">Connect</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="showPage('connect')">GET IN TOUCH</button>
+  </div>
+  <button class="hamburger" onclick="openMobile()">&#9776;</button>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="pg-home">
+<section id="hero">
+  <canvas id="hcanvas"></canvas>
+  <div class="hi">
+    <div class="hey">Louisiana's AI Infrastructure Company</div>
+    <h1 class="htitle">ADC<span class="k3">3K</span></h1>
+    <div class="hclass">MARLIE I &nbsp;&middot;&nbsp; ADC 3K PODS &nbsp;&middot;&nbsp; KLFT HUB</div>
+    <p class="hdesc">We design, build, and operate AI compute infrastructure across Louisiana — from our flagship 2 MW AI factory to modular edge pods and autonomous airspace operations.</p>
+    <div class="hstats">
+      <div><div class="hsv" id="hc1">2 MW</div><div class="hsl">MARLIE I Factory</div></div>
+      <div><div class="hsv" id="hc2">3.0 MW</div><div class="hsl">Pod Class Capacity</div></div>
+      <div><div class="hsv" id="hc3">1.05 PUE</div><div class="hsl">Power Efficiency</div></div>
+      <div><div class="hsv" id="hc4">16 wk</div><div class="hsl">Pod Deployment</div></div>
+    </div>
+    <div class="hcta">
+      <button class="btn1" onclick="showPage('connect')">Request Information</button>
+      <button class="btn2" onclick="showPage('learn')">What Is an AI Factory?</button>
+    </div>
+  </div>
+</section>
+
+<!-- TECH TICKER -->
+<div id="ticker-wrap" style="background:#060e1a;border-top:1px solid #1a2840;border-bottom:1px solid #1a2840;overflow:hidden;padding:10px 0;position:relative">
+  <div id="ticker" style="display:flex;white-space:nowrap;animation:tickerScroll 40s linear infinite;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.5px">
+    <span style="color:#00d68f;margin-right:40px">&#9632; LAYER 1: NAT GAS ONLINE</span>
+    <span style="color:#3b9eff;margin-right:40px">MARLIE I &mdash; PHASE 1 ENGINEERING COMPLETE</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; PUE: 1.05</span>
+    <span style="color:#8fa4bc;margin-right:40px">ADC 3K POD &mdash; 3.0 MW CLASS &nbsp;|&nbsp; 16-WEEK DEPLOYMENT</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; IMMERSION COOLING: ACTIVE</span>
+    <span style="color:#3b9eff;margin-right:40px">VERA RUBIN NVL72 &mdash; PHASE 1 COMPUTE PLATFORM</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; H2O CONSUMPTION: 0 GALLONS</span>
+    <span style="color:#8fa4bc;margin-right:40px">HENRY HUB PRICING &nbsp;|&nbsp; NAT GAS PRIMARY &nbsp;|&nbsp; LAYER 4 GRID: LAST RESORT</span>
+    <span style="color:#f5a623;margin-right:40px">&#9632; HURRICANE IDA PROOF &mdash; LAYER 2 DIESEL: STANDBY</span>
+    <span style="color:#3b9eff;margin-right:40px">MADE IN LAFAYETTE, LOUISIANA &nbsp;|&nbsp; 100% AMERICAN-MADE</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; KLFT AIRSPACE OPS: PHASE 1 PLANNING</span>
+    <span style="color:#8fa4bc;margin-right:40px">TRAPPEYS CANNERY &mdash; FIRST DEPLOYMENT SITE</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; UPTIME TARGET: 99.999%</span>
+    <span style="color:#3b9eff;margin-right:40px">NOW ACCEPTING DEPLOYMENT INQUIRIES &mdash; ADC3K.COM</span>
+    <!-- duplicate for seamless loop -->
+    <span style="color:#00d68f;margin-right:40px">&#9632; LAYER 1: NAT GAS ONLINE</span>
+    <span style="color:#3b9eff;margin-right:40px">MARLIE I &mdash; PHASE 1 ENGINEERING COMPLETE</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; PUE: 1.05</span>
+    <span style="color:#8fa4bc;margin-right:40px">ADC 3K POD &mdash; 3.0 MW CLASS &nbsp;|&nbsp; 16-WEEK DEPLOYMENT</span>
+    <span style="color:#00d68f;margin-right:40px">&#9632; IMMERSION COOLING: ACTIVE</span>
+    <span style="color:#3b9eff;margin-right:40px">VERA RUBIN NVL72 &mdash; PHASE 1 COMPUTE PLATFORM</span>
+  </div>
+</div>
+
+<!-- HERO IMAGE — pods at night -->
+<div style="width:100%;overflow:hidden;line-height:0;position:relative">
+  <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:560px;object-fit:cover;display:block;opacity:0.95">
+  <!-- overlay stats -->
+  <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(6,10,16,0.92));padding:32px 40px 24px;display:flex;gap:40px;flex-wrap:wrap">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#00d68f;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#9632; SYSTEMS ONLINE</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">4-LAYER POWER STACK ACTIVE</div></div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COMPUTE PLATFORM</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">NVIDIA VERA RUBIN NVL72</div></div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COOLING</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">EC-110 IMMERSION &nbsp;|&nbsp; 0 GAL H2O</div></div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">ORIGIN</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">MADE IN LAFAYETTE, LOUISIANA</div></div>
+  </div>
+</div>
+
+<div class="pad" style="padding-top:80px;padding-bottom:80px">
+  <div class="eyebrow reveal">The ADC3K Ecosystem</div>
+  <h2 class="stitle reveal">Three platforms.<br/>One infrastructure company.</h2>
+  <p class="ssub reveal">ADC3K is not a single product — it's an integrated ecosystem of AI compute infrastructure engineered for Louisiana and built for the Gulf Coast industrial economy.</p>
+  <div class="ec">
+    <div class="ecard m reveal" onclick="showPage('ecosystem')">
+      <div class="enum b">PLATFORM 01</div>
+      <h3>MARLIE I</h3>
+      <div class="esub">Lafayette AI Factory</div>
+      <p>Permanent 2 MW AI compute facility at 1201 SE Evangeline Thruway, Lafayette. NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, and 24/7 NOC. Our headquarters and primary compute engine.</p>
+      <div class="estats">
+        <div class="estat"><strong>2 MW</strong>Phase 1</div>
+        <div class="estat"><strong>N+1</strong>Redundancy</div>
+        <div class="estat"><strong>24/7</strong>NOC</div>
+      </div>
+      <div class="elink b">Explore MARLIE I &rarr;</div>
+    </div>
+    <div class="ecard p reveal d1" onclick="showPage('ecosystem')">
+      <div class="enum g">PLATFORM 02</div>
+      <h3>ADC 3K Pods</h3>
+      <div class="esub">Modular AI Pod Network</div>
+      <p>Factory-manufactured 40-ft ISO containerized AI AI factories. Immersion cooled, truck-shippable, concrete-pad deployable. No HVAC. No construction. Connects to MARLIE I NOC.</p>
+      <div class="estats">
+        <div class="estat"><strong>3.0 MW</strong>Capacity</div>
+        <div class="estat"><strong>1.05</strong>PUE</div>
+        <div class="estat"><strong>16 wk</strong>Deploy</div>
+      </div>
+      <div class="elink g">Explore ADC 3K &rarr;</div>
+    </div>
+    <div class="ecard k reveal d2" onclick="showPage('ecosystem')">
+      <div class="enum p">PLATFORM 03</div>
+      <h3>KLFT 1.1</h3>
+      <div class="esub">Autonomous Airspace Hub</div>
+      <p>AI-powered autonomous airspace operations at Lafayette Regional Airport. SkyCommand software enables BVLOS drone operations and real-time airspace management across Acadiana.</p>
+      <div class="estats">
+        <div class="estat"><strong>KLFT</strong>Lafayette Airport</div>
+        <div class="estat"><strong>BVLOS</strong>Ops</div>
+        <div class="estat"><strong>Phase 1</strong>Planning</div>
+      </div>
+      <div class="elink p">Explore KLFT &rarr;</div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px">
+    <div class="eyebrow green reveal">The Thesis</div>
+    <h2 class="sh reveal">Louisiana is the right place. Now is the right time.</h2>
+    <div class="g3" style="margin-top:24px">
+      <div class="card reveal"><div class="ctag g">INFRASTRUCTURE</div><h3>Industrial DNA</h3><p>60+ years of heavy industrial construction, high-voltage electrical, and mechanical contracting. We don't hire this expertise — we are this expertise.</p></div>
+      <div class="card reveal d1"><div class="ctag b">ECONOMICS</div><h3>Competitive Power</h3><p>Louisiana industrial electricity rates rank among the lowest in the nation. Nat gas at Henry Hub pricing. Four-layer resilient power stack on every site.</p></div>
+      <div class="card reveal d2"><div class="ctag p">GEOGRAPHY</div><h3>Gulf Coast Position</h3><p>Central Gulf Coast location. Port access. O&amp;G, petrochemical, agriculture, and defense industries on our doorstep — all needing local AI compute.</p></div>
+    </div>
+  </div>
+
+  <!-- NVIDIA GPU PLATFORM -->
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="eyebrow reveal">NVIDIA Platform</div>
+    <h2 class="sh reveal">The GPU hardware inside MARLIE I and every ADC 3K pod.</h2>
+    <p class="bd reveal" style="max-width:700px">ADC3K is built on the NVIDIA compute platform — from the proven H100 to the Vera Rubin NVL72 racks going into MARLIE I Phase 1. Every generation of NVIDIA silicon can be deployed and upgraded without replacing the pod infrastructure.</p>
+    <div class="g3" style="margin-top:28px">
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-h100.jpg" alt="NVIDIA H100 GPU" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag b">HOPPER GENERATION</div>
+          <h3 style="margin-bottom:6px">NVIDIA H100</h3>
+          <p>The current workhorse of enterprise AI. 80GB HBM3 memory, 3.35 TB/s bandwidth. Powers ChatGPT, enterprise LLMs, and scientific compute worldwide.</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-blackwell.jpg" alt="NVIDIA Blackwell Architecture" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag b">BLACKWELL ARCHITECTURE</div>
+          <h3 style="margin-bottom:6px">NVIDIA B200</h3>
+          <p>Second-generation Transformer Engine. 2.5x faster AI inference vs. H100. 192GB HBM3e per GPU. Designed for trillion-parameter model training.</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-grace-blackwell.jpg" alt="NVIDIA GB200 Grace Blackwell Superchip" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag b">BLACKWELL GENERATION</div>
+          <h3 style="margin-bottom:6px">GB200 Grace Blackwell</h3>
+          <p>NVIDIA Grace CPU + two B200 GPUs on one superchip. 900 GB/s NVLink chip-to-chip bandwidth. The building block of the NVL72 rack system.</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-gb200-nvl72.jpg" alt="NVIDIA GB200 NVL72 Rack" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag b">BLACKWELL GENERATION</div>
+          <h3 style="margin-bottom:6px">GB200 NVL72</h3>
+          <p>36 Grace CPUs + 72 Blackwell GPUs in a single rack. 1.4 exaFLOPS AI performance. The benchmark rack configuration for modern AI factories.</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-vera-rubin.jpg" alt="NVIDIA Vera Rubin NVL72" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag g">MARLIE I — PHASE 1</div>
+          <h3 style="margin-bottom:6px">Vera Rubin NVL72</h3>
+          <p style="color:var(--text-bright)">The rack going into MARLIE I Phase 1. Next-generation architecture beyond Blackwell. 2x the performance density of GB200 NVL72.</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;border:1px solid var(--border)">
+        <img src="nv-rubin-platform.jpg" alt="NVIDIA Rubin Platform" style="width:100%;height:200px;object-fit:contain;background:#0a1018;display:block;padding:12px" onerror="this.style.display='none'">
+        <div style="padding:16px">
+          <div class="ctag g">NEXT GENERATION</div>
+          <h3 style="margin-bottom:6px">Rubin Platform</h3>
+          <p>The full NVIDIA Rubin platform ecosystem — CPU, GPU, networking, and software stack. The compute platform ADC3K infrastructure is designed around.</p>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:12px;text-align:center">GPU-swap architecture: pod infrastructure remains. Compute upgrades without replacing the facility.</div>
+  </div>
+
+  <!-- MADE IN AMERICA -->
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center">
       <div>
-        <div id="ovTitle" style="font-size:14px;color:var(--accent)"></div>
-        <div id="ovMeta" style="font-size:11px;color:var(--muted);margin-top:2px"></div>
+        <div class="eyebrow green reveal">Made in America</div>
+        <h2 class="sh reveal" style="margin-top:8px">Built in Lafayette, Louisiana.<br/>100% American-made.</h2>
+        <p class="bd reveal">Every ADC 3K pod is designed, engineered, and manufactured in Lafayette, Louisiana by American workers. Our supply chain is domestic. Our construction crews are local. The infrastructure powering the AI economy — built here, by us.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px" class="reveal">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:var(--green-soft);border:1px solid rgba(0,214,143,0.2);padding:6px 14px;border-radius:20px">&#10003; Designed in Louisiana</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:var(--green-soft);border:1px solid rgba(0,214,143,0.2);padding:6px 14px;border-radius:20px">&#10003; Manufactured in the USA</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:var(--green-soft);border:1px solid rgba(0,214,143,0.2);padding:6px 14px;border-radius:20px">&#10003; Local Louisiana Workforce</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:var(--green-soft);border:1px solid rgba(0,214,143,0.2);padding:6px 14px;border-radius:20px">&#10003; Domestic Supply Chain</div>
+        </div>
       </div>
-      <button class="close-btn" onclick="document.getElementById('overlay').classList.remove('show'); if(_jobStreamES){_jobStreamES.close();_jobStreamES=null;}">&#x2715;</button>
+      <div style="text-align:center">
+        <div style="font-size:96px;margin-bottom:8px">&#127482;&#127480;</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--text-white);letter-spacing:2px">MADE IN THE USA</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:6px;letter-spacing:1px">LAFAYETTE, LOUISIANA</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:4px">Advantage Design Construction Inc.</div>
+        <div style="margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);line-height:1.8">
+          Louisiana-Licensed General Contractor<br>
+          Heavy Industrial &amp; Commercial Construction<br>
+          AI Infrastructure Specialist
+        </div>
+      </div>
     </div>
-    <div class="overlay-body" id="ovBody"></div>
   </div>
-</div>
 
-<!-- Settings overlay -->
-<div class="overlay" id="settingsOverlay" onclick="closeSettings(event)">
-  <div class="overlay-box settings-box" onclick="event.stopPropagation()">
-    <div class="overlay-header">
-      <div style="color:var(--accent);font-size:13px;letter-spacing:1px">CONFIGURATION</div>
-      <button class="close-btn" onclick="document.getElementById('settingsOverlay').classList.remove('show')">&#x2715;</button>
-    </div>
-    <div class="overlay-body">
-
-      <div class="cfg-section">
-        <div class="cfg-section-title">Notion Work Folder</div>
-        <div class="cfg-row">
-          <span class="cfg-label">Database ID</span>
-          <input class="cfg-input" id="cfgNotionDbId" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
-          <button class="cfg-save-btn" onclick="saveCfg('notion_work_db_id','cfgNotionDbId','cfgNotionDbStatus')">Save</button>
-          <span class="cfg-status" id="cfgNotionDbStatus"></span>
-        </div>
-        <div class="cfg-row">
-          <span class="cfg-label">API Key</span>
-          <input class="cfg-input" id="cfgNotionKey" type="password" placeholder="secret_…" />
-          <button class="cfg-save-btn" onclick="saveCfg('notion_api_key','cfgNotionKey','cfgNotionKeyStatus')">Save</button>
-          <span class="cfg-status" id="cfgNotionKeyStatus"></span>
-        </div>
-        <div class="cfg-row" style="margin-top:4px">
-          <span class="cfg-label" style="color:var(--dim);font-size:10px">Status</span>
-          <span id="cfgNotionSyncStatus" style="font-size:11px;color:var(--muted)">Loading…</span>
-        </div>
+  <div style="margin-top:60px">
+    <div class="eyebrow reveal">Who We Work With</div>
+    <h2 class="sh reveal">Your path into ADC3K.</h2>
+    <div class="g2" style="margin-top:20px">
+      <div class="card reveal" style="border-left:3px solid var(--accent)">
+        <div class="ctag b">INVESTORS</div>
+        <h3>Infrastructure-Grade Returns</h3>
+        <p>AI compute is a 10-year structural shift. We're building the physical layer. Request our investor materials — financial model, site pipeline, and deal structure.</p>
+        <button class="btn1" style="margin-top:16px;padding:9px 20px;font-size:10px;width:auto" onclick="showPage('connect')">Request Investor Materials</button>
       </div>
-
-      <div class="cfg-section">
-        <div class="cfg-section-title">RunPod</div>
-        <div class="cfg-row">
-          <span class="cfg-label">API Key</span>
-          <input class="cfg-input" id="cfgRunpodKey" type="password" placeholder="rp_…" />
-          <button class="cfg-save-btn" onclick="saveCfg('runpod_api_key','cfgRunpodKey','cfgRunpodStatus')">Save</button>
-          <span class="cfg-status" id="cfgRunpodStatus"></span>
-        </div>
-        <div class="cfg-row" style="margin-top:4px">
-          <span class="cfg-label" style="color:var(--dim);font-size:10px">Status</span>
-          <span id="cfgRunpodApiStatus" style="font-size:11px;color:var(--muted)">Loading…</span>
-        </div>
+      <div class="card reveal d1" style="border-left:3px solid var(--green)">
+        <div class="ctag g">DEPLOYMENT CUSTOMERS</div>
+        <h3>Deploy AI at Your Site</h3>
+        <p>Industrial operators, municipalities, and anchor tenants — sovereign AI compute at your location, no AI factory construction required.</p>
+        <button class="btn2" style="margin-top:16px;padding:9px 20px;font-size:10px;width:auto" onclick="showPage('connect')">Start a Deployment Inquiry</button>
       </div>
-
-      <div class="cfg-section">
-        <div class="cfg-section-title">Model</div>
-        <div class="cfg-row">
-          <span class="cfg-label">Active Model</span>
-          <span id="cfgModelName" style="color:var(--text);font-size:12px">—</span>
-        </div>
+      <div class="card reveal" style="border-left:3px solid var(--amber)">
+        <div class="ctag a">CITIES &amp; PARISHES</div>
+        <h3>Bring AI Jobs to Your Community</h3>
+        <p>Economic development, tax base expansion, high-skill jobs. We structure deployments that benefit communities, not just balance sheets.</p>
+        <button class="btn2" style="margin-top:16px;padding:9px 20px;font-size:10px;width:auto;border-color:var(--amber);color:var(--amber)" onclick="showPage('connect')">Talk to Economic Development</button>
       </div>
-
+      <div class="card reveal d1" style="border-left:3px solid var(--purple)">
+        <div class="ctag p">VENDORS &amp; PARTNERS</div>
+        <h3>Supply Chain &amp; Integration</h3>
+        <p>Actively procuring: nat gas gensets, switchgear, CDU cooling, dielectric fluid, fiber, and construction services. Louisiana-based vendors preferred.</p>
+        <button class="btn2" style="margin-top:16px;padding:9px 20px;font-size:10px;width:auto;border-color:var(--purple);color:var(--purple)" onclick="showPage('connect')">Become a Vendor Partner</button>
+      </div>
     </div>
   </div>
 </div>
+</div>
+
+<!-- ECOSYSTEM -->
+<div class="page" id="pg-ecosystem">
+<div class="pad">
+  <div class="eyebrow">The ADC3K Ecosystem</div>
+  <h2 class="stitle">Three platforms, fully integrated.</h2>
+  <p class="ssub">MARLIE I is the brain. ADC 3K pods are the body. KLFT extends into autonomous airspace. Together — Louisiana's first vertically integrated AI infrastructure company.</p>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sbadge p1">PHASE 1 — ENGINEERING COMPLETE</div>
+    <div class="eyebrow">Platform 01</div>
+    <h2 class="sh" style="margin-top:8px">MARLIE I — Lafayette AI Factory</h2>
+    <p class="bd">MARLIE I is a <span class="ha">permanent AI compute facility</span> at 1201 SE Evangeline Thruway, Lafayette, Louisiana — corner of SE Evangeline and 16th Street. Converts an existing industrial building into a purpose-built AI factory housing NVIDIA Vera Rubin NVL72 compute racks with CDU liquid cooling.</p>
+    <p class="bd">MARLIE I serves as the <span class="hl">headquarters, NOC, and primary compute engine</span> for the entire ADC3K network. Every remote pod connects back here for monitoring, management, and data aggregation.</p>
+    <div class="g2" style="margin-top:28px">
+      <div>
+        <div class="sn">FACILITY SPECS</div>
+        <div class="srow" style="grid-template-columns:1fr 1fr;margin-top:12px">
+          <div class="sv"><div class="svv">2 <span style="font-size:14px;color:var(--accent)">MW</span></div><div class="svl">Phase 1 Power</div></div>
+          <div class="sv g"><div class="svv" style="font-size:20px;color:var(--green)">N+1</div><div class="svl">Generator Redundancy</div></div>
+          <div class="sv"><div class="svv" style="font-size:18px">NVL72</div><div class="svl">Vera Rubin Racks</div></div>
+          <div class="sv g"><div class="svv" style="font-size:20px;color:var(--green)">CDU</div><div class="svl">Liquid Cooling Per Rack</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="sn">LOCATION</div>
+        <div class="note" style="margin-top:12px;border-left-color:var(--accent)">
+          <strong style="color:var(--accent)">1201 SE Evangeline Thruway</strong><br>
+          Lafayette, Louisiana 70501<br>
+          30.21975&deg;N, 92.00645&deg;W<br><br>
+          Existing industrial building — no new construction footprint. 5 min from I-10.
+        </div>
+        <div class="note"><strong>Status:</strong> Phase 1 engineering complete. LOI/lease in negotiation. LUS utility capacity confirmation pending. LED Act 730 pre-application in process.</div>
+      </div>
+    </div>
+    <h2 class="sh">Power Stack — MARLIE I</h2>
+    <div class="layers">
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS</span></div><div class="ldesc">Two 1,500 kW prime-rated natural gas gensets. PRIMARY power. Henry Hub pricing. 24/7 continuous — never turns off.</div><div class="lbadge pr">PRIMARY</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 2 — DIESEL</span></div><div class="ldesc">One 1,500 kW diesel genset. On-site fuel. Pipeline-independent. Ida-proven. Activates if nat gas supply interrupted.</div><div class="lbadge bk">HURRICANE BACKUP</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc">300 kW solar + 600 kWh battery. Daytime offset, peak shaving, instant ATS bridge during switching events.</div><div class="lbadge sp">SUPPLEMENT</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red)"></div><span style="color:var(--red)">LAYER 4 — LUS GRID</span></div><div class="ldesc">Lafayette Utilities System grid connection. LAST RESORT ONLY — used during genset maintenance windows only. Never primary power.</div><div class="lbadge lr">LAST RESORT</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sbadge p1">NOW ACCEPTING DEPLOYMENT INQUIRIES</div>
+    <div class="eyebrow green">Platform 02</div>
+    <h2 class="sh" style="margin-top:8px">ADC 3K — Modular AI Pod Network</h2>
+    <p class="bd">The ADC 3K pod is a <span class="hl">factory-manufactured AI AI factory inside a 40-foot ISO shipping container</span>. GPU compute racks, immersion cooling tanks, power distribution, networking, and physical security — fully self-contained.</p>
+    <p class="bd">Drop it on a concrete pad, connect power and fiber, and it's operational. No building permits. No construction. <span class="hl">Order to operational: approximately 16 weeks.</span></p>
+    <div class="srow" style="margin-top:28px">
+      <div class="sv g"><div class="svv" style="color:var(--green)">3.0<span style="font-size:14px;color:var(--green)"> MW</span></div><div class="svl">Class IT Load</div></div>
+      <div class="sv"><div class="svv">1.05</div><div class="svl">PUE</div></div>
+      <div class="sv g"><div class="svv" style="color:var(--green)">0</div><div class="svl">Gallons Water/Year</div></div>
+      <div class="sv"><div class="svv">16<span style="font-size:14px;color:var(--accent)"> wk</span></div><div class="svl">Order to Operational</div></div>
+    </div>
+    <h2 class="sh">5-Zone Interior Layout</h2>
+    <div class="g3">
+      <div class="card"><div class="ctag b">ZONE 1</div><h3>Compute</h3><p>NVIDIA GPU racks in EC-110 immersion cooling tanks. Full-depth submersion — chips run cooler at higher clock speeds.</p></div>
+      <div class="card"><div class="ctag b">ZONE 2</div><h3>Power Distribution</h3><p>Medium-voltage input, transformer, PDUs. ATS switchgear for automatic failover between power layers.</p></div>
+      <div class="card"><div class="ctag b">ZONE 3</div><h3>Networking</h3><p>Spine-leaf topology. InfiniBand between GPU nodes. Fiber + microwave + Starlink uplinks. Connects to MARLIE I NOC.</p></div>
+      <div class="card"><div class="ctag b">ZONE 4</div><h3>Dry Coolers</h3><p>External dry cooler array. No water. No HVAC. Quiet — comparable to commercial air conditioning units.</p></div>
+      <div class="card"><div class="ctag b">ZONE 5</div><h3>Physical Security</h3><p>ISO container structure. Biometric access, cameras, tamper sensors. Data never leaves unless you send it.</p></div>
+      <div class="card"><div class="ctag g">ARCHITECTURE</div><h3>Daisy-Chain Network</h3><p>Pods link together with no upper limit. Start with one. Add more as demand grows. Each pod independently operational.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sbadge pl">PHASE 1 — PLANNING</div>
+    <div class="eyebrow purple">Platform 03</div>
+    <h2 class="sh" style="margin-top:8px">KLFT 1.1 — Autonomous Airspace Hub</h2>
+    <p class="bd">KLFT 1.1 is an AI-powered <span style="color:var(--purple);font-weight:600">autonomous airspace operations hub</span> at Lafayette Regional Airport. The SkyCommand platform enables BVLOS drone operations, autonomous routing, real-time airspace management, and edge AI compute supporting aviation and industrial operations across the Gulf Coast corridor.</p>
+    <div class="g2" style="margin-top:20px">
+      <div class="card" style="border-top:3px solid var(--purple)"><div class="ctag p">SOFTWARE</div><h3>SkyCommand Platform</h3><p>Proprietary airspace management software. Fleet management, flight path optimization, regulatory compliance, real-time monitoring, and AI-assisted decision support.</p></div>
+      <div class="card" style="border-top:3px solid var(--purple)"><div class="ctag p">FACILITY</div><h3>Lafayette Regional Airport</h3><p>30.21256&deg;N, 91.99069&deg;W. BVLOS operations radiating from Lafayette across Acadiana. O&amp;G inspection, infrastructure monitoring, agricultural ops, logistics.</p></div>
+    </div>
+    <div class="callout" style="margin-top:32px">
+      <h3>Interested in autonomous airspace operations?</h3>
+      <p>We're building the first autonomous airspace hub in Acadiana. If you operate drones, manage infrastructure, or work in logistics — connect with us.</p>
+      <button class="cta" onclick="showPage('connect')">Contact Our Airspace Team &rarr;</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TECHNOLOGY -->
+<div class="page" id="pg-technology">
+<div class="pad">
+  <div class="eyebrow">Engineering</div>
+  <h2 class="stitle">The technology stack<br/>behind ADC3K.</h2>
+  <p class="ssub">Immersion cooling, 4-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
+
+  <div style="margin-top:48px">
+    <div class="sn">01 — COOLING</div>
+    <h2 class="sh">Why immersion cooling changes everything.</h2>
+    <p class="bd">Modern AI chips generate <span class="hr">extreme thermal density</span>. A single AI GPU produces heat equivalent to a kitchen toaster, concentrated into a chip the size of your hand. Air cooling physically cannot remove heat fast enough at these power densities.</p>
+    <p class="bd"><span class="hl">Immersion cooling submerges the entire server in engineered dielectric fluid</span> that conducts heat 1,200x more efficiently than air. No fans. No HVAC. No chillers. No water.</p>
+    <div class="vs">
+      <div class="vc old"><div class="vtag ot">Traditional Air Cooling</div><h3>The Old Way</h3><p>Computer room air conditioners. PUE 1.4-1.6 — 40-60% of power wasted on cooling. Raised floors, hot/cold aisle containment, massive HVAC. Fails above ~1 kW per rack density.</p></div>
+      <div class="vc nw"><div class="vtag nt">ADC 3K Immersion</div><h3>The New Way</h3><p>Servers submerged in EC-110 dielectric fluid. PUE 1.05 — only 5% overhead. No fans, no HVAC, no water. Operates at 100 kW+ per rack. Quiet. Zero water consumption.</p></div>
+    </div>
+    <div class="srow" style="margin-top:28px">
+      <div class="sv g"><div class="svv" style="color:var(--green)">1.05</div><div class="svl">PUE vs 1.5 Industry Avg</div></div>
+      <div class="sv"><div class="svv">0</div><div class="svl">Gallons Water Per Year</div></div>
+      <div class="sv g"><div class="svv" style="color:var(--green);font-size:20px">1,200x</div><div class="svl">Better Heat Transfer vs Air</div></div>
+      <div class="sv"><div class="svv">30%</div><div class="svl">Lower Cooling OpEx</div></div>
+    </div>
+    <div class="sn" style="margin-top:36px">EC-110 DIELECTRIC FLUID</div>
+    <h2 class="sh">Engineered for AI. Safe for humans.</h2>
+    <div class="g4" style="margin-top:16px">
+      <div class="card"><h3>Non-Toxic</h3><p>Safe for human contact. No HAZMAT classification. No special handling required.</p></div>
+      <div class="card"><h3>Non-Conductive</h3><p>Electronics submerge directly. No short circuits. No corrosion.</p></div>
+      <div class="card"><h3>Non-Flammable</h3><p>High flash point. Significantly safer than diesel or other industrial fluids.</p></div>
+      <div class="card"><h3>Recyclable</h3><p>Fully recoverable and recyclable at end of life. Near-zero environmental impact.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">02 — POWER</div>
+    <h2 class="sh">4-Layer Power Architecture — every ADC3K site.</h2>
+    <p class="bd">Every site runs the same four-layer stack. <span class="hl">Natural gas is Layer 1 — primary, continuous, 24/7.</span> The grid is Layer 4 — last resort only. Built around the lessons of Hurricane Ida.</p>
+    <div class="layers" style="margin-top:24px">
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS GENSETS</span></div><div class="ldesc"><strong style="color:var(--text-bright)">PRIMARY &middot; Prime-rated &middot; 24/7 &middot; Henry Hub pricing.</strong> Natural gas generators run continuously. Henry Hub pricing provides stable cost independent of utility rate structures.</div><div class="lbadge pr">PRIMARY</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 2 — DIESEL GENSETS</span></div><div class="ldesc"><strong style="color:var(--text-bright)">HURRICANE BACKUP &middot; On-site fuel &middot; Pipeline-independent.</strong> Diesel with on-site fuel storage. If the nat gas pipeline is disrupted (as during Hurricane Ida), diesel takes over without interruption.</div><div class="lbadge bk">HURRICANE BACKUP</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc"><strong style="color:var(--text-bright)">SUPPLEMENT &middot; Daytime offset &middot; Instant ATS bridge.</strong> Solar offsets daytime consumption. Battery provides instant bridge during ATS switching (~30-50ms). Supports ESG reporting.</div><div class="lbadge sp">SUPPLEMENT</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red)"></div><span style="color:var(--red)">LAYER 4 — UTILITY GRID</span></div><div class="ldesc"><strong style="color:var(--text-bright)">LAST RESORT &middot; Never primary &middot; Rate exposure avoided.</strong> Grid connection used for maintenance windows only. We avoid grid reliance to protect against outages, rate volatility, and regulatory exposure.</div><div class="lbadge lr">LAST RESORT</div></div>
+    </div>
+    <div class="ana" style="margin-top:24px">
+      <p><strong>MARLIE I:</strong> 2&times; 1,500 kW nat gas (N+1) + 1&times; 1,500 kW diesel + 300 kW solar + 600 kWh battery. &nbsp;&nbsp;<strong>Pod sites:</strong> 2&times; 750 kW nat gas (N+1) + 1&times; 750 kW diesel + 200 kW solar + 400 kWh battery.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">03 — CONNECTIVITY</div>
+    <h2 class="sh">Three uplink paths — including space.</h2>
+    <div class="g3">
+      <div class="card" style="border-top:3px solid var(--green)"><div class="ctag g">PATH 1</div><h3>Fiber Optic</h3><p>Primary path. Direct fiber backhaul to MARLIE I and internet exchange. Multi-gigabit. Lowest latency. Required at all deployment sites where available.</p></div>
+      <div class="card" style="border-top:3px solid var(--accent)"><div class="ctag b">PATH 2</div><h3>Licensed Microwave</h3><p>Secondary path. Point-to-point microwave radio links. Activated automatically if fiber fails. Full management plane within milliseconds.</p></div>
+      <div class="card" style="border-top:3px solid var(--cyan)"><div class="ctag" style="color:var(--cyan)">PATH 3</div><h3>Starlink</h3><p>Tertiary and last-resort uplink. Satellite means even remote or disaster-affected sites maintain NOC visibility — critical for hurricane recovery scenarios.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LOUISIANA -->
+<div class="page" id="pg-louisiana">
+<div class="pad">
+  <div class="eyebrow green">Strategic Advantage</div>
+  <h2 class="stitle">Powered by Louisiana.</h2>
+  <p class="ssub">Louisiana isn't just where we operate — it's why we operate. Industrial infrastructure, energy economics, geography, and workforce make it ideal for the next generation of AI compute.</p>
+
+  <div style="margin-top:48px">
+    <div class="sn">01 — POWER ECONOMICS</div>
+    <h2 class="sh">Industrial electricity at Henry Hub pricing.</h2>
+    <p class="bd">Louisiana industrial electricity rates consistently rank among the <span class="hl">lowest in the United States</span>. For AI AI factories where electricity is 60-70% of operating cost, this is a structural advantage that compounds over time.</p>
+    <p class="bd">ADC3K goes further — by running <span class="hl">natural gas generators as primary power</span>, we access Henry Hub spot pricing directly, bypassing utility rate structures entirely.</p>
+    <div class="g3">
+      <div class="card"><div class="ctag g">ELECTRICITY</div><h3>Low Industrial Rates</h3><p>Louisiana industrial power rates among the lowest nationally. Structural advantage vs. Northern Virginia, Texas, and Arizona AI factory markets.</p></div>
+      <div class="card"><div class="ctag g">NAT GAS</div><h3>Henry Hub Access</h3><p>Direct pipeline access to Henry Hub pricing. Consistent, low-cost fuel for primary generation — insulated from utility rate increases.</p></div>
+      <div class="card"><div class="ctag g">SOLAR</div><h3>Gulf Coast Irradiance</h3><p>Strong solar irradiance year-round. 300 kW solar offset on each site reduces fuel burn and supports ESG reporting for enterprise customers.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">02 — INDUSTRIAL DNA</div>
+    <h2 class="sh">60+ years of heavy industrial experience.</h2>
+    <p class="bd">Advantage Design Construction Inc. is a <span class="ha">Louisiana-licensed general contractor</span> with decades of heavy industrial construction, high-voltage electrical, and mechanical contracting experience across the Gulf Coast. We don't hire the expertise needed — <span class="hl">we are that expertise</span>.</p>
+    <div class="g2" style="margin-top:24px">
+      <div class="card"><h3>General Contractor Advantage</h3><p>Louisiana-licensed GC means we self-perform construction. No markup to a third-party builder. Faster execution, lower cost, complete accountability.</p></div>
+      <div class="card"><h3>High-Voltage Expertise</h3><p>Medium-voltage electrical infrastructure is our core competency. Switchgear, transformers, ATS systems, and generator interconnects — done for decades on industrial sites.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">03 — INDUSTRIES WE SERVE</div>
+    <h2 class="sh">Gulf Coast industries need AI compute, locally.</h2>
+    <div class="g4">
+      <div class="card"><h3>Oil &amp; Gas</h3><p>Seismic processing, pipeline monitoring, drilling optimization, predictive maintenance.</p></div>
+      <div class="card"><h3>Petrochemical</h3><p>Process optimization, safety monitoring, environmental compliance, digital twin simulation.</p></div>
+      <div class="card"><h3>Agriculture</h3><p>Precision farming, yield prediction, autonomous equipment, crop disease detection.</p></div>
+      <div class="card"><h3>Ports &amp; Logistics</h3><p>Container tracking, autonomous port operations, supply chain AI, vessel routing.</p></div>
+      <div class="card"><h3>Defense</h3><p>Sovereign compute requirements. No cloud. On-premise AI for classified and sensitive operations.</p></div>
+      <div class="card"><h3>Healthcare</h3><p>Medical imaging AI, patient data on sovereign infrastructure, clinical decision support.</p></div>
+      <div class="card"><h3>First Responders</h3><p>Real-time AI for 911 dispatch optimization, facial recognition, incident command, and emergency management — locally processed, zero cloud latency.</p></div>
+      <div class="card"><h3>University Research</h3><p>LSU, UL Lafayette, Tulane — GPU compute for research that currently waits months for national lab access.</p></div>
+      <div class="card"><h3>Energy Trading</h3><p>Commodity algorithms requiring low-latency Gulf Coast compute. Millisecond-sensitive financial operations.</p></div>
+      <div class="card"><h3>Manufacturing</h3><p>Quality control AI, predictive maintenance, robotic vision, production line optimization at the plant floor.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">04 — INCENTIVES</div>
+    <h2 class="sh">Louisiana's funding toolkit.</h2>
+    <div class="g3">
+      <div class="card"><div class="ctag b">LED ACT 730</div><h3>Digital Infrastructure</h3><p>Louisiana's incentive program covering digital infrastructure. Pre-application meetings available through LED Business Development.</p></div>
+      <div class="card"><div class="ctag b">PILOT AGREEMENTS</div><h3>Parish-Level Tax Incentives</h3><p>Payment-in-lieu-of-taxes negotiated at parish level. Each parish economic development authority has flexibility to structure competitive incentive packages.</p></div>
+      <div class="card"><div class="ctag b">FEDERAL PROGRAMS</div><h3>Infrastructure &amp; Energy</h3><p>IRA energy infrastructure credits, DOE AI factory efficiency grants, and SBA programs applicable to AI infrastructure buildouts.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">05 — LEADERSHIP</div>
+    <h2 class="sh">About Scott Tomsu</h2>
+    <div class="card" style="border-top:3px solid var(--accent);padding:32px">
+      <h3 style="font-size:22px;margin-bottom:4px">Scott Tomsu</h3>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.5px;margin-bottom:16px">Founder &amp; Principal — Advantage Design Construction Inc.</div>
+      <p class="bd" style="font-style:italic;border-left:2px solid var(--accent);padding-left:14px">"Louisiana built the energy infrastructure that powered America for a century. We're building the AI infrastructure that powers it for the next one."</p>
+      <p class="bd">Louisiana-licensed general contractor with decades of heavy industrial construction experience across the Gulf Coast. ADC3K is the intersection of construction expertise, Louisiana's industrial base, and the global AI compute shortage — a company only possible in Louisiana, built by someone who's spent a career here.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PROJECTS -->
+<div class="page" id="pg-projects">
+<div class="pad">
+  <div class="eyebrow">Active Projects</div>
+  <h2 class="stitle">Where ADC3K is building.</h2>
+  <p class="ssub">Four active projects across Lafayette and Acadiana — plus 16 scored pipeline sites identified by our AI-powered site scout.</p>
+
+  <div class="pcard reveal" style="margin-top:40px;border-top:3px solid var(--accent)">
+    <div class="sbadge p1">PHASE 1 — ENGINEERING COMPLETE</div>
+    <h3>MARLIE I — Lafayette AI Factory</h3>
+    <div class="ploc">1201 SE Evangeline Thruway, Lafayette, LA &nbsp;&middot;&nbsp; 30.21975&deg;N, 92.00645&deg;W</div>
+    <p class="bd">Flagship permanent AI compute facility. Converts an existing industrial building into Louisiana's first purpose-built AI factory. Two NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, 4-layer power stack, 24/7 NOC operations — and the command center for the entire ADC 3K pod network.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Power</div><div class="sval">2 MW Phase 1</div></div>
+      <div class="spec"><div class="slbl">Compute</div><div class="sval">2&times; NVL72 Racks</div></div>
+      <div class="spec"><div class="slbl">Cooling</div><div class="sval">CDU Liquid</div></div>
+      <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--amber)">LOI Pending</div></div>
+    </div>
+    <button class="deck-link" onclick="showPage('marlie')">VIEW FULL DECK &rarr;</button>
+  </div>
+
+  <div class="pcard reveal d1" style="border-top:3px solid var(--green)">
+    <div class="sbadge" style="background:var(--green-soft);color:var(--green);border:1px solid rgba(0,214,143,0.2)">PRODUCT LINE — MANUFACTURED IN LAFAYETTE</div>
+    <h3>ADC 3K Pod System</h3>
+    <div class="ploc">Factory-built in Lafayette &nbsp;&middot;&nbsp; Deployable anywhere with power + fiber</div>
+    <p class="bd">A manufactured AI compute pod inside an ISO shipping container. Immersion-cooled with EC-110 fluid. 3.0 MW-class. Vera Rubin NVL72 ready. No construction, no HVAC, no facility modification. Drop it on a concrete pad — operational in 16 weeks.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Power</div><div class="sval">3.0 MW Class</div></div>
+      <div class="spec"><div class="slbl">Cooling</div><div class="sval">Immersion / EC-110</div></div>
+      <div class="spec"><div class="slbl">Deploy Time</div><div class="sval">16 Weeks</div></div>
+      <div class="spec"><div class="slbl">Water Use</div><div class="sval" style="color:var(--green)">Zero</div></div>
+    </div>
+    <button class="deck-link" onclick="showPage('adc3k')">VIEW FULL DECK &rarr;</button>
+  </div>
+
+  <div class="pcard reveal d2" style="border-top:3px solid var(--green)">
+    <div class="sbadge" style="background:var(--green-soft);color:var(--green);border:1px solid rgba(0,214,143,0.2)">FIRST ADC 3K DEPLOYMENT SITE</div>
+    <h3>Trappey's Cannery — Vermilion River</h3>
+    <div class="ploc">SE Evangeline Thruway Corridor, Lafayette, LA &nbsp;&middot;&nbsp; 30.21356&deg;N, 92.00163&deg;W</div>
+    <p class="bd">The historic Trappey's cannery — a Lafayette landmark on the Vermilion River — is the first site for ADC 3K pod deployment. Metal warehouse, no construction required, 0.3 miles from MARLIE I NOC. UL Lafayette is the target anchor tenant.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Type</div><div class="sval">ADC 3K Pods</div></div>
+      <div class="spec"><div class="slbl">Cooling</div><div class="sval">Immersion / EC-110</div></div>
+      <div class="spec"><div class="slbl">NOC</div><div class="sval">MARLIE I Remote</div></div>
+      <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--accent)">Site Identified</div></div>
+    </div>
+    <button class="deck-link" onclick="showPage('trappeys')">VIEW FULL DECK &rarr;</button>
+  </div>
+
+  <div class="pcard reveal" style="border-top:3px solid var(--purple)">
+    <div class="sbadge pl">AUTONOMOUS AIRSPACE HUB</div>
+    <h3>KLFT 1.1 — Lafayette Regional Airport</h3>
+    <div class="ploc">Lafayette Regional Airport, Lafayette, LA &nbsp;&middot;&nbsp; 30.21256&deg;N, 91.99069&deg;W</div>
+    <p class="bd">AI-powered autonomous airspace operations hub at KLFT. SkyCommand platform manages BVLOS drone operations across Acadiana — oil &amp; gas, agriculture, infrastructure, emergency response. AIKCC software available as a licensable SaaS for other operators.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Platform</div><div class="sval">SkyCommand</div></div>
+      <div class="spec"><div class="slbl">Operations</div><div class="sval">BVLOS</div></div>
+      <div class="spec"><div class="slbl">Coverage</div><div class="sval">Acadiana Region</div></div>
+      <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--purple)">Phase 1 Planning</div></div>
+    </div>
+    <button class="deck-link" onclick="showPage('klft')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW KLFT DECK &rarr;</button>
+    <button class="deck-link" onclick="showPage('skydio')" style="margin-top:8px;border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW SKYDIO PARTNERSHIP DECK &rarr;</button>
+  </div>
+
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border)">
+    <div class="eyebrow green">Site Acquisition Pipeline</div>
+    <h2 class="sh">16 sites scored. 4 Tier A.</h2>
+    <p class="bd">Our AI-powered pipeline scout has identified and scored 16 potential pod deployment sites across Louisiana, ranked by natural gas access, flood zone classification, grid capacity, fiber availability, industrial adjacency, and incentive potential.</p>
+    <div class="prow hdr"><div>Score</div><div>Tier</div><div>Location</div><div>Parish</div><div>Key Advantage</div></div>
+    <div class="prow"><div class="sa">83</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Common St &amp; Arabie Rd, Lake Charles</div><div style="color:var(--text-dim)">Calcasieu</div><div style="color:var(--text-dim)">ON pipeline corridor</div></div>
+    <div class="prow"><div class="sa">81</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Kinder Industrial (Hwy 165)</div><div style="color:var(--text-dim)">Allen</div><div style="color:var(--text-dim)">Zone X confirmed</div></div>
+    <div class="prow"><div class="sa">81</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Hwy 165/I-10, Iowa</div><div style="color:var(--text-dim)">Jefferson Davis</div><div style="color:var(--text-dim)">27.75 acres</div></div>
+    <div class="prow"><div class="sa">80</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">New Iberia (Hwy 90 &amp; Hwy 14)</div><div style="color:var(--text-dim)">Iberia</div><div style="color:var(--text-dim)">Gas line ON property</div></div>
+    <div class="prow"><div class="sb">74</div><div><span class="tb">B</span></div><div style="color:var(--text-bright)">Smede Hwy, Broussard</div><div style="color:var(--text-dim)">St. Martin</div><div style="color:var(--text-dim)">46 acres, Zone X</div></div>
+    <div class="prow"><div class="sb">72</div><div><span class="tb">B</span></div><div style="color:var(--text-bright)">Hwy 90 Energy Corridor, Gray</div><div style="color:var(--text-dim)">Terrebonne</div><div style="color:var(--text-dim)">108 acres, Zone X</div></div>
+    <div class="note" style="margin-top:16px"><strong>Note:</strong> Site scoring is proprietary. Tier A = highest infrastructure readiness. Sabine corridor pending evaluation. Contact us for site-specific detail.</div>
+  </div>
+</div>
+</div>
+
+<!-- MARLIE I DECK -->
+<div class="page" id="pg-marlie" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">MARLIE I &nbsp;·&nbsp; LAFAYETTE AI FACTORY</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
+  </div>
+  <iframe src="marlie-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+</div>
+
+<!-- ADC 3K DECK -->
+<div class="page" id="pg-adc3k">
+<div class="pad-sm">
+  <button class="back-btn" onclick="showPage('projects')">Back to Projects</button>
+
+  <!-- Photo Hero — pods at night -->
+  <div class="ph reveal">
+    <img src="pods-night.jpg" alt="ADC 3K Pod Array — nighttime">
+    <div class="ph-overlay">
+      <div class="ph-badge">Manufactured in Lafayette, LA</div>
+      <div class="ph-title">ADC 3K Pod System</div>
+      <div class="ph-sub">Factory-built · Truck-shipped · Concrete pad + power + fiber = operational in 16 weeks</div>
+      <div class="ph-stats">
+        <div><div class="ph-sv">3.0 MW</div><div class="ph-sl">Class Power</div></div>
+        <div><div class="ph-sv">EC-110</div><div class="ph-sl">Immersion Fluid</div></div>
+        <div><div class="ph-sv">16 Wk</div><div class="ph-sl">Order to Ops</div></div>
+        <div><div class="ph-sv">1.05</div><div class="ph-sl">PUE</div></div>
+        <div><div class="ph-sv">0 gal</div><div class="ph-sl">Water Use</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Infographic -->
+  <img src="power-infographic.png" alt="ADC 3K — AI Compute is Becoming Power-Limited" class="full-img reveal" style="object-fit:contain;background:var(--surface2);height:360px;padding:0">
+
+  <!-- Old vs New comparison -->
+  <div class="vs reveal">
+    <div class="vc old"><div class="vtag ot">Traditional AI Factory</div><h3>The Old Way</h3><p>Custom building. 18–36 months. $500M+. Air cooled — fans everywhere. 4–5 metro markets only. Specialized real estate, permits, construction crews.</p></div>
+    <div class="vc nw"><div class="vtag nt">ADC 3K Pod</div><h3>The New Way</h3><p>Factory-built in Lafayette. 16 weeks. Ships on a flatbed. Immersion cooled — no fans, no HVAC. Deployable anywhere with power and fiber. Equipment, not a building.</p></div>
+  </div>
+
+  <!-- Split: NVL72 + What's inside -->
+  <div class="split reveal">
+    <img src="nv-gb200-nvl72.jpg" alt="NVIDIA GB200 NVL72 inside the pod" class="contain">
+    <div class="split-text">
+      <div class="sn" style="margin:0 0 8px">Hardware Inside the Pod</div>
+      <h3>NVIDIA Vera Rubin NVL72 — frontier AI compute in an ISO container.</h3>
+      <ul>
+        <li><strong>Cooling:</strong> EC-110 full immersion — direct-to-chip</li>
+        <li><strong>Heat rejection:</strong> Dry cooler — zero water</li>
+        <li><strong>UPS:</strong> Vertiv GXT5 LFP on-board</li>
+        <li><strong>Fire:</strong> VESDA detection + FK-5-1-12 suppression</li>
+        <li><strong>Monitoring:</strong> Full BMS + TraceTek leak detection</li>
+        <li><strong>Remote ops:</strong> All telemetry to MARLIE I NOC</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GPU image row -->
+  <div class="img-row reveal">
+    <img src="nv-grace-blackwell.jpg" alt="Grace Blackwell GB200" class="contain">
+    <img src="nv-rubin-platform.jpg" alt="Rubin Platform" class="contain">
+  </div>
+  <div class="img-caption">Grace Blackwell GB200 Superchip (left) · Vera Rubin Platform (right) — supported GPU configurations</div>
+
+  <!-- Power stack -->
+  <div class="sn reveal" style="margin-top:32px">Power at Every Pod Site</div>
+  <h2 class="sh reveal">4-layer resilience. No grid dependency.</h2>
+  <div class="layers reveal">
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--green)"></span><span style="color:var(--green)">LAYER 1 — NAT GAS (N+1)</span></div><div class="ldesc">Two 750 kW prime-rated nat gas gensets. Primary 24/7. Henry Hub pricing. Pipeline-fed.</div><div class="lbadge pr">PRIMARY</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--amber)"></span><span style="color:var(--amber)">LAYER 2 — DIESEL</span></div><div class="ldesc">750 kW diesel + on-site fuel. Runs when the pipeline is out. Built around Hurricane Ida lessons.</div><div class="lbadge bk">BACKUP</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--accent)"></span><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc">200 kW solar + 400 kWh LFP. Daytime offset + instant ATS bridge.</div><div class="lbadge sp">SUPPLEMENT</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--red)"></span><span style="color:var(--red)">LAYER 4 — LOCAL GRID</span></div><div class="ldesc">Utility connection at each site. Last resort only — never primary.</div><div class="lbadge lr">LAST RESORT</div></div>
+  </div>
+
+  <!-- Where pods deploy -->
+  <div class="sn reveal" style="margin-top:36px">Where Pods Deploy</div>
+  <h2 class="sh reveal">Any site with power and fiber.</h2>
+  <div class="use-grid reveal">
+    <div class="use-card"><div class="use-icon">&#128754;</div><div class="use-title">Oil &amp; Gas</div><div class="use-desc">Processing plants, pipeline corridors, offshore support. On-site AI — no cloud latency, no data sovereignty risk.</div></div>
+    <div class="use-card"><div class="use-icon">&#127963;</div><div class="use-title">Military &amp; Defense</div><div class="use-desc">Forward AI compute. Air-gap capable. Truck-deployable. Operates independent of civilian infrastructure.</div></div>
+    <div class="use-card"><div class="use-icon">&#127979;</div><div class="use-title">Universities</div><div class="use-desc">Research-grade GPUs on campus. Replaces cloud spend with owned infrastructure.</div></div>
+    <div class="use-card"><div class="use-icon">&#127970;</div><div class="use-title">Port &amp; Logistics</div><div class="use-desc">Port Fourchon, New Orleans, Lake Charles. AI for cargo, customs, autonomous routing.</div></div>
+    <div class="use-card"><div class="use-icon">&#128657;</div><div class="use-title">First Responders</div><div class="use-desc">Disaster response AI. Real-time coordination. Operates when cloud is unreachable.</div></div>
+    <div class="use-card"><div class="use-icon">&#127968;</div><div class="use-title">Industrial Parks</div><div class="use-desc">Manufacturing AI, quality inspection, supply chain. Drops in anywhere with utility service.</div></div>
+  </div>
+
+  <div class="callout reveal" style="margin-top:36px">
+    <h3>Deploy an ADC 3K Pod</h3>
+    <p>Tell us your site, your power situation, your compute requirements. We assess suitability and scope the deployment.</p>
+    <div class="dual-cta">
+      <div class="cta-card"><h4>Deployment Inquiry</h4><p>Site assessment, power review, deployment timeline — starts here.</p><button class="cta" onclick="showPage('connect')">Start Deployment &rarr;</button></div>
+      <div class="cta-card"><h4>Investor Materials</h4><p>Manufacturing economics, unit margins, pod network scaling — for qualified investors.</p><button class="cta out" onclick="showPage('connect')">Request Package &rarr;</button></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TRAPPEYS DECK -->
+<div class="page" id="pg-trappeys">
+<div class="pad-sm">
+  <button class="back-btn" onclick="showPage('projects')">Back to Projects</button>
+
+  <!-- Photo Hero — metal warehouse -->
+  <div class="ph reveal">
+    <img src="metal-warehouse.jpg" alt="Metal warehouse — ADC 3K pod deployment site" class="cover">
+    <div class="ph-overlay">
+      <div class="ph-badge">First ADC 3K Deployment Site</div>
+      <div class="ph-title">Trappey's Cannery — Vermilion River</div>
+      <div class="ph-sub">SE Evangeline Thruway Corridor, Lafayette, LA &nbsp;·&nbsp; 30.21356°N, 92.00163°W</div>
+      <div class="ph-stats">
+        <div><div class="ph-sv">1901</div><div class="ph-sl">Year Built</div></div>
+        <div><div class="ph-sv">Metal</div><div class="ph-sl">Structure</div></div>
+        <div><div class="ph-sv">0</div><div class="ph-sl">Build-Out Req.</div></div>
+        <div><div class="ph-sv">0.3 mi</div><div class="ph-sl">From MARLIE I</div></div>
+        <div><div class="ph-sv">Remote</div><div class="ph-sl">NOC Managed</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What goes inside — split -->
+  <div class="split reveal" style="flex-direction:row-reverse">
+    <div class="split-text">
+      <div class="sn" style="margin:0 0 8px">What Goes Inside</div>
+      <h3>Pods roll in on a flatbed. Power connects. Fiber connects. Done.</h3>
+      <p>ADC 3K pods don't need climate-controlled space, finished interiors, or traditional data center build-out. They need a covered structure with power and fiber. The Trappeys metal warehouse delivers exactly that — with zero modification to the building.</p>
+      <p>The pods are sealed, immersion-cooled containers. The warehouse just keeps the weather off them. Remote monitoring and operations run from MARLIE I, 0.3 miles away.</p>
+    </div>
+    <img src="pods-night.jpg" alt="ADC 3K pods — what goes inside the warehouse" class="cover">
+  </div>
+
+  <!-- Big stats -->
+  <div class="bstats reveal">
+    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0.3</div><div class="bstat-l">Miles from MARLIE I NOC</div></div>
+    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0</div><div class="bstat-l">Construction Required</div></div>
+    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0</div><div class="bstat-l">On-Site Staff Needed</div></div>
+    <div class="bstat"><div class="bstat-v" style="color:var(--green)">3 min</div><div class="bstat-l">Emergency Response Time</div></div>
+  </div>
+
+  <!-- Why it works — 3 cards -->
+  <div class="sn reveal">Why This Works</div>
+  <h2 class="sh reveal">Five advantages. Zero construction.</h2>
+  <div class="g3 reveal">
+    <div class="card"><div class="ctag g">Structure</div><h3>No Build-Out</h3><p>Metal industrial warehouse. Pods position on the concrete floor. No interior modification to the building.</p></div>
+    <div class="card"><div class="ctag b">Operations</div><h3>MARLIE I NOC</h3><p>All monitoring, alerts, and management handled remotely from 0.3 miles. Zero staff required at Trappeys.</p></div>
+    <div class="card"><div class="ctag g">Response</div><h3>3-Minute Physical Response</h3><p>If a rare physical intervention is needed, MARLIE I staff are 3 minutes away. Better SLA than any remote-only site.</p></div>
+    <div class="card"><div class="ctag b">Fiber + Power</div><h3>SE Evangeline Corridor</h3><p>Same utility service area as MARLIE I. Dark fiber extension is a one-time run. No new infrastructure corridors needed.</p></div>
+    <div class="card"><div class="ctag g">Incentives</div><h3>Historic Tax Credits</h3><p>1901 cannery building qualifies for NPS Historic Tax Credit review — Parts 1/2/3 application pathway.</p></div>
+    <div class="card"><div class="ctag b">Anchor Tenant</div><h3>UL Lafayette</h3><p>University research computing is the target anchor. Research cloud spend → owned infrastructure on-corridor.</p></div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="sn reveal" style="margin-top:36px">Deployment Plan</div>
+  <h2 class="sh reveal">Pods in. Fiber connected. Operational.</h2>
+  <div class="tm reveal">
+    <div class="tm-item active"><div class="tm-dot"></div><div><div class="tm-step">Now</div><div class="tm-name">Site Control</div><div class="tm-note">Site identified. Access negotiations and historic tax credit assessment in progress.</div></div></div>
+    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Next</div><div class="tm-name">UL Lafayette Engagement</div><div class="tm-note">First contact: president / provost / research computing director. Anchor commitment before deployment spend.</div></div></div>
+    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">Utility + Fiber</div><div class="tm-note">LUS MV extension from MARLIE I. 0.3-mile dark fiber run. Nat gas for 4-layer power stack.</div></div></div>
+    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">Pod Delivery &amp; Installation</div><div class="tm-note">ADC 3K pods from Lafayette factory. Positioned on warehouse floor. Power + fiber connected.</div></div></div>
+    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Target</div><div class="tm-name">GO-LIVE — Trappeys AI Center</div><div class="tm-note">First production workload. Managed remotely from MARLIE I NOC.</div></div></div>
+  </div>
+
+  <div class="callout reveal" style="margin-top:36px">
+    <h3>Trappeys AI Center</h3>
+    <p>University research, Louisiana enterprise, government compute — if you need dedicated AI infrastructure in Lafayette, this site is being designed for you.</p>
+    <div class="dual-cta">
+      <div class="cta-card"><h4>Anchor Tenant Inquiry</h4><p>UL Lafayette, LSU, enterprise, government — let's talk before the site fills.</p><button class="cta" onclick="showPage('connect')">Start Conversation &rarr;</button></div>
+      <div class="cta-card"><h4>City &amp; Development Partners</h4><p>Economic development, historic preservation, city engagement — multiple partnership pathways.</p><button class="cta out" onclick="showPage('connect')">Connect Now &rarr;</button></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- KLFT 1.1 DECK -->
+<div class="page" id="pg-klft" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">KLFT 1.1 &nbsp;·&nbsp; AUTONOMOUS AIRSPACE OPS HUB</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
+  </div>
+  <iframe src="klft-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+</div>
+
+<!-- SKYDIO DECK -->
+<div class="page" id="pg-skydio" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">SKYDIO &nbsp;·&nbsp; GULF COAST DRONE DEPLOYMENT HUB</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
+  </div>
+  <iframe src="skydio-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+</div>
+
+<!-- LEARN -->
+<div class="page" id="pg-learn">
+<div class="pad-sm">
+  <div class="eyebrow green">Education</div>
+  <h2 class="stitle">What Is an AI Factory?</h2>
+  <p class="ssub">You've probably heard the term but never needed to think about it. This page explains AI factories in plain language — what they are, why they matter, and why they're coming to Louisiana.</p>
+
+  <div class="sn">01 — THE SHORT ANSWER</div>
+  <h2 class="sh">An AI factory is a specialized facility built to run artificial intelligence.</h2>
+  <p class="bd">A AI factory is a specialized facility filled with <span class="ha">powerful computers called servers</span> that run 24/7, doing work that keeps the modern world running.</p>
+  <p class="bd">Every time you open your phone, check email, watch Netflix, use GPS, ask an AI a question, or pay with a credit card — your request travels to a server in a AI factory, gets processed, and comes back in milliseconds.</p>
+  <div class="ana"><p><strong>Think of it like a power plant, but for information.</strong> A power plant takes fuel and turns it into electricity that flows to every home. A AI factory takes electricity and turns it into computing power that flows to every device. Without AI factories, there is no internet, no AI, no digital economy.</p></div>
+
+  <div class="sn" style="margin-top:36px">02 — WHAT'S INSIDE</div>
+  <h2 class="sh">Four things every AI factory needs.</h2>
+  <div class="igrid">
+    <div class="iitem"><div class="iemoji">&#128421;</div><h4>Servers</h4><p>The computers. Rows of them, stacked in racks, doing the actual work.</p></div>
+    <div class="iitem"><div class="iemoji">&#9889;</div><h4>Power</h4><p>Massive electricity. A single AI factory can use as much power as a small city.</p></div>
+    <div class="iitem"><div class="iemoji">&#10052;</div><h4>Cooling</h4><p>Without cooling, servers overheat in minutes. The #1 engineering challenge.</p></div>
+    <div class="iitem"><div class="iemoji">&#127760;</div><h4>Network</h4><p>Fiber optic cables connecting to the internet. Data at the speed of light.</p></div>
+    <div class="iitem"><div class="iemoji">&#128274;</div><h4>Security</h4><p>Physical and digital. Fences, cameras, biometrics, fire suppression.</p></div>
+    <div class="iitem"><div class="iemoji">&#128267;</div><h4>Backup Power</h4><p>UPS batteries and generators. If the grid goes down, the AI factory keeps running.</p></div>
+  </div>
+
+  <div class="sn" style="margin-top:36px">03 — WHY THEY MATTER</div>
+  <h2 class="sh">Everything digital runs on AI factories.</h2>
+  <div class="igrid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="iitem"><div class="iemoji">&#128241;</div><h4>Your Phone</h4><p>iCloud, Google, apps, maps</p></div>
+    <div class="iitem"><div class="iemoji">&#128179;</div><h4>Banking</h4><p>Every card swipe, Venmo, ATMs</p></div>
+    <div class="iitem"><div class="iemoji">&#127973;</div><h4>Healthcare</h4><p>Medical records, telemedicine</p></div>
+    <div class="iitem"><div class="iemoji">&#128754;</div><h4>Oil &amp; Gas</h4><p>Seismic, pipelines, trading</p></div>
+    <div class="iitem"><div class="iemoji">&#129302;</div><h4>AI</h4><p>Every AI query = AI factory</p></div>
+    <div class="iitem"><div class="iemoji">&#128250;</div><h4>Streaming</h4><p>Netflix, YouTube, Spotify</p></div>
+    <div class="iitem"><div class="iemoji">&#128664;</div><h4>Vehicles</h4><p>GPS, connected cars, autonomy</p></div>
+    <div class="iitem"><div class="iemoji">&#127963;</div><h4>Government</h4><p>Military, Social Security, 911</p></div>
+  </div>
+
+  <div class="sn" style="margin-top:36px">04 — THE HEAT PROBLEM</div>
+  <h2 class="sh">The #1 problem is heat.</h2>
+  <p class="bd">AI chips generate <span class="hr">extreme heat</span> — as much as a kitchen toaster per chip. Traditional AI factories use air conditioning, but AI chips are now so powerful that <span class="hr">air can't remove heat fast enough</span>. That's where immersion cooling comes in — and that's what the ADC 3K pod uses.</p>
+
+  <div class="sn" style="margin-top:36px">05 — OLD WAY vs. NEW WAY</div>
+  <h2 class="sh">The AI factory industry is changing.</h2>
+  <div class="vs">
+    <div class="vc old"><div class="vtag ot">Traditional</div><h3>The Old Way</h3><p>Giant warehouse-sized building. Custom every time. 18-36 months to build. $500M+. Air cooled. A few major markets only.</p></div>
+    <div class="vc nw"><div class="vtag nt">ADC 3K Pod</div><h3>The New Way</h3><p>Factory-built inside a shipping container. Manufactured in Lafayette. Immersion cooled. Truck-shippable. Concrete pad + power + fiber = operational in weeks.</p></div>
+  </div>
+
+  <div class="sn" style="margin-top:36px">06 — WHAT DOES "EDGE" MEAN</div>
+  <h2 class="sh">Edge = closer to where the work happens.</h2>
+  <p class="bd">Most AI factories are concentrated in a handful of places. Your data travels 1,000+ miles to get processed. <span class="hl">Edge AI factories</span> bring computing power closer — right to the factory, the oil field, the city.</p>
+  <div class="ana"><p><strong>Think of it like electricity.</strong> Power plants generate electricity, but you need substations near your neighborhood to deliver it. Edge AI factories are the substations of the digital world — bringing computing power closer to where it's needed.</p></div>
+  <p class="bd">The <span class="hl">Gulf Coast is a perfect location</span> for edge AI. Oil &amp; gas, petrochemical, ports, energy — all need high-performance computing nearby, not 1,000 miles away.</p>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="sh">Frequently Asked Questions</h2>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is this like a bitcoin mining operation?</div><div class="faq-a">No. Bitcoin mining uses specialized hardware for a single purpose. The ADC 3K pod houses general-purpose AI GPUs — the same technology powering ChatGPT, medical imaging, autonomous vehicles, and defense systems. The hardware is far more sophisticated and the applications create real economic value across every industry.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How loud is it?</div><div class="faq-a">Remarkably quiet. Immersion cooling eliminates all server fans inside the container. The outdoor dry coolers produce sound similar to commercial HVAC. Far quieter than traditional air-cooled AI factories.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much water does it use?</div><div class="faq-a">Zero. The ADC 3K pod uses dry coolers instead of evaporative cooling towers. Traditional AI factories consume millions of gallons per year. This is an environmental and operational advantage.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much power does it need?</div><div class="faq-a">3.0 MW-class — roughly equivalent to 2,000-2,500 homes. Requires a medium-voltage utility feed or generator interconnect. Initial deployments may operate at lower capacity and scale up to full 3.0 MW.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the cooling liquid dangerous?</div><div class="faq-a">No. EC-110 engineered dielectric fluid is non-toxic, non-conductive, and non-flammable. Safe for human contact. Environmentally friendly. Recyclable at end of life. No HAZMAT classification required.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Who controls the data?</div><div class="faq-a">You do. Unlike cloud services, the ADC 3K pod is a privately owned asset at your location. Data never leaves unless you send it. Critical for defense, healthcare, oil &amp; gas, and government where data sovereignty isn't optional.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it survive a hurricane?</div><div class="faq-a">The ADC 3K pod is built inside an ISO shipping container — one of the most rugged structures ever designed. Our 4-layer power architecture was specifically built around Hurricane Ida lessons: Layer 2 diesel keeps us running independently of both the grid and the nat gas pipeline, which was disrupted for weeks during Ida.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it need building permits?</div><div class="faq-a">Classified as equipment, not a building. In most jurisdictions, equipment placement requires utility permits and site approval but not traditional building permits. Requirements vary by parish — we navigate the permitting process for each deployment.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What kind of investment opportunity is this?</div><div class="faq-a">AI compute infrastructure is generating strong infrastructure-grade returns in markets where it's been deployed. We're building that market in Louisiana. Contact us for investor materials — we don't publish financial projections publicly, but we walk qualified investors through the full financial model.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I deploy an ADC 3K pod at my site?</div><div class="faq-a">Start with a deployment inquiry. Tell us your location, power situation, compute requirements, and timeline. We'll assess site suitability, walk through the deployment process, and provide a project scope. Order to operational: approximately 16-20 weeks.</div></div>
+  </div>
+
+  <div class="callout" style="margin-top:40px">
+    <h3>Ready to go deeper?</h3>
+    <p>Get in touch and tell us who you are. We'll route you to the right conversation — investor materials, deployment inquiry, vendor partnership, or city engagement.</p>
+    <button class="cta" onclick="showPage('connect')">CONNECT WITH ADC3K &rarr;</button>
+  </div>
+</div>
+</div>
+
+<!-- CONNECT -->
+<div class="page" id="pg-connect">
+<div class="pad-sm">
+  <div class="eyebrow">Contact</div>
+  <h2 class="stitle">Let's talk.</h2>
+  <p class="ssub">Tell us who you are and what you're looking for. Your role determines what comes next — investor materials, deployment specs, partnership agreements, or city engagement frameworks.</p>
+
+  <div style="margin-top:40px">
+    <div class="sn">01 — SELECT YOUR ROLE</div>
+    <div class="rgrid" style="margin-top:16px">
+      <div class="rbtn" onclick="selectRole(this,'Investor')"><div class="rico">&#128200;</div><div class="rlbl">Investor</div></div>
+      <div class="rbtn" onclick="selectRole(this,'Deployment Customer')"><div class="rico">&#128776;</div><div class="rlbl">Deploy AI</div></div>
+      <div class="rbtn" onclick="selectRole(this,'City / Parish')"><div class="rico">&#127963;</div><div class="rlbl">City / Parish</div></div>
+      <div class="rbtn" onclick="selectRole(this,'Vendor / Partner')"><div class="rico">&#129309;</div><div class="rlbl">Vendor / Partner</div></div>
+      <div class="rbtn" onclick="selectRole(this,'Media / Press')"><div class="rico">&#128240;</div><div class="rlbl">Media / Press</div></div>
+    </div>
+    <div id="rctx" style="display:none;margin-bottom:24px">
+      <div id="rctx-investor" class="note" style="border-left-color:var(--accent);display:none"><strong style="color:var(--accent)">Investors:</strong> We'll follow up with our investor materials — financial model, site pipeline, deal structure, and timeline. We don't publish financial projections publicly.</div>
+      <div id="rctx-deploy" class="note" style="border-left-color:var(--green);display:none"><strong style="color:var(--green)">Deployment Customers:</strong> Tell us your location, power situation, compute requirements, and timeline. We'll assess site suitability and provide a deployment scope.</div>
+      <div id="rctx-city" class="note" style="border-left-color:var(--amber);display:none"><strong style="color:var(--amber)">Cities &amp; Parishes:</strong> We work with economic development authorities to structure deployments that create jobs, expand the tax base, and build AI infrastructure in your community.</div>
+      <div id="rctx-vendor" class="note" style="border-left-color:var(--purple);display:none"><strong style="color:var(--purple)">Vendors &amp; Partners:</strong> Actively procuring nat gas gensets, switchgear, CDU cooling, dielectric fluid, fiber, and construction services. Louisiana-based vendors preferred.</div>
+      <div id="rctx-media" class="note" style="border-left-color:var(--cyan);display:none"><strong style="color:var(--cyan)">Media &amp; Press:</strong> Happy to speak on the record about Louisiana's AI infrastructure buildout. Backgrounders and fact sheets available.</div>
+    </div>
+
+    <div class="sn">02 — YOUR INFORMATION</div>
+    <!-- Replace YOUR_FORM_ID: create account at formspree.io, create a new form, paste the ID here -->
+    <form id="cform" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:16px">
+      <input type="hidden" name="role" id="hrole" value="">
+      <div class="fg2">
+        <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="First name" required></div>
+        <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Last name" required></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="you@company.com" required></div>
+        <div class="fg"><label>Organization</label><input type="text" name="organization" placeholder="Company or City"></div>
+      </div>
+      <div class="fg"><label>What Are You Looking For?</label><textarea name="message" placeholder="Tell us what brought you here — the more context, the faster we can route you to the right conversation."></textarea></div>
+      <button type="submit" class="fsub">SEND MESSAGE &rarr;</button>
+      <div class="fnote">We respond to every inquiry within 24 hours. Your information is never sold or shared.</div>
+    </form>
+    <div id="fsuccess" style="display:none;text-align:center;padding:40px 20px">
+      <div style="font-size:40px;margin-bottom:16px">&#10003;</div>
+      <h3 style="color:var(--text-white);font-size:22px;margin-bottom:8px">Message received.</h3>
+      <p style="color:var(--text);line-height:1.7">We'll be in touch within 24 hours.<br>Check your inbox — we'll route you based on your role.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">03 — DIRECT CONTACT</div>
+    <h2 class="sh">Prefer a direct conversation?</h2>
+    <div class="g2">
+      <div class="card"><div class="ctag b">GENERAL INQUIRIES</div><h3>Advantage Design Construction Inc.</h3><p style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-bright)">Lafayette, Louisiana</p><p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);margin-top:4px">adc3k.com</p></div>
+      <div class="card"><div class="ctag g">SITE ACQUISITION</div><h3>Pipeline Site Inquiries</h3><p>Own or represent property in Louisiana? Key criteria: nat gas access, Zone X flood zone, 3-phase power, industrial zoning. We want to hear from you.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer id="sitefooter" style="display:none">
+  <div><span style="font-weight:700;color:var(--text-white)"><span style="color:var(--accent)">ADC</span>3K</span> &nbsp;&middot;&nbsp; Advantage Design Construction Inc. &nbsp;&middot;&nbsp; Lafayette, Louisiana</div>
+  <div class="flinks">
+    <a onclick="showPage('ecosystem')">Ecosystem</a>
+    <a onclick="showPage('technology')">Technology</a>
+    <a onclick="showPage('louisiana')">Louisiana</a>
+    <a onclick="showPage('projects')">Projects</a>
+    <a onclick="showPage('learn')">Learn</a>
+    <a onclick="showPage('connect')">Connect</a>
+  </div>
+  <div>&copy; 2026 Advantage Design Construction Inc.</div>
+</footer>
 
 <script>
-const API = '';
-let chatHistory = [];
-let latestSnap  = { agents:[], jobs:[], infra:{}, events:[] };
-
-// Clock
-setInterval(() => {
-  document.getElementById('clockEl').textContent =
-    new Date().toLocaleTimeString('en-US', {hour12:false});
-}, 1000);
-
-// SSE
-function connectSSE() {
-  const dot   = document.getElementById('connDot');
-  const label = document.getElementById('connLabel');
-  const es    = new EventSource(API + '/events');
-  es.onopen = () => { dot.classList.add('live'); label.textContent = 'live'; };
-  es.onmessage = e => {
-    try { latestSnap = JSON.parse(e.data); renderAll(latestSnap); } catch {}
-  };
-  es.onerror = () => {
-    dot.classList.remove('live'); label.textContent = 'reconnecting…';
-    es.close(); setTimeout(connectSSE, 3000);
-  };
-}
-connectSSE();
-
-// Render all panels
-function renderAll(s) {
-  renderAgents(s.agents || []);
-  renderJobs(s.jobs     || []);
-  renderInfra(s.infra   || {});
-  renderEvents(s.events || []);
-}
-
-function renderAgents(agents) {
-  const el = document.getElementById('agentList');
-  if (!agents.length) { el.innerHTML = '<div style="color:var(--muted)">No agents yet</div>'; return; }
-  el.innerHTML = agents.map(a => `
-    <div class="agent-card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="role">${esc(a.role)}</span>
-        <span class="status-${a.status||'stopped'}" style="font-size:10px">${(a.status||'?').toUpperCase()}</span>
-      </div>
-      <div class="id">${esc((a.agent_id||'').slice(0,24))}</div>
-    </div>`).join('');
-}
-
-function renderJobs(jobs) {
-  const el = document.getElementById('jobList');
-  if (!jobs.length) { el.innerHTML = '<div style="color:var(--muted);padding:12px">No jobs yet</div>'; return; }
-  el.innerHTML = jobs.map(j => {
-    const ts = j.updated_at ? new Date(j.updated_at).toLocaleTimeString() : '';
-    return `<div class="job-row" onclick="showJob('${esc(j.job_id)}')">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div class="job-title">${esc(j.title || j.job_id)}</div>
-        <span class="badge badge-${j.status||'pending'}">${j.status||'?'}</span>
-      </div>
-      <div class="job-meta"><span>${esc(j.job_id.slice(0,8))}&#x2026;</span><span>${ts}</span></div>
-    </div>`;
-  }).join('');
-}
-
-function renderInfra(infra) {
-  const el  = document.getElementById('infraPanel');
-  const sys = infra.system || {};
-  const gpu = infra.gpu    || {};
-  const docker = infra.docker || {};
-  const redis  = infra.redis  || {};
-  const ramPct  = sys.ram_pct  || 0;
-  const diskPct = sys.disk_pct || 0;
-  const cpuPct  = sys.cpu_pct  || 0;
-  el.innerHTML = `<div class="infra-grid">
-    <div class="infra-box">
-      <div class="label">CPU</div>
-      <div class="value">${sys.cpu_count||'?'} cores &middot; ${cpuPct}%</div>
-      <div class="bar-wrap"><div class="bar-fill" style="width:${cpuPct}%;background:${cpuPct>80?'var(--red)':'var(--accent)'}"></div></div>
-    </div>
-    <div class="infra-box">
-      <div class="label">RAM</div>
-      <div class="value">${sys.ram_used_gb||'?'} / ${sys.ram_total_gb||'?'} GB</div>
-      <div class="bar-wrap"><div class="bar-fill" style="width:${ramPct}%;background:${ramPct>85?'var(--red)':'var(--green)'}"></div></div>
-    </div>
-    <div class="infra-box">
-      <div class="label">Disk</div>
-      <div class="value">${sys.disk_used_gb||'?'} / ${sys.disk_total_gb||'?'} GB</div>
-      <div class="bar-wrap"><div class="bar-fill" style="width:${diskPct}%;background:${diskPct>90?'var(--red)':'var(--yellow)'}"></div></div>
-    </div>
-    <div class="infra-box">
-      <div class="label">GPU</div>
-      <div class="value" style="color:${gpu.available?'var(--green)':'var(--dim)'}">
-        ${gpu.available ? gpu.count+' device(s)' : gpu.reason||'unavailable'}
-      </div>
-    </div>
-    <div class="infra-box">
-      <div class="label">Docker</div>
-      <div class="value" style="color:${docker.available?'var(--green)':'var(--dim)'}">
-        ${docker.available ? docker.count+' running' : 'offline'}
-      </div>
-    </div>
-    <div class="infra-box">
-      <div class="label">Redis</div>
-      <div class="value" style="color:${redis.mode==='redis'?'var(--green)':'var(--yellow)'}">
-        ${redis.mode||'unknown'}
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderEvents(events) {
-  const el = document.getElementById('eventLog');
-  if (!events.length) { el.innerHTML = '<div style="color:var(--muted);padding:8px">No events yet</div>'; return; }
-  el.innerHTML = [...events].reverse().map(e =>
-    `<div class="event-row">
-      <span class="event-type">${esc(e.event_type)}</span>
-      <span class="event-src">${esc((e.source||'').slice(0,10))}</span>
-      <span class="event-preview">${esc(e.preview||'')}</span>
-    </div>`
-  ).join('');
-}
-
-// Job overlay — subscribes to live SSE stream for running jobs
-let _jobStreamES = null;
-
-function renderJobOverlay(job) {
-  document.getElementById('ovTitle').textContent = job.title || job.job_id;
-  document.getElementById('ovMeta').textContent =
-    `${job.status} · ${job.job_id.slice(0,8)} · ${(job.steps||[]).length} step(s)`;
-  document.getElementById('ovBody').innerHTML = (job.steps||[]).map(s => {
-    const res = s.result != null
-      ? (typeof s.result === 'object' ? JSON.stringify(s.result, null, 2) : String(s.result))
-      : (s.error || '');
-    return `<div class="step-row" id="step-${esc(s.step_id)}">
-      <div style="display:flex;justify-content:space-between">
-        <span class="step-name">${esc(s.name)}</span>
-        <span class="badge badge-${s.status}">${s.status}</span>
-      </div>
-      <div style="color:var(--muted);font-size:10px;margin-top:2px">${esc(s.assigned_role)} &middot; attempts: ${s.attempts}</div>
-      ${res ? `<div class="step-result">${esc(res)}</div>` : ''}
-    </div>`;
-  }).join('') || '<div style="color:var(--muted)">No steps</div>';
-}
-
-function updateStepInOverlay(step) {
-  const el = document.getElementById('step-' + step.step_id);
-  if (!el) return;
-  el.querySelector('.badge').className = 'badge badge-' + step.status;
-  el.querySelector('.badge').textContent = step.status;
-  const res = step.result != null
-    ? (typeof step.result === 'object' ? JSON.stringify(step.result, null, 2) : String(step.result))
-    : (step.error || '');
-  let resEl = el.querySelector('.step-result');
-  if (res) {
-    if (!resEl) { resEl = document.createElement('div'); resEl.className = 'step-result'; el.appendChild(resEl); }
-    resEl.textContent = res;
-  }
-}
-
-async function showJob(jobId) {
-  // Close any existing job stream
-  if (_jobStreamES) { _jobStreamES.close(); _jobStreamES = null; }
-
-  const overlay = document.getElementById('overlay');
-  overlay.classList.add('show');
-
-  // Connect to live job stream
-  const es = new EventSource(API + '/tasks/' + jobId + '/stream');
-  _jobStreamES = es;
-
-  es.onmessage = e => {
-    try {
-      const d = JSON.parse(e.data);
-      if (d.error) { document.getElementById('ovBody').textContent = d.error; return; }
-      if (d.type === 'snapshot' || d.type === 'job.done') {
-        renderJobOverlay(d.job);
-        if (d.type === 'job.done') { es.close(); _jobStreamES = null; }
-      } else if (d.type === 'step.completed' || d.type === 'step.failed') {
-        updateStepInOverlay(d.step);
-        // Update meta status
-        const meta = document.getElementById('ovMeta');
-        if (meta) {
-          const parts = meta.textContent.split(' · ');
-          const done = document.querySelectorAll('.badge-completed, .badge-failed, .badge-skipped').length;
-          const total = document.querySelectorAll('[id^="step-"]').length;
-          if (parts.length > 0) parts[0] = done >= total ? 'completed' : 'running';
-          meta.textContent = parts.join(' · ');
-        }
-      }
-    } catch {}
-  };
-  es.onerror = () => { es.close(); _jobStreamES = null; };
-}
-
-function closeOverlay(e) {
-  if (e.target.id === 'overlay') {
-    document.getElementById('overlay').classList.remove('show');
-    if (_jobStreamES) { _jobStreamES.close(); _jobStreamES = null; }
-  }
-}
-
-// Task submit
-document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key==='Enter') submitTask(); });
-async function submitTask() {
-  const inp = document.getElementById('taskInput');
-  const val = inp.value.trim(); if (!val) return;
-  inp.value = '';
-  const btn = document.getElementById('taskBtn'); btn.disabled = true;
-  try {
-    await fetch(API+'/tasks', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ description: val, title: val.slice(0,60) }),
-    });
-  } finally { btn.disabled = false; inp.focus(); }
-}
-
-// Chat
-function addMsg(role, text, id) {
-  const el  = document.getElementById('chatMessages');
-  const div = document.createElement('div');
-  div.className = 'msg msg-' + role;
-  if (id) div.id = id;
-  const label = document.createElement('div');
-  label.className = 'msg-role';
-  label.textContent = role === 'user' ? 'YOU' : 'MISSION CONTROL';
-  const body = document.createElement('span');
-  body.className = 'msg-body';
-  body.textContent = text;
-  div.appendChild(label);
-  div.appendChild(body);
-  el.appendChild(div);
-  el.scrollTop = el.scrollHeight;
-  return div;
-}
-function appendMsg(id, text) {
-  const div  = document.getElementById(id);
-  if (!div) return;
-  div.querySelector('.msg-body').textContent += text;
-  document.getElementById('chatMessages').scrollTop = 99999;
-}
-
-async function sendChat() {
-  const inp = document.getElementById('chatInput');
-  const btn = document.getElementById('chatBtn');
-  const txt = inp.value.trim(); if (!txt) return;
-  addMsg('user', txt);
-  chatHistory.push({role:'user', content:txt});
-  inp.value = ''; btn.disabled = true;
-
-  const msgId = 'ai-' + Date.now();
-  addMsg('ai', '', msgId);
-  let fullReply = '';
-
-  try {
-    const res = await fetch(API + '/chat/stream', {
-      method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({messages: chatHistory}),
-    });
-    if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'Server error'); }
-
-    const reader = res.body.getReader();
-    const dec    = new TextDecoder();
-    let buf = '';
-
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      buf += dec.decode(value, {stream: true});
-      const lines = buf.split('\n');
-      buf = lines.pop();
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        try {
-          const d = JSON.parse(line.slice(6));
-          if (d.error) throw new Error(d.error);
-          if (d.delta) { appendMsg(msgId, d.delta); fullReply += d.delta; }
-          if (d.job_id) {
-            const aiDiv = document.getElementById(msgId);
-            if (aiDiv && !aiDiv.querySelector('.job-link')) {
-              const lnk = document.createElement('span');
-              lnk.className = 'job-link';
-              lnk.style.cssText = 'display:block;margin-top:6px;color:var(--accent);cursor:pointer;font-size:11px;text-decoration:underline';
-              lnk.textContent = '→ View job ' + d.job_id.slice(0, 8);
-              lnk.onclick = () => showJob(d.job_id);
-              aiDiv.appendChild(lnk);
-            }
-          }
-        } catch(e) {
-          if (e.message !== 'Unexpected end of JSON input')
-            appendMsg(msgId, '\n[Error: ' + e.message + ']');
-        }
-      }
-    }
-    chatHistory.push({role: 'assistant', content: fullReply});
-  } catch(err) { appendMsg(msgId, 'Error: ' + err.message); }
-  finally { btn.disabled = false; inp.focus(); }
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// Initial poll fallback
-fetch(API+'/snapshot').then(r=>r.json()).then(renderAll).catch(()=>{});
-
-// -------------------------------------------------------------------------
-// File upload
-// -------------------------------------------------------------------------
-async function uploadFile() {
-  const fileInput = document.getElementById('fileInput');
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  const nameEl   = document.getElementById('uploadName');
-  const statusEl = document.getElementById('uploadStatus');
-  const taskInput = document.getElementById('taskInput');
-  nameEl.textContent   = file.name;
-  statusEl.textContent = 'uploading…';
-  statusEl.className   = 'upload-status busy';
-
-  const form = new FormData();
-  form.append('file', file);
-
-  try {
-    const res = await fetch(API + '/upload', { method: 'POST', body: form });
-    const d   = await res.json();
-    if (!res.ok) throw new Error(d.detail || 'Upload failed');
-
-    if (d.zip) {
-      // Zip was extracted — show file count and suggest listing workspace
-      const count = (d.files || []).length;
-      statusEl.textContent = `${count} file${count !== 1 ? 's' : ''} extracted`;
-      statusEl.className   = 'upload-status ok';
-      // Find the deepest common folder prefix to suggest a targeted analysis
-      const firstFile = (d.files || [])[0] || 'workspace';
-      const folder = firstFile.split('/').slice(0, -1).join('/') || 'workspace';
-      taskInput.value = `list workspace files`;
-    } else {
-      // Single file
-      statusEl.textContent = `${(d.size / 1024).toFixed(1)} KB`;
-      statusEl.className   = 'upload-status ok';
-      taskInput.value = `analyse file ${d.path}`;
-    }
-    taskInput.focus();
-  } catch(e) {
-    statusEl.textContent = e.message.slice(0, 40);
-    statusEl.className   = 'upload-status err';
-  } finally {
-    fileInput.value = '';  // allow re-uploading same file
-  }
-}
-
-// -------------------------------------------------------------------------
-// Settings modal
-// -------------------------------------------------------------------------
-async function openSettings() {
-  document.getElementById('settingsOverlay').classList.add('show');
-  // Clear previous statuses
-  ['cfgNotionDbStatus','cfgNotionKeyStatus','cfgRunpodStatus'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.textContent = ''; el.className = 'cfg-status'; }
+const pages=['home','ecosystem','technology','louisiana','projects','marlie','adc3k','trappeys','klft','skydio','learn','connect'];
+const deckPages=['marlie','klft','skydio'];
+function showPage(id){
+  pages.forEach(p=>{
+    document.getElementById('pg-'+p).classList.remove('active');
+    const n=document.getElementById('nav-'+p);if(n)n.classList.remove('active');
   });
-  try {
-    const cfg = await fetch(API + '/config').then(r => r.json());
-    // Notion
-    const dbId = cfg.notion_work_db_id || '';
-    document.getElementById('cfgNotionDbId').value = dbId;
-    const keySet = cfg.notion_api_key_set === 'yes';
-    document.getElementById('cfgNotionSyncStatus').innerHTML =
-      `DB: <span class="cfg-pill ${dbId ? 'cfg-pill-yes' : 'cfg-pill-no'}">${dbId ? 'configured' : 'not set'}</span>` +
-      `&nbsp;&nbsp;Key: <span class="cfg-pill ${keySet ? 'cfg-pill-yes' : 'cfg-pill-no'}">${keySet ? 'set' : 'not set'}</span>`;
-    // RunPod
-    const rpSet = cfg.runpod_api_key_set === 'yes';
-    document.getElementById('cfgRunpodApiStatus').innerHTML =
-      `<span class="cfg-pill ${rpSet ? 'cfg-pill-yes' : 'cfg-pill-no'}">${rpSet ? 'configured' : 'not set'}</span>`;
-    // Model
-    document.getElementById('cfgModelName').textContent = cfg.model || '—';
-  } catch (e) {
-    document.getElementById('cfgNotionSyncStatus').textContent = 'Failed to load config';
+  const pg=document.getElementById('pg-'+id);if(pg)pg.classList.add('active');
+  const nav=document.getElementById('nav-'+id);if(nav)nav.classList.add('active');
+  window.scrollTo(0,0);
+  const isDeck=deckPages.includes(id);
+  document.getElementById('sitefooter').style.display=isDeck?'none':'flex';
+  document.body.style.overflow=isDeck?'hidden':'';
+  if(!isDeck)setTimeout(observeReveal,50);
+}
+function openMobile(){document.getElementById('mobileNav').classList.add('open');}
+function closeMobile(){document.getElementById('mobileNav').classList.remove('open');}
+function selectRole(btn,role){
+  document.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('hrole').value=role;
+  document.getElementById('rctx').style.display='block';
+  ['investor','deploy','city','vendor','media'].forEach(r=>{document.getElementById('rctx-'+r).style.display='none';});
+  const map={'Investor':'investor','Deployment Customer':'deploy','City / Parish':'city','Vendor / Partner':'vendor','Media / Press':'media'};
+  const k=map[role];if(k)document.getElementById('rctx-'+k).style.display='block';
+}
+document.getElementById('cform').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=this.querySelector('.fsub');btn.textContent='SENDING...';btn.disabled=true;
+  try{
+    const r=await fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}});
+    if(r.ok){this.style.display='none';document.getElementById('fsuccess').style.display='block';}
+    else{btn.textContent='ERROR — TRY AGAIN';btn.disabled=false;}
+  }catch{btn.textContent='ERROR — TRY AGAIN';btn.disabled=false;}
+});
+function observeReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+function initCanvas(){
+  const c=document.getElementById('hcanvas');if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H,particles=[],sats=[],rings=[];
+
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+
+  // Network nodes
+  function mkParticles(){
+    particles=[];
+    const n=Math.floor((W*H)/14000);
+    for(let i=0;i<n;i++){
+      particles.push({
+        x:Math.random()*W, y:Math.random()*H,
+        vx:(Math.random()-0.5)*0.35, vy:(Math.random()-0.5)*0.35,
+        r:Math.random()*1.8+0.6,
+        pulse:Math.random()*Math.PI*2,
+        speed:Math.random()*0.02+0.01
+      });
+    }
   }
-}
 
-function closeSettings(e) {
-  if (e.target.id === 'settingsOverlay')
-    document.getElementById('settingsOverlay').classList.remove('show');
-}
+  // Fast-moving drones/satellites with trails
+  function mkSat(){
+    const edge=Math.floor(Math.random()*4);
+    let x,y;
+    if(edge===0){x=-30;y=Math.random()*H;}
+    else if(edge===1){x=W+30;y=Math.random()*H;}
+    else if(edge===2){x=Math.random()*W;y=-30;}
+    else{x=Math.random()*W;y=H+30;}
+    const tx=W*0.2+Math.random()*W*0.6;
+    const ty=H*0.2+Math.random()*H*0.6;
+    const angle=Math.atan2(ty-y,tx-x)+(Math.random()-0.5)*0.8;
+    const spd=Math.random()*1.8+0.9;
+    const isGreen=Math.random()>0.5;
+    return{
+      x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,
+      trail:[],trailMax:Math.floor(Math.random()*28+18),
+      r:Math.random()*1.8+1.2,
+      col:isGreen?'0,214,143':'59,158,255'
+    };
+  }
 
-async function saveCfg(key, inputId, statusId) {
-  const val    = document.getElementById(inputId).value.trim();
-  const statEl = document.getElementById(statusId);
-  if (!val) { statEl.textContent = 'empty'; statEl.className = 'cfg-status err'; return; }
-  statEl.textContent = '…'; statEl.className = 'cfg-status';
-  try {
-    const res = await fetch(API + '/config', {
-      method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({key, value: val}),
+  function initSats(){
+    sats=[];
+    const n=Math.min(12,Math.floor(W/120));
+    for(let i=0;i<n;i++){
+      const s=mkSat();
+      // Scatter initial positions across screen instead of all from edge
+      s.x=Math.random()*W;s.y=Math.random()*H;s.trail=[];
+      sats.push(s);
+    }
+  }
+
+  // Radar ping rings
+  function addRing(){
+    rings.push({x:Math.random()*W,y:Math.random()*H,r:0,maxR:Math.random()*120+60,a:0.6,spd:Math.random()*1.2+0.6,col:Math.random()>0.5?'59,158,255':'0,214,143'});
+  }
+  let ringTimer=0;
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // Subtle grid
+    ctx.strokeStyle='rgba(26,40,70,0.55)';ctx.lineWidth=0.5;
+    const gs=80;
+    for(let x=0;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    // Connecting lines between close nodes
+    const maxD=130;
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<maxD){
+          const a=(1-d/maxD)*0.28;
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(59,158,255,${a})`;ctx.lineWidth=0.6;ctx.stroke();
+        }
+      }
+    }
+
+    // Draw and update nodes
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      p.pulse+=p.speed;
+      const a=0.4+Math.sin(p.pulse)*0.25;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(59,158,255,${a})`;ctx.fill();
+      // Occasional bright node
+      if(p.r>2){
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.5,0,Math.PI*2);
+        ctx.fillStyle=`rgba(59,158,255,0.06)`;ctx.fill();
+      }
     });
-    if (!res.ok) { const d = await res.json(); throw new Error(d.detail || 'error'); }
-    statEl.textContent = 'saved'; statEl.className = 'cfg-status ok';
-    // Mask password fields after save
-    const inp = document.getElementById(inputId);
-    if (inp.type === 'password') inp.value = '';
-    // Refresh status pills
-    await openSettings();
-  } catch(e) {
-    statEl.textContent = 'fail'; statEl.className = 'cfg-status err';
+
+    // Drones/satellites with trails
+    sats.forEach((s,i)=>{
+      s.trail.unshift({x:s.x,y:s.y});
+      if(s.trail.length>s.trailMax)s.trail.pop();
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<-60||s.x>W+60||s.y<-60||s.y>H+60){sats[i]=mkSat();}
+      // Trail
+      s.trail.forEach((p,ti)=>{
+        const a=(1-ti/s.trail.length)*0.55;
+        const sz=s.r*(1-ti/s.trail.length);
+        ctx.beginPath();ctx.arc(p.x,p.y,Math.max(sz,0.1),0,Math.PI*2);
+        ctx.fillStyle=`rgba(${s.col},${a})`;ctx.fill();
+      });
+      // Head
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(${s.col},1)`;ctx.fill();
+      // Glow
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r*4,0,Math.PI*2);ctx.fillStyle=`rgba(${s.col},0.12)`;ctx.fill();
+    });
+
+    // Radar rings
+    ringTimer++;if(ringTimer>180){ringTimer=0;if(rings.length<6)addRing();}
+    rings.forEach((rg,i)=>{
+      rg.r+=rg.spd;rg.a=0.6*(1-rg.r/rg.maxR);
+      ctx.beginPath();ctx.arc(rg.x,rg.y,rg.r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(${rg.col},${Math.max(rg.a,0)})`;ctx.lineWidth=1.2;ctx.stroke();
+      if(rg.r>=rg.maxR)rings.splice(i,1);
+    });
+
+    requestAnimationFrame(draw);
   }
+
+  resize();mkParticles();initSats();addRing();addRing();draw();
+  window.addEventListener('resize',()=>{resize();mkParticles();initSats();});
 }
+function animateCounter(el, target, decimals, suffix, duration){
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    const val=(target*ease).toFixed(decimals);
+    el.textContent=val+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function runHeroCounters(){
+  const counters=[
+    {id:'hc1',target:2,decimals:0,suffix:' MW'},
+    {id:'hc2',target:3.0,decimals:1,suffix:' MW'},
+    {id:'hc3',target:1.05,decimals:2,suffix:' PUE'},
+    {id:'hc4',target:16,decimals:0,suffix:' wk'},
+  ];
+  counters.forEach(c=>{
+    const el=document.getElementById(c.id);
+    if(el)animateCounter(el,c.target,c.decimals,c.suffix,2000);
+  });
+}
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('done');
+    document.getElementById('sitefooter').style.display='flex';
+    initCanvas();observeReveal();
+    setTimeout(runHeroCounters,400);
+  },900);
+});
 </script>
 </body>
 </html>

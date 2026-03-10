@@ -33,7 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(6,10
 .mobile-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
 .pad{max-width:1200px;margin:0 auto;padding:120px 40px 80px}
 .pad-sm{max-width:960px;margin:0 auto;padding:100px 40px 80px}
-.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active{display:block;height:100vh;min-height:0;overflow:hidden}
+.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active,#pg-klft.active,#pg-skydio.active{display:block;height:100vh;min-height:0;overflow:hidden}
 .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
 .eyebrow.green{color:var(--green)}.eyebrow.green::before{background:var(--green)}
@@ -838,7 +838,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="spec"><div class="slbl">Coverage</div><div class="sval">Acadiana Region</div></div>
       <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--purple)">Phase 1 Planning</div></div>
     </div>
-    <button class="deck-link" onclick="showPage('klft')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW FULL DECK &rarr;</button>
+    <button type="button" class="deck-link" onclick="showPage('skydio')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW FULL DECK &rarr;</button>
   </div>
 
   <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border)">
@@ -1031,100 +1031,23 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </div>
 
 <!-- KLFT 1.1 DECK -->
-<div class="page" id="pg-klft">
-<div class="pad-sm">
-  <button class="back-btn" onclick="showPage('projects')">Back to Projects</button>
-
-  <!-- Radar Hero (CSS animated — no photo) -->
-  <div class="radar-hero reveal">
-    <div class="radar-rings">
-      <div class="rring"></div><div class="rring"></div><div class="rring"></div><div class="rring"></div><div class="rring"></div>
-    </div>
-    <div class="radar-content">
-      <div class="ph-badge p" style="justify-content:center;margin-bottom:16px">Autonomous Airspace Hub — Phase 1 Planning</div>
-      <div class="ph-title" style="color:var(--text-white);font-size:30px">KLFT 1.1 — Autonomous Airspace Operations Hub</div>
-      <p class="ph-sub" style="color:var(--text);max-width:580px;margin:8px auto 0">Lafayette Regional Airport · SkyCommand platform · BVLOS operations across Acadiana</p>
-      <div class="radar-ph-stats" style="margin-top:24px">
-        <div><div class="ph-sv" style="color:var(--purple)">KLFT</div><div class="ph-sl">Host Airport</div></div>
-        <div><div class="ph-sv" style="color:var(--purple)">BVLOS</div><div class="ph-sl">Ops Type</div></div>
-        <div><div class="ph-sv" style="color:var(--purple)">Acadiana</div><div class="ph-sl">Coverage</div></div>
-        <div><div class="ph-sv" style="color:var(--purple)">AIKCC</div><div class="ph-sl">SaaS Product</div></div>
-      </div>
-    </div>
+<div class="page" id="pg-klft" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">KLFT 1.1 &nbsp;·&nbsp; AUTONOMOUS AIRSPACE OPS HUB</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-
-  <!-- What it is -->
-  <div class="ana reveal">
-    <p><strong style="color:var(--purple)">What it is:</strong> An AI-powered airspace operations hub at Lafayette Regional Airport. SkyCommand manages BVLOS drone operations — situational awareness, traffic deconfliction, mission control — across Acadiana's oil &amp; gas corridors, agricultural land, and infrastructure. <strong>AIKCC</strong> packages the same software as a licensable SaaS for other airports and operators.</p>
-  </div>
-
-  <!-- Platform cards -->
-  <div class="sn reveal">SkyCommand Platform</div>
-  <h2 class="sh reveal">Mission control for autonomous Louisiana.</h2>
-  <div class="g2 reveal">
-    <div class="card"><div class="ctag p">Situational Awareness</div><h3>Live Airspace Picture</h3><p>Real-time tracking of all autonomous assets. ADS-B integration, Remote ID correlation, radar feed fusion. Full common operating picture — manned and unmanned.</p></div>
-    <div class="card"><div class="ctag p">Deconfliction Engine</div><h3>AI Traffic Management</h3><p>Multiple operators, different altitudes, different corridors — simultaneous. AI-powered separation assurance. No conflicts.</p></div>
-    <div class="card"><div class="ctag p">Mission Management</div><h3>BVLOS Operations</h3><p>Route planning, payload management, weather integration, contingency handling. Full lifecycle from pre-flight to landing — uncrewed.</p></div>
-    <div class="card"><div class="ctag p">C2 Architecture</div><h3>Redundant Command Link</h3><p>LTE primary + satellite backup. Positive control maintained beyond visual range in Louisiana's remote coastal and agricultural environments.</p></div>
-  </div>
-
-  <!-- AIKCC callout -->
-  <div class="split reveal">
-    <div class="split-text" style="border-right:3px solid var(--purple)">
-      <div class="sn" style="margin:0 0 8px;color:var(--purple)">The SaaS Product</div>
-      <h3>AIKCC — License the airspace stack.</h3>
-      <p>AIKCC (AI-powered Airspace Control Center) is SkyCommand packaged as a licensable product. Any airport, port authority, municipality, or enterprise operator can deploy AIKCC to manage their own autonomous airspace — without building the infrastructure from scratch.</p>
-      <ul>
-        <li><strong>Airports</strong> — manage growing UAS traffic alongside traditional ATC</li>
-        <li><strong>Enterprise</strong> — oil &amp; gas, utilities, ports running BVLOS ops</li>
-        <li><strong>Government</strong> — emergency management, transportation, law enforcement</li>
-      </ul>
-    </div>
-    <div style="background:var(--surface2);display:flex;align-items:center;justify-content:center;padding:40px;min-height:280px">
-      <div style="text-align:center">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:48px;font-weight:700;color:var(--purple);margin-bottom:8px">AIKCC</div>
-        <div style="font-size:12px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;font-family:'IBM Plex Mono',monospace">AI-Powered Airspace<br>Control Center</div>
-        <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;text-align:left">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);padding:6px 12px;border:1px solid rgba(168,85,247,0.3);border-radius:4px;letter-spacing:1px">&#9632; AIRPORTS</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);padding:6px 12px;border:1px solid rgba(168,85,247,0.3);border-radius:4px;letter-spacing:1px">&#9632; ENTERPRISE OPS</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--purple);padding:6px 12px;border:1px solid rgba(168,85,247,0.3);border-radius:4px;letter-spacing:1px">&#9632; GOVERNMENT</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Use cases -->
-  <div class="sn reveal">Use Cases</div>
-  <h2 class="sh reveal">Louisiana industry. From above.</h2>
-  <div class="use-grid reveal">
-    <div class="use-card"><div class="use-icon">&#128754;</div><div class="use-title">Oil &amp; Gas Inspection</div><div class="use-desc">Pipeline corridors, flare stacks, offshore platforms. Replaces manned helicopter flights. Continuous coverage, lower cost.</div></div>
-    <div class="use-card"><div class="use-icon">&#127807;</div><div class="use-title">Agriculture</div><div class="use-desc">Crop health, irrigation mapping, livestock tracking. Rice, sugarcane, soybean fields. Multispectral payloads.</div></div>
-    <div class="use-card"><div class="use-icon">&#128268;</div><div class="use-title">Infrastructure</div><div class="use-desc">Levee inspection, bridge assessment, transmission lines, coastal erosion mapping.</div></div>
-    <div class="use-card"><div class="use-icon">&#128657;</div><div class="use-title">Emergency Response</div><div class="use-desc">Hurricane damage, search &amp; rescue, flood mapping. Operates when roads are impassable and cell towers are down.</div></div>
-    <div class="use-card"><div class="use-icon">&#128666;</div><div class="use-title">Logistics</div><div class="use-desc">Last-mile delivery in underserved parishes. Port cargo monitoring. I-10/I-49 freight corridor optimization.</div></div>
-    <div class="use-card"><div class="use-icon">&#128110;</div><div class="use-title">Public Safety</div><div class="use-desc">Law enforcement support, crowd monitoring, traffic incidents. Persistent aerial presence across Acadiana.</div></div>
-  </div>
-
-  <!-- Timeline -->
-  <div class="sn reveal" style="margin-top:36px">Milestone Timeline</div>
-  <div class="tm reveal">
-    <div class="tm-item done"><div class="tm-dot"></div><div><div class="tm-step">Complete</div><div class="tm-name">Engineering Package</div><div class="tm-note">Full architecture, CONOPS, safety case, SkyCommand spec, AIKCC architecture, hardware procurement spec.</div></div></div>
-    <div class="tm-item active"><div class="tm-dot"></div><div><div class="tm-step">In Progress</div><div class="tm-name">Airport Authority Engagement</div><div class="tm-note">Schedule meeting with Lafayette Regional Airport Authority. Present KLFT 1.1 concept + facility requirements.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">FAA Coordination — BVLOS Waiver</div><div class="tm-note">UAS Integration Pilot Program engagement. LAANC integration. Low-altitude corridor establishment.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">Phase 1 Operator Agreements</div><div class="tm-note">First BVLOS missions signed — target O&amp;G inspection + infrastructure surveillance.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">AIKCC Platform Launch</div><div class="tm-note">First external AIKCC license signed with another airport or enterprise operator.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Target</div><div class="tm-name">Regional Scale — Multi-Airport</div><div class="tm-note">Statewide BVLOS corridor network. AIKCC deployed at 3+ external sites.</div></div></div>
-  </div>
-
-  <div class="callout reveal" style="margin-top:36px;border-color:rgba(168,85,247,0.2)">
-    <h3>Partner with KLFT 1.1</h3>
-    <p>Drone operators, airports, oil &amp; gas companies, municipalities — there is a role for each in the autonomous airspace ecosystem we are building in Louisiana.</p>
-    <div class="dual-cta">
-      <div class="cta-card"><h4>Drone Operator</h4><p>Flying BVLOS in Louisiana? KLFT 1.1 provides the infrastructure, airspace management, and regulatory framework.</p><button class="cta" style="background:var(--purple)" onclick="showPage('connect')">Operator Inquiry &rarr;</button></div>
-      <div class="cta-card"><h4>AIKCC License</h4><p>Airport authority, municipality, or enterprise? License SkyCommand for your own operations.</p><button class="cta out" style="color:var(--purple);border-color:var(--purple)" onclick="showPage('connect')">License AIKCC &rarr;</button></div>
-    </div>
-  </div>
+  <iframe src="klft-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
 </div>
+
+<!-- SKYDIO DECK -->
+<div class="page" id="pg-skydio" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">SKYDIO &nbsp;·&nbsp; GULF COAST DRONE DEPLOYMENT HUB</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
+  </div>
+  <iframe src="skydio-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
 </div>
 
 <!-- LEARN -->
@@ -1276,11 +1199,11 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </footer>
 
 <script>
-const pages=['home','ecosystem','technology','louisiana','projects','marlie','adc3k','trappeys','klft','learn','connect'];
-const deckPages=['marlie'];
+const pages=['home','ecosystem','technology','louisiana','projects','marlie','adc3k','trappeys','klft','skydio','learn','connect'];
+const deckPages=['marlie','klft','skydio'];
 function showPage(id){
   pages.forEach(p=>{
-    document.getElementById('pg-'+p).classList.remove('active');
+    const el=document.getElementById('pg-'+p);if(el)el.classList.remove('active');
     const n=document.getElementById('nav-'+p);if(n)n.classList.remove('active');
   });
   const pg=document.getElementById('pg-'+id);if(pg)pg.classList.add('active');
