@@ -324,7 +324,12 @@ def get_title(obj: dict) -> str:
             if isinstance(v, dict) and v.get("type") == "title":
                 title_arr = v.get("title", [])
                 break
-    return "".join(t.get("plain_text", "") for t in title_arr) or "(untitled)"
+    result = "".join(t.get("plain_text", "") for t in title_arr) or "(untitled)"
+    try:
+        result = result.encode('utf-16-le', 'surrogatepass').decode('utf-16-le')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        pass
+    return result
 
 
 def print_tree(client: NotionClient | None = None, encode: str = "utf-8") -> None:

@@ -36,6 +36,7 @@ Site Acq Pipeline: 31e88f09-7e31-8136-9d4f-dbc128f55757
 Cooling fluid: Engineered Fluids EC-110 (single-phase immersion). NEVER reference 3M Novec — discontinued.
 Remote ops: MARLIE I NOC manages all pods remotely. No on-site staff at remote sites.
 Drone (KLFT): Skydio X10 + Skydio Dock ONLY. DJI removed — Countering CCP Drones Act risk.
+KLFT pitch deck: `adc3k-deploy/skydio-deck.html` — 24 slides, LIVE at adc3k.com. Accessed via KLFT project card.
 
 === NOTION API PATTERNS ===
 - Full tree query: paginated POST /search (pages + databases) → build parent map → print indented tree
