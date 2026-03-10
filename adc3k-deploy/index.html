@@ -365,8 +365,8 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <span style="color:#00d68f;margin-right:40px">&#9632; IMMERSION COOLING: ACTIVE</span>
     <span style="color:#3b9eff;margin-right:40px">VERA RUBIN NVL72 &mdash; PHASE 1 COMPUTE PLATFORM</span>
     <span style="color:#00d68f;margin-right:40px">&#9632; H2O CONSUMPTION: 0 GALLONS</span>
-    <span style="color:#8fa4bc;margin-right:40px">HENRY HUB PRICING &nbsp;|&nbsp; NAT GAS PRIMARY &nbsp;|&nbsp; LAYER 4 GRID: LAST RESORT</span>
-    <span style="color:#f5a623;margin-right:40px">&#9632; HURRICANE IDA PROOF &mdash; LAYER 2 DIESEL: STANDBY</span>
+    <span style="color:#8fa4bc;margin-right:40px">HENRY HUB PRICING &nbsp;|&nbsp; NAT GAS PRIMARY &nbsp;|&nbsp; GRID BACKUP</span>
+    <span style="color:#f5a623;margin-right:40px">&#9632; HURRICANE IDA PROOF &mdash; LAYER 3 DIESEL: STANDBY</span>
     <span style="color:#3b9eff;margin-right:40px">MADE IN LAFAYETTE, LOUISIANA &nbsp;|&nbsp; 100% AMERICAN-MADE</span>
     <span style="color:#00d68f;margin-right:40px">&#9632; KLFT AIRSPACE OPS: PHASE 1 PLANNING</span>
     <span style="color:#8fa4bc;margin-right:40px">TRAPPEYS CANNERY &mdash; FIRST DEPLOYMENT SITE</span>
@@ -387,7 +387,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:560px;object-fit:cover;display:block;opacity:0.95">
   <!-- overlay stats -->
   <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(6,10,16,0.92));padding:32px 40px 24px;display:flex;gap:40px;flex-wrap:wrap">
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#00d68f;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#9632; SYSTEMS ONLINE</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">4-LAYER POWER STACK ACTIVE</div></div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#00d68f;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#9632; SYSTEMS ONLINE</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">3-LAYER POWER STACK ACTIVE</div></div>
     <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COMPUTE PLATFORM</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">NVIDIA VERA RUBIN NVL72</div></div>
     <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COOLING</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">EC-110 IMMERSION &nbsp;|&nbsp; 0 GAL H2O</div></div>
     <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">ORIGIN</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">MADE IN LAFAYETTE, LOUISIANA</div></div>
@@ -442,7 +442,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <h2 class="sh reveal">Louisiana is the right place. Now is the right time.</h2>
     <div class="g3" style="margin-top:24px">
       <div class="card reveal"><div class="ctag g">INFRASTRUCTURE</div><h3>Industrial DNA</h3><p>60+ years of heavy industrial construction, high-voltage electrical, and mechanical contracting. We don't hire this expertise — we are this expertise.</p></div>
-      <div class="card reveal d1"><div class="ctag b">ECONOMICS</div><h3>Competitive Power</h3><p>Louisiana industrial electricity rates rank among the lowest in the nation. Nat gas at Henry Hub pricing. Four-layer resilient power stack on every site.</p></div>
+      <div class="card reveal d1"><div class="ctag b">ECONOMICS</div><h3>Competitive Power</h3><p>Louisiana industrial electricity rates rank among the lowest in the nation. Nat gas at Henry Hub pricing. Three-layer resilient power stack on every site.</p></div>
       <div class="card reveal d2"><div class="ctag p">GEOGRAPHY</div><h3>Gulf Coast Position</h3><p>Central Gulf Coast location. Port access. O&amp;G, petrochemical, agriculture, and defense industries on our doorstep — all needing local AI compute.</p></div>
     </div>
   </div>
@@ -602,10 +602,9 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
     <h2 class="sh">Power Stack — MARLIE I</h2>
     <div class="layers">
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS</span></div><div class="ldesc">Two 1,500 kW prime-rated natural gas gensets. PRIMARY power. Henry Hub pricing. 24/7 continuous — never turns off.</div><div class="lbadge pr">PRIMARY</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 2 — DIESEL</span></div><div class="ldesc">One 1,500 kW diesel genset. On-site fuel. Pipeline-independent. Ida-proven. Activates if nat gas supply interrupted.</div><div class="lbadge bk">HURRICANE BACKUP</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc">300 kW solar + 600 kWh battery. Daytime offset, peak shaving, instant ATS bridge during switching events.</div><div class="lbadge sp">SUPPLEMENT</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red)"></div><span style="color:var(--red)">LAYER 4 — LUS GRID</span></div><div class="ldesc">Lafayette Utilities System grid connection. LAST RESORT ONLY — used during genset maintenance windows only. Never primary power.</div><div class="lbadge lr">LAST RESORT</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS + SOLAR + BATTERY</span></div><div class="ldesc">Two 1,500 kW prime-rated natural gas gensets — PRIMARY power, 24/7, Henry Hub pricing. 300 kW solar offsets daytime fuel burn. 600 kWh battery provides instant ATS bridge during switching.</div><div class="lbadge pr">PRIMARY</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 2 — LUS GRID</span></div><div class="ldesc">Lafayette Utilities System grid connection. Handles low-power operations, maintenance windows, and backup if primary system needs servicing.</div><div class="lbadge sp">BACKUP</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 3 — DIESEL</span></div><div class="ldesc">One 1,500 kW diesel genset. On-site fuel. Pipeline-independent. Ida-proven. Activates when gas and grid are both compromised — hurricane-rated emergency power.</div><div class="lbadge bk">EMERGENCY</div></div>
     </div>
   </div>
 
@@ -655,7 +654,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 <div class="pad">
   <div class="eyebrow">Engineering</div>
   <h2 class="stitle">The technology stack<br/>behind ADC3K.</h2>
-  <p class="ssub">Immersion cooling, 4-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
+  <p class="ssub">Immersion cooling, 3-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
 
   <div style="margin-top:48px">
     <div class="sn">01 — COOLING</div>
@@ -684,13 +683,12 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
   <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
     <div class="sn">02 — POWER</div>
-    <h2 class="sh">4-Layer Power Architecture — every ADC3K site.</h2>
-    <p class="bd">Every site runs the same four-layer stack. <span class="hl">Natural gas is Layer 1 — primary, continuous, 24/7.</span> The grid is Layer 4 — last resort only. Built around the lessons of Hurricane Ida.</p>
+    <h2 class="sh">3-Layer Power Architecture — every ADC3K site.</h2>
+    <p class="bd">Every site runs the same three-layer stack. <span class="hl">Natural gas + solar + battery is Layer 1 — primary, continuous, 24/7.</span> The grid is Layer 2 — backup for maintenance and low-power ops. Diesel is Layer 3 — hurricane-rated emergency power. Built around the lessons of Hurricane Ida.</p>
     <div class="layers" style="margin-top:24px">
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS GENSETS</span></div><div class="ldesc"><strong style="color:var(--text-bright)">PRIMARY &middot; Prime-rated &middot; 24/7 &middot; Henry Hub pricing.</strong> Natural gas generators run continuously. Henry Hub pricing provides stable cost independent of utility rate structures.</div><div class="lbadge pr">PRIMARY</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 2 — DIESEL GENSETS</span></div><div class="ldesc"><strong style="color:var(--text-bright)">HURRICANE BACKUP &middot; On-site fuel &middot; Pipeline-independent.</strong> Diesel with on-site fuel storage. If the nat gas pipeline is disrupted (as during Hurricane Ida), diesel takes over without interruption.</div><div class="lbadge bk">HURRICANE BACKUP</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc"><strong style="color:var(--text-bright)">SUPPLEMENT &middot; Daytime offset &middot; Instant ATS bridge.</strong> Solar offsets daytime consumption. Battery provides instant bridge during ATS switching (~30-50ms). Supports ESG reporting.</div><div class="lbadge sp">SUPPLEMENT</div></div>
-      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red)"></div><span style="color:var(--red)">LAYER 4 — UTILITY GRID</span></div><div class="ldesc"><strong style="color:var(--text-bright)">LAST RESORT &middot; Never primary &middot; Rate exposure avoided.</strong> Grid connection used for maintenance windows only. We avoid grid reliance to protect against outages, rate volatility, and regulatory exposure.</div><div class="lbadge lr">LAST RESORT</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — NAT GAS + SOLAR + BATTERY</span></div><div class="ldesc"><strong style="color:var(--text-bright)">PRIMARY &middot; Prime-rated &middot; 24/7 &middot; Henry Hub pricing.</strong> Natural gas gensets run continuously as primary power. Solar offsets daytime fuel burn. Battery provides instant ATS bridge during switching (~30-50ms).</div><div class="lbadge pr">PRIMARY</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 2 — UTILITY GRID</span></div><div class="ldesc"><strong style="color:var(--text-bright)">BACKUP &middot; Low-power ops &middot; Maintenance windows.</strong> LUS grid connection handles office, NOC, and monitoring loads. Steps in as backup if primary system needs servicing.</div><div class="lbadge sp">BACKUP</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 3 — DIESEL GENSETS</span></div><div class="ldesc"><strong style="color:var(--text-bright)">EMERGENCY &middot; On-site fuel &middot; Hurricane-rated.</strong> Diesel with on-site fuel storage. Activates when both gas pipelines and grid are compromised — as happened during Hurricane Ida.</div><div class="lbadge bk">EMERGENCY</div></div>
     </div>
     <div class="ana" style="margin-top:24px">
       <p><strong>MARLIE I:</strong> 2&times; 1,500 kW nat gas (N+1) + 1&times; 1,500 kW diesel + 300 kW solar + 600 kWh battery. &nbsp;&nbsp;<strong>Pod sites:</strong> 2&times; 750 kW nat gas (N+1) + 1&times; 750 kW diesel + 200 kW solar + 400 kWh battery.</p>
@@ -783,13 +781,13 @@ footer{flex-direction:column;gap:10px;text-align:center}
 <div class="pad">
   <div class="eyebrow">Active Projects</div>
   <h2 class="stitle">Where ADC3K is building.</h2>
-  <p class="ssub">Four active projects across Lafayette and Acadiana — plus 16 scored pipeline sites identified by our AI-powered site scout.</p>
+  <p class="ssub">Four active projects across Lafayette and Acadiana.</p>
 
   <div class="pcard reveal" style="margin-top:40px;border-top:3px solid var(--accent)">
     <div class="sbadge p1">PHASE 1 — ENGINEERING COMPLETE</div>
     <h3>MARLIE I — Lafayette AI Factory</h3>
     <div class="ploc">1201 SE Evangeline Thruway, Lafayette, LA &nbsp;&middot;&nbsp; 30.21975&deg;N, 92.00645&deg;W</div>
-    <p class="bd">Flagship permanent AI compute facility. Converts an existing industrial building into Louisiana's first purpose-built AI factory. Two NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, 4-layer power stack, 24/7 NOC operations — and the command center for the entire ADC 3K pod network.</p>
+    <p class="bd">Flagship permanent AI compute facility. Converts an existing industrial building into Louisiana's first purpose-built AI factory. Two NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, 3-layer power stack, 24/7 NOC operations — and the command center for the entire ADC 3K pod network.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Power</div><div class="sval">2 MW Phase 1</div></div>
       <div class="spec"><div class="slbl">Compute</div><div class="sval">2&times; NVL72 Racks</div></div>
@@ -841,19 +839,6 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <button type="button" class="deck-link" onclick="showPage('skydio')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW FULL DECK &rarr;</button>
   </div>
 
-  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border)">
-    <div class="eyebrow green">Site Acquisition Pipeline</div>
-    <h2 class="sh">16 sites scored. 4 Tier A.</h2>
-    <p class="bd">Our AI-powered pipeline scout has identified and scored 16 potential pod deployment sites across Louisiana, ranked by natural gas access, flood zone classification, grid capacity, fiber availability, industrial adjacency, and incentive potential.</p>
-    <div class="prow hdr"><div>Score</div><div>Tier</div><div>Location</div><div>Parish</div><div>Key Advantage</div></div>
-    <div class="prow"><div class="sa">83</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Common St &amp; Arabie Rd, Lake Charles</div><div style="color:var(--text-dim)">Calcasieu</div><div style="color:var(--text-dim)">ON pipeline corridor</div></div>
-    <div class="prow"><div class="sa">81</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Kinder Industrial (Hwy 165)</div><div style="color:var(--text-dim)">Allen</div><div style="color:var(--text-dim)">Zone X confirmed</div></div>
-    <div class="prow"><div class="sa">81</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">Hwy 165/I-10, Iowa</div><div style="color:var(--text-dim)">Jefferson Davis</div><div style="color:var(--text-dim)">27.75 acres</div></div>
-    <div class="prow"><div class="sa">80</div><div><span class="ta">A</span></div><div style="color:var(--text-bright)">New Iberia (Hwy 90 &amp; Hwy 14)</div><div style="color:var(--text-dim)">Iberia</div><div style="color:var(--text-dim)">Gas line ON property</div></div>
-    <div class="prow"><div class="sb">74</div><div><span class="tb">B</span></div><div style="color:var(--text-bright)">Smede Hwy, Broussard</div><div style="color:var(--text-dim)">St. Martin</div><div style="color:var(--text-dim)">46 acres, Zone X</div></div>
-    <div class="prow"><div class="sb">72</div><div><span class="tb">B</span></div><div style="color:var(--text-bright)">Hwy 90 Energy Corridor, Gray</div><div style="color:var(--text-dim)">Terrebonne</div><div style="color:var(--text-dim)">108 acres, Zone X</div></div>
-    <div class="note" style="margin-top:16px"><strong>Note:</strong> Site scoring is proprietary. Tier A = highest infrastructure readiness. Sabine corridor pending evaluation. Contact us for site-specific detail.</div>
-  </div>
 </div>
 </div>
 
@@ -924,12 +909,11 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
   <!-- Power stack -->
   <div class="sn reveal" style="margin-top:32px">Power at Every Pod Site</div>
-  <h2 class="sh reveal">4-layer resilience. No grid dependency.</h2>
+  <h2 class="sh reveal">3-layer resilience. Natural gas first.</h2>
   <div class="layers reveal">
-    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--green)"></span><span style="color:var(--green)">LAYER 1 — NAT GAS (N+1)</span></div><div class="ldesc">Two 750 kW prime-rated nat gas gensets. Primary 24/7. Henry Hub pricing. Pipeline-fed.</div><div class="lbadge pr">PRIMARY</div></div>
-    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--amber)"></span><span style="color:var(--amber)">LAYER 2 — DIESEL</span></div><div class="ldesc">750 kW diesel + on-site fuel. Runs when the pipeline is out. Built around Hurricane Ida lessons.</div><div class="lbadge bk">BACKUP</div></div>
-    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--accent)"></span><span style="color:var(--accent)">LAYER 3 — SOLAR + BATTERY</span></div><div class="ldesc">200 kW solar + 400 kWh LFP. Daytime offset + instant ATS bridge.</div><div class="lbadge sp">SUPPLEMENT</div></div>
-    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--red)"></span><span style="color:var(--red)">LAYER 4 — LOCAL GRID</span></div><div class="ldesc">Utility connection at each site. Last resort only — never primary.</div><div class="lbadge lr">LAST RESORT</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--green)"></span><span style="color:var(--green)">LAYER 1 — NAT GAS + SOLAR + BATTERY</span></div><div class="ldesc">Two 750 kW prime-rated nat gas gensets (N+1). Primary 24/7, Henry Hub pricing. 200 kW solar offsets daytime fuel burn. 400 kWh LFP battery for instant ATS bridge.</div><div class="lbadge pr">PRIMARY</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--accent)"></span><span style="color:var(--accent)">LAYER 2 — LOCAL GRID</span></div><div class="ldesc">Utility connection at each site. Handles low-power ops and maintenance windows. Backup if primary needs servicing.</div><div class="lbadge sp">BACKUP</div></div>
+    <div class="layer"><div class="lnum"><span class="ldot" style="background:var(--amber)"></span><span style="color:var(--amber)">LAYER 3 — DIESEL</span></div><div class="ldesc">750 kW diesel + on-site fuel. Hurricane-rated emergency power. Activates when gas and grid are both compromised. Built around Ida lessons.</div><div class="lbadge bk">EMERGENCY</div></div>
   </div>
 
   <!-- Where pods deploy -->
@@ -1048,7 +1032,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much power does it need?</div><div class="faq-a">3.0 MW-class — roughly equivalent to 2,000-2,500 homes. Requires a medium-voltage utility feed or generator interconnect. Initial deployments may operate at lower capacity and scale up to full 3.0 MW.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the cooling liquid dangerous?</div><div class="faq-a">No. EC-110 engineered dielectric fluid is non-toxic, non-conductive, and non-flammable. Safe for human contact. Environmentally friendly. Recyclable at end of life. No HAZMAT classification required.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Who controls the data?</div><div class="faq-a">You do. Unlike cloud services, the ADC 3K pod is a privately owned asset at your location. Data never leaves unless you send it. Critical for defense, healthcare, oil &amp; gas, and government where data sovereignty isn't optional.</div></div>
-    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it survive a hurricane?</div><div class="faq-a">The ADC 3K pod is built inside an ISO shipping container — one of the most rugged structures ever designed. Our 4-layer power architecture was specifically built around Hurricane Ida lessons: Layer 2 diesel keeps us running independently of both the grid and the nat gas pipeline, which was disrupted for weeks during Ida.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it survive a hurricane?</div><div class="faq-a">The ADC 3K pod is built inside an ISO shipping container — one of the most rugged structures ever designed. Our 3-layer power architecture was specifically built around Hurricane Ida lessons: Layer 3 diesel keeps us running independently of both the grid and the nat gas pipeline, which was disrupted for weeks during Ida.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it need building permits?</div><div class="faq-a">Classified as equipment, not a building. In most jurisdictions, equipment placement requires utility permits and site approval but not traditional building permits. Requirements vary by parish — we navigate the permitting process for each deployment.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What kind of investment opportunity is this?</div><div class="faq-a">AI compute infrastructure is generating strong infrastructure-grade returns in markets where it's been deployed. We're building that market in Louisiana. Contact us for investor materials — we don't publish financial projections publicly, but we walk qualified investors through the full financial model.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I deploy an ADC 3K pod at my site?</div><div class="faq-a">Start with a deployment inquiry. Tell us your location, power situation, compute requirements, and timeline. We'll assess site suitability, walk through the deployment process, and provide a project scope. Order to operational: approximately 16-20 weeks.</div></div>

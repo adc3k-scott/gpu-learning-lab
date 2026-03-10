@@ -1543,37 +1543,38 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- OFF GRID BANNER                                               -->
+<!-- POWER STRATEGY BANNER                                         -->
 <!-- ============================================================ -->
 <div class="offgrid-banner">
   <div>
     <div class="offgrid-eyebrow">Power Strategy</div>
-    <div class="offgrid-headline">OFF GRID<br>BY DESIGN</div>
-    <div class="offgrid-sub">Natural gas &mdash; primary power &mdash; not backup</div>
+    <div class="offgrid-headline">NATURAL GAS<br>FIRST</div>
+    <div class="offgrid-sub">On-site generation &mdash; primary power &mdash; grid is backup</div>
   </div>
   <div class="offgrid-vbar"></div>
   <div class="offgrid-detail">
-    Marlie I is <strong>not connected to the utility grid</strong>. That is not a limitation &mdash; it is the strategy.
-    On-site natural gas generation provides 100% of compute power, eliminating grid dependency, rate
-    volatility, and capacity constraints. <strong>Henry Hub</strong> &mdash; the world's most liquid natural gas
-    benchmark &mdash; sits <strong>40 miles away in Erath, LA</strong>, locking Marlie I's fuel costs to the
-    most competitive gas price on earth. We push to LUS Fiber for connectivity, Atmos Energy for gas supply,
-    and <strong>NVIDIA Texas factories for hardware</strong> &mdash; on our terms, on our timeline.
-    <strong>We are not on the grid. We are bringing our own.</strong>
+    Marlie I runs on <strong>on-site natural gas generation as primary power</strong>.
+    Solar and battery are integrated into the primary system &mdash; solar offsets daytime fuel burn,
+    battery provides instant ATS bridge during switching events.
+    <strong>Henry Hub</strong> &mdash; the world's most liquid natural gas
+    benchmark &mdash; sits <strong>40 miles away in Erath, LA</strong>, locking fuel costs to the
+    most competitive gas price on earth. The LUS grid handles low-power operations and serves as backup.
+    Diesel generators stand ready for hurricane scenarios when both gas and grid are compromised.
+    <strong>Three layers. Natural gas first. Hurricane-rated.</strong>
   </div>
   <div class="offgrid-vbar"></div>
   <div class="offgrid-pillars">
     <div class="offgrid-pillar">
-      <div class="offgrid-pillar-val">100%</div>
-      <div class="offgrid-pillar-label">On-site<br>generation</div>
+      <div class="offgrid-pillar-val">3</div>
+      <div class="offgrid-pillar-label">Power<br>layers</div>
     </div>
     <div class="offgrid-pillar">
       <div class="offgrid-pillar-val">40mi</div>
       <div class="offgrid-pillar-label">Henry Hub<br>gas benchmark</div>
     </div>
     <div class="offgrid-pillar">
-      <div class="offgrid-pillar-val">0</div>
-      <div class="offgrid-pillar-label">Grid<br>dependency</div>
+      <div class="offgrid-pillar-val">96h</div>
+      <div class="offgrid-pillar-label">On-site<br>diesel fuel</div>
     </div>
   </div>
 </div>
@@ -2103,11 +2104,10 @@
       <div class="eco-icon">&#9889;</div>
       <div class="eco-title">Self-Powered + Grid Feed</div>
       <p class="eco-body">
-        Marlie I is designed for <strong>energy independence</strong>. Natural gas generation
-        provides on-site primary power, eliminating grid dependency for compute loads.
-        Excess generation capacity feeds back to the LUS grid, creating a revenue stream
-        and strengthening the site's relationship with city utilities. AI factories live or
-        die on power availability — Marlie I owns its power stack.
+        Marlie I runs on <strong>on-site natural gas generation as primary power</strong>.
+        Solar and battery are integrated into the primary system. The LUS grid handles low-power
+        operations and serves as backup. Diesel generators provide hurricane-rated emergency power.
+        AI factories live or die on power availability &mdash; Marlie I owns its power stack.
       </p>
       <div class="tag tag--sm tag--gold">ENERGY INDEPENDENT</div>
     </div>
@@ -2586,11 +2586,11 @@
   <text x="295" y="390" font-size="5" fill="#5070c0" text-anchor="middle">BACKUP POWER</text>
   <text x="295" y="401" font-size="4.5" fill="#4060a0" text-anchor="middle">RIDE-THROUGH</text>
 
-  <!-- Bloom Energy -->
-  <rect x="345" y="362" width="95" height="46" rx="1" fill="#100a18" stroke="#8040c0" stroke-width="1"/>
-  <text x="392" y="378" font-size="6" fill="#c070f0" text-anchor="middle" letter-spacing="0.5">BLOOM ENERGY</text>
-  <text x="392" y="390" font-size="5" fill="#a050e0" text-anchor="middle">FUEL CELL — 300 kW</text>
-  <text x="392" y="401" font-size="4.5" fill="#8040c0" text-anchor="middle">ON-SITE GENERATION</text>
+  <!-- Solar + Battery -->
+  <rect x="345" y="362" width="95" height="46" rx="1" fill="#0a1810" stroke="#40c060" stroke-width="1"/>
+  <text x="392" y="378" font-size="6" fill="#70f090" text-anchor="middle" letter-spacing="0.5">SOLAR + BATTERY</text>
+  <text x="392" y="390" font-size="5" fill="#50d070" text-anchor="middle">300 kW + 600 kWh</text>
+  <text x="392" y="401" font-size="4.5" fill="#40b060" text-anchor="middle">PRIMARY SUPPLEMENT</text>
 
   <!-- ═══ LEGEND ═══ -->
   <line x1="55" y1="422" x2="90" y2="422" stroke="#50a0f0" stroke-width="2.5" stroke-dasharray="6,3"/>
@@ -2636,7 +2636,7 @@
           <br>
           <strong style="color:var(--text-primary);">Floor 2 (Upper):</strong> Rows C &amp; D — 16 NVL72 racks (C1&ndash;C8, D1&ndash;D8). Identical layout directly above Floor 1. Drop ceiling installed — standard liquid cooling manifolds run the same architecture. Wiring paths run freely through the shell. The floor is already down, structural load rating confirmed.
           <br><br>
-          The building&rsquo;s existing drop ceiling on Floor 2 is an advantage — <strong style="color:var(--text-primary);">conduit, manifold lines, and cable trays run clean above the drop plane</strong>, no additional structural build-out required. Same CDU architecture, same Bloom Energy feed, same fiber entry point. Both floors commission off the same utility plant.
+          The building&rsquo;s existing drop ceiling on Floor 2 is an advantage — <strong style="color:var(--text-primary);">conduit, manifold lines, and cable trays run clean above the drop plane</strong>, no additional structural build-out required. Same CDU architecture, same power feed, same fiber entry point. Both floors commission off the same utility plant.
           <br><br>
           <strong style="color:var(--gold);">Two floors. One footprint. One utility plant. Double the compute.</strong>
         </p>
@@ -3037,12 +3037,12 @@
           <tr style="border-bottom:1px solid #1a1a20;">
             <td style="padding:11px 16px;color:var(--text-muted);">On-Site Generation</td>
             <td style="padding:11px 16px;text-align:center;color:#8a4040;">None — grid dependent</td>
-            <td style="padding:11px 16px;text-align:center;color:#70c070;font-weight:500;">Bloom Energy fuel cells + gas generators</td>
+            <td style="padding:11px 16px;text-align:center;color:#70c070;font-weight:500;">Nat gas gensets + solar + battery</td>
           </tr>
           <tr style="border-bottom:1px solid #1a1a20;background:#0d1117;">
             <td style="padding:11px 16px;color:var(--text-muted);">&ldquo;Renewable&rdquo; Claim</td>
             <td style="padding:11px 16px;text-align:center;color:#8a4040;">REC paper credits — not actual generation</td>
-            <td style="padding:11px 16px;text-align:center;color:#70c070;font-weight:500;">Actual on-site fuel cell generation</td>
+            <td style="padding:11px 16px;text-align:center;color:#70c070;font-weight:500;">Actual on-site nat gas generation + solar</td>
           </tr>
           <tr style="border-bottom:1px solid #1a1a20;">
             <td style="padding:11px 16px;color:var(--text-muted);">Compute Hardware</td>
@@ -3317,8 +3317,8 @@
         <div style="font-family:'Source Code Pro',monospace;font-size:8px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;">NATURAL GAS — THE HENRY HUB ADVANTAGE</div>
         <p style="font-size:12px;line-height:1.8;color:var(--text-muted);">
           Lafayette sits 40 miles from <strong style="color:var(--text-primary);">Henry Hub</strong> — the global gas price benchmark.
-          Bloom Energy fuel cells convert Gulf Coast natural gas at <strong style="color:var(--text-primary);">60%+ efficiency</strong>,
-          generating on-site power at <strong style="color:var(--gold);">$0.07&ndash;$0.09/kWh</strong> — independent of the grid.
+          On-site natural gas gensets run 24/7 at <strong style="color:var(--text-primary);">Henry Hub pricing</strong>,
+          with solar offsetting daytime fuel burn and battery handling ATS switching.
           Every competitor on grid rates pays a premium that compounds annually. We locked in the cheapest,
           most reliable power source in the country before the first rack arrives.
         </p>
@@ -3356,7 +3356,7 @@
       <div style="background:#081308;border:1px solid #2a5020;padding:20px;">
         <div style="font-family:'Source Code Pro',monospace;font-size:8px;letter-spacing:1.5px;color:#70d070;margin-bottom:8px;">Q4 2026</div>
         <div style="font-size:12px;font-weight:600;color:#70d070;margin-bottom:8px;">Revenue Begins</div>
-        <div style="font-size:11px;color:var(--text-muted);line-height:1.7;"><strong style="color:#70d070;">First dollar of AI compute revenue.</strong> Racks 5&ndash;8 commissioned. Bloom Energy fuel cells operational.</div>
+        <div style="font-size:11px;color:var(--text-muted);line-height:1.7;"><strong style="color:#70d070;">First dollar of AI compute revenue.</strong> Racks 5&ndash;8 commissioned. Solar array and battery system operational.</div>
       </div>
 
       <div style="background:var(--bg-card);border:1px solid var(--card-border);padding:20px;">
@@ -3377,13 +3377,13 @@
 
   <!-- ── POWER RESILIENCE ── -->
   <div style="margin-bottom:64px;">
-    <div style="font-family:'Source Code Pro',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">5-Layer Power Resilience &mdash; Hurricane-Rated Infrastructure</div>
+    <div style="font-family:'Source Code Pro',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">3-Layer Power Resilience &mdash; Hurricane-Rated Infrastructure</div>
 
     <p style="font-size:13px;line-height:1.85;color:var(--text-muted);font-weight:300;margin-bottom:32px;">
       Lafayette sits 60 miles inland from the Gulf Coast &mdash; FEMA Zone X, high ground, dry through Katrina, Rita, and Ida.
       But we are in Louisiana. We engineer for what <em>can</em> happen, not just what usually happens.
       MARLIE I is designed to <strong style="color:var(--text-primary);">keep running through a Category 4 landfall</strong> &mdash;
-      five independent power layers, stored fuel for 96+ hours on-site, and zero dependence on any single utility or pipeline.
+      three independent power layers, stored fuel for 96+ hours on-site, and zero dependence on any single utility or pipeline.
     </p>
 
     <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:40px;">
@@ -3391,41 +3391,25 @@
       <div style="display:grid;grid-template-columns:48px 1fr;background:#0a0e0a;border:1px solid #1a2a1a;">
         <div style="background:#1a4a1a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#70e070;padding:20px 0;">1</div>
         <div style="padding:18px 22px;">
-          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">LUS POWER &mdash; UTILITY GRID TIE</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">Lafayette Utilities System municipal grid. Primary power during commissioning, servicing windows, and low-draw periods. Cooperative interconnect agreement &mdash; municipal utility. MARLIE I draws minimally from the grid at operating capacity, but the tie-in is the legal and operational safety net required by lenders and by code.</div>
-        </div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:48px 1fr;background:#0a0e0a;border:1px solid #2a1a3a;">
-        <div style="background:#3a1a5a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#c070f0;padding:20px 0;">2</div>
-        <div style="padding:18px 22px;">
-          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">BLOOM ENERGY &mdash; ON-SITE FUEL CELLS</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">300 kW continuous (Phase 1), scalable in 300 kW increments. Converts Gulf Coast natural gas at 60%+ electrical efficiency &mdash; <strong style="color:var(--gold);">$0.07&ndash;$0.09/kWh</strong> effective cost, grid-independent. Runs 24/7/365 without interruption. Offsets 10.8% of Phase 1 facility load on an ongoing basis. Made in Newark, Delaware &mdash; 100% domestic.</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">NAT GAS + SOLAR + BATTERY &mdash; PRIMARY POWER</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">2&times; Caterpillar G3520H &mdash; 2.5 MW each, <strong style="color:var(--gold);">5 MW total installed capacity</strong>. Both units operate in parallel at moderate load, providing true N+1 redundancy &mdash; if either unit requires service, the other carries the facility without interruption. EPA prime/continuous certified. 10-second full block load from cold start. Henry Hub pricing &mdash; 40 miles from site, lowest nat gas cost in the country. 300 kW solar array offsets daytime fuel burn. 600 kWh battery provides instant ATS bridge during any source transition &mdash; zero perceived downtime to hosted workloads. Manufactured: <strong style="color:var(--text-primary);">Caterpillar Large Engine Center, Lafayette, Indiana.</strong> 5,500 parts from 500+ U.S. suppliers across 33 states. OBBBA domestic content certified.</div>
         </div>
       </div>
 
       <div style="display:grid;grid-template-columns:48px 1fr;background:#0a0e0a;border:1px solid #1a2a3a;">
-        <div style="background:#1a3a5a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#60b0f0;padding:20px 0;">3</div>
+        <div style="background:#1a3a5a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#60b0f0;padding:20px 0;">2</div>
         <div style="padding:18px 22px;">
-          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">CAT G3520H &mdash; NATURAL GAS PRIME POWER (PARALLEL N+1)</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">2&times; Caterpillar G3520H &mdash; 2.5 MW each, <strong style="color:var(--gold);">5 MW total installed capacity</strong>. Both units operate in parallel at moderate load, providing true N+1 redundancy across the full build — if either unit requires service, the other carries the facility without interruption. EPA prime/continuous certified &mdash; not standby-restricted. 10-second full block load from cold start. Natural gas / up to 25% hydrogen blend. Manufactured: <strong style="color:var(--text-primary);">Caterpillar Large Engine Center, Lafayette, Indiana.</strong> 5,500 parts from 500+ U.S. suppliers across 33 states. OBBBA domestic content certified.</div>
-        </div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:48px 1fr;background:#0a0e0a;border:1px solid #2a2a1a;">
-        <div style="background:#4a3a10;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#d4a843;padding:20px 0;">4</div>
-        <div style="padding:18px 22px;">
-          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">UPS &mdash; BATTERY RIDE-THROUGH</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">Uninterruptible power supply &mdash; millisecond switchover, seconds-to-minutes battery ride-through during any source transition. Protects compute hardware from power transients. Vertiv (Columbus, Ohio) or Eaton (Menomonee Falls, Wisconsin) &mdash; both American manufacturers. Standard Tier III data center requirement. Zero perceived downtime to hosted workloads during any power source switch.</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">LUS GRID &mdash; BACKUP POWER</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">Lafayette Utilities System municipal grid. Handles low-power operations, maintenance windows, and backup if primary system needs servicing. Cooperative interconnect agreement &mdash; municipal utility, $0.065/kWh industrial rate. Required for lender compliance, code compliance, and commissioning operations. MARLIE I draws minimally from the grid at full operating capacity, but the tie-in is the legal and operational safety net required by lenders and by code.</div>
         </div>
       </div>
 
       <div style="display:grid;grid-template-columns:48px 1fr;background:#0a0e0a;border:1px solid #3a1a1a;">
-        <div style="background:#5a1a1a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#ff6060;padding:20px 0;">5</div>
+        <div style="background:#5a1a1a;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:#ff6060;padding:20px 0;">3</div>
         <div style="padding:18px 22px;">
-          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">DIESEL EMERGENCY BACKUP &mdash; HURRICANE LAYER</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--text-primary);margin-bottom:4px;">DIESEL EMERGENCY &mdash; HURRICANE LAYER</div>
           <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">
-            Last-resort layer &mdash; independent of natural gas pipelines, utility grid, and all external infrastructure. Activates when gas supply is interrupted by hurricane, pipeline shutdown, or force majeure.
+            Last-resort layer &mdash; independent of natural gas pipelines, utility grid, and all external infrastructure. Activates when gas and grid are both compromised by hurricane, pipeline shutdown, or force majeure. Ida-proven design principle.
             <br><br>
             <strong style="color:var(--text-primary);">Phase 1:</strong> 1&times; Cat C175-16 diesel emergency standby &mdash; 3,365 kW (3.4 MW). Covers full Phase 1 facility load as a single unit.
             On-site <strong style="color:var(--gold);">30,000-gallon double-wall UL 142 diesel storage tank</strong>.
@@ -3444,7 +3428,7 @@
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:32px;">
       <div style="background:var(--bg-card);border:1px solid var(--card-border);padding:20px;text-align:center;">
-        <div style="font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px;">5</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px;">3</div>
         <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">Independent Power Layers</div>
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--card-border);padding:20px;text-align:center;">
@@ -3459,8 +3443,9 @@
 
     <div style="background:#080c08;border:1px solid #2a4020;border-left:4px solid #70e070;padding:20px 24px;font-size:12px;color:var(--text-muted);line-height:1.8;">
       <strong style="color:#70e070;">Hurricane Protocol:</strong>
-      When a Gulf Coast storm threatens, MARLIE I switches to diesel + Bloom Energy island mode, disconnects from the grid, and runs self-contained.
-      Natural gas generators remain on hot standby. Once the storm passes and pipeline pressure is restored &mdash; typically 24&ndash;72 hours for Lafayette inland &mdash;
+      When a Gulf Coast storm threatens, MARLIE I switches to diesel emergency power, disconnects from the grid, and runs self-contained.
+      Natural gas generators shut down safely when pipeline operators isolate supply for safety &mdash; this is the Ida lesson.
+      Once the storm passes and pipeline pressure is restored &mdash; typically 24&ndash;72 hours for Lafayette inland &mdash;
       prime power transitions back to natural gas. Diesel tank is replenished via fuel delivery contract.
       <strong style="color:var(--text-primary);">Customer-facing downtime: zero.</strong>
     </div>
@@ -3574,8 +3559,8 @@
         Manufactured in Texas — Houston &amp; Dallas area facilities. CHIPS Act domestic production. Zero foreign semiconductor dependency.
       </div>
       <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
-        <strong style="color:var(--text-primary);">Bloom Energy Fuel Cells</strong><br>
-        Assembled in Newark, Delaware. US-manufactured solid oxide fuel cell stacks. American clean energy technology.
+        <strong style="color:var(--text-primary);">Solar + Battery Systems</strong><br>
+        American-manufactured solar panels and battery storage. On-site renewable energy offset integrated with primary nat gas generation.
       </div>
       <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
         <strong style="color:var(--text-primary);">Vertiv Cooling Systems</strong><br>
@@ -3635,7 +3620,7 @@
             <strong style="color:var(--text-primary);">Industrial rate infrastructure</strong> — $0.065/kWh industrial rate is one of the lowest in the US Gulf Coast. This rate advantage is baked into every year of the financial model and compounds as the facility scales.
           </li>
           <li style="font-size:12px;color:var(--text-muted);line-height:1.7;padding-left:16px;border-left:2px solid #3a6a9a;">
-            <strong style="color:var(--text-primary);">Grid interconnect agreement</strong> — Layer 1 of the 5-layer power stack. Required for lender compliance, code compliance, and commissioning operations. The cooperative interconnect structure with LUS is the legal foundation the entire power architecture rests on.
+            <strong style="color:var(--text-primary);">Grid interconnect agreement</strong> — Layer 2 of the 3-layer power stack. Required for lender compliance, code compliance, and commissioning operations. The cooperative interconnect structure with LUS is the legal foundation the entire power architecture rests on.
           </li>
           <li style="font-size:12px;color:var(--text-muted);line-height:1.7;padding-left:16px;border-left:2px solid #3a6a9a;">
             <strong style="color:var(--text-primary);">Long-term industrial load growth</strong> — As MARLIE I scales to full build and Phase 2 sites come online, LUS Power adds a high-value, high-demand industrial customer that doesn&rsquo;t spike unpredictably — AI compute load is flat, continuous, and forecastable.
@@ -3711,7 +3696,7 @@
         </div>
         <div style="padding:20px 28px;">
           <div style="font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:8px;">3-phase industrial interconnect agreement and industrial rate classification</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.75;">MARLIE I needs a formal utility interconnect agreement for lender and code compliance — this is Layer 1 of the 5-layer power stack. We run primarily on on-site natural gas generation, so peak grid draw is modest. The interconnect is the legal and safety foundation, not the primary supply.</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.75;">MARLIE I needs a formal utility interconnect agreement for lender and code compliance — this is Layer 2 of the 3-layer power stack. We run primarily on on-site natural gas generation, so peak grid draw is modest. The interconnect is the legal and safety foundation, not the primary supply.</div>
         </div>
       </div>
 
