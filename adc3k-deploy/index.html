@@ -33,7 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(6,10
 .mobile-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
 .pad{max-width:1200px;margin:0 auto;padding:120px 40px 80px}
 .pad-sm{max-width:960px;margin:0 auto;padding:100px 40px 80px}
-.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active,#pg-klft.active,#pg-skydio.active{display:block;height:100vh;min-height:0;overflow:hidden}
+.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active,#pg-klft.active,#pg-skydio.active,#pg-trappeys.active{display:block;height:100vh;min-height:0;overflow:hidden}
 .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
 .eyebrow.green{color:var(--green)}.eyebrow.green::before{background:var(--green)}
@@ -956,78 +956,13 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </div>
 
 <!-- TRAPPEYS DECK -->
-<div class="page" id="pg-trappeys">
-<div class="pad-sm">
-  <button class="back-btn" onclick="showPage('projects')">Back to Projects</button>
-
-  <!-- Photo Hero — metal warehouse -->
-  <div class="ph reveal">
-    <img src="metal-warehouse.jpg" alt="Metal warehouse — ADC 3K pod deployment site" class="cover">
-    <div class="ph-overlay">
-      <div class="ph-badge">First ADC 3K Deployment Site</div>
-      <div class="ph-title">Trappey's Cannery — Vermilion River</div>
-      <div class="ph-sub">SE Evangeline Thruway Corridor, Lafayette, LA &nbsp;·&nbsp; 30.21356°N, 92.00163°W</div>
-      <div class="ph-stats">
-        <div><div class="ph-sv">1901</div><div class="ph-sl">Year Built</div></div>
-        <div><div class="ph-sv">Metal</div><div class="ph-sl">Structure</div></div>
-        <div><div class="ph-sv">0</div><div class="ph-sl">Build-Out Req.</div></div>
-        <div><div class="ph-sv">0.3 mi</div><div class="ph-sl">From MARLIE I</div></div>
-        <div><div class="ph-sv">Remote</div><div class="ph-sl">NOC Managed</div></div>
-      </div>
-    </div>
+<div class="page" id="pg-trappeys" style="padding-top:56px">
+  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">TRAPPEYS AI CENTER &nbsp;·&nbsp; VERMILION RIVER RESTORATION</div>
+    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-
-  <!-- What goes inside — split -->
-  <div class="split reveal" style="flex-direction:row-reverse">
-    <div class="split-text">
-      <div class="sn" style="margin:0 0 8px">What Goes Inside</div>
-      <h3>Pods roll in on a flatbed. Power connects. Fiber connects. Done.</h3>
-      <p>ADC 3K pods don't need climate-controlled space, finished interiors, or traditional data center build-out. They need a covered structure with power and fiber. The Trappeys metal warehouse delivers exactly that — with zero modification to the building.</p>
-      <p>The pods are sealed, immersion-cooled containers. The warehouse just keeps the weather off them. Remote monitoring and operations run from MARLIE I, 0.3 miles away.</p>
-    </div>
-    <img src="pods-night.jpg" alt="ADC 3K pods — what goes inside the warehouse" class="cover">
-  </div>
-
-  <!-- Big stats -->
-  <div class="bstats reveal">
-    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0.3</div><div class="bstat-l">Miles from MARLIE I NOC</div></div>
-    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0</div><div class="bstat-l">Construction Required</div></div>
-    <div class="bstat"><div class="bstat-v" style="color:var(--green)">0</div><div class="bstat-l">On-Site Staff Needed</div></div>
-    <div class="bstat"><div class="bstat-v" style="color:var(--green)">3 min</div><div class="bstat-l">Emergency Response Time</div></div>
-  </div>
-
-  <!-- Why it works — 3 cards -->
-  <div class="sn reveal">Why This Works</div>
-  <h2 class="sh reveal">Five advantages. Zero construction.</h2>
-  <div class="g3 reveal">
-    <div class="card"><div class="ctag g">Structure</div><h3>No Build-Out</h3><p>Metal industrial warehouse. Pods position on the concrete floor. No interior modification to the building.</p></div>
-    <div class="card"><div class="ctag b">Operations</div><h3>MARLIE I NOC</h3><p>All monitoring, alerts, and management handled remotely from 0.3 miles. Zero staff required at Trappeys.</p></div>
-    <div class="card"><div class="ctag g">Response</div><h3>3-Minute Physical Response</h3><p>If a rare physical intervention is needed, MARLIE I staff are 3 minutes away. Better SLA than any remote-only site.</p></div>
-    <div class="card"><div class="ctag b">Fiber + Power</div><h3>SE Evangeline Corridor</h3><p>Same utility service area as MARLIE I. Dark fiber extension is a one-time run. No new infrastructure corridors needed.</p></div>
-    <div class="card"><div class="ctag g">Incentives</div><h3>Historic Tax Credits</h3><p>1901 cannery building qualifies for NPS Historic Tax Credit review — Parts 1/2/3 application pathway.</p></div>
-    <div class="card"><div class="ctag b">Anchor Tenant</div><h3>UL Lafayette</h3><p>University research computing is the target anchor. Research cloud spend → owned infrastructure on-corridor.</p></div>
-  </div>
-
-  <!-- Timeline -->
-  <div class="sn reveal" style="margin-top:36px">Deployment Plan</div>
-  <h2 class="sh reveal">Pods in. Fiber connected. Operational.</h2>
-  <div class="tm reveal">
-    <div class="tm-item active"><div class="tm-dot"></div><div><div class="tm-step">Now</div><div class="tm-name">Site Control</div><div class="tm-note">Site identified. Access negotiations and historic tax credit assessment in progress.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Next</div><div class="tm-name">UL Lafayette Engagement</div><div class="tm-note">First contact: president / provost / research computing director. Anchor commitment before deployment spend.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">Utility + Fiber</div><div class="tm-note">LUS MV extension from MARLIE I. 0.3-mile dark fiber run. Nat gas for 4-layer power stack.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Pending</div><div class="tm-name">Pod Delivery &amp; Installation</div><div class="tm-note">ADC 3K pods from Lafayette factory. Positioned on warehouse floor. Power + fiber connected.</div></div></div>
-    <div class="tm-item pending"><div class="tm-dot"></div><div><div class="tm-step">Target</div><div class="tm-name">GO-LIVE — Trappeys AI Center</div><div class="tm-note">First production workload. Managed remotely from MARLIE I NOC.</div></div></div>
-  </div>
-
-  <div class="callout reveal" style="margin-top:36px">
-    <h3>Trappeys AI Center</h3>
-    <p>University research, Louisiana enterprise, government compute — if you need dedicated AI infrastructure in Lafayette, this site is being designed for you.</p>
-    <div class="dual-cta">
-      <div class="cta-card"><h4>Anchor Tenant Inquiry</h4><p>UL Lafayette, LSU, enterprise, government — let's talk before the site fills.</p><button class="cta" onclick="showPage('connect')">Start Conversation &rarr;</button></div>
-      <div class="cta-card"><h4>City &amp; Development Partners</h4><p>Economic development, historic preservation, city engagement — multiple partnership pathways.</p><button class="cta out" onclick="showPage('connect')">Connect Now &rarr;</button></div>
-    </div>
-  </div>
-</div>
+  <iframe src="trappeys-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
 </div>
 
 <!-- KLFT 1.1 DECK -->
@@ -1200,7 +1135,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
 <script>
 const pages=['home','ecosystem','technology','louisiana','projects','marlie','adc3k','trappeys','klft','skydio','learn','connect'];
-const deckPages=['marlie','klft','skydio'];
+const deckPages=['marlie','klft','skydio','trappeys'];
 function showPage(id){
   pages.forEach(p=>{
     const el=document.getElementById('pg-'+p);if(el)el.classList.remove('active');
