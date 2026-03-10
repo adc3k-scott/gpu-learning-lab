@@ -1,25 +1,31 @@
 # Mission Control — Project State
-Last updated: 2026-03-09 (website rebuild session)
+Last updated: 2026-03-09 (project decks session)
 
 ---
 
-## What Was Done This Session (Website Rebuild)
+## What Was Done This Session
 
-### adc3k.com — Full Ecosystem Rebuild (local, NOT yet deployed to Vercel)
-- Rebuilt `adc3k-deploy/index.html` from V3 → new 7-page SPA, ~83KB
-- Pages: Home, Ecosystem, Technology, Louisiana, Projects, Learn, Connect
-- Hero: 4-layer canvas animation (dark grid + particle neural net + drone/satellite comet trails + radar ping rings)
-- NVIDIA GPU lineup: 6 local images — H100, Blackwell, GB200, NVL72, Vera Rubin, Rubin Platform
-- Pods nighttime hero image: `adc3k-deploy/pods-night.jpg`
-- AI factory branding: all "data center" → "AI factory" replaced (0 remaining)
-- First responders section added to Louisiana page
-- Made in America section added
-- Formspree email capture with role routing — placeholder `YOUR_FORM_ID` (needs real ID)
-- Animated stat counters: 2MW / 3.0MW / 1.05 PUE / 16 wk
-- All 7 image files downloaded locally — no external CDN deps
-- Git committed: `130f89e` feat: adc3k.com full ecosystem rebuild
+### adc3k.com — Project Deck Pages Added (local, NOT yet deployed to Vercel)
+- `130f89e` — Full ecosystem rebuild: 7-page SPA, particle canvas hero, NVIDIA lineup, AI factory branding
+- `8212100` — Project deck pages: MARLIE I iframe + visual decks for ADC 3K, Trappeys, KLFT
 
-### Deploy Command (NOT YET RUN this session)
+### MARLIE I Deck (pg-marlie)
+- Full-screen iframe loading `marlie-deck.html` (copied from `marlie/MARLIE-I-Lafayette-Partnership-SHARE.html`)
+- Thin nav bar: back button + title + "Request Investor Package" CTA
+- Pattern: real existing deck, nothing rewritten. **Use this same approach for all 4 projects.**
+- Deck pages that have existing HTML: `marlie-deck.html` ✓ · `trappeys-deck.html` (pending) · adc3k-deck (pending) · klft-deck (pending)
+
+### ADC 3K, Trappeys, KLFT Deck Pages
+- Visual-first pages built (photo hero, split layouts, image rows, power stack, timeline)
+- Trappeys and KLFT: no existing standalone deck HTML yet — visual pages are the current state
+- **Next: apply same iframe treatment to Trappeys using `marlie/Trappeys-Investor-Deck.html`**
+
+### New image assets in adc3k-deploy/
+- `marlie-building.jpg` — MARLIE I building (1201 SE Evangeline)
+- `metal-warehouse.jpg` — metal warehouse (Trappeys deployment site type)
+- `power-infographic.png` — ADC3K power-limited infographic
+
+### Deploy Command (NOT YET RUN)
 - `cd adc3k-deploy && npx vercel --prod --yes`
 - After deploy: replace `YOUR_FORM_ID` in connect form with real Formspree ID
 
@@ -65,7 +71,7 @@ Last updated: 2026-03-09 (website rebuild session)
 | **Trappeys** | Strategy defined. UL Lafayette = critical unlock. | First contact: UL president/provost/research computing director. City participation required. |
 | **KLFT 1.1** | Full engineering package + airport meeting deck ready. | Schedule Airport Authority meeting. Get building sq footage + condition report first. |
 | **Pipeline Sites** | 16 sites scored. 4 Tier A. Map operational. | Run Sabine corridor (needs API credits). Import sites.json to map via console. |
-| **ADC3K.com** | Rebuild complete (local). 7-page SPA, particle canvas, NVIDIA lineup, pods image. | Deploy: `cd adc3k-deploy && npx vercel --prod --yes`. Then replace Formspree ID. |
+| **ADC3K.com** | Deck pages in progress. MARLIE I iframe done. Trappeys next. | Finish 4 project decks, then deploy: `cd adc3k-deploy && npx vercel --prod --yes`. |
 | **Mission Control HD** | Live. Two deferred blockers. | Stripe live webhook + Supabase auth redirect URLs. |
 | **Ground Zero** | EP001 private. EP002 pending. | PEXELS_API_KEY confirmed in .env — run EP002 now. |
 | **Mission Control (repo)** | 160 tests green. All 10 agents operational. | No blockers. |
