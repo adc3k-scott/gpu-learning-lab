@@ -365,6 +365,14 @@
 </div>
 
 <script>
+// API key auth — set via ?key= query param or MC_API_KEY localStorage
+var MC_KEY = new URLSearchParams(location.search).get('key') || localStorage.getItem('MC_API_KEY') || '';
+if (MC_KEY) localStorage.setItem('MC_API_KEY', MC_KEY);
+function authHeaders(extra) {
+  var h = Object.assign({}, extra || {});
+  if (MC_KEY) h['X-API-Key'] = MC_KEY;
+  return h;
+}
 var state = { jobs: {}, agents: {}, evCount: 0 };
 
 function switchTab(name, el) {
@@ -377,7 +385,7 @@ function switchTab(name, el) {
 var sse = null;
 function connectSSE() {
   if (sse) sse.close();
-  sse = new EventSource('/events');
+  sse = new EventSource('/events' + (MC_KEY ? '?api_key=' + encodeURIComponent(MC_KEY) : ''));
   sse.onopen = function() { document.getElementById('conn-dot').classList.remove('off'); };
   sse.onmessage = function(e) {
     try { handleEvent(JSON.parse(e.data)); } catch(x) {}
@@ -411,7 +419,7 @@ function pushEventLog(type) {
 
 async function refreshJobs() {
   try {
-    var res = await fetch('/tasks');
+    var res = await fetch('/tasks', { headers: authHeaders() });
     var data = await res.json();
     var jobs = data.jobs || [];
     var list = document.getElementById('jobs-list');
@@ -448,7 +456,7 @@ async function submitTask() {
   try {
     var res = await fetch('/tasks', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ description: desc })
     });
     var data = await res.json();
@@ -462,7 +470,7 @@ async function handleFile(input) {
   var fd = new FormData();
   fd.append('file', file);
   try {
-    await fetch('/upload', { method: 'POST', body: fd });
+    await fetch('/upload', { method: 'POST', headers: authHeaders(), body: fd });
     if (file.name.endsWith('.zip')) {
       document.getElementById('task-input').value = 'Analyse the uploaded workspace: ' + file.name;
     }
@@ -472,7 +480,7 @@ async function handleFile(input) {
 
 async function refreshAgents() {
   try {
-    var res = await fetch('/agents');
+    var res = await fetch('/agents', { headers: authHeaders() });
     var data = await res.json();
     var agents = data.agents || [];
     var list = document.getElementById('agents-list');
@@ -511,7 +519,7 @@ async function sendChat() {
   try {
     var res = await fetch('/chat/stream', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ message: msg })
     });
     var reader = res.body.getReader();
@@ -558,7 +566,7 @@ async function saveConfig(key, inputId, statusId) {
   try {
     await fetch('/config', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ key: key, value: value })
     });
     statusEl.textContent = '\u2713 Saved';

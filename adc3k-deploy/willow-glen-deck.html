@@ -1298,9 +1298,27 @@ function goTo(n) {
 }
 function go(dir) { goTo(cur + dir); }
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
-  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
 });
+
+// Mouse wheel / trackpad scroll — throttled so one scroll = one slide
+let wheelLock = false;
+document.addEventListener('wheel', e => {
+  e.preventDefault();
+  if (wheelLock) return;
+  wheelLock = true;
+  if (e.deltaY > 0) go(1); else go(-1);
+  setTimeout(() => { wheelLock = false; }, 650);
+}, { passive: false });
+
+// Touch swipe
+let touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const diff = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(diff) > 40) { if (diff > 0) go(1); else go(-1); }
+}, { passive: true });
 </script>
 </body>
 </html>

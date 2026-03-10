@@ -8,10 +8,12 @@ from pathlib import Path
 
 from anthropic import AsyncAnthropic, Anthropic
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
+from starlette.status import HTTP_403_FORBIDDEN
 
 # ---------------------------------------------------------------------------
 # Load .env — prefer project root, fall back to .venv/.env
@@ -35,6 +37,41 @@ if not API_KEY:
 
 anthropic_client       = Anthropic(api_key=API_KEY)
 anthropic_async_client = AsyncAnthropic(api_key=API_KEY)
+
+# ---------------------------------------------------------------------------
+# API key authentication
+# ---------------------------------------------------------------------------
+MC_API_KEY = os.getenv("MC_API_KEY", "")
+
+_api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+# Endpoints that don't require auth (public dashboard + static)
+_PUBLIC_PATHS = frozenset({"/", "/mobile", "/docs", "/openapi.json", "/redoc"})
+
+
+async def require_api_key(
+    request: Request,
+    api_key: str | None = Depends(_api_key_header),
+):
+    """Reject requests without a valid API key.
+    Accepts key via X-API-Key header or ?api_key= query param (for EventSource).
+    Skipped for public paths and when MC_API_KEY is not configured (dev mode).
+    """
+    if not MC_API_KEY:
+        return  # auth disabled — dev mode (no MC_API_KEY set)
+    if request.url.path in _PUBLIC_PATHS:
+        return  # public endpoints
+    if api_key and api_key == MC_API_KEY:
+        return  # valid header key
+    # Fallback: query param (EventSource can't set headers)
+    query_key = request.query_params.get("api_key")
+    if query_key and query_key == MC_API_KEY:
+        return
+    raise HTTPException(
+        status_code=HTTP_403_FORBIDDEN,
+        detail="Invalid or missing API key. Set X-API-Key header.",
+    )
+
 
 # ---------------------------------------------------------------------------
 # Multi-agent infrastructure
@@ -124,11 +161,17 @@ async def lifespan(app: FastAPI):
 # ---------------------------------------------------------------------------
 app = FastAPI(title="Mission Control", lifespan=lifespan)
 
+_ALLOWED_ORIGINS = [
+    o.strip()
+    for o in os.getenv("MC_CORS_ORIGINS", "http://localhost:8000,http://127.0.0.1:8000").split(",")
+    if o.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_ALLOWED_ORIGINS,
     allow_methods=["POST", "GET"],
-    allow_headers=["*"],
+    allow_headers=["X-API-Key", "Content-Type"],
 )
 
 
@@ -168,7 +211,7 @@ def mobile():
 # ---------------------------------------------------------------------------
 # Routes — SSE live dashboard stream
 # ---------------------------------------------------------------------------
-@app.get("/events")
+@app.get("/events", dependencies=[Depends(require_api_key)])
 async def sse_events():
     """Server-Sent Events stream — pushes dashboard snapshots to the browser."""
     q = ui_agent.add_sse_subscriber()
@@ -202,7 +245,7 @@ async def sse_events():
 # ---------------------------------------------------------------------------
 # Routes — model info
 # ---------------------------------------------------------------------------
-@app.get("/model")
+@app.get("/model", dependencies=[Depends(require_api_key)])
 def get_model():
     return {"model": MODEL, "mode": bus.mode}
 
@@ -210,7 +253,7 @@ def get_model():
 # ---------------------------------------------------------------------------
 # Routes — direct Claude chat
 # ---------------------------------------------------------------------------
-@app.post("/chat")
+@app.post("/chat", dependencies=[Depends(require_api_key)])
 def chat(req: ChatRequest):
     system = req.system or (
         "You are Mission Control — an AI assistant with expertise in CUDA, GPU computing, "
@@ -257,7 +300,7 @@ _CHAT_SYSTEM = (
 )
 
 
-@app.post("/chat/stream")
+@app.post("/chat/stream", dependencies=[Depends(require_api_key)])
 async def chat_stream(req: ChatRequest):
     """Streaming chat endpoint — returns SSE with delta tokens."""
     system = req.system or _CHAT_SYSTEM
@@ -348,7 +391,7 @@ def _format_job_result(job: dict) -> str:
 # ---------------------------------------------------------------------------
 # Routes — multi-agent task API
 # ---------------------------------------------------------------------------
-@app.post("/tasks")
+@app.post("/tasks", dependencies=[Depends(require_api_key)])
 async def submit_task(req: TaskRequest):
     job_id = await orchestrator.submit_task(
         description=req.description,
@@ -358,7 +401,7 @@ async def submit_task(req: TaskRequest):
     return {"job_id": job_id, "status": "queued"}
 
 
-@app.get("/tasks/{job_id}")
+@app.get("/tasks/{job_id}", dependencies=[Depends(require_api_key)])
 async def get_task(job_id: str):
     job = await orchestrator.get_job(job_id)
     if not job:
@@ -366,12 +409,12 @@ async def get_task(job_id: str):
     return job
 
 
-@app.get("/tasks")
+@app.get("/tasks", dependencies=[Depends(require_api_key)])
 async def list_tasks():
     return await orchestrator.list_jobs()
 
 
-@app.get("/tasks/{job_id}/stream")
+@app.get("/tasks/{job_id}/stream", dependencies=[Depends(require_api_key)])
 async def stream_task(job_id: str):
     """SSE stream for a specific job — pushes step and job events until done."""
     async def generate():
@@ -412,7 +455,7 @@ async def stream_task(job_id: str):
 # ---------------------------------------------------------------------------
 # Routes — agent status
 # ---------------------------------------------------------------------------
-@app.get("/agents")
+@app.get("/agents", dependencies=[Depends(require_api_key)])
 async def list_agents():
     states = []
     for agent in _ALL_AGENTS:
@@ -424,7 +467,7 @@ async def list_agents():
 # ---------------------------------------------------------------------------
 # Routes — infrastructure health
 # ---------------------------------------------------------------------------
-@app.get("/infra")
+@app.get("/infra", dependencies=[Depends(require_api_key)])
 async def get_infra():
     cached = await store.get("infra:health")
     if cached:
@@ -432,7 +475,7 @@ async def get_infra():
     return await infra_manager._health()
 
 
-@app.post("/infra/check")
+@app.post("/infra/check", dependencies=[Depends(require_api_key)])
 async def trigger_infra_check():
     await bus.publish(Event(event_type="infra.check", payload={}, source="api"))
     return {"status": "check triggered"}
@@ -480,7 +523,7 @@ class ConfigRequest(BaseModel):
     value: str
 
 
-@app.get("/config")
+@app.get("/config", dependencies=[Depends(require_api_key)])
 async def get_config():
     """Return current runtime configuration (sensitive values masked)."""
     runpod_key_stored = await store.get("config:runpod_api_key") or ""
@@ -492,7 +535,7 @@ async def get_config():
     }
 
 
-@app.post("/config")
+@app.post("/config", dependencies=[Depends(require_api_key)])
 async def set_config(req: ConfigRequest):
     """Set a runtime config value. Stored in StateStore and persisted to .env."""
     if req.key not in _ALLOWED_CONFIG_KEYS:
@@ -573,7 +616,7 @@ def _safe_extract_zip(zip_path: Path, dest_dir: Path) -> list[str]:
     return extracted
 
 
-@app.post("/upload")
+@app.post("/upload", dependencies=[Depends(require_api_key)])
 async def upload_file(file: UploadFile = File(...)):
     """
     Accept a file upload and save it to workspace/.
@@ -627,7 +670,7 @@ async def upload_file(file: UploadFile = File(...)):
     return {"filename": filename, "size": size, "path": f"workspace/{filename}", "zip": False}
 
 
-@app.get("/files")
+@app.get("/files", dependencies=[Depends(require_api_key)])
 async def list_workspace_files():
     """List all files in workspace/ (recursive) available for analysis."""
     if not WORKSPACE.exists():
@@ -643,7 +686,7 @@ async def list_workspace_files():
 # ---------------------------------------------------------------------------
 # Routes — snapshot (for polling fallback)
 # ---------------------------------------------------------------------------
-@app.get("/snapshot")
+@app.get("/snapshot", dependencies=[Depends(require_api_key)])
 async def get_snapshot():
     """Return the current UIAgent dashboard snapshot."""
     return ui_agent.snapshot()
@@ -651,7 +694,7 @@ async def get_snapshot():
 # ---------------------------------------------------------------------------
 # Notion tree — no bash needed, call via WebFetch when server is running
 # ---------------------------------------------------------------------------
-@app.get("/notion/tree")
+@app.get("/notion/tree", dependencies=[Depends(require_api_key)])
 async def notion_tree():
     """Return the full Notion workspace tree as structured JSON + plain text."""
     try:
