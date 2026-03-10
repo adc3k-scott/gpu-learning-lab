@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willow Glen Terminal — AI Factory on the Mississippi</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #04080f;
+    --panel: #08111e;
+    --border: #0f2035;
+    --border2: #1a3a5c;
+    --green: #00e87a;
+    --gold: #f5a623;
+    --amber: #e8890a;
+    --blue: #3b9eff;
+    --blue2: #00c8ff;
+    --purple: #9b6dff;
+    --red: #ff4d6d;
+    --text: #e8f0fc;
+    --muted: #4a6480;
+    --muted2: #7a9ab8;
+  }
+  html, body { height: 100%; background: #000; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+  #deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    background: var(--bg); padding: 0; overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(245,166,35,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none; z-index: 0;
+  }
+  .slide-bar {
+    display: flex; align-items: center; gap: 16px; padding: 10px 28px;
+    background: rgba(4,8,15,0.9); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px); z-index: 10; flex-shrink: 0;
+  }
+  .bar-logo { font-family: monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--gold); white-space: nowrap; }
+  .bar-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .bar-meta { font-size: 10px; color: var(--muted); font-family: monospace; letter-spacing: 1px; white-space: nowrap; }
+  .slide-content { flex: 1; display: flex; align-items: stretch; overflow: hidden; z-index: 1; position: relative; }
+  .std-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 28px 36px; width: 100%; align-items: start; overflow-y: auto; }
+  .full-inner { padding: 24px 36px; width: 100%; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+  .vis-panel {
+    background: var(--panel); border: 1px solid var(--border2); border-radius: 14px;
+    padding: 18px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;
+  }
+  .vis-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted2); border-bottom: 1px solid var(--border); padding-bottom: 8px; flex-shrink: 0; }
+  .slide-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px; }
+  .slide-h2 { font-size: clamp(20px, 2.4vw, 30px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 10px; }
+  .slide-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; margin-bottom: 14px; }
+  .bullets { display: flex; flex-direction: column; gap: 10px; }
+  .bullet { display: flex; gap: 12px; align-items: flex-start; }
+  .bullet-icon { font-size: 14px; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .bullet-body { display: flex; flex-direction: column; gap: 2px; }
+  .bullet-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .bullet-desc { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+  .stat-row { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .stat-card { flex: 1; min-width: 100px; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel); text-align: center; }
+  .sv { font-size: clamp(18px, 2vw, 26px); font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .sl { font-size: 10px; color: var(--muted2); letter-spacing: 0.5px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .pill { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--border2); color: var(--muted2); background: var(--panel); }
+  .pill.green { border-color: rgba(0,232,122,0.3); color: var(--green); background: rgba(0,232,122,0.06); }
+  .pill.blue { border-color: rgba(0,200,255,0.3); color: var(--blue2); background: rgba(0,200,255,0.06); }
+  .pill.gold { border-color: rgba(245,166,35,0.3); color: var(--gold); background: rgba(245,166,35,0.06); }
+  .pill.purple { border-color: rgba(155,109,255,0.3); color: var(--purple); background: rgba(155,109,255,0.06); }
+  .quote-box { padding: 16px 20px; border-radius: 10px; border-left: 3px solid var(--gold);
+    background: rgba(245,166,35,0.04); font-size: 13px; color: var(--muted2); line-height: 1.7; font-style: italic; }
+  .info-panel { padding: 14px 16px; border-radius: 8px; background: var(--panel); border: 1px solid var(--border2); }
+  .info-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .info-body { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+  .compare-table { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; }
+  .ct-header { padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(4,8,15,0.8); border-bottom: 1px solid var(--border2); }
+  .ct-cell { padding: 9px 14px; font-size: 12px; color: var(--muted2); border-top: 1px solid var(--border); }
+  .ct-cell.highlight { color: var(--green); font-weight: 700; }
+  .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pillar { padding: 18px; border-radius: 10px; border: 1px solid var(--border2); background: var(--panel); }
+  .pillar-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .pillar-items { display: flex; flex-direction: column; gap: 4px; }
+  .pillar-item { font-size: 12px; color: var(--muted2); line-height: 1.4; }
+  .cover-full { position: absolute; inset: 0; overflow: hidden; background: var(--bg); }
+  .cover-overlay { position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(4,8,15,0.94) 40%, rgba(4,8,15,0.5) 100%); }
+  .cover-content { position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: center; padding: 60px 56px; gap: 18px; max-width: 620px; }
+  .cover-eyebrow { display: flex; align-items: center; gap: 8px; padding: 6px 16px;
+    border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; background: rgba(245,166,35,0.07);
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; font-family: monospace; width: fit-content; }
+  .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .cover-h1 { font-size: clamp(30px, 4.5vw, 54px); font-weight: 900; color: var(--text); line-height: 1.05; }
+  .cover-sub { font-size: clamp(13px, 1.4vw, 17px); color: var(--muted2); max-width: 520px; line-height: 1.6; }
+  .cover-meta-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px; }
+  .cover-meta-item { text-align: left; }
+  .cover-meta-val { font-size: clamp(16px, 2vw, 24px); font-weight: 800; }
+  .cover-meta-lbl { font-size: 10px; color: var(--muted2); letter-spacing: 0.5px; }
+  .cover-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--green), var(--blue2)); }
+  .closing-inner { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; height: 100%; padding: 40px; text-align: center; position: relative; gap: 14px; }
+  .closing-glow { position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(245,166,35,0.07) 0%, transparent 70%);
+    pointer-events: none; }
+  .closing-h1 { font-size: clamp(26px, 3.5vw, 48px); font-weight: 900; color: var(--text); line-height: 1.1; }
+  .closing-sub { font-size: clamp(13px, 1.3vw, 16px); color: var(--muted2); max-width: 620px; line-height: 1.6; }
+  .contact-cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+  .contact-card { padding: 16px 24px; border-radius: 10px; border: 1px solid rgba(245,166,35,0.3);
+    background: var(--panel); font-size: 13px; color: var(--text); font-weight: 600; }
+  .contact-card span { display: block; font-size: 11px; color: var(--muted2); font-weight: 400; margin-top: 2px; }
+  #nav { position: fixed; bottom: 0; left: 0; right: 0; height: 40px; z-index: 100;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: rgba(4,8,15,0.9); border-top: 1px solid var(--border); backdrop-filter: blur(12px); }
+  .nav-btn { background: transparent; border: 1px solid var(--border2); color: var(--muted2);
+    width: 28px; height: 24px; border-radius: 4px; cursor: pointer; font-size: 11px; transition: all 0.15s; }
+  .nav-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-dots { display: flex; gap: 5px; align-items: center; }
+  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: all 0.2s; }
+  .nav-dot.active { background: var(--gold); width: 16px; border-radius: 3px; }
+  #slide-counter { font-size: 10px; color: var(--muted); font-family: monospace; min-width: 40px; text-align: center; }
+  .slide.entering { animation: slideIn 0.25s ease forwards; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  .c-green { color: var(--green); } .c-blue { color: var(--blue2); } .c-gold { color: var(--gold); }
+  .c-purple { color: var(--purple); } .c-amber { color: var(--amber); }
+  .phase-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border2); margin: 8px 0; }
+  .phase-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .wf-chain { display: flex; flex-direction: column; gap: 4px; }
+  .wf-node { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px;
+    border: 1px solid var(--border2); background: var(--panel); font-size: 12px; }
+  .wf-node .wf-icon { font-size: 16px; flex-shrink: 0; }
+  .wf-node .wf-label { font-weight: 700; color: var(--text); }
+  .wf-node .wf-detail { color: var(--muted2); font-size: 11px; }
+  .wf-arrow { text-align: center; font-size: 12px; color: var(--border2); line-height: 1; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- SLIDE 1 — COVER -->
+<div class="slide active" id="s1">
+  <div class="cover-full">
+    <img src="wgt-aerial.jpg" alt="Willow Glen Terminal — Aerial view of 700-acre former power station on the Mississippi River" style="width:100%;height:100%;object-fit:cover;">
+    <div class="cover-overlay"></div>
+  </div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">
+      <div class="cover-dot"></div>
+      ADC 3K &nbsp;·&nbsp; ENGINEERING BLUEPRINT
+    </div>
+    <h1 class="cover-h1">Willow Glen<br>AI Factory<br><span style="font-size:0.55em;color:var(--gold)">+ Mini Grid</span></h1>
+    <p class="cover-sub">Former 2,200 MW power station reborn — AI compute and renewable power generation on the Mississippi. We don't just use the grid. We fire it back up.</p>
+    <div class="cover-meta-row">
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--gold)">700 Acres</div>
+        <div class="cover-meta-lbl">St. Gabriel, LA</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--green)">230kV</div>
+        <div class="cover-meta-lbl">On-Site Substation</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--blue2)">3,500 ft</div>
+        <div class="cover-meta-lbl">River Frontage</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--purple)">Score 94</div>
+        <div class="cover-meta-lbl">Site Intel Tier A</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-strip"></div>
+</div>
+
+<!-- SLIDE 2 — THE SITE -->
+<div class="slide" id="s2">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">The Site</div>
+    <div class="bar-meta">Slide 2 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Former Entergy Willow Glen Power Station</div>
+        <h2 class="slide-h2">Everything We Need<br>Is Already Built.</h2>
+        <p class="slide-desc">Built in 1960 as a 2,200 MW gas/oil power station. Decommissioned 2016. Acquired by Zydeco Equity Holdings in 2020. Genover recycled 30,000+ tons of steel and 1M+ lbs of copper. What remains is the infrastructure that matters.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon">&#x26A1;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">On-Site Entergy Substation — 230kV + 138kV</div>
+              <div class="bullet-desc">Generation-class interconnect. Built for 2,200 MW. Can import AND export power to the grid.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">&#x1F30A;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">3,500 ft Mississippi River Frontage</div>
+              <div class="bullet-desc">43-ft deepwater dock. Former cooling water intake/discharge infrastructure from power station era.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Pipeline Corridor + CN Railway + I-10</div>
+              <div class="bullet-desc">Natural gas pipeline tie-in on property. Canadian National rail siding. Interstate highway access.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">&#x25A0;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">M2 Heavy Industrial — No Rezoning Needed</div>
+              <div class="bullet-desc">400+ developable acres. 20,000 SF warehouse available now. Zoned and permitted for exactly what we need.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Site Infrastructure Map</div>
+        <svg viewBox="0 0 500 450" style="width:100%;flex:1;min-height:0;">
+          <!-- River -->
+          <path d="M420 0 Q440 100 430 200 Q420 300 440 450" stroke="#1a4a7a" stroke-width="40" fill="none" opacity="0.3"/>
+          <path d="M420 0 Q440 100 430 200 Q420 300 440 450" stroke="#3b9eff" stroke-width="2" fill="none" opacity="0.5"/>
+          <text x="455" y="220" font-size="11" fill="#3b9eff" opacity="0.7" transform="rotate(5,455,220)">MISSISSIPPI</text>
+          <!-- Property boundary -->
+          <rect x="40" y="30" width="370" height="390" rx="8" fill="none" stroke="#1a3a5c" stroke-width="1.5" stroke-dasharray="8,4"/>
+          <text x="55" y="52" font-size="10" fill="#4a6480" letter-spacing="2">700 ACRES</text>
+          <!-- Tank farm -->
+          <rect x="250" y="60" width="120" height="100" rx="6" fill="rgba(245,166,35,0.06)" stroke="var(--gold)" stroke-width="1"/>
+          <circle cx="280" cy="90" r="14" fill="none" stroke="#f5a623" stroke-width="1" opacity="0.6"/>
+          <circle cx="315" cy="90" r="14" fill="none" stroke="#f5a623" stroke-width="1" opacity="0.6"/>
+          <circle cx="350" cy="90" r="14" fill="none" stroke="#f5a623" stroke-width="1" opacity="0.6"/>
+          <circle cx="295" cy="125" r="14" fill="none" stroke="#f5a623" stroke-width="1" opacity="0.6"/>
+          <circle cx="335" cy="125" r="14" fill="none" stroke="#f5a623" stroke-width="1" opacity="0.6"/>
+          <text x="310" y="155" font-size="9" fill="#f5a623" text-anchor="middle">2.33M BBL TANK FARM</text>
+          <!-- Substation -->
+          <rect x="60" y="70" width="80" height="55" rx="4" fill="rgba(245,166,35,0.08)" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="100" y="93" font-size="9" fill="#f5a623" text-anchor="middle" font-weight="700">SUBSTATION</text>
+          <text x="100" y="107" font-size="8" fill="#f5a623" text-anchor="middle" opacity="0.7">230kV + 138kV</text>
+          <!-- Warehouse — Phase 1 -->
+          <rect x="80" y="200" width="140" height="80" rx="6" fill="rgba(0,232,122,0.08)" stroke="#00e87a" stroke-width="2"/>
+          <text x="150" y="235" font-size="11" fill="#00e87a" text-anchor="middle" font-weight="700">WAREHOUSE</text>
+          <text x="150" y="250" font-size="9" fill="#00e87a" text-anchor="middle" opacity="0.7">20,000 SF — PHASE 1</text>
+          <text x="150" y="265" font-size="8" fill="#00e87a" text-anchor="middle" opacity="0.5">ADC 3K PODS</text>
+          <!-- Power line from substation to warehouse -->
+          <line x1="100" y1="125" x2="120" y2="200" stroke="#f5a623" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+          <!-- Dock -->
+          <rect x="380" y="180" width="30" height="60" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="395" y="215" font-size="8" fill="#3b9eff" text-anchor="middle" transform="rotate(-90,395,215)">DOCK</text>
+          <!-- Pipeline corridor -->
+          <line x1="0" y1="350" x2="410" y2="350" stroke="#9b6dff" stroke-width="2" stroke-dasharray="6,3" opacity="0.5"/>
+          <text x="200" y="342" font-size="9" fill="#9b6dff" text-anchor="middle" opacity="0.7">PIPELINE CORRIDOR</text>
+          <!-- Rail -->
+          <line x1="40" y1="390" x2="380" y2="390" stroke="#7a9ab8" stroke-width="1.5" opacity="0.4"/>
+          <line x1="40" y1="394" x2="380" y2="394" stroke="#7a9ab8" stroke-width="1.5" opacity="0.4"/>
+          <text x="200" y="415" font-size="9" fill="#7a9ab8" text-anchor="middle" opacity="0.7">CN RAILWAY</text>
+          <!-- Phase 2 expansion area -->
+          <rect x="60" y="300" width="300" height="35" rx="4" fill="none" stroke="#4a6480" stroke-width="1" stroke-dasharray="4,4"/>
+          <text x="210" y="322" font-size="9" fill="#4a6480" text-anchor="middle">PHASE 2+ EXPANSION — 400+ ACRES</text>
+          <!-- Water intake line -->
+          <path d="M220 240 L380 210" stroke="#00c8ff" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+          <text x="300" y="218" font-size="7" fill="#00c8ff" opacity="0.6">COOLING WATER</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — BY THE NUMBERS -->
+<div class="slide" id="s3">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Site Specifications</div>
+    <div class="bar-meta">Slide 3 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="full-inner">
+      <div class="slide-eyebrow">What's Already There</div>
+      <h2 class="slide-h2">$10-20M of Infrastructure — Already Built.</h2>
+      <div class="stat-row">
+        <div class="stat-card"><div class="sv c-gold">700</div><div class="sl">Total Acres</div></div>
+        <div class="stat-card"><div class="sv c-green">400+</div><div class="sl">Developable Acres</div></div>
+        <div class="stat-card"><div class="sv c-blue">3,500 ft</div><div class="sl">River Frontage</div></div>
+        <div class="stat-card"><div class="sv c-purple">43 ft</div><div class="sl">Deepwater Draft</div></div>
+        <div class="stat-card"><div class="sv c-amber">230kV</div><div class="sl">Substation</div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="sv c-gold">2.33M</div><div class="sl">BBL Tank Farm</div></div>
+        <div class="stat-card"><div class="sv c-green">20K SF</div><div class="sl">Warehouse</div></div>
+        <div class="stat-card"><div class="sv c-blue">M2</div><div class="sl">Heavy Industrial</div></div>
+        <div class="stat-card"><div class="sv c-purple">Zone X</div><div class="sl">Minimal Flood Risk</div></div>
+        <div class="stat-card"><div class="sv c-amber">I-10</div><div class="sl">Highway Access</div></div>
+      </div>
+      <div class="pillar-grid">
+        <div class="info-panel">
+          <div class="info-title c-gold">What We Don't Have to Build</div>
+          <div class="info-body">
+            Substation ($5-15M) · River water intake ($2-5M) · Pipeline interconnect ($1-3M) · Road/rail access (built) · Heavy industrial zoning (done) · Environmental baseline (completed by Genover)
+          </div>
+        </div>
+        <div class="info-panel">
+          <div class="info-title c-green">What We Bring</div>
+          <div class="info-body">
+            ADC 3K immersion pods · EC-110 cooling technology · NVIDIA NVL72 GPU platform · River water heat exchange design · Solar roof integration · AI-managed NOC from MARLIE I HQ
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 — PHASE 1: WAREHOUSE -->
+<div class="slide" id="s4">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Phase 1 — Warehouse Deployment</div>
+    <div class="bar-meta">Slide 4 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Immediate Revenue — Day One</div>
+        <h2 class="slide-h2">20,000 SF Warehouse.<br>Pods In. Cash Flowing.</h2>
+        <p class="slide-desc">No land purchase required. Lease the existing warehouse, drop pods, connect to substation power and river cooling. Revenue generating while Phase 2 campus is designed and permitted.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-green">16</div><div class="sl">Pod Capacity</div></div>
+          <div class="stat-card"><div class="sv c-gold">12 MW</div><div class="sl">Max IT Load</div></div>
+          <div class="stat-card"><div class="sv c-blue">1.02</div><div class="sl">Target PUE</div></div>
+        </div>
+        <div class="slide-desc" style="font-size:12px;">
+          <strong style="color:var(--text)">Phase 1A:</strong> 4 pods (3 MW) — prove concept, first revenue<br>
+          <strong style="color:var(--text)">Phase 1B:</strong> 8 pods (6 MW) — scale operations<br>
+          <strong style="color:var(--text)">Phase 1C:</strong> 16 pods (12 MW) — warehouse fully deployed
+        </div>
+        <div class="phase-bar">
+          <div class="phase-seg" style="flex:1;background:rgba(0,232,122,0.15);color:var(--green);border-right:1px solid var(--border)">1A · 3MW</div>
+          <div class="phase-seg" style="flex:1;background:rgba(59,154,255,0.15);color:var(--blue2);border-right:1px solid var(--border)">1B · 6MW</div>
+          <div class="phase-seg" style="flex:1;background:rgba(155,109,255,0.15);color:var(--purple)">1C · 12MW</div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Warehouse Floor Plan — 200' x 100'</div>
+        <svg viewBox="0 0 500 300" style="width:100%;flex:1;min-height:0;">
+          <!-- Warehouse outline -->
+          <rect x="20" y="20" width="460" height="240" rx="4" fill="rgba(8,17,30,0.8)" stroke="#1a3a5c" stroke-width="2"/>
+          <!-- Loading dock -->
+          <rect x="20" y="110" width="15" height="60" fill="rgba(122,154,184,0.15)" stroke="#7a9ab8" stroke-width="1"/>
+          <text x="10" y="145" font-size="7" fill="#7a9ab8" transform="rotate(-90,10,145)">LOADING</text>
+          <!-- Central aisle -->
+          <rect x="35" y="130" width="445" height="20" fill="rgba(74,100,128,0.08)" stroke="none"/>
+          <text x="260" y="143" font-size="7" fill="#4a6480" text-anchor="middle">CENTRAL SERVICE AISLE — 15'</text>
+          <!-- Top row pods — Phase 1A (green), 1B (blue), 1C (purple) -->
+          <!-- Row 1 — top -->
+          <rect x="90" y="35" width="44" height="85" rx="3" fill="rgba(0,232,122,0.12)" stroke="#00e87a" stroke-width="1.5"/>
+          <rect x="140" y="35" width="44" height="85" rx="3" fill="rgba(0,232,122,0.12)" stroke="#00e87a" stroke-width="1.5"/>
+          <rect x="190" y="35" width="44" height="85" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <rect x="240" y="35" width="44" height="85" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <rect x="290" y="35" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="340" y="35" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="390" y="35" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="440" y="35" width="30" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <!-- Row 2 — bottom -->
+          <rect x="90" y="160" width="44" height="85" rx="3" fill="rgba(0,232,122,0.12)" stroke="#00e87a" stroke-width="1.5"/>
+          <rect x="140" y="160" width="44" height="85" rx="3" fill="rgba(0,232,122,0.12)" stroke="#00e87a" stroke-width="1.5"/>
+          <rect x="190" y="160" width="44" height="85" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <rect x="240" y="160" width="44" height="85" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <rect x="290" y="160" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="340" y="160" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="390" y="160" width="44" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="440" y="160" width="30" height="85" rx="3" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="3,2"/>
+          <!-- Electrical room -->
+          <rect x="35" y="35" width="45" height="45" rx="3" fill="rgba(245,166,35,0.08)" stroke="#f5a623" stroke-width="1"/>
+          <text x="58" y="55" font-size="7" fill="#f5a623" text-anchor="middle">ELEC</text>
+          <text x="58" y="65" font-size="6" fill="#f5a623" text-anchor="middle" opacity="0.7">ROOM</text>
+          <!-- Cooling manifold -->
+          <rect x="35" y="195" width="45" height="45" rx="3" fill="rgba(0,200,255,0.08)" stroke="#00c8ff" stroke-width="1"/>
+          <text x="58" y="215" font-size="7" fill="#00c8ff" text-anchor="middle">COOL</text>
+          <text x="58" y="225" font-size="6" fill="#00c8ff" text-anchor="middle" opacity="0.7">MNFLD</text>
+          <!-- Legend -->
+          <rect x="90" y="268" width="10" height="8" rx="1" fill="rgba(0,232,122,0.2)" stroke="#00e87a" stroke-width="1"/>
+          <text x="105" y="275" font-size="7" fill="#00e87a">Phase 1A — 4 pods</text>
+          <rect x="195" y="268" width="10" height="8" rx="1" fill="rgba(59,154,255,0.15)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="210" y="275" font-size="7" fill="#3b9eff">Phase 1B — +4 pods</text>
+          <rect x="310" y="268" width="10" height="8" rx="1" fill="rgba(155,109,255,0.1)" stroke="#9b6dff" stroke-width="1"/>
+          <text x="325" y="275" font-size="7" fill="#9b6dff">Phase 1C — +8 pods</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — RIVER COOLING -->
+<div class="slide" id="s5">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">River Water Cooling System</div>
+    <div class="bar-meta">Slide 5 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Mississippi River — Infinite Heat Sink</div>
+        <h2 class="slide-h2">River-Cooled<br>Immersion Compute.</h2>
+        <p class="slide-desc">The Mississippi moves 500,000+ CFS past this site. Entergy used it to cool 2,200 MW of turbines for 56 years. We use it to cool 12 MW of GPUs. The intake infrastructure already exists — we just turn it back on.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-blue">500K+</div><div class="sl">CFS Flow Rate</div></div>
+          <div class="stat-card"><div class="sv c-green">1.02</div><div class="sl">PUE Target</div></div>
+          <div class="stat-card"><div class="sv c-gold">0</div><div class="sl">Dry Coolers Needed</div></div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Closed-Loop — River Water Never Touches Hardware</div>
+              <div class="bullet-desc">River water flows through plate heat exchangers only. EC-110 dielectric stays sealed inside pods. Zero contamination risk.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Existing Intake Infrastructure</div>
+              <div class="bullet-desc">Former power station had river water cooling for 2,200 MW. Pumps, intake pipes, discharge permits — the bones are there.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--gold)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Eliminates Dry Coolers Entirely</div>
+              <div class="bullet-desc">Standard pods need exterior dry coolers ($50-80K each). River cooling replaces all of them with one shared heat exchanger system.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Cooling System Flow Diagram</div>
+        <svg viewBox="0 0 500 400" style="width:100%;flex:1;min-height:0;">
+          <!-- Mississippi River -->
+          <rect x="400" y="0" width="100" height="400" fill="rgba(59,154,255,0.06)"/>
+          <text x="450" y="30" font-size="11" fill="#3b9eff" text-anchor="middle" font-weight="700">MISSISSIPPI</text>
+          <text x="450" y="45" font-size="9" fill="#3b9eff" text-anchor="middle" opacity="0.6">RIVER</text>
+          <!-- Flow arrows in river -->
+          <path d="M430 60 L430 380" stroke="#3b9eff" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+          <path d="M460 60 L460 380" stroke="#3b9eff" stroke-width="1" opacity="0.2" stroke-dasharray="4,4"/>
+          <!-- Intake pump -->
+          <rect x="330" y="80" width="60" height="40" rx="6" fill="rgba(0,200,255,0.1)" stroke="#00c8ff" stroke-width="1.5"/>
+          <text x="360" y="97" font-size="8" fill="#00c8ff" text-anchor="middle" font-weight="700">INTAKE</text>
+          <text x="360" y="110" font-size="7" fill="#00c8ff" text-anchor="middle" opacity="0.7">PUMP</text>
+          <line x1="390" y1="100" x2="400" y2="100" stroke="#00c8ff" stroke-width="2" marker-start="url(#arrowBlue)"/>
+          <!-- Strainer -->
+          <rect x="330" y="140" width="60" height="30" rx="4" fill="rgba(122,154,184,0.08)" stroke="#7a9ab8" stroke-width="1"/>
+          <text x="360" y="159" font-size="8" fill="#7a9ab8" text-anchor="middle">STRAINER</text>
+          <line x1="360" y1="120" x2="360" y2="140" stroke="#00c8ff" stroke-width="1.5"/>
+          <!-- Plate heat exchanger -->
+          <rect x="280" y="190" width="120" height="55" rx="8" fill="rgba(245,166,35,0.08)" stroke="#f5a623" stroke-width="2"/>
+          <text x="340" y="212" font-size="9" fill="#f5a623" text-anchor="middle" font-weight="700">PLATE HEAT</text>
+          <text x="340" y="226" font-size="9" fill="#f5a623" text-anchor="middle" font-weight="700">EXCHANGER</text>
+          <text x="340" y="240" font-size="7" fill="#f5a623" text-anchor="middle" opacity="0.6">River Side | Pod Side</text>
+          <line x1="360" y1="170" x2="360" y2="190" stroke="#00c8ff" stroke-width="1.5"/>
+          <!-- Discharge back to river -->
+          <path d="M400 220 L430 220 L430 300 L400 300" stroke="#7a9ab8" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+          <text x="445" y="260" font-size="7" fill="#7a9ab8" transform="rotate(90,445,260)">DISCHARGE</text>
+          <!-- Secondary loop to pods -->
+          <rect x="120" y="190" width="100" height="55" rx="6" fill="rgba(0,232,122,0.08)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="170" y="212" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">COOLING</text>
+          <text x="170" y="226" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">MANIFOLD</text>
+          <text x="170" y="240" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">To/From All Pods</text>
+          <!-- Connection HX to manifold -->
+          <line x1="280" y1="217" x2="220" y2="217" stroke="#f5a623" stroke-width="1.5"/>
+          <!-- Pods -->
+          <rect x="30" y="290" width="70" height="40" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="1"/>
+          <text x="65" y="308" font-size="8" fill="#00e87a" text-anchor="middle">POD 1</text>
+          <text x="65" y="320" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">EC-110</text>
+          <rect x="110" y="290" width="70" height="40" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="1"/>
+          <text x="145" y="308" font-size="8" fill="#00e87a" text-anchor="middle">POD 2</text>
+          <text x="145" y="320" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">EC-110</text>
+          <rect x="190" y="290" width="70" height="40" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="1"/>
+          <text x="225" y="308" font-size="8" fill="#00e87a" text-anchor="middle">POD N</text>
+          <text x="225" y="320" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">EC-110</text>
+          <!-- Lines from manifold to pods -->
+          <line x1="130" y1="245" x2="65" y2="290" stroke="#00e87a" stroke-width="1" opacity="0.6"/>
+          <line x1="170" y1="245" x2="145" y2="290" stroke="#00e87a" stroke-width="1" opacity="0.6"/>
+          <line x1="200" y1="245" x2="225" y2="290" stroke="#00e87a" stroke-width="1" opacity="0.6"/>
+          <!-- Pod internal detail -->
+          <rect x="30" y="350" width="260" height="40" rx="6" fill="rgba(8,17,30,0.8)" stroke="var(--border2)" stroke-width="1"/>
+          <text x="160" y="367" font-size="8" fill="var(--muted2)" text-anchor="middle">INSIDE EACH POD: GPU Racks submerged in EC-110 dielectric fluid</text>
+          <text x="160" y="380" font-size="7" fill="var(--muted2)" text-anchor="middle" opacity="0.7">Internal pump circulates fluid through pod-wall heat exchanger to manifold loop</text>
+          <!-- Legend -->
+          <line x1="310" y1="290" x2="340" y2="290" stroke="#00c8ff" stroke-width="2"/>
+          <text x="345" y="293" font-size="7" fill="#00c8ff">River Water (open)</text>
+          <line x1="310" y1="305" x2="340" y2="305" stroke="#00e87a" stroke-width="2"/>
+          <text x="345" y="308" font-size="7" fill="#00e87a">Glycol Loop (closed)</text>
+          <line x1="310" y1="320" x2="340" y2="320" stroke="#f5a623" stroke-width="2"/>
+          <text x="345" y="323" font-size="7" fill="#f5a623">Heat Exchange</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 — POWER ARCHITECTURE -->
+<div class="slide" id="s6">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Power Architecture</div>
+    <div class="bar-meta">Slide 6 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Mini Grid — We Fire This Thing Back Up</div>
+        <h2 class="slide-h2">This Was a<br>Power Station.<br>It Will Be Again.</h2>
+        <p class="slide-desc">Entergy ran 2,200 MW from this exact spot for 56 years. The substation is still live. The pipeline corridor is still there. We don't just plug into the grid — we restart power generation, run the AI factory, and sell excess back to Entergy through the same 230kV substation they built. This site becomes a producer again.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-gold">230kV</div><div class="sl">Live Substation</div></div>
+          <div class="stat-card"><div class="sv c-green">EXPORT</div><div class="sl">Sell to Grid</div></div>
+          <div class="stat-card"><div class="sv c-blue">4</div><div class="sl">Power Sources</div></div>
+        </div>
+        <div class="wf-chain">
+          <div class="wf-node" style="border-color:rgba(0,232,122,0.4);">
+            <div class="wf-icon" style="color:var(--green)">&#x25B2;</div>
+            <div>
+              <div class="wf-label">Layer 1: Renewable Fuels + Solar — PRIMARY</div>
+              <div class="wf-detail">Renewable feedstock imported via deepwater dock (WGT already ships renewable diesel). Solar roof on warehouse (200kW) expanding to ground-mount solar farm across cleared acreage. Panels from New Iberia corridor — Louisiana-made, Louisiana-deployed.</div>
+            </div>
+          </div>
+          <div class="wf-arrow">|</div>
+          <div class="wf-node">
+            <div class="wf-icon" style="color:var(--blue2)">&#x25C6;</div>
+            <div>
+              <div class="wf-label">Layer 2: Natural Gas — SECONDARY</div>
+              <div class="wf-detail">Pipeline corridor literally runs through the property. Henry Hub pricing ~60 mi away — lowest nat gas cost in the country. N+1 prime-rated gensets. This was a gas-fired plant. The gas is right there.</div>
+            </div>
+          </div>
+          <div class="wf-arrow">|</div>
+          <div class="wf-node" style="border-color:rgba(245,166,35,0.4);">
+            <div class="wf-icon" style="color:var(--gold)">&#x26A1;</div>
+            <div>
+              <div class="wf-label">Layer 3: Grid — BIDIRECTIONAL</div>
+              <div class="wf-detail">The 230kV + 138kV substation goes BOTH ways. Pull power when we need it. Push excess generation back to Entergy and GET PAID. The substation was built to export 2,200 MW — we're generating a fraction of that. Pure revenue stream.</div>
+            </div>
+          </div>
+          <div class="wf-arrow">|</div>
+          <div class="wf-node" style="border-color:rgba(255,77,109,0.2);">
+            <div class="wf-icon" style="color:var(--red)">&#x25A0;</div>
+            <div>
+              <div class="wf-label">Layer 4: Diesel — EMERGENCY ONLY</div>
+              <div class="wf-detail">Hurricane backup. On-site fuel storage. Pipeline-independent. Last resort — we'll barely ever touch it with three layers above.</div>
+            </div>
+          </div>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          "We're not building a data center that needs power. We're restarting a power station that also runs an AI factory. The grid revenue alone changes the economics."
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Mini Grid — Power Generation + AI Compute</div>
+        <svg viewBox="0 0 500 400" style="width:100%;flex:1;min-height:0;">
+          <!-- GRID EXPORT — big prominent arrow at top -->
+          <rect x="140" y="8" width="220" height="36" rx="6" fill="rgba(155,109,255,0.12)" stroke="#9b6dff" stroke-width="2"/>
+          <text x="250" y="22" font-size="9" fill="#9b6dff" text-anchor="middle" font-weight="700">ENTERGY GRID — 230kV SUBSTATION</text>
+          <text x="250" y="36" font-size="8" fill="#9b6dff" text-anchor="middle" opacity="0.7">SELL EXCESS POWER = REVENUE STREAM</text>
+          <!-- Bidirectional arrows -->
+          <line x1="250" y1="44" x2="250" y2="70" stroke="#9b6dff" stroke-width="2"/>
+          <polygon points="245,65 255,65 250,72" fill="#9b6dff"/>
+          <polygon points="245,49 255,49 250,44" fill="#9b6dff"/>
+          <text x="275" y="60" font-size="7" fill="#9b6dff" opacity="0.7">IMPORT / EXPORT</text>
+          <!-- Main bus bar — larger, central -->
+          <rect x="100" y="72" width="300" height="28" rx="4" fill="rgba(245,166,35,0.12)" stroke="#f5a623" stroke-width="2"/>
+          <text x="250" y="91" font-size="11" fill="#f5a623" text-anchor="middle" font-weight="700">MINI GRID — 480V MAIN BUS</text>
+          <!-- Generation sources feeding the bus -->
+          <!-- Renewable fuels -->
+          <rect x="15" y="125" width="105" height="65" rx="6" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="2"/>
+          <text x="67" y="145" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">RENEWABLE</text>
+          <text x="67" y="158" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">FUELS</text>
+          <text x="67" y="172" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.7">Via Deepwater Dock</text>
+          <text x="67" y="183" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.5">PRIMARY</text>
+          <line x1="67" y1="125" x2="150" y2="100" stroke="#00e87a" stroke-width="2" opacity="0.7"/>
+          <!-- Solar -->
+          <rect x="135" y="125" width="105" height="65" rx="6" fill="rgba(245,166,35,0.1)" stroke="#f5a623" stroke-width="2"/>
+          <text x="187" y="145" font-size="9" fill="#f5a623" text-anchor="middle" font-weight="700">SOLAR</text>
+          <text x="187" y="158" font-size="8" fill="#f5a623" text-anchor="middle" opacity="0.8">Roof 200kW</text>
+          <text x="187" y="172" font-size="8" fill="#f5a623" text-anchor="middle" opacity="0.8">Farm 2MW+</text>
+          <text x="187" y="183" font-size="7" fill="#f5a623" text-anchor="middle" opacity="0.5">New Iberia Panels</text>
+          <line x1="187" y1="125" x2="220" y2="100" stroke="#f5a623" stroke-width="2" opacity="0.7"/>
+          <!-- Nat Gas -->
+          <rect x="255" y="125" width="105" height="65" rx="6" fill="rgba(0,200,255,0.1)" stroke="#00c8ff" stroke-width="2"/>
+          <text x="307" y="145" font-size="9" fill="#00c8ff" text-anchor="middle" font-weight="700">NAT GAS</text>
+          <text x="307" y="158" font-size="8" fill="#00c8ff" text-anchor="middle" opacity="0.8">Pipeline On-Site</text>
+          <text x="307" y="172" font-size="8" fill="#00c8ff" text-anchor="middle" opacity="0.8">Henry Hub ~60mi</text>
+          <text x="307" y="183" font-size="7" fill="#00c8ff" text-anchor="middle" opacity="0.5">SECONDARY</text>
+          <line x1="307" y1="125" x2="300" y2="100" stroke="#00c8ff" stroke-width="2" opacity="0.7"/>
+          <!-- Diesel -->
+          <rect x="375" y="125" width="105" height="65" rx="6" fill="rgba(255,77,109,0.06)" stroke="#ff4d6d" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="427" y="145" font-size="9" fill="#ff4d6d" text-anchor="middle" font-weight="700">DIESEL</text>
+          <text x="427" y="158" font-size="8" fill="#ff4d6d" text-anchor="middle" opacity="0.7">Emergency Only</text>
+          <text x="427" y="172" font-size="7" fill="#ff4d6d" text-anchor="middle" opacity="0.5">Hurricane Backup</text>
+          <line x1="427" y1="125" x2="380" y2="100" stroke="#ff4d6d" stroke-width="1" opacity="0.3" stroke-dasharray="4,3"/>
+          <!-- LOADS below bus -->
+          <text x="250" y="215" font-size="9" fill="var(--text)" text-anchor="middle" font-weight="700">LOADS</text>
+          <!-- AI Pods -->
+          <rect x="40" y="230" width="160" height="55" rx="6" fill="rgba(0,232,122,0.08)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="120" y="252" font-size="10" fill="#00e87a" text-anchor="middle" font-weight="700">AI COMPUTE PODS</text>
+          <text x="120" y="267" font-size="8" fill="#00e87a" text-anchor="middle" opacity="0.7">16 Pods x 750kW = 12 MW</text>
+          <text x="120" y="280" font-size="7" fill="var(--muted2)" text-anchor="middle">EC-110 Immersion Cooled</text>
+          <line x1="120" y1="230" x2="200" y2="100" stroke="#f5a623" stroke-width="1.5" opacity="0.4"/>
+          <!-- River Cooling -->
+          <rect x="220" y="230" width="120" height="55" rx="6" fill="rgba(0,200,255,0.06)" stroke="#00c8ff" stroke-width="1"/>
+          <text x="280" y="252" font-size="9" fill="#00c8ff" text-anchor="middle" font-weight="700">COOLING PUMPS</text>
+          <text x="280" y="267" font-size="8" fill="#00c8ff" text-anchor="middle" opacity="0.7">River Water HX</text>
+          <text x="280" y="280" font-size="7" fill="var(--muted2)" text-anchor="middle">~1 MW</text>
+          <line x1="280" y1="230" x2="280" y2="100" stroke="#f5a623" stroke-width="1" opacity="0.3"/>
+          <!-- Grid export -->
+          <rect x="360" y="230" width="120" height="55" rx="6" fill="rgba(155,109,255,0.08)" stroke="#9b6dff" stroke-width="1.5"/>
+          <text x="420" y="248" font-size="9" fill="#9b6dff" text-anchor="middle" font-weight="700">GRID EXPORT</text>
+          <text x="420" y="262" font-size="8" fill="#9b6dff" text-anchor="middle" opacity="0.8">Excess Generation</text>
+          <text x="420" y="276" font-size="8" fill="#9b6dff" text-anchor="middle" opacity="0.8">= Revenue</text>
+          <line x1="420" y1="230" x2="370" y2="100" stroke="#9b6dff" stroke-width="1.5" opacity="0.4"/>
+          <!-- Bottom summary -->
+          <rect x="40" y="305" width="420" height="48" rx="6" fill="rgba(245,166,35,0.04)" stroke="var(--border2)" stroke-width="1"/>
+          <text x="250" y="322" font-size="10" fill="var(--text)" text-anchor="middle" font-weight="700">GENERATE + COMPUTE + SELL = THREE REVENUE STREAMS</text>
+          <text x="250" y="340" font-size="8" fill="var(--muted2)" text-anchor="middle">Renewable fuels + solar = primary generation | Nat gas = backup generation | Grid export = passive income</text>
+          <!-- Callout: this was a power station -->
+          <rect x="120" y="362" width="260" height="28" rx="4" fill="rgba(0,232,122,0.06)" stroke="rgba(0,232,122,0.3)" stroke-width="1"/>
+          <text x="250" y="380" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">FORMER 2,200 MW POWER STATION — WE FIRE IT BACK UP</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — IMMERSION TECHNOLOGY -->
+<div class="slide" id="s7">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Immersion Cooling Technology</div>
+    <div class="bar-meta">Slide 7 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Engineered Fluids EC-110</div>
+        <h2 class="slide-h2">Full Immersion.<br>No HVAC. No Dry Coolers.<br>PUE 1.02.</h2>
+        <p class="slide-desc">Every GPU is submerged in EC-110 single-phase dielectric fluid inside sealed 40-ft ISO containers. Heat transfers from fluid to the river water loop through pod-wall heat exchangers. No air cooling anywhere in the system.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-green">1.02</div><div class="sl">PUE Target</div></div>
+          <div class="stat-card"><div class="sv c-gold">EC-110</div><div class="sl">Dielectric Fluid</div></div>
+          <div class="stat-card"><div class="sv c-blue">40 ft</div><div class="sl">ISO Container</div></div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Zero HVAC — Zero Raised Floor — Zero Hot Aisle</div>
+              <div class="bullet-desc">Pods drop into any structure with power and fiber. The warehouse needs zero modifications beyond electrical and plumbing connections.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">River Water Eliminates All Dry Coolers</div>
+              <div class="bullet-desc">Industry standard: $50-80K per dry cooler unit, one per pod. Mississippi River heat rejection replaces all of them with a single shared plate heat exchanger.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--gold)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Single-Phase — No Phase Change, No Boiling</div>
+              <div class="bullet-desc">EC-110 stays liquid at all operating temps. Simpler plumbing, lower maintenance, proven reliability. No exotic two-phase engineering required.</div>
+            </div>
+          </div>
+        </div>
+        <div class="quote-box" style="margin-top:12px;">
+          "Hut 8 spent $34M on 190 cooling distribution units for their River Bend campus. Our river-cooled immersion system handles the same thermal load at a fraction of the cost — because the Mississippi does the heavy lifting."
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Inside an ADC 3K Pod</div>
+        <svg viewBox="0 0 500 420" style="width:100%;flex:1;min-height:0;">
+          <!-- Container outline -->
+          <rect x="30" y="30" width="440" height="180" rx="8" fill="rgba(8,17,30,0.9)" stroke="#1a3a5c" stroke-width="2"/>
+          <text x="250" y="22" font-size="10" fill="var(--muted2)" text-anchor="middle">40-FT HIGH CUBE ISO CONTAINER</text>
+          <!-- EC-110 fluid level -->
+          <rect x="50" y="80" width="400" height="120" rx="4" fill="rgba(0,232,122,0.04)" stroke="#00e87a" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="250" y="95" font-size="8" fill="#00e87a" text-anchor="middle" opacity="0.5">EC-110 DIELECTRIC FLUID</text>
+          <!-- GPU racks submerged -->
+          <rect x="70" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <rect x="110" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <rect x="150" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <rect x="190" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <rect x="230" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <rect x="270" y="100" width="30" height="85" rx="2" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="1"/>
+          <text x="175" y="200" font-size="8" fill="#9b6dff" text-anchor="middle" opacity="0.7">NVL72 GPU RACKS — SUBMERGED</text>
+          <!-- Internal pump -->
+          <circle cx="360" cy="140" r="20" fill="rgba(0,200,255,0.1)" stroke="#00c8ff" stroke-width="1.5"/>
+          <text x="360" y="137" font-size="7" fill="#00c8ff" text-anchor="middle">CIRC</text>
+          <text x="360" y="148" font-size="7" fill="#00c8ff" text-anchor="middle">PUMP</text>
+          <!-- Pod-wall HX -->
+          <rect x="410" y="100" width="30" height="85" rx="3" fill="rgba(245,166,35,0.1)" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="425" y="135" font-size="6" fill="#f5a623" text-anchor="middle" transform="rotate(90,425,145)">POD-WALL HX</text>
+          <!-- Flow arrows inside pod -->
+          <path d="M300 140 L340 140" stroke="#00e87a" stroke-width="1" opacity="0.5"/>
+          <path d="M380 140 L410 140" stroke="#f5a623" stroke-width="1" opacity="0.5"/>
+          <!-- PDU -->
+          <rect x="50" y="40" width="60" height="30" rx="3" fill="rgba(245,166,35,0.06)" stroke="#f5a623" stroke-width="1"/>
+          <text x="80" y="58" font-size="8" fill="#f5a623" text-anchor="middle">480V PDU</text>
+          <!-- Network -->
+          <rect x="130" y="40" width="60" height="30" rx="3" fill="rgba(59,154,255,0.06)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="160" y="58" font-size="8" fill="#3b9eff" text-anchor="middle">NETWORK</text>
+          <!-- External connections below -->
+          <text x="250" y="240" font-size="10" fill="var(--text)" text-anchor="middle" font-weight="700">External Connections</text>
+          <!-- Power in -->
+          <rect x="30" y="260" width="100" height="36" rx="4" fill="rgba(245,166,35,0.06)" stroke="#f5a623" stroke-width="1"/>
+          <text x="80" y="275" font-size="8" fill="#f5a623" text-anchor="middle" font-weight="700">480V 3-Phase</text>
+          <text x="80" y="288" font-size="7" fill="var(--muted2)" text-anchor="middle">From Main Bus</text>
+          <!-- Cooling in/out -->
+          <rect x="150" y="260" width="100" height="36" rx="4" fill="rgba(0,200,255,0.06)" stroke="#00c8ff" stroke-width="1"/>
+          <text x="200" y="275" font-size="8" fill="#00c8ff" text-anchor="middle" font-weight="700">Glycol In/Out</text>
+          <text x="200" y="288" font-size="7" fill="var(--muted2)" text-anchor="middle">To Cooling Manifold</text>
+          <!-- Fiber -->
+          <rect x="270" y="260" width="100" height="36" rx="4" fill="rgba(59,154,255,0.06)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="320" y="275" font-size="8" fill="#3b9eff" text-anchor="middle" font-weight="700">Fiber Optic</text>
+          <text x="320" y="288" font-size="7" fill="var(--muted2)" text-anchor="middle">To MARLIE I NOC</text>
+          <!-- Monitoring -->
+          <rect x="390" y="260" width="90" height="36" rx="4" fill="rgba(0,232,122,0.06)" stroke="#00e87a" stroke-width="1"/>
+          <text x="435" y="275" font-size="8" fill="#00e87a" text-anchor="middle" font-weight="700">Telemetry</text>
+          <text x="435" y="288" font-size="7" fill="var(--muted2)" text-anchor="middle">AI-Managed</text>
+          <!-- Bottom specs -->
+          <rect x="30" y="320" width="450" height="80" rx="6" fill="rgba(8,17,30,0.6)" stroke="var(--border2)" stroke-width="1"/>
+          <text x="250" y="340" font-size="9" fill="var(--text)" text-anchor="middle" font-weight="700">Per-Pod Specifications</text>
+          <text x="100" y="360" font-size="8" fill="var(--muted2)" text-anchor="middle">750 kW Power</text>
+          <text x="250" y="360" font-size="8" fill="var(--muted2)" text-anchor="middle">NVIDIA NVL72 Racks</text>
+          <text x="400" y="360" font-size="8" fill="var(--muted2)" text-anchor="middle">EC-110 Immersion</text>
+          <text x="100" y="380" font-size="8" fill="var(--muted2)" text-anchor="middle">40' x 8' x 9.5'</text>
+          <text x="250" y="380" font-size="8" fill="var(--muted2)" text-anchor="middle">Lights-Out Operation</text>
+          <text x="400" y="380" font-size="8" fill="var(--muted2)" text-anchor="middle">Zero HVAC</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 — HUT 8 MARKET VALIDATION -->
+<div class="slide" id="s8">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Market Validation — Hut 8 River Bend</div>
+    <div class="bar-meta">Slide 8 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">45 Minutes North of Willow Glen</div>
+        <h2 class="slide-h2">Hut 8 Just Bet<br>$10 Billion on This<br>Exact Corridor.</h2>
+        <p class="slide-desc">Hut 8's River Bend campus in West Feliciana Parish — 611 acres on the Mississippi River, powered by Entergy, backed by Google. The same river, the same power grid, the same thesis. They validated the market. We execute faster.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-gold">$10B</div><div class="sl">Hut 8 Phase 1</div></div>
+          <div class="stat-card"><div class="sv c-green">$7B</div><div class="sl">15-Year Lease</div></div>
+          <div class="stat-card"><div class="sv c-blue">245 MW</div><div class="sl">IT Capacity</div></div>
+        </div>
+        <div class="info-panel" style="margin-top:8px;">
+          <div class="info-title c-gold">Hut 8 River Bend — Key Facts</div>
+          <div class="info-body">
+            Tenant: Fluidstack (Google financial backstop) · 15-year NNN lease · $454M avg annual NOI · 3% annual escalator · $17M substation · $34M for 190 CDUs · Jacobs EPCM · Vertiv infrastructure · J.P. Morgan + Goldman financing · Q2 2027 operational · 75+ permanent jobs · 1,000 construction workers at peak
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">ADC 3K vs Hut 8 — Side by Side</div>
+        <div style="display:flex;flex-direction:column;gap:0;flex:1;">
+          <div class="compare-table" style="grid-template-columns:1.2fr 1fr 1fr;">
+            <div class="ct-header" style="color:var(--muted2)">METRIC</div>
+            <div class="ct-header" style="color:var(--gold)">ADC 3K · WILLOW GLEN</div>
+            <div class="ct-header" style="color:var(--muted2)">HUT 8 · RIVER BEND</div>
+
+            <div class="ct-cell">Cooling Method</div>
+            <div class="ct-cell highlight">EC-110 Immersion + River</div>
+            <div class="ct-cell">Closed-Loop CDUs ($34M)</div>
+
+            <div class="ct-cell">Time to Revenue</div>
+            <div class="ct-cell highlight">Weeks (pod drop-in)</div>
+            <div class="ct-cell">18+ months (ground-up)</div>
+
+            <div class="ct-cell">Phase 1 CapEx</div>
+            <div class="ct-cell highlight">~$5-10M (lease + pods)</div>
+            <div class="ct-cell">$2.8B+ (build from scratch)</div>
+
+            <div class="ct-cell">Substation</div>
+            <div class="ct-cell highlight">Existing (230kV on-site)</div>
+            <div class="ct-cell">$17M (new build)</div>
+
+            <div class="ct-cell">River Cooling</div>
+            <div class="ct-cell highlight">Direct (existing intake)</div>
+            <div class="ct-cell">Minimal (closed-loop only)</div>
+
+            <div class="ct-cell">PUE</div>
+            <div class="ct-cell highlight">1.02 (river-cooled)</div>
+            <div class="ct-cell">~1.2-1.3 (estimated)</div>
+
+            <div class="ct-cell">Scalability</div>
+            <div class="ct-cell highlight">400+ acres available</div>
+            <div class="ct-cell">611 acres total</div>
+
+            <div class="ct-cell">Approach</div>
+            <div class="ct-cell highlight">Modular pods — add anytime</div>
+            <div class="ct-cell">Data halls — long lead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9 — SKYDIO DRONE SECURITY -->
+<div class="slide" id="s9">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Autonomous Site Security</div>
+    <div class="bar-meta">Slide 9 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Skydio X10 — Security + Infrastructure Inspection</div>
+        <h2 class="slide-h2">700 Acres Secured<br>and Inspected<br>by Autonomous Drones.</h2>
+        <p class="slide-desc">Skydio X10 drones deploy from charging docks across campus. AI-managed flight paths handle both 24/7 perimeter security AND routine infrastructure inspection — tank farm corrosion, pipeline corridor, substation equipment, river cooling intake, dock structures, and solar panel condition. All fed to MARLIE I NOC in real-time.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-green">24/7</div><div class="sl">Autonomous Patrol</div></div>
+          <div class="stat-card"><div class="sv c-gold">700 ac</div><div class="sl">Coverage Area</div></div>
+          <div class="stat-card"><div class="sv c-blue">X10</div><div class="sl">Skydio Platform</div></div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">&#x25B2;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">AI Visual Intelligence — Threat Detection</div>
+              <div class="bullet-desc">Skydio's onboard AI identifies humans, vehicles, and anomalies across the property. Automated alerts to MARLIE I NOC. No human pilot required.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">&#x25B2;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Infrastructure Inspection — Automated</div>
+              <div class="bullet-desc">Scheduled inspection flights: tank farm corrosion scans, pipeline corridor leak detection, substation thermal imaging, cooling intake debris check, solar panel condition, dock structural assessment. AI flags anomalies before they become failures.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--gold)">&#x25B2;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Deployed with Every Pod Site</div>
+              <div class="bullet-desc">Skydio drones ship as standard with every ADC 3K deployment. Security + inspection infrastructure scales with compute. Same AI brain at MARLIE I manages drones and GPUs together.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">&#x25B2;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Dock-Based — Continuous Operations</div>
+              <div class="bullet-desc">Multiple charging docks across 700 acres. Drones rotate patrols and inspection routes automatically. Weather-resistant. Always airborne. Zero on-site guards or inspectors needed.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Drone Security Coverage Map</div>
+        <svg viewBox="0 0 500 420" style="width:100%;flex:1;min-height:0;">
+          <!-- Property boundary -->
+          <rect x="30" y="30" width="440" height="360" rx="8" fill="none" stroke="#1a3a5c" stroke-width="1.5" stroke-dasharray="8,4"/>
+          <!-- Coverage rings -->
+          <circle cx="250" cy="210" r="180" fill="none" stroke="rgba(0,232,122,0.1)" stroke-width="40"/>
+          <circle cx="250" cy="210" r="120" fill="none" stroke="rgba(0,232,122,0.08)" stroke-width="30"/>
+          <!-- Key structures -->
+          <rect x="150" y="170" width="80" height="50" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="190" y="195" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">WAREHOUSE</text>
+          <text x="190" y="210" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">PODS</text>
+          <rect x="300" y="80" width="100" height="70" rx="4" fill="rgba(245,166,35,0.06)" stroke="#f5a623" stroke-width="1"/>
+          <text x="350" y="115" font-size="8" fill="#f5a623" text-anchor="middle">TANK FARM</text>
+          <rect x="80" y="80" width="60" height="40" rx="3" fill="rgba(245,166,35,0.08)" stroke="#f5a623" stroke-width="1"/>
+          <text x="110" y="103" font-size="8" fill="#f5a623" text-anchor="middle">SUBST</text>
+          <rect x="420" y="150" width="30" height="50" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="435" y="180" font-size="7" fill="#3b9eff" text-anchor="middle">DOCK</text>
+          <!-- Drone docks -->
+          <circle cx="190" cy="165" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="190" y="155" font-size="6" fill="#00e87a" text-anchor="middle">D1</text>
+          <circle cx="350" cy="75" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="350" y="65" font-size="6" fill="#00e87a" text-anchor="middle">D2</text>
+          <circle cx="110" cy="280" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="110" y="270" font-size="6" fill="#00e87a" text-anchor="middle">D3</text>
+          <circle cx="400" cy="300" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
+          <text x="400" y="290" font-size="6" fill="#00e87a" text-anchor="middle">D4</text>
+          <!-- Flight paths -->
+          <path d="M190 165 Q300 60 350 75" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
+          <path d="M350 75 Q450 200 400 300" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
+          <path d="M400 300 Q250 380 110 280" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
+          <path d="M110 280 Q60 180 190 165" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
+          <!-- Drone icons (triangles) -->
+          <polygon points="280,90 275,100 285,100" fill="#00e87a" opacity="0.8"/>
+          <polygon points="430,240 425,250 435,250" fill="#00e87a" opacity="0.8"/>
+          <polygon points="80,220 75,230 85,230" fill="#00e87a" opacity="0.8"/>
+          <!-- Perimeter patrol label -->
+          <rect x="140" y="350" width="220" height="30" rx="4" fill="rgba(0,232,122,0.04)" stroke="rgba(0,232,122,0.2)" stroke-width="1"/>
+          <text x="250" y="369" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">SKYDIO X10 — AUTONOMOUS PERIMETER PATROL</text>
+          <!-- Legend -->
+          <circle cx="60" y="400" r="5" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1" cy="400"/>
+          <text x="72" y="403" font-size="7" fill="#00e87a">Charging Dock</text>
+          <polygon points="150,397 145,403 155,403" fill="#00e87a" opacity="0.8"/>
+          <text x="162" y="403" font-size="7" fill="#00e87a">Active Drone</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 — GPU COMPUTE -->
+<div class="slide" id="s10">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">GPU Compute Platform</div>
+    <div class="bar-meta">Slide 10 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">NVIDIA Vera Rubin NVL72</div>
+        <h2 class="slide-h2">Next-Gen Silicon.<br>River-Cooled.<br>Immersion-Ready.</h2>
+        <p class="slide-desc">Each NVL72 rack holds 72 Rubin GPUs + 36 Vera CPUs with HBM4 memory and NVLink 6 interconnect. Submerged in EC-110, cooled by the Mississippi. This is the platform NVIDIA designed for exactly this kind of deployment.</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="sv c-purple">NVL72</div><div class="sl">Per Rack</div></div>
+          <div class="stat-card"><div class="sv c-gold">288 GB</div><div class="sl">HBM4 / GPU</div></div>
+          <div class="stat-card"><div class="sv c-green">NVLink 6</div><div class="sl">Interconnect</div></div>
+        </div>
+        <div class="info-panel" style="margin-bottom:12px;">
+          <div class="info-title c-gold">Phase 1 Warehouse — Compute Projection</div>
+          <div class="info-body">
+            Phase 1A (4 pods): Estimated 8-16 NVL72 racks · 576-1,152 GPUs<br>
+            Phase 1B (8 pods): Estimated 16-32 racks · 1,152-2,304 GPUs<br>
+            Phase 1C (16 pods): Estimated 32-64 racks · 2,304-4,608 GPUs<br>
+            <span style="color:var(--gold);font-weight:700;">Final density pending NVIDIA TDP publication for Vera Rubin.</span>
+          </div>
+        </div>
+        <div class="quote-box">
+          "We have a 20,000 SF warehouse on the Mississippi River with an on-site 230kV substation, pipeline-fed natural gas, river water cooling, and immersion-ready pods. This is exactly the kind of site NVIDIA wants to see deploying NVL72."
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">The NVIDIA Pitch</div>
+        <div style="display:flex;flex-direction:column;gap:12px;flex:1;">
+          <div class="info-panel">
+            <div class="info-title c-green">What We Bring to NVIDIA</div>
+            <div class="info-body">
+              Deployment-ready site with existing infrastructure ($10-20M saved) · River-cooled immersion at PUE 1.02 (best-in-class) · Modular pod architecture — add capacity in weeks, not years · Renewable energy primary + nat gas secondary (ESG story) · 400+ acres for unlimited scale · Same Mississippi River corridor as Hut 8/Google ($10B validation)
+            </div>
+          </div>
+          <div class="info-panel">
+            <div class="info-title c-gold">What We Need from NVIDIA</div>
+            <div class="info-body">
+              NVL72 TDP specifications for pod engineering finalization · Priority allocation for Vera Rubin (H2 2026 production) · NVIDIA Inception program partnership · Technical validation of immersion-cooled NVL72 configuration · Joint marketing — "AI Factory on the Mississippi"
+            </div>
+          </div>
+          <div class="info-panel">
+            <div class="info-title c-blue">Why NVIDIA Cares</div>
+            <div class="info-body">
+              Speed to deployment — pods in weeks, not 18-month data hall builds · Proof that NVL72 works in immersion + river cooling (new reference architecture) · Louisiana corridor momentum alongside Hut 8 · Renewable-first power story for ESG positioning · Scalable: 16 pods now → hundreds on 400+ acres
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11 — PHASE 2 BUILDOUT -->
+<div class="slide" id="s11">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Phase 2 — Campus Expansion</div>
+    <div class="bar-meta">Slide 11 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">400+ Developable Acres</div>
+        <h2 class="slide-h2">Phase 1 Proves It.<br>Phase 2 Scales It.</h2>
+        <p class="slide-desc">Revenue from the 20K SF warehouse funds the design and permitting for Phase 2 — purpose-built data halls on the remaining 400+ acres. Solar farms. Expanded river cooling. Additional pod warehouses. The substation can handle it all.</p>
+        <div class="phase-bar" style="height:32px;">
+          <div class="phase-seg" style="flex:1;background:rgba(0,232,122,0.2);color:var(--green);">PH 1 · 12 MW · NOW</div>
+          <div class="phase-seg" style="flex:2;background:rgba(59,154,255,0.15);color:var(--blue2);">PH 2 · 50 MW · Y2-3</div>
+          <div class="phase-seg" style="flex:3;background:rgba(155,109,255,0.12);color:var(--purple);">PH 3 · 100+ MW · Y3-5</div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">1</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Phase 1 — Warehouse (NOW)</div>
+              <div class="bullet-desc">Lease 20K SF warehouse. 16 pods. 12 MW. River cooling. Immediate revenue. Prove the model.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">2</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Phase 2 — First Expansion (Year 2-3)</div>
+              <div class="bullet-desc">Build 2-3 new pod warehouses on acreage. 50+ MW. Solar farm on cleared land. Expanded river cooling manifold. Hire local operations team.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">3</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Phase 3 — Full Campus (Year 3-5)</div>
+              <div class="bullet-desc">100+ MW AI campus. Multiple pod warehouses. Grid export revenue. Full solar array. Rail-delivered equipment. NVIDIA reference site.</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-panel" style="margin-top:8px;">
+          <div class="info-title c-gold">Solar Roof — Phase 1 Warehouse</div>
+          <div class="info-body">20,000 SF roof = ~200 kW solar array. Daytime offset for pod operations. Expands to ground-mount solar farm across cleared acreage in Phase 2. Panels sourced from New Iberia corridor — Louisiana manufacturing, Louisiana deployment.</div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Campus Build-Out Plan</div>
+        <svg viewBox="0 0 500 420" style="width:100%;flex:1;min-height:0;">
+          <!-- River -->
+          <rect x="440" y="0" width="60" height="420" fill="rgba(59,154,255,0.05)"/>
+          <text x="470" y="210" font-size="10" fill="#3b9eff" text-anchor="middle" transform="rotate(90,470,210)" opacity="0.5">MISSISSIPPI RIVER</text>
+          <!-- Property -->
+          <rect x="20" y="20" width="410" height="380" rx="6" fill="none" stroke="#1a3a5c" stroke-width="1" stroke-dasharray="6,3"/>
+          <!-- Phase 1 — warehouse -->
+          <rect x="40" y="40" width="120" height="70" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="2"/>
+          <text x="100" y="70" font-size="10" fill="#00e87a" text-anchor="middle" font-weight="700">PH 1</text>
+          <text x="100" y="85" font-size="8" fill="#00e87a" text-anchor="middle" opacity="0.7">20K SF · 16 PODS</text>
+          <text x="100" y="100" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.5">12 MW</text>
+          <!-- Phase 2 buildings -->
+          <rect x="40" y="130" width="120" height="60" rx="4" fill="rgba(59,154,255,0.08)" stroke="#3b9eff" stroke-width="1.5"/>
+          <text x="100" y="158" font-size="9" fill="#3b9eff" text-anchor="middle" font-weight="700">PH 2A · 40K SF</text>
+          <text x="100" y="175" font-size="7" fill="#3b9eff" text-anchor="middle" opacity="0.7">32 PODS · 24 MW</text>
+          <rect x="40" y="210" width="120" height="60" rx="4" fill="rgba(59,154,255,0.08)" stroke="#3b9eff" stroke-width="1.5"/>
+          <text x="100" y="238" font-size="9" fill="#3b9eff" text-anchor="middle" font-weight="700">PH 2B · 40K SF</text>
+          <text x="100" y="255" font-size="7" fill="#3b9eff" text-anchor="middle" opacity="0.7">32 PODS · 24 MW</text>
+          <!-- Phase 3 -->
+          <rect x="180" y="40" width="100" height="230" rx="4" fill="rgba(155,109,255,0.05)" stroke="#9b6dff" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="230" y="155" font-size="10" fill="#9b6dff" text-anchor="middle" font-weight="700">PHASE 3</text>
+          <text x="230" y="170" font-size="8" fill="#9b6dff" text-anchor="middle" opacity="0.7">EXPANSION</text>
+          <text x="230" y="185" font-size="7" fill="#9b6dff" text-anchor="middle" opacity="0.5">100+ MW</text>
+          <!-- Solar farm -->
+          <rect x="40" y="290" width="240" height="80" rx="4" fill="rgba(245,166,35,0.05)" stroke="#f5a623" stroke-width="1"/>
+          <text x="160" y="325" font-size="10" fill="#f5a623" text-anchor="middle" font-weight="700">SOLAR FARM</text>
+          <text x="160" y="345" font-size="8" fill="#f5a623" text-anchor="middle" opacity="0.7">Ground-mount array — Phase 2+</text>
+          <!-- Substation -->
+          <rect x="310" y="40" width="70" height="50" rx="4" fill="rgba(245,166,35,0.1)" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="345" y="62" font-size="8" fill="#f5a623" text-anchor="middle" font-weight="700">SUBSTATION</text>
+          <text x="345" y="78" font-size="7" fill="#f5a623" text-anchor="middle" opacity="0.7">230kV</text>
+          <!-- Tank farm -->
+          <rect x="310" y="110" width="100" height="70" rx="4" fill="rgba(122,154,184,0.05)" stroke="#7a9ab8" stroke-width="1"/>
+          <text x="360" y="145" font-size="8" fill="#7a9ab8" text-anchor="middle">TANK FARM</text>
+          <text x="360" y="160" font-size="7" fill="#7a9ab8" text-anchor="middle" opacity="0.6">2.33M BBL</text>
+          <!-- Dock -->
+          <rect x="420" y="100" width="20" height="50" rx="2" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
+          <text x="430" y="130" font-size="6" fill="#3b9eff" text-anchor="middle" transform="rotate(90,430,130)">DOCK</text>
+          <!-- Drone docks -->
+          <circle cx="100" cy="38" r="5" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1"/>
+          <circle cx="360" cy="200" r="5" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1"/>
+          <circle cx="160" cy="380" r="5" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1"/>
+          <!-- Cooling trunk line -->
+          <line x1="100" y1="110" x2="420" y2="125" stroke="#00c8ff" stroke-width="2" stroke-dasharray="6,3" opacity="0.4"/>
+          <text x="260" y="112" font-size="7" fill="#00c8ff" text-anchor="middle" opacity="0.6">RIVER COOLING TRUNK LINE</text>
+          <!-- Power trunk line -->
+          <line x1="310" y1="65" x2="160" y2="65" stroke="#f5a623" stroke-width="2" stroke-dasharray="6,3" opacity="0.4"/>
+          <!-- Total capacity -->
+          <rect x="300" y="310" width="120" height="60" rx="6" fill="rgba(8,17,30,0.8)" stroke="var(--border2)" stroke-width="1"/>
+          <text x="360" y="332" font-size="9" fill="var(--text)" text-anchor="middle" font-weight="700">FULL BUILD-OUT</text>
+          <text x="360" y="348" font-size="14" fill="var(--green)" text-anchor="middle" font-weight="800">100+ MW</text>
+          <text x="360" y="362" font-size="8" fill="var(--muted2)" text-anchor="middle">200+ Pods</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12 — FINANCIAL OVERVIEW -->
+<div class="slide" id="s12">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Financial Overview</div>
+    <div class="bar-meta">Slide 12 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="full-inner">
+      <div class="slide-eyebrow">Revenue Model</div>
+      <h2 class="slide-h2">Lease First. Revenue Fast. Build with Cash Flow.</h2>
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="pillar-title c-green">Phase 1 Economics</div>
+          <div class="pillar-items">
+            <div class="pillar-item"><strong style="color:var(--text)">Entry:</strong> Warehouse lease (not land purchase)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">CapEx:</strong> Pods + cooling + electrical fit-out</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Revenue:</strong> GPU-as-a-Service from day one</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Payback:</strong> Cash flowing before Phase 2 design starts</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Risk:</strong> Minimal — lease, not buy. Scale or exit.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title c-gold">Infrastructure Savings</div>
+          <div class="pillar-items">
+            <div class="pillar-item"><strong style="color:var(--text)">Substation:</strong> $5-15M saved (already built)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">River intake:</strong> $2-5M saved (existing)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Pipeline:</strong> $1-3M saved (corridor on-site)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Road/rail:</strong> $0 (existing CN + I-10)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Zoning/permits:</strong> $0 + 0 months (M2 zoned)</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title c-blue">Revenue Streams</div>
+          <div class="pillar-items">
+            <div class="pillar-item"><strong style="color:var(--text)">Primary:</strong> GPU compute leasing ($/GPU-hr)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Secondary:</strong> Grid power export (excess generation)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Tertiary:</strong> Managed AI infrastructure services</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Phase 2+:</strong> Land development / co-location leasing</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title c-purple">Incentive Stack</div>
+          <div class="pillar-items">
+            <div class="pillar-item"><strong style="color:var(--text)">Act 730:</strong> Sales/use tax rebate on data center equipment</div>
+            <div class="pillar-item"><strong style="color:var(--text)">ITEP:</strong> File before groundbreaking — non-negotiable</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Quality Jobs:</strong> 75+ positions qualifies</div>
+            <div class="pillar-item"><strong style="color:var(--text)">LA Corp Tax:</strong> 5.5% (not 25%)</div>
+            <div class="pillar-item"><strong style="color:var(--text)">Parish PILOT:</strong> Iberville Parish agreement</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-box" style="margin-top:10px;">
+        "Hut 8 signed a $7 billion, 15-year lease at $454M annual NOI — for 245 MW on the same river. We enter at a fraction of the cost with the same infrastructure advantages, prove the model at 12 MW, and scale to 100+ MW with cash flow. The math works at every phase."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13 — PITCH TO WGT -->
+<div class="slide" id="s13">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">The Partnership</div>
+    <div class="bar-meta">Slide 13 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner">
+      <div>
+        <div class="slide-eyebrow">Why Willow Glen Terminal Wants This</div>
+        <h2 class="slide-h2">We Make Their<br>Property 10x<br>More Valuable.</h2>
+        <p class="slide-desc">Zydeco bought a decommissioned power station for logistics. We bring it back to life as an AI compute campus — with revenue, jobs, and national attention. They get a percentage. We get the infrastructure.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Revenue Share — Ongoing Income</div>
+              <div class="bullet-desc">WGT earns a percentage of compute revenue. Passive income on infrastructure they already own. Better than warehouse rent alone.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--gold)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Renewable Energy — Their Exact Brand Story</div>
+              <div class="bullet-desc">WGT already imports renewable diesel feedstock via the dock. They market the site as a "transitional energy facility." We bring solar, renewable fuel generation, river cooling, and grid export — we ARE their transition story, fully realized.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Complementary — Not Competing</div>
+              <div class="bullet-desc">They store liquids. We compute. Same infrastructure, different business lines. Zero conflict with their existing terminal operations.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">&#x25C6;</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Property Value Multiplier</div>
+              <div class="bullet-desc">An AI compute campus on 400+ acres — adjacent to Hut 8's $10B corridor — transforms WGT from a terminal into a technology hub. Land value follows.</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-panel" style="margin-top:10px;">
+          <div class="info-title c-gold">The Ask</div>
+          <div class="info-body">
+            Phase 1: Lease the 20K SF warehouse for pod deployment. Standard commercial lease + revenue share on compute. Phase 2: Joint development agreement for acreage expansion. We build, they participate.
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Value Creation for Both Parties</div>
+        <div style="display:flex;flex-direction:column;gap:14px;flex:1;">
+          <div class="info-panel">
+            <div class="info-title c-green">What WGT Gets</div>
+            <div class="info-body" style="font-size:13px;line-height:1.8;">
+              Warehouse lease revenue (immediate)<br>
+              Revenue share on GPU compute operations<br>
+              Substation utilization income (power was idle)<br>
+              Property value appreciation (AI campus)<br>
+              National visibility alongside Hut 8 corridor<br>
+              Renewable energy story for their investors<br>
+              Job creation for incentive compliance<br>
+              Skydio drone security across entire campus
+            </div>
+          </div>
+          <div class="info-panel">
+            <div class="info-title c-blue">What ADC 3K Gets</div>
+            <div class="info-body" style="font-size:13px;line-height:1.8;">
+              $10-20M infrastructure — no build cost<br>
+              230kV substation — no utility queue<br>
+              River cooling — no dry cooler expense<br>
+              Pipeline nat gas — no fuel transport<br>
+              M2 zoning — no permitting delay<br>
+              400+ acres — unlimited scale path<br>
+              Hut 8 corridor validation<br>
+              Weeks to revenue (not years)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14 — CLOSING -->
+<div class="slide" id="s14">
+  <div class="slide-bar">
+    <div class="bar-logo">WILLOW GLEN</div>
+    <div class="bar-title">Next Steps</div>
+    <div class="bar-meta">Slide 14 of 14</div>
+  </div>
+  <div class="slide-content">
+    <div class="closing-inner">
+      <div class="closing-glow"></div>
+      <div class="cover-eyebrow" style="position:relative;z-index:1;">
+        <div class="cover-dot"></div>
+        ADC 3K &nbsp;·&nbsp; DESIGNED BY AI &nbsp;·&nbsp; BUILT FOR THE FUTURE
+      </div>
+      <h1 class="closing-h1" style="position:relative;z-index:1;">AI Factory + Mini Grid<br>on the Mississippi.</h1>
+      <p class="closing-sub" style="position:relative;z-index:1;">A former 2,200 MW power station reborn. Renewable fuels via deepwater dock. Solar farm on 400+ acres. Natural gas pipeline on-site. River-cooled immersion compute. Grid export revenue. We don't just use power — we generate it, compute with it, and sell the rest.</p>
+      <div class="contact-cards" style="position:relative;z-index:1;margin-top:12px;">
+        <div class="contact-card">
+          scott@adc3k.com
+          <span>Scott Tomsu — ADC 3K</span>
+        </div>
+        <div class="contact-card">
+          337-780-1535
+          <span>Lafayette, Louisiana</span>
+        </div>
+        <div class="contact-card">
+          adc3k.com
+          <span>Advantage Design Construction</span>
+        </div>
+      </div>
+      <div class="cover-strip" style="position:absolute;"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- NAVIGATION -->
+<div id="nav">
+  <button class="nav-btn" id="prev-btn" onclick="go(-1)">&lt;</button>
+  <div class="nav-dots" id="dots"></div>
+  <span id="slide-counter">1 / 14</span>
+  <button class="nav-btn" id="next-btn" onclick="go(1)">&gt;</button>
+</div>
+
+<script>
+const TOTAL = 14;
+let cur = 1;
+const dots = document.getElementById('dots');
+for (let i = 1; i <= TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 1 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dots.appendChild(d);
+}
+function goTo(n) {
+  if (n < 1 || n > TOTAL) return;
+  document.getElementById('s' + cur).classList.remove('active');
+  document.getElementById('s' + cur).classList.remove('entering');
+  cur = n;
+  const s = document.getElementById('s' + cur);
+  s.classList.add('active', 'entering');
+  setTimeout(() => s.classList.remove('entering'), 300);
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === cur - 1));
+  document.getElementById('slide-counter').textContent = cur + ' / ' + TOTAL;
+  document.getElementById('prev-btn').disabled = cur === 1;
+  document.getElementById('next-btn').disabled = cur === TOTAL;
+}
+function go(dir) { goTo(cur + dir); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+});
+</script>
+</body>
+</html>
