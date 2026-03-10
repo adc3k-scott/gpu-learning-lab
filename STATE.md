@@ -1,9 +1,31 @@
 # Mission Control — Project State
-Last updated: 2026-03-09 (post-power architecture + vendor outreach session)
+Last updated: 2026-03-09 (website rebuild session)
 
 ---
 
-## What Was Done This Session
+## What Was Done This Session (Website Rebuild)
+
+### adc3k.com — Full Ecosystem Rebuild (local, NOT yet deployed to Vercel)
+- Rebuilt `adc3k-deploy/index.html` from V3 → new 7-page SPA, ~83KB
+- Pages: Home, Ecosystem, Technology, Louisiana, Projects, Learn, Connect
+- Hero: 4-layer canvas animation (dark grid + particle neural net + drone/satellite comet trails + radar ping rings)
+- NVIDIA GPU lineup: 6 local images — H100, Blackwell, GB200, NVL72, Vera Rubin, Rubin Platform
+- Pods nighttime hero image: `adc3k-deploy/pods-night.jpg`
+- AI factory branding: all "data center" → "AI factory" replaced (0 remaining)
+- First responders section added to Louisiana page
+- Made in America section added
+- Formspree email capture with role routing — placeholder `YOUR_FORM_ID` (needs real ID)
+- Animated stat counters: 2MW / 3.0MW / 1.05 PUE / 16 wk
+- All 7 image files downloaded locally — no external CDN deps
+- Git committed: `130f89e` feat: adc3k.com full ecosystem rebuild
+
+### Deploy Command (NOT YET RUN this session)
+- `cd adc3k-deploy && npx vercel --prod --yes`
+- After deploy: replace `YOUR_FORM_ID` in connect form with real Formspree ID
+
+---
+
+### Previous Session Work (Power Architecture + Vendor Outreach)
 
 ### Power Architecture Document (new)
 - `web/power-architecture.html` — 5-tab interactive power doc:
@@ -43,7 +65,7 @@ Last updated: 2026-03-09 (post-power architecture + vendor outreach session)
 | **Trappeys** | Strategy defined. UL Lafayette = critical unlock. | First contact: UL president/provost/research computing director. City participation required. |
 | **KLFT 1.1** | Full engineering package + airport meeting deck ready. | Schedule Airport Authority meeting. Get building sq footage + condition report first. |
 | **Pipeline Sites** | 16 sites scored. 4 Tier A. Map operational. | Run Sabine corridor (needs API credits). Import sites.json to map via console. |
-| **ADC3K.com** | Vercel scaffold built. Auth parked. | Find correct Vercel account → `cd adc3k-deploy && npx vercel --prod` |
+| **ADC3K.com** | Rebuild complete (local). 7-page SPA, particle canvas, NVIDIA lineup, pods image. | Deploy: `cd adc3k-deploy && npx vercel --prod --yes`. Then replace Formspree ID. |
 | **Mission Control HD** | Live. Two deferred blockers. | Stripe live webhook + Supabase auth redirect URLs. |
 | **Ground Zero** | EP001 private. EP002 pending. | PEXELS_API_KEY confirmed in .env — run EP002 now. |
 | **Mission Control (repo)** | 160 tests green. All 10 agents operational. | No blockers. |
@@ -160,15 +182,23 @@ Site Acquisition Pipeline: 31e88f09-7e31-8136-9d4f-dbc128f55757
 - `data/pipeline_sites.json` — 16 scored listings
 - `web/` — all presentation/intelligence HTML tools (marlie-phase1, adc3k-site, power-architecture, vendor-outreach, klft-deck, site-intel, network-map, infrastructure-layers)
 - `marlie/` — MARLIE I investor deck HTML + PDF + Store_Front_Pic.jpg
-- `adc3k-deploy/` — Vercel deployment scaffold (index.html + vercel.json)
+- `adc3k-deploy/` — Vercel deployment scaffold (index.html + vercel.json + 7 images)
 - `aido/` — Ground Zero video pipeline
 - `pyproject.toml` — source of truth for deps
 
 ---
 
+## adc3k.com — Deployment Info (LIVE)
+- Vercel: mission-control1 account (adhscott@yahoo.com)
+- Cloudflare: gofast@stfumotorcycles.com — Zone ID: 7869891ccc4bb74419d38bd749c24af1
+- Deploy command: `cd adc3k-deploy && npx vercel --prod --yes`
+- Master file: `adc3k-deploy/index.html` (~83KB, 976 lines) — ecosystem rebuild (NOT V3)
+- Images: pods-night.jpg + 6 NVIDIA product shots (all local, no CDN)
+- Formspree: replace `YOUR_FORM_ID` in connect form after creating formspree.io account
+
 ## Next Session — Starting Points
-1. **ADC3K.com deploy** — find correct Vercel account, run `cd adc3k-deploy && npx vercel --prod`
-2. **Building photo cleanup** — cleanup.pictures for Store_Front_Pic.jpg (remove signage/Dino)
-3. **Sabine corridor scout** — run when API credits restored
-4. **Import pipeline sites** — paste pipeline_sites_import.js in site-intel.html console
-5. **Vendor outreach** — open vendor-outreach.html, work down the 8-step sequence, mark vendors contacted
+1. **ADC3K.com deploy** — `cd adc3k-deploy && npx vercel --prod --yes` then swap Formspree ID
+2. **Building photo cleanup** — cleanup.pictures for Store_Front_Pic.jpg (remove Dynojet signage/Dino)
+3. **ADC 3K investor items** — financial model fix (5.5% tax, CapEx recon, 3-scenario), deck slides (competitive, exit, team)
+4. **Sabine corridor scout** — run when API credits restored: `python scripts/pipeline_scout.py --corridors "Sabine" --max-sites 4`
+5. **Vendor outreach** — open vendor-outreach.html, work down 8-step sequence
