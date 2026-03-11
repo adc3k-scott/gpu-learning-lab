@@ -142,6 +142,8 @@
   .wf-node .wf-label { font-weight: 700; color: var(--text); }
   .wf-node .wf-detail { color: var(--muted2); font-size: 11px; }
   .wf-arrow { text-align: center; font-size: 12px; color: var(--border2); line-height: 1; }
+  .deck-badges { position: absolute; bottom: 56px; left: 16px; display: flex; align-items: center; gap: 12px; z-index: 10; opacity: 0.9; }
+  .deck-badges img { height: 48px; width: auto; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -173,13 +175,10 @@
         <div class="cover-meta-val" style="color:var(--blue2)">3,500 ft</div>
         <div class="cover-meta-lbl">River Frontage</div>
       </div>
-      <div class="cover-meta-item">
-        <div class="cover-meta-val" style="color:var(--purple)">Score 94</div>
-        <div class="cover-meta-lbl">Site Intel Tier A</div>
-      </div>
     </div>
   </div>
   <div class="cover-strip"></div>
+  <div class="deck-badges"><img src="adc-logo.jpg" alt="ADC"><img src="made-in-usa.png" alt="Made in USA"></div>
 </div>
 
 <!-- SLIDE 2 — THE SITE -->
@@ -285,34 +284,34 @@
     <div class="bar-meta">Slide 3 of 14</div>
   </div>
   <div class="slide-content">
-    <div class="full-inner">
-      <div class="slide-eyebrow">What's Already There</div>
-      <h2 class="slide-h2">$10-20M of Infrastructure — Already Built.</h2>
-      <div class="stat-row">
-        <div class="stat-card"><div class="sv c-gold">700</div><div class="sl">Total Acres</div></div>
-        <div class="stat-card"><div class="sv c-green">400+</div><div class="sl">Developable Acres</div></div>
-        <div class="stat-card"><div class="sv c-blue">3,500 ft</div><div class="sl">River Frontage</div></div>
-        <div class="stat-card"><div class="sv c-purple">43 ft</div><div class="sl">Deepwater Draft</div></div>
-        <div class="stat-card"><div class="sv c-amber">230kV</div><div class="sl">Substation</div></div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-card"><div class="sv c-gold">2.33M</div><div class="sl">BBL Tank Farm</div></div>
-        <div class="stat-card"><div class="sv c-green">20K SF</div><div class="sl">Warehouse</div></div>
-        <div class="stat-card"><div class="sv c-blue">M2</div><div class="sl">Heavy Industrial</div></div>
-        <div class="stat-card"><div class="sv c-purple">Zone X</div><div class="sl">Minimal Flood Risk</div></div>
-        <div class="stat-card"><div class="sv c-amber">I-10</div><div class="sl">Highway Access</div></div>
-      </div>
-      <div class="pillar-grid">
-        <div class="info-panel">
-          <div class="info-title c-gold">What We Don't Have to Build</div>
-          <div class="info-body">
-            Substation ($5-15M) · River water intake ($2-5M) · Pipeline interconnect ($1-3M) · Road/rail access (built) · Heavy industrial zoning (done) · Environmental baseline (completed by Genover)
-          </div>
+    <div class="full-inner" style="gap:10px">
+      <div class="slide-eyebrow" style="margin-bottom:0">What's Already There</div>
+      <h2 class="slide-h2" style="font-size:clamp(16px,2vw,22px);margin-bottom:4px">$10-20M of Infrastructure — Already Built.</h2>
+      <div style="display:flex;gap:16px;flex:1;min-height:0">
+        <!-- Left: image -->
+        <div style="flex:1;min-width:0;overflow:hidden;border-radius:6px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;background:#0a0e14">
+          <img src="ai-factory-arch.jpg" alt="AI Factory Architecture" style="width:100%;display:block;object-fit:contain">
         </div>
-        <div class="info-panel">
-          <div class="info-title c-green">What We Bring</div>
-          <div class="info-body">
-            ADC 3K immersion pods · EC-110 cooling technology · NVIDIA NVL72 GPU platform · River water heat exchange design · Solar roof integration · AI-managed NOC from MARLIE I HQ
+        <!-- Right: stats -->
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;overflow-y:auto">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <div class="stat-card" style="padding:8px"><div class="sv c-gold" style="font-size:16px">700</div><div class="sl" style="font-size:8px">Total Acres</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-green" style="font-size:16px">400+</div><div class="sl" style="font-size:8px">Developable</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-blue" style="font-size:16px">3,500 ft</div><div class="sl" style="font-size:8px">River Frontage</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-purple" style="font-size:16px">43 ft</div><div class="sl" style="font-size:8px">Deepwater Draft</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-amber" style="font-size:16px">230kV</div><div class="sl" style="font-size:8px">Substation</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-gold" style="font-size:16px">2.33M</div><div class="sl" style="font-size:8px">BBL Tank Farm</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-green" style="font-size:16px">20K SF</div><div class="sl" style="font-size:8px">Warehouse</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-blue" style="font-size:16px">M2</div><div class="sl" style="font-size:8px">Heavy Industrial</div></div>
+            <div class="stat-card" style="padding:8px"><div class="sv c-purple" style="font-size:16px">Zone X</div><div class="sl" style="font-size:8px">Min Flood Risk</div></div>
+          </div>
+          <div class="info-panel" style="padding:8px 10px">
+            <div class="info-title c-gold" style="font-size:9px;margin-bottom:3px">What We Don't Have to Build</div>
+            <div class="info-body" style="font-size:10px;line-height:1.4">Substation ($5-15M) · River intake ($2-5M) · Pipeline ($1-3M) · Road/rail (built) · Zoning (done)</div>
+          </div>
+          <div class="info-panel" style="padding:8px 10px">
+            <div class="info-title c-green" style="font-size:9px;margin-bottom:3px">What We Bring</div>
+            <div class="info-body" style="font-size:10px;line-height:1.4">ADC 3K pods · EC-110 cooling · NVIDIA NVL72 · River heat exchange · Solar roof · MARLIE I NOC</div>
           </div>
         </div>
       </div>
@@ -871,50 +870,8 @@
         </div>
       </div>
       <div class="vis-panel">
-        <div class="vis-label">Drone Security Coverage Map</div>
-        <svg viewBox="0 0 500 420" style="width:100%;flex:1;min-height:0;">
-          <!-- Property boundary -->
-          <rect x="30" y="30" width="440" height="360" rx="8" fill="none" stroke="#1a3a5c" stroke-width="1.5" stroke-dasharray="8,4"/>
-          <!-- Coverage rings -->
-          <circle cx="250" cy="210" r="180" fill="none" stroke="rgba(0,232,122,0.1)" stroke-width="40"/>
-          <circle cx="250" cy="210" r="120" fill="none" stroke="rgba(0,232,122,0.08)" stroke-width="30"/>
-          <!-- Key structures -->
-          <rect x="150" y="170" width="80" height="50" rx="4" fill="rgba(0,232,122,0.1)" stroke="#00e87a" stroke-width="1.5"/>
-          <text x="190" y="195" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">WAREHOUSE</text>
-          <text x="190" y="210" font-size="7" fill="#00e87a" text-anchor="middle" opacity="0.6">PODS</text>
-          <rect x="300" y="80" width="100" height="70" rx="4" fill="rgba(245,166,35,0.06)" stroke="#f5a623" stroke-width="1"/>
-          <text x="350" y="115" font-size="8" fill="#f5a623" text-anchor="middle">TANK FARM</text>
-          <rect x="80" y="80" width="60" height="40" rx="3" fill="rgba(245,166,35,0.08)" stroke="#f5a623" stroke-width="1"/>
-          <text x="110" y="103" font-size="8" fill="#f5a623" text-anchor="middle">SUBST</text>
-          <rect x="420" y="150" width="30" height="50" rx="3" fill="rgba(59,154,255,0.1)" stroke="#3b9eff" stroke-width="1"/>
-          <text x="435" y="180" font-size="7" fill="#3b9eff" text-anchor="middle">DOCK</text>
-          <!-- Drone docks -->
-          <circle cx="190" cy="165" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
-          <text x="190" y="155" font-size="6" fill="#00e87a" text-anchor="middle">D1</text>
-          <circle cx="350" cy="75" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
-          <text x="350" y="65" font-size="6" fill="#00e87a" text-anchor="middle">D2</text>
-          <circle cx="110" cy="280" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
-          <text x="110" y="270" font-size="6" fill="#00e87a" text-anchor="middle">D3</text>
-          <circle cx="400" cy="300" r="8" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1.5"/>
-          <text x="400" y="290" font-size="6" fill="#00e87a" text-anchor="middle">D4</text>
-          <!-- Flight paths -->
-          <path d="M190 165 Q300 60 350 75" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
-          <path d="M350 75 Q450 200 400 300" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
-          <path d="M400 300 Q250 380 110 280" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
-          <path d="M110 280 Q60 180 190 165" stroke="#00e87a" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.4"/>
-          <!-- Drone icons (triangles) -->
-          <polygon points="280,90 275,100 285,100" fill="#00e87a" opacity="0.8"/>
-          <polygon points="430,240 425,250 435,250" fill="#00e87a" opacity="0.8"/>
-          <polygon points="80,220 75,230 85,230" fill="#00e87a" opacity="0.8"/>
-          <!-- Perimeter patrol label -->
-          <rect x="140" y="350" width="220" height="30" rx="4" fill="rgba(0,232,122,0.04)" stroke="rgba(0,232,122,0.2)" stroke-width="1"/>
-          <text x="250" y="369" font-size="9" fill="#00e87a" text-anchor="middle" font-weight="700">SKYDIO X10 — AUTONOMOUS PERIMETER PATROL</text>
-          <!-- Legend -->
-          <circle cx="60" y="400" r="5" fill="rgba(0,232,122,0.3)" stroke="#00e87a" stroke-width="1" cy="400"/>
-          <text x="72" y="403" font-size="7" fill="#00e87a">Charging Dock</text>
-          <polygon points="150,397 145,403 155,403" fill="#00e87a" opacity="0.8"/>
-          <text x="162" y="403" font-size="7" fill="#00e87a">Active Drone</text>
-        </svg>
+        <div class="vis-label">700 Acres — Secured &amp; Inspected</div>
+        <img src="drone-grid.jpg" alt="Autonomous drone inspecting electrical grid infrastructure" style="width:100%;flex:1;min-height:0;object-fit:cover;border-radius:6px">
       </div>
     </div>
   </div>
@@ -1261,6 +1218,7 @@
       <div class="cover-strip" style="position:absolute;"></div>
     </div>
   </div>
+  <div class="deck-badges"><img src="adc-logo.jpg" alt="ADC"><img src="made-in-usa.png" alt="Made in USA"></div>
 </div>
 
 </div><!-- end deck -->

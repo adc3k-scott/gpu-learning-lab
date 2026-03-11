@@ -59,7 +59,7 @@ p.bd{font-size:15px;line-height:1.8;margin-bottom:14px}
 .sv:hover{transform:translateY(-2px)}.sv.g{border-top-color:var(--green)}
 .svv{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--text-white)}
 .svl{font-size:10px;color:var(--text-dim);margin-top:4px}
-#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('three-pic.jpg') center center/cover no-repeat}
+#hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('three-pic.jpg') center center/cover no-repeat;padding-bottom:40px}
 #hero::before{content:'';position:absolute;inset:0;background:rgba(6,10,16,0.72);z-index:0}
 .hi{position:relative;z-index:2;padding:0 40px}
 .hey{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;animation:fu 0.8s ease 0.3s both}
@@ -309,6 +309,8 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <a onclick="showPage('home');closeMobile()">Home</a>
   <a onclick="showPage('ecosystem');closeMobile()">Ecosystem</a>
   <a onclick="showPage('technology');closeMobile()">Technology</a>
+  <a onclick="showPage('security');closeMobile()">Security</a>
+  <a onclick="showPage('whyadc');closeMobile()">Why ADC</a>
   <a onclick="showPage('louisiana');closeMobile()">Louisiana</a>
   <a onclick="showPage('projects');closeMobile()">Projects</a>
   <a onclick="showPage('learn');closeMobile()">Learn</a>
@@ -321,6 +323,8 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <a id="nav-home" onclick="showPage('home')" class="active">Home</a>
     <a id="nav-ecosystem" onclick="showPage('ecosystem')">Ecosystem</a>
     <a id="nav-technology" onclick="showPage('technology')">Technology</a>
+    <a id="nav-security" onclick="showPage('security')">Security</a>
+    <a id="nav-whyadc" onclick="showPage('whyadc')">Why ADC</a>
     <a id="nav-louisiana" onclick="showPage('louisiana')">Louisiana</a>
     <a id="nav-projects" onclick="showPage('projects')">Projects</a>
     <a id="nav-learn" onclick="showPage('learn')">Learn</a>
@@ -355,26 +359,14 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
 
 <!-- HERO IMAGE — pods at night -->
-<div style="width:100%;overflow:hidden;line-height:0;position:relative">
-  <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:560px;object-fit:cover;display:block;opacity:0.95">
-  <!-- overlay stats -->
-  <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(6,10,16,0.92));padding:32px 40px 24px;display:flex;gap:40px;flex-wrap:wrap">
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#00d68f;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#9632; SYSTEMS ONLINE</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">3-LAYER POWER STACK ACTIVE</div></div>
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COMPUTE PLATFORM</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">NVIDIA VERA RUBIN NVL72</div></div>
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">COOLING</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">EC-110 IMMERSION &nbsp;|&nbsp; 0 GAL H2O</div></div>
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3b9eff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">ORIGIN</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#d0dce8;letter-spacing:1px">MADE IN LAFAYETTE, LOUISIANA</div></div>
-  </div>
+<div style="width:100%;overflow:hidden;line-height:0;position:relative;margin-bottom:16px">
+  <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:320px;object-fit:cover;display:block;opacity:0.95">
 </div>
 
-<div class="pad" style="padding-top:80px;padding-bottom:80px">
-
-  <!-- AI COMPUTE GROWTH VISUAL -->
-  <div style="margin-bottom:48px;text-align:center">
-    <img src="henry-hub-1.jpg" alt="The Exponential Growth of AI Compute — model parameter growth from 2017 to 2026+" style="width:100%;max-width:560px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
-  </div>
+<div class="pad" style="padding-top:60px;padding-bottom:80px">
 
   <!-- WHY HERE, WHY NOW -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:60px">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:48px">
     <div style="background:#0a130a;border:1px solid #153a15;padding:24px;text-align:center">
       <div style="font-size:28px;margin-bottom:8px">&#9981;</div>
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;margin-bottom:6px">CHEAPEST POWER</div>
@@ -397,46 +389,9 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
-  <div class="eyebrow reveal">The ADC3K Ecosystem</div>
-  <h2 class="stitle reveal">Three platforms. One integrated system.</h2>
-  <p class="ssub reveal">MARLIE I is the permanent AI factory and command center. ADC 3K pods are the deployable edge network. KLFT extends operations into autonomous airspace. All managed from one NOC in Lafayette.</p>
-  <div class="ec">
-    <div class="ecard m reveal" onclick="showPage('marlie')">
-      <div class="enum b">PLATFORM 01</div>
-      <h3>MARLIE I</h3>
-      <div class="esub">Lafayette AI Factory</div>
-      <p>Permanent 2 MW AI compute facility at 1201 SE Evangeline Thruway, Lafayette. NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, and 24/7 NOC. Our headquarters and primary compute engine.</p>
-      <div class="estats">
-        <div class="estat"><strong>2 MW</strong>Phase 1</div>
-        <div class="estat"><strong>N+1</strong>Redundancy</div>
-        <div class="estat"><strong>24/7</strong>NOC</div>
-      </div>
-      <div class="elink b">View Full Deck &rarr;</div>
-    </div>
-    <div class="ecard p reveal d1" onclick="showPage('ecosystem')">
-      <div class="enum g">PLATFORM 02</div>
-      <h3>ADC 3K Pods</h3>
-      <div class="esub">Modular AI Pod Network</div>
-      <p>Factory-manufactured 40-ft ISO containerized AI compute pods. Immersion cooled, truck-shippable, concrete-pad deployable. No HVAC. No construction. Connects to MARLIE I NOC.</p>
-      <div class="estats">
-        <div class="estat"><strong>3.0 MW</strong>Capacity</div>
-        <div class="estat"><strong>1.05</strong>PUE</div>
-        <div class="estat"><strong>16 wk</strong>Deploy</div>
-      </div>
-      <div class="elink g">Explore ADC 3K &rarr;</div>
-    </div>
-    <div class="ecard k reveal d2" onclick="showPage('skydio')">
-      <div class="enum p">PLATFORM 03</div>
-      <h3>KLFT 1.1</h3>
-      <div class="esub">Autonomous Airspace Hub</div>
-      <p>AI-powered autonomous airspace operations at Lafayette Regional Airport. SkyCommand software enables BVLOS drone operations and real-time airspace management across Acadiana.</p>
-      <div class="estats">
-        <div class="estat"><strong>KLFT</strong>Lafayette Airport</div>
-        <div class="estat"><strong>BVLOS</strong>Ops</div>
-        <div class="estat"><strong>Phase 1</strong>Planning</div>
-      </div>
-      <div class="elink p">View Full Deck &rarr;</div>
-    </div>
+  <!-- AI COMPUTE GROWTH VISUAL -->
+  <div style="margin-bottom:60px;text-align:center">
+    <img src="henry-hub-1.jpg" alt="The Exponential Growth of AI Compute — model parameter growth from 2017 to 2026+" style="width:100%;max-width:520px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
   </div>
 
   <div style="margin-top:60px">
@@ -594,6 +549,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
       </div>
     </div>
   </div>
+  <div style="display:flex;align-items:center;gap:24px;margin-top:48px;padding:0 40px 32px">
+    <img src="adc-logo.jpg" alt="ADC 3K logo" style="height:96px;border-radius:8px">
+    <img src="made-in-usa.png" alt="Made in USA" style="height:96px">
+  </div>
 </div>
 </div>
 
@@ -687,6 +646,9 @@ footer{flex-direction:column;gap:10px;text-align:center}
   </div>
 
   <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div style="margin-bottom:32px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+      <img src="adc3k-side-view.png" alt="ADC 3K modular AI pod — side view" style="width:100%;display:block;max-height:480px;object-fit:cover">
+    </div>
     <div class="sbadge p1">NOW ACCEPTING DEPLOYMENT INQUIRIES</div>
     <div class="eyebrow green">Platform 02</div>
     <h2 class="sh" style="margin-top:8px">ADC 3K — Modular AI Pod Network</h2>
@@ -768,6 +730,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <h2 class="stitle">The technology stack<br/>behind ADC3K.</h2>
   <p class="ssub">Immersion cooling, 3-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
 
+  <div style="margin-top:40px;margin-bottom:48px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+    <img src="immersion-tech.jpg" alt="Immersion cooling technology — servers submerged in dielectric fluid" style="width:100%;display:block;max-height:480px;object-fit:cover">
+  </div>
+
   <div style="margin-top:48px">
     <div class="sn">01 — COOLING</div>
     <h2 class="sh">Why immersion cooling changes everything.</h2>
@@ -798,6 +764,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
+  <div style="margin-top:48px;text-align:center">
+    <img src="immersion-cooling.jpg" alt="GRC Single-Phase Immersion Cooling — HPC benefits overview" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+  </div>
+
   <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
     <div class="sn">02 — POWER</div>
     <h2 class="sh">3-Layer Power Architecture — every ADC3K site.</h2>
@@ -825,6 +795,257 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="card" style="border-top:3px solid var(--accent)"><div class="ctag b">PATH 2</div><h3>Licensed Microwave</h3><p>Secondary path. Point-to-point microwave radio links. Activated automatically if fiber fails. Full management plane within milliseconds.</p></div>
       <div class="card" style="border-top:3px solid var(--cyan)"><div class="ctag" style="color:var(--cyan)">PATH 3</div><h3>Starlink</h3><p>Tertiary and last-resort uplink. Satellite means even remote or disaster-affected sites maintain NOC visibility — critical for hurricane recovery scenarios.</p></div>
     </div>
+  </div>
+</div>
+</div>
+
+<!-- SECURITY -->
+<div class="page" id="pg-security">
+<div class="pad">
+  <div class="eyebrow" style="color:var(--red,#ff4d4f)">Security &amp; First Response</div>
+  <h2 class="stitle">Protecting infrastructure.<br/>Protecting communities.</h2>
+  <p class="ssub">Every ADC3K site ships with a layered security system — AI-powered software, autonomous drone patrols, and a first responder network that turns our infrastructure into a community asset.</p>
+
+  <!-- HERO: Drone photo -->
+  <div style="margin-top:40px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+    <img src="drone2.jpg" alt="Skydio X10 autonomous security drone" style="width:100%;display:block;max-height:420px;object-fit:cover">
+  </div>
+
+  <div style="margin-top:48px">
+    <div class="sn" style="color:var(--red,#ff4d4f)">01 — FIRST RESPONDERS</div>
+    <h2 class="sh">AI infrastructure that serves the community first.</h2>
+    <p class="bd">This is the part nobody else in AI infrastructure is talking about. <span class="hl">Every ADC3K site is a first responder force multiplier.</span> When hurricanes hit, when floods rise, when emergencies strike — our drones, our power, our connectivity, and our compute are already on the ground, already operational.</p>
+    <div class="g3" style="margin-top:20px">
+      <div class="card" style="border-top:3px solid var(--red,#ff4d4f)">
+        <div class="ctag" style="color:var(--red,#ff4d4f)">HURRICANE RESPONSE</div>
+        <h3>Aerial Damage Assessment</h3>
+        <p>Skydio drones deploy within minutes of storm passage. Autonomous flight patterns map damage across parishes — downed power lines, flooded roads, structural collapse. <span class="hl">Data to emergency managers in hours, not days.</span></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="ctag" style="color:var(--amber)">SEARCH &amp; RESCUE</div>
+        <h3>Thermal &amp; Visual Search</h3>
+        <p>Infrared + visual cameras locate stranded residents on rooftops, in floodwaters, in collapsed structures. Autonomous waypoint navigation covers search grids systematically — no pilot fatigue, no missed sectors.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--green)">
+        <div class="ctag g">COMMUNITY POWER</div>
+        <h3>Emergency Power &amp; Connectivity</h3>
+        <p>Our 3-layer power stack keeps running when the grid goes down. <span class="hl">Nat gas + diesel + solar = self-sufficient.</span> Starlink uplink maintains communications. We become the emergency operations hub for the community.</p>
+      </div>
+    </div>
+    <div class="g2" style="margin-top:12px">
+      <div class="card" style="border-left:3px solid var(--cyan)">
+        <div class="ctag" style="color:var(--cyan)">FIRE DEPARTMENTS</div>
+        <h3>Pre-Incident Planning</h3>
+        <p>Drone-generated 3D site maps shared with local fire departments before any emergency. Thermal monitoring detects hotspots on infrastructure — tank farms, substations, solar arrays — before they become fires.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent)">
+        <div class="ctag b">LAW ENFORCEMENT</div>
+        <h3>Perimeter &amp; Pursuit Support</h3>
+        <p>Autonomous perimeter patrols provide real-time video feeds to parish law enforcement. Industrial corridor surveillance that would otherwise require multiple officers — handled by one drone dock.</p>
+      </div>
+    </div>
+    <div class="ana" style="margin-top:20px">
+      <p><strong>The pitch to every city and parish:</strong> ADC3K doesn't just create jobs and tax revenue. We deploy a first responder drone network, emergency power infrastructure, and satellite communications — at zero cost to the community. <span class="hl">That's the deal no other data center company is offering.</span></p>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">02 — NVIDIA AI SECURITY PLATFORM</div>
+    <h2 class="sh">Software-defined security. Hardware-accelerated.</h2>
+    <p class="bd">Every ADC3K pod runs the <span class="hl">NVIDIA AI Enterprise security stack</span> — centralized license management, node-locked authentication, role-based access control, and continuous monitoring. The same platform protecting the world's most sensitive AI workloads.</p>
+
+    <!-- NVIDIA Security Architecture diagram -->
+    <div style="margin-top:24px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+      <img src="nvidia-security.png" alt="NVIDIA Licensing System — Enterprise Architecture showing ADC3K pod integration" style="width:100%;display:block;max-height:560px;object-fit:contain;background:#0a0e14">
+    </div>
+
+    <div class="g2" style="margin-top:24px">
+      <div class="card" style="border-top:3px solid var(--green)">
+        <div class="ctag g">LICENSING &amp; AUTH</div>
+        <h3>NVIDIA NLS</h3>
+        <p>Centralized license management via NVIDIA Licensing Portal. Cloud + local license pools. Floating and node-locked licenses. User roles and authentication at every layer. No unauthorized GPU access — ever.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <div class="ctag b">MONITORING</div>
+        <h3>Continuous Oversight</h3>
+        <p>Real-time GPU utilization, thermal, and workload monitoring across every pod in the network. Anomaly detection flags unauthorized compute patterns. MARLIE I NOC has eyes on every rack, every pod, every site — 24/7.</p>
+      </div>
+    </div>
+    <div class="layers" style="margin-top:24px">
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">LAYER 1 — IDENTITY</span></div><div class="ldesc">NVIDIA NLS user roles, node-locked licenses, multi-factor authentication. No anonymous compute.</div><div class="lbadge pr">ACTIVE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">LAYER 2 — NETWORK</span></div><div class="ldesc">Encrypted pod-to-NOC tunnels. Segmented VLANs per tenant. Zero-trust architecture. Starlink failover for management plane.</div><div class="lbadge pr">ACTIVE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">LAYER 3 — PHYSICAL</span></div><div class="ldesc">Skydio X10 autonomous patrols. Thermal + visual cameras. Perimeter intrusion detection. 24/7 autonomous coverage.</div><div class="lbadge pr">ACTIVE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red,#ff4d4f)"></div><span style="color:var(--red,#ff4d4f)">LAYER 4 — RESPONSE</span></div><div class="ldesc">Automated alerts to MARLIE I NOC + local law enforcement. Video evidence chain. First responder data sharing.</div><div class="lbadge pr">ACTIVE</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">03 — SKYDIO AUTONOMOUS DRONES</div>
+    <h2 class="sh">Physical security without the headcount.</h2>
+    <p class="bd">Every ADC3K deployment site includes <span class="hl">Skydio X10 autonomous drones</span> operating from self-charging dock stations. No pilot required. No security guard shifts. Autonomous flight paths cover the entire site — tank farms, substations, cooling infrastructure, solar arrays, perimeter fencing.</p>
+    <div class="g3" style="margin-top:20px">
+      <div class="card">
+        <h3>Site Security</h3>
+        <p>Scheduled perimeter patrols + triggered response flights. Visual + thermal cameras detect intrusion, vandalism, unauthorized access. Video streamed live to MARLIE I NOC.</p>
+      </div>
+      <div class="card">
+        <h3>Infrastructure Inspection</h3>
+        <p>Automated inspection of solar panels, cooling systems, tank farm integrity, substation equipment, pipeline corridors. Detect problems before they become failures.</p>
+      </div>
+      <div class="card">
+        <h3>Emergency Deployment</h3>
+        <p>Hurricane damage mapping. Flood extent surveys. Search and rescue thermal scanning. Fire detection and monitoring. <span class="hl">First in the air, last to land.</span></p>
+      </div>
+    </div>
+    <div class="srow" style="margin-top:28px">
+      <div class="sv g"><div class="svv" style="color:var(--green)">24/7</div><div class="svl">Autonomous Coverage</div></div>
+      <div class="sv"><div class="svv">0</div><div class="svl">Pilots Required</div></div>
+      <div class="sv g"><div class="svv" style="color:var(--green)">X10</div><div class="svl">Skydio Platform</div></div>
+      <div class="sv"><div class="svv">4K</div><div class="svl">Thermal + Visual</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- WHY ADC -->
+<div class="page" id="pg-whyadc">
+<div class="pad">
+  <div class="eyebrow">Leadership</div>
+  <h2 class="stitle">Why Advantage Design Construction.</h2>
+  <p class="ssub">Most AI infrastructure companies are built by finance teams who hire engineers. ADC is built by an infrastructure operator with 25 years of mission-critical robotics experience — who also holds every construction, NVIDIA, and aviation credential needed to take a site from bare land to live compute. No middlemen. No outsourcing. One company.</p>
+
+  <!-- FOUNDER -->
+  <div style="margin-top:48px">
+    <div class="sn">01 — FOUNDER</div>
+    <h2 class="sh">Scott Tomsu — 25 years of systems that cannot fail.</h2>
+    <p class="bd">ROV Superintendent. FAA Pilot. Licensed General Contractor. NVIDIA-certified AI infrastructure integrator. Multi-time motorsports champion. <span class="hl">The same person who ran autonomous robots at 3,000+ meters depth in the Gulf of America — and made saturation dives at 760 feet as a commercial diver — is now building autonomous AI factories and drone security networks in Louisiana.</span></p>
+
+    <div style="margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+      <div style="background:#0a130a;border:1px solid #153a15;padding:28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:12px">Deepwater Robotics</div>
+        <div style="font-size:20px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:12px">25+ years executing mission-critical subsea operations worldwide.</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">ROV Superintendent — remotely operated vehicles at 3,000+ meters depth in the Gulf of America, West Africa, and deepwater fields globally. Commercial saturation diver at 760 feet. <strong style="color:var(--text-bright)">Subsea installation, drill support, intervention, inspection &amp; survey.</strong> Hydraulic/electronic control systems, manipulator operations, field diagnostics. Systems at depth, under pressure, in hostile environments — zero tolerance for failure.</p>
+      </div>
+      <div style="background:#0a0e14;border:1px solid #152a3a;padding:28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:12px">Why This Transfers</div>
+        <div style="font-size:20px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:12px">AI factories demand the exact same discipline.</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Continuous uptime. Redundant systems. Immediate fault response. 24/7 crew management. Remote operations in hostile conditions. <strong style="color:var(--text-bright)">The operational DNA of running deepwater robotics is identical to running AI compute infrastructure</strong> — power, cooling, monitoring, failover, and autonomous systems that must perform without interruption.</p>
+      </div>
+    </div>
+
+    <!-- WEST AFRICA HIGHLIGHT -->
+    <div style="margin-top:3px;background:#0d0a14;border:1px solid #2a1540;padding:28px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;margin-bottom:12px">Pacific Wizard — Equatorial Guinea, West Africa (2013–2018)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:12px">Led subsea inspection &amp; construction operations across multiple deepwater campaigns.</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Managed vessel positioning, mission planning, ROV deployment. Directed 24-hour operations with multiple crews. Optimized vessel utilization saving millions in operational costs for i-Tech / Subsea 7.</p>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-bright);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px">Client Feedback — MEGI Field</div>
+          <div style="background:rgba(0,232,122,0.04);border:1px solid rgba(0,232,122,0.15);border-radius:6px;padding:16px;margin-bottom:8px">
+            <p style="font-size:12px;color:var(--text);line-height:1.6;margin:0;font-style:italic">"Scott goes above and beyond in every operation. Excellent completion record. Safe, detailed daily reporting. Quality of work is outstanding."</p>
+            <p style="font-size:10px;color:var(--text-dim);margin:8px 0 0;text-align:right">— i-Tech / Subsea 7 Operations Review, MEGI Field</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROV PHOTO -->
+  <div style="margin-top:48px;text-align:center">
+    <img src="rov.jpg" alt="ROV — Remotely Operated Vehicle in deepwater subsea operations" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+  </div>
+
+  <!-- CROSS-DOMAIN EXPERTISE -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">02 — CROSS-DOMAIN EXPERTISE</div>
+    <h2 class="sh">No other AI factory builder has this stack.</h2>
+    <div class="g3" style="margin-top:20px">
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="ctag" style="color:var(--amber)">ROBOTICS</div>
+        <h3>25+ Years ROV Operations</h3>
+        <p>Deepwater subsea robotics — piloting, installation, intervention, inspection. Gulf of Mexico, West Africa, worldwide. IMCA ROV Supervisor certified. Electronic Technician. <span class="hl">Mission-critical autonomous systems are not new territory.</span></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--cyan)">
+        <div class="ctag" style="color:var(--cyan)">AVIATION</div>
+        <h3>FAA Pilot + Part 107 UAS</h3>
+        <p>Private Pilot Certificate (fixed wing). Instrument Rating training (IRA written: 90%). FAA Part 107 Remote Pilot for commercial drone ops. Controlled airspace experience. <span class="hl">Enables KLFT autonomous airspace hub.</span></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--green)">
+        <div class="ctag g">HIGH PERFORMANCE</div>
+        <h3>Motorsports Engineering</h3>
+        <p>Multi-time drag racing champion. Custom engine components — pistons, rods, full builds. FuelTech advanced engine management certified. EFI calibration, dyno tuning, data-driven optimization. <span class="hl">Precision engineering and rapid failure analysis.</span></p>
+      </div>
+    </div>
+    <div class="g3" style="margin-top:12px">
+      <div class="card" style="border-top:3px solid var(--green)">
+        <div class="ctag g">CONSTRUCTION</div>
+        <h3>Louisiana General Contractor</h3>
+        <p>Active state license. Eliminates 10-15% GC markup. Pulls permits, hires trades, executes buildout directly. Built the MARLIE I facility — <span class="hl">20 years standing, hurricane-proven.</span></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <div class="ctag b">AI INFRASTRUCTURE</div>
+        <h3>7 NVIDIA Certifications</h3>
+        <p>AI infrastructure design, GPU compute deployment, NVIDIA partner program. No third-party integrator needed — receive, rack, cable, power on. <span class="hl">Revenue from day one.</span></p>
+      </div>
+      <div class="card">
+        <div class="ctag" style="color:var(--purple)">FOUNDATIONS</div>
+        <h3>CompTIA A+ &amp; Network+</h3>
+        <p>Certified since the late 1990s. Hardware diagnostics, network architecture, systems administration. Commercial Diver (Divers Academy). The fundamentals everything else builds on.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATIONS LEADERSHIP -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="sn">03 — OPERATIONS LEADERSHIP</div>
+    <h2 class="sh">Field-hardened. Not theoretical.</h2>
+    <p class="bd">This isn't a finance team that hired engineers. This isn't a software company that rented a building. <span class="hl">This is an infrastructure operator who built the building, earned every certification, and will be on-site when the GPUs power on.</span></p>
+    <div class="g2" style="margin-top:20px">
+      <div class="card">
+        <h3>Mission-Critical Operations</h3>
+        <p>Mission planning, multidisciplinary team leadership, high-risk decision making, safety management, equipment deployment, real-time troubleshooting. <span class="hl">24/7 operations with zero tolerance for downtime.</span></p>
+      </div>
+      <div class="card">
+        <h3>Autonomous Systems Direction</h3>
+        <p>Transitioning 25 years of robotics and remote operations expertise toward next-generation AI-driven autonomous deployment. Subsea robotics, aerial drones, GPU compute — <span class="hl">same discipline, new domain.</span></p>
+      </div>
+    </div>
+
+    <!-- MISSION CONTROL -->
+    <div style="margin-top:24px;background:#0a0d13;border:1px solid #152a3a;border-radius:8px;padding:28px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">Built In-House</div>
+          <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:12px">Mission Control — autonomous AI operations platform.</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Scott designed and built a full autonomous work system powered by Claude AI — <strong style="color:var(--text-bright)">10 specialized AI agents, 160+ automated tests, real-time streaming dashboard, skill plugin architecture, and multi-agent orchestration</strong>. The same system that manages this website, runs infrastructure health checks, and coordinates operations across every ADC project. Built from scratch. No templates. No outsourced dev team.</p>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">What This Proves</div>
+          <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:12px">Hardware operator. Software builder. Both.</div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Most founders are one or the other — they build software or they build infrastructure. Scott does both. He went from running ROVs at 3,000 meters to building autonomous AI systems that manage multi-site operations. <span style="color:var(--green);font-weight:700">That's not a resume line — that's a working system in production right now.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layers" style="margin-top:24px">
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--green)"></div><span style="color:var(--green)">GENERAL CONTRACTOR</span></div><div class="ldesc">Pulls permits, hires trades, executes buildout. No 10-15% GC markup. One throat to choke.</div><div class="lbadge pr">IN-HOUSE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--accent)"></div><span style="color:var(--accent)">NVIDIA INTEGRATOR</span></div><div class="ldesc">7 certifications. Receive, rack, cable, power on. No outside integrator fees or scheduling delays.</div><div class="lbadge pr">IN-HOUSE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--cyan)"></div><span style="color:var(--cyan)">DRONE &amp; AVIATION OPS</span></div><div class="ldesc">FAA Private Pilot + Part 107. Site inspection, security, infrastructure monitoring — all internal.</div><div class="lbadge pr">IN-HOUSE</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--amber)"></div><span style="color:var(--amber)">SUBSEA ROBOTICS</span></div><div class="ldesc">25+ years ROV operations. IMCA certified. The operational DNA that runs every ADC system.</div><div class="lbadge pr">FOUNDER</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--red)"></div><span style="color:var(--red)">AI SOFTWARE</span></div><div class="ldesc">Mission Control — 10-agent autonomous system built in-house. Claude AI orchestration, real-time ops dashboard, 160+ tests.</div><div class="lbadge pr">BUILT IT</div></div>
+      <div class="layer"><div class="lnum"><div class="ldot" style="background:var(--purple)"></div><span style="color:var(--purple)">FACILITY OWNER</span></div><div class="ldesc">Built the building. Owns the land. 20 years standing. Hurricane-proven. Effectively debt-free.</div><div class="lbadge pr">OWNED</div></div>
+    </div>
+    <div class="ana" style="margin-top:24px">
+      <p><strong>The bottom line:</strong> When you invest in ADC, you're investing in a 25-year robotics and operations veteran who holds every license, owns the facility, built it with his own hands, and has operated mission-critical autonomous systems in the most extreme environments on earth. That's not a pitch deck — that's a track record.</p>
+    </div>
+  </div>
+
+  <!-- WINNER'S CIRCLE -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border);text-align:center">
+    <img src="winning.jpg" alt="Scott Tomsu — multi-time drag racing champion, winner's circle" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+    <p style="font-size:12px;color:var(--text-dim);margin-top:14px;line-height:1.6;max-width:600px;display:inline-block">Every motorcycle built, tuned, and raced by one person. No crew. No sponsors. Just precision engineering and the will to win. The same approach drives everything at ADC.</p>
   </div>
 </div>
 </div>
@@ -1185,13 +1406,36 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <h2 class="stitle">What Is an AI Factory?</h2>
   <p class="ssub">You've probably heard the term but never needed to think about it. This page explains AI factories in plain language — what they are, why they matter, and why they're coming to Louisiana.</p>
 
-  <div class="sn">01 — THE SHORT ANSWER</div>
-  <h2 class="sh">An AI factory is a specialized facility built to run artificial intelligence.</h2>
-  <p class="bd">A AI factory is a specialized facility filled with <span class="ha">powerful computers called servers</span> that run 24/7, doing work that keeps the modern world running.</p>
-  <p class="bd">Every time you open your phone, check email, watch Netflix, use GPS, ask an AI a question, or pay with a credit card — your request travels to a server in a AI factory, gets processed, and comes back in milliseconds.</p>
-  <div class="ana"><p><strong>Think of it like a power plant, but for information.</strong> A power plant takes fuel and turns it into electricity that flows to every home. A AI factory takes electricity and turns it into computing power that flows to every device. Without AI factories, there is no internet, no AI, no digital economy.</p></div>
+  <div class="sn">01 — CPU vs GPU: THE FUNDAMENTAL DIFFERENCE</div>
+  <h2 class="sh">Why old data centers can't do what we do.</h2>
+  <p class="bd">Traditional data centers were built around <span class="hr">CPUs</span> — general-purpose processors designed for the internet era. Web pages, email, databases. A single CPU puts out roughly <strong style="color:var(--amber)">15 kilowatts</strong> and handles tasks one at a time. That worked fine for 30 years.</p>
+  <p class="bd">AI doesn't work that way. AI requires <span class="hl">thousands of calculations running simultaneously</span> — training models, processing images, running inference. That's what <span class="hl">GPUs</span> were built for. A single GPU rack pushes <strong style="color:var(--green)">40-80+ kilowatts</strong> with thousands of cores working in parallel. It's not an upgrade — it's a completely different machine.</p>
 
-  <div class="sn" style="margin-top:36px">02 — WHAT'S INSIDE</div>
+  <div style="margin-top:28px;text-align:center">
+    <img src="cpu-vs-gpu.jpg" alt="CPU vs GPU architecture comparison — sequential processing vs massively parallel processing" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+  </div>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Old Data Centers — CPU Era</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Designed for the internet. Not for AI.</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Sequential processing. One task at a time. ~15 kW per rack. Air cooled. Built for web traffic, email, databases. <strong style="color:var(--amber)">Like putting a band-aid on a bullet wound</strong> — you can add GPUs to an old data center, but the power, cooling, and networking weren't designed for it. You're fighting the building.</p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">ADC AI Factories — GPU Era</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Purpose-built for AI from day one.</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Massively parallel processing. Thousands of cores working simultaneously. 40-80+ kW per rack. Immersion cooled. <strong style="color:var(--green)">Top-of-the-line components at the beginning of their availability</strong> — NVIDIA's latest silicon, EC-110 immersion fluid, behind-the-meter power. Every piece designed to work together. No retrofits. No compromises.</p>
+    </div>
+  </div>
+  <div class="ana" style="margin-top:16px"><p><strong>The bottom line:</strong> Old data centers are CPUs with some GPUs bolted on. An ADC AI factory is GPU-native from the ground up — the power architecture, the cooling system, the networking, the facility itself. That's the difference between retrofitting and purpose-building.</p></div>
+
+  <div class="sn" style="margin-top:36px">02 — THE SHORT ANSWER</div>
+  <h2 class="sh">An AI factory is a specialized facility built to run artificial intelligence.</h2>
+  <p class="bd">An AI factory is a specialized facility filled with <span class="ha">powerful computers called servers</span> that run 24/7, doing work that keeps the modern world running.</p>
+  <p class="bd">Every time you open your phone, check email, watch Netflix, use GPS, ask an AI a question, or pay with a credit card — your request travels to a server in an AI factory, gets processed, and comes back in milliseconds.</p>
+  <div class="ana"><p><strong>Think of it like a power plant, but for information.</strong> A power plant takes fuel and turns it into electricity that flows to every home. An AI factory takes electricity and turns it into computing power that flows to every device. Without AI factories, there is no internet, no AI, no digital economy.</p></div>
+
+  <div class="sn" style="margin-top:36px">03 — WHAT'S INSIDE</div>
   <h2 class="sh">Four things every AI factory needs.</h2>
   <div class="igrid">
     <div class="iitem"><div class="iemoji">&#128421;</div><h4>Servers</h4><p>The computers. Rows of them, stacked in racks, doing the actual work.</p></div>
@@ -1202,7 +1446,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="iitem"><div class="iemoji">&#128267;</div><h4>Backup Power</h4><p>UPS batteries and generators. If the grid goes down, the AI factory keeps running.</p></div>
   </div>
 
-  <div class="sn" style="margin-top:36px">03 — WHY THEY MATTER</div>
+  <div class="sn" style="margin-top:36px">04 — WHY THEY MATTER</div>
   <h2 class="sh">Everything digital runs on AI factories.</h2>
   <div class="igrid" style="grid-template-columns:repeat(4,1fr)">
     <div class="iitem"><div class="iemoji">&#128241;</div><h4>Your Phone</h4><p>iCloud, Google, apps, maps</p></div>
@@ -1215,18 +1459,18 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="iitem"><div class="iemoji">&#127963;</div><h4>Government</h4><p>Military, Social Security, 911</p></div>
   </div>
 
-  <div class="sn" style="margin-top:36px">04 — THE HEAT PROBLEM</div>
+  <div class="sn" style="margin-top:36px">05 — THE HEAT PROBLEM</div>
   <h2 class="sh">The #1 problem is heat.</h2>
   <p class="bd">AI chips generate <span class="hr">extreme heat</span> — as much as a kitchen toaster per chip. Traditional AI factories use air conditioning, but AI chips are now so powerful that <span class="hr">air can't remove heat fast enough</span>. That's where immersion cooling comes in — and that's what the ADC 3K pod uses.</p>
 
-  <div class="sn" style="margin-top:36px">05 — OLD WAY vs. NEW WAY</div>
+  <div class="sn" style="margin-top:36px">06 — OLD WAY vs. NEW WAY</div>
   <h2 class="sh">The AI factory industry is changing.</h2>
   <div class="vs">
     <div class="vc old"><div class="vtag ot">Traditional</div><h3>The Old Way</h3><p>Giant warehouse-sized building. Custom every time. 18-36 months to build. $500M+. Air cooled. A few major markets only.</p></div>
     <div class="vc nw"><div class="vtag nt">ADC 3K Pod</div><h3>The New Way</h3><p>Factory-built inside a shipping container. Manufactured in Lafayette. Immersion cooled. Truck-shippable. Concrete pad + power + fiber = operational in weeks.</p></div>
   </div>
 
-  <div class="sn" style="margin-top:36px">06 — WHAT DOES "EDGE" MEAN</div>
+  <div class="sn" style="margin-top:36px">07 — WHAT DOES "EDGE" MEAN</div>
   <h2 class="sh">Edge = closer to where the work happens.</h2>
   <p class="bd">Most AI factories are concentrated in a handful of places. Your data travels 1,000+ miles to get processed. <span class="hl">Edge AI factories</span> bring computing power closer — right to the factory, the oil field, the city.</p>
   <div class="ana"><p><strong>Think of it like electricity.</strong> Power plants generate electricity, but you need substations near your neighborhood to deliver it. Edge AI factories are the substations of the digital world — bringing computing power closer to where it's needed.</p></div>
@@ -1310,6 +1554,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="card"><div class="ctag g">SITE ACQUISITION</div><h3>Pipeline Site Inquiries</h3><p>Own or represent property in Louisiana? Key criteria: nat gas access, Zone X flood zone, 3-phase power, industrial zoning. We want to hear from you.</p></div>
     </div>
   </div>
+  <div style="display:flex;align-items:center;gap:20px;margin-top:48px;padding-bottom:32px">
+    <img src="adc-logo.jpg" alt="ADC 3K logo" style="height:48px;border-radius:6px">
+    <img src="made-in-usa.png" alt="Made in USA" style="height:48px">
+  </div>
 </div>
 </div>
 
@@ -1327,7 +1575,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </footer>
 
 <script>
-const pages=['home','ecosystem','technology','louisiana','projects','willowglen','marlie','adc3k','trappeys','klft','skydio','learn','connect'];
+const pages=['home','ecosystem','technology','security','whyadc','louisiana','projects','willowglen','marlie','adc3k','trappeys','klft','skydio','learn','connect'];
 const deckPages=['marlie','klft','skydio','trappeys','willowglen'];
 function showPage(id){
   pages.forEach(p=>{
