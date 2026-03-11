@@ -1,39 +1,47 @@
 # Mission Control — Project State
-Last updated: 2026-03-10 (Security audit + mobile fix session)
+Last updated: 2026-03-10 (Website content + founder branding session)
 
 ---
 
 ## What Was Done This Session
 
-### Full Stack Security Audit
-- Ran 3 parallel audit agents: backend (FastAPI/agents/skills), frontend (adc3k.com/web), git secrets scan
-- Found 4 CRITICAL, 8 HIGH, 8 MEDIUM, 3 LOW issues across the full stack
-- No real API keys or secrets found in git history (clean)
+### ADC3K.com Home Page Overhaul
+- Removed "Three Platforms One Integrated System" section (duplicated Ecosystem)
+- Moved The Thesis section between hero and pods-night photo to break up consecutive images
+- Tightened hero section spacing to prevent text cutoff at bottom of viewport
+- Doubled ADC logo + Made in USA badges to 96px on home page
+- Changed "data centers" to "AI factories" in Thesis copy
 
-### API Key Authentication (CRITICAL fix #1 — DONE)
-- Added `MC_API_KEY` env var auth middleware to FastAPI (main.py)
-- 17 endpoints protected with `Depends(require_api_key)`
-- Public paths exempt: `/`, `/mobile`, `/docs`, `/openapi.json`
-- Auth accepts `X-API-Key` header or `?api_key=` query param (for EventSource/SSE)
-- Dev mode: auth disabled when `MC_API_KEY` not set (backward compatible, tests pass)
-- 160 tests still green
+### Why ADC Tab — Complete Rebuild
+- Section 01: FOUNDER — 25-year deepwater robotics career, 3,000+ meters Gulf of America, 760-foot sat dive, West Africa ops (Pacific Wizard 2013-2018), customer testimonials
+- Section 02: CROSS-DOMAIN EXPERTISE — 6 credential cards (deepwater, aviation, motorsports, construction, software, safety)
+- Section 03: OPERATIONS LEADERSHIP — Mission Control callout (built in-house proof), 6-layer IN-HOUSE stack
+- ROV photo above Section 02, winning photo at bottom
+- "Data center" language replaced with "AI factory builder"
 
-### CORS Lockdown (HIGH fix #5 — DONE)
-- Changed `allow_origins=["*"]` to `MC_CORS_ORIGINS` env var
-- Defaults to `http://localhost:8000,http://127.0.0.1:8000`
-- Headers restricted to `X-API-Key` and `Content-Type`
+### Learning Center — New Section 01
+- CPU vs GPU: THE FUNDAMENTAL DIFFERENCE — image, two-column comparison, old-vs-new framing
+- Renumbered remaining sections 02-07
 
-### Dashboard Auth Wiring
-- Updated `web/mobile.html` with `authHeaders()` helper
-- API key loaded from `?key=` URL param or `localStorage`
-- All 7 fetch calls + EventSource updated to pass credentials
+### Technology Tab
+- Added immersion cooling image above 3-Layer Power Architecture
 
-### Mobile Swipe Fix (deployed live)
-- Added touch swipe + wheel scroll to `willow-glen-deck.html` (was stuck on slide 1)
-- Added same fix to `klft-deck.html` (also missing touch/wheel)
-- Trappeys + Skydio already had touch support (confirmed)
-- Marlie deck is long-scroll (no fix needed)
-- Deployed to adc3k.com
+### Willow Glen Deck Updates
+- Slide 9: SVG coverage map replaced with drone-grid.jpg photo
+- Slide 1: Removed Score 94/Tier A stat
+- ADC logo + Made in USA badges on slides 1 and 14 only (position:absolute, 48px, bottom:56px for taskbar clearance)
+
+### Images Downloaded from Notion
+- `drone-grid.jpg` — drone near electrical grid
+- `immersion-cooling.jpg` — GRC single-phase immersion cooling
+- `cpu-vs-gpu.jpg` — CPU vs GPU architecture comparison
+- `rov.jpg` — ROV in deepwater operations
+- `winning.jpg` — Scott in winner's circle
+
+### Founder Profile Saved
+- Downloaded Scott's resume from Notion, extracted key career data
+- Created `memory/scott_tomsu.md` — full biography, career highlights, credentials
+- Updated MEMORY.md with founder details
 
 ---
 
@@ -41,13 +49,13 @@ Last updated: 2026-03-10 (Security audit + mobile fix session)
 
 | Project | Status | Next Action |
 |---------|--------|-------------|
-| **Willow Glen** | 14-slide deck live. Mobile swipe fixed. Score 94 Tier A. | Contact CBRE/Bryce French. NVIDIA Inception. WGT partnership proposal. |
+| **Willow Glen** | 14-slide deck live. Badges on slides 1+14. Mobile swipe working. | Contact CBRE/Bryce French. NVIDIA Inception. WGT partnership proposal. |
 | **MARLIE I** | Engineering complete. Investor deck live. | Sign LOI/lease. LUS power capacity. LED Act 730 pre-app. |
 | **ADC 3K** | 12 open investor items. Financial model needs fix. | Fix 5.5% tax rate, CapEx recon, 3-scenario model. |
 | **Trappeys** | Deck built (18 slides). Live at adc3k.com. | UL Lafayette first contact. |
 | **KLFT 1.1** | Skydio deck live. Mobile swipe fixed. | Schedule Airport Authority meeting. |
-| **ADC3K.com** | LIVE. 5 project decks. All mobile-swipeable. | Formspree ID (replace YOUR_FORM_ID). Security headers in vercel.json. |
-| **Mission Control** | Auth middleware added. 160 tests green. | Set MC_API_KEY in .env. Fix remaining security items (browser eval, rate limiting). |
+| **ADC3K.com** | LIVE. Why ADC rebuilt. Learning Center expanded. Home page tightened. | Formspree ID. Security headers. Remaining "data center" sweep (Ecosystem, Louisiana, Security tabs). |
+| **Mission Control** | Auth middleware added. 160 tests green. | Set MC_API_KEY in .env. Fix remaining security items. |
 | **Pipeline Sites** | 16 pipeline sites + 15 river sites scored. | Sabine corridor pending. Second river pass. |
 | **Mission Control HD** | Live. Two deferred blockers. | Stripe webhook + Supabase auth redirect. |
 | **Ground Zero** | EP001 private. EP002 pending. | PEXELS_API_KEY + run EP002. |
@@ -56,7 +64,7 @@ Last updated: 2026-03-10 (Security audit + mobile fix session)
 
 ## Security Audit Results (2026-03-10)
 
-### Fixed This Session
+### Fixed
 - [x] #1 CRITICAL: No auth on FastAPI endpoints — MC_API_KEY middleware added
 - [x] #5 HIGH: Wildcard CORS — locked to MC_CORS_ORIGINS
 
@@ -72,9 +80,6 @@ Last updated: 2026-03-10 (Security audit + mobile fix session)
 - [ ] #11 HIGH: Unsafe iframes — add sandbox attribute
 - [ ] #12 HIGH: DOM XSS in site-intel.html — safe event listeners
 - [ ] #13-#20 MEDIUM: Docker config, HTTPS, job TTL, audit logging, .gitignore gaps, Formspree
-
-### Git Secrets Scan — CLEAN
-No real API keys, tokens, or passwords in git history. .gitignore gaps identified (*.pem, *.key, .env.*).
 
 ---
 
@@ -133,6 +138,7 @@ KLFT Hub:         30.21256 N, 91.99069 W  — Lafayette Regional Airport
 - `adc3k-deploy/skydio-deck.html` — Skydio/KLFT pitch deck
 - `main.py` — FastAPI server with auth middleware
 - `web/mobile.html` — Mission Control mobile dashboard (auth-enabled)
+- `memory/scott_tomsu.md` — Scott Tomsu founder biography + career data
 
 ## Deployment
 - Deploy site: `cd adc3k-deploy && npx vercel --prod --yes`
@@ -140,8 +146,9 @@ KLFT Hub:         30.21256 N, 91.99069 W  — Lafayette Regional Airport
 - Cloudflare: gofast@stfumotorcycles.com
 
 ## Next Session — Starting Points
-1. **Security fixes** — browser eval restriction, vercel.json security headers, .gitignore gaps
-2. **Willow Glen photos** — user mentioned adding more images later
-3. **Second river scout pass** — updated keywords not yet run
-4. **CBRE outreach draft** — warehouse lease inquiry email
-5. **Formspree** — wire contact form
+1. **"Data center" sweep** — remaining instances in Ecosystem, Louisiana, Security tabs, alt tags
+2. **Security fixes** — browser eval restriction, vercel.json security headers, .gitignore gaps
+3. **Formspree** — wire contact form
+4. **Home page hero** — verify text no longer cut off on various screen sizes; may need further mobile tweaks
+5. **Willow Glen photos** — user mentioned adding more images later
+6. **CBRE outreach draft** — warehouse lease inquiry email
