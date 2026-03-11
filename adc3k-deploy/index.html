@@ -59,15 +59,15 @@ p.bd{font-size:15px;line-height:1.8;margin-bottom:14px}
 .sv:hover{transform:translateY(-2px)}.sv.g{border-top-color:var(--green)}
 .svv{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--text-white)}
 .svl{font-size:10px;color:var(--text-dim);margin-top:4px}
-#hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('three-pic.jpg') center center/cover no-repeat;padding-bottom:40px}
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('three-pic.jpg') center center/cover no-repeat}
 #hero::before{content:'';position:absolute;inset:0;background:rgba(6,10,16,0.72);z-index:0}
-.hi{position:relative;z-index:2;padding:0 40px}
+.hi{position:relative;z-index:2;padding:0 40px 32px}
 .hey{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;animation:fu 0.8s ease 0.3s both}
 .htitle{font-size:88px;font-weight:700;color:var(--text-white);line-height:0.95;margin-bottom:8px;animation:fu 0.8s ease 0.5s both}
 .htitle .k3{color:var(--accent)}
-.hclass{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:3px;margin-bottom:28px;animation:fu 0.8s ease 0.7s both}
-.hdesc{font-size:17px;color:var(--text);max-width:620px;margin:0 auto 40px;line-height:1.7;animation:fu 0.8s ease 0.9s both}
-.hstats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;animation:fu 0.8s ease 1.1s both}
+.hclass{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:3px;margin-bottom:20px;animation:fu 0.8s ease 0.7s both}
+.hdesc{font-size:17px;color:var(--text);max-width:620px;margin:0 auto 24px;line-height:1.7;animation:fu 0.8s ease 0.9s both}
+.hstats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:24px;animation:fu 0.8s ease 1.1s both}
 .hsv{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:700;color:var(--text-white)}
 .hsv .u{font-size:14px;color:var(--accent);font-weight:500}
 .hsl{font-size:10px;color:var(--text-dim);margin-top:2px}
@@ -358,9 +358,21 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </section>
 
 
+<!-- THE THESIS — text break between hero and pods photo -->
+<div class="pad" style="padding-top:60px;padding-bottom:48px">
+  <div class="eyebrow green reveal">The Thesis</div>
+  <h2 class="sh reveal">The window is open. It won't stay open.</h2>
+  <p class="bd reveal">AI compute demand is doubling every 6 months. Grid interconnection queues in Virginia and Texas are <strong style="color:var(--amber)">4+ years</strong>. Gas interconnection requests for AI factories jumped <strong style="color:var(--text-bright)">160% year-over-year</strong>. The industry is moving to on-site natural gas generation — and nobody is closer to the source than us.</p>
+  <div class="g3" style="margin-top:24px">
+    <div class="card reveal" style="border-top:3px solid var(--green)"><div class="ctag g">POWER ADVANTAGE</div><h3>3-5 cents/kWh</h3><p>Behind-the-meter nat gas generation at Henry Hub pricing. Virginia pays 10-12 cents. Texas pays 8 cents with spike risk. California pays 27 cents. This gap widens every year.</p></div>
+    <div class="card reveal d1" style="border-top:3px solid var(--red)"><div class="ctag" style="color:var(--red)">MARKET GAP</div><h3>First Mover</h3><p>Zero regional AI compute facilities between Houston and Jacksonville. The entire Gulf Coast — oil &amp; gas, petrochemical, defense, agriculture, ports — is sending data to Virginia. That's ending.</p></div>
+    <div class="card reveal d2" style="border-top:3px solid var(--amber)"><div class="ctag a">INCENTIVES</div><h3>Louisiana Wants This</h3><p>LED Act 730 digital infrastructure credits. Parish-level PILOT tax agreements. IRA energy credits. SBA financing programs. The state is actively funding this buildout.</p></div>
+  </div>
+</div>
+
 <!-- HERO IMAGE — pods at night -->
 <div style="width:100%;overflow:hidden;line-height:0;position:relative;margin-bottom:16px">
-  <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:320px;object-fit:cover;display:block;opacity:0.95">
+  <img src="pods-night.jpg" alt="ADC 3K pod array — nighttime deployment" style="width:100%;max-height:560px;object-fit:cover;display:block;opacity:0.95">
 </div>
 
 <div class="pad" style="padding-top:60px;padding-bottom:80px">
@@ -392,17 +404,6 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <!-- AI COMPUTE GROWTH VISUAL -->
   <div style="margin-bottom:60px;text-align:center">
     <img src="henry-hub-1.jpg" alt="The Exponential Growth of AI Compute — model parameter growth from 2017 to 2026+" style="width:100%;max-width:520px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
-  </div>
-
-  <div style="margin-top:60px">
-    <div class="eyebrow green reveal">The Thesis</div>
-    <h2 class="sh reveal">The window is open. It won't stay open.</h2>
-    <p class="bd reveal">AI compute demand is doubling every 6 months. Grid interconnection queues in Virginia and Texas are <strong style="color:var(--amber)">4+ years</strong>. Gas interconnection requests for data centers jumped <strong style="color:var(--text-bright)">160% year-over-year</strong>. The industry is moving to on-site natural gas generation — and nobody is closer to the source than us.</p>
-    <div class="g3" style="margin-top:24px">
-      <div class="card reveal" style="border-top:3px solid var(--green)"><div class="ctag g">POWER ADVANTAGE</div><h3>3-5 cents/kWh</h3><p>Behind-the-meter nat gas generation at Henry Hub pricing. Virginia pays 10-12 cents. Texas pays 8 cents with spike risk. California pays 27 cents. This gap widens every year.</p></div>
-      <div class="card reveal d1" style="border-top:3px solid var(--red)"><div class="ctag" style="color:var(--red)">MARKET GAP</div><h3>First Mover</h3><p>Zero regional AI compute facilities between Houston and Jacksonville. The entire Gulf Coast — oil &amp; gas, petrochemical, defense, agriculture, ports — is sending data to Virginia. That's ending.</p></div>
-      <div class="card reveal d2" style="border-top:3px solid var(--amber)"><div class="ctag a">INCENTIVES</div><h3>Louisiana Wants This</h3><p>LED Act 730 digital infrastructure credits. Parish-level PILOT tax agreements. IRA energy credits. SBA financing programs. The state is actively funding this buildout.</p></div>
-    </div>
   </div>
 
   <!-- NVIDIA GPU PLATFORM -->
