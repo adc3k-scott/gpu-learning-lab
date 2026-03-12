@@ -211,3 +211,8 @@ credentials.json
 youtube_token.json
 client_secret_*.json
 output/
+
+# Skydio drone exports
+*.key
+*.url
+Skydio_extracted/

@@ -78,6 +78,8 @@ async def require_api_key(
 # ---------------------------------------------------------------------------
 from core.config import settings
 from core.event_bus import Event, EventBus
+from core.rate_limit import RateLimitMiddleware
+from core.sanitize import mask_secrets, safe_error
 from core.state_store import StateStore
 from skills.registry import registry
 from agents.orchestrator import OrchestratorAgent
@@ -173,6 +175,7 @@ app.add_middleware(
     allow_methods=["POST", "GET"],
     allow_headers=["X-API-Key", "Content-Type"],
 )
+app.add_middleware(RateLimitMiddleware)
 
 
 # ---------------------------------------------------------------------------
@@ -267,7 +270,7 @@ def chat(req: ChatRequest):
             messages=req.messages,
         )
     except Exception as exc:
-        raise HTTPException(status_code=502, detail=str(exc))
+        raise HTTPException(status_code=502, detail=safe_error(exc))
 
     content = response.content[0].text if response.content else ""
     return {
@@ -336,7 +339,7 @@ async def chat_stream(req: ChatRequest):
                 async for text in stream.text_stream:
                     yield f"data: {json.dumps({'delta': text})}\n\n"
         except Exception as exc:
-            yield f"data: {json.dumps({'error': str(exc)})}\n\n"
+            yield f"data: {json.dumps({'error': safe_error(exc)})}\n\n"
             return
 
         # If a task was submitted, wait up to 15s for it to finish via waiter queue
@@ -479,6 +482,32 @@ async def get_infra():
 async def trigger_infra_check():
     await bus.publish(Event(event_type="infra.check", payload={}, source="api"))
     return {"status": "check triggered"}
+
+
+@app.get("/infra/dlq", dependencies=[Depends(require_api_key)])
+async def get_dead_letters():
+    """Return dead-lettered events from the event bus."""
+    return {
+        "count": bus.dead_letter_count,
+        "entries": [
+            {
+                "event_type": dl.event.event_type,
+                "event_id": dl.event.event_id,
+                "handler": dl.handler_name,
+                "error": dl.error,
+                "attempts": dl.attempts,
+                "timestamp": dl.timestamp,
+            }
+            for dl in bus.dead_letters
+        ],
+    }
+
+
+@app.delete("/infra/dlq", dependencies=[Depends(require_api_key)])
+async def clear_dead_letters():
+    """Clear the dead letter queue."""
+    cleared = bus.clear_dead_letters()
+    return {"cleared": cleared}
 
 
 # ---------------------------------------------------------------------------
@@ -644,7 +673,7 @@ async def upload_file(file: UploadFile = File(...)):
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail=safe_error(exc))
 
     # Auto-extract zips
     is_zip = filename.lower().endswith(".zip") or (
@@ -658,7 +687,7 @@ async def upload_file(file: UploadFile = File(...)):
             extracted = _safe_extract_zip(dest, WORKSPACE)
         except ValueError as exc:
             dest.unlink(missing_ok=True)
-            raise HTTPException(status_code=413, detail=str(exc))
+            raise HTTPException(status_code=413, detail=safe_error(exc))
         except Exception as exc:
             dest.unlink(missing_ok=True)
             raise HTTPException(status_code=500, detail=f"Extraction failed: {exc}")
@@ -720,4 +749,4 @@ async def notion_tree():
             "text": "\n".join(lines),
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=safe_error(e))

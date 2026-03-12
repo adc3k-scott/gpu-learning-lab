@@ -16,10 +16,11 @@ from __future__ import annotations
 import asyncio
 import fnmatch
 import logging
-from collections import defaultdict
+import time
+from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Callable, Awaitable
+from typing import Any, Callable, Awaitable
 from uuid import uuid4
 
 logger = logging.getLogger(__name__)
@@ -40,11 +41,30 @@ class Event:
 Handler = Callable[[Event], Awaitable[None]]
 
 
+@dataclass
+class DeadLetter:
+    """A failed event + context stored in the dead letter queue."""
+    event: Event
+    handler_name: str
+    error: str
+    timestamp: float = field(default_factory=time.time)
+    attempts: int = 1
+
+
 class EventBus:
     """
     Pub/sub event bus.  Automatically uses Redis Streams when available,
     falls back to in-process asyncio queues otherwise.
+
+    Dead Letter Queue:
+      - Failed handler invocations are stored in a bounded deque (max 500)
+      - Access via bus.dead_letters (list) and bus.dead_letter_count (int)
+      - Handlers get up to 2 retry attempts with 0.5s backoff before DLQ
     """
+
+    _MAX_DLQ_SIZE = 500
+    _MAX_HANDLER_RETRIES = 2
+    _RETRY_BACKOFF = 0.5  # seconds
 
     def __init__(self, redis_url: str | None = None):
         self._redis_url = redis_url
@@ -53,6 +73,7 @@ class EventBus:
         self._queue: asyncio.Queue[Event] = asyncio.Queue()
         self._mode = "memory"
         self._running = False
+        self._dlq: deque[DeadLetter] = deque(maxlen=self._MAX_DLQ_SIZE)
 
     # ------------------------------------------------------------------
     # Connection
@@ -141,15 +162,56 @@ class EventBus:
         for pattern, handlers in self._handlers.items():
             if fnmatch.fnmatch(event.event_type, pattern):
                 for handler in handlers:
-                    try:
-                        await handler(event)
-                    except Exception as exc:
-                        logger.exception(
-                            "Handler %s failed for event %s: %s",
-                            handler.__name__,
-                            event.event_type,
-                            exc,
-                        )
+                    await self._invoke_handler(handler, event)
+
+    async def _invoke_handler(self, handler: Handler, event: Event) -> None:
+        """Invoke a handler with retry logic; dead-letter on exhaustion."""
+        last_exc: Exception | None = None
+        for attempt in range(1, self._MAX_HANDLER_RETRIES + 1):
+            try:
+                await handler(event)
+                return  # success
+            except Exception as exc:
+                last_exc = exc
+                logger.warning(
+                    "Handler %s failed (attempt %d/%d) for event %s: %s",
+                    handler.__name__, attempt, self._MAX_HANDLER_RETRIES,
+                    event.event_type, exc,
+                )
+                if attempt < self._MAX_HANDLER_RETRIES:
+                    await asyncio.sleep(self._RETRY_BACKOFF * attempt)
+
+        # All retries exhausted — send to dead letter queue
+        dl = DeadLetter(
+            event=event,
+            handler_name=handler.__name__,
+            error=str(last_exc),
+            attempts=self._MAX_HANDLER_RETRIES,
+        )
+        self._dlq.append(dl)
+        logger.error(
+            "Handler %s dead-lettered for event %s after %d attempts: %s",
+            handler.__name__, event.event_type, self._MAX_HANDLER_RETRIES, last_exc,
+        )
+
+    # ------------------------------------------------------------------
+    # Dead Letter Queue API
+    # ------------------------------------------------------------------
+
+    @property
+    def dead_letters(self) -> list[DeadLetter]:
+        """Return all dead-lettered events (most recent last)."""
+        return list(self._dlq)
+
+    @property
+    def dead_letter_count(self) -> int:
+        return len(self._dlq)
+
+    def clear_dead_letters(self) -> int:
+        """Clear the DLQ. Returns the number of entries cleared."""
+        count = len(self._dlq)
+        self._dlq.clear()
+        return count
 
     @property
     def mode(self) -> str:

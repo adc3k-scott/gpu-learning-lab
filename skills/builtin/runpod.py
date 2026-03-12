@@ -23,6 +23,7 @@ from typing import Any
 
 import httpx
 
+from core.sanitize import safe_error
 from skills.base import BaseSkill, SkillContext, SkillResult
 
 logger = logging.getLogger(__name__)
@@ -64,7 +65,7 @@ class RunPodSkill(BaseSkill):
         try:
             data = await _graphql(query, variables, api_key)
         except Exception as exc:
-            return SkillResult.fail(str(exc))
+            return SkillResult.fail(safe_error(exc))
 
         return SkillResult.ok(output=data)
 
