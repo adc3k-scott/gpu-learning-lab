@@ -235,6 +235,11 @@ class BrowserSkill(BaseSkill):
             return {"found": False, "selectors_tried": sels}
 
         if action == "eval":
+            if not os.getenv("BROWSER_ALLOW_EVAL"):
+                raise ValueError(
+                    "eval action is disabled by default (security risk). "
+                    "Set BROWSER_ALLOW_EVAL=1 to enable."
+                )
             expr = params.get("expression") or (_ for _ in ()).throw(ValueError("eval requires expression"))
             return {"result": await page.evaluate(expr)}
 

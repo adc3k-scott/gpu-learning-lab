@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Iberia Pod Factory — Construction Timeline</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e14;color:#c8cdd3;font-family:'Segoe UI',system-ui,sans-serif}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #1a2030;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.toolbar h1{font-size:15px;font-weight:600;letter-spacing:1px;color:#f5a623}
+.toolbar .sub{font-size:11px;color:#667;font-family:'Courier New',monospace}
+
+.main{padding:80px 32px 40px}
+
+/* Timeline header */
+.tl-header{display:flex;align-items:flex-end;margin-bottom:4px;padding-left:280px}
+.tl-month{width:80px;text-align:center;font-size:10px;font-weight:600;color:#667;letter-spacing:0.5px;border-left:1px solid #1a2030;padding:4px 0}
+.tl-month.today{color:#f5a623;border-left-color:#f5a623}
+
+/* Week grid overlay */
+.tl-weeks{display:flex;padding-left:280px;margin-bottom:2px}
+.tl-week{width:20px;height:8px;border-left:1px solid rgba(26,32,48,0.5);font-size:7px;color:#333;text-align:center}
+
+/* Phase groups */
+.phase-group{margin-bottom:24px}
+.phase-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;margin-bottom:2px;border-radius:4px}
+
+/* Gantt rows */
+.gantt-row{display:flex;align-items:center;height:36px;border-bottom:1px solid #111820}
+.gantt-label{width:280px;min-width:280px;padding:0 16px;font-size:12px;display:flex;align-items:center;gap:8px}
+.gantt-label .gl-name{color:#e8ecf0}
+.gantt-label .gl-dur{font-size:10px;color:#667;font-family:'Courier New',monospace}
+.gantt-track{flex:1;position:relative;height:100%}
+
+/* Gantt bars */
+.gantt-bar{position:absolute;top:8px;height:20px;border-radius:3px;display:flex;align-items:center;padding:0 8px;font-size:9px;font-weight:600;letter-spacing:0.3px;cursor:pointer;transition:all 0.2s;overflow:hidden;white-space:nowrap}
+.gantt-bar:hover{filter:brightness(1.3);transform:scaleY(1.2)}
+
+/* Bar colors by phase */
+.bar-precon{background:rgba(168,85,247,0.3);border:1px solid rgba(168,85,247,0.5);color:#a855f7}
+.bar-found{background:rgba(239,68,68,0.3);border:1px solid rgba(239,68,68,0.5);color:#ef4444}
+.bar-struct{background:rgba(245,166,35,0.3);border:1px solid rgba(245,166,35,0.5);color:#f5a623}
+.bar-mep{background:rgba(59,154,255,0.3);border:1px solid rgba(59,154,255,0.5);color:#3b9eff}
+.bar-power{background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#ef4444}
+.bar-solar{background:rgba(251,191,36,0.3);border:1px solid rgba(251,191,36,0.5);color:#fbbf24}
+.bar-robot{background:rgba(0,232,122,0.3);border:1px solid rgba(0,232,122,0.5);color:#00e87a}
+.bar-ai{background:rgba(6,182,212,0.3);border:1px solid rgba(6,182,212,0.5);color:#06b6d4}
+.bar-test{background:rgba(251,191,36,0.25);border:1px solid rgba(251,191,36,0.4);color:#fbbf24}
+.bar-omni{background:rgba(118,255,3,0.2);border:1px solid rgba(118,255,3,0.4);color:#76ff03}
+
+/* Milestone diamond */
+.milestone{position:absolute;top:10px;width:16px;height:16px;background:#f5a623;transform:rotate(45deg);border-radius:2px;cursor:pointer;z-index:2}
+.milestone:hover{transform:rotate(45deg) scale(1.3);box-shadow:0 0 12px rgba(245,166,35,0.5)}
+.milestone-label{position:absolute;top:4px;left:24px;font-size:9px;color:#f5a623;white-space:nowrap;font-weight:600;z-index:2}
+
+/* Dependency arrows */
+.dep-line{position:absolute;z-index:1;pointer-events:none}
+
+/* Summary stats */
+.summary{display:flex;gap:0;border:1px solid #1a2030;border-radius:6px;overflow:hidden;margin-bottom:24px}
+.sum-box{flex:1;padding:16px 20px;text-align:center;border-right:1px solid #1a2030;background:#0d1117}
+.sum-box:last-child{border-right:none}
+.sum-box .sb-label{font-size:10px;letter-spacing:1.5px;color:#667;text-transform:uppercase;margin-bottom:4px}
+.sum-box .sb-val{font-size:22px;font-weight:700;font-family:'Courier New',monospace}
+.sum-box .sb-val.green{color:#00e87a}
+.sum-box .sb-val.amber{color:#f5a623}
+.sum-box .sb-val.blue{color:#3b9eff}
+.sum-box .sb-val.red{color:#ef4444}
+
+/* Critical path highlight */
+.critical .gantt-bar{box-shadow:0 0 8px rgba(239,68,68,0.2)}
+.critical .gl-name{color:#ef4444}
+
+/* Notes section */
+.notes{margin-top:32px;background:#0d1117;border:1px solid #1a2030;border-radius:6px;padding:20px}
+.notes h3{font-size:12px;letter-spacing:1.5px;color:#667;text-transform:uppercase;margin-bottom:12px}
+.notes ul{list-style:none;padding:0}
+.notes li{font-size:12px;color:#8b95a0;padding:6px 0;border-bottom:1px solid #111820;display:flex;gap:8px}
+.notes li::before{content:'';width:6px;height:6px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.notes li.crit::before{background:#ef4444}
+.notes li.warn::before{background:#f5a623}
+.notes li.info::before{background:#3b9eff}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <h1>CONSTRUCTION TIMELINE — GANTT CHART</h1>
+    <div class="sub">NEW IBERIA POD FACTORY &nbsp;|&nbsp; 14 MONTHS &nbsp;|&nbsp; 40 TASKS &nbsp;|&nbsp; CRITICAL PATH SHOWN IN RED</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- SUMMARY STATS -->
+<div class="summary">
+  <div class="sum-box"><div class="sb-label">Total Duration</div><div class="sb-val amber">14 Months</div></div>
+  <div class="sum-box"><div class="sb-label">Start Date</div><div class="sb-val">Q2 2026</div></div>
+  <div class="sum-box"><div class="sb-label">First Pod Ships</div><div class="sb-val green">Q3 2027</div></div>
+  <div class="sum-box"><div class="sb-label">Total Budget</div><div class="sb-val blue">$7.9–9.3M</div></div>
+  <div class="sum-box"><div class="sb-label">Critical Path</div><div class="sb-val red">Foundation → Steel → Robot Install</div></div>
+  <div class="sum-box"><div class="sb-label">Float Available</div><div class="sb-val">3–4 Weeks</div></div>
+</div>
+
+<!-- MONTH HEADERS -->
+<div class="tl-header" id="monthHeader">
+  <div class="tl-month">APR 26</div>
+  <div class="tl-month">MAY</div>
+  <div class="tl-month">JUN</div>
+  <div class="tl-month">JUL</div>
+  <div class="tl-month">AUG</div>
+  <div class="tl-month">SEP</div>
+  <div class="tl-month">OCT</div>
+  <div class="tl-month">NOV</div>
+  <div class="tl-month">DEC</div>
+  <div class="tl-month">JAN 27</div>
+  <div class="tl-month">FEB</div>
+  <div class="tl-month">MAR</div>
+  <div class="tl-month">APR</div>
+  <div class="tl-month">MAY</div>
+  <div class="tl-month">JUN</div>
+</div>
+
+<!-- ===== PHASE 1: PRE-CONSTRUCTION ===== -->
+<div class="phase-group">
+  <div class="phase-title" style="background:rgba(168,85,247,0.08);color:#a855f7;border-left:3px solid #a855f7">PHASE 1 — PRE-CONSTRUCTION</div>
+
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Site Survey + Geotech</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:0px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Land Acquisition / Closing</span><span class="gl-dur">4 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:0px;width:80px">4 WK</div></div>
+  </div>
+  <div class="gantt-row critical">
+    <div class="gantt-label"><span class="gl-name">Architecture + Omniverse Design</span><span class="gl-dur">8 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:40px;width:160px">8 WK — OMNIVERSE DIGITAL TWIN</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">ITEP Filing (BEFORE groundbreaking)</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track">
+      <div class="gantt-bar bar-precon" style="left:80px;width:40px">2 WK</div>
+      <div class="milestone" style="left:80px"></div>
+      <div class="milestone-label" style="left:104px;top:2px">ITEP FILED</div>
+    </div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Building Permit</span><span class="gl-dur">6 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:120px;width:120px">6 WK — IBERIA PARISH</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Gas Pipeline Tap Permit</span><span class="gl-dur">6 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:120px;width:120px">6 WK — LA DNR</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Environmental (Air Permit)</span><span class="gl-dur">8 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-precon" style="left:120px;width:160px">8 WK — LDEQ</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Robot Orders Placed</span><span class="gl-dur">—</span></div>
+    <div class="gantt-track">
+      <div class="milestone" style="left:200px"></div>
+      <div class="milestone-label" style="left:224px;top:2px">ROBOT POs — 12-16 WK LEAD TIME</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHASE 2: FOUNDATION & STRUCTURE ===== -->
+<div class="phase-group">
+  <div class="phase-title" style="background:rgba(245,166,35,0.08);color:#f5a623;border-left:3px solid #f5a623">PHASE 2 — FOUNDATION & STRUCTURE (Critical Path)</div>
+
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Site Prep + Grading</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-found" style="left:240px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row critical">
+    <div class="gantt-label"><span class="gl-name">Foundation + Robot Footings</span><span class="gl-dur">4 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-found" style="left:280px;width:80px">4 WK — 8" SLAB + 5000 PSI FOOTINGS</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Underground Utilities</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-found" style="left:280px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row critical">
+    <div class="gantt-label"><span class="gl-name">Steel Erection (PEMB)</span><span class="gl-dur">6 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-struct" style="left:360px;width:120px">6 WK — NUCOR PEMB ERECTION</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Metal Roof + Wall Panels</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-struct" style="left:440px;width:60px">3 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Truck Docks + Overhead Doors</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-struct" style="left:480px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Overhead Crane Install</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-struct" style="left:480px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Building Dried In</span><span class="gl-dur">—</span></div>
+    <div class="gantt-track">
+      <div class="milestone" style="left:500px"></div>
+      <div class="milestone-label" style="left:524px;top:2px">BUILDING DRIED IN — INTERIOR BEGINS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHASE 3: MEP & POWER ===== -->
+<div class="phase-group">
+  <div class="phase-title" style="background:rgba(59,154,255,0.08);color:#3b9eff;border-left:3px solid #3b9eff">PHASE 3 — MECHANICAL, ELECTRICAL, POWER</div>
+
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Electrical Rough-In</span><span class="gl-dur">4 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-mep" style="left:500px;width:80px">4 WK — CONDUIT + WIRE PULL</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Plumbing + Coolant Drains</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-mep" style="left:500px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">HVAC Installation</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-mep" style="left:520px;width:60px">3 WK — 10× RTU</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Gas Pipeline Tap + Piping</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-power" style="left:500px;width:40px">2 WK — 2" SERVICE LINE</div></div>
+  </div>
+  <div class="gantt-row critical">
+    <div class="gantt-label"><span class="gl-name">Genset Install + Commissioning</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-power" style="left:540px;width:60px">3 WK — 2× CAT G3516H</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Switchgear + ATS Install</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-power" style="left:560px;width:40px">2 WK — 4000A</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Solar Roof Array</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-solar" style="left:500px;width:60px">3 WK — 768 PANELS</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Battery + Inverter Install</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-solar" style="left:560px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Fire Suppression</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-mep" style="left:540px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Power System Energized</span><span class="gl-dur">—</span></div>
+    <div class="gantt-track">
+      <div class="milestone" style="left:600px"></div>
+      <div class="milestone-label" style="left:624px;top:2px">POWER ON — ALL SYSTEMS ENERGIZED</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHASE 4: AUTOMATION & AI ===== -->
+<div class="phase-group">
+  <div class="phase-title" style="background:rgba(0,232,122,0.08);color:#00e87a;border-left:3px solid #00e87a">PHASE 4 — ROBOT INSTALLATION & AI SYSTEMS</div>
+
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Conveyor System Install</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-robot" style="left:600px;width:40px">2 WK — OVERHEAD TRACK</div></div>
+  </div>
+  <div class="gantt-row critical">
+    <div class="gantt-label"><span class="gl-name">Robot Installation (14 units)</span><span class="gl-dur">4 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-robot" style="left:620px;width:80px">4 WK — ALL 14 ROBOTS + EOAT</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Robot Calibration + Safety Fencing</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-robot" style="left:700px;width:40px">2 WK</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Metropolis Camera Install</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-ai" style="left:680px;width:40px">2 WK — 22 CAMERAS + 7 JETSON</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Network Backbone (25GbE)</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-ai" style="left:680px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">AI Model Training (Metropolis)</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-ai" style="left:720px;width:40px">2 WK — INITIAL TRAINING</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Control Room Buildout</span><span class="gl-dur">2 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-omni" style="left:660px;width:40px">2 WK — RTX WORKSTATIONS + DISPLAYS</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Omniverse Digital Twin Sync</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-omni" style="left:700px;width:60px">3 WK — LIVE SENSOR SYNC</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Isaac Sim Robot Programming</span><span class="gl-dur">3 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-omni" style="left:700px;width:60px">3 WK — ALL STATION PATHS</div></div>
+  </div>
+</div>
+
+<!-- ===== PHASE 5: COMMISSIONING ===== -->
+<div class="phase-group">
+  <div class="phase-title" style="background:rgba(251,191,36,0.08);color:#fbbf24;border-left:3px solid #fbbf24">PHASE 5 — COMMISSIONING & FIRST PRODUCTION</div>
+
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Dry Run (no material)</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-test" style="left:760px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Trial Pod #1</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-test" style="left:780px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Trial Pod #2 (timing validation)</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-test" style="left:800px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Trial Pod #3 (full QA cycle)</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-test" style="left:820px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">Punch List + Corrections</span><span class="gl-dur">1 wk</span></div>
+    <div class="gantt-track"><div class="gantt-bar bar-test" style="left:840px;width:20px">1W</div></div>
+  </div>
+  <div class="gantt-row">
+    <div class="gantt-label"><span class="gl-name">FIRST PRODUCTION POD SHIPS</span><span class="gl-dur">—</span></div>
+    <div class="gantt-track">
+      <div class="milestone" style="left:860px;background:#00e87a"></div>
+      <div class="milestone-label" style="left:884px;top:2px;color:#00e87a;font-size:11px">PRODUCTION START — REVENUE BEGINS</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="notes">
+  <h3>Critical Path & Risk Notes</h3>
+  <ul>
+    <li class="crit"><strong>Critical path:</strong> Omniverse design (8 wk) → Foundation (4 wk) → Steel erection (6 wk) → Genset install (3 wk) → Robot install (4 wk) → Commissioning (4 wk) = 29 weeks sequential + overlaps = ~14 months</li>
+    <li class="crit"><strong>Robot lead time:</strong> Fanuc and ABB robots have 12-16 week lead times. POs MUST be placed during pre-construction phase to arrive when building is ready.</li>
+    <li class="crit"><strong>ITEP filing:</strong> Must be filed BEFORE any groundbreaking. Missing this deadline forfeits 80% property tax abatement for 10 years ($500K+ NPV).</li>
+    <li class="warn"><strong>Genset delivery:</strong> CAT G3516H generators have 16-20 week lead time. Order with robots in pre-construction.</li>
+    <li class="warn"><strong>Weather risk:</strong> Louisiana hurricane season (Jun-Nov) overlaps with Phases 2-3. Metal building erection should avoid peak season if possible — target foundation pour before June.</li>
+    <li class="warn"><strong>PEMB lead time:</strong> Nucor/BlueScope metal buildings: 10-14 week fabrication + delivery. Order during permitting phase.</li>
+    <li class="info"><strong>Parallel work:</strong> Solar roof, gas pipeline tap, and interior MEP all happen concurrently with structure — no float impact.</li>
+    <li class="info"><strong>Omniverse advantage:</strong> Digital twin starts in pre-construction and continues through commissioning. Robot paths programmed in Isaac Sim BEFORE robots are installed — zero rework on first power-up.</li>
+    <li class="info"><strong>Baton Rouge Terminal (Step 1):</strong> Operating and generating revenue during entire 14-month factory construction. Cash flow covers part of construction costs.</li>
+  </ul>
+</div>
+
+</div>
+</body>
+</html>

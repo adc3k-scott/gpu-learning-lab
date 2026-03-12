@@ -381,7 +381,7 @@ def _credentials_blocks() -> list[dict]:
         _bullet("CompTIA Network+ — earned late 1990s"),
         _divider(),
         _h2("Background"),
-        _bullet("20 years underwater robotics / ROV — Gulf of Mexico oil and gas industry"),
+        _bullet("20 years underwater robotics / ROV — Gulf of America oil and gas industry"),
         _bullet("Systems at depth, under pressure, hostile environments — zero tolerance for failure"),
         _bullet("AI factory ops demand the same: continuous uptime, redundant systems, immediate fault response"),
         _bullet("Built 1201 SE Evangeline Thruway himself — 20 years standing, hurricane-proven"),
