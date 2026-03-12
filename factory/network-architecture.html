@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC Network Architecture — Hub &amp; Spoke</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#b0b0b8;font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
+.mono{font-family:'Cascadia Code','Fira Code','IBM Plex Mono',monospace}
+
+/* Tabs */
+.tabs{display:flex;gap:2px;padding:12px 20px 0;background:#08080d;border-bottom:1px solid #1a1a2e;position:sticky;top:0;z-index:100}
+.tab{padding:10px 20px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;color:#666;transition:all .2s}
+.tab:hover{color:#999;background:#0d0d15}
+.tab.active{color:#00ffa3;border-color:#1a1a2e;background:#0a0a0f}
+
+.view{display:none;padding:24px 20px 60px;max-width:1200px;margin:0 auto}
+.view.active{display:block}
+
+h1{font-size:28px;font-weight:700;color:#e8e8f0;margin-bottom:6px}
+h2{font-size:20px;font-weight:600;color:#e8e8f0;margin:32px 0 12px}
+h3{font-size:15px;font-weight:600;color:#c0c0cc;margin:20px 0 8px}
+.sub{font-size:13px;color:#666;margin-bottom:32px}
+.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#00ffa3;margin-bottom:8px}
+
+/* Layer Stack */
+.layer-stack{display:flex;flex-direction:column;gap:3px;margin:24px 0}
+.layer{border:1px solid #1a1a2e;border-radius:6px;overflow:hidden;cursor:pointer;transition:all .3s}
+.layer:hover{border-color:#2a2a4e}
+.layer.expanded{border-color:#00ffa3}
+.layer-header{display:flex;align-items:center;gap:16px;padding:16px 20px}
+.layer-num{font-family:'Cascadia Code',monospace;font-size:11px;letter-spacing:1px;padding:4px 10px;border-radius:4px;font-weight:700;min-width:80px;text-align:center}
+.layer-title{font-size:15px;font-weight:600;color:#e8e8f0;flex:1}
+.layer-desc{font-size:11px;color:#666;margin-left:auto}
+.layer-chevron{color:#444;transition:transform .3s;font-size:18px}
+.layer.expanded .layer-chevron{transform:rotate(90deg);color:#00ffa3}
+.layer-body{display:none;padding:0 20px 20px;border-top:1px solid #1a1a2e}
+.layer.expanded .layer-body{display:block}
+
+.l0 .layer-num{background:#1a0a2e;color:#a855f7}
+.l1 .layer-num{background:#0a1a2e;color:#3b82f6}
+.l2 .layer-num{background:#0a2e1a;color:#00ffa3}
+.l3 .layer-num{background:#2e1a0a;color:#f59e0b}
+.l4 .layer-num{background:#2e0a0a;color:#ef4444}
+.l5 .layer-num{background:#0a2e2e;color:#06b6d4}
+.l6 .layer-num{background:#1a2e0a;color:#84cc16}
+
+/* Hub Diagram */
+.hub-diagram{position:relative;width:100%;max-width:900px;margin:32px auto;min-height:600px}
+.hub-node{position:absolute;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;z-index:2}
+.hub-node:hover{transform:scale(1.05);z-index:10}
+.hub-node h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.hub-node p{font-size:10px;line-height:1.4}
+
+.hub-primary{background:linear-gradient(135deg,#0a2e1a,#0a1a0a);border:2px solid #00ffa3;width:240px}
+.hub-primary h4{color:#00ffa3}
+.hub-primary p{color:#66ffcc}
+
+.hub-secondary{background:linear-gradient(135deg,#0a1a2e,#0a0d1a);border:2px solid #3b82f6;width:200px}
+.hub-secondary h4{color:#3b82f6}
+.hub-secondary p{color:#93c5fd}
+
+.hub-edge{background:linear-gradient(135deg,#1a1a0a,#0d0d0a);border:1px solid #f59e0b;width:160px}
+.hub-edge h4{color:#f59e0b;font-size:11px}
+.hub-edge p{color:#fcd34d;font-size:9px}
+
+.hub-factory{background:linear-gradient(135deg,#2e0a1a,#1a0a0d);border:1px solid #ef4444;width:160px}
+.hub-factory h4{color:#ef4444;font-size:11px}
+.hub-factory p{color:#fca5a5;font-size:9px}
+
+/* Connection lines via SVG */
+.hub-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hub-svg line{stroke-width:2;stroke-dasharray:6,4}
+.hub-svg .fiber{stroke:#00ffa3;opacity:.4}
+.hub-svg .mgmt{stroke:#3b82f6;opacity:.4}
+.hub-svg .sat{stroke:#f59e0b;opacity:.3;stroke-dasharray:3,6}
+
+/* Info cards */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3px;margin:16px 0}
+.info-card{background:#0d0d15;border:1px solid #1a1a2e;padding:20px;border-radius:6px}
+.info-card h4{font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.info-card p{font-size:12px;line-height:1.7;color:#888}
+.info-card .val{font-size:24px;font-weight:700;margin:8px 0}
+
+.green{color:#00ffa3}
+.blue{color:#3b82f6}
+.amber{color:#f59e0b}
+.red{color:#ef4444}
+.purple{color:#a855f7}
+.cyan{color:#06b6d4}
+.lime{color:#84cc16}
+
+/* Data flow animation */
+.flow-container{position:relative;background:#0d0d15;border:1px solid #1a1a2e;border-radius:8px;padding:32px 20px;margin:24px 0;overflow:hidden}
+.flow-row{display:flex;align-items:center;gap:8px;margin:8px 0;flex-wrap:wrap}
+.flow-box{padding:8px 14px;border-radius:6px;font-size:11px;font-weight:600;white-space:nowrap}
+.flow-arrow{color:#333;font-size:16px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+.note{background:#0d0d15;border-left:3px solid #00ffa3;padding:12px 16px;margin:16px 0;font-size:12px;line-height:1.7;color:#888}
+.note strong{color:#e8e8f0}
+
+/* Responsive */
+@media(max-width:768px){
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab{padding:8px 14px;font-size:10px;white-space:nowrap}
+  .hub-diagram{min-height:800px}
+  .info-grid{grid-template-columns:1fr}
+  h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <div class="tab active" onclick="showView('layers')">Layer Stack</div>
+  <div class="tab" onclick="showView('hub')">Hub &amp; Spoke</div>
+  <div class="tab" onclick="showView('dataflow')">Data Flow</div>
+  <div class="tab" onclick="showView('sites')">Site Roles</div>
+</div>
+
+<!-- VIEW 1: LAYER STACK -->
+<div class="view active" id="v-layers">
+  <div class="eyebrow">ADC Network Architecture</div>
+  <h1>The Seven Layers</h1>
+  <p class="sub">Every layer builds on the one below it. Click to expand.</p>
+
+  <div class="layer-stack">
+
+    <div class="layer l0" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 0</div>
+        <div class="layer-title">Physical Transport</div>
+        <div class="layer-desc">Fiber &bull; Satellite &bull; The wire in the ground</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">Everything rides on this. No Layer 0 = no network, no compute, nothing.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="purple">Dedicated Fiber</h4><p>Dark fiber between Willow Glen and MARLIE I (60 mi). Management traffic, monitoring, backup control. Sub-millisecond latency over dedicated strand.</p></div>
+          <div class="info-card"><h4 class="purple">Site Fiber</h4><p>Fiber runs from wetland sites to nearest corridor (I-10, Hwy 90, Hwy 182). Connects edge sites back to Willow Glen spine. Max 5 mi to existing fiber corridor.</p></div>
+          <div class="info-card"><h4 class="purple">Satellite</h4><p>Starlink / VSAT for offshore rigs and barges. 20-40ms latency — fine for edge inference and periodic sync. Not suitable for InfiniBand fabric.</p></div>
+        </div>
+        <div class="note"><strong>ROV parallel:</strong> Scott ran subsea fiber optic multiplexers for 25 years. Most aircraft mechanics don't know fiber — Scott does. Layer 0 is infrastructure he already understands.</div>
+      </div>
+    </div>
+
+    <div class="layer l1" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 1</div>
+        <div class="layer-title">Power Architecture</div>
+        <div class="layer-desc">Gas &bull; Solar &bull; Battery &bull; Grid &bull; Diesel</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">No power = no compute. The 3-layer power stack is locked across all sites.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="blue">Layer 1 Primary</h4><div class="val blue">Nat Gas + Solar + Battery</div><p>24/7 baseload. Henry Hub pricing (cheapest in the US). Solar offset during peak sun. Battery buffer for transients.</p></div>
+          <div class="info-card"><h4 class="blue">Layer 2 Backup</h4><div class="val blue">Grid / LUS</div><p>Never primary. Backup only. Connected but not depended on.</p></div>
+          <div class="info-card"><h4 class="blue">Layer 3 Emergency</h4><div class="val blue">Diesel Gensets</div><p>On-site fuel. Pipeline-independent. Learned from Hurricane Ida — gas pipeline was down for weeks.</p></div>
+        </div>
+        <div class="note"><strong>Willow Glen is different:</strong> 4-layer Mini Grid (solar, nat gas, grid, biodiesel) + future green hydrogen from electrolysis. Former 2,200 MW Entergy station — power infrastructure already exists.</div>
+      </div>
+    </div>
+
+    <div class="layer l2" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 2</div>
+        <div class="layer-title">Cooling &amp; Thermal</div>
+        <div class="layer-desc">EC-110 &bull; Immersion &bull; Heat Recovery</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">SITE VIABILITY = POWER + COOLING. This is half the equation.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="green">Immersion Cooling</h4><p>GPU boards submerged in EC-110 dielectric fluid. Non-toxic, non-conductive, non-flammable. Fluid runs at 60-70°C. No server fans. PUE 1.03.</p></div>
+          <div class="info-card"><h4 class="green">External Rejection</h4><p>Dry coolers reject heat to ambient. Zero water consumption. No evaporative cooling towers.</p></div>
+          <div class="info-card"><h4 class="green">Heat Recovery (Phase 2)</h4><p>ORC electricity recovery (ElectraTherm/Infinity Turbine, 3-5% efficiency). Solar thermal boost to 85-90°C doubles output. Direct thermal sales to co-located customers.</p></div>
+        </div>
+        <div class="note"><strong>Closed-loop system:</strong> EC-110 absorbs GPU heat → heat exchanger → dry cooler rejects to ambient (or ORC captures electricity, or thermal customer uses heat). Cooled fluid returns to tank. Same as ROV deck pack with seawater heat exchanger.</div>
+      </div>
+    </div>
+
+    <div class="layer l3" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 3</div>
+        <div class="layer-title">Compute Fabric</div>
+        <div class="layer-desc">InfiniBand &bull; GPUs &bull; DGX SuperPOD</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">The reason everything else exists. GPU-to-GPU communication at microsecond latency.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="amber">Compute Network</h4><p>InfiniBand (NVIDIA Quantum switches). GPU-to-GPU during training and inference. Highest bandwidth, lowest latency of all four networks. This is the spine.</p></div>
+          <div class="info-card"><h4 class="amber">Storage Network</h4><p>High-speed Ethernet or dedicated storage fabric. Moves training data and model weights. A starved GPU is a wasted GPU.</p></div>
+          <div class="info-card"><h4 class="amber">NVLink / NVSwitch</h4><p>GPU-to-GPU inside a single node at 900 GB/s. Internal bus — like crank position to injector timing. No external network needed.</p></div>
+        </div>
+        <div class="note"><strong>Fat-tree topology:</strong> Pods are leaf nodes on the InfiniBand spine. Scale wide (add pods) or punch in (inject at bottleneck). All spine switches live at Willow Glen — the fabric grows from there.</div>
+      </div>
+    </div>
+
+    <div class="layer l4" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 4</div>
+        <div class="layer-title">Network Intelligence</div>
+        <div class="layer-desc">SmartNICs &bull; DPUs &bull; Software-Defined</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">The ECU of the AI factory. Reads sensors, processes data, adjusts in real time.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="red">ConnectX SmartNICs</h4><p>The sensors. Sit on every server, reading network traffic, measuring latency, reporting congestion. Like O2 sensors in an engine management system.</p></div>
+          <div class="info-card"><h4 class="red">BlueField DPUs</h4><p>The ECU. Process network data and make routing/security decisions without bothering the GPU. Offload infrastructure work so GPUs only do AI compute.</p></div>
+          <div class="info-card"><h4 class="red">Software-Defined Networking</h4><p>Closed-loop tuning. The system reads its own performance data and adjusts — not static configuration, adaptive. Like a closed-loop fuel map that learns.</p></div>
+        </div>
+        <div class="note"><strong>ECM parallel:</strong> FuelTech ECU reads sensors → processes data → adjusts fuel/timing in real time. ConnectX reads traffic → BlueField processes → SDN adjusts routing in real time. Same closed-loop control, different scale.</div>
+      </div>
+    </div>
+
+    <div class="layer l5" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 5</div>
+        <div class="layer-title">Management Plane</div>
+        <div class="layer-desc">Base Command &bull; In-Band &bull; Out-of-Band</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">Two management networks — one for software, one for hardware emergencies.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="cyan">In-Band Management</h4><p>Software-level: monitoring, updates, job scheduling, telemetry. How NVIDIA Base Command Manager talks to every node — assigning workloads, collecting performance data.</p></div>
+          <div class="info-card"><h4 class="cyan">Out-of-Band Management</h4><p>Hardware-level: works even when the server OS is crashed. Power cycling, BIOS access, remote KVM. Like having a physical hand on every machine. Separate network for security.</p></div>
+          <div class="info-card"><h4 class="cyan">Base Command Manager</h4><p>NVIDIA's orchestration platform. Runs at Willow Glen on the cluster itself. Manages the entire compute fabric — scheduling, monitoring, scaling. The brain.</p></div>
+        </div>
+        <div class="note"><strong>Willow Glen = Primary. MARLIE I = Mirror.</strong> Base Command runs at Willow Glen because it needs to be on the InfiniBand fabric. MARLIE I gets a read-only mirror — Scott watches everything from Lafayette.</div>
+      </div>
+    </div>
+
+    <div class="layer l6" onclick="this.classList.toggle('expanded')">
+      <div class="layer-header">
+        <div class="layer-num">LAYER 6</div>
+        <div class="layer-title">Operations &amp; Autonomy</div>
+        <div class="layer-desc">NOC &bull; Drones &bull; AI Ops &bull; MARLIE I</div>
+        <div class="layer-chevron">&#9654;</div>
+      </div>
+      <div class="layer-body">
+        <p style="margin-bottom:12px">The human and AI operations layer. Where decisions get made and executed.</p>
+        <div class="info-grid">
+          <div class="info-card"><h4 class="lime">Primary NOC (Willow Glen)</h4><p>On-site operations center at the flagship. Staff monitor the full fabric — compute, power, cooling, security. 24/7 operations.</p></div>
+          <div class="info-card"><h4 class="lime">Backup NOC (MARLIE I)</h4><p>Scott's war room in Lafayette. Full monitoring mirror. If Willow Glen NOC goes down, MARLIE I takes over. Also R&D staging — test new pod configs here first.</p></div>
+          <div class="info-card"><h4 class="lime">Autonomous Ops</h4><p>Drones patrol sites (KLFT hub). Robots maintain pods. AI manages compute scheduling, power optimization, thermal management. Minimal permanent human presence at remote sites.</p></div>
+        </div>
+        <div class="note"><strong>ROV control room model:</strong> The captain doesn't stand on the drill floor. He's in the control room watching everything on screens. MARLIE I is Scott's control room. Willow Glen is the drill floor.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- VIEW 2: HUB & SPOKE -->
+<div class="view" id="v-hub">
+  <div class="eyebrow">ADC Network Architecture</div>
+  <h1>Hub &amp; Spoke Topology</h1>
+  <p class="sub">Willow Glen is the center of gravity. Everything connects back to it.</p>
+
+  <div class="hub-diagram" id="hubDiagram">
+    <svg class="hub-svg" id="hubSvg"></svg>
+
+    <!-- Willow Glen - Center -->
+    <div class="hub-node hub-primary" id="n-wg" style="left:50%;top:30%;transform:translate(-50%,-50%)">
+      <h4>WILLOW GLEN</h4>
+      <p style="font-size:12px;font-weight:700;margin:4px 0">PRIMARY HUB</p>
+      <p>InfiniBand Spine<br>Base Command Manager<br>Primary NOC<br>700 acres &bull; 100+ MW</p>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid #00ffa355">
+        <p style="font-size:9px;opacity:.7">St. Gabriel, LA &bull; Score 94 A</p>
+      </div>
+    </div>
+
+    <!-- MARLIE I - Left -->
+    <div class="hub-node hub-secondary" id="n-m1" style="left:8%;top:28%;transform:translate(0,-50%)">
+      <h4>MARLIE I</h4>
+      <p style="font-size:11px;font-weight:600;margin:4px 0">BACKUP NOC</p>
+      <p>Mirror Dashboard<br>Edge Compute<br>R&amp;D Staging<br>Scott's War Room</p>
+      <div style="margin-top:6px;padding-top:6px;border-top:1px solid #3b82f655">
+        <p style="font-size:9px;opacity:.7">Lafayette, LA &bull; 60 mi fiber</p>
+      </div>
+    </div>
+
+    <!-- Baton Rouge Factory -->
+    <div class="hub-node hub-factory" id="n-br" style="left:78%;top:12%">
+      <h4>BATON ROUGE</h4>
+      <p>Pod Manufacturing<br>Step 1: Bootstrap<br>Terminal Assembly</p>
+    </div>
+
+    <!-- New Iberia Factory -->
+    <div class="hub-node hub-factory" id="n-ni" style="left:78%;top:32%">
+      <h4>NEW IBERIA</h4>
+      <p>Pod Manufacturing<br>Step 2: Automated<br>14 Robots &bull; 22 AI Cameras</p>
+    </div>
+
+    <!-- Wetland Sites - Bottom -->
+    <div class="hub-node hub-edge" id="n-w1" style="left:15%;top:68%">
+      <h4>KROTZ SPRINGS</h4>
+      <p>160 acres &bull; $3K/acre<br>Pipeline ON SITE<br>Piling Deployment</p>
+    </div>
+
+    <div class="hub-node hub-edge" id="n-w2" style="left:38%;top:75%">
+      <h4>ATCHAFALAYA BASIN</h4>
+      <p>Wetland Swarm<br>10-50 pods per site<br>Solar + Gas + Barge</p>
+    </div>
+
+    <div class="hub-node hub-edge" id="n-w3" style="left:60%;top:75%">
+      <h4>MORGAN CITY</h4>
+      <p>Former McDermott Yard<br>8 acres &bull; 72K SF<br>Bayou Boeuf access</p>
+    </div>
+
+    <!-- Offshore -->
+    <div class="hub-node hub-edge" id="n-off" style="left:80%;top:68%">
+      <h4>OFFSHORE</h4>
+      <p>Rigs &bull; Barges<br>Flare gas &bull; Ocean cooling<br>Satellite uplink</p>
+    </div>
+
+    <!-- KLFT -->
+    <div class="hub-node hub-secondary" id="n-klft" style="left:5%;top:50%">
+      <h4>KLFT 1.1</h4>
+      <p>Drone Hub<br>Airspace Ops<br>Site Security</p>
+    </div>
+
+  </div>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:16px;justify-content:center">
+    <div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:3px;background:#00ffa3"></div><span style="font-size:11px;color:#666">InfiniBand / Dedicated Fiber</span></div>
+    <div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:3px;background:#3b82f6"></div><span style="font-size:11px;color:#666">Management Fiber</span></div>
+    <div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:3px;background:#f59e0b;border-top:1px dashed #f59e0b"></div><span style="font-size:11px;color:#666">Satellite</span></div>
+  </div>
+</div>
+
+<!-- VIEW 3: DATA FLOW -->
+<div class="view" id="v-dataflow">
+  <div class="eyebrow">ADC Network Architecture</div>
+  <h1>Data Flow — How Everything Connects</h1>
+  <p class="sub">Follow the data from GPU to customer and back.</p>
+
+  <h2>Compute Path (InfiniBand — Microseconds)</h2>
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-box" style="background:#2e1a0a;border:1px solid #f59e0b;color:#f59e0b">GPU Board</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#2e0a0a;border:1px solid #ef4444;color:#ef4444">NVLink / NVSwitch</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#2e0a0a;border:1px solid #ef4444;color:#ef4444">ConnectX SmartNIC</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">InfiniBand Spine</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">Other GPUs</div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">All within Willow Glen. Microsecond latency. This is where training happens.</p>
+  </div>
+
+  <h2>Management Path (Ethernet — Milliseconds)</h2>
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">Base Command (WG)</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a1a2e;border:1px solid #3b82f6;color:#3b82f6">Ethernet Mgmt</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a1a2e;border:1px solid #3b82f6;color:#3b82f6">Every Node</div>
+    </div>
+    <div class="flow-row" style="margin-top:12px">
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">Base Command (WG)</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a0a2e;border:1px solid #a855f7;color:#a855f7">Dedicated Fiber (60 mi)</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a1a2e;border:1px solid #3b82f6;color:#3b82f6">MARLIE I Mirror</div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">Scott sees everything from Lafayette. Same dashboard, real-time data, 1-2ms delay.</p>
+  </div>
+
+  <h2>Edge Inference Path (Fiber/Satellite — 2-40ms)</h2>
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-box" style="background:#1a1a0a;border:1px solid #f59e0b;color:#f59e0b">Customer Request</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a1a0a;border:1px solid #f59e0b;color:#f59e0b">Edge Pod (Wetland)</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a1a0a;border:1px solid #f59e0b;color:#f59e0b">Local Inference</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a1a0a;border:1px solid #f59e0b;color:#f59e0b">Response</div>
+    </div>
+    <div class="flow-row" style="margin-top:8px;opacity:.6">
+      <div class="flow-box" style="background:#0d0d15;border:1px solid #333;color:#666">Periodic Sync</div>
+      <div class="flow-arrow" style="color:#555">&#10145;</div>
+      <div class="flow-box" style="background:#0d0d15;border:1px solid #333;color:#666">Willow Glen (model updates, logs)</div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">Edge pods handle inference locally. Sync back to Willow Glen for model updates and telemetry. No InfiniBand needed.</p>
+  </div>
+
+  <h2>Thermal Path (Closed Loop)</h2>
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-box" style="background:#2e1a0a;border:1px solid #f59e0b;color:#f59e0b">GPU Heat</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">EC-110 (60-70°C)</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">Heat Exchanger</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">Dry Cooler / ORC / Customer</div>
+    </div>
+    <div class="flow-row" style="margin-top:4px;justify-content:center">
+      <div class="flow-arrow" style="transform:rotate(180deg)">&#10145;</div>
+      <span style="font-size:10px;color:#555">Cooled fluid returns to immersion tank</span>
+    </div>
+  </div>
+
+  <h2>Power Path</h2>
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-box" style="background:#0a1a2e;border:1px solid #3b82f6;color:#3b82f6">Nat Gas Pipeline</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a1a2e;border:1px solid #3b82f6;color:#3b82f6">Generator</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">Switchgear</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">Pod</div>
+    </div>
+    <div class="flow-row" style="margin-top:8px">
+      <div class="flow-box" style="background:#1a2e0a;border:1px solid #84cc16;color:#84cc16">Solar PV</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a2e0a;border:1px solid #84cc16;color:#84cc16">DC Bus</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a2e0a;border:1px solid #84cc16;color:#84cc16">Battery Bank</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e1a;border:1px solid #00ffa3;color:#00ffa3">Site Auxiliary</div>
+    </div>
+    <div class="flow-row" style="margin-top:4px">
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">Solar Thermal</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">Boost to 85°C</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#0a2e2e;border:1px solid #06b6d4;color:#06b6d4">ORC</div>
+      <div class="flow-arrow">&#10145;</div>
+      <div class="flow-box" style="background:#1a2e0a;border:1px solid #84cc16;color:#84cc16">DC Bus</div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW 4: SITE ROLES -->
+<div class="view" id="v-sites">
+  <div class="eyebrow">ADC Network Architecture</div>
+  <h1>Site Roles &amp; Deployment Tiers</h1>
+  <p class="sub">Every site has a specific function in the fabric.</p>
+
+  <div class="info-grid" style="grid-template-columns:1fr">
+
+    <div class="info-card" style="border-left:3px solid #00ffa3">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div class="layer-num" style="background:#0a2e1a;color:#00ffa3;font-size:10px;padding:6px 12px">TIER 1</div>
+        <h4 class="green" style="font-size:16px;margin:0">WILLOW GLEN — Primary Hub</h4>
+      </div>
+      <p style="color:#aaa">Former 2,200 MW Entergy station. 700 acres. Score 94 A. Mississippi River access.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="background:#0a1510;padding:12px;border-radius:4px"><span class="green mono" style="font-size:10px">COMPUTE</span><p style="font-size:11px;margin-top:4px">InfiniBand spine. DGX SuperPOD. All tightly-coupled training.</p></div>
+        <div style="background:#0a1510;padding:12px;border-radius:4px"><span class="green mono" style="font-size:10px">MANAGEMENT</span><p style="font-size:11px;margin-top:4px">Base Command Manager. Primary NOC. On-site ops staff.</p></div>
+        <div style="background:#0a1510;padding:12px;border-radius:4px"><span class="green mono" style="font-size:10px">POWER</span><p style="font-size:11px;margin-top:4px">4-layer Mini Grid. 100% renewable capable. Existing substation.</p></div>
+        <div style="background:#0a1510;padding:12px;border-radius:4px"><span class="green mono" style="font-size:10px">SCALE</span><p style="font-size:11px;margin-top:4px">100+ MW potential. Room for hundreds of pods. Grow N-S and E-W.</p></div>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-left:3px solid #3b82f6">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div class="layer-num" style="background:#0a1a2e;color:#3b82f6;font-size:10px;padding:6px 12px">TIER 2</div>
+        <h4 class="blue" style="font-size:16px;margin:0">MARLIE I — Backup NOC &amp; Edge</h4>
+      </div>
+      <p style="color:#aaa">1201 SE Evangeline Thruway, Lafayette. 0.6 acres. Scott's home base.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="background:#0a0d15;padding:12px;border-radius:4px"><span class="blue mono" style="font-size:10px">BACKUP NOC</span><p style="font-size:11px;margin-top:4px">Full monitoring mirror. Takes over if Willow Glen NOC goes down.</p></div>
+        <div style="background:#0a0d15;padding:12px;border-radius:4px"><span class="blue mono" style="font-size:10px">EDGE COMPUTE</span><p style="font-size:11px;margin-top:4px">Local inference for Lafayette customers. Low-latency edge.</p></div>
+        <div style="background:#0a0d15;padding:12px;border-radius:4px"><span class="blue mono" style="font-size:10px">R&amp;D / STAGING</span><p style="font-size:11px;margin-top:4px">Test new pod configs before deploying to Willow Glen.</p></div>
+        <div style="background:#0a0d15;padding:12px;border-radius:4px"><span class="blue mono" style="font-size:10px">WAR ROOM</span><p style="font-size:11px;margin-top:4px">Scott's control room. 60 mi dedicated fiber to WG.</p></div>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-left:3px solid #f59e0b">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div class="layer-num" style="background:#2e1a0a;color:#f59e0b;font-size:10px;padding:6px 12px">TIER 3</div>
+        <h4 class="amber" style="font-size:16px;margin:0">WETLAND SITES — Edge Swarm</h4>
+      </div>
+      <p style="color:#aaa">Pods on pilings in the Atchafalaya Basin. Pipeline gas. Barge access. Solar.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="background:#15100a;padding:12px;border-radius:4px"><span class="amber mono" style="font-size:10px">INFERENCE ONLY</span><p style="font-size:11px;margin-top:4px">Latency too high for training. Edge inference + batch processing.</p></div>
+        <div style="background:#15100a;padding:12px;border-radius:4px"><span class="amber mono" style="font-size:10px">AUTONOMOUS</span><p style="font-size:11px;margin-top:4px">AI + drones + robots. No permanent human presence. Barge-serviced quarterly.</p></div>
+        <div style="background:#15100a;padding:12px;border-radius:4px"><span class="amber mono" style="font-size:10px">CHEAP LAND</span><p style="font-size:11px;margin-top:4px">$1K-5K/acre. Gas on site. Nobody else wants it.</p></div>
+        <div style="background:#15100a;padding:12px;border-radius:4px"><span class="amber mono" style="font-size:10px">FIBER BACK</span><p style="font-size:11px;margin-top:4px">Connected to Willow Glen via fiber corridor. Managed by Base Command.</p></div>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-left:3px solid #a855f7">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div class="layer-num" style="background:#1a0a2e;color:#a855f7;font-size:10px;padding:6px 12px">TIER 4</div>
+        <h4 class="purple" style="font-size:16px;margin:0">OFFSHORE — Gulf of America</h4>
+      </div>
+      <p style="color:#aaa">Pods on rigs and barges. Flare gas capture. Ocean cooling. Satellite uplink.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="background:#0d0a15;padding:12px;border-radius:4px"><span class="purple mono" style="font-size:10px">EDGE INFERENCE</span><p style="font-size:11px;margin-top:4px">Local compute for rig operations. Periodic sync via satellite.</p></div>
+        <div style="background:#0d0a15;padding:12px;border-radius:4px"><span class="purple mono" style="font-size:10px">FLARE GAS</span><p style="font-size:11px;margin-top:4px">Operators pay to burn it. ADC takes it, makes tokens. Negative fuel cost.</p></div>
+        <div style="background:#0d0a15;padding:12px;border-radius:4px"><span class="purple mono" style="font-size:10px">OCEAN COOLING</span><p style="font-size:11px;margin-top:4px">Seawater at 40-50°F year-round. Best cooling on earth.</p></div>
+        <div style="background:#0d0a15;padding:12px;border-radius:4px"><span class="purple mono" style="font-size:10px">STARLINK/VSAT</span><p style="font-size:11px;margin-top:4px">20-40ms latency. Fine for inference. Not for training fabric.</p></div>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-left:3px solid #ef4444">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div class="layer-num" style="background:#2e0a0a;color:#ef4444;font-size:10px;padding:6px 12px">MFG</div>
+        <h4 class="red" style="font-size:16px;margin:0">MANUFACTURING — Pod Factories</h4>
+      </div>
+      <p style="color:#aaa">Two-step manufacturing: bootstrap in Baton Rouge, scale in New Iberia.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="background:#150a0a;padding:12px;border-radius:4px"><span class="red mono" style="font-size:10px">BATON ROUGE</span><p style="font-size:11px;margin-top:4px">Step 1: Bootstrap. Leased building. Manual assembly. First pods.</p></div>
+        <div style="background:#150a0a;padding:12px;border-radius:4px"><span class="red mono" style="font-size:10px">NEW IBERIA</span><p style="font-size:11px;margin-top:4px">Step 2: Automated. 52,800 SF. 14 robots. 22 AI cameras. Scale production.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('v-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='hub') setTimeout(drawLines,50);
+}
+
+function drawLines(){
+  const svg=document.getElementById('hubSvg');
+  const diagram=document.getElementById('hubDiagram');
+  if(!svg||!diagram) return;
+  svg.innerHTML='';
+  const rect=diagram.getBoundingClientRect();
+
+  function getCenter(id){
+    const el=document.getElementById(id);
+    if(!el) return {x:0,y:0};
+    const r=el.getBoundingClientRect();
+    return {x:r.left-rect.left+r.width/2, y:r.top-rect.top+r.height/2};
+  }
+
+  function line(from,to,cls){
+    const a=getCenter(from), b=getCenter(to);
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',a.x);l.setAttribute('y1',a.y);
+    l.setAttribute('x2',b.x);l.setAttribute('y2',b.y);
+    l.setAttribute('class',cls);
+    svg.appendChild(l);
+  }
+
+  // Fiber connections to Willow Glen
+  line('n-wg','n-m1','fiber');
+  line('n-wg','n-w1','fiber');
+  line('n-wg','n-w2','fiber');
+  line('n-wg','n-w3','fiber');
+  line('n-wg','n-br','mgmt');
+  line('n-wg','n-ni','mgmt');
+
+  // Management from MARLIE I
+  line('n-m1','n-klft','mgmt');
+
+  // Satellite to offshore
+  line('n-wg','n-off','sat');
+}
+
+window.addEventListener('resize',()=>{
+  if(document.getElementById('v-hub').classList.contains('active')) drawLines();
+});
+</script>
+
+</body>
+</html>

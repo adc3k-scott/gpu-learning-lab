@@ -343,7 +343,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="hey">Louisiana's AI Infrastructure Company</div>
     <h1 class="htitle">ADC<span class="k3">3K</span></h1>
     <div class="hclass">MARLIE I &nbsp;&middot;&nbsp; ADC 3K PODS &nbsp;&middot;&nbsp; KLFT HUB</div>
-    <p class="hdesc">We design, build, and operate mission-critical AI compute infrastructure across Louisiana &mdash; powered by the cheapest natural gas supply in the United States, built on next-generation NVIDIA systems, and engineered not just for today but for the next decade of AI demand.</p>
+    <p class="hdesc">We design, build, and operate mission-critical AI compute infrastructure across Louisiana &mdash; powered by the cheapest energy in the United States, cooled by full liquid immersion, and engineered from the ground up for maximum efficiency and minimum waste.</p>
     <div class="hstats">
       <div><div class="hsv" style="color:#00d68f" id="hc1">3&ndash;5&cent;</div><div class="hsl">kWh — Lowest in U.S.</div></div>
       <div><div class="hsv" style="color:#ff6b7a" id="hc2">0</div><div class="hsl">Gulf Coast AI Facilities</div></div>
@@ -401,6 +401,31 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
+
+  <!-- ENERGY EFFICIENCY -->
+  <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="eyebrow green reveal">Energy Efficiency</div>
+    <h2 class="sh reveal">Legacy facilities waste 40% of their power on cooling. We waste less than 3%.</h2>
+    <p class="bd reveal" style="max-width:700px">Every ADC facility is built around full liquid immersion cooling and renewable-first power architecture. No air conditioning. No chillers. No compressors. Every watt goes to compute.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0">
+      <div class="card reveal" style="border-top:3px solid var(--green)">
+        <div class="ctag g">COOLING</div>
+        <h3 style="font-family:'IBM Plex Mono',monospace;font-size:28px;color:var(--green)">PUE 1.03</h3>
+        <p>Full immersion cooling. Industry average is 1.58. Our servers are submerged in dielectric fluid &mdash; no fans, no HVAC, no wasted energy. 97% of every dollar of power goes directly to AI compute.</p>
+      </div>
+      <div class="card reveal d1" style="border-top:3px solid var(--accent)">
+        <div class="ctag b">POWER</div>
+        <h3 style="font-family:'IBM Plex Mono',monospace;font-size:28px;color:var(--accent)">3&ndash;5&cent;</h3>
+        <p>On-site natural gas generation at Henry Hub pricing &mdash; the lowest energy cost of any AI facility in the United States. Solar offset on every site. Battery backup standard. Grid is backup, never primary.</p>
+      </div>
+      <div class="card reveal d2" style="border-top:3px solid var(--amber)">
+        <div class="ctag a">RENEWABLE</div>
+        <h3 style="font-family:'IBM Plex Mono',monospace;font-size:28px;color:var(--amber)">Solar First</h3>
+        <p>Every site deploys solar arrays and battery storage as the primary daytime power source. Natural gas handles baseload. Willow Glen's existing tank farm enables future green hydrogen &mdash; 100% renewable path.</p>
+      </div>
+    </div>
+    <div class="ana" style="margin-top:16px"><p><strong>Why this matters:</strong> A 2 MW AI facility with PUE 1.58 (industry average) wastes 580 kW just on cooling. That's $400K/year burned on moving air. At PUE 1.03, we waste 30 kW. The savings compound every hour of every day &mdash; and they go straight to the bottom line.</p></div>
+  </div>
 
   <!-- NVIDIA GPU PLATFORM -->
   <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
@@ -628,10 +653,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="g3">
       <div class="card"><div class="ctag b">ZONE 1</div><h3>Compute</h3><p>NVIDIA Vera Rubin NVL72 racks in EC-110 full immersion cooling tanks. Direct-to-chip heat transfer — chips run cooler at higher clock speeds. Full BMS telemetry + TraceTek leak detection.</p></div>
       <div class="card"><div class="ctag b">ZONE 2</div><h3>Power Distribution</h3><p>Medium-voltage input, transformer, PDUs. ATS switchgear for automatic failover between power layers. Vertiv GXT5 LFP UPS on-board for instant ride-through.</p></div>
-      <div class="card"><div class="ctag b">ZONE 3</div><h3>Networking</h3><p>Spine-leaf topology. InfiniBand between GPU nodes. Fiber + microwave + Starlink uplinks. All telemetry streams to MARLIE I NOC in real time.</p></div>
+      <div class="card"><div class="ctag b">ZONE 3</div><h3>Networking</h3><p>NVIDIA Quantum InfiniBand NDR fabric. NVLink + NVSwitch inside the pod, ConnectX-7 NICs connect up to the spine. All telemetry streams to MARLIE I NOC via DCGM + UFM in real time.</p></div>
       <div class="card"><div class="ctag b">ZONE 4</div><h3>Dry Coolers</h3><p>External dry cooler array rejects heat from immersion loop. Zero water consumption. No HVAC. Quiet — comparable to commercial air conditioning.</p></div>
       <div class="card"><div class="ctag b">ZONE 5</div><h3>Safety &amp; Security</h3><p>ISO container structure. Biometric access, cameras, tamper sensors. VESDA aspirating detection + FK-5-1-12 clean agent fire suppression. Data never leaves unless you send it.</p></div>
-      <div class="card"><div class="ctag g">ARCHITECTURE</div><h3>Daisy-Chain Scaling</h3><p>Pods link together with no upper limit. Start with one. Add more as demand grows. Each pod independently operational — no single point of failure across the network.</p></div>
+      <div class="card"><div class="ctag g">ARCHITECTURE</div><h3>DGX SuperPOD Fabric</h3><p>Each pod is a leaf on an NVIDIA Quantum InfiniBand spine. Fat-tree topology — add pods to scale wide, inject pods to eliminate bottlenecks. AI-managed fabric grows organically. No upper limit.</p></div>
     </div>
 
     <!-- POD POWER STACK -->
@@ -646,14 +671,14 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <!-- HOW IT SCALES -->
   <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
     <div class="eyebrow green">How It Scales</div>
-    <h2 class="sh" style="margin-top:8px">One NOC. Unlimited pods. Every deployment compounds the network.</h2>
-    <p class="bd">Every ADC 3K pod connects back to a single <span class="ha">Network Operations Center</span> at MARLIE I in Lafayette. Monitoring, management, licensing, security — all centralized. The NOC overhead is fixed. <span class="hl">Each new pod is pure margin growth.</span></p>
+    <h2 class="sh" style="margin-top:8px">Modular DGX SuperPOD. One NOC. Unlimited pods.</h2>
+    <p class="bd">Every ADC 3K pod is a <span class="ha">SuperPOD building block</span> on an NVIDIA Quantum InfiniBand spine. Fat-tree topology — add pods to scale compute wide, inject pods to eliminate bottlenecks. NVIDIA DCGM + UFM monitor the entire fabric in real time from MARLIE I. <span class="hl">The fabric grows organically. Each new pod is pure margin growth.</span></p>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:28px">
       <div style="background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--accent);padding:28px">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);margin-bottom:12px">MARLIE I — THE NOC</div>
         <div style="font-size:18px;font-weight:700;color:var(--text-bright);margin-bottom:8px">Headquarters + Command Center</div>
-        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">1201 SE Evangeline Thruway, Lafayette. Permanent AI factory with NVIDIA NVL72 racks and CDU liquid cooling. Also houses the NOC that monitors every remote pod 24/7. Phase 1 engineering complete.</p>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">1201 SE Evangeline Thruway, Lafayette. Permanent AI factory with NVIDIA NVL72 racks and CDU liquid cooling. Runs NVIDIA Base Command Manager, DCGM, and UFM — the brain that orchestrates the entire SuperPOD fabric across all deployed pods 24/7.</p>
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--green);padding:28px">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);margin-bottom:12px">DEPLOYED PODS</div>
@@ -697,7 +722,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
     <!-- COOLING COMPARISON VISUAL -->
     <div style="margin-top:36px;text-align:center">
-      <img src="pod-img-3.jpg" alt="Data Center Cooling Designs — Air vs Cold Plate vs Immersion Cooling comparison" style="width:100%;max-width:700px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+      <img src="pod-img-3.jpg" alt="AI Factory Cooling Designs — Air vs Cold Plate vs Immersion Cooling comparison" style="width:100%;max-width:700px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
     </div>
 
     <div class="sn" style="margin-top:36px">EC-110 DIELECTRIC FLUID</div>
@@ -791,7 +816,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       </div>
     </div>
     <div class="ana" style="margin-top:20px">
-      <p><strong>The pitch to every city and parish:</strong> ADC3K doesn't just create jobs and tax revenue. We deploy a first responder drone network, emergency power infrastructure, and satellite communications — at zero cost to the community. <span class="hl">That's the deal no other data center company is offering.</span></p>
+      <p><strong>The pitch to every city and parish:</strong> ADC3K doesn't just create jobs and tax revenue. We deploy a first responder drone network, emergency power infrastructure, and satellite communications — at zero cost to the community. <span class="hl">That's the deal no other AI infrastructure company is offering.</span></p>
     </div>
   </div>
 
@@ -916,7 +941,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="card" style="border-top:3px solid var(--amber)">
         <div class="ctag" style="color:var(--amber)">ROBOTICS</div>
         <h3>25+ Years ROV Operations</h3>
-        <p>Deepwater subsea robotics — piloting, installation, intervention, inspection. Gulf of Mexico, West Africa, worldwide. IMCA ROV Supervisor certified. Electronic Technician. <span class="hl">Mission-critical autonomous systems are not new territory.</span></p>
+        <p>Deepwater subsea robotics — piloting, installation, intervention, inspection. Gulf of America, West Africa, worldwide. IMCA ROV Supervisor certified. Electronic Technician. <span class="hl">Mission-critical autonomous systems are not new territory.</span></p>
       </div>
       <div class="card" style="border-top:3px solid var(--cyan)">
         <div class="ctag" style="color:var(--cyan)">AVIATION</div>
@@ -936,14 +961,14 @@ footer{flex-direction:column;gap:10px;text-align:center}
         <p>Active state license. Eliminates 10-15% GC markup. Pulls permits, hires trades, executes buildout directly. Built the MARLIE I facility — <span class="hl">20 years standing, hurricane-proven.</span></p>
       </div>
       <div class="card" style="border-top:3px solid var(--accent)">
-        <div class="ctag b">AI INFRASTRUCTURE</div>
-        <h3>7 NVIDIA Certifications</h3>
-        <p>AI infrastructure design, GPU compute deployment, NVIDIA partner program. No third-party integrator needed — receive, rack, cable, power on. <span class="hl">Revenue from day one.</span></p>
+        <div class="ctag b">NVIDIA CERTIFIED</div>
+        <h3>8 NVIDIA Credentials + NCA-AIIO</h3>
+        <p>Base Command Manager Administration. InfiniBand Essentials. NetQ Network Operations. NVIDIA License System. AI Fundamentals. Ansible for Network Engineers. Intro to Networking. <strong style="color:var(--accent)">NCA-AIIO certified</strong> — AI Infrastructure &amp; Operations. <span class="hl">Not a reseller. An operator.</span></p>
       </div>
       <div class="card">
         <div class="ctag" style="color:var(--purple)">FOUNDATIONS</div>
         <h3>CompTIA A+ &amp; Network+</h3>
-        <p>Certified since the late 1990s. Hardware diagnostics, network architecture, systems administration. Commercial Diver (Divers Academy). The fundamentals everything else builds on.</p>
+        <p>Certified since the late 1990s — OSI model, switching, routing, subnets. Hardware diagnostics, network architecture. Commercial Diver (Divers Academy). <span class="hl">The fundamentals everything else builds on.</span></p>
       </div>
     </div>
   </div>
@@ -1065,7 +1090,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <!-- PIPELINE INFRASTRUCTURE -->
     <div style="margin-top:28px">
       <h2 class="sh">Redundant supply. No single point of failure.</h2>
-      <p class="bd">South Louisiana has the <span class="hl">densest natural gas pipeline infrastructure in North America</span>. Multiple interstate and intrastate systems serve the Lafayette area with redundant supply routes. Haynesville Shale production, Gulf of Mexico offshore, and Permian Basin via Texas pipelines all feed through this corridor.</p>
+      <p class="bd">South Louisiana has the <span class="hl">densest natural gas pipeline infrastructure in North America</span>. Multiple interstate and intrastate systems serve the Lafayette area with redundant supply routes. Haynesville Shale production, Gulf of America offshore, and Permian Basin via Texas pipelines all feed through this corridor.</p>
       <div class="srow">
         <div class="sv g"><div class="svv" style="color:var(--green);font-size:22px">1.8 <span style="font-size:12px">Bcf/d</span></div><div class="svl">Henry Hub Throughput</div></div>
         <div class="sv"><div class="svv" style="font-size:22px">13</div><div class="svl">Interconnected Pipelines</div></div>
@@ -1078,7 +1103,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="margin-top:28px;background:var(--bg-card);border:1px solid var(--border);border-left:4px solid var(--green);padding:24px 28px">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--green);letter-spacing:2px;margin-bottom:12px">THE MATH — WHY THIS MATTERS AT SCALE</div>
       <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin:0 0 12px 0">A 2 MW AI facility running 24/7 consumes ~17,500 MWh per year. At <strong style="color:var(--green)">$0.04/kWh</strong> (Henry Hub genset), that's <strong style="color:var(--green)">$700K/year</strong> in energy cost. The same facility in Virginia at $0.11/kWh pays <strong style="color:var(--red)">$1.93M/year</strong>. That's a <strong style="color:var(--text-bright)">$1.2M annual energy advantage</strong> — recurring, compounding, and widening as grid rates climb 20-30% while Henry Hub stays stable.</p>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin:0">And unlike grid-dependent operators facing <strong style="color:var(--amber)">4+ year interconnection queues</strong>, on-site nat gas generation bypasses the grid queue entirely. Gas interconnection requests for data centers jumped <strong style="color:var(--text-bright)">160% year-over-year</strong> — the industry is moving this direction. We're already there.</p>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin:0">And unlike grid-dependent operators facing <strong style="color:var(--amber)">4+ year interconnection queues</strong>, on-site nat gas generation bypasses the grid queue entirely. Gas interconnection requests for AI facilities jumped <strong style="color:var(--text-bright)">160% year-over-year</strong> — the industry is moving this direction. We're already there.</p>
     </div>
 
     <!-- SOLAR -->
@@ -1236,7 +1261,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 <div class="pad">
   <div class="eyebrow">Active Projects</div>
   <h2 class="stitle">Where ADC3K is building.</h2>
-  <p class="ssub">Five active projects — Lafayette to the Mississippi River corridor.</p>
+  <p class="ssub">Seven active projects — Lafayette to the Mississippi River corridor.</p>
 
   <div class="pcard reveal" style="margin-top:40px;border-top:3px solid #3b9eff">
     <div class="sbadge" style="background:rgba(59,154,255,0.08);color:#3b9eff;border:1px solid rgba(59,154,255,0.25)">AI FACTORY + MINI GRID — ENGINEERING BLUEPRINT</div>
@@ -1295,6 +1320,32 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <button type="button" class="deck-link" onclick="showPage('skydio')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW FULL DECK &rarr;</button>
   </div>
 
+  <div class="pcard reveal" style="border-top:3px solid var(--amber)">
+    <div class="sbadge" style="background:rgba(245,166,35,0.08);color:var(--amber);border:1px solid rgba(245,166,35,0.25)">STEP 1 — BOOTSTRAP FACTORY</div>
+    <h3>Baton Rouge Terminal — Pod Assembly</h3>
+    <div class="ploc">Lafayette, LA (Baton Rouge Corridor) &nbsp;&middot;&nbsp; Address TBD</div>
+    <p class="bd">Leased industrial building converted into ADC's first pod assembly line. Six manual stations — container prep, insulation, electrical, cooling, compute install, and test/QA. Cash flow from day one while the automated factory is designed. Becomes the custom &amp; defense-spec shop when Step 2 opens.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Type</div><div class="sval">Manual Assembly</div></div>
+      <div class="spec"><div class="slbl">Output</div><div class="sval">2&ndash;3 Pods/Month</div></div>
+      <div class="spec"><div class="slbl">Staff</div><div class="sval">8&ndash;12 People</div></div>
+      <div class="spec"><div class="slbl">Timeline</div><div class="sval" style="color:var(--amber)">60&ndash;90 Days</div></div>
+    </div>
+  </div>
+
+  <div class="pcard reveal" style="border-top:3px solid #00e87a">
+    <div class="sbadge" style="background:rgba(0,232,122,0.08);color:#00e87a;border:1px solid rgba(0,232,122,0.25)">STEP 2 — AI-AUTOMATED FACTORY</div>
+    <h3>New Iberia — Omniverse Pod Factory</h3>
+    <div class="ploc">14th Street &amp; Highway 90, New Iberia, LA &nbsp;&middot;&nbsp; GPS Pending</div>
+    <p class="bd">Purpose-built robotic pod factory designed entirely in NVIDIA Omniverse before a single wall goes up. Seven automated stations, Isaac Sim-trained robot arms, Metropolis AI vision for quality inspection, solar roof, and pipeline natural gas on-property. Digital twin runs 24/7 — every weld, every connection, every test logged and optimized by AI.</p>
+    <div class="pspecs">
+      <div class="spec"><div class="slbl">Output</div><div class="sval">8&ndash;12 Pods/Month</div></div>
+      <div class="spec"><div class="slbl">Power</div><div class="sval">Solar + Pipeline Gas</div></div>
+      <div class="spec"><div class="slbl">Digital Twin</div><div class="sval">NVIDIA Omniverse</div></div>
+      <div class="spec"><div class="slbl">Timeline</div><div class="sval" style="color:#00e87a">12&ndash;18 Months</div></div>
+    </div>
+  </div>
+
 </div>
 </div>
 
@@ -1305,7 +1356,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">WILLOW GLEN &nbsp;·&nbsp; AI FACTORY + MINI GRID</div>
     <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Partnership Info</button>
   </div>
-  <iframe src="willow-glen-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+  <iframe src="willow-glen-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
 </div>
 
 <!-- MARLIE I DECK -->
@@ -1315,7 +1366,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">MARLIE I &nbsp;·&nbsp; LAFAYETTE AI FACTORY</div>
     <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-  <iframe src="marlie-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+  <iframe src="marlie-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
 </div>
 
 <!-- ADC 3K DECK -->
@@ -1327,7 +1378,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">TRAPPEYS AI CENTER &nbsp;·&nbsp; VERMILION RIVER RESTORATION</div>
     <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-  <iframe src="trappeys-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+  <iframe src="trappeys-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
 </div>
 
 <!-- KLFT 1.1 DECK -->
@@ -1337,7 +1388,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">KLFT 1.1 &nbsp;·&nbsp; AUTONOMOUS AIRSPACE OPS HUB</div>
     <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-  <iframe src="klft-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+  <iframe src="klft-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
 </div>
 
 <!-- SKYDIO DECK -->
@@ -1347,7 +1398,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">SKYDIO &nbsp;·&nbsp; GULF COAST DRONE DEPLOYMENT HUB</div>
     <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
   </div>
-  <iframe src="skydio-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" allowfullscreen></iframe>
+  <iframe src="skydio-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
 </div>
 
 <!-- LEARN -->
@@ -1427,6 +1478,95 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <div class="ana"><p><strong>Think of it like electricity.</strong> Power plants generate electricity, but you need substations near your neighborhood to deliver it. Edge AI factories are the substations of the digital world — bringing computing power closer to where it's needed.</p></div>
   <p class="bd">The <span class="hl">Gulf Coast is a perfect location</span> for edge AI. Oil &amp; gas, petrochemical, ports, energy — all need high-performance computing nearby, not 1,000 miles away.</p>
 
+  <div class="sn" style="margin-top:36px">08 — THE FOUR NETWORKS INSIDE AN AI FACTORY</div>
+  <h2 class="sh">It's not just servers. It's how they talk to each other.</h2>
+  <p class="bd">Most people think an AI factory is just a room full of computers. It's not. A modern AI factory runs <span class="hl">four separate networks</span> — each doing a completely different job. Understanding these networks is what separates people who build real infrastructure from people who just buy servers and rack them.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">Network 1</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Compute Network</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The main highway. This is how GPUs talk to each other during AI training and inference — sending massive amounts of data at extreme speed. This network needs the <strong style="color:var(--accent)">highest bandwidth and lowest latency</strong> of all four. When people say "InfiniBand" — this is what they're talking about.</p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">Network 2</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Storage Network</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The data pipeline. Moves training data and model weights between storage arrays and GPUs. Needs <strong style="color:var(--green)">high throughput</strong> to keep GPUs fed — a starved GPU is a wasted GPU. Typically runs on high-speed Ethernet or dedicated storage fabric.</p>
+    </div>
+    <div style="background:#130d0a;border:1px solid #3a2515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Network 3</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">In-Band Management</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The control plane. Software-level monitoring, updates, job scheduling, telemetry. This is how <strong style="color:var(--amber)">AI orchestration software</strong> talks to every node — assigning workloads, collecting performance data, managing the fleet. Runs on standard Ethernet.</p>
+    </div>
+    <div style="background:#0d0a13;border:1px solid #251a3a;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;margin-bottom:10px">Network 4</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Out-of-Band Management</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The emergency channel. Hardware-level access that works even when the server's OS is crashed or unresponsive — <strong style="color:var(--purple)">power cycling, BIOS access, remote KVM</strong>. Like having a physical hand on every machine, from anywhere. Completely separate from all other networks for security.</p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>Why this matters for ADC:</strong> Every ADC 3K pod has all four networks built in from the factory. That's what "purpose-built" means — the compute fabric, the storage pipeline, the software control plane, and the hardware management channel are all designed together. Not bolted on after the fact.</p></div>
+
+  <div class="sn" style="margin-top:36px">09 — INFINIBAND vs. ETHERNET</div>
+  <h2 class="sh">Two ways to connect. One was built for AI.</h2>
+  <p class="bd"><span class="hl">Ethernet</span> is the networking technology you already know — it's what connects your laptop to the internet. Introduced in 1979, standardized by IEEE in the 1980s. It's the backbone of every local area network on earth. Reliable, universal, and constantly improving.</p>
+  <p class="bd"><span class="hl">InfiniBand</span> is different. It was purpose-built for high-performance computing — <span class="hr">extreme throughput, ultra-low latency, and minimal processing overhead</span>. Maintained by the InfiniBand Trade Association (IBTA). When AI workloads need GPUs to communicate at maximum speed with zero wasted cycles, InfiniBand is the answer.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Ethernet</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">The universal standard.</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Runs storage, management, and general traffic. RoCE (RDMA over Converged Ethernet) enables high-performance data transfers over Ethernet networks. <strong style="color:var(--amber)">Good for most workloads</strong> — storage access, monitoring, internet connectivity, client-facing inference.</p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">InfiniBand</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Built for AI compute.</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The compute network backbone. GPU-to-GPU communication during training and large-scale inference. <strong style="color:var(--green)">Non-negotiable for serious AI workloads</strong> — when thousands of GPUs need to synchronize in microseconds, nothing else comes close.</p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>The ADC approach:</strong> We use both. InfiniBand for the compute fabric (GPU-to-GPU), Ethernet for everything else (storage, management, client traffic). This is the same architecture NVIDIA uses in their DGX SuperPOD reference design — because it's the right tool for each job.</p></div>
+
+  <div class="sn" style="margin-top:36px">10 — NVIDIA NETWORKING STACK</div>
+  <h2 class="sh">The hardware that makes it all work.</h2>
+  <p class="bd">NVIDIA doesn't just make GPUs. They build the <span class="hl">entire networking stack</span> that connects them — switches, adapters, cables, and security processors. ADC runs an all-NVIDIA networking portfolio because every component is designed to work together.</p>
+
+  <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px">
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Switches</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">Quantum InfiniBand + Spectrum Ethernet</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">Quantum switches handle the high-speed compute fabric. Spectrum switches handle Ethernet traffic. Together they form the spine of the AI factory network.</p>
+    </div>
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px">Adapters</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">ConnectX SmartNICs + BlueField DPUs</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">ConnectX SmartNICs plug into every server for high-speed network access. BlueField DPUs add a security and infrastructure processing layer — offloading network tasks so GPUs focus on AI.</p>
+    </div>
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;margin-bottom:8px">Cables</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">LinkX Interconnects</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">Purpose-built cables and transceivers connecting everything together. Fiber and copper options for different distances and speeds. The physical wiring of the AI factory.</p>
+    </div>
+  </div>
+
+  <div class="sn" style="margin-top:36px">11 — WHY MODULAR NETWORKING CHANGES EVERYTHING</div>
+  <h2 class="sh">Software-controlled. Scalable in every direction.</h2>
+  <p class="bd">Here's what most people miss: the old way of building AI infrastructure meant one giant facility with a fixed network. If you needed more capacity, you built another giant facility. <span class="hl">That's not how ADC works.</span></p>
+  <p class="bd">Each ADC 3K pod is a <span class="hl">self-contained compute node</span> with all four networks built in. Connect it to the InfiniBand spine and it's part of the fabric. The network is <span class="hr">software-defined</span> — meaning we control routing, scheduling, and optimization from a central brain (MARLIE I), not from hardwired physical connections.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-size:15px;font-weight:700;color:var(--green);line-height:1.2;margin-bottom:10px">Scale North-South</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Add more pods to an existing site. Each pod plugs into the spine as a new leaf node. Capacity grows without rebuilding anything. Like adding cars to a train — the track is already there.</p>
+    </div>
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:24px">
+      <div style="font-size:15px;font-weight:700;color:var(--accent);line-height:1.2;margin-bottom:10px">Scale East-West</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Add new sites across Louisiana and the Gulf Coast. Each site connects back to the spine via fiber. The fabric gets wider, covering more geography, more customers, more edge locations.</p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>This is the advantage:</strong> A fixed mega-facility can only scale by building more mega-facilities. ADC scales by manufacturing more pods and placing them wherever power and cooling exist — on a concrete pad, on pilings in the marsh, on a barge in the Gulf. The network follows the pods. The software manages the fleet. That's more control than any traditional AI factory has ever had.</p></div>
+
   <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
     <div class="eyebrow">FAQ</div>
     <h2 class="sh">Frequently Asked Questions</h2>
@@ -1475,8 +1615,12 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
 
     <div class="sn">02 — YOUR INFORMATION</div>
-    <!-- Replace YOUR_FORM_ID: create account at formspree.io, create a new form, paste the ID here -->
-    <form id="cform" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:16px">
+    <form id="cform" action="https://formsubmit.co/scott@adc3k.com" method="POST" style="margin-top:16px">
+      <input type="hidden" name="_subject" value="ADC3K.com — New Contact Form Submission">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="https://adc3k.com/?submitted=true">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none">
       <input type="hidden" name="role" id="hrole" value="">
       <div class="fg2">
         <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="First name" required></div>
@@ -1561,6 +1705,12 @@ document.getElementById('cform').addEventListener('submit',async function(e){
     else{btn.textContent='ERROR — TRY AGAIN';btn.disabled=false;}
   }catch{btn.textContent='ERROR — TRY AGAIN';btn.disabled=false;}
 });
+if(new URLSearchParams(window.location.search).get('submitted')){
+  const f=document.getElementById('cform');if(f)f.style.display='none';
+  const s=document.getElementById('fsuccess');if(s)s.style.display='block';
+  showPage('connect');
+  history.replaceState(null,'',window.location.pathname);
+}
 function observeReveal(){
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
