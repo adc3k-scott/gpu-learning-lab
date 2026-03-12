@@ -153,8 +153,9 @@ class TestEventBus:
         bus.subscribe("err_test", bad)
         bus.subscribe("err_test", good_fn)
         await bus.publish(Event(event_type="err_test"))
-        await asyncio.sleep(0.2)
-        assert good   # good handler still ran
+        await asyncio.sleep(2.5)  # allow retry backoff (2 attempts * 0.5s + processing)
+        assert good   # good handler still ran despite bad handler's failure
+        assert bus.dead_letter_count >= 1  # bad handler was dead-lettered
 
     async def test_mode_is_memory(self, bus):
         assert bus.mode == "memory"

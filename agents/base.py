@@ -35,6 +35,7 @@ from typing import Any
 from uuid import uuid4
 
 from core.event_bus import Event, EventBus
+from core.metrics import metrics
 from core.state_store import StateStore
 from skills.base import SkillContext, SkillResult
 from skills.registry import SkillRegistry

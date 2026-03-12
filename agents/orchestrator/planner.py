@@ -18,6 +18,95 @@ from agents.orchestrator.job import Job, Step
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# Input sanitisation — defence against prompt injection
+# ---------------------------------------------------------------------------
+
+_MAX_DESCRIPTION_LEN = 2000  # hard cap on user input length
+
+# Patterns that attempt to override the system prompt
+_INJECTION_PATTERNS = [
+    re.compile(r"\[?\s*SYSTEM\s*[:\]]\s*", re.I),           # [SYSTEM: ...] or SYSTEM: ...
+    re.compile(r"<\s*system\s*>", re.I),                     # <system> tags
+    re.compile(r"ignore\s+(all\s+)?(previous|prior|above)\s+(instructions?|rules?|prompts?)", re.I),
+    re.compile(r"you\s+are\s+now\s+", re.I),                 # "you are now DAN"
+    re.compile(r"forget\s+(all\s+)?(previous|prior|your)\s+(instructions?|rules?)", re.I),
+    re.compile(r"new\s+instructions?\s*:", re.I),
+    re.compile(r"override\s+(system|prompt|instructions?)", re.I),
+    re.compile(r"act\s+as\s+(if\s+)?(you\s+)?(are|were)\s+", re.I),
+]
+
+
+def sanitize_input(description: str) -> str:
+    """
+    Sanitise user task description before it reaches the LLM or regex planner.
+
+    - Truncates to _MAX_DESCRIPTION_LEN characters
+    - Strips known prompt-injection patterns
+    - Removes control characters (except newline/tab)
+    """
+    # Length cap
+    if len(description) > _MAX_DESCRIPTION_LEN:
+        description = description[:_MAX_DESCRIPTION_LEN]
+        logger.warning("Task description truncated to %d chars", _MAX_DESCRIPTION_LEN)
+
+    # Strip control characters (keep \n \t)
+    description = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", description)
+
+    # Neutralise injection attempts by replacing with [FILTERED]
+    for pat in _INJECTION_PATTERNS:
+        if pat.search(description):
+            description = pat.sub("[FILTERED] ", description)
+            logger.warning("Prompt injection pattern detected and filtered")
+
+    return description.strip()
+
+
+_ALLOWED_ROLES = frozenset({
+    "orchestrator", "repo_analyst", "coder", "infra_manager",
+    "integration", "ui",
+})
+
+_ALLOWED_SKILLS = frozenset({
+    "", "file_manager", "http_client", "runpod", "runpod_exec",
+    "notion", "marlie_notion", "browser",
+})
+
+
+def _validate_step_dicts(step_dicts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """
+    Validate and sanitise LLM-generated step dicts.
+
+    - Reject unknown roles/skills
+    - Cap param string values at 5000 chars
+    - Remove any step with suspicious params
+    """
+    validated = []
+    for sd in step_dicts:
+        role = sd.get("assigned_role", "")
+        skill = sd.get("skill", "")
+
+        if role not in _ALLOWED_ROLES:
+            logger.warning("LLM produced unknown role %r — dropping step %r", role, sd.get("name"))
+            continue
+
+        if skill not in _ALLOWED_SKILLS:
+            logger.warning("LLM produced unknown skill %r — dropping step %r", skill, sd.get("name"))
+            continue
+
+        # Cap param string lengths
+        params = sd.get("params") or {}
+        clean_params = {}
+        for k, v in params.items():
+            if isinstance(v, str) and len(v) > 5000:
+                v = v[:5000]
+            clean_params[k] = v
+        sd["params"] = clean_params
+
+        validated.append(sd)
+
+    return validated
+
 
 # ---------------------------------------------------------------------------
 # Regex pattern rules (no LLM cost)
@@ -361,6 +450,60 @@ _PATTERNS: list[dict[str, Any]] = [
         ],
     },
     # ------------------------------------------------------------------
+    # RunPod GPU execution
+    # ------------------------------------------------------------------
+    {
+        "match": re.compile(
+            r"\b(run|execute|exec)\b.*(on|at|in)\s+(pod|runpod|gpu)\b"
+            r"|\bssh.*pod\b|\bpod.*command\b", re.I
+        ),
+        "steps": lambda desc: [
+            {"name": "exec_on_pod", "skill": "runpod_exec", "assigned_role": "integration",
+             "description": "Execute command on RunPod GPU pod",
+             "params": {"action": "execute", "pod_id": _extract_pod_id(desc), "command": ""}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\b(deploy|upload|push)\b.*(to|on)\s+(pod|runpod|gpu)\b"
+            r"|\bscp.*pod\b|\brsync.*pod\b", re.I
+        ),
+        "steps": lambda desc: [
+            {"name": "deploy_to_pod", "skill": "runpod_exec", "assigned_role": "integration",
+             "description": "Deploy files to RunPod GPU pod",
+             "params": {"action": "deploy", "pod_id": _extract_pod_id(desc),
+                        "local_path": _extract_path(desc), "remote_path": "/workspace/"}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\b(pull|download|fetch)\b.*(from)\s+(pod|runpod|gpu)\b"
+            r"|\bpod.*download\b|\bget.*results?.*pod\b", re.I
+        ),
+        "steps": lambda desc: [
+            {"name": "pull_from_pod", "skill": "runpod_exec", "assigned_role": "integration",
+             "description": "Pull files from RunPod GPU pod",
+             "params": {"action": "pull", "pod_id": _extract_pod_id(desc),
+                        "remote_path": "", "local_path": "workspace/"}},
+        ],
+    },
+    {
+        "match": re.compile(
+            r"\b(run|launch)\b.*(script|training|train|benchmark)\b.*(on|at)\s+(pod|runpod|gpu)\b"
+            r"|\bgpu.*train\b|\btrain.*gpu\b", re.I
+        ),
+        "steps": lambda desc: [
+            {"name": "start_gpu_pod", "skill": "runpod", "assigned_role": "integration",
+             "description": "Ensure GPU pod is running",
+             "params": {"action": "start_pod", "pod_id": _extract_pod_id(desc)}},
+            {"name": "run_on_gpu", "skill": "runpod_exec", "assigned_role": "integration",
+             "description": "Deploy and run script on GPU pod",
+             "params": {"action": "run_script", "pod_id": _extract_pod_id(desc),
+                        "local_path": _extract_path(desc)},
+             "depends_on": ["start_gpu_pod"]},
+        ],
+    },
+    # ------------------------------------------------------------------
     # Browser automation
     # ------------------------------------------------------------------
     {
@@ -425,6 +568,13 @@ _SYSTEM_PROMPT = (
     "    action=stop_pod,      pod_id=<id>\n"
     "    action=terminate_pod, pod_id=<id>   (permanent — use with caution)\n"
     "\n"
+    "  runpod_exec (role: integration) -- Execute on RunPod GPU pods via SSH:\n"
+    "    action=execute,    pod_id=<id>, command=<shell command>, timeout=300\n"
+    "    action=deploy,     pod_id=<id>, local_path=<path>, remote_path='/workspace/'\n"
+    "    action=pull,       pod_id=<id>, remote_path=<path>, local_path='workspace/'\n"
+    "    action=run_script, pod_id=<id>, local_path=<script>, args='', timeout=300\n"
+    "    NOTE: pod must be RUNNING first (use runpod skill to start)\n"
+    "\n"
     "  notion (role: integration) -- Notion workspace:\n"
     "    action=search,           query=<str>\n"
     "    action=get_page,         page_id=<uuid>\n"
@@ -487,16 +637,18 @@ _SYSTEM_PROMPT = (
 
 async def _llm_plan_async(description: str, client: Any, model: str) -> list[dict[str, Any]]:
     """Call Claude in a thread executor -- never blocks the event loop."""
+    safe_desc = sanitize_input(description)
+
     def _call() -> list[dict[str, Any]]:
         response = client.messages.create(
             model=model,
             max_tokens=1024,
             system=_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": description}],
+            messages=[{"role": "user", "content": safe_desc}],
         )
         raw = response.content[0].text.strip()
         raw = re.sub(r"^```[a-zA-Z]*\n?", "", raw).rstrip("`").strip()
-        return json.loads(raw)
+        return _validate_step_dicts(json.loads(raw))
 
     return await asyncio.get_event_loop().run_in_executor(None, _call)
 
@@ -504,6 +656,83 @@ async def _llm_plan_async(description: str, client: Any, model: str) -> list[dic
 # ---------------------------------------------------------------------------
 # Public factory -- async
 # ---------------------------------------------------------------------------
+
+_REPLAN_SYSTEM_PROMPT = (
+    "You are the Replanner for Mission Control.\n"
+    "A task was partially executed but a step failed. You must decide:\n"
+    "  1. Can the remaining work be achieved by a different approach?\n"
+    "  2. If yes, output a revised JSON step array (same format as the Planner).\n"
+    "  3. If no, output the JSON: [{\"abort\": true, \"reason\": \"...\"}]\n"
+    "\n"
+    "You will receive:\n"
+    "  - The original task description\n"
+    "  - Steps already completed (with their results)\n"
+    "  - The failed step (with its error)\n"
+    "  - Any remaining PENDING steps\n"
+    "\n"
+    "RULES:\n"
+    "- Do NOT repeat completed steps.\n"
+    "- You may modify, replace, or remove remaining steps.\n"
+    "- You may add new steps if needed.\n"
+    "- Use the same roles, skills, and params as the Planner.\n"
+    "- Output ONLY valid JSON, no markdown.\n"
+    "\n" + _SYSTEM_PROMPT.split("AVAILABLE AGENT ROLES:")[1]
+)
+
+
+async def replan(
+    original_description: str,
+    completed_steps: list[dict[str, Any]],
+    failed_step: dict[str, Any],
+    pending_steps: list[dict[str, Any]],
+    llm_client: Any = None,
+    llm_model: str = "claude-opus-4-5",
+) -> list[dict[str, Any]] | None:
+    """
+    Given a partial execution with a failure, ask Claude for a revised plan.
+
+    Returns:
+        - A list of new step dicts to replace remaining work, OR
+        - None if the LLM says to abort or replanning fails.
+    """
+    if llm_client is None:
+        logger.warning("No LLM client for replanning — cannot replan")
+        return None
+
+    context = (
+        f"ORIGINAL TASK: {original_description}\n\n"
+        f"COMPLETED STEPS:\n{json.dumps(completed_steps, indent=2)}\n\n"
+        f"FAILED STEP:\n{json.dumps(failed_step, indent=2)}\n\n"
+        f"REMAINING PENDING STEPS:\n{json.dumps(pending_steps, indent=2)}\n"
+    )
+
+    def _call() -> list[dict[str, Any]]:
+        response = llm_client.messages.create(
+            model=llm_model,
+            max_tokens=1024,
+            system=_REPLAN_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": context}],
+        )
+        raw = response.content[0].text.strip()
+        raw = re.sub(r"^```[a-zA-Z]*\n?", "", raw).rstrip("`").strip()
+        return json.loads(raw)
+
+    try:
+        step_dicts = await asyncio.get_event_loop().run_in_executor(None, _call)
+    except Exception as exc:
+        logger.warning("Replanning LLM call failed: %s", exc)
+        return None
+
+    # Check for abort signal
+    if step_dicts and isinstance(step_dicts[0], dict) and step_dicts[0].get("abort"):
+        reason = step_dicts[0].get("reason", "unknown")
+        logger.info("Replanner decided to abort: %s", reason)
+        return None
+
+    step_dicts = _validate_step_dicts(step_dicts)
+    logger.info("Replanner produced %d revised step(s)", len(step_dicts))
+    return step_dicts
+
 
 async def plan(
     description: str,
@@ -519,6 +748,9 @@ async def plan(
     Falls back to Claude when no pattern matches and a client is provided.
     Last resort: single generic step for repo_analyst to handle.
     """
+    # Sanitise input before any processing
+    description = sanitize_input(description)
+
     job = Job(
         title=title or description[:80],
         description=description,

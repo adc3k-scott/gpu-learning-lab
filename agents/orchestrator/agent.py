@@ -35,7 +35,7 @@ from typing import Any
 
 from agents.base import BaseAgent
 from agents.orchestrator.job import Job, JobStatus, Step, StepStatus
-from agents.orchestrator.planner import plan
+from agents.orchestrator.planner import plan, replan
 from core.event_bus import Event
 
 logger = logging.getLogger(__name__)
@@ -191,11 +191,91 @@ class OrchestratorAgent(BaseAgent):
             step.status = StepStatus.PENDING   # reset so ready_steps() picks it up
 
         ready = job.ready_steps()
+
+        # --- Adaptive replanning ---
+        # If no ready steps, there are exhausted failures, and we haven't replanned yet,
+        # ask the LLM for a revised plan before giving up.
+        if (
+            not ready
+            and not job.is_done()
+            and job.has_failures()
+            and not job.metadata.get("replanned")
+            and self._llm_client is not None
+        ):
+            await self._attempt_replan(job)
+            # Re-check after replanning
+            ready = job.ready_steps()
+
         for step in ready:
             asyncio.create_task(self._dispatch_step(job, step))
 
         if not ready and job.is_done():
             await self._finalise_job(job)
+
+    async def _attempt_replan(self, job: Job) -> None:
+        """Ask the planner for a revised plan after a step failure."""
+        job.metadata["replanned"] = True  # only try once per job
+
+        completed = [
+            {"name": s.name, "result": s.result}
+            for s in job.steps if s.status == StepStatus.COMPLETED
+        ]
+        failed = next(
+            ({"name": s.name, "error": s.error, "params": s.params}
+             for s in job.steps if s.status == StepStatus.FAILED),
+            None,
+        )
+        pending = [
+            {"name": s.name, "description": s.description, "skill": s.skill,
+             "assigned_role": s.assigned_role, "params": s.params}
+            for s in job.steps if s.status == StepStatus.PENDING
+        ]
+
+        if not failed:
+            return
+
+        logger.info("[%s] Attempting replan for job %s", self.agent_id, job.job_id)
+
+        revised = await replan(
+            original_description=job.description,
+            completed_steps=completed,
+            failed_step=failed,
+            pending_steps=pending,
+            llm_client=self._llm_client,
+            llm_model=self._llm_model,
+        )
+
+        if not revised:
+            logger.info("[%s] Replan returned no alternative — job will fail", self.agent_id)
+            return
+
+        # Remove all PENDING and FAILED steps, replace with revised plan
+        job.steps = [s for s in job.steps if s.status == StepStatus.COMPLETED]
+
+        # Build name→id mapping including completed steps
+        name_to_id = {s.name: s.step_id for s in job.steps}
+
+        for sd in revised:
+            step = Step(
+                name=sd.get("name", "step"),
+                description=sd.get("description", ""),
+                assigned_role=sd.get("assigned_role", "orchestrator"),
+                skill=sd.get("skill", ""),
+                params=sd.get("params") or {},
+                depends_on=[name_to_id[n] for n in sd.get("depends_on", []) if n in name_to_id],
+            )
+            name_to_id[step.name] = step.step_id
+            job.steps.append(step)
+
+        await self._persist_job(job)
+        self._push_job_event(job.job_id, {
+            "type": "job.replanned",
+            "steps": [s.to_dict() for s in job.steps],
+        })
+        logger.info(
+            "[%s] Replanned job %s with %d new step(s)",
+            self.agent_id, job.job_id, len(revised),
+        )
 
     async def _dispatch_step(self, job: Job, step: Step) -> None:
         step.start()
