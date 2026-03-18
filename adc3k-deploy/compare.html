@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blackwell vs Rubin — Side by Side</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:700;color:#e8edf2;letter-spacing:0.5px}
+.header h1 span{color:#76b900}
+.header-links{display:flex;gap:8px}
+.header-links a{font-size:12px;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;white-space:nowrap}
+.btn-orange{background:#ff6b35;color:#fff}
+.btn-green{background:#76b900;color:#fff}
+
+.hero{text-align:center;padding:40px 20px 20px}
+.hero h2{font-size:28px;font-weight:800;color:#e8edf2;margin-bottom:8px}
+.hero h2 .old{color:#607080;text-decoration:line-through;font-weight:400}
+.hero h2 .new{color:#76b900}
+.hero p{font-size:14px;color:#607080;max-width:700px;margin:0 auto}
+
+.section-title{padding:24px 20px 8px;font-size:14px;font-weight:700;color:#76b900;letter-spacing:0.5px;text-transform:uppercase}
+.section-sub{padding:0 20px 12px;font-size:12px;color:#607080}
+
+/* Comparison table */
+.comp-table{margin:0 16px 20px;border-radius:8px;overflow:hidden;border:1px solid #1a2436}
+.comp-table table{width:100%;border-collapse:collapse}
+.comp-table th,.comp-table td{padding:10px 14px;text-align:left;font-size:12px;border-bottom:1px solid #1a2436}
+.comp-table th{background:#111820;color:#607080;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-size:10px}
+.comp-table th.col-old{color:#607080}
+.comp-table th.col-new{color:#76b900}
+.comp-table th.col-rubin{color:#00e5ff}
+.comp-table td{background:#0d1117;color:#8899aa}
+.comp-table td:first-child{font-weight:600;color:#e8edf2;width:22%}
+.comp-table td.old{color:#607080}
+.comp-table td.current{color:#ff6b35;font-weight:700}
+.comp-table td.future{color:#76b900;font-weight:700}
+.comp-table td.rubin{color:#00e5ff;font-weight:700}
+.comp-table tr:last-child td{border-bottom:none}
+
+/* Multiplier callouts */
+.mult-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 16px;margin-bottom:20px}
+.mult-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px;text-align:center}
+.mult-card .label{font-size:10px;color:#607080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.mult-card .value{font-size:24px;font-weight:800;color:#76b900}
+.mult-card .sub{font-size:9px;color:#4a5568;margin-top:2px}
+.mult-card.rubin .value{color:#00e5ff}
+
+/* ADC advantage cards */
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 16px}
+.adv-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px;border-left:3px solid #76b900}
+.adv-card .atitle{font-size:12px;font-weight:700;color:#e8edf2;margin-bottom:6px}
+.adv-card .adesc{font-size:11px;color:#8899aa;line-height:1.4}
+.adv-card .adesc strong{color:#76b900}
+
+/* Storage section */
+.storage-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:16px;margin:8px 16px 20px}
+.storage-card h3{font-size:13px;font-weight:700;color:#e8edf2;margin-bottom:8px}
+.storage-card p{font-size:12px;color:#8899aa;line-height:1.5;margin-bottom:8px}
+.storage-card strong{color:#ff6b35}
+
+/* Tokens per watt */
+.tpw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 16px;margin-bottom:20px}
+.tpw-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px;text-align:center}
+.tpw-card .gen{font-size:10px;color:#607080;text-transform:uppercase;letter-spacing:0.5px}
+.tpw-card .perf{font-size:20px;font-weight:800;margin:4px 0}
+.tpw-card .perf.old-gen{color:#607080}
+.tpw-card .perf.cur-gen{color:#ff6b35}
+.tpw-card .perf.next-gen{color:#76b900}
+.tpw-card .detail{font-size:9px;color:#4a5568}
+
+/* Software intelligence section */
+.sw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:8px 16px;margin-bottom:20px}
+.sw-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px}
+.sw-card .stitle{font-size:12px;font-weight:700;color:#00d68f;margin-bottom:4px}
+.sw-card .sdesc{font-size:11px;color:#8899aa;line-height:1.4}
+.sw-card .sdesc strong{color:#e8edf2}
+
+.footer{text-align:center;padding:30px 20px;font-size:11px;color:#4a5568}
+.footer strong{color:#76b900}
+
+@media(max-width:1024px){
+  .mult-grid{grid-template-columns:repeat(2,1fr)}
+  .adv-grid{grid-template-columns:repeat(2,1fr)}
+  .tpw-grid{grid-template-columns:repeat(3,1fr)}
+  .sw-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .mult-grid{grid-template-columns:1fr}
+  .adv-grid{grid-template-columns:1fr}
+  .tpw-grid{grid-template-columns:1fr}
+  .hero h2{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Blackwell vs <span>Rubin</span> — The Real Numbers</h1>
+  <div class="header-links">
+    <a href="/ncp-study" class="btn-orange">Study Guide</a>
+    <a href="/ncp-cheat" class="btn-green">Cheat Sheet</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h2>Stop Building for <span class="old">Yesterday</span>. Build for <span class="new">Tomorrow</span>.</h2>
+  <p>Three generations side by side. Know exactly what's shipping now, what's coming next, and why your facility design determines your competitive position for the next decade.</p>
+</div>
+
+<!-- GPU COMPARISON -->
+<div class="section-title">GPU Silicon — Per Chip</div>
+<div class="section-sub">Hopper (legacy) vs Blackwell Ultra (shipping now) vs Rubin (H2 2026)</div>
+
+<div class="comp-table">
+<table>
+<tr><th>Spec</th><th class="col-old">H100 (Hopper)</th><th class="col-new">B300 (Blackwell Ultra)</th><th class="col-rubin">R100 (Rubin)</th></tr>
+<tr><td>FP8 Training</td><td class="old">3.96 PFLOPS</td><td class="current">~5 PFLOPS</td><td class="rubin">~35 PFLOPS</td></tr>
+<tr><td>FP4 Inference</td><td class="old">N/A</td><td class="current">15 PFLOPS</td><td class="rubin">50 PFLOPS</td></tr>
+<tr><td>GPU Memory</td><td class="old">80 GB HBM3</td><td class="current">288 GB HBM3e</td><td class="rubin">288 GB HBM4</td></tr>
+<tr><td>Memory BW</td><td class="old">3.35 TB/s</td><td class="current">8 TB/s</td><td class="rubin">22 TB/s</td></tr>
+<tr><td>NVLink BW</td><td class="old">900 GB/s (Gen 4)</td><td class="current">1,800 GB/s (Gen 5)</td><td class="rubin">3,600 GB/s (Gen 6)</td></tr>
+<tr><td>TDP</td><td class="old">700W</td><td class="current">1,400W</td><td class="rubin">TBD</td></tr>
+<tr><td>Process</td><td class="old">TSMC 4nm</td><td class="current">TSMC 4nm</td><td class="rubin">TSMC 3nm</td></tr>
+<tr><td>Transistors</td><td class="old">80B</td><td class="current">208B</td><td class="rubin">336B</td></tr>
+</table>
+</div>
+
+<!-- MULTIPLIER CALLOUTS -->
+<div class="mult-grid">
+  <div class="mult-card"><div class="label">FP4 Inference</div><div class="value">3.3x</div><div class="sub">Rubin vs Blackwell per GPU</div></div>
+  <div class="mult-card"><div class="label">Memory BW</div><div class="value">2.75x</div><div class="sub">Rubin HBM4 vs Blackwell HBM3e</div></div>
+  <div class="mult-card"><div class="label">NVLink BW</div><div class="value">2x</div><div class="sub">3,600 GB/s vs 1,800 GB/s</div></div>
+  <div class="mult-card rubin"><div class="label">vs Hopper</div><div class="value">12.6x</div><div class="sub">Rubin FP4 vs H100 FP8</div></div>
+</div>
+
+<!-- RACK-SCALE COMPARISON -->
+<div class="section-title">Rack-Scale — NVL72 Systems</div>
+<div class="section-sub">DGX H100 SuperPOD rack vs GB300 NVL72 vs Rubin NVL72</div>
+
+<div class="comp-table">
+<table>
+<tr><th>Spec</th><th class="col-old">DGX H100 (4/rack)</th><th class="col-new">GB300 NVL72</th><th class="col-rubin">Rubin NVL72</th></tr>
+<tr><td>GPUs per Rack</td><td class="old">32 (8×4 nodes)</td><td class="current">72</td><td class="rubin">72</td></tr>
+<tr><td>Rack FP4</td><td class="old">N/A</td><td class="current">1.1 ExaFLOPS</td><td class="rubin">3.6 ExaFLOPS</td></tr>
+<tr><td>GPU Memory</td><td class="old">2.56 TB</td><td class="current">~21 TB</td><td class="rubin">~21 TB (HBM4)</td></tr>
+<tr><td>NVLink Aggregate</td><td class="old">7.2 TB/s (intra-node only)</td><td class="current">130 TB/s (all-to-all)</td><td class="rubin">260 TB/s (all-to-all)</td></tr>
+<tr><td>Rack Power</td><td class="old">~40 kW</td><td class="current">~132 kW</td><td class="rubin">250+ kW</td></tr>
+<tr><td>Cooling</td><td class="old">Air (blanking plates, airflow)</td><td class="current">Liquid mandatory</td><td class="rubin">Liquid mandatory</td></tr>
+<tr><td>CPU</td><td class="old">x86 host</td><td class="current">Grace (72 Arm cores)</td><td class="rubin">Vera (88 Olympus cores)</td></tr>
+<tr><td>NIC</td><td class="old">ConnectX-7 (NDR 400G)</td><td class="current">ConnectX-8 (XDR 800G)</td><td class="rubin">ConnectX-9</td></tr>
+<tr><td>DPU</td><td class="old">BlueField-3 (16 cores)</td><td class="current">BlueField-3</td><td class="rubin">BlueField-4 (64 cores)</td></tr>
+<tr><td>All-to-All GPU?</td><td class="old">No — 8 GPUs/node only</td><td class="current">Yes — 72 GPUs act as one</td><td class="rubin">Yes — 72 GPUs act as one</td></tr>
+</table>
+</div>
+
+<!-- TOKENS PER WATT -->
+<div class="section-title">Tokens per Watt — The Only Metric That Matters</div>
+<div class="section-sub">Same power budget, wildly different output. This is why facility design is a 10-year bet.</div>
+
+<div class="tpw-grid">
+  <div class="tpw-card"><div class="gen">Hopper (H100)</div><div class="perf old-gen">1x</div><div class="detail">Baseline: ~40 kW/rack, air cooled</div></div>
+  <div class="tpw-card"><div class="gen">Blackwell Ultra (B300)</div><div class="perf cur-gen">~4x</div><div class="detail">~56 kW/rack (DGX) or 132 kW (NVL72), liquid</div></div>
+  <div class="tpw-card"><div class="gen">Rubin (R100)</div><div class="perf next-gen">~13x</div><div class="detail">250+ kW/rack, liquid mandatory, 3nm</div></div>
+</div>
+
+<!-- SOFTWARE INTELLIGENCE -->
+<div class="section-title">Software-Defined Speed — How NVIDIA Uses Software to Direct Flow</div>
+<div class="section-sub">It's not just faster chips. The software stack routes data through the AI factory like air traffic control.</div>
+
+<div class="sw-grid">
+  <div class="sw-card"><div class="stitle">SHARP — In-Network Computing</div><div class="sdesc">Reduction operations happen <strong>inside the switches</strong>, not the GPUs. Quantum-X800: 14.4 TFLOPS of compute in the switch silicon itself. 5x faster AllReduce, 9x faster Barrier. GPUs spend less time communicating, more time computing.</div></div>
+  <div class="sw-card"><div class="stitle">Adaptive Routing</div><div class="sdesc">Switches pick the <strong>least-loaded output port</strong> per-packet in real time. No static routing tables. Traffic flows around congestion automatically. Combined with ARN (Adaptive Routing Notification) — switches warn neighbors upstream.</div></div>
+  <div class="sw-card"><div class="stitle">DCQCN Congestion Control</div><div class="sdesc">Switch detects congestion → marks <strong>ECN bit</strong> → receiver sends CNP → sender reduces rate. <strong>Alpha value</strong> per queue pair tracks severity. PFC (Priority Flow Control) = last resort pause frames. No packets dropped, no retransmits.</div></div>
+  <div class="sw-card"><div class="stitle">NVLink-C2C</div><div class="sdesc">Grace CPU connects to Blackwell GPU at <strong>900 GB/s</strong> — not through PCIe. 7x faster than PCIe Gen5. CPU is no longer the bottleneck. Data preprocessing flows directly into GPU memory without bus contention.</div></div>
+  <div class="sw-card"><div class="stitle">GPUDirect Storage + RDMA</div><div class="sdesc"><strong>NVMe → GPU memory with zero CPU bounce.</strong> Storage data goes straight to where it's needed. 3.5x bandwidth, 3.5x lower latency. Combined with GDS, the entire data path from disk to GPU to network avoids the CPU entirely.</div></div>
+  <div class="sw-card"><div class="stitle">Rail-Optimized Topology</div><div class="sdesc">GPU 0 from every node → same leaf switches. GPU 1 → different set. <strong>AllReduce follows rail patterns</strong> — stays within one leaf group. Minimizes spine hops. The physical cabling IS the optimization — topology = performance.</div></div>
+</div>
+
+<!-- STORAGE -->
+<div class="section-title">Storage — The Elephant in the Room</div>
+<div class="section-sub">Everyone talks FLOPS. Nobody talks about where the models and data actually live.</div>
+
+<div class="storage-card">
+  <h3>The Storage Problem at Scale</h3>
+  <p>A single LLM training run can consume <strong>petabytes</strong> of data. Models themselves are growing: GPT-4 class models = ~1.8 TB of weights. Training checkpoints every few hours = another few TB each. Multiply by experiments, versions, datasets.</p>
+  <p><strong>NVIDIA's minimum spec:</strong> 40 GBps per node of sustained storage I/O. For a 72-node SuperPOD SU, that's <strong>2.88 TBps of aggregate storage bandwidth</strong> — just to keep the GPUs fed.</p>
+  <p><strong>Supported parallel file systems:</strong> Lustre (DDN EXAScaler), IBM Spectrum Scale (GPFS), WekaFS, BeeGFS — all GDS-certified, all POSIX-compliant.</p>
+  <p><strong>The real differentiator:</strong> GPUDirect Storage bypasses CPU entirely. Data flows NVMe → GPU memory via DMA. Without GDS, the CPU becomes a bottleneck copying data back and forth. With GDS: <strong>3.5x bandwidth, 3.5x lower latency.</strong></p>
+  <p><strong>Storage tiering matters:</strong> Hot tier (NVMe flash, active training data) → Warm tier (SSD, recent checkpoints) → Cold tier (HDD/object store, archived models/datasets). The facility needs space, power, and cooling for ALL tiers — not just the GPUs.</p>
+</div>
+
+<div class="storage-card">
+  <h3>Why ADC's Approach Works</h3>
+  <p><strong>Immersion cooling handles everything.</strong> GPUs, NVMe drives, network switches — all submerged. No hot spots in storage arrays. No separate cooling zone for the "storage room."</p>
+  <p><strong>EC-110 single-phase immersion at PUE 1.02</strong> means more of every watt goes to actual compute and storage I/O, not to moving air around with blanking plates and hoping the hot aisle containment holds.</p>
+  <p>The guys running air-cooled facilities at 40 kW/rack are spending <strong>30-50% of their power bill on cooling.</strong> We spend 2%. That delta compounds with every rack added.</p>
+</div>
+
+<!-- AIRFLOW VS IMMERSION -->
+<div class="section-title">Air Cooling vs Liquid — Why This Isn't Even Close Anymore</div>
+
+<div class="comp-table">
+<table>
+<tr><th>Factor</th><th class="col-old">Air Cooled</th><th class="col-new">Immersion (EC-110)</th></tr>
+<tr><td>Max kW/rack</td><td class="old">~30 kW (with blanking plates, hot/cold aisle)</td><td class="future">200+ kW</td></tr>
+<tr><td>PUE</td><td class="old">1.3-1.5</td><td class="future">1.02</td></tr>
+<tr><td>Noise</td><td class="old">85+ dB (jet engine levels)</td><td class="future">Near silent</td></tr>
+<tr><td>Failure points</td><td class="old">Fans, filters, CRAC units, dampers, actuators</td><td class="future">Pumps (dual redundant)</td></tr>
+<tr><td>Supports Blackwell?</td><td class="old">DGX B300 needs liquid</td><td class="future">Yes — any density</td></tr>
+<tr><td>Supports Rubin?</td><td class="old">Not possible (250+ kW/rack)</td><td class="future">Yes</td></tr>
+<tr><td>Hot spots</td><td class="old">Constant battle (airflow management)</td><td class="future">Eliminated — uniform temp</td></tr>
+<tr><td>Humidity control</td><td class="old">Required (40-60% RH)</td><td class="future">Not applicable</td></tr>
+<tr><td>Blanking plates</td><td class="old">Every unused U, or airflow bypasses</td><td class="future">Not needed</td></tr>
+<tr><td>Floor space</td><td class="old">Hot aisle + cold aisle + CRAC + plenum</td><td class="future">Tank footprint only</td></tr>
+</table>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="section-title">The Bottom Line</div>
+
+<div class="adv-grid">
+  <div class="adv-card"><div class="atitle">Build the Facility Right Once</div><div class="adesc">Liquid cooling infrastructure supports <strong>every generation forward</strong>. Blackwell today, Rubin next year, whatever comes after. Air cooling maxes out at H100 — you hit a wall and have to retrofit or rebuild.</div></div>
+  <div class="adv-card"><div class="atitle">Power Efficiency Compounds</div><div class="adesc">PUE 1.02 vs 1.4 = <strong>28% less power for the same compute</strong>. At utility scale (20+ MW), that's millions per year. Henry Hub nat gas + solar offset + battery = lowest cost per watt in the industry.</div></div>
+  <div class="adv-card"><div class="atitle">GPU Upgrade = Swap, Not Rebuild</div><div class="adesc">Same rack form factor, same cooling infrastructure, same power distribution. When GB300 NVL72 drops in, the facility doesn't change. When Rubin NVL72 ships, <strong>same swap</strong>. The building is the moat.</div></div>
+  <div class="adv-card"><div class="atitle">Storage Scales with Compute</div><div class="adesc">Immersion cools storage arrays too. No separate thermal zone. <strong>GPUDirect Storage + InfiniBand fabric</strong> = 40+ GBps per node sustained. Models get bigger, storage grows alongside.</div></div>
+  <div class="adv-card"><div class="atitle">Software-Defined Performance</div><div class="adesc">SHARP, adaptive routing, DCQCN, GPUDirect — the software stack <strong>routes every byte optimally</strong>. Like ATC for data. The hardware provides the runway, the software flies the planes.</div></div>
+  <div class="adv-card"><div class="atitle">Vertical Integration = No Gaps</div><div class="adesc">NVIDIA makes all 6 chips. ADC deploys the full stack — no third-party gaps, no compatibility issues. <strong>Mission Control manages the facility end to end.</strong> One vendor, one stack, one throat to choke.</div></div>
+</div>
+
+<div class="footer">
+  <strong>Advantage Design & Construction</strong> — Building AI Factories, Not Data Centers<br>
+  Willow Glen Primary Hub | MARLIE I Command Center | ADC 3K Pods<br>
+  adc3k.com
+</div>
+
+</body>
+</html>

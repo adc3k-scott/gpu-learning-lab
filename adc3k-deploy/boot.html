@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AI Factory Boot Sequence</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 60px}
+
+.back{display:inline-block;color:#76b900;text-decoration:none;font-size:12px;font-weight:700;margin-bottom:8px}
+
+.hdr{text-align:center;padding:16px 0 8px}
+.hdr h1{font-size:20px;font-weight:800;color:#e8edf2;letter-spacing:1px}
+.hdr h1 span{color:#76b900}
+.hdr .sub{font-size:11px;color:#607080;margin-top:4px}
+.hdr .src{font-size:10px;color:#4a5568;margin-top:6px}
+
+/* Step card */
+.step{background:#111820;border:1px solid #1a2436;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.step-hdr{padding:14px 16px 6px;display:flex;align-items:baseline;gap:10px;cursor:pointer}
+.step-hdr .num{font-size:20px;font-weight:900;color:#76b900;min-width:32px}
+.step-hdr .title{font-size:14px;font-weight:700;color:#e8edf2;line-height:1.3}
+.step-hdr .title small{display:block;font-size:11px;font-weight:400;color:#607080;margin-top:2px}
+.step-body{padding:0 16px 14px 58px}
+.step-body ul{list-style:none;padding:0}
+.step-body li{font-size:11px;color:#8090a0;padding:4px 0;border-bottom:1px solid #0d1218}
+.step-body li:last-child{border-bottom:none}
+.step-body li strong{color:#c0ccd8}
+.step-body li .cmd{font-family:'Courier New',monospace;font-size:10px;color:#76b900;background:#0d1218;padding:1px 5px;border-radius:3px}
+.step-body li .tool{color:#ff6b35;font-weight:600}
+.step-body li .why{color:#00e5ff;font-style:italic}
+
+/* Connector line */
+.connector{text-align:center;color:#1a2436;font-size:20px;line-height:12px;margin:-4px 0}
+
+/* Summary box */
+.summary{background:linear-gradient(135deg,#1a2a1a,#111820);border:1px solid #2a4a2a;border-radius:12px;padding:16px;margin-bottom:14px}
+.summary h2{font-size:15px;font-weight:700;color:#76b900;margin-bottom:10px}
+.summary p{font-size:12px;color:#c0ccd8;margin-bottom:8px;padding-left:12px;border-left:2px solid #76b900}
+.summary p:last-child{margin-bottom:0}
+
+/* Cert path */
+.certs{background:linear-gradient(135deg,#2a1a10,#111820);border:1px solid #4a2a1a;border-radius:12px;padding:16px;margin-bottom:14px}
+.certs h2{font-size:15px;font-weight:700;color:#ff6b35;margin-bottom:10px}
+.cert-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #1a2436;align-items:center}
+.cert-row:last-child{border-bottom:none}
+.cert-badge{min-width:70px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;text-align:center}
+.cert-done{background:#76b900;color:#0a0e14}
+.cert-next{background:#ff6b35;color:#fff}
+.cert-future{background:#1a2436;color:#607080}
+.cert-info{font-size:11px;color:#8090a0}
+.cert-info strong{color:#e8edf2}
+
+.tagline{text-align:center;padding:16px 0;font-size:10px;color:#3a4a5a}
+.tagline a{color:#607080;text-decoration:none}
+
+@media(min-width:768px){
+  .wrap{max-width:640px;padding:24px}
+  .hdr h1{font-size:26px}
+  .step-hdr .title{font-size:15px}
+  .step-body li{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/hub" class="back">&larr; Mission Control</a>
+  <div class="hdr">
+    <h1>AI FACTORY <span>BOOT SEQUENCE</span></h1>
+    <div class="sub">How You Turn On an NVIDIA AI Factory &mdash; Step by Step</div>
+    <div class="src">Based on NVIDIA NCP-AIO Training Outline + AI Factory Design Guide</div>
+  </div>
+
+  <div class="summary">
+    <h2>The Big Picture</h2>
+    <p>An AI factory isn't one thing you power on. It's <strong>13 layers</strong> you bring up in order &mdash; site prep and credentials first, hardware second, networking third, management and workloads last.</p>
+    <p>Skip a step or do them out of order and the whole thing breaks. This is the sequence.</p>
+  </div>
+
+  <!-- PRE-STEP: SITE SURVEY -->
+  <div class="step" style="border-color:#ff6b3530">
+    <div class="step-hdr">
+      <span class="num" style="color:#ff6b35">00a</span>
+      <div class="title">Site Survey &amp; Readiness<small>Before you buy a single GPU</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Power capacity assessment</strong> &mdash; how many megawatts available? What's the utility interconnect agreement? Transformer capacity? A single SuperPOD can pull <strong>3-5 MW</strong>. You need commitments from the utility before signing hardware POs.</li>
+        <li><strong>Cooling capacity</strong> &mdash; water supply (volume, temperature, quality) for cooling towers or dry coolers. Immersion tanks need fluid procurement (EC-110, 3M Novec, etc). CDU placement planning. Heat rejection strategy (where does the waste heat go?).</li>
+        <li><strong>Network connectivity</strong> &mdash; fiber to the building. Dark fiber or lit service? Latency to nearest peering point. Redundant paths from different carriers. This determines tenant experience.</li>
+        <li><strong>Physical space</strong> &mdash; floor load capacity (NVL72 racks are heavy), ceiling height (for overhead cabling/cooling), raised floor vs slab. Clear path for forklift delivery of racks.</li>
+        <li><strong>Environmental</strong> &mdash; permits, zoning (industrial use), noise ordinances (cooling equipment), environmental impact (water discharge). Louisiana: check DEQ, Army Corps if near waterways.</li>
+        <li><strong>Redundancy design</strong> &mdash; N+1 or 2N power? Generator fuel storage and runtime calculations. UPS sizing. Fire suppression (clean agent, not water, around GPU racks).</li>
+        <li><strong>Network architecture</strong> &mdash; design the InfiniBand fabric topology (fat-tree, rail-optimized). How many spine/leaf switches? Port count math determines rack count limits.</li>
+        <li><span class="why">This is the make-or-break step. A bad site kills the project. Willow Glen scores 94 because power, water, fiber, and space are all pre-existing at the former Entergy station.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- PRE-STEP: CREDENTIALS & LICENSES -->
+  <div class="step" style="border-color:#ff6b3530">
+    <div class="step-hdr">
+      <span class="num" style="color:#ff6b35">00b</span>
+      <div class="title">Credentials, Licenses &amp; Keys<small>You can't install anything without these</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>NGC API Key</strong> &mdash; required to pull containers, models, and Helm charts from NVIDIA's NGC catalog. Generated at <strong>ngc.nvidia.com</strong>. Without this, you can't deploy any NVIDIA AI software. Every node that pulls containers needs it.</li>
+        <li><strong>NVIDIA AI Enterprise (NVAIE) License</strong> &mdash; the enterprise software subscription. Unlocks support, security patches, certified containers, Run:ai, and production-grade tools. Per-GPU annual license. <span class="why">This is NVIDIA's recurring revenue model &mdash; hardware is one-time, software is annual.</span></li>
+        <li><strong>Base Command Manager (BCM) License</strong> &mdash; included with DGX systems or purchased separately for third-party servers (Supermicro, Dell, etc). Required to manage the cluster. No BCM = no centralized management.</li>
+        <li><strong>Run:ai License</strong> &mdash; comes with NVAIE or purchased standalone. Required for GPU orchestration and multi-tenancy. The control plane needs license activation before it schedules anything.</li>
+        <li><strong>InfiniBand UFM License</strong> &mdash; Unified Fabric Manager. Base version may be included with switches; advanced features (telemetry, SHARP management, cyber security) require UFM Enterprise license.</li>
+        <li><strong>NVIDIA Inception membership</strong> &mdash; free program for startups. Gets you cloud credits, technical support, co-marketing, investor connects, and discounts on DGX. <span class="why">Get ADC registered at GTC &mdash; Inception desk on the expo floor.</span></li>
+        <li><strong>NVentures relationship</strong> &mdash; NVIDIA's VC arm. Not a license, but a strategic relationship. They invest in companies building on the NVIDIA stack. <span class="why">Wednesday 2 PM at GTC.</span></li>
+        <li><strong>SSH keys &amp; certificates</strong> &mdash; generate keypairs for all admin accounts before cluster bring-up. Root access to head node, BMC/IPMI credentials for every server, switch admin passwords. Store in a vault (HashiCorp Vault, not a spreadsheet).</li>
+        <li><strong>DNS &amp; TLS certificates</strong> &mdash; internal DNS for node naming (gpu-node-001.wg.adc3k.local). TLS certs for dashboards, APIs, and management interfaces. Wildcard cert or per-service from internal CA.</li>
+        <li><strong>Monitoring credentials</strong> &mdash; Prometheus, Grafana, Alertmanager. Service accounts for DCGM exporters, UFM telemetry, BCM health checks. These feed your NOC dashboards.</li>
+        <li><span class="why">Missing one key or expired license can halt an entire deployment. Get all of these sorted BEFORE hardware arrives. Put them in a secure vault with access controls.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">01</span>
+      <div class="title">Physical Infrastructure<small>Power + Cooling + Rack &amp; Stack</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Power delivery</strong> &mdash; redundant feeds, PDUs, UPS. An NVL72 rack pulls <strong>120+ kW</strong>. A SuperPOD needs <strong>megawatts</strong>.</li>
+        <li><strong>Cooling loops online</strong> &mdash; CDUs pumping, immersion tanks filled (EC-110), cold plates seated. <span class="why">Nothing powers on until cooling is verified.</span></li>
+        <li><strong>Racks mounted</strong> &mdash; servers, switches, cabling. InfiniBand cables connected (passive copper for short runs, active optical for longer).</li>
+        <li><strong>ADC 3-layer power stack</strong> &mdash; nat gas + solar (primary), grid (backup), diesel gensets (emergency). All three verified before compute powers on.</li>
+        <li><strong>Out-of-band management</strong> &mdash; BMC/IPMI network up so you can reach every node remotely even if the main network is down.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">02</span>
+      <div class="title">GPU &amp; Compute Hardware<small>Drivers, NVSM, DCGM</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Install GPU drivers</strong> &mdash; NVIDIA driver package on every compute node. Must match your GPU generation (Blackwell, Hopper, etc).</li>
+        <li><span class="tool">NVSM</span> (NVIDIA System Management) &mdash; validates server hardware health: GPUs, NVLink, PCIe, memory, fans, thermals. First sanity check.</li>
+        <li><span class="tool">DCGM</span> (Data Center GPU Manager) &mdash; real-time telemetry on every GPU. Temperature, power draw, ECC errors, NVLink status. Feeds into Prometheus/Grafana.</li>
+        <li><span class="cmd">dcgmi diag -r 3</span> &mdash; run Level 3 diagnostics. Tests GPU memory, compute, NVLink bandwidth. Catches bad GPUs before workloads hit them.</li>
+        <li><strong>nvidia-smi</strong> &mdash; quick CLI check. Shows GPU model, driver version, memory usage, temperature, power draw, running processes.</li>
+        <li><span class="why">Every GPU must pass diagnostics before moving to Step 3. One bad GPU in a training run can corrupt the entire job.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">03</span>
+      <div class="title">Networking &mdash; InfiniBand Fabric<small>Quantum Switches + UFM</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>InfiniBand spine</strong> &mdash; Quantum-2 switches (400 Gb/s per port). This is the backbone connecting every rack in the building.</li>
+        <li><span class="tool">UFM</span> (Unified Fabric Manager) &mdash; discovers the fabric topology, assigns LIDs (local IDs), manages routing, monitors health. The "brain" of the network.</li>
+        <li><strong>SHARP</strong> (Scalable Hierarchical Aggregation and Reduction Protocol) &mdash; enables in-network compute. Math operations happen <strong>on the switch</strong> before data reaches the GPU. Reduces traffic by up to 2x.</li>
+        <li><strong>Subnet Manager</strong> &mdash; runs on UFM. Manages all InfiniBand addressing and routing. One primary, one standby for failover.</li>
+        <li><span class="cmd">ibstat</span> / <span class="cmd">ibdiagnet</span> &mdash; verify link status, check for errors, validate fabric health.</li>
+        <li><strong>NVLink mesh</strong> &mdash; GPU-to-GPU within a node (and across nodes in NVL72). 900 GB/s per GPU. Verified separately from InfiniBand.</li>
+        <li><span class="why">The network is the computer. If InfiniBand has errors, training jobs will hang or produce garbage results.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">04</span>
+      <div class="title">BlueField DPUs<small>Infrastructure on a Chip</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>BlueField bring-up</strong> &mdash; each DPU runs its own ARM-based OS (DOCA). Boot it, configure networking, verify connectivity.</li>
+        <li><strong>What it offloads</strong> &mdash; networking, encryption, firewall, storage I/O, RDMA, microsegmentation. All handled on the DPU so the GPU never touches it.</li>
+        <li><span class="tool">BlueMan</span> service &mdash; management daemon running on the DPU. Handles provisioning, monitoring, firmware updates.</li>
+        <li><strong>Zero-trust security</strong> &mdash; DPU enforces network policies at the hardware level. Even if a VM or container is compromised, the DPU controls what traffic gets in/out.</li>
+        <li><strong>GPUDirect RDMA</strong> &mdash; DPU enables network data to flow directly to GPU memory, bypassing CPU. Critical for distributed training performance.</li>
+        <li><span class="why">DPUs are what separate an AI factory from a regular server farm. They turn "dumb NICs" into programmable infrastructure.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">05</span>
+      <div class="title">Storage<small>Parallel File Systems + GPUDirect</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Parallel file system</strong> &mdash; Lustre, GPFS (Spectrum Scale), or WekaFS. Data striped across hundreds of NVMe drives for maximum throughput.</li>
+        <li><span class="tool">GPUDirect Storage</span> &mdash; data flows straight from NVMe to GPU memory, bypassing CPU. Eliminates the biggest bottleneck in the data pipeline.</li>
+        <li><strong>Performance testing</strong> &mdash; benchmark read/write speeds before running workloads. If storage can't feed GPUs fast enough, expensive GPUs sit idle waiting for data.</li>
+        <li><strong>Tiered storage</strong> &mdash; hot tier (NVMe, fast), warm tier (SSD), cold tier (HDD/object storage). Training data on hot, checkpoints on warm, archives on cold.</li>
+        <li><strong>Capacity planning</strong> &mdash; a single LLM training run can generate <strong>terabytes</strong> of checkpoints. Plan for it or your storage fills up mid-training.</li>
+        <li><span class="why">The #1 performance killer in AI training isn't slow GPUs — it's slow storage. GPUs can consume data faster than most storage systems can deliver it.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">06</span>
+      <div class="title">Base Command Manager (BCM)<small>The Foreman</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Head node install</strong> &mdash; BCM lives on the head node. This is the management server that controls everything else.</li>
+        <li><strong>Cluster bring-up</strong> &mdash; PXE boot compute nodes from head node. BCM pushes OS images, drivers, and configuration automatically.</li>
+        <li><span class="tool">cmsh</span> (Cluster Management Shell) &mdash; CLI for everything. Add nodes, assign roles, manage images, check health. <span class="cmd">device list</span>, <span class="cmd">device status</span>.</li>
+        <li><strong>Node categories</strong> &mdash; group nodes by role (compute, storage, login, management). Each category gets its own software image and config.</li>
+        <li><strong>Software images</strong> &mdash; BCM manages golden images for each node type. Update the image, push to all nodes in that category at once.</li>
+        <li><strong>User management</strong> &mdash; LDAP integration, SSH keys, role-based access. Control who can submit jobs and to which resources.</li>
+        <li><strong>Monitoring</strong> &mdash; BCM collects health from every node, switch, and GPU. Alerts on failures, thermals, hardware errors.</li>
+        <li><span class="why">BCM is the foundation. Everything above it — Slurm, Kubernetes, Run:ai — depends on BCM having the cluster healthy and provisioned.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">07</span>
+      <div class="title">Slurm<small>HPC Job Scheduler</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Install Slurm</strong> &mdash; BCM assigns the <span class="cmd">slurmclient</span> role to compute nodes. Head node runs the Slurm controller.</li>
+        <li><strong>Partitions</strong> &mdash; divide the cluster into queues (partitions). E.g., "training" (big GPU jobs), "inference" (small fast jobs), "debug" (testing).</li>
+        <li><strong>Job submission</strong> &mdash; <span class="cmd">sbatch</span> for batch jobs, <span class="cmd">srun</span> for interactive, <span class="cmd">salloc</span> for resource allocation. Users submit, Slurm schedules.</li>
+        <li><strong>GRES (Generic Resources)</strong> &mdash; how Slurm tracks GPUs. <span class="cmd">--gres=gpu:4</span> requests 4 GPUs for a job.</li>
+        <li><strong>Fair-share scheduling</strong> &mdash; prevents one user from hogging all GPUs. Balances resources across teams/tenants.</li>
+        <li><span class="why">Slurm is the traditional way. Still used for tightly coupled HPC workloads (CFD, molecular dynamics, seismic). NVIDIA now owns SchedMD (Slurm developer).</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 8 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">08</span>
+      <div class="title">Kubernetes<small>Container Orchestration</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>K8s cluster</strong> &mdash; control plane on management nodes, worker nodes on compute. BCM handles the underlying OS, K8s handles the containers.</li>
+        <li><span class="tool">GPU Operator</span> &mdash; auto-installs NVIDIA drivers, container toolkit, device plugins, and DCGM inside K8s. Drop a node in, it becomes GPU-ready automatically.</li>
+        <li><strong>Device plugin</strong> &mdash; exposes GPUs to Kubernetes. Pods request GPUs like any other resource: <span class="cmd">nvidia.com/gpu: 2</span>.</li>
+        <li><strong>Container toolkit</strong> &mdash; lets containers access the GPU driver. The bridge between Docker/containerd and NVIDIA hardware.</li>
+        <li><strong>Namespaces</strong> &mdash; isolate tenants. Team A's workloads can't see or affect Team B's. Each namespace gets resource quotas.</li>
+        <li><span class="why">Kubernetes is the foundation for Run:ai and modern AI workloads. Most AI frameworks ship as containers — K8s is how you run them at scale.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 9 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">09</span>
+      <div class="title">Run:ai<small>GPU Orchestration &amp; Multi-Tenancy</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>Sits on top of Kubernetes</strong> &mdash; Run:ai adds GPU-aware scheduling that K8s doesn't have natively.</li>
+        <li><strong>Dynamic GPU Fractions</strong> &mdash; split one GPU across multiple workloads, or gang multiple GPUs for one job. No GPU sits idle.</li>
+        <li><strong>Projects &amp; Departments</strong> &mdash; organize tenants. Each gets a GPU quota with guaranteed minimums and borrowable maximums.</li>
+        <li><strong>Fairness policies</strong> &mdash; if Team A isn't using their GPUs, Team B can borrow them. When Team A needs them back, Run:ai preempts gracefully.</li>
+        <li><strong>Workload types</strong> &mdash; Training (long, multi-GPU), Interactive (Jupyter notebooks), Inference (serving endpoints). Each scheduled differently.</li>
+        <li><strong>Dashboard</strong> &mdash; visual GPU utilization across the entire cluster. See who's using what, what's idle, what's queued.</li>
+        <li><span class="why">This is where the money is. Run:ai can push GPU utilization from 30-40% (typical) to 80%+. That's 2x the revenue from the same hardware.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 10 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">10</span>
+      <div class="title">GPU Partitioning (MIG)<small>Slice GPUs for Shared Use</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><strong>MIG</strong> (Multi-Instance GPU) &mdash; hardware-level GPU partitioning. One A100/H100 becomes up to <strong>7 independent GPU instances</strong>.</li>
+        <li><strong>Each instance</strong> gets its own compute, memory, and cache. Fully isolated — one tenant's workload can't see or affect another's.</li>
+        <li><strong>Use case</strong> &mdash; inference workloads that don't need a full GPU. Serve 7 different models on one physical GPU.</li>
+        <li><span class="cmd">nvidia-smi mig</span> &mdash; create, list, and destroy MIG instances. Configure profiles (1g.5gb, 2g.10gb, 3g.20gb, etc).</li>
+        <li><strong>Run:ai + MIG</strong> &mdash; Run:ai can schedule workloads to MIG instances automatically. Combines software scheduling with hardware isolation.</li>
+        <li><span class="why">MIG + Run:ai fractions = maximum GPU utilization. Hardware isolation where you need security, software fractions where you need flexibility.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="connector">|</div>
+
+  <!-- STEP 11 -->
+  <div class="step">
+    <div class="step-hdr">
+      <span class="num">11</span>
+      <div class="title">AI Software &amp; NGC<small>Pull Containers, Run Workloads</small></div>
+    </div>
+    <div class="step-body">
+      <ul>
+        <li><span class="tool">NGC Catalog</span> &mdash; NVIDIA's container registry. Pre-optimized containers for PyTorch, TensorFlow, NeMo, Triton, RAPIDS, and hundreds more.</li>
+        <li><strong>Triton Inference Server</strong> &mdash; serves trained models in production. Handles batching, model versioning, multi-framework support. This is your inference engine.</li>
+        <li><strong>NeMo</strong> &mdash; framework for building and fine-tuning LLMs. Training, RLHF, guardrails, deployment — end to end.</li>
+        <li><strong>RAPIDS</strong> &mdash; GPU-accelerated data science. Pandas, scikit-learn, graph analytics — all on GPU instead of CPU. 10-100x faster.</li>
+        <li><span class="cmd">ngc registry image list</span> &mdash; browse available containers. <span class="cmd">docker pull nvcr.io/nvidia/pytorch:xx.xx-py3</span> to grab one.</li>
+        <li><strong>NVIDIA AI Enterprise</strong> &mdash; the enterprise software suite. Includes all the above plus support, security patches, and certified containers.</li>
+        <li><span class="why">This is where the factory starts producing. Everything before this was building the factory. Now it's running.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary" style="margin-top:20px">
+    <h2>The One-Liner Version</h2>
+    <p><strong>Power &amp; cool it</strong> &rarr; <strong>verify the GPUs</strong> &rarr; <strong>wire the fabric</strong> &rarr; <strong>bring up DPUs</strong> &rarr; <strong>mount storage</strong> &rarr; <strong>install BCM</strong> &rarr; <strong>add Slurm</strong> &rarr; <strong>layer Kubernetes</strong> &rarr; <strong>deploy Run:ai</strong> &rarr; <strong>partition GPUs</strong> &rarr; <strong>pull containers and run</strong></p>
+    <p>Bottom up: hardware, then networking, then management, then scheduling, then workloads. Each layer depends on every layer below it.</p>
+    <p>This is the Willow Glen boot sequence. This is what NCP-AIO certifies you to do.</p>
+  </div>
+
+  <!-- CERT PATH -->
+  <div class="certs">
+    <h2>NVIDIA Certification Path</h2>
+    <div class="cert-row">
+      <span class="cert-badge cert-done">NCA</span>
+      <div class="cert-info"><strong>Associate</strong> &mdash; AI infrastructure fundamentals. Entry level.</div>
+    </div>
+    <div class="cert-row">
+      <span class="cert-badge cert-next">NCP-AII</span>
+      <div class="cert-info"><strong>AI Infrastructure</strong> &mdash; Design &amp; plan AI factories. <strong>Your exam: Wed Mar 18, 4 PM.</strong></div>
+    </div>
+    <div class="cert-row">
+      <span class="cert-badge cert-future">NCP-AIO</span>
+      <div class="cert-info"><strong>AI Operations</strong> &mdash; Build &amp; run AI factories. This boot sequence is the curriculum. <strong>Next cert.</strong></div>
+    </div>
+    <div class="cert-row">
+      <span class="cert-badge cert-future">NCP-AIN</span>
+      <div class="cert-info"><strong>AI Networking</strong> &mdash; InfiniBand, SHARP, UFM, fabric design. Deep network specialist.</div>
+    </div>
+  </div>
+
+  <!-- GLOSSARY -->
+  <div class="card" style="margin-top:6px">
+    <div class="card-hdr" style="padding-bottom:12px">
+      <h2 style="font-size:16px;font-weight:800;color:#ff6b35">Glossary<small style="color:#607080">Quick-reference &mdash; tap a term, get the answer</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">SHARP</div>
+        <div class="desc"><strong>Scalable Hierarchical Aggregation and Reduction Protocol.</strong> InfiniBand switches do math operations (all-reduce, broadcast) right on the switch silicon instead of making GPUs do it. Cuts network traffic up to 2x. Built into Quantum-2 switches &mdash; not software you install.</div>
+      </div>
+      <div class="comp">
+        <div class="name">MIG</div>
+        <div class="desc"><strong>Multi-Instance GPU.</strong> Hardware-level GPU partitioning. Splits one physical GPU into up to 7 independent instances, each with its own compute, memory, and cache. Fully isolated &mdash; one tenant can't see another. Used for inference workloads that don't need a full GPU.</div>
+      </div>
+      <div class="comp">
+        <div class="name">BCM</div>
+        <div class="desc"><strong>Base Command Manager.</strong> NVIDIA's cluster management platform. Provisions bare metal, deploys OS images, manages firmware, assigns node roles. CLI is <strong>cmsh</strong> (cluster management shell). The foundation &mdash; everything else sits on top of it.</div>
+      </div>
+      <div class="comp">
+        <div class="name">DCGM</div>
+        <div class="desc"><strong>Data Center GPU Manager.</strong> Real-time monitoring for every GPU &mdash; temperature, power draw, ECC errors, NVLink status, utilization. Feeds into Prometheus/Grafana. <strong>dcgmi diag</strong> runs health checks. If a GPU is going bad, DCGM catches it first.</div>
+      </div>
+      <div class="comp">
+        <div class="name">DPU (BlueField)</div>
+        <div class="desc"><strong>Data Processing Unit.</strong> A full ARM-based computer on a network card. Offloads networking, security, encryption, firewall, storage I/O from the CPU/GPU. Runs its own OS (DOCA). Enables zero-trust security at hardware level. "Infrastructure on a chip."</div>
+      </div>
+      <div class="comp">
+        <div class="name">DOCA</div>
+        <div class="desc"><strong>Data Center Infrastructure on a Chip Architecture.</strong> The SDK and runtime that runs on BlueField DPUs. Think of it as the operating system for the DPU &mdash; lets you program what the DPU offloads (firewall rules, encryption, storage, network policies).</div>
+      </div>
+      <div class="comp">
+        <div class="name">UFM</div>
+        <div class="desc"><strong>Unified Fabric Manager.</strong> The brain of the InfiniBand network. Discovers topology, assigns addresses (LIDs), manages routing, monitors health, enables SHARP. Runs the Subnet Manager. One primary + one standby for failover.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVLink</div>
+        <div class="desc"><strong>GPU-to-GPU interconnect.</strong> 900 GB/s per GPU (Blackwell). Connects GPUs within a node and across nodes in NVL72 racks. NVLink Switch manages the topology. This is how 72 GPUs act like one giant GPU. Way faster than PCIe.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVL72</div>
+        <div class="desc"><strong>72-GPU rack.</strong> A single rack with 72 Blackwell GPUs connected via NVLink. Pulls 120+ kW. Requires liquid cooling. The building block of a SuperPOD. All 72 GPUs share memory and compute as one unified system.</div>
+      </div>
+      <div class="comp">
+        <div class="name">SuperPOD</div>
+        <div class="desc"><strong>NVIDIA's reference AI factory architecture.</strong> Multiple NVL72 racks connected by InfiniBand spine. Managed by BCM. The full-scale deployment &mdash; what Willow Glen is being designed around. Scales from hundreds to tens of thousands of GPUs.</div>
+      </div>
+      <div class="comp">
+        <div name="name">InfiniBand</div>
+        <div class="desc"><strong>High-speed interconnect fabric.</strong> 400 Gb/s per port (Quantum-2). Ultra-low latency, RDMA-capable. Not just a network &mdash; supports in-network compute (SHARP). The backbone connecting every rack in an AI factory. Managed by UFM.</div>
+      </div>
+      <div class="comp">
+        <div class="name">RDMA</div>
+        <div class="desc"><strong>Remote Direct Memory Access.</strong> Lets one machine read/write another machine's memory directly, bypassing the CPU and OS kernel on both sides. Zero-copy, ultra-low latency. This is why InfiniBand is faster than Ethernet for AI training.</div>
+      </div>
+      <div class="comp">
+        <div class="name">GPUDirect Storage</div>
+        <div class="desc"><strong>Data path from NVMe drives straight to GPU memory.</strong> Bypasses CPU entirely. The storage equivalent of RDMA. Eliminates the CPU bottleneck when loading training data. Critical for keeping GPUs fed.</div>
+      </div>
+      <div class="comp">
+        <div class="name">GPUDirect RDMA</div>
+        <div class="desc"><strong>Network data flows directly to GPU memory.</strong> Bypasses CPU. Enabled by BlueField DPU. Essential for distributed training where GPUs on different nodes exchange gradients at high speed.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Run:ai</div>
+        <div class="desc"><strong>GPU orchestration platform.</strong> Kubernetes-native. Dynamic GPU Fractions &mdash; splits or gangs GPUs per workload. Multi-tenant scheduling, fair-share policies, priority queues. Pushes GPU utilization from ~30% to 80%+. NVIDIA acquired Run:ai in 2024.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Slurm</div>
+        <div class="desc"><strong>HPC job scheduler.</strong> Traditional batch queue system. Submit jobs, Slurm allocates nodes and GPUs. Partitions, fair-share, GRES (GPU resources). NVIDIA acquired SchedMD (Slurm developer) Dec 2025. Still used for tightly coupled HPC workloads.</div>
+      </div>
+      <div class="comp">
+        <div class="name">GPU Operator</div>
+        <div class="desc"><strong>Kubernetes operator for NVIDIA GPUs.</strong> Auto-installs drivers, container toolkit, device plugins, DCGM inside K8s clusters. Drop a new node in, GPU Operator makes it GPU-ready automatically. No manual driver installs.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NGC</div>
+        <div class="desc"><strong>NVIDIA GPU Cloud Catalog.</strong> Container registry with pre-optimized AI containers &mdash; PyTorch, TensorFlow, NeMo, Triton, RAPIDS. Pull and run. Already tuned for NVIDIA hardware. Also hosts pre-trained models and Helm charts.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Triton</div>
+        <div class="desc"><strong>NVIDIA Triton Inference Server.</strong> Serves trained models in production. Handles dynamic batching, model versioning, multi-framework (PyTorch, TensorFlow, ONNX). Your inference engine &mdash; this is how tenants deploy models as API endpoints.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NeMo</div>
+        <div class="desc"><strong>NVIDIA's LLM framework.</strong> End-to-end: data prep, training, fine-tuning, RLHF, guardrails (NeMo Guardrails), deployment. Built for enterprise-scale LLM development on NVIDIA hardware.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVSM</div>
+        <div class="desc"><strong>NVIDIA System Management.</strong> Validates server hardware health &mdash; GPUs, NVLink, PCIe, memory, fans, thermals. First sanity check on new hardware before anything else runs. Different from DCGM (NVSM = hardware validation, DCGM = ongoing monitoring).</div>
+      </div>
+      <div class="comp">
+        <div class="name">NCCL</div>
+        <div class="desc"><strong>NVIDIA Collective Communications Library.</strong> Handles multi-GPU and multi-node communication for distributed training &mdash; all-reduce, all-gather, broadcast. Works over NVLink (within node) and InfiniBand (across nodes). The glue for distributed training.</div>
+      </div>
+      <div class="comp">
+        <div class="name">ECC</div>
+        <div class="desc"><strong>Error Correcting Code.</strong> Memory error detection and correction built into GPU HBM. Single-bit errors get corrected automatically. Multi-bit errors get flagged. DCGM monitors ECC counts &mdash; rising errors mean a GPU is degrading and needs replacement.</div>
+      </div>
+      <div class="comp">
+        <div class="name">HBM</div>
+        <div class="desc"><strong>High Bandwidth Memory.</strong> Memory stacked directly on the GPU package. HBM3e: up to 288 GB at 8 TB/s bandwidth per GPU. HBM4 coming (Samsung, Booth #1207 at GTC). This is where model weights live &mdash; the GPU's fuel tank.</div>
+      </div>
+      <div class="comp">
+        <div class="name">CDU</div>
+        <div class="desc"><strong>Coolant Distribution Unit.</strong> Pumps liquid coolant to server cold plates or immersion tanks, removes heat via heat exchangers. The heart of any liquid cooling system. Moves heat from the chips to where it can be rejected (or reused).</div>
+      </div>
+      <div class="comp">
+        <div class="name">PFLOPS</div>
+        <div class="desc"><strong>PetaFLOPS.</strong> One quadrillion (10^15) floating-point operations per second. A single Blackwell GPU delivers ~20 PFLOPS of AI compute (FP4/FP8). A SuperPOD delivers exaflops. This is how you measure AI factory horsepower.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Inference vs Training</div>
+        <div class="desc"><strong>Training</strong> = teaching the model (expensive, long, lots of GPUs). <strong>Inference</strong> = using the trained model to get answers (cheaper, fast, revenue-generating). Training is a cost. Inference is a product. AI factories do both.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Accelerated Computing</div>
+        <div class="desc">The new term that replaces "HPC." GPU-accelerated everything &mdash; AI, simulation, rendering, analytics, scientific computing. The entire infrastructure is accelerated, not just the GPUs. Every chip (DPU, switch, NVLink) removes overhead so GPUs do nothing but compute.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NGC API Key</div>
+        <div class="desc"><strong>Authentication token for NVIDIA's container registry.</strong> Generated at ngc.nvidia.com. Required to pull any container, model, or Helm chart. Without it, you can't deploy NVIDIA AI software. Treat it like a password &mdash; store in a vault, rotate regularly.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVAIE</div>
+        <div class="desc"><strong>NVIDIA AI Enterprise.</strong> The enterprise software subscription. Per-GPU annual license. Unlocks Run:ai, certified NGC containers, security patches, enterprise support, and production-grade tools. This is NVIDIA's recurring revenue model &mdash; hardware once, software forever.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVIDIA Inception</div>
+        <div class="desc"><strong>Free startup program.</strong> Cloud credits, technical support, co-marketing, investor introductions, hardware discounts. No cost to join. Apply online or register at the Inception desk on the GTC expo floor. ADC qualifies &mdash; building on full NVIDIA stack.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVentures</div>
+        <div class="desc"><strong>NVIDIA's corporate venture capital arm.</strong> Invests in companies building on the NVIDIA platform. Strategic money &mdash; comes with NVIDIA engineering support and market access, not just capital. Target: Wed Mar 18, 2 PM at GTC.</div>
+      </div>
+      <div class="comp">
+        <div class="name">BMC / IPMI</div>
+        <div class="desc"><strong>Baseboard Management Controller / Intelligent Platform Management Interface.</strong> Out-of-band management built into every server. Lets you power on/off, access console, check hardware health remotely &mdash; even when the OS is down. Your lifeline when something breaks at 3 AM.</div>
+      </div>
+      <div class="comp">
+        <div class="name">PXE Boot</div>
+        <div class="desc"><strong>Preboot Execution Environment.</strong> Boots servers over the network from the BCM head node. No USB drives, no local install media. BCM pushes the OS image to bare metal nodes automatically. This is how you provision 100+ nodes without touching each one.</div>
+      </div>
+      <div class="comp">
+        <div class="name">PDU</div>
+        <div class="desc"><strong>Power Distribution Unit.</strong> Distributes power to racks. Smart PDUs monitor per-outlet power draw, enable remote power cycling, and feed data to monitoring dashboards. You need to know exactly how much power each rack pulls.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Fat-Tree Topology</div>
+        <div class="desc"><strong>Standard InfiniBand network design.</strong> Leaf switches connect to servers, spine switches connect leaf switches. Every node can talk to every other node at full bandwidth. Non-blocking &mdash; no bottlenecks. This is the SuperPOD reference architecture.</div>
+      </div>
+      <div class="comp">
+        <div class="name">LID</div>
+        <div class="desc"><strong>Local Identifier.</strong> The InfiniBand equivalent of an IP address. Assigned by the Subnet Manager (UFM). Every port on every switch and HCA gets a unique LID. The fabric uses LIDs for routing. If LIDs are wrong, nothing talks.</div>
+      </div>
+      <div class="comp">
+        <div class="name">GRES</div>
+        <div class="desc"><strong>Generic Resources (Slurm).</strong> How Slurm tracks GPUs. Jobs request GPUs with <strong>--gres=gpu:4</strong>. Slurm matches the request to available nodes. Without GRES configured, Slurm doesn't know GPUs exist.</div>
+      </div>
+      <div class="comp">
+        <div class="name">K8s / Kubernetes</div>
+        <div class="desc"><strong>Container orchestration platform.</strong> Manages containerized workloads at scale. Control plane schedules pods to worker nodes. NVIDIA GPU Operator makes K8s GPU-aware. Run:ai sits on top of K8s for GPU-specific scheduling. The industry standard for deploying AI at scale.</div>
+      </div>
+      <div class="comp">
+        <div class="name">RLHF</div>
+        <div class="desc"><strong>Reinforcement Learning from Human Feedback.</strong> How LLMs like Claude and ChatGPT get fine-tuned after initial training. Humans rate model outputs, model learns from the ratings. NeMo framework handles this on NVIDIA hardware.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tagline">
+    Advantage Design &amp; Construction | Lafayette LA<br>
+    <a href="/card">scott@adc3k.com</a> &nbsp;|&nbsp; <a href="/hub">Mission Control</a>
+  </div>
+</div>
+</body>
+</html>

@@ -87,6 +87,25 @@ class Step:
             "max_attempts": self.max_attempts,
         }
 
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Step":
+        return cls(
+            step_id=data.get("step_id", uuid4().hex[:8]),
+            name=data.get("name", ""),
+            description=data.get("description", ""),
+            assigned_role=data.get("assigned_role", ""),
+            skill=data.get("skill", ""),
+            params=data.get("params") or {},
+            depends_on=data.get("depends_on") or [],
+            status=StepStatus(data.get("status", "pending")),
+            result=data.get("result"),
+            error=data.get("error", ""),
+            started_at=data.get("started_at"),
+            finished_at=data.get("finished_at"),
+            attempts=data.get("attempts", 0),
+            max_attempts=data.get("max_attempts", 2),
+        )
+
 
 @dataclass
 class Job:
@@ -180,3 +199,20 @@ class Job:
             "steps": [s.to_dict() for s in self.steps],
             "metadata": self.metadata,
         }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Job":
+        steps = [Step.from_dict(s) for s in data.get("steps", [])]
+        return cls(
+            job_id=data.get("job_id", str(uuid4())),
+            title=data.get("title", ""),
+            description=data.get("description", ""),
+            requested_by=data.get("requested_by", "user"),
+            steps=steps,
+            status=JobStatus(data.get("status", "pending")),
+            created_at=data.get("created_at", time.time()),
+            started_at=data.get("started_at"),
+            finished_at=data.get("finished_at"),
+            error=data.get("error", ""),
+            metadata=data.get("metadata") or {},
+        )

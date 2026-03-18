@@ -37,6 +37,7 @@ from agents.base import BaseAgent
 from agents.orchestrator.job import Job, JobStatus, Step, StepStatus
 from agents.orchestrator.planner import plan, replan
 from core.event_bus import Event
+from core.metrics import metrics
 
 logger = logging.getLogger(__name__)
 
@@ -98,11 +99,45 @@ class OrchestratorAgent(BaseAgent):
     # Lifecycle
     # ------------------------------------------------------------------
 
+    _CLEANUP_INTERVAL = 300  # 5 minutes between cleanup sweeps
+
     async def _setup(self) -> None:
         self.bus.subscribe("task.requested", self._on_task_requested)
         self.bus.subscribe("step.completed", self._on_step_completed)
         self.bus.subscribe("step.failed", self._on_step_failed)
+        self._cleanup_task = asyncio.create_task(
+            self._cleanup_loop(), name=f"job-cleanup-{self.agent_id}"
+        )
         logger.info("[%s] OrchestratorAgent ready", self.agent_id)
+
+    async def _cleanup_loop(self) -> None:
+        """Periodically purge completed/failed jobs from in-memory cache."""
+        while True:
+            try:
+                await asyncio.sleep(self._CLEANUP_INTERVAL)
+                await self._cleanup_jobs()
+            except asyncio.CancelledError:
+                break
+            except Exception as exc:
+                logger.warning("[%s] Job cleanup error: %s", self.agent_id, exc)
+
+    async def _cleanup_jobs(self) -> None:
+        """Remove terminal jobs older than 1 hour from the in-memory cache."""
+        import time as _time
+        now = _time.time()
+        max_age = 3600  # 1 hour
+        to_remove = []
+        for job_id, job in self._jobs.items():
+            if job.status in (JobStatus.COMPLETED, JobStatus.FAILED, JobStatus.CANCELLED):
+                age = now - (job.finished_at or job.created_at)
+                if age > max_age:
+                    to_remove.append(job_id)
+        for job_id in to_remove:
+            del self._jobs[job_id]
+            self._job_waiters.pop(job_id, None)
+        if to_remove:
+            metrics.increment("jobs.cleaned", len(to_remove))
+            logger.info("[%s] Cleaned %d expired jobs from memory", self.agent_id, len(to_remove))
 
     # ------------------------------------------------------------------
     # Event handlers
@@ -114,6 +149,8 @@ class OrchestratorAgent(BaseAgent):
         if not description:
             logger.warning("task.requested received with no description")
             return
+
+        metrics.increment("jobs.created")
 
         job = await plan(
             description=description,
@@ -332,10 +369,16 @@ class OrchestratorAgent(BaseAgent):
             self._job_waiters.pop(job_id, None)
 
     async def _finalise_job(self, job: Job) -> None:
+        # Record job duration (created_at → now)
+        import time as _time
+        duration_ms = (_time.time() - job.created_at) * 1000
+        metrics.timing("jobs.duration_ms", duration_ms)
+
         if job.has_failures():
             failed = [s.name for s in job.steps if s.status == StepStatus.FAILED]
             job.fail(f"Steps failed: {', '.join(failed)}")
             await self.publish("job.failed", {"job_id": job.job_id, "error": job.error})
+            metrics.increment("jobs.failed")
             logger.warning("[%s] Job %s FAILED: %s", self.agent_id, job.job_id, job.error)
         else:
             job.complete()
@@ -345,6 +388,7 @@ class OrchestratorAgent(BaseAgent):
                 if s.status == StepStatus.COMPLETED
             }
             await self.publish("job.completed", {"job_id": job.job_id, "results": results})
+            metrics.increment("jobs.completed")
             logger.info("[%s] Job %s COMPLETED", self.agent_id, job.job_id)
 
         await self._persist_job(job)
@@ -388,3 +432,30 @@ class OrchestratorAgent(BaseAgent):
     async def list_jobs(self) -> list[dict[str, Any]]:
         """Return all jobs currently tracked in the state store."""
         return list((await self.store.get_all("jobs:*")).values())
+
+    async def persist_active_jobs(self) -> int:
+        """Persist all in-flight jobs to the state store (for graceful shutdown).
+        Returns the number of jobs persisted."""
+        count = 0
+        for job in self._jobs.values():
+            if job.status in (JobStatus.PENDING, JobStatus.RUNNING):
+                await self._persist_job(job)
+                count += 1
+        if count:
+            logger.info("[%s] Persisted %d active job(s) for shutdown", self.agent_id, count)
+        return count
+
+    async def recover_jobs(self) -> int:
+        """Recover incomplete jobs from the state store after restart.
+        Returns the number of jobs recovered."""
+        all_jobs = await self.store.get_all("jobs:*")
+        count = 0
+        for data in all_jobs.values():
+            status = data.get("status", "")
+            job_id = data.get("job_id", "")
+            if status in ("pending", "running") and job_id not in self._jobs:
+                job = Job.from_dict(data)
+                self._jobs[job.job_id] = job
+                count += 1
+                logger.info("[%s] Recovered job %s (status=%s)", self.agent_id, job_id, status)
+        return count

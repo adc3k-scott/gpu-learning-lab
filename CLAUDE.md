@@ -94,13 +94,24 @@ The agent checks project root first, then falls back to `.venv/.env`.
 | InfraManagerAgent (GPU/CPU/RAM/Docker/Redis) | Working |
 | IntegrationAgent (HTTP/RunPod GraphQL/webhooks) | Working |
 | UIAgent (SSE broadcast + state bootstrap) | Working |
-| Test suite | 222 tests, all green |
+| Test suite | 303 tests, all green |
 | RunPod exec skill (SSH bridge) | Working |
 | Adaptive replanning (LLM recovery) | Working |
 | Prompt injection sanitization | Working |
 | Secret masking (error responses) | Working |
 | Rate limiting middleware | Working |
 | Dead letter queue (EventBus) | Working |
+| Metrics collector (counters/gauges/histograms) | Working |
+| Agent watchdog (stall detection + alerts) | Working |
+| Skill retry + exponential backoff | Working |
+| Job cleanup sweep (TTL enforcement) | Working |
+| Event sequence numbers + SSE replay buffer | Working |
+| Skill execution timeouts | Working |
+| Graceful shutdown + job recovery | Working |
+| Circuit breaker (external services) | Working |
+| Structured logging (JSON + context) | Working |
+| Agent capability declaration | Working |
+| Health/readiness probes (/health, /ready) | Working |
 | RunPod skill (builtin plugin) | Working |
 | HTTP client skill (builtin plugin) | Working |
 | Notion skill (builtin plugin) | Working — needs NOTION_API_KEY in .env |

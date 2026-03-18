@@ -65,6 +65,7 @@ _DEFAULT_TIMEOUT = 10.0
 
 class IntegrationAgent(BaseAgent):
     role = "integration"
+    capabilities = ["http_client", "runpod", "runpod_exec", "webhook"]
 
     def __init__(self, *, runpod_api_key: str = "", **kwargs):
         super().__init__(**kwargs)

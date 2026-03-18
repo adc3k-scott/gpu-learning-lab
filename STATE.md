@@ -163,7 +163,7 @@ Last updated: 2026-03-12 (Session 5 — Networking content + Heat recovery resea
 | **New Iberia Factory** | Full engineering package complete. 6 documents. | Site survey. Land acquisition. ITEP filing. Robot POs. |
 | **Baton Rouge Terminal** | Engineering package complete. Lease spec ready. | Real estate broker search. Building tour. |
 | **ADC3K.com** | LIVE. Security hardened. Energy efficiency added. Contact form FIXED (FormSubmit.co). | Confirm activation email in scott@adc3k.com inbox. |
-| **Mission Control** | Auth middleware. 222 tests. RunPod SSH exec. Adaptive replanning. Prompt injection defense. Secret masking. Rate limiting. Dead letter queue. | Set MC_API_KEY. Remaining: browser profile env var, DOM XSS in site-intel. |
+| **Mission Control** | Auth middleware. 303 tests. Full observability (metrics + watchdog + structured logging). Security hardened (injection, masking, rate limiting, DLQ). Production resilience (retry + backoff, cleanup sweep, event replay). Production hardening (timeouts, graceful shutdown + recovery, circuit breakers). Ops layer (health/ready probes, agent capabilities, JSON logging). RunPod SSH exec. Adaptive replanning. | Set MC_API_KEY. Remaining: browser profile env var, DOM XSS in site-intel. |
 | **NCA-AIIO Cert** | 100-question quiz rebuilt from PDFs. Cheat sheet ready. | **EXAM TOMORROW 6 PM (2026-03-13)** |
 | **GTC 2026** | One-pager, topology viewer, wetland rendering, network architecture, quiz all ready. | Print PDF. Submit Inception. Book travel. |
 | **Remote Deployment** | Wetland + offshore strategy documented. Top 10 sites ranked. | Wetland permitting research. USACE Section 404. Krotz Springs site visit. |

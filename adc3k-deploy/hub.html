@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ADC Mission Control</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+
+.hub{display:flex;flex-direction:column;min-height:100%;max-width:500px;margin:0 auto;padding:16px 16px 100px}
+
+.brand{text-align:center;padding:24px 0 16px}
+.brand .logo{font-size:32px;font-weight:800;color:#e8edf2;letter-spacing:1px}
+.brand .logo span{color:#76b900}
+.brand .tagline{font-size:12px;color:#607080;margin-top:4px;letter-spacing:0.5px}
+.brand .role{font-size:11px;color:#ff6b35;margin-top:8px;font-weight:600;letter-spacing:0.5px}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;flex:1;align-content:start;margin-top:12px}
+
+.tile{background:#111820;border:1px solid #1a2436;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:all 0.2s;min-height:90px;-webkit-tap-highlight-color:transparent}
+.tile:hover,.tile:active{border-color:#76b900;transform:scale(0.98)}
+.tile .icon{font-size:24px;margin-bottom:6px}
+.tile .label{font-size:12px;font-weight:700;color:#e8edf2;text-align:center;line-height:1.3}
+.tile .sub{font-size:10px;color:#607080;margin-top:2px;text-align:center}
+
+.tile.primary{background:linear-gradient(135deg,#1a2a1a,#111820);border-color:#2a4a2a}
+.tile.primary .label{color:#76b900}
+.tile.accent{background:linear-gradient(135deg,#2a1a10,#111820);border-color:#4a2a1a}
+.tile.accent .label{color:#ff6b35}
+
+.tile.wide{grid-column:span 2}
+
+.footer{text-align:center;padding:12px 0 0;font-size:10px;color:#3a4a5a}
+.footer a{color:#607080;text-decoration:none}
+
+/* Chat input */
+.chat-bar{display:flex;gap:8px;margin-top:10px;grid-column:span 2}
+.chat-input{flex:1;background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 14px;font-size:13px;color:#e8edf2;outline:none;font-family:inherit}
+.chat-input:focus{border-color:#76b900}
+.chat-input::placeholder{color:#4a5568}
+.chat-send{background:#76b900;color:#0a0e14;border:none;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.chat-send:hover{background:#8ed100}
+
+/* iPad layout */
+@media(min-width:768px){
+  .hub{max-width:600px;padding:24px}
+  .brand .logo{font-size:38px}
+  .tile{min-height:110px;padding:20px}
+  .tile .icon{font-size:28px}
+  .tile .label{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="hub">
+  <div class="brand">
+    <div class="logo">ADC <span>MISSION CONTROL</span></div>
+    <div class="tagline">Advantage Design & Construction</div>
+    <div class="role">Scott Tomsu -- Founder | NCP-AII Candidate | GTC 2026</div>
+  </div>
+
+  <div class="grid">
+    <a href="/gtc" class="tile wide accent">
+      <div class="icon">&#9733;</div>
+      <div class="label">GTC 2026 Battle Plan</div>
+      <div class="sub">Mar 16-19 San Jose | Schedule + Targets + Talk Track</div>
+    </a>
+
+    <a href="/stack" class="tile wide primary">
+      <div class="icon">&#9881;</div>
+      <div class="label">NVIDIA Accelerated Computing Stack</div>
+      <div class="sub">Full breakdown — how every piece works together</div>
+    </a>
+
+    <a href="/boot" class="tile wide primary">
+      <div class="icon">&#9654;</div>
+      <div class="label">AI Factory Boot Sequence</div>
+      <div class="sub">11 steps — how you turn on an NVIDIA AI factory</div>
+    </a>
+
+    <a href="/card" class="tile primary">
+      <div class="icon">&#9733;</div>
+      <div class="label">Business Card</div>
+      <div class="sub">scott@adc3k.com</div>
+    </a>
+
+    <a href="/compare" class="tile primary">
+      <div class="icon">&#9879;</div>
+      <div class="label">Blackwell vs Rubin</div>
+      <div class="sub">Side-by-side comparison</div>
+    </a>
+
+    <a href="/ncp-study" class="tile accent">
+      <div class="icon">&#9997;</div>
+      <div class="label">NCP-AII Study</div>
+      <div class="sub">90 cards + Drive Mode</div>
+    </a>
+
+    <a href="/ncp-cheat" class="tile accent">
+      <div class="icon">&#9889;</div>
+      <div class="label">NCP-AII Cheat Sheet</div>
+      <div class="sub">All answers visible</div>
+    </a>
+
+    <a href="/" class="tile">
+      <div class="icon">&#9670;</div>
+      <div class="label">ADC 3K Site</div>
+      <div class="sub">adc3k.com</div>
+    </a>
+
+    <a href="/qr" class="tile">
+      <div class="icon">&#9638;</div>
+      <div class="label">QR Code</div>
+      <div class="sub">Share instantly</div>
+    </a>
+
+    <a href="/cheatsheet" class="tile">
+      <div class="icon">&#9883;</div>
+      <div class="label">NCA Cheat Sheet</div>
+      <div class="sub">Associate level</div>
+    </a>
+
+    <a href="https://claude.ai/new" class="tile" target="_blank">
+      <div class="icon">&#9708;</div>
+      <div class="label">Claude AI</div>
+      <div class="sub">New chat at claude.ai</div>
+    </a>
+
+    <!-- Quick notes area -->
+    <div class="chat-bar">
+      <input type="text" class="chat-input" id="noteInput" placeholder="Quick note to self...">
+      <button class="chat-send" id="noteSave">Save</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    Advantage Design & Construction | Lafayette LA<br>
+    <a href="mailto:scott@adc3k.com">scott@adc3k.com</a>
+  </div>
+</div>
+
+<script>
+// Quick notes - saves to localStorage
+const NOTES_KEY='adc_hub_notes';
+const input=document.getElementById('noteInput');
+const saveBtn=document.getElementById('noteSave');
+
+saveBtn.addEventListener('click',()=>{
+  const text=input.value.trim();
+  if(!text)return;
+  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+  notes.push({text:text,time:new Date().toISOString()});
+  localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
+  input.value='';
+  saveBtn.textContent='Saved!';
+  setTimeout(()=>{saveBtn.textContent='Save'},1500);
+});
+
+input.addEventListener('keydown',e=>{if(e.key==='Enter')saveBtn.click()});
+</script>
+</body>
+</html>

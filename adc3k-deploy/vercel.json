@@ -16,6 +16,20 @@
     }
   ],
   "rewrites": [
+    { "source": "/card", "destination": "/card.html" },
+    { "source": "/qr", "destination": "/qr.html" },
+    { "source": "/factory", "destination": "/floor-plan.html" },
+    { "source": "/factory-sim", "destination": "/production-sim.html" },
+    { "source": "/study", "destination": "/study.html" },
+    { "source": "/quiz", "destination": "/quiz.html" },
+    { "source": "/cheatsheet", "destination": "/cheatsheet.html" },
+    { "source": "/ncp-study", "destination": "/ncp-study.html" },
+    { "source": "/ncp-cheat", "destination": "/ncp-cheat.html" },
+    { "source": "/compare", "destination": "/compare.html" },
+    { "source": "/hub", "destination": "/hub.html" },
+    { "source": "/gtc", "destination": "/gtc-plan.html" },
+    { "source": "/stack", "destination": "/stack.html" },
+    { "source": "/boot", "destination": "/boot.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

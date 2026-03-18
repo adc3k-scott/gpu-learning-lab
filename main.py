@@ -1,10 +1,13 @@
 import asyncio
 import json
+import logging
 import os
 import re
 import zipfile
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 from anthropic import AsyncAnthropic, Anthropic
 from dotenv import load_dotenv
@@ -46,7 +49,7 @@ MC_API_KEY = os.getenv("MC_API_KEY", "")
 _api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 # Endpoints that don't require auth (public dashboard + static)
-_PUBLIC_PATHS = frozenset({"/", "/mobile", "/docs", "/openapi.json", "/redoc"})
+_PUBLIC_PATHS = frozenset({"/", "/mobile", "/docs", "/openapi.json", "/redoc", "/health", "/ready"})
 
 
 async def require_api_key(
@@ -78,9 +81,11 @@ async def require_api_key(
 # ---------------------------------------------------------------------------
 from core.config import settings
 from core.event_bus import Event, EventBus
+from core.metrics import metrics
 from core.rate_limit import RateLimitMiddleware
 from core.sanitize import mask_secrets, safe_error
 from core.state_store import StateStore
+from core.watchdog import AgentWatchdog
 from skills.registry import registry
 from agents.orchestrator import OrchestratorAgent
 from agents.repo_analyst import RepoAnalystAgent
@@ -142,8 +147,13 @@ _ALL_AGENTS = [
 # ---------------------------------------------------------------------------
 # Lifespan — start/stop all agents with the server
 # ---------------------------------------------------------------------------
+watchdog = AgentWatchdog(bus=bus, store=store, agents=_ALL_AGENTS)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    from core.logging import configure_logging
+    configure_logging()
     await bus.connect()
     await store.connect()
     # UIAgent starts first so it is subscribed before other agents emit events
@@ -151,11 +161,23 @@ async def lifespan(app: FastAPI):
     for agent in [orchestrator, repo_analyst, coder, infra_manager, integration, notion_sync,
                   news_scout, publisher, social]:
         await agent.start()
+    await watchdog.start()
+    metrics.gauge("agents.total", len(_ALL_AGENTS))
     yield
+    # --- Graceful shutdown ---
+    logger.info("Graceful shutdown: persisting in-flight jobs")
+    await orchestrator.persist_active_jobs()
+    # Drain event bus queue (max 5s)
+    try:
+        await asyncio.wait_for(bus._queue.join(), timeout=5.0)
+    except asyncio.TimeoutError:
+        logger.warning("Event bus drain timed out after 5s — proceeding with shutdown")
+    await watchdog.stop()
     for agent in reversed(_ALL_AGENTS):
         await agent.stop()
     await bus.disconnect()
     await store.disconnect()
+    logger.info("Graceful shutdown complete")
 
 
 # ---------------------------------------------------------------------------
@@ -215,19 +237,30 @@ def mobile():
 # Routes — SSE live dashboard stream
 # ---------------------------------------------------------------------------
 @app.get("/events", dependencies=[Depends(require_api_key)])
-async def sse_events():
-    """Server-Sent Events stream — pushes dashboard snapshots to the browser."""
+async def sse_events(since: int = 0):
+    """Server-Sent Events stream — pushes dashboard snapshots to the browser.
+
+    Query params:
+        since  — replay all events with sequence > since before switching to live
+    """
     q = ui_agent.add_sse_subscriber()
 
     async def stream():
+        # Replay missed events if client provides ?since=N
+        if since > 0:
+            missed = bus.replay_since(since)
+            for evt in missed:
+                yield f"id: {evt.sequence}\ndata: {json.dumps({'event_type': evt.event_type, 'payload': evt.payload, 'source': evt.source, 'sequence': evt.sequence})}\n\n"
+
         # Send current snapshot immediately on connect
-        snap = json.dumps(ui_agent.snapshot())
-        yield f"data: {snap}\n\n"
+        snap = json.dumps({**ui_agent.snapshot(), "sequence": bus.last_sequence})
+        yield f"id: {bus.last_sequence}\ndata: {snap}\n\n"
         try:
             while True:
                 try:
                     data = await asyncio.wait_for(q.get(), timeout=20.0)
-                    yield f"data: {data}\n\n"
+                    seq = bus.last_sequence
+                    yield f"id: {seq}\ndata: {data}\n\n"
                 except asyncio.TimeoutError:
                     yield ": heartbeat\n\n"   # keep connection alive
         except asyncio.CancelledError:
@@ -465,6 +498,82 @@ async def list_agents():
         state = await agent.get_state()
         states.append(state.to_dict())
     return states
+
+
+# ---------------------------------------------------------------------------
+# Routes — metrics / observability
+# ---------------------------------------------------------------------------
+@app.get("/metrics", dependencies=[Depends(require_api_key)])
+async def get_metrics():
+    """Return full metrics snapshot (counters, gauges, histograms)."""
+    snap = metrics.snapshot()
+    # Inject live bus/watchdog state
+    snap["gauges"]["eventbus.dlq_count"] = bus.dead_letter_count
+    snap["gauges"]["watchdog.stalled_count"] = len(watchdog.stalled_agents)
+    return snap
+
+
+# ---------------------------------------------------------------------------
+# Routes — health / readiness probes (unauthenticated for load balancers)
+# ---------------------------------------------------------------------------
+@app.get("/health")
+async def health_check():
+    """Liveness probe — returns 200 if the process is alive."""
+    return {
+        "status": "ok",
+        "uptime_seconds": round(metrics.snapshot().get("uptime_seconds", 0), 1),
+    }
+
+
+@app.get("/ready")
+async def readiness_check():
+    """Readiness probe — returns 200 only if all critical subsystems are healthy."""
+    issues = []
+
+    # Check agent statuses
+    agent_states = {}
+    for agent in _ALL_AGENTS:
+        state = await agent.get_state()
+        status_val = state.status.value
+        agent_states[state.role] = status_val
+        if status_val == "error":
+            issues.append(f"Agent '{state.role}' is in ERROR state")
+
+    running = sum(1 for s in agent_states.values() if s == "running")
+    error_count = sum(1 for s in agent_states.values() if s == "error")
+    stalled = len(watchdog.stalled_agents)
+
+    # Check DLQ
+    dlq_count = bus.dead_letter_count
+    dlq_threshold = 50
+    if dlq_count >= dlq_threshold:
+        issues.append(f"DLQ has {dlq_count} entries (threshold: {dlq_threshold})")
+
+    # Check stalled agents
+    if stalled > 0:
+        issues.append(f"{stalled} agent(s) stalled")
+
+    ready = len(issues) == 0
+    status_code = 200 if ready else 503
+
+    from fastapi.responses import JSONResponse
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "ready": ready,
+            "issues": issues,
+            "dependencies": {
+                "event_bus": {"mode": bus.mode, "dlq_count": dlq_count},
+                "state_store": {"mode": store.mode},
+                "agents": {
+                    "total": len(_ALL_AGENTS),
+                    "running": running,
+                    "error": error_count,
+                    "stalled": stalled,
+                },
+            },
+        },
+    )
 
 
 # ---------------------------------------------------------------------------

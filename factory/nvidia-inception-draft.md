@@ -8,9 +8,9 @@
 
 | Field | Value |
 |-------|-------|
-| Company Name | Advantage Design & Construction (ADC) |
+| Company Name | Advantage Design Construction Inc. (ADC) |
 | Website | adc3k.com |
-| Founded | 2025 |
+| Founded | 2003 (ADC 3K AI Infrastructure division launched 2025) |
 | Location | Lafayette, Louisiana, USA |
 | Founder / CEO | Scott Tomsu |
 | Employees | 1-10 |
@@ -24,13 +24,17 @@
 
 *Suggested — edit to your voice before submitting:*
 
-Advantage Design & Construction (ADC) designs, builds, and operates modular DGX SuperPOD infrastructure across Louisiana. Our core product — the ADC 3K — is a self-contained, liquid-immersion-cooled AI compute pod manufactured inside a modified shipping container. Each pod is a SuperPOD building block: self-powered (natural gas + solar), self-cooled (EC-110 dielectric immersion at PUE 1.03), and remotely managed from our Network Operations Center.
+Advantage Design Construction Inc. (ADC) deploys NVIDIA Vera Rubin AI infrastructure on renewable micro grids across Louisiana. We offer two deployment paths — both 100% NVIDIA stack:
 
-Each pod connects to a shared NVIDIA Quantum InfiniBand spine using fat-tree topology. Deploy one pod — standalone compute. Deploy multiple pods — they mesh into a larger SuperPOD fabric. AI-driven monitoring (DCGM + UFM) identifies bottlenecks in real time, and we inject additional pods at the exact point of need. The fabric grows organically — not a fixed building you fill once, but a living system that keeps scaling.
+**Option A — Enterprise Rack Deployment (Revenue Now):** We lease and build out existing industrial facilities for immediate Vera Rubin NVL72 rack deployment. Our flagship site — Willow Glen Terminal on the Mississippi River — is a former 2,200 MW power station with a 230kV Entergy substation, 700 developable acres, deepwater dock, gas pipeline, and a 20,000 SF warehouse ready for rack rows today. We are a licensed Louisiana general contractor — we pull the permits, do the buildout, and take delivery. Operational in weeks, not years.
 
-We are building two facilities: a manual pod assembly terminal (producing 2-3 pods/month within 90 days) and a fully automated robotic factory designed in NVIDIA Omniverse (producing 8-12 pods/month). Our flagship site — Willow Glen Terminal on the Mississippi River — is a former 2,200 MW power station being converted into a 12 MW AI compute campus and renewable mini grid with a 230kV Entergy substation already on-site.
+**Option B — ADC 3K Containerized Pods (Differentiated Product):** Our manufactured AI compute pods are self-contained, liquid-immersion-cooled SuperPOD building blocks inside modified shipping containers. Self-powered (natural gas + solar), self-cooled (EC-110 dielectric immersion at PUE 1.03), and remotely managed from our NOC. Field-deployable to any site with power and fiber.
 
-ADC is 100% NVIDIA stack — silicon to software. Our automated factory uses Isaac Sim for robot path programming, Metropolis for AI vision quality control at every assembly station, and Omniverse for a full factory digital twin. Our compute pods are built around NVIDIA DGX SuperPOD architecture with Vera Rubin NVL72 racks, NVIDIA Quantum InfiniBand networking, and NVIDIA AI Enterprise for orchestration.
+Both options connect to a shared NVIDIA Quantum InfiniBand spine using fat-tree topology. Racks or pods — they're all leaves on the spine. AI-driven monitoring (DCGM + UFM) identifies bottlenecks in real time, and we add capacity at the exact point of need. The fabric grows organically.
+
+We are building two manufacturing facilities: a manual pod assembly terminal (2-3 pods/month within 90 days) and a fully automated robotic factory designed in NVIDIA Omniverse (8-12 pods/month). The automated factory runs Isaac Sim for robot path programming, Metropolis for AI vision quality control at every station, and Omniverse for a full digital twin.
+
+ADC is 100% NVIDIA stack — silicon to software. Vera Rubin or nothing. No legacy hardware, no backwards-compatible builds, no third-party alternatives. Louisiana has the most aggressive AI infrastructure tax incentive stack in the country (OBBBA 100% bonus depreciation, Act 730 sales tax exemption, ITEP 10-year property tax abatement, LED FastStart workforce training). We are the licensed general contractor in that state.
 
 ---
 
@@ -82,8 +86,8 @@ The AI compute infrastructure market is constrained by four bottlenecks: power, 
 
 - **Power**: Louisiana has the cheapest energy in the US (Henry Hub natural gas at $2-3/MMBtu). Our pods generate their own power on renewable micro grids. Highest token-per-dollar value in the industry.
 - **Cooling**: Full liquid immersion at PUE 1.03 vs. industry average 1.58 — 35% less energy wasted on cooling.
-- **Time**: A pod deploys in weeks, not years. No construction permits. No utility interconnect delays. Truck it to the site, plug in, compute.
-- **Scalability**: Fat-tree SuperPOD topology. Each pod is a leaf on the InfiniBand spine. Add pods to scale wide. Inject pods to eliminate bottlenecks. AI-managed fabric grows organically — unlike fixed facilities that fill once and stop.
+- **Time**: Option A (racks in a building) deploys in weeks. Option B (pods) deploys anywhere with power and fiber. Both faster than any new-build facility.
+- **Scalability**: Fat-tree SuperPOD topology. Racks or pods — they're all leaves on the InfiniBand spine. Add leaves to scale wide. Inject capacity at bottlenecks. AI-managed fabric grows organically — unlike fixed facilities that fill once and stop.
 
 ### Target Markets
 1. **Oil & Gas** — Edge AI at production sites (Louisiana, Texas, Gulf of America)
@@ -113,11 +117,12 @@ The AI compute infrastructure market is constrained by four bottlenecks: power, 
 | **Go-to-market support** | NVIDIA partner badge builds customer trust for pod sales |
 
 ### Long-Term Partnership
-- ADC becomes the reference implementation for modular, containerized DGX SuperPOD deployment
-- 100% NVIDIA stack — silicon, networking, software, management. No third-party alternatives.
+- ADC becomes the reference implementation for NVIDIA Vera Rubin deployment in Louisiana — both rack and containerized
+- 100% NVIDIA stack — silicon, networking, software, management. Vera Rubin or nothing. No third-party alternatives.
 - Louisiana's first Omniverse-designed, AI-automated manufacturing facility
-- Every pod we sell runs NVIDIA GPUs on NVIDIA InfiniBand with NVIDIA software — fully aligned incentives
-- Flagship site (Willow Glen): 700 acres, 230kV substation, Mississippi River cooling, renewable micro grid — ready for NVIDIA showcase
+- Every rack and pod we deploy runs NVIDIA GPUs on NVIDIA InfiniBand with NVIDIA software — fully aligned incentives
+- Flagship site (Willow Glen): 700 acres, 230kV substation, Mississippi River cooling, renewable micro grid, 20K SF warehouse ready NOW — ready for NVIDIA showcase
+- Hut 8 is 45 min north with $10B and Google's money. ADC is doing it smarter, latest gen only, in the best tax state in the country.
 - ADC proves NVIDIA's platform works from factory floor (Omniverse) to deployed infrastructure (SuperPOD) to remote management (Base Command) — the full loop
 
 ---
