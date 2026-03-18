@@ -340,16 +340,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
 <div class="page active" id="pg-home">
 <section id="hero">
   <div class="hi">
-    <div class="hey">Louisiana's AI Infrastructure Company</div>
+    <div class="hey">Louisiana's NVIDIA Neocloud</div>
     <h1 class="htitle">ADC<span class="k3">3K</span></h1>
     <div class="hclass">MARLIE I &nbsp;&middot;&nbsp; ADC 3K PODS &nbsp;&middot;&nbsp; KLFT HUB</div>
-    <p class="hdesc">We design, build, and operate mission-critical AI compute infrastructure across Louisiana &mdash; powered by the cheapest energy in the United States, cooled by full liquid immersion, and engineered from the ground up for maximum efficiency and minimum waste.</p>
-    <div class="hstats">
-      <div><div class="hsv" style="color:#00d68f" id="hc1">3&ndash;5&cent;</div><div class="hsl">kWh — Lowest in U.S.</div></div>
-      <div><div class="hsv" style="color:#ff6b7a" id="hc2">0</div><div class="hsl">Gulf Coast AI Facilities</div></div>
-      <div><div class="hsv" id="hc3">40 mi</div><div class="hsl">From Henry Hub</div></div>
-      <div><div class="hsv" style="color:#f5a623" id="hc4">$1.2M</div><div class="hsl">Annual Savings vs Virginia</div></div>
-    </div>
+    <p class="hdesc">We design, build, and operate GPU-first AI compute infrastructure across Louisiana &mdash; 100% NVIDIA stack, DSX reference design, powered by the cheapest energy in the United States. We sell optimized tokens, not GPU hours.</p>
     <div class="hcta">
       <button class="btn1" onclick="showPage('projects')">View Projects</button>
       <button class="btn2" onclick="showPage('connect')">Request Investor Materials</button>
@@ -406,12 +400,12 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border)">
     <div class="eyebrow green reveal">Energy Efficiency</div>
     <h2 class="sh reveal">Legacy facilities waste 40% of their power on cooling. We waste less than 3%.</h2>
-    <p class="bd reveal" style="max-width:700px">Every ADC facility is built around full liquid immersion cooling and renewable-first power architecture. No air conditioning. No chillers. No compressors. Every watt goes to compute.</p>
+    <p class="bd reveal" style="max-width:700px">Every ADC facility is built to NVIDIA's DSX reference design with integrated liquid cooling and renewable-first power architecture. NVIDIA ships the racks. We build the facility. Every watt goes to compute.</p>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0">
       <div class="card reveal" style="border-top:3px solid var(--green)">
         <div class="ctag g">COOLING</div>
         <h3 style="font-family:'IBM Plex Mono',monospace;font-size:28px;color:var(--green)">PUE 1.03</h3>
-        <p>Full immersion cooling. Industry average is 1.58. Our servers are submerged in dielectric fluid &mdash; no fans, no HVAC, no wasted energy. 97% of every dollar of power goes directly to AI compute.</p>
+        <p>NVIDIA integrated liquid cooling. Industry average PUE is 1.58. Our facilities run at 1.05 &mdash; no fans, no HVAC, no wasted energy. 95% of every dollar of power goes directly to AI compute.</p>
       </div>
       <div class="card reveal d1" style="border-top:3px solid var(--accent)">
         <div class="ctag b">POWER</div>
@@ -566,7 +560,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="card reveal d1" style="border-left:3px solid var(--purple)">
         <div class="ctag p">VENDORS &amp; PARTNERS</div>
         <h3>Supply Chain &amp; Integration</h3>
-        <p>Actively procuring: nat gas gensets, switchgear, CDU cooling, dielectric fluid, fiber, and construction services. Louisiana-based vendors preferred.</p>
+        <p>Actively procuring: nat gas gensets, switchgear, cooling infrastructure, fiber, and construction services. Louisiana-based vendors preferred.</p>
         <button class="btn2" style="margin-top:16px;padding:9px 20px;font-size:10px;width:auto;border-color:var(--purple);color:var(--purple)" onclick="showPage('connect')">Become a Vendor Partner</button>
       </div>
     </div>
@@ -599,9 +593,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
-  <!-- POD STACK VISUAL -->
-  <div style="margin-top:36px;text-align:center">
-    <img src="pod-img-1.jpg" alt="ADC3K AI Infrastructure Pod — hardware and software stack layers" style="width:100%;max-width:480px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+  <!-- POD STACK + MODULAR ARCHITECTURE — side by side -->
+  <div style="margin-top:36px;display:flex;gap:12px;justify-content:center;align-items:flex-start;flex-wrap:wrap">
+    <img src="pod-img-1.jpg" alt="ADC3K AI Infrastructure Pod — hardware and software stack layers" style="width:calc(50% - 6px);max-width:420px;border-radius:8px;border:1px solid var(--border);display:block" />
+    <img src="pod-img-2.jpg" alt="ADC3K Modular AI Factory Architecture — full system layers from network fabric to AI output" style="width:calc(50% - 6px);max-width:420px;border-radius:8px;border:1px solid var(--border);display:block" />
   </div>
 
   <!-- EDGE STATS -->
@@ -610,11 +605,6 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="sv" style="background:#0a0a13;border:1px solid var(--border)"><div class="svv" style="color:#c04040">50<span style="font-size:14px">ms+</span></div><div class="svl">Latency — Virginia Hyperscale</div></div>
     <div class="sv g" style="background:#0a130a;border:1px solid #153a15"><div class="svv" style="color:var(--green)">16<span style="font-size:14px">wk</span></div><div class="svl">Pod Order to Operational</div></div>
     <div class="sv" style="background:#0a0a13;border:1px solid var(--border)"><div class="svv" style="color:var(--amber)">3<span style="font-size:14px">yr+</span></div><div class="svl">Hyperscale Build Time</div></div>
-  </div>
-
-  <!-- MODULAR ARCHITECTURE VISUAL -->
-  <div style="margin-top:36px;text-align:center">
-    <img src="pod-img-2.jpg" alt="ADC3K Modular AI Factory Architecture — full system layers from network fabric to AI output" style="width:100%;max-width:560px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
   </div>
 
   <!-- WHO NEEDS THIS -->
@@ -632,6 +622,28 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
+  <!-- TWO DEPLOYMENT PATHS -->
+  <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+    <div class="eyebrow" style="color:var(--amber)">Two Deployment Architectures</div>
+    <h2 class="sh" style="margin-top:8px">Racks today. Pods tomorrow. Both on NVIDIA.</h2>
+    <p class="bd">We don't ask you to wait. ADC offers two paths to deployment — both on the same NVIDIA Vera Rubin stack, same InfiniBand spine, same Louisiana tax incentives.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:28px">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--amber);padding:28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);margin-bottom:12px">OPTION A — ENTERPRISE RACKS</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text-bright);margin-bottom:8px">Building-Ready. Operational in Weeks.</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">NVIDIA Vera Rubin NVL72 racks deployed in existing industrial space. NVIDIA's integrated rack-scale liquid cooling — minimal facility buildout. We are a licensed Louisiana general contractor. We pull the permits, do the buildout, take delivery. <span style="color:var(--amber);font-weight:600">Willow Glen has a 20,000 SF warehouse ready now.</span></p>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--green);padding:28px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);margin-bottom:12px">OPTION B — ADC 3K PODS</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text-bright);margin-bottom:8px">Containerized. Deploy Anywhere.</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">DSX-compliant AI facility modules inside ISO shipping containers. NVIDIA liquid-cooled racks, self-powered, remotely managed. Drop on a concrete pad anywhere — wetlands, offshore, industrial sites, airports. <span style="color:var(--green);font-weight:600">Deployable neocloud nodes. The differentiated product.</span></p>
+      </div>
+    </div>
+    <div style="margin-top:3px;background:#0d0d17;border:1px solid var(--border);padding:16px 24px;font-size:12px;color:var(--text-dim);text-align:center;line-height:1.7">
+      <span style="color:var(--text-bright);font-weight:600">Same spine. Same power. Same tax stack.</span> &nbsp; Both options connect to NVIDIA Quantum InfiniBand in fat-tree topology. Option A funds Option B. The fabric grows either way.
+    </div>
+  </div>
+
   <!-- THE PRODUCT — ADC 3K POD -->
   <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
     <div style="margin-bottom:32px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
@@ -640,7 +652,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="sbadge p1">NOW ACCEPTING DEPLOYMENT INQUIRIES</div>
     <div class="eyebrow green">The Product</div>
     <h2 class="sh" style="margin-top:8px">ADC 3K — Modular AI Compute Pod</h2>
-    <p class="bd">The ADC 3K pod is a <span class="hl">factory-manufactured AI compute facility inside a 40-foot ISO shipping container</span>. GPU compute racks, immersion cooling tanks, power distribution, networking, and physical security — fully self-contained.</p>
+    <p class="bd">The ADC 3K pod is a <span class="hl">DSX-compliant AI facility module inside a 40-foot ISO shipping container</span>. NVIDIA liquid-cooled racks, power distribution, facility water loop, networking, and physical security — fully self-contained. A deployable neocloud node.</p>
     <p class="bd">Drop it on a concrete pad, connect power and fiber, and it's operational. No building permits. No construction. <span class="hl">Order to operational: approximately 16 weeks.</span></p>
     <div class="srow" style="margin-top:28px">
       <div class="sv g"><div class="svv" style="color:var(--green)">3.0<span style="font-size:14px;color:var(--green)"> MW</span></div><div class="svl">Class IT Load</div></div>
@@ -651,10 +663,10 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
     <h2 class="sh">5-Zone Interior Layout</h2>
     <div class="g3">
-      <div class="card"><div class="ctag b">ZONE 1</div><h3>Compute</h3><p>NVIDIA Vera Rubin NVL72 racks in EC-110 full immersion cooling tanks. Direct-to-chip heat transfer — chips run cooler at higher clock speeds. Full BMS telemetry + TraceTek leak detection.</p></div>
+      <div class="card"><div class="ctag b">ZONE 1</div><h3>Compute</h3><p>NVIDIA Vera Rubin NVL72 racks with integrated liquid cooling (45°C hot water, 2-hour install). Dynamo 1.0 inference OS + Groq LPX decode racks. Full BMS telemetry + TraceTek leak detection.</p></div>
       <div class="card"><div class="ctag b">ZONE 2</div><h3>Power Distribution</h3><p>Medium-voltage input, transformer, PDUs. ATS switchgear for automatic failover between power layers. Vertiv GXT5 LFP UPS on-board for instant ride-through.</p></div>
       <div class="card"><div class="ctag b">ZONE 3</div><h3>Networking</h3><p>NVIDIA Quantum InfiniBand NDR fabric. NVLink + NVSwitch inside the pod, ConnectX-7 NICs connect up to the spine. All telemetry streams to MARLIE I NOC via DCGM + UFM in real time.</p></div>
-      <div class="card"><div class="ctag b">ZONE 4</div><h3>Dry Coolers</h3><p>External dry cooler array rejects heat from immersion loop. Zero water consumption. No HVAC. Quiet — comparable to commercial air conditioning.</p></div>
+      <div class="card"><div class="ctag b">ZONE 4</div><h3>Heat Rejection</h3><p>External dry cooler array rejects heat from facility water loop. Cooling towers where river water is available. No HVAC. Quiet — comparable to commercial air conditioning.</p></div>
       <div class="card"><div class="ctag b">ZONE 5</div><h3>Safety &amp; Security</h3><p>ISO container structure. Biometric access, cameras, tamper sensors. VESDA aspirating detection + FK-5-1-12 clean agent fire suppression. Data never leaves unless you send it.</p></div>
       <div class="card"><div class="ctag g">ARCHITECTURE</div><h3>DGX SuperPOD Fabric</h3><p>Each pod is a leaf on an NVIDIA Quantum InfiniBand spine. Fat-tree topology — add pods to scale wide, inject pods to eliminate bottlenecks. AI-managed fabric grows organically. No upper limit.</p></div>
     </div>
@@ -699,20 +711,20 @@ footer{flex-direction:column;gap:10px;text-align:center}
 <div class="pad">
   <div class="eyebrow">Engineering</div>
   <h2 class="stitle">The technology stack<br/>behind ADC3K.</h2>
-  <p class="ssub">Immersion cooling, 3-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
+  <p class="ssub">NVIDIA integrated liquid cooling, 3-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
 
   <div style="margin-top:40px;margin-bottom:48px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
-    <img src="immersion-tech.jpg" alt="Immersion cooling technology — servers submerged in dielectric fluid" style="width:100%;display:block;max-height:480px;object-fit:cover">
+    <img src="immersion-tech.jpg" alt="Liquid cooling technology for AI compute infrastructure" style="width:100%;display:block;max-height:480px;object-fit:cover">
   </div>
 
   <div style="margin-top:48px">
     <div class="sn">01 — COOLING</div>
-    <h2 class="sh">Why immersion cooling changes everything.</h2>
+    <h2 class="sh">Why liquid cooling changes everything.</h2>
     <p class="bd">Modern AI chips generate <span class="hr">extreme thermal density</span>. A single AI GPU produces heat equivalent to a kitchen toaster, concentrated into a chip the size of your hand. Air cooling physically cannot remove heat fast enough at these power densities.</p>
-    <p class="bd"><span class="hl">Immersion cooling submerges the entire server in engineered dielectric fluid</span> that conducts heat 1,200x more efficiently than air. No fans. No HVAC. No chillers. No water.</p>
+    <p class="bd"><span class="hl">NVIDIA's integrated liquid cooling delivers 45°C hot water directly to every rack</span> — removing heat 1,200x more efficiently than air. No fans. No HVAC. No chillers. 2-hour install per rack.</p>
     <div class="vs">
       <div class="vc old"><div class="vtag ot">Traditional Air Cooling</div><h3>The Old Way</h3><p>Computer room air conditioners. PUE 1.4-1.6 — 40-60% of power wasted on cooling. Raised floors, hot/cold aisle containment, massive HVAC. Fails above ~1 kW per rack density.</p></div>
-      <div class="vc nw"><div class="vtag nt">ADC 3K Immersion</div><h3>The New Way</h3><p>Servers submerged in EC-110 dielectric fluid. PUE 1.05 — only 5% overhead. No fans, no HVAC, no water. Operates at 100 kW+ per rack. Quiet. Zero water consumption.</p></div>
+      <div class="vc nw"><div class="vtag nt">ADC 3K — NVIDIA Liquid Cooling</div><h3>The New Way</h3><p>NVIDIA integrated liquid cooling at every rack. 45°C hot water, 2-hour install. PUE 1.05 — only 5% overhead. No fans, no HVAC. Operates at 100 kW+ per rack. Quiet. Factory-standard.</p></div>
     </div>
     <div class="srow" style="margin-top:28px">
       <div class="sv g"><div class="svv" style="color:var(--green)">1.05</div><div class="svl">PUE vs 1.5 Industry Avg</div></div>
@@ -722,21 +734,21 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
     <!-- COOLING COMPARISON VISUAL -->
     <div style="margin-top:36px;text-align:center">
-      <img src="pod-img-3.jpg" alt="AI Factory Cooling Designs — Air vs Cold Plate vs Immersion Cooling comparison" style="width:100%;max-width:700px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+      <img src="pod-img-3.jpg" alt="AI Factory Cooling Designs — Air vs Cold Plate vs Liquid Cooling comparison" style="width:100%;max-width:700px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
     </div>
 
-    <div class="sn" style="margin-top:36px">EC-110 DIELECTRIC FLUID</div>
-    <h2 class="sh">Engineered for AI. Safe for humans.</h2>
+    <div class="sn" style="margin-top:36px">NVIDIA INTEGRATED LIQUID COOLING</div>
+    <h2 class="sh">Factory-standard. Rack-level. 2-hour install.</h2>
     <div class="g4" style="margin-top:16px">
-      <div class="card"><h3>Non-Toxic</h3><p>Safe for human contact. No HAZMAT classification. No special handling required.</p></div>
-      <div class="card"><h3>Non-Conductive</h3><p>Electronics submerge directly. No short circuits. No corrosion.</p></div>
-      <div class="card"><h3>Non-Flammable</h3><p>High flash point. Significantly safer than diesel or other industrial fluids.</p></div>
-      <div class="card"><h3>Recyclable</h3><p>Fully recoverable and recyclable at end of life. Near-zero environmental impact.</p></div>
+      <div class="card"><h3>Rack-Integrated</h3><p>Cooling built into every NVIDIA rack. 45°C hot water return. No custom engineering &mdash; factory standard.</p></div>
+      <div class="card"><h3>2-Hour Install</h3><p>Each rack connects to the facility water loop in under 2 hours. Plug and cool. Scale by adding racks.</p></div>
+      <div class="card"><h3>100+ kW Per Rack</h3><p>Handles the full thermal load of Vera Rubin NVL72 (72 GPUs). No thermal throttling. No density limits.</p></div>
+      <div class="card"><h3>DSX Compliant</h3><p>Built to NVIDIA's DSX reference design. Validated architecture. Omniverse digital twin for facility planning.</p></div>
     </div>
   </div>
 
   <div style="margin-top:48px;text-align:center">
-    <img src="immersion-cooling.jpg" alt="GRC Single-Phase Immersion Cooling — HPC benefits overview" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
+    <img src="ai-factory-arch.jpg" alt="NVIDIA AI Factory architecture — DSX reference design" style="width:100%;max-width:780px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
   </div>
 
   <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
@@ -973,9 +985,9 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
-  <!-- Oil-filled immersion visual -->
+  <!-- NVIDIA liquid cooling visual -->
   <div style="margin-top:48px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border);line-height:0">
-    <img src="oil-filled.jpg" alt="Oil-filled immersion cooling — GPU servers submerged in dielectric fluid" style="width:100%;display:block;max-height:480px;object-fit:cover">
+    <img src="nv-gb200-nvl72.jpg" alt="NVIDIA NVL72 liquid-cooled rack system" style="width:100%;display:block;max-height:480px;object-fit:cover">
   </div>
 
   <!-- OPERATIONS LEADERSHIP -->
@@ -1267,7 +1279,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="sbadge" style="background:rgba(59,154,255,0.08);color:#3b9eff;border:1px solid rgba(59,154,255,0.25)">AI FACTORY + MINI GRID — ENGINEERING BLUEPRINT</div>
     <h3>Willow Glen Terminal — Mississippi River</h3>
     <div class="ploc">2605 LA-75, St. Gabriel, LA (Iberville Parish) &nbsp;&middot;&nbsp; 30.2470&deg;N, 91.0985&deg;W</div>
-    <p class="bd">Former 2,200 MW Entergy power station reborn as an AI compute campus and renewable mini grid. 700 acres on the Mississippi with a live 230kV substation, deepwater dock, pipeline corridor, and 20,000 SF warehouse ready for immediate pod deployment. River-cooled immersion compute. Solar + renewable fuel generation. Grid export revenue. Designed by AI.</p>
+    <p class="bd">Former 2,200 MW Entergy power station reborn as a DSX-compliant AI factory campus and renewable mini grid. 700 acres on the Mississippi with a live 230kV substation, deepwater dock, pipeline corridor, and 20,000 SF warehouse ready for immediate deployment. NVIDIA liquid-cooled racks. Dynamo inference OS. Solar + renewable fuel generation. Grid export revenue. Louisiana's neocloud hub.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Power</div><div class="sval">12 MW Phase 1</div></div>
       <div class="spec"><div class="slbl">Cooling</div><div class="sval">Mississippi River</div></div>
@@ -1299,7 +1311,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <p class="bd">The historic Trappey's cannery — a Lafayette landmark on the Vermilion River — is the first site for ADC 3K pod deployment. Metal warehouse, no construction required, 0.3 miles from MARLIE I NOC. UL Lafayette is the target anchor tenant.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Type</div><div class="sval">ADC 3K Pods</div></div>
-      <div class="spec"><div class="slbl">Cooling</div><div class="sval">Immersion / EC-110</div></div>
+      <div class="spec"><div class="slbl">Cooling</div><div class="sval">NVIDIA Integrated Liquid</div></div>
       <div class="spec"><div class="slbl">NOC</div><div class="sval">MARLIE I Remote</div></div>
       <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--accent)">Site Identified</div></div>
     </div>
@@ -1426,7 +1438,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">ADC AI Factories — GPU Era</div>
       <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Purpose-built for AI from day one.</div>
-      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Massively parallel processing. Thousands of cores working simultaneously. 40-80+ kW per rack. Immersion cooled. <strong style="color:var(--green)">Top-of-the-line components at the beginning of their availability</strong> — NVIDIA's latest silicon, EC-110 immersion fluid, behind-the-meter power. Every piece designed to work together. No retrofits. No compromises.</p>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Massively parallel processing. Thousands of cores working simultaneously. 40-80+ kW per rack. NVIDIA integrated liquid cooling. <strong style="color:var(--green)">Top-of-the-line components at the beginning of their availability</strong> — NVIDIA's latest silicon, DSX reference design, behind-the-meter power. Every piece designed to work together. No retrofits. No compromises.</p>
     </div>
   </div>
   <div class="ana" style="margin-top:16px"><p><strong>The bottom line:</strong> Old data centers are CPUs with some GPUs bolted on. An ADC AI factory is GPU-native from the ground up — the power architecture, the cooling system, the networking, the facility itself. That's the difference between retrofitting and purpose-building.</p></div>
@@ -1463,22 +1475,99 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
   <div class="sn" style="margin-top:36px">05 — THE HEAT PROBLEM</div>
   <h2 class="sh">The #1 problem is heat.</h2>
-  <p class="bd">AI chips generate <span class="hr">extreme heat</span> — as much as a kitchen toaster per chip. Traditional AI factories use air conditioning, but AI chips are now so powerful that <span class="hr">air can't remove heat fast enough</span>. That's where immersion cooling comes in — and that's what the ADC 3K pod uses.</p>
+  <p class="bd">AI chips generate <span class="hr">extreme heat</span> — as much as a kitchen toaster per chip. Traditional AI factories use air conditioning, but AI chips are now so powerful that <span class="hr">air can't remove heat fast enough</span>. That's where NVIDIA's integrated liquid cooling comes in — built into every rack, 45°C hot water, installed in 2 hours.</p>
 
   <div class="sn" style="margin-top:36px">06 — OLD WAY vs. NEW WAY</div>
   <h2 class="sh">The AI factory industry is changing.</h2>
   <div class="vs">
     <div class="vc old"><div class="vtag ot">Traditional</div><h3>The Old Way</h3><p>Giant warehouse-sized building. Custom every time. 18-36 months to build. $500M+. Air cooled. A few major markets only.</p></div>
-    <div class="vc nw"><div class="vtag nt">ADC 3K Pod</div><h3>The New Way</h3><p>Factory-built inside a shipping container. Manufactured in Lafayette. Immersion cooled. Truck-shippable. Concrete pad + power + fiber = operational in weeks.</p></div>
+    <div class="vc nw"><div class="vtag nt">ADC 3K Pod</div><h3>The New Way</h3><p>DSX-compliant facility module inside a shipping container. NVIDIA liquid-cooled racks. Manufactured in Lafayette. Truck-shippable. Concrete pad + power + fiber = operational in weeks.</p></div>
   </div>
 
-  <div class="sn" style="margin-top:36px">07 — WHAT DOES "EDGE" MEAN</div>
+  <div class="sn" style="margin-top:36px">07 — THE EFFICIENCY REVOLUTION</div>
+  <h2 class="sh">New hardware doesn't just go faster. It goes smarter.</h2>
+  <p class="bd">Here's what most people don't understand: the newest AI chips aren't just faster — they produce <span class="hl">dramatically more work per watt of electricity</span>. This is the single biggest shift in the industry, and it's why building with the latest hardware isn't a luxury — it's a financial necessity.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Legacy (2022)</div>
+      <div style="font-size:24px;font-weight:800;color:var(--amber);margin-bottom:4px">1x</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">Hopper H100</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">700 watts per chip. Air cooled. 80 GB memory. The chip that launched the AI boom — but already being outpaced. Facilities built around H100s are <strong style="color:var(--amber)">already limited</strong> by their air cooling and power design.</p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">Current (2026)</div>
+      <div style="font-size:24px;font-weight:800;color:var(--green);margin-bottom:4px">~4x</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">Blackwell Ultra B300</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">1,400 watts per chip — more power, but <strong style="color:var(--green)">4x more work per watt</strong>. 288 GB memory. Liquid cooling required. This is what ADC deploys. More chips working harder on less total electricity.</p>
+    </div>
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">Next (H2 2026)</div>
+      <div style="font-size:24px;font-weight:800;color:var(--accent);margin-bottom:4px">~13x</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:8px">Vera Rubin R100</div>
+      <p style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:0">The next generation — <strong style="color:var(--accent)">13x more efficient</strong> than the chips people are installing today. Same rack, same cooling infrastructure. ADC facilities are designed to accept Rubin as a drop-in upgrade. Build once, upgrade for a decade.</p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>What this means in plain English:</strong> If you build an AI factory with last year's chips, you're paying for electricity to do 1 unit of work. ADC's current hardware does 4 units of work for a similar power bill. Next year's hardware — which drops right into our facilities — does 13 units. The facilities being built with old hardware right now are the equivalent of buying a gas-guzzler the year the electric car came out. They'll be running at a permanent competitive disadvantage.</p></div>
+
+  <div class="sn" style="margin-top:36px">08 — ADC'S POWER STRATEGY</div>
+  <h2 class="sh">Three layers of power. Grid is the backup, not the plan.</h2>
+  <p class="bd">Most AI factories are 100% dependent on the electrical grid. When the grid gets stressed — and it will, as AI factories multiply — their power costs go up, their reliability goes down, and the community gets stuck with the bill. <span class="hl">ADC does it differently.</span></p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr;gap:3px">
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+      <div style="font-size:28px;font-weight:800;color:var(--green)">1</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:6px">Natural Gas + Solar + Battery — PRIMARY</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Our primary power comes from <strong style="color:var(--text-bright)">on-site natural gas generation</strong> backed by solar panels and battery storage. Louisiana sits on top of some of the cheapest natural gas in the world (Henry Hub pricing). We're not buying electricity at retail — we're generating our own at wholesale. Solar offsets during daylight hours. Batteries smooth the transitions. This is the base load, 24/7.</p>
+      </div>
+    </div>
+    <div style="background:#0a0d13;border:1px solid #1a2a3a;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+      <div style="font-size:28px;font-weight:800;color:var(--accent)">2</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--accent);margin-bottom:6px">Grid / Utility — BACKUP ONLY</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">The electrical grid is our <strong style="color:var(--text-bright)">backup, not our primary source</strong>. We can pull from the grid if we need to — but we don't plan around it. This means we're not competing with homes and businesses for electricity. We're not driving up anyone's power bill. The grid is there if we need it, but we're not dependent on it.</p>
+      </div>
+    </div>
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start">
+      <div style="font-size:28px;font-weight:800;color:var(--amber)">3</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--amber);margin-bottom:6px">Diesel Generators — EMERGENCY</div>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">On-site diesel generators with fuel storage. If the natural gas pipeline goes down <strong style="color:var(--text-bright)">and</strong> the grid goes down — like during Hurricane Ida when both were disrupted for weeks — we keep running on diesel. Pipeline-independent. Grid-independent. This is the lesson Ida taught us: have a power source that depends on nothing but the fuel in your tank.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>Why this matters to you:</strong> AI factories are coming to Louisiana whether you like it or not. The question is whether they're built by companies that drain the grid and drive up your power bill — or by a Louisiana company that generates its own power, uses the cheapest fuel in the country, and treats the grid as a backup. ADC chose the second path. Your power bill stays where it is.</p></div>
+
+  <div class="sn" style="margin-top:36px">09 — COOLING EFFICIENCY</div>
+  <h2 class="sh">Where 30-50% of everyone else's electricity goes to waste.</h2>
+  <p class="bd">Traditional AI factories use air conditioning to keep servers cool. They build elaborate <span class="hr">hot aisles, cold aisles, blanking plates, raised floors, and giant CRAC units</span> — all to push air past electronics. Even with all that effort, air cooling consumes <span class="hr">30-50% of the total power bill</span> just keeping the temperature down.</p>
+  <p class="bd">ADC uses <span class="hl">NVIDIA's integrated liquid cooling</span> — built into every rack, 45°C hot water return, installed in 2 hours. No fans, no air conditioning, no hot spots. The result: a Power Usage Effectiveness (PUE) of <span class="hl">1.05</span>. That means <strong style="color:var(--green)">95% of our electricity goes to actual computing</strong>. The industry average is 1.3-1.5, meaning 23-33% of their power is wasted on cooling.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Air Cooled Facility</div>
+      <div style="font-size:36px;font-weight:800;color:var(--amber);margin-bottom:4px">1.4 PUE</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin:0">29% of power wasted on cooling. Fans, CRAC units, chilled water, raised floors. Maximum ~30 kW per rack. <strong style="color:var(--amber)">Cannot support next-gen hardware.</strong></p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">ADC — NVIDIA Liquid Cooled</div>
+      <div style="font-size:36px;font-weight:800;color:var(--green);margin-bottom:4px">1.02 PUE</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin:0">2% overhead. Silent operation. 200+ kW per rack. Zero water consumption. <strong style="color:var(--green)">Supports every generation of hardware — now and future.</strong></p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>The financial impact:</strong> At scale, the difference between PUE 1.4 and PUE 1.02 is millions of dollars per year in electricity savings. That's money that goes straight to the bottom line — or gets passed on as lower pricing to customers. Every competitor running air cooling is paying a permanent tax that ADC doesn't pay.</p></div>
+
+  <div class="sn" style="margin-top:36px">10 — WHAT DOES "EDGE" MEAN?</div>
   <h2 class="sh">Edge = closer to where the work happens.</h2>
   <p class="bd">Most AI factories are concentrated in a handful of places. Your data travels 1,000+ miles to get processed. <span class="hl">Edge AI factories</span> bring computing power closer — right to the factory, the oil field, the city.</p>
   <div class="ana"><p><strong>Think of it like electricity.</strong> Power plants generate electricity, but you need substations near your neighborhood to deliver it. Edge AI factories are the substations of the digital world — bringing computing power closer to where it's needed.</p></div>
   <p class="bd">The <span class="hl">Gulf Coast is a perfect location</span> for edge AI. Oil &amp; gas, petrochemical, ports, energy — all need high-performance computing nearby, not 1,000 miles away.</p>
 
-  <div class="sn" style="margin-top:36px">08 — THE FOUR NETWORKS INSIDE AN AI FACTORY</div>
+  <div class="sn" style="margin-top:36px">11 — THE FOUR NETWORKS INSIDE AN AI FACTORY</div>
   <h2 class="sh">It's not just servers. It's how they talk to each other.</h2>
   <p class="bd">Most people think an AI factory is just a room full of computers. It's not. A modern AI factory runs <span class="hl">four separate networks</span> — each doing a completely different job. Understanding these networks is what separates people who build real infrastructure from people who just buy servers and rack them.</p>
 
@@ -1507,7 +1596,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
   <div class="ana" style="margin-top:16px"><p><strong>Why this matters for ADC:</strong> Every ADC 3K pod has all four networks built in from the factory. That's what "purpose-built" means — the compute fabric, the storage pipeline, the software control plane, and the hardware management channel are all designed together. Not bolted on after the fact.</p></div>
 
-  <div class="sn" style="margin-top:36px">09 — INFINIBAND vs. ETHERNET</div>
+  <div class="sn" style="margin-top:36px">12 — INFINIBAND vs. ETHERNET</div>
   <h2 class="sh">Two ways to connect. One was built for AI.</h2>
   <p class="bd"><span class="hl">Ethernet</span> is the networking technology you already know — it's what connects your laptop to the internet. Introduced in 1979, standardized by IEEE in the 1980s. It's the backbone of every local area network on earth. Reliable, universal, and constantly improving.</p>
   <p class="bd"><span class="hl">InfiniBand</span> is different. It was purpose-built for high-performance computing — <span class="hr">extreme throughput, ultra-low latency, and minimal processing overhead</span>. Maintained by the InfiniBand Trade Association (IBTA). When AI workloads need GPUs to communicate at maximum speed with zero wasted cycles, InfiniBand is the answer.</p>
@@ -1527,7 +1616,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
   <div class="ana" style="margin-top:16px"><p><strong>The ADC approach:</strong> We use both. InfiniBand for the compute fabric (GPU-to-GPU), Ethernet for everything else (storage, management, client traffic). This is the same architecture NVIDIA uses in their DGX SuperPOD reference design — because it's the right tool for each job.</p></div>
 
-  <div class="sn" style="margin-top:36px">10 — NVIDIA NETWORKING STACK</div>
+  <div class="sn" style="margin-top:36px">13 — NVIDIA NETWORKING STACK</div>
   <h2 class="sh">The hardware that makes it all work.</h2>
   <p class="bd">NVIDIA doesn't just make GPUs. They build the <span class="hl">entire networking stack</span> that connects them — switches, adapters, cables, and security processors. ADC runs an all-NVIDIA networking portfolio because every component is designed to work together.</p>
 
@@ -1549,7 +1638,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     </div>
   </div>
 
-  <div class="sn" style="margin-top:36px">11 — WHY MODULAR NETWORKING CHANGES EVERYTHING</div>
+  <div class="sn" style="margin-top:36px">14 — WHY MODULAR NETWORKING CHANGES EVERYTHING</div>
   <h2 class="sh">Software-controlled. Scalable in every direction.</h2>
   <p class="bd">Here's what most people miss: the old way of building AI infrastructure meant one giant facility with a fixed network. If you needed more capacity, you built another giant facility. <span class="hl">That's not how ADC works.</span></p>
   <p class="bd">Each ADC 3K pod is a <span class="hl">self-contained compute node</span> with all four networks built in. Connect it to the InfiniBand spine and it's part of the fabric. The network is <span class="hr">software-defined</span> — meaning we control routing, scheduling, and optimization from a central brain (MARLIE I), not from hardwired physical connections.</p>
@@ -1571,15 +1660,30 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <div class="eyebrow">FAQ</div>
     <h2 class="sh">Frequently Asked Questions</h2>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is this like a bitcoin mining operation?</div><div class="faq-a">No. Bitcoin mining uses specialized hardware for a single purpose. The ADC 3K pod houses general-purpose AI GPUs — the same technology powering ChatGPT, medical imaging, autonomous vehicles, and defense systems. The hardware is far more sophisticated and the applications create real economic value across every industry.</div></div>
-    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How loud is it?</div><div class="faq-a">Remarkably quiet. Immersion cooling eliminates all server fans inside the container. The outdoor dry coolers produce sound similar to commercial HVAC. Far quieter than traditional air-cooled AI factories.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How loud is it?</div><div class="faq-a">Remarkably quiet. NVIDIA's integrated liquid cooling eliminates all server fans. The outdoor dry coolers produce sound similar to commercial HVAC. Far quieter than traditional air-cooled AI factories.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much water does it use?</div><div class="faq-a">Zero. The ADC 3K pod uses dry coolers instead of evaporative cooling towers. Traditional AI factories consume millions of gallons per year. This is an environmental and operational advantage.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much power does it need?</div><div class="faq-a">3.0 MW-class — roughly equivalent to 2,000-2,500 homes. Requires a medium-voltage utility feed or generator interconnect. Initial deployments may operate at lower capacity and scale up to full 3.0 MW.</div></div>
-    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the cooling liquid dangerous?</div><div class="faq-a">No. EC-110 engineered dielectric fluid is non-toxic, non-conductive, and non-flammable. Safe for human contact. Environmentally friendly. Recyclable at end of life. No HAZMAT classification required.</div></div>
+    <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How does the cooling work?</div><div class="faq-a">NVIDIA's integrated liquid cooling is built into every rack. 45°C hot water removes heat directly from the chips, flows to the facility water loop, and rejects heat through external dry coolers or cooling towers. No fans, no HVAC, no chillers. 2-hour install per rack. Factory-standard, DSX-compliant.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Who controls the data?</div><div class="faq-a">You do. Unlike cloud services, the ADC 3K pod is a privately owned asset at your location. Data never leaves unless you send it. Critical for defense, healthcare, oil &amp; gas, and government where data sovereignty isn't optional.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it survive a hurricane?</div><div class="faq-a">The ADC 3K pod is built inside an ISO shipping container — one of the most rugged structures ever designed. Our 3-layer power architecture was specifically built around Hurricane Ida lessons: Layer 3 diesel keeps us running independently of both the grid and the nat gas pipeline, which was disrupted for weeks during Ida.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it need building permits?</div><div class="faq-a">Classified as equipment, not a building. In most jurisdictions, equipment placement requires utility permits and site approval but not traditional building permits. Requirements vary by parish — we navigate the permitting process for each deployment.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What kind of investment opportunity is this?</div><div class="faq-a">AI compute infrastructure is generating strong infrastructure-grade returns in markets where it's been deployed. We're building that market in Louisiana. Contact us for investor materials — we don't publish financial projections publicly, but we walk qualified investors through the full financial model.</div></div>
     <div class="faq"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I deploy an ADC 3K pod at my site?</div><div class="faq-a">Start with a deployment inquiry. Tell us your location, power situation, compute requirements, and timeline. We'll assess site suitability, walk through the deployment process, and provide a project scope. Order to operational: approximately 16-20 weeks.</div></div>
+  </div>
+
+  <div style="margin-top:56px;padding:32px;background:#111820;border:1px solid #1a2436;border-radius:8px">
+    <div class="eyebrow green">Ask Us Anything</div>
+    <h2 class="sh" style="margin-top:8px">Still have questions?</h2>
+    <p class="bd" style="margin-bottom:20px">Type your question below. Whether it's about the technology, the business, or how this affects your community — we'll get back to you.</p>
+    <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:grid;gap:12px">
+      <input type="hidden" name="_subject" value="ADC3K Learn Page Question">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="box">
+      <input type="text" name="name" placeholder="Your name" required style="background:#0a0e14;border:1px solid #1a2436;border-radius:6px;padding:12px 16px;font-size:14px;color:var(--text-bright);outline:none;font-family:inherit" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='#1a2436'">
+      <input type="email" name="email" placeholder="Your email" required style="background:#0a0e14;border:1px solid #1a2436;border-radius:6px;padding:12px 16px;font-size:14px;color:var(--text-bright);outline:none;font-family:inherit" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='#1a2436'">
+      <textarea name="message" placeholder="What would you like to know?" rows="4" required style="background:#0a0e14;border:1px solid #1a2436;border-radius:6px;padding:12px 16px;font-size:14px;color:var(--text-bright);outline:none;font-family:inherit;resize:vertical" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='#1a2436'"></textarea>
+      <button type="submit" style="background:var(--green);color:#0a0e14;border:none;border-radius:6px;padding:14px 24px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:background 0.2s" onmouseover="this.style.background='#8ed100'" onmouseout="this.style.background='var(--green)'">SEND QUESTION</button>
+    </form>
   </div>
 
   <div class="callout" style="margin-top:40px">
@@ -1610,7 +1714,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div id="rctx-investor" class="note" style="border-left-color:var(--accent);display:none"><strong style="color:var(--accent)">Investors:</strong> We'll follow up with our investor materials — financial model, site pipeline, deal structure, and timeline. We don't publish financial projections publicly.</div>
       <div id="rctx-deploy" class="note" style="border-left-color:var(--green);display:none"><strong style="color:var(--green)">Deployment Customers:</strong> Tell us your location, power situation, compute requirements, and timeline. We'll assess site suitability and provide a deployment scope.</div>
       <div id="rctx-city" class="note" style="border-left-color:var(--amber);display:none"><strong style="color:var(--amber)">Cities &amp; Parishes:</strong> We work with economic development authorities to structure deployments that create jobs, expand the tax base, and build AI infrastructure in your community.</div>
-      <div id="rctx-vendor" class="note" style="border-left-color:var(--purple);display:none"><strong style="color:var(--purple)">Vendors &amp; Partners:</strong> Actively procuring nat gas gensets, switchgear, CDU cooling, dielectric fluid, fiber, and construction services. Louisiana-based vendors preferred.</div>
+      <div id="rctx-vendor" class="note" style="border-left-color:var(--purple);display:none"><strong style="color:var(--purple)">Vendors &amp; Partners:</strong> Actively procuring nat gas gensets, switchgear, cooling infrastructure, fiber, and construction services. Louisiana-based vendors preferred.</div>
       <div id="rctx-media" class="note" style="border-left-color:var(--cyan);display:none"><strong style="color:var(--cyan)">Media &amp; Press:</strong> Happy to speak on the record about Louisiana's AI infrastructure buildout. Backgrounders and fact sheets available.</div>
     </div>
 

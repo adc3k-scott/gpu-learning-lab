@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NCA-AIIO Cheat Sheet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:700;color:#e8edf2;letter-spacing:0.5px}
+.header h1 span{color:#f5a623}
+.header-links{display:flex;gap:8px}
+.header-links a{font-size:12px;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;white-space:nowrap}
+.btn-amber{background:#f5a623;color:#0a0e14}
+.btn-green{background:#00d68f;color:#0a0e14}
+
+/* Domain filter tabs */
+.tabs{position:sticky;top:53px;z-index:99;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 12px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 16px;font-size:12px;font-weight:600;color:#607080;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
+.tab.active{color:#f5a623;border-bottom-color:#f5a623}
+.tab:hover{color:#e8edf2}
+
+/* Section headers */
+.section-title{padding:20px 20px 8px;font-size:14px;font-weight:700;color:#f5a623;letter-spacing:0.5px;text-transform:uppercase}
+
+/* 3-column card grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 16px}
+
+/* Individual card */
+.card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s}
+.card:hover{border-color:#2a3a50}
+.card.d1{border-left:3px solid #f5a623}
+.card.d2{border-left:3px solid #00b4d8}
+.card.d3{border-left:3px solid #00d68f}
+
+.card .q{font-size:12px;font-weight:700;color:#e8edf2;line-height:1.35}
+.card .a{font-size:11px;color:#8899aa;line-height:1.4}
+.card .a strong{color:#cdd6e0;font-weight:600}
+
+/* Key numbers section */
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 16px}
+.num-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 12px;text-align:center}
+.num-card .label{font-size:10px;color:#607080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.num-card .value{font-size:18px;font-weight:800;color:#f5a623}
+
+/* Product map */
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 16px}
+.prod-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 12px;text-align:center}
+.prod-card .pname{font-size:13px;font-weight:700;color:#00b4d8;margin-bottom:2px}
+.prod-card .pdesc{font-size:10px;color:#607080;line-height:1.3}
+
+/* iPad responsive */
+@media(max-width:1024px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .numbers-grid{grid-template-columns:repeat(3,1fr)}
+  .product-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+  .product-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>NCA-AIIO</span> Cheat Sheet</h1>
+  <div class="header-links">
+    <a href="/study" class="btn-green">Study Guide</a>
+    <a href="/quiz" class="btn-amber">Take Quiz</a>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="all">All 60</div>
+  <div class="tab" data-tab="nums">Key Numbers</div>
+  <div class="tab" data-tab="products">Product Map</div>
+  <div class="tab" data-tab="d1">D1: AI Knowledge (23)</div>
+  <div class="tab" data-tab="d2">D2: Infrastructure (24)</div>
+  <div class="tab" data-tab="d3">D3: Operations (13)</div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="section" id="sec-nums">
+<div class="section-title">Key Numbers</div>
+<div class="numbers-grid">
+  <div class="num-card"><div class="label">H100 TDP</div><div class="value">700W</div></div>
+  <div class="num-card"><div class="label">H100 Memory</div><div class="value">80 GB</div></div>
+  <div class="num-card"><div class="label">H100 NVLink BW</div><div class="value">900 GB/s</div></div>
+  <div class="num-card"><div class="label">DGX H100 GPUs</div><div class="value">8</div></div>
+  <div class="num-card"><div class="label">DGX H100 Power</div><div class="value">10.2 kW</div></div>
+  <div class="num-card"><div class="label">IB NDR Speed</div><div class="value">400 Gb/s</div></div>
+  <div class="num-card"><div class="label">MIG Max Instances</div><div class="value">7</div></div>
+  <div class="num-card"><div class="label">Good PUE</div><div class="value">&lt;1.3</div></div>
+  <div class="num-card"><div class="label">Liquid PUE</div><div class="value">&lt;1.1</div></div>
+  <div class="num-card"><div class="label">Industry PUE Avg</div><div class="value">1.58</div></div>
+  <div class="num-card"><div class="label">Air Cool Max</div><div class="value">30 kW/rack</div></div>
+  <div class="num-card"><div class="label">GPU Throttle Temp</div><div class="value">~83&deg;C</div></div>
+</div>
+</div>
+
+<!-- PRODUCT MAP -->
+<div class="section" id="sec-products">
+<div class="section-title">NVIDIA Product Map</div>
+<div class="product-grid">
+  <div class="prod-card"><div class="pname">CUDA</div><div class="pdesc">GPU parallel programming</div></div>
+  <div class="prod-card"><div class="pname">TensorRT</div><div class="pdesc">Inference optimization</div></div>
+  <div class="prod-card"><div class="pname">Triton</div><div class="pdesc">Multi-model inference server</div></div>
+  <div class="prod-card"><div class="pname">NIM</div><div class="pdesc">Containerized inference microservices</div></div>
+  <div class="prod-card"><div class="pname">NGC</div><div class="pdesc">Container/model registry</div></div>
+  <div class="prod-card"><div class="pname">DCGM</div><div class="pdesc">GPU monitoring</div></div>
+  <div class="prod-card"><div class="pname">Base Command</div><div class="pdesc">DGX cluster management</div></div>
+  <div class="prod-card"><div class="pname">GPU Operator</div><div class="pdesc">K8s GPU automation</div></div>
+  <div class="prod-card"><div class="pname">NVLink</div><div class="pdesc">GPU-to-GPU interconnect</div></div>
+  <div class="prod-card"><div class="pname">NVSwitch</div><div class="pdesc">In-node GPU fabric</div></div>
+  <div class="prod-card"><div class="pname">InfiniBand</div><div class="pdesc">Inter-node network</div></div>
+  <div class="prod-card"><div class="pname">BlueField DPU</div><div class="pdesc">Offload net/storage/security</div></div>
+  <div class="prod-card"><div class="pname">MIG</div><div class="pdesc">Hardware GPU partitioning</div></div>
+  <div class="prod-card"><div class="pname">RAPIDS</div><div class="pdesc">GPU data science libs</div></div>
+  <div class="prod-card"><div class="pname">Omniverse</div><div class="pdesc">Digital twin platform</div></div>
+  <div class="prod-card"><div class="pname">Isaac Sim</div><div class="pdesc">Robot simulation</div></div>
+  <div class="prod-card"><div class="pname">Metropolis</div><div class="pdesc">AI vision analytics</div></div>
+  <div class="prod-card"><div class="pname">NCCL</div><div class="pdesc">GPU collective comms</div></div>
+  <div class="prod-card"><div class="pname">cuDNN</div><div class="pdesc">Deep learning primitives</div></div>
+  <div class="prod-card"><div class="pname">AI Enterprise</div><div class="pdesc">Production AI platform</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 1: AI KNOWLEDGE -->
+<div class="section" id="sec-d1">
+<div class="section-title">Domain 1 &mdash; Essential AI Knowledge (38%)</div>
+<div class="grid">
+  <div class="card d1"><div class="q">AI vs ML vs Deep Learning?</div><div class="a"><strong>AI &gt; ML &gt; DL</strong> (nested circles). AI = machines mimic intelligence. ML = learn from data. DL = neural nets with many layers.</div></div>
+  <div class="card d1"><div class="q">CPU vs GPU architecture?</div><div class="a">CPU: few powerful cores, <strong>sequential</strong>. GPU: <strong>thousands of cores</strong>, parallel. GPUs excel at matrix math for AI.</div></div>
+  <div class="card d1"><div class="q">Why GPUs for AI?</div><div class="a">AI = massive <strong>matrix multiplications</strong>, highly parallelizable. GPUs deliver <strong>10-100x speedup</strong>. Tensor Cores add mixed-precision acceleration.</div></div>
+  <div class="card d1"><div class="q">Training vs Inference?</div><div class="a"><strong>Training</strong> = build model (days/weeks, huge compute). <strong>Inference</strong> = use model (low latency, less per-request compute).</div></div>
+  <div class="card d1"><div class="q">Which needs more compute?</div><div class="a"><strong>Training</strong> per run. But at scale, <strong>inference can use more total GPU-hours</strong> (24/7 serving millions).</div></div>
+  <div class="card d1"><div class="q">What is TensorRT?</div><div class="a"><strong>Inference optimization engine.</strong> Layer fusion, precision calibration (FP32&rarr;FP16/INT8), kernel auto-tuning. Faster inference on NVIDIA GPUs.</div></div>
+  <div class="card d1"><div class="q">AI adoption drivers?</div><div class="a"><strong>(1)</strong> GPU compute <strong>(2)</strong> Data availability <strong>(3)</strong> Algorithm advances (transformers) <strong>(4)</strong> Software ecosystem (PyTorch, pre-trained models)</div></div>
+  <div class="card d1"><div class="q">5 major AI industries?</div><div class="a"><strong>Healthcare</strong>, autonomous vehicles, <strong>financial services</strong>, manufacturing, <strong>natural language/LLMs</strong>. Also: retail, energy, defense.</div></div>
+  <div class="card d1"><div class="q">NVIDIA software stack?</div><div class="a">GPU &rarr; <strong>CUDA</strong> &rarr; cuDNN &rarr; <strong>AI Enterprise</strong> (TensorRT, Triton, NIM, RAPIDS) &rarr; Frameworks (PyTorch) &rarr; Apps (NGC). CUDA is foundation.</div></div>
+  <div class="card d1"><div class="q">What is NGC?</div><div class="a"><strong>Catalog/registry</strong> of GPU-optimized containers, pre-trained models, SDKs. <strong>App store for GPU AI software.</strong></div></div>
+  <div class="card d1"><div class="q">What is NIM?</div><div class="a">Packages AI models as <strong>containerized microservices</strong> with REST API. Pull container &rarr; get optimized inference endpoint. Simplifies production.</div></div>
+  <div class="card d1"><div class="q">What is Triton?</div><div class="a">Open-source <strong>inference serving platform</strong>. Multiple models, multiple frameworks (PyTorch, TF, TensorRT, ONNX). Batching, scheduling, monitoring.</div></div>
+  <div class="card d1"><div class="q">What is an LLM?</div><div class="a">Deep learning model, <strong>billions of parameters</strong>. Training = thousands of GPUs for weeks. Even inference needs multiple high-memory GPUs (weights in VRAM).</div></div>
+  <div class="card d1"><div class="q">Supervised vs Unsupervised vs RL?</div><div class="a"><strong>Supervised</strong> = labeled data. <strong>Unsupervised</strong> = finds patterns, no labels. <strong>RL</strong> = agent learns from rewards/penalties.</div></div>
+  <div class="card d1"><div class="q">Transfer learning?</div><div class="a">Take <strong>pre-trained model</strong>, fine-tune on smaller domain data. Less data needed, less time, good results.</div></div>
+  <div class="card d1"><div class="q">What is RAPIDS?</div><div class="a"><strong>GPU-accelerated data science</strong> libs. cuDF (GPU pandas), cuML (GPU scikit-learn), cuGraph. Speeds up data prep.</div></div>
+  <div class="card d1"><div class="q">Mixed-precision training?</div><div class="a">Uses <strong>FP16 + FP32</strong>. Tensor Cores do FP16 math faster. Master weights in FP32. <strong>~2x speedup</strong>, minimal accuracy loss. Blackwell adds FP4/FP8.</div></div>
+  <div class="card d1"><div class="q">AI development lifecycle?</div><div class="a">Data collection &rarr; prep &rarr; model dev &rarr; evaluation &rarr; <strong>deployment</strong> (TensorRT, Triton/NIM) &rarr; <strong>monitoring</strong> (drift detection). Iterative.</div></div>
+  <div class="card d1"><div class="q">Containers (Docker) in AI?</div><div class="a">Package entire stack (OS, CUDA, frameworks). <strong>Portable</strong>, reproducible, no dependency conflicts. <strong>NGC provides pre-built GPU containers.</strong></div></div>
+  <div class="card d1"><div class="q">What is an epoch?</div><div class="a">One <strong>complete pass</strong> through training data. Many epochs per training run. Too many = <strong>overfitting</strong>.</div></div>
+  <div class="card d1"><div class="q">What is DGX?</div><div class="a">Purpose-built <strong>AI supercomputer</strong>. DGX H100 = 8x H100 + NVLink/NVSwitch + networking. Building block for <strong>DGX SuperPOD</strong>.</div></div>
+  <div class="card d1"><div class="q">What is Base Command?</div><div class="a"><strong>Cluster management</strong> for DGX. Job scheduling, resource allocation, user management, monitoring. The OS for a DGX cluster.</div></div>
+  <div class="card d1"><div class="q">What is MLOps?</div><div class="a"><strong>DevOps for ML.</strong> Automates training, testing, deployment, monitoring pipelines. Models degrade (data drift) &rarr; need automated lifecycle.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 2: INFRASTRUCTURE -->
+<div class="section" id="sec-d2">
+<div class="section-title">Domain 2 &mdash; AI Infrastructure (40%)</div>
+<div class="grid">
+  <div class="card d2"><div class="q">What is NVLink?</div><div class="a">High-bandwidth <strong>GPU-to-GPU interconnect</strong>. H100: <strong>900 GB/s</strong> bidirectional. Solves communication bottleneck across GPUs.</div></div>
+  <div class="card d2"><div class="q">What is NVSwitch?</div><div class="a">Connects all GPUs in a node via NVLink. <strong>Fully connected fabric</strong>, any-to-any at full bandwidth. Creates <strong>unified GPU memory space</strong>.</div></div>
+  <div class="card d2"><div class="q">What is InfiniBand?</div><div class="a">High-bandwidth, <strong>low-latency</strong> cluster networking. ConnectX + Quantum switches. <strong>400 Gb/s/port</strong>. Minimizes gradient exchange overhead.</div></div>
+  <div class="card d2"><div class="q">InfiniBand vs Ethernet?</div><div class="a"><strong>IB:</strong> 400 Gb/s, ~1&micro;s, native RDMA, best for training. <strong>Ethernet:</strong> 400 Gb/s, ~5-10&micro;s, needs RoCE, good for inference. <strong>IB wins for training.</strong></div></div>
+  <div class="card d2"><div class="q">What is RDMA?</div><div class="a"><strong>Remote Direct Memory Access.</strong> GPU reads/writes remote memory bypassing CPU/OS. Wire-speed gradient exchange. IB = native RDMA. Ethernet = RoCE.</div></div>
+  <div class="card d2"><div class="q">What is BlueField DPU?</div><div class="a"><strong>Offloads networking, storage, security</strong> from CPU. Frees GPUs for AI. Hardware security isolation, zero-trust, storage acceleration.</div></div>
+  <div class="card d2"><div class="q">Scale-up vs Scale-out?</div><div class="a"><strong>Scale-up</strong> = more GPUs per node (NVLink, max ~8). <strong>Scale-out</strong> = more nodes (InfiniBand). In practice: both.</div></div>
+  <div class="card d2"><div class="q">GPU memory: training vs inference?</div><div class="a"><strong>Training:</strong> params + gradients + optimizer + activations (70B = 8x80GB GPUs). <strong>Inference:</strong> weights + KV cache. Memory BW often the bottleneck.</div></div>
+  <div class="card d2"><div class="q">Power and cooling for AI?</div><div class="a"><strong>5-10 kW/node</strong>. Air fails above 30 kW/rack. <strong>Liquid cooling required.</strong> PUE target &lt;1.3. 480V 3-phase. N+1 redundancy.</div></div>
+  <div class="card d2"><div class="q">What is PUE?</div><div class="a"><strong>Total Facility Power / IT Power.</strong> 1.0 = perfect. Avg: 1.58. Modern target: 1.2-1.3. Best liquid: <strong>1.03-1.1</strong>.</div></div>
+  <div class="card d2"><div class="q">Air vs Liquid cooling?</div><div class="a"><strong>Air:</strong> up to 30 kW/rack, PUE 1.3-1.6. <strong>Liquid:</strong> 50-100+ kW/rack, PUE 1.03-1.2. Liquid <strong>required for modern GPU clusters</strong>.</div></div>
+  <div class="card d2"><div class="q">Direct-to-chip vs Immersion?</div><div class="a"><strong>Direct-to-chip:</strong> cold plates on GPU, rest uses air. Most common. <strong>Immersion:</strong> entire server in dielectric fluid. Max density, <strong>lowest PUE</strong>.</div></div>
+  <div class="card d2"><div class="q">Key AI cluster components?</div><div class="a">GPU nodes, <strong>IB spine-leaf</strong>, parallel FS, Quantum switches, management (BCM, DCGM), scheduler (Slurm/K8s), power + cooling.</div></div>
+  <div class="card d2"><div class="q">What is DGX SuperPOD?</div><div class="a">NVIDIA <strong>reference architecture</strong> for large AI clusters. Defines topology, storage, cabling for <strong>20-140+ DGX nodes</strong>.</div></div>
+  <div class="card d2"><div class="q">Facility requirements?</div><div class="a"><strong>20-50+ MW</strong>, 30-100 kW/rack density, liquid cooling, 2,000-3,000+ lbs/rack floor load, fiber, physical security, <strong>N+1 redundancy</strong>.</div></div>
+  <div class="card d2"><div class="q">Storage for AI?</div><div class="a"><strong>Training:</strong> parallel FS (Lustre/GPFS). Checkpointing: high write throughput. NVMe for local scratch. Petabytes, tiered. <strong>100+ GB/s</strong> network throughput.</div></div>
+  <div class="card d2"><div class="q">On-prem vs Cloud?</div><div class="a"><strong>On-prem:</strong> full control, high CapEx, lower long-term TCO at sustained use, data sovereignty. <strong>Cloud:</strong> pay-per-use, fast scale, higher TCO if always-on.</div></div>
+  <div class="card d2"><div class="q">What is spine-leaf?</div><div class="a">Two-tier: every leaf to every spine. <strong>Max 2 hops</strong>, predictable latency, easy horizontal scaling. Standard for AI clusters.</div></div>
+  <div class="card d2"><div class="q">Multi-node training bandwidth?</div><div class="a">Each node needs <strong>400 Gb/s+</strong>. DGX H100: 8x 400 Gb/s = <strong>3.2 Tb/s total</strong>. Network must match compute or GPUs idle.</div></div>
+  <div class="card d2"><div class="q">GPU Direct RDMA + Storage?</div><div class="a"><strong>GPU Direct RDMA:</strong> network adapters &harr; GPU memory (no CPU). <strong>GPU Direct Storage:</strong> NVMe &rarr; GPU memory directly. Both eliminate data copies.</div></div>
+  <div class="card d2"><div class="q">Data vs Model parallelism?</div><div class="a"><strong>Data:</strong> same model on every GPU, different batches, sync gradients. <strong>Model:</strong> model split across GPUs. <strong>Pipeline:</strong> stages on different GPUs.</div></div>
+  <div class="card d2"><div class="q">GPU power consumption?</div><div class="a">H100 = <strong>700W</strong>. DGX H100 = ~10.2 kW. GPU racks <strong>5-10x more power-dense</strong> than traditional servers.</div></div>
+  <div class="card d2"><div class="q">What is MIG?</div><div class="a"><strong>Multi-Instance GPU.</strong> Partitions 1 GPU into up to <strong>7 isolated instances</strong>. Dedicated compute/memory/BW. A100/H100 only. Maximizes utilization.</div></div>
+  <div class="card d2"><div class="q">GPU hardware selection factors?</div><div class="a"><strong>Model size</strong> (memory), training vs inference, precision needs, scaling, budget, throughput vs latency, software compatibility.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 3: OPERATIONS -->
+<div class="section" id="sec-d3">
+<div class="section-title">Domain 3 &mdash; AI Operations (22%)</div>
+<div class="grid">
+  <div class="card d3"><div class="q">What is DCGM?</div><div class="a"><strong>Data Center GPU Manager.</strong> GPU health (temp, power, ECC), diagnostics, policy management. Integrates with Prometheus/Grafana.</div></div>
+  <div class="card d3"><div class="q">GPU metrics to monitor?</div><div class="a"><strong>Utilization %</strong>, memory util, temp (throttle ~83&deg;C), power, <strong>ECC errors</strong>, SM clock, PCIe/NVLink throughput, memory BW.</div></div>
+  <div class="card d3"><div class="q">What is BMC?</div><div class="a"><strong>Baseboard Management Controller.</strong> Out-of-band: remote power, health, KVM console, firmware. Works when OS is crashed. Uses IPMI.</div></div>
+  <div class="card d3"><div class="q">Kubernetes for AI?</div><div class="a"><strong>Container orchestration.</strong> Deploy/scale inference, manage GPU resources, health checks, rolling updates. + <strong>NVIDIA GPU Operator</strong>. Best for inference.</div></div>
+  <div class="card d3"><div class="q">NVIDIA GPU Operator?</div><div class="a"><strong>Automates all NVIDIA software on K8s</strong> &mdash; drivers, container toolkit, device plugin, DCGM, MIG manager. GPU K8s plug-and-play.</div></div>
+  <div class="card d3"><div class="q">Slurm vs K8s for training?</div><div class="a"><strong>Slurm:</strong> native multi-node GPU jobs (MPI, NCCL), gang scheduling, mature. <strong>K8s:</strong> better for inference serving. Slurm wins for large training.</div></div>
+  <div class="card d3"><div class="q">Gang scheduling vs Backfill?</div><div class="a"><strong>Gang:</strong> all resources at once (64 GPUs requested = wait for all 64). Required for distributed training. <strong>Backfill:</strong> small jobs fill idle resources.</div></div>
+  <div class="card d3"><div class="q">GPU virtualization?</div><div class="a"><strong>MIG:</strong> hardware partition, full isolation, A100/H100, up to 7. <strong>vGPU:</strong> software, time-slicing. <strong>MPS:</strong> multi-process sharing, less isolation.</div></div>
+  <div class="card d3"><div class="q">Time-slicing vs MIG?</div><div class="a"><strong>Time-slicing:</strong> switches between workloads, shared memory, no isolation. <strong>MIG:</strong> physically partitioned, dedicated resources, <strong>full isolation</strong>.</div></div>
+  <div class="card d3"><div class="q">Management protocols?</div><div class="a"><strong>IPMI/BMC</strong>, SNMP, <strong>Redfish</strong> (REST API), DCGM, Prometheus+Grafana, Syslog/ELK, Ansible/Terraform, Base Command.</div></div>
+  <div class="card d3"><div class="q">Job scheduling considerations?</div><div class="a">Priority queues, fair-share, <strong>gang scheduling</strong>, preemption, resource quotas, topology awareness, <strong>checkpointing for long jobs</strong>.</div></div>
+  <div class="card d3"><div class="q">ECC memory errors?</div><div class="a"><strong>Correctable (CE):</strong> auto-fixed, increasing count = failing. <strong>Uncorrectable (UCE):</strong> job fails, drain node, DCGM diagnostics, RMA. <strong>Monitor CE trend.</strong></div></div>
+  <div class="card d3"><div class="q">Design 70B LLM cluster?</div><div class="a">70B @ FP16 = 140 GB weights, ~560 GB with optimizer. <strong>4-8 DGX H100</strong> (32-64 GPUs), IB NDR, spine-leaf, Lustre 100+ TB, <strong>liquid cooling</strong>, Slurm, DCGM.</div></div>
+</div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const sections = {
+  nums: document.getElementById('sec-nums'),
+  products: document.getElementById('sec-products'),
+  d1: document.getElementById('sec-d1'),
+  d2: document.getElementById('sec-d2'),
+  d3: document.getElementById('sec-d3')
+};
+
+function showTab(tab) {
+  tabs.forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+  if (tab === 'all') {
+    Object.values(sections).forEach(s => s.style.display = '');
+  } else {
+    Object.entries(sections).forEach(([k, s]) => {
+      s.style.display = k === tab ? '' : 'none';
+    });
+  }
+}
+
+tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+</script>
+</body>
+</html>

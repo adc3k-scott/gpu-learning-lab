@@ -16,6 +16,7 @@ from __future__ import annotations
 import asyncio
 import fnmatch
 import logging
+import threading
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
@@ -36,6 +37,7 @@ class Event:
     timestamp: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
+    sequence: int = 0  # assigned by EventBus on publish
 
 
 Handler = Callable[[Event], Awaitable[None]]
@@ -66,6 +68,8 @@ class EventBus:
     _MAX_HANDLER_RETRIES = 2
     _RETRY_BACKOFF = 0.5  # seconds
 
+    _REPLAY_BUFFER_SIZE = 200
+
     def __init__(self, redis_url: str | None = None):
         self._redis_url = redis_url
         self._redis: object | None = None
@@ -74,6 +78,9 @@ class EventBus:
         self._mode = "memory"
         self._running = False
         self._dlq: deque[DeadLetter] = deque(maxlen=self._MAX_DLQ_SIZE)
+        self._seq_counter = 0
+        self._seq_lock = threading.Lock()
+        self._replay_buffer: deque[Event] = deque(maxlen=self._REPLAY_BUFFER_SIZE)
 
     # ------------------------------------------------------------------
     # Connection
@@ -122,11 +129,16 @@ class EventBus:
         ]
 
     async def publish(self, event: Event) -> None:
+        with self._seq_lock:
+            self._seq_counter += 1
+            event.sequence = self._seq_counter
+        self._replay_buffer.append(event)
+
         if self._mode == "redis" and self._redis:
             await self._publish_redis(event)
         else:
             await self._queue.put(event)
-        logger.debug("Published event: %s [%s]", event.event_type, event.event_id)
+        logger.debug("Published event: %s [seq=%d]", event.event_type, event.sequence)
 
     # ------------------------------------------------------------------
     # Internal
@@ -212,6 +224,19 @@ class EventBus:
         count = len(self._dlq)
         self._dlq.clear()
         return count
+
+    # ------------------------------------------------------------------
+    # Replay buffer API
+    # ------------------------------------------------------------------
+
+    def replay_since(self, sequence: int) -> list[Event]:
+        """Return all buffered events with sequence > *sequence*."""
+        return [e for e in self._replay_buffer if e.sequence > sequence]
+
+    @property
+    def last_sequence(self) -> int:
+        """Return the most recently assigned sequence number."""
+        return self._seq_counter
 
     @property
     def mode(self) -> str:

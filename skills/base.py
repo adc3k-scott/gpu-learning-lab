@@ -84,6 +84,7 @@ class RetryPolicy:
     max_attempts: int = 1
     backoff_base: float = 1.0
     exceptions: tuple[type[Exception], ...] = (Exception,)
+    timeout: float = 300.0  # per-attempt timeout in seconds (0 = no timeout)
 
 
 # ---------------------------------------------------------------------------

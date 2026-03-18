@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>NVIDIA Accelerated Computing Stack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 60px}
+
+.back{display:inline-block;color:#76b900;text-decoration:none;font-size:12px;font-weight:700;margin-bottom:8px}
+
+.hdr{text-align:center;padding:16px 0 8px}
+.hdr h1{font-size:20px;font-weight:800;color:#e8edf2;letter-spacing:1px}
+.hdr h1 span{color:#76b900}
+.hdr .sub{font-size:11px;color:#607080;margin-top:4px}
+.hdr .quote{font-size:12px;color:#ff6b35;margin-top:10px;font-style:italic;font-weight:600}
+.hdr .updated{font-size:10px;color:#4a5568;margin-top:6px}
+
+/* Section card */
+.card{background:#111820;border:1px solid #1a2436;border-radius:12px;margin-bottom:14px;overflow:hidden}
+.card-hdr{padding:14px 16px 8px}
+.card-hdr h2{font-size:15px;font-weight:700;color:#76b900;line-height:1.3}
+.card-hdr h2 small{display:block;font-size:11px;font-weight:400;color:#607080;margin-top:2px}
+.card-body{padding:0 16px 14px}
+
+/* Component rows */
+.comp{padding:12px 0;border-bottom:1px solid #1a2436}
+.comp:last-child{border-bottom:none}
+.comp .name{font-size:13px;font-weight:700;color:#e8edf2;margin-bottom:2px}
+.comp .name .chip{font-size:9px;font-weight:800;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.comp .role{font-size:11px;color:#ff6b35;font-weight:600;margin-bottom:4px}
+.comp .desc{font-size:11px;color:#8090a0}
+.comp .desc strong{color:#c0ccd8}
+
+/* Color chips */
+.gpu{background:#76b900;color:#0a0e14}
+.net{background:#00e5ff;color:#0a0e14}
+.sec{background:#7c4dff;color:#fff}
+.sw{background:#ff6b35;color:#fff}
+.stor{background:#ffab00;color:#0a0e14}
+.new{background:#e040fb;color:#fff}
+
+/* Numbers grid */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 0}
+.num{background:#0d1218;border-radius:8px;padding:10px 8px;text-align:center}
+.num .val{font-size:18px;font-weight:800;color:#76b900}
+.num .lbl{font-size:9px;color:#607080;margin-top:2px;text-transform:uppercase;letter-spacing:0.3px}
+
+/* Flow diagram */
+.flow{background:#111820;border:1px solid #1a2436;border-radius:12px;padding:16px;margin-bottom:14px}
+.flow h2{font-size:15px;font-weight:700;color:#76b900;margin-bottom:12px;text-align:center}
+.flow-row{display:flex;align-items:center;justify-content:center;margin-bottom:6px;gap:8px}
+.flow-box{background:#1a2436;border-radius:8px;padding:8px 12px;text-align:center;flex:1;max-width:200px}
+.flow-box .f-label{font-size:10px;font-weight:700;color:#76b900}
+.flow-box .f-name{font-size:12px;font-weight:700;color:#e8edf2}
+.flow-box .f-does{font-size:10px;color:#607080;margin-top:2px}
+.flow-box.fnew{border:1px solid #e040fb40}
+.flow-box.fnew .f-label{color:#e040fb}
+.flow-arrow{color:#76b900;font-size:16px;padding:0 4px}
+.flow-down{text-align:center;color:#76b900;font-size:16px;padding:4px 0}
+.flow-note{font-size:10px;color:#607080;text-align:center;margin-top:8px;font-style:italic}
+
+/* Highlight box */
+.highlight{background:linear-gradient(135deg,#1a2a1a,#111820);border:1px solid #2a4a2a;border-radius:12px;padding:16px;margin-bottom:14px}
+.highlight h2{font-size:15px;font-weight:700;color:#76b900;margin-bottom:10px}
+.highlight p{font-size:12px;color:#c0ccd8;margin-bottom:8px;padding-left:12px;border-left:2px solid #76b900}
+.highlight p:last-child{margin-bottom:0}
+
+/* New announcement box */
+.announce{background:linear-gradient(135deg,#2a1a2a,#111820);border:1px solid #4a2a4a;border-radius:12px;padding:16px;margin-bottom:14px}
+.announce h2{font-size:15px;font-weight:700;color:#e040fb;margin-bottom:10px}
+.announce p{font-size:12px;color:#c0ccd8;margin-bottom:8px;padding-left:12px;border-left:2px solid #e040fb}
+.announce p:last-child{margin-bottom:0}
+
+/* Comparison */
+.vs{background:linear-gradient(135deg,#2a1a1a,#111820);border:1px solid #4a2a2a;border-radius:12px;padding:16px;margin-bottom:14px}
+.vs h2{font-size:15px;font-weight:700;color:#ff6b35;margin-bottom:10px}
+.vs-row{display:flex;padding:8px 0;border-bottom:1px solid #1a2436;gap:8px}
+.vs-row:last-child{border-bottom:none}
+.vs-old{font-size:11px;color:#607080;min-width:110px;text-decoration:line-through}
+.vs-new{font-size:11px;color:#e8edf2;font-weight:700;flex:1}
+
+/* Roadmap */
+.roadmap{background:#111820;border:1px solid #1a2436;border-radius:12px;padding:16px;margin-bottom:14px}
+.roadmap h2{font-size:15px;font-weight:700;color:#00e5ff;margin-bottom:10px}
+.rm-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #1a2436;align-items:baseline}
+.rm-row:last-child{border-bottom:none}
+.rm-year{font-size:12px;font-weight:800;color:#00e5ff;min-width:50px}
+.rm-gen{font-size:12px;font-weight:700;color:#e8edf2}
+.rm-det{font-size:10px;color:#607080;margin-top:2px}
+
+/* Bottom tagline */
+.tagline{text-align:center;padding:16px 0;font-size:10px;color:#3a4a5a}
+.tagline a{color:#607080;text-decoration:none}
+
+@media(max-width:380px){.nums{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:768px){
+  .wrap{max-width:640px;padding:24px}
+  .hdr h1{font-size:26px}
+  .comp .name{font-size:14px}
+  .comp .desc{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/hub" class="back">&larr; Mission Control</a>
+  <div class="hdr">
+    <h1>NVIDIA <span>ACCELERATED COMPUTING</span></h1>
+    <div class="sub">The Full Stack &mdash; How Every Piece Works Together</div>
+    <div class="quote">"Clear the road and let the GPUs eat."</div>
+    <div class="updated">Updated with GTC 2026 Keynote Announcements (Mar 16)</div>
+  </div>
+
+  <!-- THE BIG IDEA -->
+  <div class="highlight">
+    <h2>The Big Idea</h2>
+    <p>Every component in an NVIDIA AI factory is a <strong>smart device</strong> &mdash; not dumb hardware waiting for instructions. Each chip, switch, and card is a little computer with its own management built in.</p>
+    <p>They all exist for one reason: <strong>remove overhead from the GPUs</strong> so the GPUs do nothing but compute. That's accelerated computing.</p>
+    <p>When every piece of silicon is designed to talk to every other piece natively &mdash; nothing is translating, nothing is waiting, nothing is wasted.</p>
+  </div>
+
+  <!-- GTC 2026 HEADLINE -->
+  <div class="announce">
+    <h2>GTC 2026: What Just Changed</h2>
+    <p><strong>7 new chips. 5 rack-scale systems. 1 complete AI factory blueprint.</strong> NVIDIA is now shipping the entire factory as a reference design &mdash; not just chips.</p>
+    <p><strong>Dynamo 1.0</strong> &mdash; open-source inference OS that boosted Blackwell performance 7x with software alone. The multiplier Jensen showed.</p>
+    <p><strong>Groq LPU integration</strong> &mdash; NVIDIA acquired Groq. GPU handles heavy thinking (prefill), Groq handles fast output (decode). <strong>35x tokens-per-watt.</strong></p>
+    <p><strong>DSX Reference Design</strong> &mdash; NVIDIA's complete AI factory blueprint. Power, cooling, network, digital twin. Build to spec, not from scratch.</p>
+    <p><strong>NemoClaw + OpenClaw</strong> &mdash; open-source agent OS. Resource management, tool access, LLM integration, sandboxed execution. The "open call" agent stack.</p>
+  </div>
+
+  <!-- 7 CHIPS -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>The 7 Chips <span class="chip new">GTC 2026</span><small>Full vertical integration &mdash; every layer is NVIDIA silicon</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">Vera Rubin GPU <span class="chip gpu">COMPUTE</span></div>
+        <div class="role">Next-gen training + inference. NVLink 6.</div>
+        <div class="desc"><strong>50 PFLOPS FP4</strong> per GPU (5x Blackwell). 288 GB HBM4 at 22 TB/s bandwidth. NVLink 6 at <strong>3,600 GB/s</strong>. 336B transistors. Production H2 2026.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Vera CPU <span class="chip gpu">PROCESSOR</span></div>
+        <div class="role">Purpose-built for AI inference + agent workloads.</div>
+        <div class="desc"><strong>2x single-thread vs Grace.</strong> 1.5 TB LPDDR5 memory, 1.2 TB/s bandwidth. Only data center CPU using LPDDR5. Designed for constant parameter and KV cache pulling at massive bandwidth. <strong>88 Olympus cores, 176 threads.</strong></div>
+      </div>
+      <div class="comp">
+        <div class="name">Groq 3 LPX <span class="chip new">INFERENCE</span></div>
+        <div class="role">Language Processing Unit. Ultra-fast token output.</div>
+        <div class="desc">NVIDIA acquired Groq. <strong>500 MB on-chip SRAM, 640 TB/s bandwidth.</strong> Static compilation at model load. Handles the decode path (fast token generation) while GPUs handle prefill (heavy reasoning). Dynamo orchestrates both. <strong>35x tokens-per-watt vs GPU-only.</strong></div>
+      </div>
+      <div class="comp">
+        <div class="name">BlueField-4 <span class="chip sec">DPU</span></div>
+        <div class="role">4x the cores, 4x the memory, 2x the speed.</div>
+        <div class="desc"><strong>64 Arm Neoverse V2 cores</strong> (vs 16 on BF-3). 128 GB memory (vs 32). 800 Gb/s (vs 400). PCIe Gen 6. 114 MB L3 cache. Ships 2026 with Vera Rubin.</div>
+      </div>
+      <div class="comp">
+        <div class="name">ConnectX-9 <span class="chip net">SUPERNIC</span></div>
+        <div class="role">Next-gen network interface.</div>
+        <div class="desc">High-speed interconnect for Vera Rubin systems. Integrated PCIe switch. Partners with BlueField-4 for full I/O offload.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Spectrum-6 SPX <span class="chip net">SWITCH</span></div>
+        <div class="role">Co-packaged optics Ethernet.</div>
+        <div class="desc">Full networking fabric with co-packaged optics. For environments using Spectrum-X Ethernet alongside or instead of InfiniBand.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Vera Rubin Space 1 <span class="chip new">ORBITAL</span></div>
+        <div class="role">Radiation-hardened. AI in space.</div>
+        <div class="desc"><strong>25x more AI compute than H100</strong> in orbit. Radiation-only cooling. Partners: Aetherflux, Axiom Space, Planet Labs, Starcloud.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 RACK SYSTEMS -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>5 Rack-Scale Systems <span class="chip new">GTC 2026</span><small>Factory-in-a-box. All liquid cooled. 45C hot water. 2-hour install.</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">Vera Rubin NVL72 GPU Rack</div>
+        <div class="role">The main compute rack. 72 GPUs acting as one.</div>
+        <div class="desc"><strong>72 Rubin GPUs + 36 Vera CPUs</strong>. NVLink 6. <strong>700 million tokens/sec per rack.</strong> 10x inference throughput per watt, 1/10 cost per token. 1.3 million individual components. Liquid cooled, 2-hour install.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Vera CPU Rack</div>
+        <div class="role">256 Vera processors. Agent + inference workhorse.</div>
+        <div class="desc"><strong>256 Vera CPUs</strong> in liquid-cooled config. 2x efficiency, 50% faster than traditional CPUs. Handles tool-calling agent ops and KV cache management.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Groq 3 LPX Inference Rack</div>
+        <div class="role">256 LPUs. The speed rack.</div>
+        <div class="desc"><strong>256 LPU processors.</strong> 35x tokens-per-watt vs GPU-only. Paired with GPU racks via Dynamo. Recommendation: <strong>~25% of facility capacity</strong> for high-value inference.</div>
+      </div>
+      <div class="comp">
+        <div class="name">BlueField-4 STX Storage Rack</div>
+        <div class="role">AI-native storage. Feed the GPUs.</div>
+        <div class="desc"><strong>5x token throughput, 4x energy efficiency, 2x faster data ingestion</strong> vs previous gen. Purpose-built to keep GPU racks fed without bottlenecks.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Spectrum-6 SPX Ethernet Rack</div>
+        <div class="role">Full networking fabric.</div>
+        <div class="desc">Co-packaged optics networking. For Spectrum-X Ethernet deployments. Complete rack-scale fabric solution.</div>
+      </div>
+      <div class="nums">
+        <div class="num"><div class="val">45&deg;C</div><div class="lbl">Hot Water</div></div>
+        <div class="num"><div class="val">2 hrs</div><div class="lbl">Install Time</div></div>
+        <div class="num"><div class="val">700M</div><div class="lbl">Tokens/Sec/Rack</div></div>
+        <div class="num"><div class="val">35x</div><div class="lbl">Tokens/Watt</div></div>
+        <div class="num"><div class="val">350x</div><div class="lbl">2-Year Gain</div></div>
+        <div class="num"><div class="val">$1T</div><div class="lbl">AI Infra Demand</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 1: THE MUSCLE -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>Layer 1: The Muscle<small>Where the work gets done</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">GPUs (Blackwell Now / Rubin H2 2026) <span class="chip gpu">COMPUTE</span></div>
+        <div class="role">The workers. They eat data.</div>
+        <div class="desc"><strong>What they do:</strong> AI training, inference, simulation, rendering &mdash; all the heavy lifting. Blackwell: 20 PFLOPS FP4. <strong>Vera Rubin: 50 PFLOPS FP4.</strong> They don't waste a single cycle on networking, security, or storage &mdash; that's everyone else's job.</div>
+      </div>
+      <div class="comp">
+        <div class="name">HBM Memory (HBM3e / HBM4) <span class="chip gpu">MEMORY</span></div>
+        <div class="role">The fuel tank. Right next to the engine.</div>
+        <div class="desc"><strong>What it does:</strong> High Bandwidth Memory stacked directly on the GPU package. Rubin: <strong>288 GB per GPU at 22 TB/s</strong> (3x Blackwell bandwidth). The model weights and training data live here so the GPU never waits for memory.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Groq LPU (Language Processing Unit) <span class="chip new">INFERENCE</span></div>
+        <div class="role">The sprinter. Decode-only, zero-latency token output.</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> GPUs are great at prefill (heavy reasoning). Groq LPUs are great at decode (generating tokens fast). <strong>Dynamo splits the work</strong> &mdash; GPU does the thinking, Groq does the talking. Combined: 35x more tokens per watt. Think of it like turbo + supercharger &mdash; different power bands, both feeding the same output.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 2: THE NERVOUS SYSTEM -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>Layer 2: The Nervous System<small>How GPUs talk to each other</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">NVLink 6 + NVLink Switch <span class="chip net">GPU-TO-GPU</span></div>
+        <div class="role">Direct GPU-to-GPU highway. No detours.</div>
+        <div class="desc"><strong>What it does:</strong> Connects GPUs within a rack at <strong>3,600 GB/s per GPU</strong> (Vera Rubin, 2x Blackwell). NVL72: 72 GPUs act like one giant GPU. Vera Rubin Ultra: <strong>144 GPUs</strong> in a single NVLink domain (Kyber rack, 2027).</div>
+      </div>
+      <div class="comp">
+        <div class="name">InfiniBand (Quantum Switches) <span class="chip net">NODE-TO-NODE</span></div>
+        <div class="role">The backbone. Connects every rack in the building.</div>
+        <div class="desc"><strong>What it does:</strong> XDR: 800 Gb/s per port, ultra-low latency. Quantum switches run <strong>SHARP</strong> &mdash; math operations right on the switch fabric. Data gets reduced before it hits the GPU. Managed by <strong>UFM</strong>. Still the king for large-scale training. <strong>Spectrum-X Ethernet</strong> now available for mid-size inference clusters.</div>
+      </div>
+      <div class="comp">
+        <div class="name">BlueField-4 DPUs <span class="chip sec">SECURITY + I/O</span></div>
+        <div class="role">A full ARM computer on a network card. Now 4x stronger.</div>
+        <div class="desc"><strong>What it does:</strong> Offloads <strong>all</strong> networking, security, encryption, firewall, and storage I/O from the CPU/GPU. Runs DOCA. BF-4: <strong>64 Arm cores, 128 GB memory, 800 Gb/s, PCIe Gen 6.</strong> The GPU never sees a packet header or a firewall rule.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 3: THE BRAIN -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>Layer 3: The Brain<small>Software that runs the factory</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">Dynamo 1.0 <span class="chip new">INFERENCE OS</span></div>
+        <div class="role">THE software multiplier. 7x boost, same hardware.</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> Open-source inference operating system for AI factories. Disaggregates workloads: sends prefill to GPUs, decode to Groq LPUs, orchestrates both over Ethernet. Token output went from <strong>700 to nearly 5,000/sec</strong> on identical hardware. Modules: KVBM (memory mgmt), NIXL (GPU-to-GPU data), Grove (scaling). Already adopted by AWS, Azure, Google Cloud, Oracle. <strong>This is the multiplier.</strong></div>
+      </div>
+      <div class="comp">
+        <div class="name">Base Command Manager (BCM) <span class="chip sw">CLUSTER MGMT</span></div>
+        <div class="role">The foreman. Manages every node in the building.</div>
+        <div class="desc"><strong>What it does:</strong> Provisions bare metal, deploys OS images, manages firmware, assigns roles. Uses <strong>cmsh</strong>. Every node, switch, and DPU reports to BCM. Now part of <strong>NVIDIA Mission Control</strong> (BCM + Run:ai + facility monitoring).</div>
+      </div>
+      <div class="comp">
+        <div class="name">Run:ai <span class="chip sw">GPU SCHEDULING</span></div>
+        <div class="role">The dispatcher. Makes sure no GPU sits idle.</div>
+        <div class="desc"><strong>What it does:</strong> Kubernetes-native GPU orchestration. <strong>Dynamic GPU Fractions</strong> &mdash; splits a GPU across workloads or gangs multiple GPUs for one job. Multi-tenant scheduling, priority queues, fair-share. Part of Mission Control.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NemoClaw + OpenClaw <span class="chip new">AGENT OS</span></div>
+        <div class="role">Open-source agent operating system. "The open call."</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> <strong>OpenClaw:</strong> open-source agent OS with resource management, tool access, LLM integration, scheduling, problem decomposition. <strong>NemoClaw:</strong> NVIDIA's production stack on top &mdash; Nemotron models + <strong>OpenShell</strong> sandboxed runtime + privacy router + security guardrails. Single-command install. Microsoft Security already using OpenShell (160x improvement in threat detection).</div>
+      </div>
+      <div class="comp">
+        <div class="name">DCGM + GPU Operator <span class="chip sw">MONITORING</span></div>
+        <div class="role">Watches every GPU heartbeat. Auto-configures Kubernetes.</div>
+        <div class="desc">DCGM: real-time telemetry &mdash; temp, power, ECC errors, NVLink status. Feeds Prometheus/Grafana. GPU Operator: auto-installs drivers, toolkit, device plugins in K8s. Drop a node in, it's GPU-ready.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NGC + Nemotron Models <span class="chip sw">SOFTWARE</span></div>
+        <div class="role">Pre-built containers + frontier open models.</div>
+        <div class="desc">NGC: container registry with PyTorch, Triton, NeMo, RAPIDS. <strong>Nemotron 3:</strong> top-3 language/reasoning model. 6 model families: Nemotron, Cosmos (world), Isaac GR00T (robotics), Alpamayo (AV), BioNeMo (bio), Earth-2 (climate).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 4: THE PHYSICAL PLANT -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>Layer 4: The Physical Plant<small>DSX Reference Design &mdash; build to spec, not from scratch</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">DSX AI Factory Reference Design <span class="chip new">BLUEPRINT</span></div>
+        <div class="role">NVIDIA's complete factory blueprint. Use it.</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> Full AI factory architecture: physical layouts, power specs, cooling specs, network topology. Comes with <strong>Omniverse DSX digital twin</strong> &mdash; simulate your factory before you build it. <strong>DSX Air</strong> accelerates design iterations. Jensen: "factor of two in efficiency gains." This is the path for Willow Glen.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Liquid Cooling (NVIDIA Integrated) <span class="chip stor">THERMAL</span></div>
+        <div class="role">Built into the rack. 45C hot water. 2-hour install.</div>
+        <div class="desc">All 5 rack systems are <strong>100% liquid cooled</strong>. Cooling is rack-level, not facility-level. NVIDIA ships the thermal management built in. Your job: provide the <strong>facility water loop</strong> (supply/return) and heat rejection (cooling towers or dry coolers). No custom immersion engineering needed &mdash; the reference design handles it.</div>
+      </div>
+      <div class="comp">
+        <div name="name">Power Infrastructure <span class="chip stor">POWER</span></div>
+        <div class="role">AI factories are power plants that think.</div>
+        <div class="desc">Vera Rubin NVL72 rack: <strong>~132 kW</strong>. A SuperPOD pulls <strong>multiple megawatts</strong>. ADC's 3-layer power stack: nat gas + solar (primary), grid (backup), diesel gensets (emergency). <strong>Power is the #1 moat.</strong> The DSX design connects to actual grid data for energy scheduling.</div>
+      </div>
+      <div class="comp">
+        <div class="name">Storage (BlueField-4 STX + GPUDirect) <span class="chip stor">STORAGE</span></div>
+        <div class="role">AI-native storage racks. Feed the GPUs.</div>
+        <div class="desc"><strong>BlueField-4 STX Storage Rack:</strong> 5x token throughput, 4x energy efficiency. <strong>GPUDirect Storage</strong> sends data straight from NVMe to GPU memory, bypassing CPU. Parallel file systems (Lustre, WekaFS) stripe across hundreds of drives. Training data must flow faster than GPUs consume it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT ALL FLOWS - UPDATED -->
+  <div class="flow">
+    <h2>How It All Comes Together</h2>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">RUN:AI</div>
+        <div class="f-name">Schedules the job</div>
+        <div class="f-does">Picks GPUs, sets priority</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">BCM</div>
+        <div class="f-name">Provisions the nodes</div>
+        <div class="f-does">OS, drivers, firmware</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box fnew">
+        <div class="f-label">DYNAMO</div>
+        <div class="f-name">Splits the workload</div>
+        <div class="f-does">Prefill &rarr; GPU, Decode &rarr; Groq</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">BLUEFIELD DPU</div>
+        <div class="f-name">Handles all I/O</div>
+        <div class="f-does">Network, security, storage</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">GPUDIRECT</div>
+        <div class="f-name">Feeds data to GPUs</div>
+        <div class="f-does">Bypasses CPU entirely</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">VERA RUBIN GPU</div>
+        <div class="f-name">Heavy reasoning</div>
+        <div class="f-does">Prefill + KV cache</div>
+      </div>
+      <div class="flow-arrow">&harr;</div>
+      <div class="flow-box fnew">
+        <div class="f-label">GROQ LPU</div>
+        <div class="f-name">Fast token output</div>
+        <div class="f-does">Decode at wire speed</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">NVLINK 6</div>
+        <div class="f-name">GPU-to-GPU sync</div>
+        <div class="f-does">3,600 GB/s per GPU</div>
+      </div>
+      <div class="flow-arrow">&harr;</div>
+      <div class="flow-box">
+        <div class="f-label">INFINIBAND</div>
+        <div class="f-name">Rack-to-rack sync</div>
+        <div class="f-does">SHARP reduces on-switch</div>
+      </div>
+    </div>
+    <div class="flow-down">&darr;</div>
+    <div class="flow-row">
+      <div class="flow-box">
+        <div class="f-label">DCGM</div>
+        <div class="f-name">Monitors everything</div>
+        <div class="f-does">Temp, power, errors, health</div>
+      </div>
+    </div>
+    <div class="flow-note">Every piece of silicon is designed to talk to every other piece natively.<br>Nothing translating. Nothing waiting. Nothing wasted.</div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="roadmap">
+    <h2>NVIDIA Roadmap</h2>
+    <div class="rm-row">
+      <span class="rm-year">NOW</span>
+      <div>
+        <div class="rm-gen">Blackwell (B300, GB300 NVL72)</div>
+        <div class="rm-det">Shipping. Dynamo 1.0 boosts inference 7x.</div>
+      </div>
+    </div>
+    <div class="rm-row">
+      <span class="rm-year">H2 '26</span>
+      <div>
+        <div class="rm-gen">Vera Rubin (NVL72, Vera CPU, BF-4, CX-9)</div>
+        <div class="rm-det">50 PFLOPS/GPU. Groq LPX racks. 35x tokens/watt.</div>
+      </div>
+    </div>
+    <div class="rm-row">
+      <span class="rm-year">2027</span>
+      <div>
+        <div class="rm-gen">Vera Rubin Ultra + Kyber Racks</div>
+        <div class="rm-det">144 GPUs in single NVLink domain. Vertical compute layout. LP35 + NVFP4.</div>
+      </div>
+    </div>
+    <div class="rm-row">
+      <span class="rm-year">2028</span>
+      <div>
+        <div class="rm-gen">Feynman (next architecture)</div>
+        <div class="rm-det">Feynman GPU + LP40 LPU + Rosa CPU + BF-5 + CX-10. Co-packaged optics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OLD vs NEW -->
+  <div class="vs">
+    <h2>Old World vs. Accelerated Computing</h2>
+    <div class="vs-row">
+      <span class="vs-old">Data center</span>
+      <span class="vs-new">AI Factory (DSX reference design)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">HPC cluster</span>
+      <span class="vs-new">DGX SuperPOD</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">GPU-only inference</span>
+      <span class="vs-new">GPU + LPU (Dynamo orchestration)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">Job scheduler (Slurm)</span>
+      <span class="vs-new">GPU Orchestration (Run:ai + Dynamo)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">Dumb switches</span>
+      <span class="vs-new">Smart fabric (SHARP, in-network compute)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">NIC (network card)</span>
+      <span class="vs-new">DPU (infrastructure on a chip)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">CPU does everything</span>
+      <span class="vs-new">CPU orchestrates, GPU computes, LPU decodes, DPU handles I/O</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">Custom cooling design</span>
+      <span class="vs-new">Rack-integrated liquid cooling (45C hot water)</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">Build from scratch</span>
+      <span class="vs-new">DSX blueprint + Omniverse digital twin</span>
+    </div>
+    <div class="vs-row">
+      <span class="vs-old">700 tokens/sec</span>
+      <span class="vs-new">5,000 tokens/sec (Dynamo, same hardware)</span>
+    </div>
+  </div>
+
+  <!-- WHY IT MATTERS - UPDATED -->
+  <div class="highlight">
+    <h2>Why This Matters for ADC</h2>
+    <p><strong>ADC is Louisiana's NVIDIA neocloud.</strong> We're building the state's first DSX-compliant AI factory at a former 2,200 MW power plant (Willow Glen). Energy-first model &mdash; the same playbook that made Crusoe a $10B+ company.</p>
+    <p><strong>Our moat is power.</strong> 3-layer stack: nat gas + solar primary, grid backup, diesel emergency. Cheapest energy in the country (Henry Hub). The racks come from NVIDIA. The power comes from us.</p>
+    <p><strong>Token factory, not BMaaS.</strong> Dynamo gives us 7x inference. Groq gives us 35x tokens-per-watt. We sell optimized tokens, not GPU hours. That's how you beat commodity pricing.</p>
+    <p>The facility receives NVIDIA's factory-in-a-box. We provide the site, the power, the water loop, the workforce, and the permits. Every component is NVIDIA-native. DSX compliant. The only NCP between Houston and Atlanta.</p>
+  </div>
+
+  <div class="tagline">
+    Advantage Design &amp; Construction | Lafayette LA<br>
+    <a href="/card">scott@adc3k.com</a> &nbsp;|&nbsp; <a href="/hub">Mission Control</a>
+  </div>
+</div>
+</body>
+</html>

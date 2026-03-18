@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCA-AIIO Practice Exam | 100 Questions from Course Material</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0f1a;--s:#131829;--s2:#1a2035;--bd:#252d44;--t:#e2e8f0;--td:#8892a8;--a:#76b900;--d1:#3b82f6;--d2:#8b5cf6;--d3:#f59e0b;--g:#22c55e;--r:#ef4444;--rad:8px}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--t);line-height:1.6;min-height:100vh}
+
+.hdr{position:sticky;top:0;z-index:100;background:var(--s);border-bottom:1px solid var(--bd);padding:10px 16px;overflow:hidden}
+.hdr-in{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.hdr h1{font-size:1rem;font-weight:700;color:var(--a);white-space:nowrap}
+.hdr-sub{font-size:.7rem;color:var(--td);white-space:nowrap}
+.stats{display:flex;flex-wrap:wrap;gap:8px;font-size:.78rem;font-weight:600}
+.stat{padding:3px 10px;border-radius:20px;background:var(--s2);border:1px solid var(--bd);white-space:nowrap}
+.sc{color:var(--a)}.sg{color:var(--g)}.sr{color:var(--r)}
+.timer{font-variant-numeric:tabular-nums;color:var(--r)}
+
+.tabs{max-width:900px;margin:12px auto 0;padding:0 16px;display:flex;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.tabs::-webkit-scrollbar{height:4px}
+.tabs::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+.tab{padding:7px 14px;border-radius:var(--rad) var(--rad) 0 0;background:var(--s2);border:1px solid var(--bd);border-bottom:none;font-size:.72rem;font-weight:600;color:var(--td);cursor:pointer;white-space:nowrap;transition:.2s;flex-shrink:0}
+.tab:hover{color:var(--t)}.tab.active{background:var(--s);color:var(--a);border-color:var(--a)}
+.tab .badge{margin-left:5px;padding:1px 5px;border-radius:8px;font-size:.6rem;background:var(--bd);color:var(--td)}
+.tab.active .badge{background:rgba(118,185,0,.3);color:var(--a)}
+.tab-cheat{background:rgba(118,185,0,.1);border-color:rgba(118,185,0,.3);color:var(--a)}
+
+.acts{max-width:900px;margin:10px auto;padding:0 16px;display:flex;gap:6px;flex-wrap:wrap}
+.btn{padding:7px 14px;border-radius:var(--rad);border:1px solid var(--bd);background:var(--s2);color:var(--t);font-size:.75rem;font-weight:600;cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--a);background:var(--s)}
+.btn-a{background:var(--a);color:#000;border-color:var(--a)}
+.btn-cheat{background:rgba(118,185,0,.15);color:var(--a);border-color:var(--a)}
+
+.main{max-width:900px;margin:0 auto;padding:16px}
+.panel{display:none}.panel.active{display:block}
+
+/* Question card */
+.qc{background:var(--s);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;margin-bottom:12px;transition:.3s}
+.qc.answered-correct{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.04)}
+.qc.answered-wrong{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.04)}
+.qc.flagged{border-left:3px solid var(--d3)}
+.qnum{font-size:.7rem;color:var(--td);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.qunit{font-size:.6rem;padding:2px 6px;border-radius:4px;font-weight:600}
+.qu1,.qu2,.qu3,.qu4,.qu5{background:rgba(59,130,246,.15);color:var(--d1)}
+.qu6,.qu7,.qu8,.qu9,.qu10{background:rgba(139,92,246,.15);color:var(--d2)}
+.qu11,.qu12,.qu13,.qu14{background:rgba(245,158,11,.15);color:var(--d3)}
+.qtxt{font-size:.92rem;font-weight:600;margin-bottom:14px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{padding:10px 14px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);cursor:pointer;font-size:.82rem;transition:.2s;display:flex;gap:10px}
+.opt:hover:not(.disabled){border-color:var(--a);background:rgba(118,185,0,.06)}
+.opt.selected-correct{border-color:var(--g);background:rgba(34,197,94,.1)}
+.opt.selected-wrong{border-color:var(--r);background:rgba(239,68,68,.1)}
+.opt.show-correct{border-color:var(--g);background:rgba(34,197,94,.06)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt-letter{font-weight:700;color:var(--td);min-width:18px}
+.flag-btn{font-size:.65rem;padding:2px 8px;border-radius:4px;border:1px solid var(--bd);background:transparent;color:var(--td);cursor:pointer}
+.flag-btn.flagged{background:rgba(245,158,11,.15);color:var(--d3);border-color:var(--d3)}
+
+/* Cheat sheet */
+.cs-section{margin-bottom:24px}
+.cs-title{font-size:.85rem;font-weight:700;color:var(--a);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--bd)}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.cs-card{background:var(--s);border:1px solid var(--bd);border-radius:6px;padding:12px}
+.cs-card h4{font-size:.75rem;color:var(--a);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.cs-card p{font-size:.78rem;color:var(--td);line-height:1.5}
+
+.prog-bar{height:4px;background:var(--bd);border-radius:2px;margin:8px 0;overflow:hidden}
+.prog-fill{height:100%;background:var(--a);transition:.3s;border-radius:2px}
+
+@media(max-width:600px){
+  .hdr h1{font-size:.85rem}
+  .stats{gap:4px;font-size:.7rem}
+  .qtxt{font-size:.85rem}
+  .opt{font-size:.78rem;padding:8px 10px}
+  .cs-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-in">
+    <div>
+      <h1>NCA-AIIO Practice Exam</h1>
+      <div class="hdr-sub">100 Questions — Sourced from Units 1-14 Course Material</div>
+    </div>
+    <div class="stats">
+      <div class="stat">Score: <span class="sg" id="score">0</span>/<span class="sc" id="answered">0</span></div>
+      <div class="stat"><span class="sr" id="pct">0%</span></div>
+      <div class="stat timer" id="timer">60:00</div>
+    </div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+</div>
+
+<div class="tabs" id="tabBar"></div>
+
+<div class="acts">
+  <button class="btn btn-cheat" onclick="showCheat()">CHEAT SHEET</button>
+  <button class="btn" onclick="shuffleAll()">Shuffle</button>
+  <button class="btn" onclick="resetAll()">Reset</button>
+  <button class="btn" onclick="showFlagged()">Flagged (<span id="flagCount">0</span>)</button>
+  <button class="btn btn-a" onclick="gradeAll()">Grade All</button>
+</div>
+
+<div class="main" id="mainArea"></div>
+
+<script>
+// ===== QUESTION DATA =====
+// Each: {u:unit#, q:question, a:[4 options], c:correct index 0-3}
+const Q=[
+// UNIT 1 — AI Transformation Across Industries (7 questions)
+{u:1,q:"How is AI revolutionizing drug discovery in healthcare?",a:["By replacing doctors with robots","By modeling biological systems, studying diseases, and discovering drug targets using AI and computing","By reducing hospital staff","By automating patient scheduling"],c:1},
+{u:1,q:"What is the role of lab automation in AI-driven healthcare?",a:["It replaces pharmacists","It uses sensors and robotics for high-throughput screening and drug formulation","It manages hospital billing","It schedules patient appointments"],c:1},
+{u:1,q:"How are banks embedding AI into their services?",a:["Only for ATM maintenance","For fraud detection, robo-advisors, and virtual financial advice","For printing physical checks","For branch location planning only"],c:1},
+{u:1,q:"What does a robo-advisor do in financial services?",a:["Physically manages cash deposits","Uses algorithms to select and manage investment portfolios","Replaces bank tellers","Handles loan applications manually"],c:1},
+{u:1,q:"How is AI being used in the automotive industry?",a:["Only for engine diagnostics","For design visualization, engineering simulation, and autonomous driving","For tire manufacturing only","For dealership management"],c:1},
+{u:1,q:"What is 'in silico' drug discovery?",a:["Drug testing on animals","Using AI and computing for molecular generation, structure prediction, virtual screening, and predictive molecular dynamics","Manufacturing drugs in silicon containers","A type of surgical robot"],c:1},
+{u:1,q:"Which of these is an example of AI in automotive beyond self-driving?",a:["Industrial digital twins and virtual showrooms","Automated car washes","Gas station locators","Tire pressure monitoring only"],c:0},
+
+// UNIT 2 — Introduction to Artificial Intelligence (7 questions)
+{u:2,q:"What are the four fundamental steps of the AI workflow?",a:["Design, build, test, ship","Data preparation, model training, optimization, and deployment/inference","Collect, store, analyze, report","Input, process, output, feedback"],c:1},
+{u:2,q:"What is the deep learning workflow?",a:["Writing code, testing code, deploying code","Training the dataset through the neural network, learning a new capability, optimizing, and applying to new data","Downloading pre-built models and running them","Manually labeling all data points"],c:1},
+{u:2,q:"What are common challenges enterprises face when adopting AI?",a:["Too many qualified employees","Exploding model sizes, need for diverse architectures, performance/scalability, and taking AI to production","Electricity costs only","Lack of internet connectivity"],c:1},
+{u:2,q:"What key milestones enabled the evolution of AI?",a:["Faster printers and larger monitors","Availability of powerful GPUs, large datasets, and improvements in training algorithms","Cheaper storage drives","Faster internet speeds alone"],c:1},
+{u:2,q:"What is the NVIDIA AI Platform?",a:["A gaming console","An end-to-end software platform for production AI","A social media network","A cloud storage service"],c:1},
+{u:2,q:"In the deep learning workflow, what does 'inference' mean?",a:["Training the model on new data","Applying the learned capability to new data","Deleting old models","Compressing the dataset"],c:1},
+{u:2,q:"What distinguishes AI from traditional computing?",a:["AI uses larger monitors","AI uses large datasets, neural networks, and transformer models to analyze, predict, learn, and generate content","AI requires no electricity","AI only works on mainframes"],c:1},
+
+// UNIT 3 — Generative AI and Beyond (8 questions)
+{u:3,q:"What is Generative AI?",a:["AI that only classifies existing data","A subset of AI that uses advanced techniques to create human-like content by learning patterns from input data","AI that deletes corrupted files","A hardware accelerator"],c:1},
+{u:3,q:"What are Foundation Models?",a:["The physical base of a server rack","AI neural networks trained on massive unlabeled datasets, generally with unsupervised learning","Entry-level GPU models","Basic programming frameworks"],c:1},
+{u:3,q:"How do Large Language Models (LLMs) work?",a:["They store entire books in memory","They use the transformer architecture to establish relationships between words and generate text based on input prompts","They translate between programming languages only","They compress text files"],c:1},
+{u:3,q:"What role do GPUs play in Generative AI?",a:["They only display the output","They train and run large models, providing performance speed-up, efficiency, and scalability","They store the training data","They cool the servers"],c:1},
+{u:3,q:"What is Agentic AI?",a:["AI that only follows scripted commands","AI systems that can act independently, with memory and reasoning capabilities, interacting with other agents","AI used only in video games","A type of antivirus software"],c:1},
+{u:3,q:"What is Physical AI?",a:["AI printed on physical paper","AI systems integrated with physical systems like robots, enabling them to perceive, learn, and interact autonomously in real-world environments","AI that only works offline","A type of solid-state drive"],c:1},
+{u:3,q:"Why are AI Factories important for the future of AI?",a:["They manufacture AI chips","They provide integrated infrastructure for autonomous AI systems, enabling scalable enterprise intelligence","They replace human workers entirely","They are only used for cryptocurrency"],c:1},
+{u:3,q:"What architecture do LLMs use to establish relationships between words?",a:["Convolutional architecture","Transformer architecture","Recurrent architecture","Linear architecture"],c:1},
+
+// UNIT 4 — Accelerating AI with GPUs (7 questions)
+{u:4,q:"When were specialized circuits first used to process pixel data?",a:["1990s","1970s","2000s","1960s"],c:1},
+{u:4,q:"What are the key architectural components of a GPU?",a:["Monitor, keyboard, mouse","GPU cores, cache memory, and GPU-specific memory","Hard drive, RAM, motherboard","Power supply, fan, case"],c:1},
+{u:4,q:"How does GPU acceleration work?",a:["The GPU replaces the CPU entirely","The GPU executes compute-intensive functions while the rest of the code runs on the CPU","The GPU only handles display output","The CPU sends all work to the GPU"],c:1},
+{u:4,q:"What are GPU server systems?",a:["Regular desktop computers with a graphics card","Specialized computer systems designed to accelerate complex computations through high performance computing, parallel processing, and workload optimization","Gaming consoles","Network routers with GPU chips"],c:1},
+{u:4,q:"What is the key difference between CPUs and GPUs?",a:["CPUs are faster than GPUs in all tasks","CPUs handle general-purpose computing and complex logic; GPUs are optimized for highly parallel tasks","GPUs are cheaper than CPUs","CPUs cannot run AI workloads at all"],c:1},
+{u:4,q:"Why are GPUs essential for AI workloads?",a:["They use less electricity","They are designed to execute complex instruction sets required by AI models and provide compute power for growing data and model sizes","They are easier to program","They are physically smaller"],c:1},
+{u:4,q:"What is the primary role of a GPU in computer systems?",a:["Managing network connections","Executing highly parallel tasks","Storing data permanently","Managing operating system processes"],c:1},
+
+// UNIT 5 — AI Software Ecosystem (8 questions)
+{u:5,q:"What is vGPU?",a:["A virtual reality headset","Virtual GPU — a foundational technology that delivers GPU acceleration to every visual workload","A video game platform","A GPU cooling system"],c:1},
+{u:5,q:"What are the benefits of GPU virtualization?",a:["Only cost savings","Bare-metal performance, business continuity, resource sharing, infrastructure security, and operational management","Faster internet","Larger storage capacity"],c:1},
+{u:5,q:"What are ML/DL frameworks?",a:["Physical frames that hold servers","Building blocks for designing, training, and validating machine learning models and deep neural networks through a high-level programming interface","Marketing tools","Database management systems"],c:1},
+{u:5,q:"What does the NVIDIA Deep Learning Software Stack include?",a:["Windows, Office, Outlook","CUDA, NVIDIA Container Runtime, NGC Containers, and DL Frameworks","Python, Java, C++","Linux, Apache, MySQL"],c:1},
+{u:5,q:"What is NVIDIA AI Enterprise?",a:["A gaming subscription","An end-to-end AI software suite that includes over 50 frameworks and pre-trained models","A hardware warranty program","A consulting service"],c:1},
+{u:5,q:"What is the NGC Catalog?",a:["A star catalog for astronomy","A GPU-optimized hub for AI and HPC software, including containers, pre-trained models, and Helm charts","A shopping website","A GPU manufacturer database"],c:1},
+{u:5,q:"What are NVIDIA AI Workflows?",a:["Employee onboarding processes","Prepackaged reference applications that accelerate the path to AI outcomes, reducing cost and improving accuracy","Network configuration scripts","Hardware installation guides"],c:1},
+{u:5,q:"How many frameworks and pre-trained models does NVIDIA AI Enterprise include?",a:["Over 10","Over 25","Over 50","Over 100"],c:2},
+
+// UNIT 6 — Data Center and Cloud Computing (7 questions)
+{u:6,q:"What are the hosting environments for AI workloads?",a:["Only on-premises servers","Data centers and the cloud","Personal laptops only","Mobile phones"],c:1},
+{u:6,q:"What components constitute an AI data center?",a:["Only servers","Compute platforms, networking, and storage for AI","Only networking equipment","Only storage arrays"],c:1},
+{u:6,q:"What is an accelerated system?",a:["A faster internet connection","The next phase in the evolution of computers, providing computational power for AI training and inferencing","An overclocked CPU","A high-speed train system"],c:1},
+{u:6,q:"How does cloud computing benefit AI deployments?",a:["It eliminates the need for GPUs","It extends the power of accelerated computing to the cloud, minimizing OPEX and maximizing ROI","It only provides data storage","It replaces all on-premises hardware"],c:1},
+{u:6,q:"What are the three main factors in planning data center deployments?",a:["Cost, marketing, sales","Space, power, and cooling","Color, size, location","Internet speed, storage, displays"],c:1},
+{u:6,q:"What serves as the backbone of AI infrastructure?",a:["The power supply","The network","The storage system","The operating system"],c:1},
+{u:6,q:"What does orchestration do in an AI data center?",a:["Plays music for staff","Automates provisioning and deployment","Manages employee schedules","Handles billing"],c:1},
+
+// UNIT 7 — Compute Platforms for AI (10 questions)
+{u:7,q:"Which GPU architecture is the NVIDIA B200 based on?",a:["Hopper","Ada Lovelace","Blackwell","Ampere"],c:2},
+{u:7,q:"Which GPU architecture is the NVIDIA H100 based on?",a:["Blackwell","Hopper","Ada Lovelace","Turing"],c:1},
+{u:7,q:"Which GPU architecture is the NVIDIA L40S based on?",a:["Hopper","Blackwell","Ada Lovelace","Volta"],c:2},
+{u:7,q:"What CPU architecture is the NVIDIA Grace CPU built on?",a:["x86","RISC-V","Arm","MIPS"],c:2},
+{u:7,q:"What is the purpose of NVLink?",a:["Connecting servers to the internet","High-bandwidth inter-GPU communication","Linking monitors together","Wireless GPU connectivity"],c:1},
+{u:7,q:"What does NVLink-C2C enable?",a:["CPU-to-cloud connectivity","GPUs to communicate between themselves at incredibly high speeds","Chip-to-chip power transfer","Customer-to-customer networking"],c:1},
+{u:7,q:"What is a BlueField DPU?",a:["A display processing unit","A Data Processing Unit that offloads, accelerates, and isolates infrastructure processing","A digital power unit","A data printing unit"],c:1},
+{u:7,q:"What is DOCA?",a:["A Docker container tool","A unified software framework for BlueField Platform supporting hyperscale, enterprise, supercomputing, and hyperconverged infrastructure","A data orchestration API","A GPU driver package"],c:1},
+{u:7,q:"What are NVIDIA-Certified Systems?",a:["Systems approved for gaming","Systems that simplify the deployment of accelerated computing at scale with performance, security, and scalability","Systems certified for home use","Systems certified by Intel"],c:1},
+{u:7,q:"What is the Grace CPU designed for?",a:["Mobile phones","High-performance computing (HPC), cloud, and hyperscale data centers","Gaming PCs","Personal laptops"],c:1},
+
+// UNIT 8 — Networking for AI (9 questions)
+{u:8,q:"What are the four networks in a typical AI data center?",a:["Internet, intranet, extranet, VPN","Compute, storage, in-band management, and out-of-band management","Wi-Fi, Bluetooth, cellular, satellite","LAN, WAN, MAN, PAN"],c:1},
+{u:8,q:"What are the networking requirements for AI workloads?",a:["Low bandwidth, high latency","High throughput, low latency, and low processing overhead","Wireless only","Standard home internet"],c:1},
+{u:8,q:"What is InfiniBand?",a:["A type of storage drive","A networking technology featuring high throughput, low latency, and low processing overhead, maintained by the IBTA","A wireless protocol","A GPU memory type"],c:1},
+{u:8,q:"When was Ethernet first introduced?",a:["1995","1979","2001","1965"],c:1},
+{u:8,q:"What does RoCE stand for?",a:["Remote over Cloud Ethernet","RDMA over Converged Ethernet","Routing over Connected Endpoints","Rapid over Copper Ethernet"],c:1},
+{u:8,q:"What are NVIDIA Quantum switches used for?",a:["Ethernet networking","InfiniBand networking","Storage management","Power distribution"],c:1},
+{u:8,q:"What are NVIDIA Spectrum switches used for?",a:["InfiniBand networking","Ethernet networking","GPU cooling","Display output"],c:1},
+{u:8,q:"What are ConnectX SmartNICs?",a:["GPU cards","NVIDIA smart network interface cards for high-speed network access","Storage controllers","CPU coolers"],c:1},
+{u:8,q:"What key factors are related to networking for AI workloads?",a:["Color coding and cable length","Network topology, bandwidth and latency, network protocols, data transferring techniques, and management methods","Internet speed test results","Number of Wi-Fi access points"],c:1},
+
+// UNIT 9 — Storage for AI (7 questions)
+{u:9,q:"Why is storage critical in an AI data center?",a:["For backing up emails","AI workloads require massive amounts of data to be stored, processed, and analyzed","For hosting websites","For running operating systems only"],c:1},
+{u:9,q:"What are the three types of storage file systems mentioned for AI?",a:["HDD, SSD, USB","Network File Systems, Parallel/Distributed File Systems, and Object Storage","FAT32, NTFS, ext4","Cloud, local, hybrid"],c:1},
+{u:9,q:"What are the benefits of using validated storage partners?",a:["Lower purchase price only","Compatibility, seamless integration, optimized performance with NVIDIA hardware, security features, and cost reduction","Faster shipping","Extended warranty only"],c:1},
+{u:9,q:"What are the key considerations for storage performance?",a:["Color and brand","Throughput, speed, caching, and distributed storage","Price and warranty","Physical size and weight"],c:1},
+{u:9,q:"Why is high-speed storage access required for AI workloads?",a:["For faster boot times","To keep GPUs fed with data — a starved GPU is a wasted GPU","For better graphics display","For email processing"],c:1},
+{u:9,q:"What does a parallel/distributed file system do?",a:["Stores files on a single drive","Distributes data across multiple storage nodes for higher throughput and performance","Compresses all files automatically","Only works with Ethernet"],c:1},
+{u:9,q:"What do validated storage partners ensure?",a:["Free hardware","Compatibility and optimized performance specifically with NVIDIA hardware","Unlimited storage","Faster internet"],c:1},
+
+// UNIT 10 — Energy Efficient Computing (7 questions)
+{u:10,q:"How does NVIDIA optimize energy efficiency in data centers?",a:["By using smaller monitors","Through reduced networking infrastructure combined with power-efficient GPUs","By turning off servers at night","By using solar panels only"],c:1},
+{u:10,q:"What are the cooling options for GPU chips in data centers?",a:["Only air conditioning","Cold air and water-cooled air exchangers","Opening windows","Ice baths"],c:1},
+{u:10,q:"What is co-location in the context of data centers?",a:["Placing two GPUs side by side","Deploying in a shared facility to improve efficiency and avoid facilities planning challenges","Connecting two data centers","Merging two companies"],c:1},
+{u:10,q:"What is the DGX-Ready Data Center Program?",a:["A GPU discount program","A program allowing businesses to deploy NVIDIA DGX systems from partners with speed and simplicity at an affordable op-ex model","A data center construction guide","A GPU recycling initiative"],c:1},
+{u:10,q:"What three factors affect data center deployment planning?",a:["Speed, bandwidth, latency","Space, power, and cooling","Cost, time, quality","Location, size, color"],c:1},
+{u:10,q:"How does NVIDIA continuously improve energy efficiency?",a:["By releasing fewer products","By improving energy efficiency across its portfolio with each new GPU generation","By using older technology","By reducing GPU performance"],c:1},
+{u:10,q:"Why is cooling architecture important for GPUs in data centers?",a:["For aesthetics","For improving efficiency — GPUs generate significant heat that must be managed","For reducing noise only","For compliance with fire codes only"],c:1},
+
+// UNIT 11 — Reference Architectures (7 questions)
+{u:11,q:"What are reference architectures?",a:["Physical building blueprints","Documents that show a recommended framework for system implementation based on best practices and design principles","Marketing brochures","Software installation guides"],c:1},
+{u:11,q:"What are the benefits of reference architectures?",a:["Only cost reduction","Reduced design cost, faster deployment, reduced complexity, improved reliability, and designs tailored to organizational needs","Free hardware","Guaranteed performance"],c:1},
+{u:11,q:"What is DGX BasePOD?",a:["A basic GPU","An integrated solution with NVIDIA systems, networking, software, and partner storage appliance","A portable computer","A gaming system"],c:1},
+{u:11,q:"Which reference architectures does NVIDIA offer?",a:["Only DGX BasePOD","DGX BasePOD, DGX SuperPOD, NVIDIA AI Enterprise, and Cloudera data platform","Only SuperPOD","Only cloud-based architectures"],c:1},
+{u:11,q:"What GPU models are included in DGX systems?",a:["Only consumer GPUs","NVIDIA B200 and H100 GPUs with Intel Xeon processors","AMD GPUs","Mobile GPUs only"],c:1},
+{u:11,q:"How do reference architectures reduce complexity?",a:["By eliminating all hardware","By providing a proven framework that can be tailored to meet an organization's specific needs","By using only one server","By removing all software"],c:1},
+{u:11,q:"What is one key benefit of using reference architectures for deployment?",a:["Unlimited free support","Faster deployment and quicker time to solution","No need for any planning","Automatic software updates"],c:1},
+
+// UNIT 12 — AI in the Cloud (6 questions)
+{u:12,q:"What AI use cases are supported in the cloud?",a:["Only email processing","Large language models, speech AI, recommenders, cybersecurity, sentiment analysis, supply chain optimization, and predictive maintenance","Only web hosting","Only file storage"],c:1},
+{u:12,q:"What are key considerations for deploying AI in the cloud?",a:["Only the internet speed","Assessing AI capabilities and readiness, choosing between on-premises and cloud, and leveraging a hybrid approach","The color of the server room","The brand of monitors used"],c:1},
+{u:12,q:"What NVIDIA solutions are available in the cloud?",a:["Only gaming GPUs","GPU-accelerated VMs/instances, AI Enterprise software, and the NVIDIA AI platform","Only storage solutions","Only networking equipment"],c:1},
+{u:12,q:"What consumption models are available for cloud AI?",a:["Only self-managed","Customer-managed infrastructure or cloud-provider-managed infrastructure","Only free tier","Only annual subscriptions"],c:1},
+{u:12,q:"Why is a hybrid approach recommended for AI deployment?",a:["It's the cheapest option","It leverages both on-premises and cloud solutions for maximum potential","It requires less hardware","It eliminates the need for IT staff"],c:1},
+{u:12,q:"What does the NVIDIA AI platform provide in the cloud?",a:["A gaming service","An end-to-end open platform for production AI for everyone, everywhere","A social media platform","An email service"],c:1},
+
+// UNIT 13 — Provisioning, Monitoring, and Management (8 questions)
+{u:13,q:"What is provisioning in the context of AI infrastructure?",a:["Purchasing new hardware","Installing software and drivers onto hardware","Planning a budget","Hiring new staff"],c:1},
+{u:13,q:"What is monitoring in AI infrastructure?",a:["Watching security cameras","Checking the health and metrics for the AI infrastructure and software, services, and jobs running on it","Reading user reviews","Counting server racks"],c:1},
+{u:13,q:"What is workload management?",a:["Managing employee schedules","Ensuring resources, scheduling jobs, and monitoring resource usage","Distributing office supplies","Planning meetings"],c:1},
+{u:13,q:"What three components make up cluster management?",a:["CPU, GPU, RAM","Infrastructure provisioning, resource management, and workload management","Server, storage, network","Hardware, software, firmware"],c:1},
+{u:13,q:"What is Base Command Manager?",a:["A military application","A tool that provides infrastructure provisioning, resource monitoring, and user access and workload management","A command-line interface","A chat application"],c:1},
+{u:13,q:"What tools are used for resource management and monitoring?",a:["Microsoft Office suite","DCGM Exporter, Prometheus, and Grafana","Photoshop and Illustrator","Slack and Teams"],c:1},
+{u:13,q:"What are the learning objectives of the management unit?",a:["Learn to code in Python","Identify provisioning/management/monitoring concepts, describe cluster management tools, describe ongoing maintenance, and identify tools","Learn to build servers","Learn to install operating systems"],c:1},
+{u:13,q:"What does DCGM stand for in the monitoring context?",a:["Data Center General Manager","Data Center GPU Manager — it exports GPU metrics for monitoring","Digital Cloud Gateway Module","Dynamic Cluster Group Manager"],c:1},
+
+// UNIT 14 — Orchestration and Job Scheduling (8 questions)
+{u:14,q:"What is the difference between orchestration and scheduling?",a:["They are the same thing","Orchestration is container-based for micro-services; scheduling is bare-metal based for HPC","Orchestration is for storage; scheduling is for networking","Orchestration is manual; scheduling is automated"],c:1},
+{u:14,q:"What is Kubernetes (K8s)?",a:["A database system","An open-source container orchestration system for automating software deployment, scaling, and management","A programming language","A GPU driver"],c:1},
+{u:14,q:"What is SLURM?",a:["A container platform","An open-source cluster management and job scheduling system for Linux clusters","A monitoring tool","A storage system"],c:1},
+{u:14,q:"Which is better suited for AI training — Kubernetes or SLURM?",a:["Kubernetes","Neither — use manual scheduling","SLURM","They are equally suited"],c:2},
+{u:14,q:"Which is better suited for AI inference — Kubernetes or SLURM?",a:["SLURM","Neither","Kubernetes","They cannot be used for inference"],c:2},
+{u:14,q:"What is MLOps?",a:["A machine learning operating system","Machine Learning Operations — tools that improve productivity, maximize resource utilization, and allow projects to scale","A GPU optimization technique","A type of neural network"],c:1},
+{u:14,q:"What does orchestration manage in an AI environment?",a:["Only storage volumes","Entire workflows and processes, with load balancing to distribute traffic across containers","Only CPU tasks","Only network traffic"],c:1},
+{u:14,q:"What are key characteristics of SLURM?",a:["Proprietary, Windows-only","Highly scalable, fault-tolerant, requires no kernel modifications","Cloud-only, expensive","Single-node only"],c:1}
+];
+
+// ===== STATE =====
+let order=[], answered={}, flagged=new Set(), correct=0, total=0, timerSec=3600, timerInt=null, currentTab='all';
+
+// ===== INIT =====
+function init(){
+  order=Q.map((_,i)=>i);
+  buildTabs();
+  renderQuestions();
+  startTimer();
+}
+
+function buildTabs(){
+  const bar=document.getElementById('tabBar');
+  const units=[...new Set(Q.map(q=>q.u))].sort((a,b)=>a-b);
+  let html='<div class="tab active" onclick="switchTab(\'all\',this)">All<span class="badge">'+Q.length+'</span></div>';
+  // Domain groupings
+  html+='<div class="tab" onclick="switchTab(\'d1\',this)">D1: AI Knowledge<span class="badge">37</span></div>';
+  html+='<div class="tab" onclick="switchTab(\'d2\',this)">D2: Infrastructure<span class="badge">40</span></div>';
+  html+='<div class="tab" onclick="switchTab(\'d3\',this)">D3: Operations<span class="badge">23</span></div>';
+  units.forEach(u=>{
+    const cnt=Q.filter(q=>q.u===u).length;
+    html+=`<div class="tab" onclick="switchTab(${u},this)">U${u}<span class="badge">${cnt}</span></div>`;
+  });
+  html+='<div class="tab tab-cheat" onclick="switchTab(\'cheat\',this)">Cheat Sheet</div>';
+  bar.innerHTML=html;
+}
+
+function showCheat(){
+  currentTab='cheat';
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');if(t.textContent.includes('Cheat'))t.classList.add('active');});
+  renderQuestions();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function switchTab(tab,el){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderQuestions();
+}
+
+function renderQuestions(){
+  const area=document.getElementById('mainArea');
+  if(currentTab==='cheat'){area.innerHTML=cheatSheet();return;}
+  let indices;
+  if(currentTab==='all') indices=order;
+  else if(currentTab==='flagged') indices=order.filter(i=>flagged.has(i));
+  else if(currentTab==='d1') indices=order.filter(i=>Q[i].u>=1&&Q[i].u<=5);
+  else if(currentTab==='d2') indices=order.filter(i=>Q[i].u>=6&&Q[i].u<=10);
+  else if(currentTab==='d3') indices=order.filter(i=>Q[i].u>=11&&Q[i].u<=14);
+  else indices=order.filter(i=>Q[i].u===currentTab);
+  let html='';
+  indices.forEach((qi,idx)=>{
+    const q=Q[qi];
+    const ans=answered[qi];
+    const isAnswered=ans!==undefined;
+    const isFlagged=flagged.has(qi);
+    let cls='qc';
+    if(isAnswered) cls+=ans===q.c?' answered-correct':' answered-wrong';
+    if(isFlagged) cls+=' flagged';
+    html+=`<div class="${cls}" id="qc-${qi}">`;
+    html+=`<div class="qnum"><span>Q${idx+1} of ${indices.length}</span><span class="qunit qu${q.u}">Unit ${q.u}</span>`;
+    html+=`<button class="flag-btn ${isFlagged?'flagged':''}" onclick="toggleFlag(${qi},this)">Flag</button></div>`;
+    html+=`<div class="qtxt">${q.q}</div><div class="opts">`;
+    const letters=['A','B','C','D'];
+    q.a.forEach((opt,oi)=>{
+      let ocls='opt';
+      if(isAnswered){
+        ocls+=' disabled';
+        if(oi===q.c) ocls+=' show-correct';
+        if(oi===ans&&ans!==q.c) ocls+=' selected-wrong';
+        if(oi===ans&&ans===q.c) ocls+=' selected-correct';
+      }
+      html+=`<div class="${ocls}" onclick="answer(${qi},${oi})"><span class="opt-letter">${letters[oi]}</span><span>${opt}</span></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  if(!indices.length) html='<div style="text-align:center;padding:40px;color:var(--td)">No questions match this filter.</div>';
+  area.innerHTML=html;
+}
+
+function answer(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  if(oi===Q[qi].c) correct++;
+  total++;
+  updateStats();
+  renderQuestions();
+  // scroll to next unanswered
+  const card=document.getElementById('qc-'+qi);
+  if(card&&card.nextElementSibling) card.nextElementSibling.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function toggleFlag(qi,btn){
+  if(flagged.has(qi)) flagged.delete(qi); else flagged.add(qi);
+  document.getElementById('flagCount').textContent=flagged.size;
+  renderQuestions();
+}
+
+function showFlagged(){
+  currentTab='flagged';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  renderQuestions();
+}
+
+function updateStats(){
+  document.getElementById('score').textContent=correct;
+  document.getElementById('answered').textContent=total;
+  document.getElementById('pct').textContent=total?Math.round(correct/total*100)+'%':'0%';
+  document.getElementById('progFill').style.width=(total/Q.length*100)+'%';
+}
+
+function shuffleAll(){
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  // also shuffle options for unanswered
+  order.forEach(qi=>{
+    if(answered[qi]===undefined){
+      const q=Q[qi];
+      const correctAns=q.a[q.c];
+      for(let i=q.a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q.a[i],q.a[j]]=[q.a[j],q.a[i]];}
+      q.c=q.a.indexOf(correctAns);
+    }
+  });
+  renderQuestions();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetAll(){
+  answered={};flagged.clear();correct=0;total=0;timerSec=3600;
+  order=Q.map((_,i)=>i);
+  updateStats();
+  document.getElementById('flagCount').textContent='0';
+  renderQuestions();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function gradeAll(){
+  Q.forEach((q,qi)=>{if(answered[qi]===undefined){answered[qi]=-1;total++;}});
+  updateStats();renderQuestions();
+}
+
+function startTimer(){
+  timerInt=setInterval(()=>{
+    if(timerSec<=0){clearInterval(timerInt);return;}
+    timerSec--;
+    const m=Math.floor(timerSec/60),s=timerSec%60;
+    const el=document.getElementById('timer');
+    el.textContent=m+':'+(s<10?'0':'')+s;
+    if(timerSec<300) el.style.animation='pulse 1s infinite';
+  },1000);
+}
+
+function cheatSheet(){
+  return `
+<div class="cs-section"><div class="cs-title">Domain 1: Essential AI Knowledge (Units 1-5) — 38% of Exam</div>
+<div class="cs-grid">
+<div class="cs-card"><h4>AI Workflow</h4><p>4 steps: Data Preparation → Model Training → Optimization → Deployment/Inference</p></div>
+<div class="cs-card"><h4>Deep Learning Workflow</h4><p>Train dataset through neural network → Learn capability → Optimize → Apply to new data</p></div>
+<div class="cs-card"><h4>Foundation Models</h4><p>AI neural networks trained on massive unlabeled datasets with unsupervised learning. Basis for Generative AI.</p></div>
+<div class="cs-card"><h4>LLMs</h4><p>Use transformer architecture to establish relationships between words and generate text from input prompts.</p></div>
+<div class="cs-card"><h4>Agentic AI</h4><p>AI systems that act independently with memory and reasoning, interacting with other agents.</p></div>
+<div class="cs-card"><h4>Physical AI</h4><p>AI integrated with robots/physical systems to perceive, learn, and interact in real-world environments.</p></div>
+<div class="cs-card"><h4>GPU vs CPU</h4><p>CPUs: general-purpose, complex logic. GPUs: massively parallel processing, AI workloads.</p></div>
+<div class="cs-card"><h4>GPU Architecture</h4><p>3 components: GPU cores, cache memory, GPU-specific memory. Used since 1970s for pixel processing.</p></div>
+<div class="cs-card"><h4>vGPU</h4><p>Virtual GPU — delivers GPU acceleration to every visual workload. Benefits: bare-metal performance, security, resource sharing.</p></div>
+<div class="cs-card"><h4>NVIDIA AI Enterprise</h4><p>End-to-end AI software suite with 50+ frameworks and pre-trained models.</p></div>
+<div class="cs-card"><h4>NGC Catalog</h4><p>GPU-optimized hub for AI/HPC software: containers, pre-trained models, Helm charts.</p></div>
+<div class="cs-card"><h4>DL Software Stack</h4><p>CUDA → NVIDIA Container Runtime → NGC Containers → DL Frameworks</p></div>
+</div></div>
+
+<div class="cs-section"><div class="cs-title">Domain 2: AI Infrastructure (Units 6-10) — 40% of Exam</div>
+<div class="cs-grid">
+<div class="cs-card"><h4>NVIDIA GPU Architectures</h4><p>B200 = Blackwell | H100 = Hopper | L40S = Ada Lovelace | Grace CPU = Arm</p></div>
+<div class="cs-card"><h4>GPU Interconnects</h4><p>NVLink: high-bandwidth GPU-to-GPU. NVSwitch: multi-GPU communication. NVLink-C2C: incredibly high-speed chip-to-chip.</p></div>
+<div class="cs-card"><h4>BlueField + DOCA</h4><p>BlueField DPU: offloads/accelerates/isolates infrastructure processing. DOCA: unified software framework for BlueField.</p></div>
+<div class="cs-card"><h4>4 Data Center Networks</h4><p>1) Compute 2) Storage 3) In-band management 4) Out-of-band management</p></div>
+<div class="cs-card"><h4>InfiniBand vs Ethernet</h4><p>InfiniBand: high throughput, low latency, low overhead (IBTA). Ethernet: predominant LAN (IEEE, 1979). RoCE = RDMA over Ethernet.</p></div>
+<div class="cs-card"><h4>NVIDIA Networking Portfolio</h4><p>BlueField DPUs/SuperNICs | ConnectX SmartNICs | Spectrum (Ethernet) | Quantum (InfiniBand) | LinkX (cables)</p></div>
+<div class="cs-card"><h4>Key Networking Factors</h4><p>Topology, bandwidth/latency, protocols, data transfer techniques, management methods.</p></div>
+<div class="cs-card"><h4>Storage Types</h4><p>Network File Systems | Parallel/Distributed File Systems | Object Storage</p></div>
+<div class="cs-card"><h4>Storage Performance</h4><p>4 considerations: throughput, speed, caching, distributed storage.</p></div>
+<div class="cs-card"><h4>Energy Efficiency</h4><p>Data center planning: space + power + cooling. Cooling: cold air or water-cooled exchangers. Each GPU gen more efficient.</p></div>
+<div class="cs-card"><h4>DGX-Ready Program</h4><p>Deploy DGX systems from partners with speed/simplicity at affordable op-ex model.</p></div>
+<div class="cs-card"><h4>NVIDIA-Certified Systems</h4><p>Simplify deployment at scale. Key features: performance, security, scalability.</p></div>
+</div></div>
+
+<div class="cs-section"><div class="cs-title">Domain 3: AI Operations (Units 11-14) — 22% of Exam</div>
+<div class="cs-grid">
+<div class="cs-card"><h4>Reference Architectures</h4><p>Recommended frameworks based on best practices. Benefits: reduce cost, faster deployment, reduce complexity, improve reliability.</p></div>
+<div class="cs-card"><h4>NVIDIA Reference Archs</h4><p>DGX BasePOD | DGX SuperPOD | NVIDIA AI Enterprise | Cloudera data platform</p></div>
+<div class="cs-card"><h4>DGX BasePOD</h4><p>Integrated solution: NVIDIA systems + networking + software + partner storage appliance.</p></div>
+<div class="cs-card"><h4>Cloud AI Use Cases</h4><p>LLMs, speech AI, recommenders, cybersecurity, sentiment analysis, supply chain, predictive maintenance.</p></div>
+<div class="cs-card"><h4>Cloud Deployment</h4><p>3 considerations: assess readiness, choose on-prem vs cloud, leverage hybrid approach.</p></div>
+<div class="cs-card"><h4>Cluster Management</h4><p>3 parts: infrastructure provisioning + resource management + workload management.</p></div>
+<div class="cs-card"><h4>Key Definitions</h4><p>Provisioning = install software/drivers. Monitoring = check health/metrics. Workload mgmt = schedule jobs + monitor usage.</p></div>
+<div class="cs-card"><h4>Monitoring Tools</h4><p>DCGM Exporter + Prometheus + Grafana. Base Command Manager for full cluster management.</p></div>
+<div class="cs-card"><h4>Orchestration vs Scheduling</h4><p>Orchestration: container-based, micro-services, K8s, best for inference. Scheduling: bare-metal, HPC, SLURM, best for training.</p></div>
+<div class="cs-card"><h4>K8s vs SLURM</h4><p>Kubernetes: container orchestration, inference. SLURM: job scheduling, training. Both open-source.</p></div>
+<div class="cs-card"><h4>MLOps</h4><p>ML Operations: improve productivity, maximize resources, scale projects, bring consistency/repeatability to AI workloads.</p></div>
+<div class="cs-card"><h4>SLURM Features</h4><p>Highly scalable, fault-tolerant, no kernel modifications needed, schedules jobs on cluster subsets.</p></div>
+</div></div>`;
+}
+
+init();
+</script>
+</body>
+</html>

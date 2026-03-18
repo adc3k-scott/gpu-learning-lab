@@ -42,6 +42,7 @@ _MAX_CONTEXT_CHARS = 60_000    # total chars sent to Claude per analysis
 
 class RepoAnalystAgent(BaseAgent):
     role = "repo_analyst"
+    capabilities = ["file_manager", "list", "read", "explain"]
 
     def __init__(self, *, llm_client: Any = None, llm_model: str = "claude-opus-4-5", **kwargs):
         super().__init__(**kwargs)

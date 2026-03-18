@@ -44,6 +44,7 @@ logger = logging.getLogger(__name__)
 
 class InfraManagerAgent(BaseAgent):
     role = "infra_manager"
+    capabilities = ["system_health", "gpu_check", "docker_check", "redis_check"]
 
     def __init__(self, *, check_interval: float = 60.0, **kwargs):
         super().__init__(**kwargs)

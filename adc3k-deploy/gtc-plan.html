@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>GTC 2026 Battle Plan</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;line-height:1.5}
+
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 40px}
+
+.hdr{text-align:center;padding:20px 0 12px}
+.hdr h1{font-size:22px;font-weight:800;color:#e8edf2;letter-spacing:1px}
+.hdr h1 span{color:#76b900}
+.hdr .sub{font-size:11px;color:#607080;margin-top:4px}
+.back{display:inline-block;color:#76b900;text-decoration:none;font-size:12px;font-weight:700;margin-bottom:8px}
+
+/* Day cards */
+.day{background:#111820;border:1px solid #1a2436;border-radius:12px;margin-bottom:14px;overflow:hidden}
+.day-hdr{padding:14px 16px 10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.day-hdr h2{font-size:15px;font-weight:700;color:#e8edf2;line-height:1.3}
+.day-hdr h2 small{display:block;font-size:11px;font-weight:400;color:#607080;margin-top:2px}
+.day-hdr .arrow{color:#76b900;font-size:16px;transition:transform 0.2s}
+.day.open .arrow{transform:rotate(180deg)}
+.day-body{display:none;padding:0 16px 14px}
+.day.open .day-body{display:block}
+
+/* Event rows */
+.ev{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #1a2436}
+.ev:last-child{border-bottom:none}
+.ev .time{min-width:65px;font-size:11px;font-weight:700;color:#76b900;padding-top:2px;white-space:nowrap}
+.ev .info{flex:1}
+.ev .what{font-size:13px;font-weight:600;color:#e8edf2}
+.ev .why{font-size:11px;color:#8090a0;margin-top:2px}
+
+/* Priority tags */
+.must{background:#76b900;color:#0a0e14;font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.exam{background:#ff6b35;color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.inv{background:#00e5ff;color:#0a0e14;font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle}
+
+/* Targets section */
+.targets{background:#111820;border:1px solid #1a2436;border-radius:12px;padding:16px;margin-bottom:14px}
+.targets h3{font-size:14px;font-weight:700;color:#e8edf2;margin-bottom:10px}
+.tgt{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #1a2436;align-items:baseline}
+.tgt:last-child{border-bottom:none}
+.tgt .name{font-size:12px;font-weight:700;color:#76b900;min-width:100px}
+.tgt .desc{font-size:11px;color:#8090a0}
+
+/* Confirmation box */
+.confs{background:linear-gradient(135deg,#1a1a2a,#111820);border:1px solid #2a2a4a;border-radius:12px;padding:16px;margin-bottom:14px}
+.confs h3{font-size:14px;font-weight:700;color:#ff6b35;margin-bottom:10px}
+.conf-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2436;align-items:center}
+.conf-row:last-child{border-bottom:none}
+.conf-label{font-size:11px;color:#8090a0}
+.conf-val{font-size:13px;font-weight:700;color:#e8edf2;font-family:'Courier New',monospace;letter-spacing:1px;user-select:all;-webkit-user-select:all}
+
+/* Talk track */
+.talk{background:linear-gradient(135deg,#1a2a1a,#111820);border:1px solid #2a4a2a;border-radius:12px;padding:16px;margin-bottom:14px}
+.talk h3{font-size:14px;font-weight:700;color:#76b900;margin-bottom:10px}
+.talk p{font-size:12px;color:#c0ccd8;margin-bottom:8px;padding-left:12px;border-left:2px solid #76b900}
+.talk p:last-child{margin-bottom:0}
+
+@media(min-width:768px){
+  .wrap{max-width:640px;padding:24px}
+  .hdr h1{font-size:28px}
+  .ev .what{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/hub" class="back">&larr; Mission Control</a>
+  <div class="hdr">
+    <h1>GTC <span>2026</span> BATTLE PLAN</h1>
+    <div class="sub">San Jose Convention Center | March 16-19 | Walk out an AI Factory Guru</div>
+  </div>
+
+  <!-- SUNDAY -->
+  <div class="day open">
+    <div class="day-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h2>Sunday Mar 15<small>Travel Day</small></h2>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="day-body">
+      <div class="ev">
+        <div class="time">5:35 AM</div>
+        <div class="info">
+          <div class="what">AA 5360: LFT &rarr; DFW <span class="must">BOOKED</span></div>
+          <div class="why">Depart Lafayette 5:35 AM &rarr; Arrive Dallas 7:22 AM</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">8:20 AM</div>
+        <div class="info">
+          <div class="what">AA 3149: DFW &rarr; SJC <span class="must">BOOKED</span></div>
+          <div class="why">Depart Dallas 8:20 AM &rarr; Arrive San Jose 10:16 AM | Conf# IAFBEV</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">10:30 AM</div>
+        <div class="info">
+          <div class="what">Uber to Motel 6 Convention Center, check in <span class="must">BOOKED</span></div>
+          <div class="why">Conf# 6782.172.321 | Check-in 12 PM | 1015 Ocean Cape Common, San Jose | 4 nights $407</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONDAY -->
+  <div class="day">
+    <div class="day-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h2>Monday Mar 16<small>Jensen Keynote + AI Factory Day</small></h2>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="day-body">
+      <div class="ev">
+        <div class="time">8:00 AM</div>
+        <div class="info">
+          <div class="what">Doors open &mdash; grab badge, scout Exhibit Hall</div>
+          <div class="why">Find the Inception Pavilion, cooling vendors, Supermicro booth</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">11:00 AM</div>
+        <div class="info">
+          <div class="what">Jensen Huang Keynote (SAP Center, 2 hrs) <span class="must">MUST</span></div>
+          <div class="why">Rubin announcements, AI factory vision, everything we studied</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">1:00 PM</div>
+        <div class="info">
+          <div class="what">Lunch + Exhibit Hall walkthrough</div>
+          <div class="why">Supermicro, Vertiv, Trane, Schneider &mdash; these are your people</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">2:00 PM</div>
+        <div class="info">
+          <div class="what">Compal: "Synergy at Scale &mdash; Compute, Power, Cooling"</div>
+          <div class="why">Rack-level AI infrastructure &mdash; directly relevant to ADC 3K pod design</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">3:00 PM</div>
+        <div class="info">
+          <div class="what">AI Factory sessions &mdash; Omniverse Blueprint, liquid cooling, NVL72</div>
+          <div class="why">Supermicro/NVIDIA: liquid-cooled HGX + NVL72 rack-scale deployment</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">5:00 PM</div>
+        <div class="info">
+          <div class="what">Networking Reception (Exhibit Halls, until 7 PM) <span class="inv">NETWORK</span></div>
+          <div class="why">Business cards out. You're an AI factory builder from Louisiana.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day">
+    <div class="day-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h2>Tuesday Mar 17<small>Startups + Investors</small></h2>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="day-body">
+      <div class="ev">
+        <div class="time">9:00 AM</div>
+        <div class="info">
+          <div class="what">Dario Gil (DOE) + Ian Buck &mdash; AI in Climate &amp; Energy <span class="must">MUST</span></div>
+          <div class="why">Power strategy, energy policy &mdash; directly relevant to your nat gas + solar stack</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">10:00 AM</div>
+        <div class="info">
+          <div class="what">Infrastructure sessions &mdash; SuperPOD, BCM, InfiniBand</div>
+          <div class="why">Deep technical &mdash; exam material AND Willow Glen build</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">12:00 PM</div>
+        <div class="info">
+          <div class="what">Trane cooling demo + Omniverse Blueprint for AI Factories</div>
+          <div class="why">Thermal management reference designs, digital twin for Willow Glen planning</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">1:00 PM</div>
+        <div class="info">
+          <div class="what">Inception Startup Pitch + VC Reverse Pitch <span class="inv">INVESTORS</span></div>
+          <div class="why">55+ startups, VCs presenting investment themes. Be in that room.</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">2:00 PM</div>
+        <div class="info">
+          <div class="what">NVIDIA Inception Program Session (until 5 PM)</div>
+          <div class="why">Get ADC registered in Inception if not already. You qualify.</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">3:30 PM</div>
+        <div class="info">
+          <div class="what">Final Exhibit Hall walkthrough</div>
+          <div class="why">Grab contacts, vendor literature, follow up on business cards</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">5:00 PM</div>
+        <div class="info">
+          <div class="what">Networking Reception (until 7 PM) <span class="inv">NETWORK</span></div>
+          <div class="why">Follow up with anyone from the VC session</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day">
+    <div class="day-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h2>Wednesday Mar 18<small>Exam Day + Open Models</small></h2>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="day-body">
+      <div class="ev">
+        <div class="time">9:00 AM</div>
+        <div class="info">
+          <div class="what">Morning sessions &mdash; edge AI, inference, cooling</div>
+          <div class="why">Fill knowledge gaps, explore 700+ session catalog</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">12:30 PM</div>
+        <div class="info">
+          <div class="what">Jensen panel: Open Models (LangChain, Cursor, A16Z) <span class="must">MUST</span></div>
+          <div class="why">Jensen's second appearance &mdash; rare. AI development approaches.</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">2:00 PM</div>
+        <div class="info">
+          <div class="what">NVentures + VC &mdash; "What's Next in AI" (until 5 PM) <span class="inv">INVESTORS</span></div>
+          <div class="why">NVIDIA Corporate Development people in the room</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">4:00 PM</div>
+        <div class="info">
+          <div class="what">NCP-AII EXAM &mdash; Reservation 7AB-DD6 <span class="exam">EXAM</span></div>
+          <div class="why">You're ready. 90 cards studied. Let's get certified.</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">5:00 PM</div>
+        <div class="info">
+          <div class="what">Final Networking Reception (until 7 PM) &mdash; LAST NIGHT</div>
+          <div class="why">Celebrate passing that exam. Pack up tonight &mdash; 4 AM checkout tomorrow.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day">
+    <div class="day-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h2>Thursday Mar 19<small>Final Day + Fly Home</small></h2>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="day-body">
+      <div class="ev">
+        <div class="time">4:00 AM</div>
+        <div class="info">
+          <div class="what">Hotel checkout + Uber to SJC</div>
+          <div class="why">Early departure &mdash; be at airport by 4:30 AM</div>
+        </div>
+      </div>
+      <div class="ev">
+        <div class="time">6:00 AM</div>
+        <div class="info">
+          <div class="what">AA 2625: SJC &rarr; PHX (6:00 AM &rarr; 8:02 AM) <span class="must">BOOKED</span></div>
+          <div class="why">Layover 2h 46m | AA 3096: PHX &rarr; DFW (10:48 AM &rarr; 3:18 PM) | Layover 1h 6m | AA 5583: DFW &rarr; LFT (4:24 PM &rarr; 5:50 PM) | Conf# ICKKPF</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATIONS -->
+  <div class="confs">
+    <h3>Confirmation Numbers</h3>
+    <div class="conf-row">
+      <span class="conf-label">AA Outbound (LFT&rarr;DFW&rarr;SJC)</span>
+      <span class="conf-val">IAFBEV</span>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">AA Return (SJC&rarr;PHX&rarr;DFW&rarr;LFT)</span>
+      <span class="conf-val">ICKKPF</span>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">Motel 6 (4 nights)</span>
+      <span class="conf-val">6782.172.321</span>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">Motel 6 PIN</span>
+      <span class="conf-val">6889</span>
+    </div>
+    <div class="conf-row">
+      <span class="conf-label">NCP-AII Exam</span>
+      <span class="conf-val">7AB-DD6</span>
+    </div>
+  </div>
+
+  <!-- COOLING VENDORS HIT LIST -->
+  <div class="targets" style="border-color:#00e5ff30">
+    <h3 style="color:#00e5ff">Cooling Vendors Hit List</h3>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Motivair</span><span class="desc">Booth #1913 | Direct liquid cooling, rear door HX | Now owned by Schneider Electric</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Trane</span><span class="desc">Full thermal mgmt + immersion | JUST ACQUIRED LiquidStack (Carrollton TX) Feb 2026</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Supermicro</span><span class="desc">Diamond Sponsor | Liquid-cooled HGX, NVL72, direct-to-chip racks</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">ZutaCore</span><span class="desc">Waterless two-phase direct-to-chip | No fluids to manage</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Bitmine</span><span class="desc">Immersion cooling systems | Listed exhibitor (BMNR)</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Wiwynn</span><span class="desc">UMS 100 modular liquid cooling management | Rack-level AI</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Compal</span><span class="desc">Liquid Cooling Rack + CDU integration | Session Mon 2 PM</span></div>
+    <div class="tgt"><span class="name" style="color:#00e5ff">Samsung</span><span class="desc">Booth #1207 | HBM4 + cooling-adjacent infrastructure</span></div>
+  </div>
+
+  <!-- ASK AROUND FOR THESE -->
+  <div class="targets">
+    <h3>Ask Around For These</h3>
+    <div class="tgt"><span class="name">GRC</span><span class="desc">Austin TX | Single-phase immersion | Closest to your EC-110 approach</span></div>
+    <div class="tgt"><span class="name">LiquidStack</span><span class="desc">Carrollton TX | Immersion + DTC | Now at Trane booth (acquired Feb 2026)</span></div>
+    <div class="tgt"><span class="name">CoolIT</span><span class="desc">Calgary | Direct liquid cooling, CDUs | Was at GTC 2025</span></div>
+    <div class="tgt"><span class="name">Submer</span><span class="desc">Barcelona | Single-phase immersion SmartPods | Was at OCP Summit</span></div>
+    <div class="tgt"><span class="name">nVent</span><span class="desc">Minneapolis | Liquid cooling + power | New products H1 2026</span></div>
+    <div class="tgt"><span class="name">Asetek</span><span class="desc">Denmark/TX | Direct-to-chip pioneer | AI liquid cooling</span></div>
+    <div class="tgt"><span class="name">Iceotope</span><span class="desc">UK | Chassis-level precision liquid cooling | nVent partnership</span></div>
+    <div class="tgt"><span class="name">LiquidCool</span><span class="desc">Minnesota | Total single-phase immersion | Edge + colo focus</span></div>
+  </div>
+
+  <!-- OTHER FLOOR TARGETS -->
+  <div class="targets">
+    <h3>Other Key Targets</h3>
+    <div class="tgt"><span class="name">Vertiv</span><span class="desc">Power + cooling infrastructure</span></div>
+    <div class="tgt"><span class="name">Schneider</span><span class="desc">Power distribution, UPS (owns Motivair)</span></div>
+    <div class="tgt"><span class="name">Inception Desk</span><span class="desc">Get ADC registered in NVIDIA Inception</span></div>
+    <div class="tgt"><span class="name">NVentures</span><span class="desc">NVIDIA's own investment arm</span></div>
+  </div>
+
+  <!-- TALK TRACK -->
+  <div class="talk">
+    <h3>What to Say</h3>
+    <p>"I'm building Louisiana's first AI factory at a decommissioned 2,200 MW power plant"</p>
+    <p>"We deploy manufactured containerized GPU pods with immersion cooling"</p>
+    <p>"3-layer power stack: nat gas + solar primary, grid backup, diesel emergency"</p>
+    <p>"NCP-AII certified" (after Wednesday)</p>
+    <p>Hand them the card: adc3k.com/card</p>
+  </div>
+
+</div>
+</body>
+</html>

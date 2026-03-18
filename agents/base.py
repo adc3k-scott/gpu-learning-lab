@@ -34,7 +34,9 @@ from enum import Enum
 from typing import Any
 from uuid import uuid4
 
+from core.circuit_breaker import CircuitBreaker, CircuitOpenError
 from core.event_bus import Event, EventBus
+from core.logging import set_log_context, clear_log_context
 from core.metrics import metrics
 from core.state_store import StateStore
 from skills.base import SkillContext, SkillResult
@@ -67,6 +69,7 @@ class AgentState:
     last_heartbeat: float = field(default_factory=time.time)
     error: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+    capabilities: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -78,6 +81,7 @@ class AgentState:
             "last_heartbeat": self.last_heartbeat,
             "error": self.error,
             "metadata": self.metadata,
+            "capabilities": self.capabilities,
         }
 
 
@@ -94,10 +98,12 @@ class BaseAgent(ABC):
     All event handlers must be async coroutines.
 
     Class-level attributes:
-        role    str  — logical role name, e.g. "coder", "repo_analyst"
+        role            str        — logical role name, e.g. "coder", "repo_analyst"
+        capabilities    list[str]  — skills/actions this agent can handle
     """
 
     role: str = "agent"
+    capabilities: list[str] = []
 
     def __init__(
         self,
@@ -116,8 +122,12 @@ class BaseAgent(ABC):
         self.project_root = project_root
         self._heartbeat_interval = heartbeat_interval
         self._heartbeat_task: asyncio.Task | None = None
-        self._state = AgentState(agent_id=self.agent_id, role=self.role)
+        self._state = AgentState(
+            agent_id=self.agent_id, role=self.role,
+            capabilities=list(self.capabilities),
+        )
         self._running = False
+        self._circuit_breakers: dict[str, CircuitBreaker] = {}
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -139,8 +149,11 @@ class BaseAgent(ABC):
         self._heartbeat_task = asyncio.create_task(
             self._heartbeat_loop(), name=f"heartbeat-{self.agent_id}"
         )
-        await self.publish("agent.started", {"role": self.role})
-        logger.info("[%s] Agent started", self.agent_id)
+        await self.publish("agent.started", {
+            "role": self.role,
+            "capabilities": self._state.capabilities,
+        })
+        logger.info("[%s] Agent started (capabilities=%s)", self.agent_id, self._state.capabilities)
 
     async def stop(self) -> None:
         """Gracefully stop the agent."""
@@ -208,11 +221,31 @@ class BaseAgent(ABC):
 
         Automatically injects agent context (agent_id, job_id, project_root)
         into the SkillContext so skills have access to shared infrastructure.
+
+        If the skill defines a retry_policy with max_attempts > 1, failed
+        executions are retried with exponential backoff before giving up.
         """
         try:
             skill = self.registry.get(skill_name)
         except KeyError as exc:
             return SkillResult.fail(str(exc))
+
+        # Circuit breaker check — fail fast if service is known-down
+        cb = self._circuit_breakers.get(skill_name)
+        if cb:
+            try:
+                # Just check state; don't wrap the call (retry loop needs control)
+                if cb.state.value == "open":
+                    retry_after = cb.cooldown_seconds - (time.time() - cb._opened_at)
+                    metrics.increment(f"circuit.{skill_name}.rejected")
+                    return SkillResult.fail(
+                        f"Circuit breaker OPEN for '{skill_name}' — retry after {max(retry_after, 0):.0f}s"
+                    )
+            except Exception:
+                pass  # circuit breaker should never block execution
+
+        # Set logging correlation context for this skill execution
+        set_log_context(agent_id=self.agent_id, job_id=job_id)
 
         ctx = SkillContext(
             agent_id=self.agent_id,
@@ -222,14 +255,63 @@ class BaseAgent(ABC):
             metadata={"project_root": self.project_root, **(extra_metadata or {})},
         )
 
+        policy = skill.retry_policy
+        max_attempts = max(policy.max_attempts, 1)
+
         await self._set_status(AgentStatus.BUSY, job_id=job_id)
-        try:
-            result = await skill.execute(ctx, params)
-        except Exception as exc:
-            logger.exception("[%s] Skill %r raised: %s", self.agent_id, skill_name, exc)
-            result = SkillResult.fail(str(exc))
-        finally:
-            await self._set_status(AgentStatus.RUNNING)
+        metrics.increment("skills.executed")
+        t0 = time.perf_counter()
+        result = SkillResult.fail("skill did not execute")
+
+        skill_timeout = policy.timeout if policy.timeout > 0 else None
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                if skill_timeout:
+                    result = await asyncio.wait_for(
+                        skill.execute(ctx, params), timeout=skill_timeout
+                    )
+                else:
+                    result = await skill.execute(ctx, params)
+            except asyncio.TimeoutError:
+                metrics.increment(f"skills.{skill_name}.timeout")
+                logger.warning("[%s] Skill %r timed out after %.0fs (attempt %d/%d)",
+                               self.agent_id, skill_name, skill_timeout, attempt, max_attempts)
+                result = SkillResult.fail(
+                    f"Skill '{skill_name}' timed out after {skill_timeout}s"
+                )
+            except Exception as exc:
+                logger.exception("[%s] Skill %r raised (attempt %d/%d): %s",
+                                 self.agent_id, skill_name, attempt, max_attempts, exc)
+                result = SkillResult.fail(str(exc))
+
+            if result.success or attempt == max_attempts:
+                break
+
+            # Retry eligible — exponential backoff
+            if isinstance(result, SkillResult) and not result.success:
+                delay = policy.backoff_base * (2 ** (attempt - 1))
+                metrics.increment("skills.retried")
+                logger.info("[%s] Retrying skill %r in %.1fs (attempt %d/%d)",
+                            self.agent_id, skill_name, delay, attempt + 1, max_attempts)
+                await asyncio.sleep(delay)
+
+        elapsed_ms = (time.perf_counter() - t0) * 1000
+        metrics.timing(f"skills.{skill_name}.duration_ms", elapsed_ms)
+        metrics.timing("skills.all.duration_ms", elapsed_ms)
+
+        # Update circuit breaker state
+        if cb:
+            if result.success:
+                cb.record_success()
+            else:
+                cb.record_failure()
+
+        if not result.success:
+            metrics.increment("skills.failed")
+            metrics.increment(f"skills.{skill_name}.failed")
+        await self._set_status(AgentStatus.RUNNING)
+        clear_log_context()
 
         return result
 

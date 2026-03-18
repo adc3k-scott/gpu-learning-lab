@@ -63,6 +63,7 @@ Guidelines:
 
 class CoderAgent(BaseAgent):
     role = "coder"
+    capabilities = ["file_manager", "read", "write", "patch", "generate"]
 
     def __init__(self, *, llm_client: Any = None, llm_model: str = "claude-opus-4-5", **kwargs):
         super().__init__(**kwargs)

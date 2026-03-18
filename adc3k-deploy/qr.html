@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Scan — ADC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#06090f;font-family:'Inter',system-ui,sans-serif}
+
+canvas#stars{position:fixed;inset:0;z-index:0}
+
+.horizon{position:fixed;bottom:0;left:0;right:0;height:180px;z-index:1;
+  background:radial-gradient(ellipse 120% 100% at 50% 100%,
+    rgba(30,80,180,0.2) 0%,rgba(10,20,60,0.05) 60%,transparent 100%);
+  pointer-events:none}
+.horizon::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 5%,rgba(80,140,255,0.35) 30%,rgba(120,180,255,0.5) 50%,rgba(80,140,255,0.35) 70%,transparent 95%)}
+
+.wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;height:100%;padding:32px 24px;text-align:center;gap:24px}
+
+.logo{width:52px;height:52px;border-radius:50%;border:2px solid rgba(120,180,255,0.25);
+  object-fit:cover;opacity:0;animation:fadeUp .7s ease .2s forwards;
+  box-shadow:0 0 20px rgba(60,120,220,0.15)}
+
+.qr-frame{position:relative;padding:20px;border-radius:16px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(120,180,255,0.15);
+  opacity:0;animation:fadeUp .8s ease .5s forwards;
+  box-shadow:0 0 40px rgba(40,90,200,0.1)}
+.qr-frame img{width:240px;height:240px;border-radius:8px;display:block}
+
+.prompt{font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(160,200,255,0.6);opacity:0;animation:fadeUp .7s ease .8s forwards}
+
+.name{font-size:22px;font-weight:700;letter-spacing:1.5px;color:#fff;
+  opacity:0;animation:fadeUp .7s ease 1s forwards}
+.title-line{font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(160,200,255,0.5);margin-top:4px;opacity:0;animation:fadeUp .7s ease 1.15s forwards}
+
+.url{font-size:11px;letter-spacing:1.5px;color:rgba(120,160,220,0.35);
+  opacity:0;animation:fadeUp .7s ease 1.3s forwards;margin-top:8px}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* pulse ring around QR */
+.qr-frame::before{content:'';position:absolute;inset:-6px;border-radius:20px;
+  border:1px solid rgba(120,180,255,0.08);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{
+  0%,100%{opacity:0.3;transform:scale(1)}
+  50%{opacity:0.8;transform:scale(1.02)}
+}
+
+@media(max-height:580px){
+  .qr-frame img{width:180px;height:180px}
+  .qr-frame{padding:14px}
+  .name{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="horizon"></div>
+
+<div class="wrap">
+  <img class="logo" src="adc-logo.jpg" alt="ADC">
+  <div class="prompt">Scan to connect</div>
+  <div class="qr-frame">
+    <img src="qr-card-dark.png" alt="QR Code — adc3k.com/card">
+  </div>
+  <div>
+    <div class="name">SCOTT TOMSU</div>
+    <div class="title-line">Advantage Design Construction Inc.</div>
+  </div>
+  <div class="url">adc3k.com/card</div>
+</div>
+
+<script>
+(function(){
+  const c=document.getElementById('stars'),x=c.getContext('2d');
+  let w,h,stars=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight;init()}
+  function init(){
+    stars=[];
+    const n=Math.floor(w*h/3500);
+    for(let i=0;i<n;i++){
+      stars.push({
+        x:Math.random()*w,y:Math.random()*h,
+        r:Math.random()*1.1+0.2,
+        base:Math.random()*0.4+0.2,
+        amp:Math.random()*0.35+0.1,
+        speed:Math.random()*0.002+0.0008,
+        phase:Math.random()*Math.PI*2
+      })
+    }
+  }
+  function draw(t){
+    x.clearRect(0,0,w,h);
+    for(const s of stars){
+      const a=s.base+Math.sin(t*s.speed+s.phase)*s.amp;
+      x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);
+      x.fillStyle=`rgba(200,220,255,${a})`;x.fill()
+    }
+    requestAnimationFrame(draw)
+  }
+  addEventListener('resize',resize);resize();requestAnimationFrame(draw)
+})();
+</script>
+</body>
+</html>

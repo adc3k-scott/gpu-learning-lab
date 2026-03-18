@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Iberia Pod Factory — Production Line Simulator</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e14;color:#c8cdd3;font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
+.toolbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,20,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #1a2030;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.toolbar h1{font-size:15px;font-weight:600;letter-spacing:1px;color:#f5a623}
+.toolbar .sub{font-size:11px;color:#667;font-family:'Courier New',monospace}
+.ctrls{display:flex;gap:8px;align-items:center}
+.ctrls button{background:#161c26;border:1px solid #1a2030;color:#c8cdd3;padding:7px 16px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;transition:all 0.2s}
+.ctrls button:hover{background:#1e2736;border-color:#2a3548}
+.ctrls button.active{background:rgba(0,232,122,0.12);border-color:rgba(0,232,122,0.4);color:#00e87a}
+.ctrls button.stop{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.4);color:#ef4444}
+.speed-label{font-size:11px;color:#667;margin-left:12px}
+.speed-val{font-size:12px;color:#f5a623;font-weight:700;font-family:'Courier New',monospace}
+
+.main{padding-top:64px;display:flex;flex-direction:column;height:100vh}
+
+/* Stats bar */
+.stats-bar{display:flex;gap:0;border-bottom:1px solid #1a2030;background:#0d1117}
+.sbox{flex:1;padding:16px 20px;border-right:1px solid #1a2030;text-align:center}
+.sbox:last-child{border-right:none}
+.sbox .slbl{font-size:10px;letter-spacing:1.5px;color:#667;text-transform:uppercase;margin-bottom:4px}
+.sbox .sval{font-size:22px;font-weight:700;font-family:'Courier New',monospace}
+.sbox .sval.green{color:#00e87a}
+.sbox .sval.amber{color:#f5a623}
+.sbox .sval.blue{color:#3b9eff}
+.sbox .sval.red{color:#ef4444}
+.sbox .sval.purple{color:#a855f7}
+
+/* Production line visual */
+.line-wrap{flex:1;display:flex;flex-direction:column;padding:24px 32px;gap:16px;overflow:auto}
+
+/* Station row */
+.srow{display:flex;align-items:stretch;gap:0}
+.srow-label{writing-mode:vertical-lr;text-orientation:mixed;transform:rotate(180deg);font-size:10px;letter-spacing:2px;color:#667;text-transform:uppercase;padding:0 12px;display:flex;align-items:center;justify-content:center;min-width:36px}
+
+/* Station card */
+.station{flex:1;background:#0d1117;border:1.5px solid #1a2030;border-radius:6px;padding:14px 16px;position:relative;min-height:140px;transition:all 0.3s}
+.station.active{border-color:rgba(0,232,122,0.5);box-shadow:0 0 20px rgba(0,232,122,0.08)}
+.station.idle{opacity:0.5}
+.station .s-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.station .s-num{font-size:11px;font-weight:700;font-family:'Courier New',monospace;padding:2px 8px;border-radius:3px;letter-spacing:1px}
+.station .s-name{font-size:13px;font-weight:600;color:#e8ecf0}
+.station .s-cycle{font-size:11px;color:#667;font-family:'Courier New',monospace}
+
+/* Progress bar inside station */
+.prog-wrap{margin:8px 0;height:6px;background:#111820;border-radius:3px;overflow:hidden}
+.prog-bar{height:100%;border-radius:3px;transition:width 0.5s linear;width:0%}
+
+/* Pod badge inside station */
+.pod-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;font-family:'Courier New',monospace;margin-top:6px}
+.pod-badge .dot{width:8px;height:8px;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Robot status */
+.robot-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.robot-chip{padding:2px 8px;border-radius:3px;font-size:9px;font-weight:600;letter-spacing:0.5px}
+.robot-chip.busy{background:rgba(59,154,255,0.1);color:#3b9eff;border:1px solid rgba(59,154,255,0.2)}
+.robot-chip.idle-r{background:rgba(100,116,139,0.1);color:#64748b;border:1px solid rgba(100,116,139,0.2)}
+
+/* Arrow between stations */
+.arrow-cell{display:flex;align-items:center;justify-content:center;width:40px;min-width:40px;color:#2a3548;font-size:20px}
+.arrow-cell.flowing{color:#f5a623;animation:arrowPulse 1s infinite}
+@keyframes arrowPulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* U-turn */
+.u-turn{display:flex;align-items:center;justify-content:flex-end;padding:8px 48px 8px 0;color:#2a3548;font-size:20px}
+.u-turn.flowing{color:#f5a623}
+
+/* Log panel */
+.log-panel{height:180px;min-height:180px;background:#0d1117;border-top:1px solid #1a2030;overflow-y:auto;padding:12px 20px;font-family:'Courier New',monospace;font-size:11px;line-height:1.7}
+.log-panel .log-line{color:#667}
+.log-panel .log-line .ts{color:#3b9eff}
+.log-panel .log-line .ev{color:#f5a623}
+.log-panel .log-line .pod{color:#00e87a}
+.log-panel .log-line .fail{color:#ef4444}
+.log-panel .log-line .pass{color:#00e87a}
+
+/* ── iPad / Tablet Responsive ── */
+@media(max-width:1024px){
+  .toolbar{flex-direction:column;gap:8px;padding:8px 12px}
+  .toolbar h1{font-size:13px}
+  .ctrls{flex-wrap:wrap;justify-content:center}
+  .ctrls button{padding:6px 12px;font-size:11px}
+  .main{padding-top:100px}
+  .stats-bar{flex-wrap:wrap}
+  .sbox{flex:0 0 calc(33.33% - 1px);border-bottom:1px solid #1a2030}
+  .sbox .sval{font-size:18px}
+  .line-wrap{padding:12px 16px;gap:12px}
+  .srow{flex-wrap:wrap;gap:8px}
+  .station{flex:0 0 calc(50% - 24px);min-width:200px}
+  .arrow-cell{display:none}
+  .srow-label{writing-mode:horizontal-tb;transform:none;padding:4px 0;min-width:unset;width:100%;text-align:center}
+  .u-turn{justify-content:center;padding:4px}
+  .log-panel{height:120px;min-height:120px;font-size:10px}
+}
+@media(max-width:600px){
+  .sbox{flex:0 0 calc(50% - 1px)}
+  .station{flex:0 0 100%}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <h1>PRODUCTION LINE SIMULATOR</h1>
+    <div class="sub">NEW IBERIA POD FACTORY &nbsp;|&nbsp; 7-STATION U-FLOW &nbsp;|&nbsp; <span id="simClock">DAY 1 — 06:00</span></div>
+  </div>
+  <div class="ctrls">
+    <button id="btnStart" class="active" onclick="toggleSim()">START</button>
+    <button id="btnReset" onclick="resetSim()">RESET</button>
+    <span class="speed-label">Speed:</span>
+    <button onclick="setSpeed(1)">1×</button>
+    <button onclick="setSpeed(5)" class="active">5×</button>
+    <button onclick="setSpeed(20)">20×</button>
+    <button onclick="setSpeed(60)">60×</button>
+    <span class="speed-label">1 sim-hour = <span class="speed-val" id="speedDisp">12s</span></span>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="sbox"><div class="slbl">Pods Completed</div><div class="sval green" id="statComplete">0</div></div>
+  <div class="sbox"><div class="slbl">In Production</div><div class="sval blue" id="statInProd">0</div></div>
+  <div class="sbox"><div class="slbl">Sim Day</div><div class="sval amber" id="statDay">1</div></div>
+  <div class="sbox"><div class="slbl">First-Pass Yield</div><div class="sval green" id="statYield">—</div></div>
+  <div class="sbox"><div class="slbl">Avg Cycle</div><div class="sval" id="statCycle">—</div></div>
+  <div class="sbox"><div class="slbl">Monthly Rate</div><div class="sval purple" id="statRate">0</div></div>
+  <div class="sbox"><div class="slbl">Revenue (Month)</div><div class="sval green" id="statRev">$0</div></div>
+</div>
+
+<!-- PRODUCTION LINE -->
+<div class="line-wrap">
+  <!-- TOP ROW: S1 → S2 → S3 -->
+  <div class="srow" id="topRow">
+    <div class="srow-label">PREP LINE</div>
+    <div class="station" id="st-1">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(245,166,35,0.15);color:#f5a623">S1</span>
+        <span class="s-name">RECEIVING & CONTAINER PREP</span>
+        <span class="s-cycle">4 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-1" style="background:#f5a623"></div></div>
+      <div id="pod-1"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r1a">M-710 #1</span>
+        <span class="robot-chip idle-r" id="r1b">M-710 #2</span>
+        <span class="robot-chip idle-r" id="r1c">XPR300</span>
+      </div>
+    </div>
+    <div class="arrow-cell" id="arr-12">&#9654;</div>
+    <div class="station" id="st-2">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(239,68,68,0.15);color:#ef4444">S2</span>
+        <span class="s-name">CNC CUTTING & FABRICATION</span>
+        <span class="s-cycle">6 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-2" style="background:#ef4444"></div></div>
+      <div id="pod-2"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r2a">XPR300</span>
+        <span class="robot-chip idle-r" id="r2b">ARC MATE</span>
+      </div>
+    </div>
+    <div class="arrow-cell" id="arr-23">&#9654;</div>
+    <div class="station" id="st-3">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(168,85,247,0.15);color:#a855f7">S3</span>
+        <span class="s-name">INSULATION</span>
+        <span class="s-cycle">3 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-3" style="background:#a855f7"></div></div>
+      <div id="pod-3"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r3a">IRB 5500</span>
+        <span class="robot-chip idle-r" id="r3b">IRB 2600</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- U-TURN -->
+  <div class="u-turn" id="uturn1">&#11176; U-TURN &#11176;</div>
+
+  <!-- BOTTOM ROW: S4 ← S5 ← S6 (displayed right-to-left visually, but S4 is rightmost) -->
+  <div class="srow" id="botRow">
+    <div class="srow-label">BUILD LINE</div>
+    <div class="station" id="st-6">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(0,232,122,0.15);color:#00e87a">S6</span>
+        <span class="s-name">COMPUTE INSTALL</span>
+        <span class="s-cycle">6 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-6" style="background:#00e87a"></div></div>
+      <div id="pod-6"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r6a">CRX #1</span>
+        <span class="robot-chip idle-r" id="r6b">CRX #2</span>
+        <span class="robot-chip idle-r" id="r6c">UR10e</span>
+      </div>
+    </div>
+    <div class="arrow-cell" id="arr-65">&#9664;</div>
+    <div class="station" id="st-5">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(6,182,212,0.15);color:#06b6d4">S5</span>
+        <span class="s-name">COOLING SYSTEM</span>
+        <span class="s-cycle">6 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-5" style="background:#06b6d4"></div></div>
+      <div id="pod-5"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r5a">CRX-25</span>
+        <span class="robot-chip idle-r" id="r5b">PIPE SYS</span>
+      </div>
+    </div>
+    <div class="arrow-cell" id="arr-54">&#9664;</div>
+    <div class="station" id="st-4">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(59,154,255,0.15);color:#3b9eff">S4</span>
+        <span class="s-name">ELECTRICAL <span style="color:#ef4444;font-size:9px">(BOTTLENECK)</span></span>
+        <span class="s-cycle">8 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-4" style="background:#3b9eff"></div></div>
+      <div id="pod-4"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r4a">UR10e #1</span>
+        <span class="robot-chip idle-r" id="r4b">UR10e #2</span>
+        <span class="robot-chip idle-r" id="r4c">ELECTRICIAN</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOWN TO TEST -->
+  <div class="u-turn" id="uturn2" style="justify-content:flex-start;padding-left:48px">&#11176; TO TEST CELL &#11176;</div>
+
+  <!-- TEST CELL ROW -->
+  <div class="srow" id="testRow">
+    <div class="srow-label">TEST</div>
+    <div class="station" id="st-7" style="max-width:500px">
+      <div class="s-head">
+        <span class="s-num" style="background:rgba(251,191,36,0.15);color:#fbbf24">S7</span>
+        <span class="s-name">TEST CELL — BURN-IN & QA</span>
+        <span class="s-cycle">8 hr</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" id="prog-7" style="background:#fbbf24"></div></div>
+      <div id="pod-7"></div>
+      <div class="robot-row">
+        <span class="robot-chip idle-r" id="r7a">METROPOLIS</span>
+        <span class="robot-chip idle-r" id="r7b">THERMAL ARR</span>
+        <span class="robot-chip idle-r" id="r7c">QA TECH</span>
+      </div>
+    </div>
+    <div class="arrow-cell" id="arr-ship">&#9654;</div>
+    <div style="display:flex;align-items:center;padding:0 20px">
+      <div style="border:2px dashed rgba(0,232,122,0.3);border-radius:8px;padding:16px 24px;text-align:center">
+        <div style="font-size:10px;letter-spacing:1.5px;color:#667;text-transform:uppercase;margin-bottom:4px">Shipping Dock</div>
+        <div style="font-size:28px;font-weight:800;color:#00e87a;font-family:'Courier New',monospace" id="shipCount">0</div>
+        <div style="font-size:11px;color:#667">pods shipped</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOG PANEL -->
+<div class="log-panel" id="logPanel">
+  <div class="log-line"><span class="ts">[00:00]</span> <span class="ev">SYSTEM</span> — Production simulator initialized. Press START to begin.</div>
+</div>
+
+</div>
+
+<script>
+// ===== SIMULATION ENGINE =====
+
+const STATIONS = [
+  {id:1, name:'Receiving & Prep', cycle:4, color:'#f5a623', robots:['r1a','r1b','r1c']},
+  {id:2, name:'CNC & Fabrication', cycle:6, color:'#ef4444', robots:['r2a','r2b']},
+  {id:3, name:'Insulation', cycle:3, color:'#a855f7', robots:['r3a','r3b']},
+  {id:4, name:'Electrical', cycle:8, color:'#3b9eff', robots:['r4a','r4b','r4c']},
+  {id:5, name:'Cooling', cycle:6, color:'#06b6d4', robots:['r5a','r5b']},
+  {id:6, name:'Compute Install', cycle:6, color:'#00e87a', robots:['r6a','r6b','r6c']},
+  {id:7, name:'Test Cell', cycle:8, color:'#fbbf24', robots:['r7a','r7b','r7c']}
+];
+
+// Shift schedule: 06:00-16:00 and 16:00-02:00, Mon-Thu
+function isWorkHour(simHour) {
+  const day = Math.floor(simHour / 24);
+  const weekday = day % 7; // 0=Mon
+  if (weekday >= 4) return false; // Fri-Sun off
+  const hourOfDay = simHour % 24;
+  return (hourOfDay >= 6 && hourOfDay < 26); // 06:00 to 02:00 next day (= hour 26 mod 24)
+}
+function isShiftActive(simHour) {
+  const day = Math.floor(simHour / 24);
+  const weekday = day % 7;
+  if (weekday >= 4) return false;
+  const h = simHour % 24;
+  return (h >= 6 && h < 16) || (h >= 16) || (h < 2);
+}
+
+let simRunning = false;
+let simHour = 0; // in hours
+let simSpeed = 5; // 1x = 60s per sim-hour, 5x = 12s, etc.
+let simInterval = null;
+
+let podCounter = 0;
+let podsCompleted = 0;
+let podsPassedFirst = 0;
+let totalCycleHours = 0;
+let monthStartHour = 0;
+let monthPods = 0;
+
+// Pods in stations: stationPods[stationIndex] = {id, name, hoursRemaining, totalHours}
+let stationPods = [null, null, null, null, null, null, null];
+let queuedPods = 0; // waiting for S1
+
+function newPod() {
+  podCounter++;
+  return {
+    id: podCounter,
+    name: `POD-${String(podCounter).padStart(3,'0')}`,
+    startHour: simHour,
+    hoursRemaining: 0,
+    totalHours: 0
+  };
+}
+
+function log(msg, type) {
+  const panel = document.getElementById('logPanel');
+  const day = Math.floor(simHour / 24) + 1;
+  const h = Math.floor(simHour % 24);
+  const m = Math.floor((simHour % 1) * 60);
+  const ts = `D${day} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.innerHTML = `<span class="ts">[${ts}]</span> ${msg}`;
+  panel.appendChild(line);
+  panel.scrollTop = panel.scrollHeight;
+  // Keep log size manageable
+  while (panel.children.length > 200) panel.removeChild(panel.firstChild);
+}
+
+function simTick() {
+  const dt = 0.5; // half-hour ticks
+  simHour += dt;
+
+  const active = isShiftActive(simHour);
+
+  // Update clock
+  const day = Math.floor(simHour / 24) + 1;
+  const h = Math.floor(simHour % 24);
+  const m = Math.floor((simHour % 1) * 60);
+  const weekdays = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+  const wd = weekdays[Math.floor(simHour / 24) % 7];
+  document.getElementById('simClock').textContent = `${wd} DAY ${day} — ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}${active ? '' : ' [OFF SHIFT]'}`;
+  document.getElementById('statDay').textContent = day;
+
+  if (!active) {
+    updateVisuals();
+    return;
+  }
+
+  // Try to feed a new container to S1 if empty
+  if (!stationPods[0]) {
+    const pod = newPod();
+    pod.hoursRemaining = STATIONS[0].cycle;
+    pod.totalHours = STATIONS[0].cycle;
+    stationPods[0] = pod;
+    log(`<span class="ev">RECEIVING</span> — <span class="pod">${pod.name}</span> container arrived at S1`, 'info');
+  }
+
+  // Process each station (reverse order so advancing works)
+  for (let i = 6; i >= 0; i--) {
+    const pod = stationPods[i];
+    if (!pod) continue;
+
+    pod.hoursRemaining -= dt;
+
+    if (pod.hoursRemaining <= 0) {
+      pod.hoursRemaining = 0;
+
+      // Station complete — try to advance
+      if (i === 6) {
+        // Test cell complete — pod ships!
+        const passed = Math.random() < 0.98; // 98% first-pass yield
+        if (passed) {
+          podsPassedFirst++;
+        }
+        podsCompleted++;
+        monthPods++;
+        totalCycleHours += (simHour - pod.startHour);
+        stationPods[i] = null;
+        log(`<span class="${passed ? 'pass' : 'fail'}">${passed ? 'PASS' : 'REWORK'}</span> — <span class="pod">${pod.name}</span> ${passed ? 'QA passed — SHIPPED' : 'QA flagged — rework required'} (${Math.round(simHour - pod.startHour)}hr total)`, passed ? 'pass' : 'fail');
+      } else {
+        // Try to move to next station
+        if (!stationPods[i + 1]) {
+          stationPods[i + 1] = pod;
+          stationPods[i + 1].hoursRemaining = STATIONS[i + 1].cycle;
+          stationPods[i + 1].totalHours += STATIONS[i + 1].cycle;
+          stationPods[i] = null;
+          log(`<span class="ev">${STATIONS[i+1].name.toUpperCase()}</span> — <span class="pod">${pod.name}</span> moved to S${i+2}`, 'info');
+        }
+        // else: pod waits (station blocked)
+      }
+    }
+  }
+
+  // Monthly rate calc
+  if (simHour - monthStartHour >= 720) { // 30 days
+    monthStartHour = simHour;
+    monthPods = 0;
+  }
+
+  updateVisuals();
+}
+
+function updateVisuals() {
+  // Station visuals
+  for (let i = 0; i < 7; i++) {
+    const st = document.getElementById(`st-${i+1}`);
+    const prog = document.getElementById(`prog-${i+1}`);
+    const podEl = document.getElementById(`pod-${i+1}`);
+    const pod = stationPods[i];
+
+    if (pod) {
+      st.classList.add('active');
+      st.classList.remove('idle');
+      const pct = Math.max(0, Math.min(100, ((STATIONS[i].cycle - pod.hoursRemaining) / STATIONS[i].cycle) * 100));
+      prog.style.width = pct + '%';
+      podEl.innerHTML = `<div class="pod-badge" style="background:rgba(0,232,122,0.08);color:#00e87a;border:1px solid rgba(0,232,122,0.2)"><span class="dot" style="background:#00e87a"></span>${pod.name} — ${Math.max(0, pod.hoursRemaining).toFixed(1)}hr left</div>`;
+
+      // Robots busy
+      STATIONS[i].robots.forEach(rid => {
+        const chip = document.getElementById(rid);
+        if (chip) { chip.classList.add('busy'); chip.classList.remove('idle-r'); }
+      });
+    } else {
+      st.classList.remove('active');
+      st.classList.add('idle');
+      prog.style.width = '0%';
+      podEl.innerHTML = '';
+
+      STATIONS[i].robots.forEach(rid => {
+        const chip = document.getElementById(rid);
+        if (chip) { chip.classList.remove('busy'); chip.classList.add('idle-r'); }
+      });
+    }
+  }
+
+  // Arrows
+  const arrows = [
+    {id:'arr-12', from:0, to:1},
+    {id:'arr-23', from:1, to:2},
+    {id:'arr-54', from:3, to:4},
+    {id:'arr-65', from:4, to:5}
+  ];
+  arrows.forEach(a => {
+    const el = document.getElementById(a.id);
+    const pod = stationPods[a.from];
+    if (pod && pod.hoursRemaining <= 0 && !stationPods[a.to]) {
+      el.classList.add('flowing');
+    } else {
+      el.classList.remove('flowing');
+    }
+  });
+
+  // Stats
+  document.getElementById('statComplete').textContent = podsCompleted;
+  document.getElementById('shipCount').textContent = podsCompleted;
+  document.getElementById('statInProd').textContent = stationPods.filter(p => p !== null).length;
+  document.getElementById('statYield').textContent = podsCompleted > 0 ? Math.round((podsPassedFirst / podsCompleted) * 100) + '%' : '—';
+  document.getElementById('statCycle').textContent = podsCompleted > 0 ? Math.round(totalCycleHours / podsCompleted) + ' hr' : '—';
+
+  // Monthly rate extrapolation
+  const daysElapsed = simHour / 24;
+  const rate = daysElapsed > 0 ? Math.round((podsCompleted / daysElapsed) * 30) : 0;
+  document.getElementById('statRate').textContent = rate + '/mo';
+  document.getElementById('statRev').textContent = '$' + (rate * 180).toLocaleString() + 'K';
+}
+
+function toggleSim() {
+  const btn = document.getElementById('btnStart');
+  if (simRunning) {
+    clearInterval(simInterval);
+    simRunning = false;
+    btn.textContent = 'START';
+    btn.classList.remove('stop');
+    btn.classList.add('active');
+  } else {
+    const tickMs = (60000 / simSpeed) / 2; // ms per half-hour tick
+    simInterval = setInterval(simTick, Math.max(tickMs, 50));
+    simRunning = true;
+    btn.textContent = 'PAUSE';
+    btn.classList.add('stop');
+    btn.classList.remove('active');
+    log(`<span class="ev">SYSTEM</span> — Production started at ${simSpeed}× speed`, 'info');
+  }
+}
+
+function resetSim() {
+  clearInterval(simInterval);
+  simRunning = false;
+  simHour = 0;
+  podCounter = 0;
+  podsCompleted = 0;
+  podsPassedFirst = 0;
+  totalCycleHours = 0;
+  monthStartHour = 0;
+  monthPods = 0;
+  stationPods = [null, null, null, null, null, null, null];
+
+  document.getElementById('btnStart').textContent = 'START';
+  document.getElementById('btnStart').classList.remove('stop');
+  document.getElementById('btnStart').classList.add('active');
+  document.getElementById('simClock').textContent = 'DAY 1 — 06:00';
+
+  document.getElementById('logPanel').innerHTML = '<div class="log-line"><span class="ts">[00:00]</span> <span class="ev">SYSTEM</span> — Simulator reset. Press START.</div>';
+  updateVisuals();
+}
+
+function setSpeed(s) {
+  simSpeed = s;
+  document.querySelectorAll('.ctrls button').forEach(b => {
+    if (b.textContent === s + '×') b.classList.add('active');
+    else if (['1×','5×','20×','60×'].includes(b.textContent)) b.classList.remove('active');
+  });
+
+  const secsPerHour = Math.max(1, Math.round(60 / s));
+  document.getElementById('speedDisp').textContent = secsPerHour + 's';
+
+  if (simRunning) {
+    clearInterval(simInterval);
+    const tickMs = (60000 / simSpeed) / 2;
+    simInterval = setInterval(simTick, Math.max(tickMs, 50));
+  }
+}
+
+// Init
+updateVisuals();
+</script>
+</body>
+</html>

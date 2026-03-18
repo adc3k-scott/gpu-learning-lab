@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NCP-AII Professional Cheat Sheet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:700;color:#e8edf2;letter-spacing:0.5px}
+.header h1 span{color:#ff6b35}
+.header-links{display:flex;gap:8px}
+.header-links a{font-size:12px;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;white-space:nowrap}
+.btn-orange{background:#ff6b35;color:#fff}
+.btn-green{background:#00d68f;color:#0a0e14}
+.btn-amber{background:#f5a623;color:#0a0e14}
+
+.tabs{position:sticky;top:53px;z-index:99;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 12px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 14px;font-size:12px;font-weight:600;color:#607080;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
+.tab.active{color:#ff6b35;border-bottom-color:#ff6b35}
+.tab:hover{color:#e8edf2}
+
+.section-title{padding:20px 20px 8px;font-size:14px;font-weight:700;color:#ff6b35;letter-spacing:0.5px;text-transform:uppercase}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 16px}
+
+.card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card:hover{border-color:#2a3a50}
+.card.d1{border-left:3px solid #ff6b35}
+.card.d2{border-left:3px solid #00b4d8}
+.card.d3{border-left:3px solid #00d68f}
+.card.d4{border-left:3px solid #f5a623}
+.card.d5{border-left:3px solid #e040fb}
+
+.card .q{font-size:12px;font-weight:700;color:#e8edf2;line-height:1.35}
+.card .a{font-size:11px;color:#8899aa;line-height:1.4}
+.card .a strong{color:#cdd6e0;font-weight:600}
+.card .a code{background:#1a2436;padding:1px 4px;border-radius:2px;font-size:10px;color:#ff6b35;font-family:'SF Mono',Monaco,monospace}
+
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 16px}
+.num-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 12px;text-align:center}
+.num-card .label{font-size:10px;color:#607080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.num-card .value{font-size:18px;font-weight:800;color:#ff6b35}
+.num-card .sub{font-size:9px;color:#4a5568;margin-top:2px}
+
+.cmd-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:8px 16px}
+.cmd-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 12px}
+.cmd-card .ctitle{font-size:11px;font-weight:700;color:#00d68f;margin-bottom:4px}
+.cmd-card code{display:block;font-family:'SF Mono',Monaco,monospace;font-size:10px;color:#8899aa;line-height:1.5}
+.cmd-card code strong{color:#ff6b35}
+
+@media(max-width:1024px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .numbers-grid{grid-template-columns:repeat(3,1fr)}
+  .cmd-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>NCP-AII</span> Cheat Sheet</h1>
+  <div class="header-links">
+    <a href="/ncp-study" class="btn-green">Study Guide</a>
+    <a href="/cheatsheet" class="btn-amber">NCA Sheet</a>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="all">All</div>
+  <div class="tab" data-tab="nums">Key Numbers</div>
+  <div class="tab" data-tab="cmds">Commands</div>
+  <div class="tab" data-tab="d1">D1: Bring-Up</div>
+  <div class="tab" data-tab="d2">D2: Test/Verify</div>
+  <div class="tab" data-tab="d3">D3: Control Plane</div>
+  <div class="tab" data-tab="d4">D4: Troubleshoot</div>
+  <div class="tab" data-tab="d5">D5: Physical</div>
+  <div class="tab" data-tab="ng">Next Gen + ADC</div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="section" id="sec-nums">
+<div class="section-title">Key Numbers — Memorize These</div>
+<div class="numbers-grid">
+  <div class="num-card"><div class="label">DGX H100 Power</div><div class="value">10.2 kW</div><div class="sub">~40 kW/rack (4 per rack)</div></div>
+  <div class="num-card"><div class="label">DGX B300 Power</div><div class="value">~14 kW</div><div class="sub">~56 kW/rack (4 per rack)</div></div>
+  <div class="num-card"><div class="label">GB200 NVL72</div><div class="value">120-140 kW</div><div class="sub">full rack, 72 GPUs</div></div>
+  <div class="num-card"><div class="label">H100 NVLink</div><div class="value">900 GB/s</div><div class="sub">Gen 4, 18 links</div></div>
+  <div class="num-card"><div class="label">Blackwell NVLink</div><div class="value">1,800 GB/s</div><div class="sub">Gen 5, 18 links</div></div>
+  <div class="num-card"><div class="label">Rubin NVLink</div><div class="value">3,600 GB/s</div><div class="sub">Gen 6, 18 links</div></div>
+  <div class="num-card"><div class="label">NDR IB Speed</div><div class="value">400 Gb/s</div><div class="sub">Quantum-2, 64 ports</div></div>
+  <div class="num-card"><div class="label">XDR IB Speed</div><div class="value">800 Gb/s</div><div class="sub">Quantum-X800, 144 ports</div></div>
+  <div class="num-card"><div class="label">H100 SU Size</div><div class="value">32 nodes</div><div class="sub">256 GPUs (248 usable)</div></div>
+  <div class="num-card"><div class="label">B300 SU Size</div><div class="value">72 nodes</div><div class="sub">576 GPUs</div></div>
+  <div class="num-card"><div class="label">NVL72 Aggregate</div><div class="value">130 TB/s</div><div class="sub">Blackwell all-to-all</div></div>
+  <div class="num-card"><div class="label">SHARP Compute</div><div class="value">14.4 TFLOPS</div><div class="sub">In-network (X800)</div></div>
+  <div class="num-card"><div class="label">ConnectX-7</div><div class="value">NDR 400G</div><div class="sub">PCIe Gen5</div></div>
+  <div class="num-card"><div class="label">ConnectX-8</div><div class="value">XDR 800G</div><div class="sub">PCIe Gen6</div></div>
+  <div class="num-card"><div class="label">BlueField-3</div><div class="value">16 Arm cores</div><div class="sub">400G, DDR5, 16GB</div></div>
+  <div class="num-card"><div class="label">GB200 Coolant</div><div class="value">130 LPM</div><div class="sub">25°C in, 45°C out</div></div>
+  <div class="num-card"><div class="label">PDU Preferred</div><div class="value">415V 3ph</div><div class="sub">Wye, 32A, N+1</div></div>
+  <div class="num-card"><div class="label">GPU Throttle</div><div class="value">~83°C</div><div class="sub">shutdown ~90°C</div></div>
+  <div class="num-card"><div class="label">MIG Max</div><div class="value">7 instances</div><div class="sub">A100/H100 only</div></div>
+  <div class="num-card"><div class="label">Min Storage I/O</div><div class="value">40 GBps</div><div class="sub">per node, SuperPOD</div></div>
+</div>
+</div>
+
+<!-- COMMANDS -->
+<div class="section" id="sec-cmds">
+<div class="section-title">Essential Commands</div>
+<div class="cmd-grid">
+  <div class="cmd-card"><div class="ctitle">nvidia-smi Essentials</div><code><strong>nvidia-smi</strong>                    # overview
+<strong>nvidia-smi -q -d ECC</strong>          # ECC errors
+<strong>nvidia-smi -q -d PERFORMANCE</strong>  # throttle reasons
+<strong>nvidia-smi -q -d RETIRED_PAGES</strong># retired pages
+<strong>nvidia-smi nvlink -s</strong>          # NVLink status
+<strong>nvidia-smi nvlink -e</strong>          # NVLink errors
+<strong>nvidia-smi topo -m</strong>            # GPU topology
+<strong>nvidia-smi dmon</strong>               # real-time monitor
+<strong>nvidia-smi -pm 1</strong>              # persistence mode ON
+<strong>nvidia-smi mig -lgi</strong>           # list MIG instances</code></div>
+
+  <div class="cmd-card"><div class="ctitle">DCGM Diagnostics</div><code><strong>dcgmi discovery</strong>               # find GPUs
+<strong>dcgmi diag -r 1</strong>               # short (~seconds)
+<strong>dcgmi diag -r 3</strong>               # long (<30 min)
+<strong>dcgmi diag -r 4 -j</strong>            # extra long + JSON
+<strong>dcgmi dmon -e 203,204,1001</strong>    # monitor fields
+<strong>dcgmi health -s mpi</strong>           # health watches
+<strong>dcgmi group -l</strong>                # list groups
+<strong>dcgmi topo -g 1</strong>               # topology
+<strong>dcgmi stats -e job123</strong>         # job stats</code></div>
+
+  <div class="cmd-card"><div class="ctitle">InfiniBand Tools</div><code><strong>ibstat</strong>                        # HCA status
+<strong>ibstatus</strong>                      # quick link state
+<strong>ibdiagnet</strong>                     # full fabric diag
+<strong>ibping -G &lt;GUID&gt;</strong>              # ping by GUID
+<strong>ib_write_bw</strong>                   # bandwidth test
+<strong>ib_write_lat</strong>                  # latency test
+<strong>perfquery</strong>                     # port perf counters
+<strong>iblinkinfo</strong>                    # link width/speed</code></div>
+
+  <div class="cmd-card"><div class="ctitle">BCM / cmsh</div><code><strong>cmsh</strong>                          # interactive mode
+<strong>cmsh -c "device list"</strong>         # batch mode
+<strong>device list</strong>                   # list nodes
+<strong>device status dgx001</strong>          # node status
+<strong>device power [on|off|reset]</strong>   # power control
+<strong>softwareimage list</strong>            # OS images
+<strong>category use gpu-compute</strong>      # select category
+<strong>assign slurmclient</strong>            # assign role
+<strong>foreach -n dgx001..004 (status)</strong># batch ops
+<strong>user add jsmith</strong>               # add user</code></div>
+
+  <div class="cmd-card"><div class="ctitle">Slurm + Containers</div><code><strong>sbatch --gres=gpu:8 --nodes=4 train.sh</strong>
+<strong>srun --gres=gpu:4 --ntasks=4</strong> nccl-tests
+<strong>srun --container-image=nvcr.io/nvidia/pytorch:24.03</strong>
+<strong>scontrol update nodename=dgx001 state=drain</strong>
+# Enroot+Pyxis = rootless containers for Slurm
+# Docker = for Kubernetes/inference</code></div>
+
+  <div class="cmd-card"><div class="ctitle">BlueField DPU Modes</div><code><strong>NIC Mode</strong> (Arm off, standard NIC):
+mlxconfig s INTERNAL_CPU_OFFLOAD_ENGINE=<strong>1</strong>
+
+<strong>DPU Mode</strong> (Arm active, default):
+mlxconfig s INTERNAL_CPU_OFFLOAD_ENGINE=<strong>0</strong>
+
+<strong>Zero Trust</strong> (host fully isolated):
+mlxprivhost r --disable_rshim
+  --disable_tracer --disable_counter_rd
+  --disable_port_owner
+
+Separated mode = <strong>OBSOLETE</strong> for BF-3</code></div>
+</div>
+</div>
+
+<!-- DOMAIN 1 -->
+<div class="section" id="sec-d1">
+<div class="section-title">D1 — System & Server Bring-Up (31%)</div>
+<div class="grid">
+  <div class="card d1"><div class="q">SuperPOD deployment sequence?</div><div class="a"><strong>1.</strong> Physical install → <strong>2.</strong> OOB/BMC → <strong>3.</strong> In-band mgmt → <strong>4.</strong> BCM head node → <strong>5.</strong> PXE provision nodes → <strong>6.</strong> Storage fabric → <strong>7.</strong> Compute fabric (IB) → <strong>8.</strong> GPU drivers → <strong>9.</strong> Validate (HPL/NCCL) → <strong>10.</strong> Workload mgr</div></div>
+  <div class="card d1"><div class="q">4 network fabrics?</div><div class="a"><strong>1.</strong> Compute: IB (Quantum XDR/NDR) <strong>2.</strong> Storage: IB or Ethernet <strong>3.</strong> In-Band Mgmt: Ethernet (SN5610) <strong>4.</strong> OOB Mgmt: Ethernet (SN2201, 1G)</div></div>
+  <div class="card d1"><div class="q">Rail-optimized topology?</div><div class="a">GPU 0 from every node → same leaf switches. GPU 1 → different set. <strong>AllReduce follows rail patterns</strong> — stays within one leaf group, minimizes spine hops.</div></div>
+  <div class="card d1"><div class="q">BMC / Redfish?</div><div class="a"><strong>BMC:</strong> embedded controller, OOB mgmt even when OS crashed. <strong>Redfish:</strong> modern REST API (JSON/HTTPS) replacing IPMI. Secure, scriptable, standardized.</div></div>
+  <div class="card d1"><div class="q">Cable types?</div><div class="a"><strong>DAC:</strong> copper, <3m, lowest latency, intra-rack. <strong>AOC:</strong> optical, <100m, inter-rack. <strong>Transceivers+fiber:</strong> >100m, spine-leaf. NDR=OSFP twin-port. XDR=OSFP single.</div></div>
+  <div class="card d1"><div class="q">Firmware to validate?</div><div class="a"><strong>GPU</strong> (InfoROM), <strong>BMC</strong>, <strong>SBIOS</strong>, <strong>NIC</strong> (ConnectX), <strong>Switch</strong> (MLNX-OS), <strong>DPU</strong> (BlueField), <strong>PSU</strong>. All must version-match per NVIDIA release notes.</div></div>
+  <div class="card d1"><div class="q">Cooling by density?</div><div class="a"><strong>Air:</strong> ≤30 kW, PUE 1.3-1.5. <strong>Rear-door passive:</strong> 30 kW. <strong>Rear-door active:</strong> 75 kW. <strong>CDU:</strong> 140+ kW, PUE 1.05. <strong>Immersion:</strong> 200+ kW, PUE 1.02.</div></div>
+  <div class="card d1"><div class="q">OOB (Out-of-Band) Network?</div><div class="a"><strong>Separate management network</strong> — completely isolated from production data traffic. Carries BMC/IPMI, BCM provisioning, UFM, DCGM, PDU/CDU mgmt. Typically <strong>1GbE (SN2201)</strong>. If IB or production net goes down, OOB still reaches every device. <strong>Your lifeline.</strong></div></div>
+  <div class="card d1"><div class="q">IB generations?</div><div class="a"><strong>HDR:</strong> 200G, QSFP56 (2019). <strong>NDR:</strong> 400G, OSFP twin, Quantum-2 64-port (2022). <strong>XDR:</strong> 800G, OSFP, Quantum-X800 144-port (2025).</div></div>
+  <div class="card d1"><div class="q">NVLink generations?</div><div class="a">Pascal 80→Volta 300→<strong>Ampere 600</strong>→<strong>Hopper 900</strong>→<strong>Blackwell 1800</strong>→<strong>Rubin 3600</strong> GB/s. Links: 4→6→12→18→18→18.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 2 -->
+<div class="section" id="sec-d2">
+<div class="section-title">D2 — Cluster Test & Verification (33%)</div>
+<div class="grid">
+  <div class="card d2"><div class="q">HPL validation?</div><div class="a"><strong>High Performance Linpack.</strong> Dense linear algebra. Validates compute+memory+interconnect. Target: <strong>>80% of theoretical peak</strong>. NGC container: <code>hpc-benchmarks</code>. Params: N, NB, P×Q.</div></div>
+  <div class="card d2"><div class="q">NCCL tests?</div><div class="a"><strong>all_reduce_perf, all_gather_perf, reduce_scatter_perf, broadcast_perf.</strong> Validates NVLink BW (intra-node) + IB BW (inter-node). Key metric: bus bandwidth GB/s.</div></div>
+  <div class="card d2"><div class="q">DCGM diag levels?</div><div class="a"><strong>r=1:</strong> seconds (Software, PCIe, Memory, BW). <strong>r=2:</strong> <2 min (+Diagnostics). <strong>r=3:</strong> <30 min (+SM/Power/Stress, EUD). <strong>r=4:</strong> 1-2 hr (+Memtest, Pulse).</div></div>
+  <div class="card d2"><div class="q">11 DCGM plugins?</div><div class="a">Deployment, Diagnostic, <strong>PCIe BW</strong>, GPU Memory, <strong>Targeted Power</strong>, Targeted Stress, <strong>Memtest</strong> (11 patterns), <strong>Pulse Test</strong>, NVBandwidth, Memory BW, <strong>NCCL Tests</strong>.</div></div>
+  <div class="card d2"><div class="q">Burn-in procedure?</div><div class="a"><strong>1.</strong> DCGM r=4 every node → <strong>2.</strong> Single-node NCCL → <strong>3.</strong> Single-node HPL → <strong>4.</strong> Multi-node NCCL → <strong>5.</strong> Multi-node HPL 24-72hr → <strong>6.</strong> Monitor ECC/thermal → <strong>7.</strong> ClusterKit.</div></div>
+  <div class="card d2"><div class="q">ECC: correctable vs uncorrectable?</div><div class="a"><strong>CE:</strong> auto-fixed, few/day normal, <strong>increasing = failing</strong>. <strong>UCE:</strong> job fails, <strong>drain + RMA immediately</strong>. Volatile = since reset. Aggregate = lifetime. Page retirement = auto.</div></div>
+  <div class="card d2"><div class="q">SHARP?</div><div class="a"><strong>In-network computing.</strong> Reductions done IN switches. 5x AllReduce, 9x Barrier. ~95% network BW. X800: 14.4 TFLOPS. Ops: AllReduce, Reduce, Broadcast, AllGather, ReduceScatter.</div></div>
+  <div class="card d2"><div class="q">DCQCN congestion?</div><div class="a">Switch detects congestion → marks <strong>ECN</strong> bit → receiver sends <strong>CNP</strong> → sender reduces rate. <strong>PFC</strong> = pause frames (last resort). Alpha value tracks congestion severity per QP.</div></div>
+  <div class="card d2"><div class="q">GPUDirect RDMA + Storage?</div><div class="a"><strong>RDMA:</strong> network → GPU memory, no CPU. <strong>Storage:</strong> NVMe → GPU memory, no CPU bounce. Both eliminate data copies. GDS: 3.5x BW, 3.5x lower latency.</div></div>
+  <div class="card d2"><div class="q">Magnum IO stack?</div><div class="a">GPUDirect Storage + GPUDirect RDMA + <strong>NCCL</strong> + <strong>NVSHMEM</strong> + cuFile. Goal: remove CPU from every data path.</div></div>
+  <div class="card d2"><div class="q">UFM tiers?</div><div class="a"><strong>Telemetry:</strong> 120+ counters/port. <strong>Enterprise:</strong> +provisioning, validation, SHARP. <strong>Cyber-AI:</strong> +ML analytics, anomaly detection. SuperPOD uses Enterprise.</div></div>
+  <div class="card d2"><div class="q">Adaptive routing?</div><div class="a">Switch picks <strong>least-loaded output port</strong> dynamically. ARN: congestion notification cascades upstream. Combined with DCQCN. Eliminates hotspots in fat-tree.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 3 -->
+<div class="section" id="sec-d3">
+<div class="section-title">D3 — Control Plane (19%)</div>
+<div class="grid">
+  <div class="card d3"><div class="q">BCM (Base Command Manager)?</div><div class="a">Formerly Bright Cluster Manager. CLI: <strong>cmsh</strong>. PXE provisioning, image mgmt, monitoring, user mgmt. Now part of <strong>NVIDIA Mission Control</strong> (BCM + Run:ai).</div></div>
+  <div class="card d3"><div class="q">cmsh device states?</div><div class="a"><strong>[UP]:</strong> monitored, healthy. <strong>[DOWN]:</strong> monitored, unexpected fail. <strong>[CLOSED](UP):</strong> intentionally up, no alerts. <strong>[CLOSED](DOWN):</strong> intentionally down, no alerts.</div></div>
+  <div class="card d3"><div class="q">Node provisioning?</div><div class="a">PXE boot → DHCP from head → TFTP kernel → software image from BCM → install. <strong>Categories</strong> group nodes, assign image + roles (<code>assign slurmclient</code>).</div></div>
+  <div class="card d3"><div class="q">Enroot + Pyxis?</div><div class="a"><strong>Enroot:</strong> rootless container runtime (no Docker daemon). <strong>Pyxis:</strong> Slurm plugin for <code>--container-image</code>. Use for training. Docker = for K8s/inference.</div></div>
+  <div class="card d3"><div class="q">GPU Operator (K8s)?</div><div class="a"><strong>9 DaemonSets:</strong> Driver, Toolkit, Device Plugin, GFD, DCGM, DCGM-Exporter, MIG Manager, Validator, NFD. <strong>ClusterPolicy CRD</strong> = single config. Helm install.</div></div>
+  <div class="card d3"><div class="q">DCGM-Exporter?</div><div class="a">Containerized. Exposes <code>/metrics</code> for Prometheus. DaemonSet via GPU Operator. Custom fields via CSV. 30s scrape. Grafana dashboards pre-built.</div></div>
+  <div class="card d3"><div class="q">NGC CLI?</div><div class="a"><code>ngc config set</code> (API key). <code>ngc registry image pull</code>. Key containers: pytorch, tritonserver, <strong>hpc-benchmarks</strong> (HPL), nccl-tests.</div></div>
+  <div class="card d3"><div class="q">Slurm for GPUs?</div><div class="a">GRES in <code>gres.conf</code> + <code>slurm.conf</code>. <code>--gres=gpu:8</code>. Gang scheduling for distributed training. <code>--exclusive</code> for full-node. Partitions, QOS, fair-share.</div></div>
+  <div class="card d3"><div class="q">Container Toolkit?</div><div class="a"><code>nvidia-ctk runtime configure --runtime=docker</code>. Injects GPU devices + driver libs into containers. <code>docker run --gpus all</code>. GPU Operator auto-installs on K8s.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 4 -->
+<div class="section" id="sec-d4">
+<div class="section-title">D4 — Troubleshoot & Optimize (12%)</div>
+<div class="grid">
+  <div class="card d4"><div class="q">Critical XID errors?</div><div class="a"><strong>XID 48:</strong> double-bit ECC → RMA. <strong>XID 79:</strong> GPU fell off bus → reseat/replace riser. <strong>XID 43:</strong> hung GPU. <strong>XID 63:</strong> row remap fail. <strong>XID 94:</strong> contained ECC (Hopper+, ok to continue).</div></div>
+  <div class="card d4"><div class="q">GPU replacement procedure?</div><div class="a"><strong>Drain</strong> (scontrol) → verify no jobs → <strong>CLOSED(DOWN)</strong> in BCM → power off via BMC → swap GPU → boot → nvidia-smi → <strong>dcgmi diag -r 3</strong> → NCCL test → undrain.</div></div>
+  <div class="card d4"><div class="q">Performance tuning?</div><div class="a"><strong>GPU:</strong> persistence ON, clocks max, ECC on. <strong>CPU:</strong> performance governor, disable C-states. <strong>Net:</strong> adaptive routing, SHARP. <strong>Storage:</strong> GDS, NVMe scheduler=none. <strong>NCCL:</strong> env vars.</div></div>
+  <div class="card d4"><div class="q">IB link troubleshooting?</div><div class="a">Link down → check cable. Width 1x not 4x → bad cable. High symbol errors → replace cable. BER rising → cable degrading. Speed mismatch → firmware or transceiver.</div></div>
+  <div class="card d4"><div class="q">Storage bottleneck?</div><div class="a">GPU util spiky/low = data bottleneck. Check: GDS enabled (<code>gdscheck</code>), Lustre stripe settings, DataLoader workers, local NVMe cache. Target: <strong>40+ GBps/node</strong>.</div></div>
+  <div class="card d4"><div class="q">Page retirement?</div><div class="a">Auto-retires pages with repeated ECC errors. <strong>Single-bit:</strong> retired at next reset. <strong>Double-bit:</strong> retired immediately. High count (>60) = <strong>RMA GPU</strong>. Check: <code>nvidia-smi -q -d RETIRED_PAGES</code>.</div></div>
+</div>
+</div>
+
+<!-- DOMAIN 5 -->
+<div class="section" id="sec-d5">
+<div class="section-title">D5 — Physical Layer (5%)</div>
+<div class="grid">
+  <div class="card d5"><div class="q">BlueField-3 modes?</div><div class="a"><strong>NIC Mode:</strong> Arm off, standard NIC (ENGINE=1). <strong>DPU Mode:</strong> Arm active, controls NIC (ENGINE=0, default). <strong>Zero Trust:</strong> host fully isolated (mlxprivhost). Separated = <strong>OBSOLETE</strong>.</div></div>
+  <div class="card d5"><div class="q">MIG: single vs mixed?</div><div class="a"><strong>Single:</strong> all GPUs same geometry, standard <code>nvidia.com/gpu</code> resource. <strong>Mixed:</strong> different per-GPU, resources per-profile (<code>nvidia.com/mig-1g.5gb</code>). ConfigMap config.</div></div>
+  <div class="card d5"><div class="q">DOCA SDK?</div><div class="a">Programming framework for BlueField DPUs. <strong>CUDA for GPUs = DOCA for DPUs.</strong> Networking offload, storage offload, security. Containerized services at scale.</div></div>
+  <div class="card d5"><div class="q">Fabric Manager?</div><div class="a">Daemon managing <strong>NVSwitch-based GPU fabrics</strong>. NVLink topology, GPU routing, health monitoring. <strong>Must be running</strong> for multi-GPU NVLink. Logs: <code>/var/log/fabricmanager.log</code>.</div></div>
+  <div class="card d5"><div class="q">3D parallelism?</div><div class="a"><strong>Data:</strong> same model, different batches, sync gradients (NCCL). <strong>Tensor:</strong> split layer across GPUs (NVLink). <strong>Pipeline:</strong> different layers on different GPUs. Large models use all 3.</div></div>
+  <div class="card d5"><div class="q">Run:ai?</div><div class="a">GPU scheduling platform (NVIDIA acquired). <strong>Fractional GPUs, quotas, fair-share</strong> across teams. Team A borrows Team B's idle GPUs, auto-returns. K8s-native. Part of Mission Control.</div></div>
+</div>
+</div>
+
+<!-- NEXT GEN + ADC -->
+<div class="section" id="sec-ng">
+<div class="section-title">Next Gen Hardware + ADC Deployment</div>
+
+<div class="numbers-grid">
+  <div class="num-card"><div class="label">B300 FP4</div><div class="value">15 PFLOPS</div><div class="sub">per GPU (vs B200: 9)</div></div>
+  <div class="num-card"><div class="label">B300 HBM3e</div><div class="value">288 GB</div><div class="sub">per GPU (vs B200: 192)</div></div>
+  <div class="num-card"><div class="label">B300 TDP</div><div class="value">1,400W</div><div class="sub">per GPU (vs B200: 1,000W)</div></div>
+  <div class="num-card"><div class="label">DGX B300 System</div><div class="value">192 PFLOPS</div><div class="sub">FP4, 14.5 kW, 12 PSUs</div></div>
+  <div class="num-card"><div class="label">GB300 NVL72</div><div class="value">1.1 ExaFLOPS</div><div class="sub">FP4, ~132 kW rack</div></div>
+  <div class="num-card"><div class="label">GB300 Total Mem</div><div class="value">~21 TB</div><div class="sub">vs GB200: ~13.5 TB</div></div>
+  <div class="num-card"><div class="label">Grace CPU</div><div class="value">72 Arm cores</div><div class="sub">NVLink-C2C: 900 GB/s</div></div>
+  <div class="num-card"><div class="label">BF-4 Arm Cores</div><div class="value">64</div><div class="sub">vs BF-3: 16 cores</div></div>
+  <div class="num-card"><div class="label">BF-4 Memory</div><div class="value">128 GB</div><div class="sub">vs BF-3: 32 GB</div></div>
+  <div class="num-card"><div class="label">BF-4 Network</div><div class="value">800 Gb/s</div><div class="sub">vs BF-3: 400 Gb/s</div></div>
+  <div class="num-card"><div class="label">Rubin R100 FP4</div><div class="value">50 PFLOPS</div><div class="sub">per GPU (5x Blackwell)</div></div>
+  <div class="num-card"><div class="label">Rubin HBM4</div><div class="value">288 GB</div><div class="sub">22 TB/s BW (3x B300)</div></div>
+  <div class="num-card"><div class="label">Rubin NVLink 6</div><div class="value">3,600 GB/s</div><div class="sub">260 TB/s NVL72 aggregate</div></div>
+  <div class="num-card"><div class="label">Vera CPU</div><div class="value">88 cores</div><div class="sub">Olympus, 176 threads SMT</div></div>
+  <div class="num-card"><div class="label">CX-9 SuperNIC</div><div class="value">Gen 6</div><div class="sub">Vera Rubin gen</div></div>
+  <div class="num-card"><div class="label">Groq LPX SRAM</div><div class="value">500 MB</div><div class="sub">640 TB/s on-chip BW</div></div>
+  <div class="num-card"><div class="label">Dynamo Boost</div><div class="value">7x</div><div class="sub">Inference, same HW</div></div>
+  <div class="num-card"><div class="label">GPU+LPU Gain</div><div class="value">35x</div><div class="sub">Tokens per watt</div></div>
+  <div class="num-card"><div class="label">NVL72 Tokens</div><div class="value">700M/s</div><div class="sub">Per rack (Vera Rubin)</div></div>
+  <div class="num-card"><div class="label">Rack Install</div><div class="value">2 hrs</div><div class="sub">Down from 2 days</div></div>
+  <div class="num-card"><div class="label">Cooling Temp</div><div class="value">45&deg;C</div><div class="sub">Hot water, rack-level</div></div>
+  <div class="num-card"><div class="label">AI Infra Demand</div><div class="value">$1T</div><div class="sub">Through 2027</div></div>
+</div>
+
+<div class="grid">
+  <div class="card d1"><div class="q">B200 vs B300?</div><div class="a"><strong>B300 = Blackwell Ultra.</strong> FP4: 9→<strong>15 PFLOPS</strong>. HBM3e: 192→<strong>288 GB</strong> (12-high stacks). TDP: 1,000→<strong>1,400W</strong>. New: 2x attention acceleration, NVFP4 precision. Shipped Jan 2026.</div></div>
+  <div class="card d1"><div class="q">GB300 vs GB200 NVL72?</div><div class="a">Same 72-GPU + 36 Grace rack. <strong>GB300:</strong> B300 GPUs, <strong>1.1 ExaFLOPS</strong> FP4 (vs 0.7), <strong>21 TB</strong> GPU memory (vs 13.5), ConnectX-8 (integrated PCIe switch), ~132 kW.</div></div>
+  <div class="card d1"><div class="q">Grace CPU?</div><div class="a"><strong>72 Arm Neoverse V2 cores.</strong> 114 MB L3. LPDDR5X 500 GB/s. Connects to Blackwell GPUs via <strong>NVLink-C2C at 900 GB/s</strong> (7x PCIe Gen5). Grace handles data preprocessing + memory expansion.</div></div>
+  <div class="card d5"><div class="q">BlueField-4 vs BF-3?</div><div class="a">Cores: 16→<strong>64</strong> Neoverse V2. Memory: 32→<strong>128 GB</strong>. Network: 400→<strong>800 Gb/s</strong>. PCIe: Gen5→<strong>Gen6</strong>. L3: 8→<strong>114 MB</strong>. SSD: 128→<strong>512 GB</strong>. 6x compute. Ships 2026 with Vera Rubin.</div></div>
+  <div class="card d1"><div class="q">Vera Rubin?</div><div class="a"><strong>Next platform after Blackwell.</strong> R100 GPU: <strong>50 PFLOPS FP4</strong> (5x B300). 288 GB HBM4, <strong>22 TB/s BW</strong>. NVLink 6: 3,600 GB/s. Vera CPU: 88 Olympus cores. 336B transistors. Production H2 2026.</div></div>
+  <div class="card d2"><div class="q">Spectrum-X vs InfiniBand?</div><div class="a"><strong>Spectrum-X:</strong> AI Ethernet. 5-10μs latency. Best for mid-size clusters, inference, multi-tenant. <strong>InfiniBand:</strong> &lt;2μs. Best for large-scale training, SuperPOD. IB costs ~2x but lowest latency.</div></div>
+  <div class="card d3"><div class="q">Mission Control?</div><div class="a"><strong>BCM + Run:ai + BMS.</strong> Bright→BCM (2024). Run:ai acquired 2024. Combined = Mission Control. Adds facility monitoring (MQTT), GPU scheduling, fractional GPUs. cmsh still works inside it.</div></div>
+  <div class="card d3"><div class="q">NVSM?</div><div class="a"><strong>NVIDIA System Management.</strong> Hardware-level layer BELOW BCM. Direct node health, GPU telemetry, power mgmt. <strong>Stack:</strong> NVSM (hardware) → BCM (cluster) → Mission Control (facility).</div></div>
+  <div class="card d1"><div class="q">MGX platform?</div><div class="a"><strong>Modular Reference Platform.</strong> Standardized chassis for OEMs. 100+ configs. Cuts dev cost $2-4M, time 18→6 months. DGX B300 = first MGX-compatible DGX. Any certified OEM can build.</div></div>
+  <div class="card d1"><div class="q">7-chip platform (GTC 2026)?</div><div class="a"><strong>Vera Rubin GPU</strong> + <strong>Vera CPU</strong> + <strong>Groq 3 LPX</strong> + <strong>BlueField-4</strong> + <strong>ConnectX-9</strong> + <strong>Spectrum-6 SPX</strong> + <strong>Space 1</strong>. 5 rack systems: GPU rack, CPU rack, LPU rack, storage rack, network rack. All liquid cooled, 45°C hot water, 2-hr install.</div></div>
+  <div class="card d3"><div class="q">Dynamo 1.0 (GTC 2026)?</div><div class="a"><strong>Open-source inference OS for AI factories.</strong> Disaggregates workloads: prefill → GPU, decode → Groq LPU. <strong>7x inference boost</strong> on Blackwell (same HW). 700→5,000 tokens/sec. Modules: KVBM (memory), NIXL (GPU-to-GPU), Grove (scaling). Adopted: AWS, Azure, GCP, Oracle.</div></div>
+  <div class="card d3"><div class="q">NemoClaw / OpenClaw (GTC 2026)?</div><div class="a"><strong>OpenClaw:</strong> open-source agent OS — resource mgmt, tool access, LLM integration, scheduling. <strong>NemoClaw:</strong> NVIDIA production stack = Nemotron models + <strong>OpenShell</strong> sandbox runtime + privacy router + guardrails. Single-command install. Microsoft Security: 160x threat detection improvement.</div></div>
+  <div class="card d1"><div class="q">DSX Reference Design (GTC 2026)?</div><div class="a"><strong>Complete AI factory blueprint from NVIDIA.</strong> Physical layouts, power specs, cooling specs, network topology. <strong>Omniverse DSX</strong> digital twin simulates factory before build. <strong>DSX Air</strong> for design iterations. Jensen: "factor of two in efficiency." Build to spec, not from scratch.</div></div>
+  <div class="card d1"><div class="q">Groq LPU Integration (GTC 2026)?</div><div class="a">NVIDIA acquired Groq. <strong>GPU handles prefill</strong> (heavy reasoning, KV cache). <strong>Groq LPU handles decode</strong> (fast token output, 500MB on-chip SRAM). Dynamo orchestrates both over Ethernet. <strong>35x tokens-per-watt</strong> vs GPU-only. Recommendation: ~25% facility capacity = Groq racks.</div></div>
+  <div class="card d1"><div class="q">Feynman (2028 roadmap)?</div><div class="a"><strong>Post-Rubin architecture.</strong> Feynman GPU + LP40 LPU + Rosa CPU + BlueField-5 + CX-10. Both copper and co-packaged optics (Kyber rack). First gen where LPU is co-designed with GPU from the start.</div></div>
+  <div class="card d4"><div class="q">ADC 3-Layer Power?</div><div class="a"><strong>L1:</strong> Nat Gas + Solar + Battery (PRIMARY, 24/7). <strong>L2:</strong> Grid/LUS (BACKUP only). <strong>L3:</strong> Diesel gensets (EMERGENCY). Henry Hub pricing + solar offset. Grid is never primary.</div></div>
+  <div class="card d1"><div class="q">ADC Willow Glen?</div><div class="a"><strong>PRIMARY HUB.</strong> Former 2,200 MW Entergy site. <strong>Built to NVIDIA DSX reference design.</strong> IB spine (Quantum-X800). Mission Control. 100% renewable. MARLIE I = backup NOC (60 mi). NVIDIA integrated liquid cooling (45°C hot water). Score 94 Tier A. Moat = power + site + permits.</div></div>
+</div>
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const sections={nums:document.getElementById('sec-nums'),cmds:document.getElementById('sec-cmds'),d1:document.getElementById('sec-d1'),d2:document.getElementById('sec-d2'),d3:document.getElementById('sec-d3'),d4:document.getElementById('sec-d4'),d5:document.getElementById('sec-d5'),ng:document.getElementById('sec-ng')};
+
+function showTab(tab){
+  tabs.forEach(t=>t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  if(tab==='all'){Object.values(sections).forEach(s=>s.style.display='')}
+  else{Object.entries(sections).forEach(([k,s])=>{s.style.display=k===tab?'':'none'})}
+}
+tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+</script>
+</body>
+</html>

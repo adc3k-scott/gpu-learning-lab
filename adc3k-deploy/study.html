@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>NCA-AIIO Study Guide</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:700;color:#e8edf2;letter-spacing:0.5px;white-space:nowrap}
+.header h1 span{color:#f5a623}
+.header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn{font-size:12px;font-weight:600;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all 0.2s}
+.btn-amber{background:#f5a623;color:#0a0e14}.btn-amber:hover{background:#ffc04d}
+.btn-green{background:#00d68f;color:#0a0e14}.btn-green:hover{background:#33e0a5}
+.btn-ghost{background:transparent;color:#b0bec5;border:1px solid #1a2436}.btn-ghost:hover{border-color:#f5a623;color:#f5a623}
+
+/* TABS */
+.tabs{position:sticky;top:53px;z-index:99;background:rgba(10,14,20,0.96);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;font-size:12px;font-weight:600;color:#5a6a7a;padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;text-transform:uppercase;letter-spacing:0.8px}
+.tab:hover{color:#b0bec5}
+.tab.active{color:#f5a623;border-bottom-color:#f5a623}
+.tab[data-tab="cheat"]{color:#00d68f;border-bottom-color:transparent}
+.tab[data-tab="cheat"].active{border-bottom-color:#00d68f}
+
+/* PROGRESS BAR */
+.progress-bar{background:#141a24;padding:10px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #1a2436}
+.progress-track{flex:1;height:6px;background:#1a2436;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#f5a623,#00d68f);border-radius:3px;transition:width 0.4s ease;width:0%}
+.progress-text{font-size:11px;color:#5a6a7a;font-weight:600;white-space:nowrap;min-width:80px;text-align:right}
+
+/* CONTENT */
+.content{max-width:900px;margin:0 auto;padding:16px 16px 120px}
+.domain-section{display:none}
+.domain-section.active{display:block}
+.domain-header{padding:20px 0 12px;margin-bottom:8px}
+.domain-header h2{font-size:20px;font-weight:700;color:#e8edf2;margin-bottom:4px}
+.domain-header p{font-size:13px;color:#5a6a7a}
+
+/* QUESTION CARDS */
+.q-card{background:#111820;border:1px solid #1a2436;border-radius:10px;margin-bottom:10px;overflow:hidden;transition:border-color 0.2s}
+.q-card.revealed{border-color:#2a3a4a}
+.q-card.revealed .q-header{background:#141c28}
+.q-header{display:flex;align-items:flex-start;gap:12px;padding:16px;cursor:pointer;-webkit-user-select:none;user-select:none;transition:background 0.2s}
+.q-header:hover{background:#141c28}
+.q-header:active{background:#182030}
+.q-num{flex-shrink:0;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0a0e14;background:#f5a623}
+.q-num.d2{background:#3b9eff}
+.q-num.d3{background:#00d68f}
+.q-text{flex:1;font-size:14px;font-weight:600;color:#d0dce8;line-height:1.5;padding-top:6px}
+.q-chevron{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#5a6a7a;font-size:18px;transition:transform 0.3s;padding-top:6px}
+.q-card.revealed .q-chevron{transform:rotate(180deg);color:#f5a623}
+.q-answer{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.q-card.revealed .q-answer{max-height:600px}
+.q-answer-inner{padding:0 16px 16px 64px;font-size:13px;line-height:1.8;color:#8fa4bc;border-top:1px solid #1a2436;margin-top:0;padding-top:14px}
+.q-answer-inner strong{color:#00d68f;font-weight:600}
+
+/* MASTERED TOGGLE */
+.q-footer{display:flex;justify-content:flex-end;padding:0 16px 12px 64px}
+.master-btn{font-size:11px;font-weight:600;padding:4px 12px;border-radius:4px;border:1px solid #1a2436;background:transparent;color:#5a6a7a;cursor:pointer;transition:all 0.2s}
+.master-btn:hover{border-color:#00d68f;color:#00d68f}
+.master-btn.mastered{background:rgba(0,214,143,0.12);border-color:#00d68f;color:#00d68f}
+
+/* CHEAT SHEET */
+.cheat-section{display:none}
+.cheat-section.active{display:block}
+.cheat-group{margin-bottom:24px}
+.cheat-group h3{font-size:15px;font-weight:700;color:#f5a623;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1a2436}
+.cheat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.cheat-item{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cheat-item .label{font-size:12px;color:#5a6a7a;font-weight:600}
+.cheat-item .value{font-size:14px;color:#e8edf2;font-weight:700;font-family:'Courier New',monospace;text-align:right}
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.product-item{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:12px 14px}
+.product-item .pname{font-size:13px;color:#3b9eff;font-weight:700;margin-bottom:2px}
+.product-item .pdesc{font-size:11px;color:#5a6a7a;line-height:1.4}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .header h1{font-size:14px}
+  .btn{font-size:11px;padding:6px 12px}
+  .tab{font-size:11px;padding:10px 14px}
+  .q-text{font-size:13px}
+  .q-answer-inner{padding-left:16px}
+  .q-footer{padding-left:16px}
+  .cheat-row{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:1fr}
+}
+@media(min-width:768px){
+  .content{padding:24px 32px 120px}
+  .header{padding:14px 28px}
+  .tabs{padding:0 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>NCA-AIIO</span> Study Guide</h1>
+  <div class="header-actions">
+    <button class="btn btn-ghost" id="resetBtn" title="Reset progress">Reset</button>
+    <a href="/quiz" class="btn btn-amber">Take Quiz</a>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="all">All (60)</div>
+  <div class="tab" data-tab="d1">Domain 1: AI Knowledge (23)</div>
+  <div class="tab" data-tab="d2">Domain 2: Infrastructure (24)</div>
+  <div class="tab" data-tab="d3">Domain 3: Operations (13)</div>
+  <div class="tab" data-tab="cheat">Cheat Sheet</div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 60 mastered</div>
+</div>
+
+<div class="content">
+
+<!-- DOMAIN 1 -->
+<div class="domain-section active" id="sec-d1">
+<div class="domain-header">
+  <h2>Domain 1: Essential AI Knowledge</h2>
+  <p>23 Questions — Foundations, GPU architecture, NVIDIA software stack, ML concepts</p>
+</div>
+
+<div class="q-card" data-q="1" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">1</div>
+    <div class="q-text">What is the primary difference between AI, machine learning, and deep learning?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">AI is the broadest concept (machines mimicking human intelligence). <strong>Machine learning</strong> is a subset of AI where systems learn from data without explicit programming. <strong>Deep learning</strong> is a subset of ML using neural networks with many layers. Think of it as nested circles: <strong>AI &gt; ML &gt; DL</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="2" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">2</div>
+    <div class="q-text">What is the main architectural difference between a CPU and a GPU?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">A CPU has a few powerful cores optimized for <strong>sequential processing</strong> (low latency, complex logic). A GPU has <strong>thousands of smaller cores</strong> optimized for parallel processing (high throughput, same operation on many data points simultaneously). GPUs excel at the matrix math that AI training and inference require.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="3" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">3</div>
+    <div class="q-text">Why have GPUs become the standard for AI workloads instead of CPUs?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">AI workloads involve massive <strong>matrix multiplications</strong> that are highly parallelizable. GPUs can execute thousands of these operations simultaneously, delivering <strong>10-100x speedup</strong>. Tensor Cores add further acceleration for mixed-precision math.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="4" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">4</div>
+    <div class="q-text">What is the difference between AI training and AI inference?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Training</strong> = building the model. Feed massive datasets through neural network, adjust weights. Requires enormous compute (days/weeks on GPU clusters). <strong>Inference</strong> = using the trained model. Feed new data in, get predictions out. Less compute per request but demands low latency.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="5" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">5</div>
+    <div class="q-text">Which requires more GPU compute -- training or inference?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Training</strong> requires far more compute per run (days/weeks on hundreds of GPUs). But at scale, <strong>inference can consume MORE total GPU-hours</strong> because it runs 24/7 serving millions of requests.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="6" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">6</div>
+    <div class="q-text">What is NVIDIA TensorRT?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">TensorRT is NVIDIA's <strong>inference optimization engine</strong>. Takes a trained model and optimizes it -- layer fusion, precision calibration (FP32 to FP16/INT8), kernel auto-tuning, memory optimization. Faster inference with lower latency on NVIDIA GPUs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="7" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">7</div>
+    <div class="q-text">Key factors driving rapid AI adoption?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>(1) Compute power</strong> -- GPU acceleration. <strong>(2) Data availability</strong> -- massive datasets. <strong>(3) Algorithm advances</strong> -- transformers, attention. <strong>(4) Software ecosystem</strong> -- PyTorch, TensorFlow, pre-trained models, cloud APIs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="8" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">8</div>
+    <div class="q-text">5 major industries for AI deployment?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Healthcare</strong> (imaging, drug discovery), <strong>Autonomous vehicles</strong>, <strong>Financial services</strong> (fraud, trading), <strong>Manufacturing</strong> (QA, predictive maintenance), <strong>Natural language</strong> (LLMs, chatbots). Also: retail, energy, telecom, defense.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="9" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">9</div>
+    <div class="q-text">NVIDIA software stack layers?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Bottom to top: <strong>GPU Hardware</strong> &rarr; <strong>CUDA</strong> &rarr; <strong>cuDNN</strong> &rarr; <strong>NVIDIA AI Enterprise</strong> (TensorRT, Triton, NIM, RAPIDS) &rarr; <strong>Frameworks</strong> (PyTorch, TensorFlow) &rarr; <strong>Applications</strong> (NGC containers, pre-trained models, NIM). CUDA is the foundation.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="10" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">10</div>
+    <div class="q-text">What is NVIDIA NGC?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">NGC is a <strong>catalog/registry</strong> of GPU-optimized containers, pre-trained models, and SDKs. Ready-to-use Docker containers for AI frameworks. Think <strong>app store for GPU-accelerated AI software</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="11" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">11</div>
+    <div class="q-text">What is NVIDIA NIM?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">NIM packages optimized AI models as <strong>containerized microservices</strong> with standard REST API. Pull a NIM container, get an inference endpoint already optimized with TensorRT. <strong>Simplifies putting AI models into production.</strong></div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="12" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">12</div>
+    <div class="q-text">What is NVIDIA Triton Inference Server?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Open-source <strong>inference serving platform</strong>. Serves multiple models from multiple frameworks (PyTorch, TF, TensorRT, ONNX). Handles model management, request batching, scheduling, health monitoring.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="13" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">13</div>
+    <div class="q-text">What is an LLM and why does it need GPU compute?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">LLM = deep learning model trained on massive text data (GPT, Llama, etc.). <strong>Billions of parameters.</strong> Training requires thousands of GPUs for weeks. Even inference requires multiple high-memory GPUs because model weights must fit in GPU memory.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="14" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">14</div>
+    <div class="q-text">Supervised vs unsupervised vs reinforcement learning?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Supervised</strong> = labeled data (input &rarr; known output). <strong>Unsupervised</strong> = unlabeled data, finds patterns. <strong>Reinforcement</strong> = agent learns from environment rewards/penalties (game AI, robotics).</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="15" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">15</div>
+    <div class="q-text">What is transfer learning?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Take a <strong>pre-trained model</strong>, fine-tune on smaller domain-specific dataset. Drastically reduces training time/cost, requires less data, achieves good results with small datasets.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="16" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">16</div>
+    <div class="q-text">What does NVIDIA RAPIDS do?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>GPU-accelerated libraries for data science</strong> -- GPU versions of pandas (cuDF), scikit-learn (cuML), graph analytics (cuGraph). Speeds up data prep before model training.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="17" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">17</div>
+    <div class="q-text">What is mixed-precision training?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Uses both <strong>FP16 and FP32</strong> during training. Tensor Cores do FP16 matrix ops faster. Forward/backward passes in FP16, master weights in FP32. <strong>~2x speedup</strong> with minimal accuracy loss. Blackwell adds FP4/FP8.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="18" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">18</div>
+    <div class="q-text">AI development lifecycle stages?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Data collection</strong> &rarr; <strong>Data preparation</strong> &rarr; <strong>Model development</strong> &rarr; <strong>Model evaluation</strong> &rarr; <strong>Deployment</strong> (TensorRT, containerize, Triton/NIM) &rarr; <strong>Monitoring</strong> (drift detection, retrain). Iterative cycle.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="19" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">19</div>
+    <div class="q-text">Role of containers (Docker) in AI?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Package entire AI stack (OS, CUDA, frameworks, code) into <strong>portable unit</strong>. Works same everywhere. Easy scaling, version control, no dependency conflicts. <strong>NGC provides pre-built GPU-optimized containers.</strong></div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="20" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">20</div>
+    <div class="q-text">What is an epoch?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">One <strong>complete pass</strong> through entire training dataset. Training runs many epochs. Each epoch = multiple batches. Batch size = samples processed before weight update. Too many epochs = <strong>overfitting</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="21" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">21</div>
+    <div class="q-text">What is NVIDIA DGX?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Purpose-built <strong>AI supercomputer</strong>. DGX H100 = 8x H100 GPUs with NVLink/NVSwitch, high-bandwidth networking, Base Command software. Building block for <strong>DGX SuperPOD</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="22" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">22</div>
+    <div class="q-text">What is NVIDIA Base Command?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Cluster management and orchestration</strong> for DGX systems. Job scheduling, resource allocation, user management, cluster monitoring. The OS for a DGX cluster.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="23" data-domain="d1">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num">23</div>
+    <div class="q-text">What is MLOps?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>DevOps for ML</strong> -- automating training, testing, deployment, monitoring pipelines. Needed because models degrade (data drift), manual deployment doesn't scale, reproducibility requires version control.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+</div><!-- end d1 -->
+
+<!-- DOMAIN 2 -->
+<div class="domain-section" id="sec-d2">
+<div class="domain-header">
+  <h2>Domain 2: AI Infrastructure</h2>
+  <p>24 Questions -- Networking, cooling, cluster design, storage, GPU hardware</p>
+</div>
+
+<div class="q-card" data-q="24" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">24</div>
+    <div class="q-text">What is NVLink?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">High-bandwidth <strong>GPU-to-GPU interconnect</strong>. H100: 900 GB/s bidirectional. Solves communication bottleneck when model is split across multiple GPUs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="25" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">25</div>
+    <div class="q-text">What is NVSwitch?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Chip connecting all GPUs within a node via NVLink into <strong>fully connected fabric</strong>. In DGX H100, connects all 8 GPUs -- any GPU to any GPU at full bandwidth. Creates <strong>unified GPU memory space</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="26" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">26</div>
+    <div class="q-text">What is InfiniBand?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">High-bandwidth, <strong>low-latency networking</strong> for AI clusters. NVIDIA ConnectX + Quantum switches, up to <strong>400 Gb/s/port</strong>. GPUs constantly exchange gradients during training -- IB minimizes this overhead.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="27" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">27</div>
+    <div class="q-text">InfiniBand vs Ethernet?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>IB:</strong> 400 Gb/s, ~1us latency, native RDMA, preferred for training, higher cost. <strong>Ethernet:</strong> 400 Gb/s, ~5-10us latency, needs RoCE for RDMA, lower cost, good for inference. IB wins for training due to <strong>native RDMA</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="28" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">28</div>
+    <div class="q-text">What is RDMA?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Remote Direct Memory Access</strong> -- one machine reads/writes another's memory directly, bypassing CPU and OS. Dramatically reduces latency. GPUs exchange gradients millions of times -- RDMA does this at wire speed. IB has native RDMA; Ethernet uses RoCE.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="29" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">29</div>
+    <div class="q-text">What is a DPU / BlueField?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">DPU <strong>offloads networking, storage, security</strong> from CPU. BlueField = NVIDIA's DPU. Frees CPUs/GPUs for AI, provides hardware security isolation, accelerates storage I/O, enables zero-trust.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="30" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">30</div>
+    <div class="q-text">Scale-up vs scale-out?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Scale-up</strong> = more GPUs in one node (NVLink, max ~8). <strong>Scale-out</strong> = more nodes in cluster (InfiniBand). In practice: both. Max GPUs per node, then add nodes.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="31" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">31</div>
+    <div class="q-text">GPU memory for training vs inference?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Training:</strong> needs memory for parameters + gradients + optimizer states + activations. 70B model may need 8x80GB GPUs. <strong>Inference:</strong> holds model weights + KV cache. Memory bandwidth often the bottleneck for LLM inference. Quantization helps.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="32" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">32</div>
+    <div class="q-text">Power and cooling for AI?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Power density <strong>5-10 kW per node</strong>. Air cooling fails above 30 kW/rack. <strong>Liquid cooling required.</strong> PUE target &lt;1.3. 480V 3-phase for efficiency. N+1 redundancy.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="33" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">33</div>
+    <div class="q-text">What is PUE?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Total Facility Power / IT Equipment Power.</strong> 1.0 = perfect. Industry avg: ~1.58. Modern target: 1.2-1.3. Best liquid-cooled: <strong>1.03-1.1</strong>. Lower = less waste.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="34" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">34</div>
+    <div class="q-text">Air vs liquid cooling?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Air:</strong> up to ~30 kW/rack, PUE 1.3-1.6, lower upfront. <strong>Liquid:</strong> 50-100+ kW/rack, PUE 1.03-1.2, higher upfront but lower ongoing. Liquid effectively <strong>required for modern GPU clusters</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="35" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">35</div>
+    <div class="q-text">Direct-to-chip vs immersion?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Direct-to-chip (CDU):</strong> cold plates on GPU chips, rest uses air. Most common enterprise. <strong>Immersion:</strong> entire server submerged in dielectric fluid. Maximum heat removal, highest density, <strong>lowest PUE</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="36" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">36</div>
+    <div class="q-text">Key components of AI cluster?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>GPU compute nodes</strong>, high-speed network (IB/Ethernet spine-leaf), storage (parallel FS), network switches (Quantum/Spectrum), management plane (BMC, Base Command, DCGM), job scheduler (Slurm/K8s), power+cooling.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="37" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">37</div>
+    <div class="q-text">What is DGX SuperPOD?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">NVIDIA <strong>reference architecture</strong> for large-scale AI clusters. Defines how to connect multiple DGX systems with IB networking, shared storage, management. Scales <strong>20-140+ nodes</strong>. Specifies exact topology, storage, cabling.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="38" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">38</div>
+    <div class="q-text">Facility requirements for GPU infrastructure?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Power capacity</strong> (20-50+ MW), power density (30-100 kW/rack), <strong>liquid cooling</strong>, floor loading (2,000-3,000+ lbs/rack), fiber-ready networking, physical security, clean agent fire suppression, <strong>N+1 redundancy</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="39" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">39</div>
+    <div class="q-text">Storage for AI workloads?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Training data:</strong> high-throughput parallel FS (Lustre, GPFS). <strong>Checkpointing:</strong> high write throughput. <strong>IOPS:</strong> NVMe SSDs for local scratch. Capacity: petabytes, tiered storage. Network: storage fabric must keep up with GPU demand (<strong>100+ GB/s</strong>).</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="40" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">40</div>
+    <div class="q-text">On-prem vs cloud?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>On-prem:</strong> full control, high CapEx, lower long-term TCO at sustained use, data sovereignty. <strong>Cloud:</strong> pay-per-use, minutes to scale, higher TCO if always-on, limited customization. On-prem for sustained; cloud for bursty.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="41" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">41</div>
+    <div class="q-text">What is spine-leaf topology?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Two-tier: every leaf connects to every spine. <strong>Predictable low latency</strong> (max 2 hops), high bandwidth (parallel paths), easy horizontal scaling. Standard for AI clusters.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="42" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">42</div>
+    <div class="q-text">Networking bandwidth for multi-node training?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">Each node needs <strong>400 Gb/s+</strong>. DGX H100 has 8x 400 Gb/s ConnectX-7 (<strong>3.2 Tb/s total</strong>). Network bandwidth must be proportional to compute capability -- otherwise GPUs idle waiting for gradient sync.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="43" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">43</div>
+    <div class="q-text">GPU Direct RDMA and GPU Direct Storage?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>GPU Direct RDMA:</strong> network adapters access GPU memory directly (no CPU). Critical for training scalability. <strong>GPU Direct Storage:</strong> NVMe transfers to GPU memory directly. Both eliminate unnecessary data copies.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="44" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">44</div>
+    <div class="q-text">Data parallelism vs model parallelism?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Data parallel:</strong> same model on every GPU, different data batches, sync gradients. Works when model fits one GPU. <strong>Model parallel:</strong> model split across GPUs (different layers). Required when too large. <strong>Pipeline parallel:</strong> stages on different GPUs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="45" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">45</div>
+    <div class="q-text">GPU power consumption?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">H100 = <strong>700W TDP</strong>. DGX H100 (8 GPUs) = ~10.2 kW. Traditional server: 300-500W. GPU racks are <strong>5-10x more power-dense</strong>. 1,000 GPUs = 1-2 MW just for GPUs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="46" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">46</div>
+    <div class="q-text">What is MIG?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Multi-Instance GPU.</strong> Partitions one GPU into up to <strong>7 isolated instances</strong> with dedicated compute, memory, bandwidth. A100/H100 only. Run multiple inference workloads on one GPU with full isolation. Maximizes utilization.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="47" data-domain="d2">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d2">47</div>
+    <div class="q-text">Factors for GPU hardware selection?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Model size</strong> (memory needs), training vs inference, precision requirements, scaling needs, budget, throughput vs latency, software compatibility.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+</div><!-- end d2 -->
+
+<!-- DOMAIN 3 -->
+<div class="domain-section" id="sec-d3">
+<div class="domain-header">
+  <h2>Domain 3: AI Operations</h2>
+  <p>13 Questions -- Monitoring, scheduling, Kubernetes, virtualization, cluster design</p>
+</div>
+
+<div class="q-card" data-q="48" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">48</div>
+    <div class="q-text">What is DCGM?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>NVIDIA Data Center GPU Manager.</strong> GPU health monitoring (temp, power, ECC errors), diagnostic testing, policy-based management, integrates with Prometheus/Grafana. Core GPU monitoring tool.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="49" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">49</div>
+    <div class="q-text">What GPU metrics to monitor?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>GPU utilization %</strong>, memory utilization, temperature (throttle at ~83C), power draw, <strong>ECC errors</strong> (correctable trend, uncorrectable = replace), SM clock frequency, PCIe/NVLink throughput, memory bandwidth utilization.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="50" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">50</div>
+    <div class="q-text">What is BMC?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Baseboard Management Controller.</strong> Embedded controller for out-of-band management: remote power, health monitoring, KVM console, firmware updates, event logging. Works even when OS is crashed. Uses IPMI.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="51" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">51</div>
+    <div class="q-text">Kubernetes for AI?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Container orchestration.</strong> Deploys/scales inference containers, manages GPU resources, health checks, auto-restart, rolling updates. Integrates with <strong>NVIDIA GPU Operator</strong>. Best for inference serving.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="52" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">52</div>
+    <div class="q-text">NVIDIA GPU Operator?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Automates all NVIDIA software on Kubernetes</strong> -- GPU drivers, container toolkit, device plugin, DCGM, MIG manager, GFD. Installs as containers. Makes GPU K8s plug-and-play.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="53" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">53</div>
+    <div class="q-text">Why Slurm over K8s for training?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Slurm:</strong> native multi-node GPU jobs (MPI, NCCL), gang scheduling, lightweight, mature priority scheduling. <strong>K8s better for inference serving.</strong> Slurm better for large training jobs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="54" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">54</div>
+    <div class="q-text">Gang scheduling vs backfill?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Gang:</strong> all resources allocated simultaneously (64 GPUs requested = wait until all 64 available). Required for distributed training. <strong>Backfill:</strong> smaller jobs run on idle resources while large job waits.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="55" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">55</div>
+    <div class="q-text">GPU virtualization approaches?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>MIG:</strong> hardware partitioning, full isolation, A100/H100, up to 7 instances. <strong>vGPU:</strong> software virtualization, time-slicing, VMware/KVM, good for VDI. <strong>MPS:</strong> multi-process sharing, less isolation, works on all GPUs.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="56" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">56</div>
+    <div class="q-text">Time-slicing vs MIG?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Time-slicing:</strong> GPU switches between workloads, shared memory, no isolation, simpler. <strong>MIG:</strong> physically partitioned, dedicated compute/memory, full isolation, A100/H100 only.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="57" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">57</div>
+    <div class="q-text">Data center management protocols?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>IPMI/BMC</strong> (out-of-band), <strong>SNMP</strong> (network monitoring), <strong>Redfish</strong> (REST API for IPMI), <strong>DCGM</strong> (GPU monitoring), Prometheus+Grafana (metrics), Syslog/ELK (logs), Ansible/Terraform (automation), Base Command (DGX clusters).</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="58" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">58</div>
+    <div class="q-text">GPU cluster job scheduling considerations?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Priority queues</strong>, fair-share scheduling, gang scheduling, preemption, resource quotas, job dependencies, multi-node topology awareness, <strong>checkpointing for long jobs</strong>.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="59" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">59</div>
+    <div class="q-text">GPU ECC memory errors in production?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner"><strong>Correctable (CE):</strong> detected/corrected by hardware, few per day normal, increasing count = failing memory. <strong>Uncorrectable (UCE):</strong> causes job failure, drain node, run DCGM diagnostics, RMA GPU. Monitor CE trend as early warning.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+
+<div class="q-card" data-q="60" data-domain="d3">
+  <div class="q-header" onclick="toggleCard(this)">
+    <div class="q-num d3">60</div>
+    <div class="q-text">Design an AI cluster for 70B LLM training?</div>
+    <div class="q-chevron">&#9662;</div>
+  </div>
+  <div class="q-answer"><div class="q-answer-inner">70B params at FP16 = ~140 GB weights. With optimizer: ~560 GB total. Spec: <strong>4-8 DGX H100 nodes</strong> (32-64 GPUs), IB NDR 400 Gb/s between nodes, spine-leaf topology, parallel FS (Lustre/GPFS 100+ TB, 50+ GB/s), <strong>liquid cooling</strong> (~82 kW for 8 nodes), Slurm for scheduling, DCGM for monitoring.</div></div>
+  <div class="q-footer"><button class="master-btn" onclick="toggleMaster(this)">Mark Mastered</button></div>
+</div>
+</div><!-- end d3 -->
+
+<!-- CHEAT SHEET -->
+<div class="cheat-section" id="sec-cheat">
+<div class="domain-header">
+  <h2>Quick Reference Cheat Sheet</h2>
+  <p>Key numbers and product map -- memorize these</p>
+</div>
+
+<div class="cheat-group">
+  <h3>H100 / DGX Key Numbers</h3>
+  <div class="cheat-row">
+    <div class="cheat-item"><span class="label">H100 TDP</span><span class="value">700W</span></div>
+    <div class="cheat-item"><span class="label">H100 Memory</span><span class="value">80 GB HBM3</span></div>
+  </div>
+  <div class="cheat-row">
+    <div class="cheat-item"><span class="label">H100 NVLink</span><span class="value">900 GB/s</span></div>
+    <div class="cheat-item"><span class="label">DGX H100 GPUs</span><span class="value">8 GPUs</span></div>
+  </div>
+  <div class="cheat-row">
+    <div class="cheat-item"><span class="label">DGX H100 Power</span><span class="value">~10.2 kW</span></div>
+    <div class="cheat-item"><span class="label">IB NDR</span><span class="value">400 Gb/s</span></div>
+  </div>
+  <div class="cheat-row">
+    <div class="cheat-item"><span class="label">MIG Max Instances</span><span class="value">7</span></div>
+    <div class="cheat-item"><span class="label">Good PUE</span><span class="value">&lt;1.3</span></div>
+  </div>
+  <div class="cheat-row">
+    <div class="cheat-item"><span class="label">Liquid PUE</span><span class="value">&lt;1.1</span></div>
+    <div class="cheat-item"><span class="label">Industry PUE Avg</span><span class="value">~1.58</span></div>
+  </div>
+</div>
+
+<div class="cheat-group">
+  <h3>NVIDIA Product Map</h3>
+  <div class="product-grid">
+    <div class="product-item"><div class="pname">CUDA</div><div class="pdesc">GPU parallel programming platform</div></div>
+    <div class="product-item"><div class="pname">TensorRT</div><div class="pdesc">Inference optimization engine</div></div>
+    <div class="product-item"><div class="pname">Triton</div><div class="pdesc">Multi-model inference server</div></div>
+    <div class="product-item"><div class="pname">NIM</div><div class="pdesc">Containerized inference microservices</div></div>
+    <div class="product-item"><div class="pname">NGC</div><div class="pdesc">GPU container/model registry</div></div>
+    <div class="product-item"><div class="pname">DCGM</div><div class="pdesc">GPU monitoring tool</div></div>
+    <div class="product-item"><div class="pname">Base Command</div><div class="pdesc">DGX cluster management</div></div>
+    <div class="product-item"><div class="pname">GPU Operator</div><div class="pdesc">K8s GPU automation</div></div>
+    <div class="product-item"><div class="pname">NVLink</div><div class="pdesc">GPU-to-GPU interconnect</div></div>
+    <div class="product-item"><div class="pname">NVSwitch</div><div class="pdesc">In-node all-to-all GPU fabric</div></div>
+    <div class="product-item"><div class="pname">InfiniBand</div><div class="pdesc">Inter-node high-speed network</div></div>
+    <div class="product-item"><div class="pname">BlueField DPU</div><div class="pdesc">Offload net/storage/security</div></div>
+    <div class="product-item"><div class="pname">MIG</div><div class="pdesc">Hardware GPU partitioning</div></div>
+    <div class="product-item"><div class="pname">RAPIDS</div><div class="pdesc">GPU data science libraries</div></div>
+    <div class="product-item"><div class="pname">Omniverse</div><div class="pdesc">Digital twin platform</div></div>
+    <div class="product-item"><div class="pname">Isaac Sim</div><div class="pdesc">Robot simulation</div></div>
+    <div class="product-item"><div class="pname">Metropolis</div><div class="pdesc">AI vision analytics</div></div>
+  </div>
+</div>
+</div><!-- end cheat -->
+
+</div><!-- end content -->
+
+<script>
+// State
+const STORAGE_KEY = 'ncaaiio_mastered';
+let mastered = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+let activeTab = 'all';
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  restoreMastered();
+  updateProgress();
+});
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeTab = tab.dataset.tab;
+    showSection(activeTab);
+  });
+});
+
+function showSection(tab) {
+  // Hide all
+  document.querySelectorAll('.domain-section, .cheat-section').forEach(s => s.classList.remove('active'));
+
+  if (tab === 'cheat') {
+    document.getElementById('sec-cheat').classList.add('active');
+  } else if (tab === 'all') {
+    document.querySelectorAll('.domain-section').forEach(s => s.classList.add('active'));
+  } else {
+    document.getElementById('sec-' + tab).classList.add('active');
+  }
+}
+
+// Toggle card
+function toggleCard(header) {
+  const card = header.closest('.q-card');
+  card.classList.toggle('revealed');
+}
+
+// Mastered
+function toggleMaster(btn) {
+  const card = btn.closest('.q-card');
+  const q = card.dataset.q;
+  if (mastered.has(q)) {
+    mastered.delete(q);
+    btn.classList.remove('mastered');
+    btn.textContent = 'Mark Mastered';
+  } else {
+    mastered.add(q);
+    btn.classList.add('mastered');
+    btn.textContent = 'Mastered';
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...mastered]));
+  updateProgress();
+}
+
+function restoreMastered() {
+  document.querySelectorAll('.q-card').forEach(card => {
+    const q = card.dataset.q;
+    if (mastered.has(q)) {
+      const btn = card.querySelector('.master-btn');
+      btn.classList.add('mastered');
+      btn.textContent = 'Mastered';
+    }
+  });
+}
+
+function updateProgress() {
+  const total = 60;
+  const count = mastered.size;
+  const pct = Math.round((count / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = count + ' / ' + total + ' mastered';
+}
+
+// Reset
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Reset all progress? This clears mastered status.')) {
+    mastered.clear();
+    localStorage.removeItem(STORAGE_KEY);
+    document.querySelectorAll('.master-btn').forEach(btn => {
+      btn.classList.remove('mastered');
+      btn.textContent = 'Mark Mastered';
+    });
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('revealed'));
+    updateProgress();
+  }
+});
+</script>
+</body>
+</html>
