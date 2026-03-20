@@ -128,11 +128,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
   <!-- GTC 2026 HEADLINE -->
   <div class="announce">
     <h2>GTC 2026: What Just Changed</h2>
-    <p><strong>7 new chips. 5 rack-scale systems. 1 complete AI factory blueprint.</strong> NVIDIA is now shipping the entire factory as a reference design &mdash; not just chips.</p>
+    <p><strong>7 chips. 5 rack-scale systems. 1 complete AI factory blueprint.</strong> GPU, CPU, NVSwitch, SuperNIC, DPU, Ethernet Switch, LPU &mdash; NVIDIA now ships the entire factory as a reference design, not just chips.</p>
     <p><strong>Dynamo 1.0</strong> &mdash; open-source inference OS that boosted Blackwell performance 7x with software alone. The multiplier Jensen showed.</p>
     <p><strong>Groq LPU integration</strong> &mdash; NVIDIA acquired Groq. GPU handles heavy thinking (prefill), Groq handles fast output (decode). <strong>35x tokens-per-watt.</strong></p>
     <p><strong>DSX Reference Design</strong> &mdash; NVIDIA's complete AI factory blueprint. Power, cooling, network, digital twin. Build to spec, not from scratch.</p>
-    <p><strong>NemoClaw + OpenClaw</strong> &mdash; open-source agent OS. Resource management, tool access, LLM integration, sandboxed execution. The "open call" agent stack.</p>
+    <p><strong>NemoClaw + OpenClaw</strong> &mdash; "the operating system for personal AI." Agent OS with sandboxed execution, privacy router, always-on dedicated hardware.</p>
+    <p><strong>Nemotron Coalition</strong> &mdash; 8 AI labs (Mistral, Perplexity, Cursor, LangChain, Black Forest Labs, Reflection AI, Sarvam, Thinking Machines Lab) building open frontier Nemotron 4 models together.</p>
+    <p><strong>Physical AI</strong> &mdash; Cosmos 3 world model, GR00T N2 humanoid model (#1 ranked), Isaac Lab 3.0. Jensen: "Every industrial company will become a robotics company."</p>
+    <p><strong>Dario Amodei (Anthropic):</strong> "NVIDIA's Vera Rubin platform gives us the compute, networking and system design to keep delivering while advancing the safety and reliability our customers depend on."</p>
+    <p><strong>Sam Altman (OpenAI):</strong> "With NVIDIA Vera Rubin, we'll run more powerful models and agents at massive scale."</p>
   </div>
 
   <!-- 7 CHIPS -->
@@ -142,19 +146,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
     </div>
     <div class="card-body">
       <div class="comp">
-        <div class="name">Vera Rubin GPU <span class="chip gpu">COMPUTE</span></div>
-        <div class="role">Next-gen training + inference. NVLink 6.</div>
-        <div class="desc"><strong>50 PFLOPS FP4</strong> per GPU (5x Blackwell). 288 GB HBM4 at 22 TB/s bandwidth. NVLink 6 at <strong>3,600 GB/s</strong>. 336B transistors. Production H2 2026.</div>
+        <div class="name">Vera Rubin GPU <span class="chip gpu">COMPUTE &mdash; FULL PRODUCTION</span></div>
+        <div class="role">"The agentic AI inflection point has arrived." &mdash; Jensen Huang</div>
+        <div class="desc"><strong>50 PFLOPS FP4</strong> per GPU (5x Blackwell). 288 GB HBM4 at 22 TB/s. NVLink 6 at <strong>3,600 GB/s</strong>. 336B transistors. Trains large MoE models with <strong>1/4 the GPUs vs Blackwell</strong>. <strong>10x inference throughput/watt, 1/10 cost/token.</strong> Anthropic, Meta, Mistral, OpenAI building on Vera Rubin. Available H2 2026.</div>
       </div>
       <div class="comp">
         <div class="name">Vera CPU <span class="chip gpu">PROCESSOR</span></div>
         <div class="role">Purpose-built for AI inference + agent workloads.</div>
-        <div class="desc"><strong>2x single-thread vs Grace.</strong> 1.5 TB LPDDR5 memory, 1.2 TB/s bandwidth. Only data center CPU using LPDDR5. Designed for constant parameter and KV cache pulling at massive bandwidth. <strong>88 Olympus cores, 176 threads.</strong></div>
+        <div class="desc"><strong>2x efficiency, 50% faster than traditional CPUs.</strong> 1.5 TB SOCAMM LPDDR5X, 1.2 TB/s bandwidth. <strong>NVLink-C2C to GPUs at 1.8 TB/s</strong> (7x faster than PCIe Gen 6). <strong>88 Olympus cores, 176 threads</strong> (Spatial Multithreading). Vera CPU Rack: 256 processors for RL + agent environments. Keeps CPU environments tightly synchronized via Spectrum-X across the factory.</div>
       </div>
       <div class="comp">
         <div class="name">Groq 3 LPX <span class="chip new">INFERENCE</span></div>
         <div class="role">Language Processing Unit. Ultra-fast token output.</div>
-        <div class="desc">NVIDIA acquired Groq. <strong>500 MB on-chip SRAM, 640 TB/s bandwidth.</strong> Static compilation at model load. Handles the decode path (fast token generation) while GPUs handle prefill (heavy reasoning). Dynamo orchestrates both. <strong>35x tokens-per-watt vs GPU-only.</strong></div>
+        <div class="desc">NVIDIA acquired Groq for <strong>$20B</strong> (closed Dec 2025). LP30 die on Samsung 4nm. <strong>512 MB on-chip SRAM, 150 TB/s bandwidth, 1.2 PFLOPS FP8 per chip.</strong> SRAM-only (no HBM) &mdash; deterministic linear dataflow. Handles decode (fast token generation) while GPUs handle prefill (reasoning). Dynamo orchestrates both. <strong>35x tokens-per-watt vs GPU-only.</strong> Ships Q3 2026.</div>
       </div>
       <div class="comp">
         <div class="name">BlueField-4 <span class="chip sec">DPU</span></div>
@@ -164,17 +168,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">ConnectX-9 <span class="chip net">SUPERNIC</span></div>
         <div class="role">Next-gen network interface.</div>
-        <div class="desc">High-speed interconnect for Vera Rubin systems. Integrated PCIe switch. Partners with BlueField-4 for full I/O offload.</div>
+        <div class="desc"><strong>1.6 Tb/s per-GPU bandwidth.</strong> Programmable RDMA, GPU-direct networking. Integrated PCIe switch. Partners with BlueField-4 for full I/O offload. The NIC that lets every GPU talk directly to the network fabric.</div>
       </div>
       <div class="comp">
         <div class="name">Spectrum-6 SPX <span class="chip net">SWITCH</span></div>
         <div class="role">Co-packaged optics Ethernet.</div>
-        <div class="desc">Full networking fabric with co-packaged optics. For environments using Spectrum-X Ethernet alongside or instead of InfiniBand.</div>
+        <div class="desc"><strong>Co-packaged optics (CPO)</strong> with 3D-stacked silicon photonics (TSMC hybrid bonding). SN6810: <strong>128 ports x 800 Gb/s = 102.4 Tb/s.</strong> SN6800: <strong>512 ports x 800 Gb/s = 409.6 Tb/s.</strong> <strong>5x optical power efficiency, 10x resiliency</strong> vs pluggable transceivers. Liquid cooled. SPX rack configurable with either Spectrum-X Ethernet or Quantum-X800 InfiniBand.</div>
       </div>
       <div class="comp">
-        <div class="name">Vera Rubin Space 1 <span class="chip new">ORBITAL</span></div>
-        <div class="role">Radiation-hardened. AI in space.</div>
-        <div class="desc"><strong>25x more AI compute than H100</strong> in orbit. Radiation-only cooling. Partners: Aetherflux, Axiom Space, Planet Labs, Starcloud.</div>
+        <div class="name">NVSwitch 6 <span class="chip net">NVLINK SWITCH</span></div>
+        <div class="role">The 7th chip. Glues GPUs into one giant brain.</div>
+        <div class="desc"><strong>Dedicated NVLink switch ASIC</strong> &mdash; the silicon that makes 72 or 144 GPUs act as one. Each NVSwitch 6 chip provides <strong>3,600 GB/s per GPU port</strong>. In NVL72: 9 NVSwitch chips create a full-bisection fabric. In Kyber NVL144: NVSwitch blades sit behind the midplane, doubling the domain. Without this chip, you have 72 separate GPUs. With it, you have one GPU with 72x the memory.</div>
       </div>
     </div>
   </div>
@@ -193,12 +197,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">Vera CPU Rack</div>
         <div class="role">256 Vera processors. Agent + inference workhorse.</div>
-        <div class="desc"><strong>256 Vera CPUs</strong> in liquid-cooled config. 2x efficiency, 50% faster than traditional CPUs. Handles tool-calling agent ops and KV cache management.</div>
+        <div class="desc"><strong>256 Vera CPUs + 64 BlueField-4 DPUs.</strong> 22,500+ cores, 400 TB memory. 2x efficiency, 50% faster single-thread. Purpose-built for agentic workloads, reinforcement learning, and KV cache management.</div>
       </div>
       <div class="comp">
         <div class="name">Groq 3 LPX Inference Rack</div>
         <div class="role">256 LPUs. The speed rack.</div>
-        <div class="desc"><strong>256 LPU processors.</strong> 35x tokens-per-watt vs GPU-only. Paired with GPU racks via Dynamo. Recommendation: <strong>~25% of facility capacity</strong> for high-value inference.</div>
+        <div class="desc"><strong>256 Groq 3 LPUs. 128 GB total SRAM. 40 PB/s memory bandwidth. 640 TB/s scale-up bandwidth.</strong> SRAM-only architecture &mdash; no HBM. 35x tokens-per-watt vs GPU-only. Paired with GPU racks via Dynamo. Ships Q3 2026.</div>
       </div>
       <div class="comp">
         <div class="name">BlueField-4 STX Storage Rack</div>
@@ -208,7 +212,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">Spectrum-6 SPX Ethernet Rack</div>
         <div class="role">Full networking fabric.</div>
-        <div class="desc">Co-packaged optics networking. For Spectrum-X Ethernet deployments. Complete rack-scale fabric solution.</div>
+        <div class="desc">Co-packaged optics (CPO) with silicon photonics. Configurable as <strong>Quantum-X800 InfiniBand</strong> (144 ports x 800 Gb/s, 14.4 TFLOPS in-network SHARP v4, sub-100ns latency) or <strong>Spectrum-X Ethernet</strong>. Liquid cooled.</div>
       </div>
       <div class="nums">
         <div class="num"><div class="val">45&deg;C</div><div class="lbl">Hot Water</div></div>
@@ -217,6 +221,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
         <div class="num"><div class="val">35x</div><div class="lbl">Tokens/Watt</div></div>
         <div class="num"><div class="val">350x</div><div class="lbl">2-Year Gain</div></div>
         <div class="num"><div class="val">$1T</div><div class="lbl">AI Infra Demand</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KYBER RACK ARCHITECTURE -->
+  <div class="card">
+    <div class="card-hdr">
+      <h2>Kyber Rack Architecture <span class="chip new">2027</span><small>The next-gen rack that changes everything &mdash; vertical blades, passive midplane, 144-576 GPUs</small></h2>
+    </div>
+    <div class="card-body">
+      <div class="comp">
+        <div class="name">Kyber Midplane <span class="chip new">BACKBONE</span></div>
+        <div class="role">72-layer copper PCB. 87,000+ NVLink pins. Zero cables.</div>
+        <div class="desc">The core innovation. A <strong>passive 72-layer copper PCB</strong> that sits in the center of the rack. Compute blades plug in from the front, NVLink switch blades plug in from the rear. <strong>87,000+ NVLink signal pins</strong> connect everything through the board &mdash; no cables, no connectors, no signal loss. Eliminates <strong>2 miles of cabling per rack</strong>. Every connection is a direct copper trace at PCB-level signal integrity.</div>
+      </div>
+      <div class="comp">
+        <div name="name">Compute Blades (Switchblades) <span class="chip gpu">FRONT</span></div>
+        <div class="role">Vertical GPU blades. Hot-swap from the front.</div>
+        <div class="desc">Vera Rubin Ultra GPUs mounted on <strong>vertical blades</strong> that slide into the front of the rack and mate with the Kyber midplane. Each blade carries GPUs + HBM4 + Vera CPU. <strong>Orientation is vertical</strong> (not horizontal like traditional servers) &mdash; shorter signal paths, better cooling airflow, higher density. Hot-swappable: pull a blade, replace it, zero downtime for the rest of the rack.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVLink Switch Blades <span class="chip net">REAR</span></div>
+        <div class="role">NVSwitch 6 arrays. Plug into the back of the midplane.</div>
+        <div class="desc">Rear-mounted blades carrying <strong>NVSwitch 6 ASICs</strong> that connect to compute blades through the midplane. Creates a <strong>full-bisection NVLink fabric</strong> across all 144 GPUs. Every GPU can talk to every other GPU at full bandwidth simultaneously. The midplane is the highway; the switch blades are the interchanges.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVL144 Rack (Single Kyber) <span class="chip gpu">144 GPUs</span></div>
+        <div class="role">2x the NVLink domain. One rack, one brain.</div>
+        <div class="desc"><strong>144 Vera Rubin Ultra GPUs</strong> in a single NVLink domain &mdash; 2x the NVL72. <strong>~600 kW per rack.</strong> 800 VDC power delivery (not traditional AC). All liquid cooled. The midplane eliminates the cabling bottleneck that limited previous gens to 72 GPUs per domain.</div>
+      </div>
+      <div class="comp">
+        <div class="name">NVL1152 Pod (8x Kyber) <span class="chip new">1,152 GPUs</span></div>
+        <div class="role">8 Kyber racks linked. The Vera Rubin POD.</div>
+        <div class="desc"><strong>1,152 Rubin Ultra GPUs across 8 Kyber racks.</strong> ~20,000 NVIDIA dies. 1.2 quadrillion transistors. <strong>60 exaFLOPS.</strong> 10 PB/s scale-up bandwidth. The complete SuperPOD unit &mdash; 40 total racks including compute, networking, storage, and CPU racks. <strong>~4.8 MW per pod.</strong> This is the compute brick ADC's DSX-compliant facilities are designed to receive. Ships H2 2027.</div>
+      </div>
+      <div class="nums">
+        <div class="num"><div class="val">144</div><div class="lbl">GPUs / Rack</div></div>
+        <div class="num"><div class="val">1,152</div><div class="lbl">GPUs / POD</div></div>
+        <div class="num"><div class="val">87K+</div><div class="lbl">NVLink Pins</div></div>
+        <div class="num"><div class="val">60</div><div class="lbl">ExaFLOPS / POD</div></div>
+        <div class="num"><div class="val">800V</div><div class="lbl">DC Power</div></div>
+        <div class="num"><div class="val">0 mi</div><div class="lbl">Cabling (was 2)</div></div>
       </div>
     </div>
   </div>
@@ -240,7 +286,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">Groq LPU (Language Processing Unit) <span class="chip new">INFERENCE</span></div>
         <div class="role">The sprinter. Decode-only, zero-latency token output.</div>
-        <div class="desc"><strong>NEW at GTC 2026.</strong> GPUs are great at prefill (heavy reasoning). Groq LPUs are great at decode (generating tokens fast). <strong>Dynamo splits the work</strong> &mdash; GPU does the thinking, Groq does the talking. Combined: 35x more tokens per watt. Think of it like turbo + supercharger &mdash; different power bands, both feeding the same output.</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> NVIDIA acquired Groq for $20B. LP30 die, Samsung 4nm. <strong>512 MB SRAM, 150 TB/s bandwidth, 1.2 PFLOPS FP8.</strong> No HBM &mdash; pure SRAM, deterministic linear dataflow. GPUs do prefill (reasoning), Groq does decode (token output). <strong>Dynamo splits the work.</strong> 35x tokens-per-watt. Like turbo + supercharger &mdash; different power bands, same output.</div>
       </div>
     </div>
   </div>
@@ -254,12 +300,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">NVLink 6 + NVLink Switch <span class="chip net">GPU-TO-GPU</span></div>
         <div class="role">Direct GPU-to-GPU highway. No detours.</div>
-        <div class="desc"><strong>What it does:</strong> Connects GPUs within a rack at <strong>3,600 GB/s per GPU</strong> (Vera Rubin, 2x Blackwell). NVL72: 72 GPUs act like one giant GPU. Vera Rubin Ultra: <strong>144 GPUs</strong> in a single NVLink domain (Kyber rack, 2027).</div>
+        <div class="desc"><strong>What it does:</strong> Connects GPUs within a rack at <strong>3,600 GB/s per GPU</strong> (Vera Rubin, 2x Blackwell). NVL72: 9 NVSwitch 6 chips, 72 GPUs act as one. Kyber NVL144 (2027): NVSwitch blades behind the midplane, <strong>144 GPUs in a single NVLink domain</strong>. 87,000+ copper traces, zero cables.</div>
       </div>
       <div class="comp">
         <div class="name">InfiniBand (Quantum Switches) <span class="chip net">NODE-TO-NODE</span></div>
         <div class="role">The backbone. Connects every rack in the building.</div>
-        <div class="desc"><strong>What it does:</strong> XDR: 800 Gb/s per port, ultra-low latency. Quantum switches run <strong>SHARP</strong> &mdash; math operations right on the switch fabric. Data gets reduced before it hits the GPU. Managed by <strong>UFM</strong>. Still the king for large-scale training. <strong>Spectrum-X Ethernet</strong> now available for mid-size inference clusters.</div>
+        <div class="desc"><strong>What it does:</strong> <strong>Quantum-X800:</strong> 144 ports x 800 Gb/s, sub-100ns latency. <strong>14.4 TFLOPS in-network SHARP v4</strong> compute &mdash; math operations right on the switch fabric. Data gets reduced before it hits the GPU. Managed by <strong>UFM</strong>. Still the king for large-scale training. <strong>Spectrum-X Ethernet</strong> now available for mid-size inference clusters.</div>
       </div>
       <div class="comp">
         <div class="name">BlueField-4 DPUs <span class="chip sec">SECURITY + I/O</span></div>
@@ -276,9 +322,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
     </div>
     <div class="card-body">
       <div class="comp">
-        <div class="name">Dynamo 1.0 <span class="chip new">INFERENCE OS</span></div>
-        <div class="role">THE software multiplier. 7x boost, same hardware.</div>
-        <div class="desc"><strong>NEW at GTC 2026.</strong> Open-source inference operating system for AI factories. Disaggregates workloads: sends prefill to GPUs, decode to Groq LPUs, orchestrates both over Ethernet. Token output went from <strong>700 to nearly 5,000/sec</strong> on identical hardware. Modules: KVBM (memory mgmt), NIXL (GPU-to-GPU data), Grove (scaling). Already adopted by AWS, Azure, Google Cloud, Oracle. <strong>This is the multiplier.</strong></div>
+        <div class="name">Dynamo 1.0 <span class="chip new">INFERENCE OS &mdash; SHIPPING NOW</span></div>
+        <div class="role">"Inference is the engine of intelligence." &mdash; Jensen Huang</div>
+        <div class="desc"><strong>PRODUCTION &mdash; shipping now.</strong> Open-source inference operating system for AI factories. Disaggregates workloads: GPU prefill + Groq LPU decode, orchestrated over Ethernet. Token output: <strong>700 &rarr; 5,000/sec</strong> on identical hardware. Three core modules: <strong>KVBM</strong> (KV cache memory management), <strong>NIXL</strong> (GPU-to-GPU data transfer), <strong>Grove</strong> (elastic scaling). Integrates with <strong>LangChain, llm-d, LMCache, SGLang, vLLM</strong>. Adopted by <strong>AWS, Azure, Google Cloud, OCI, CoreWeave, Crusoe, Nebius</strong> + Cursor, Perplexity, PayPal, Pinterest, ByteDance, BlackRock, AstraZeneca. <strong>This is the multiplier.</strong></div>
       </div>
       <div class="comp">
         <div class="name">Base Command Manager (BCM) <span class="chip sw">CLUSTER MGMT</span></div>
@@ -292,8 +338,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       </div>
       <div class="comp">
         <div class="name">NemoClaw + OpenClaw <span class="chip new">AGENT OS</span></div>
-        <div class="role">Open-source agent operating system. "The open call."</div>
-        <div class="desc"><strong>NEW at GTC 2026.</strong> <strong>OpenClaw:</strong> open-source agent OS with resource management, tool access, LLM integration, scheduling, problem decomposition. <strong>NemoClaw:</strong> NVIDIA's production stack on top &mdash; Nemotron models + <strong>OpenShell</strong> sandboxed runtime + privacy router + security guardrails. Single-command install. Microsoft Security already using OpenShell (160x improvement in threat detection).</div>
+        <div class="role">"OpenClaw is the operating system for personal AI." &mdash; Jensen Huang</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> <strong>OpenClaw:</strong> open-source agent OS &mdash; fastest-growing open-source project in history. Resource management, tool access, LLM integration, scheduling, problem decomposition. <strong>NemoClaw:</strong> single-command install of Nemotron models + <strong>OpenShell</strong> sandboxed runtime + <strong>privacy router</strong> (local models for private data, cloud models via policy guardrails). Runs on <strong>RTX PCs, DGX Spark, DGX Station</strong> &mdash; always-on agents on dedicated hardware. Uses <strong>NVIDIA Agent Toolkit</strong>. Microsoft Security: 160x improvement in threat detection.</div>
       </div>
       <div class="comp">
         <div class="name">DCGM + GPU Operator <span class="chip sw">MONITORING</span></div>
@@ -301,9 +347,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
         <div class="desc">DCGM: real-time telemetry &mdash; temp, power, ECC errors, NVLink status. Feeds Prometheus/Grafana. GPU Operator: auto-installs drivers, toolkit, device plugins in K8s. Drop a node in, it's GPU-ready.</div>
       </div>
       <div class="comp">
-        <div class="name">NGC + Nemotron Models <span class="chip sw">SOFTWARE</span></div>
-        <div class="role">Pre-built containers + frontier open models.</div>
-        <div class="desc">NGC: container registry with PyTorch, Triton, NeMo, RAPIDS. <strong>Nemotron 3:</strong> top-3 language/reasoning model. 6 model families: Nemotron, Cosmos (world), Isaac GR00T (robotics), Alpamayo (AV), BioNeMo (bio), Earth-2 (climate).</div>
+        <div class="name">NGC + Nemotron Models <span class="chip new">COALITION</span></div>
+        <div class="role">Open frontier models + the coalition to build them.</div>
+        <div class="desc">NGC: container registry with PyTorch, Triton, NeMo, RAPIDS. <strong>Nemotron Coalition</strong> (GTC 2026): first global collaboration of AI labs building open frontier models &mdash; <strong>Black Forest Labs, Cursor, LangChain, Mistral AI, Perplexity, Reflection AI, Sarvam, Thinking Machines Lab</strong> (Mira Murati). First model: <strong>Nemotron 4</strong>, codeveloped with Mistral, trained on DGX Cloud. 6 model families: Nemotron, Cosmos 3 (world), Isaac GR00T N2 (robotics), Alpamayo (AV), BioNeMo (bio), Earth-2 (climate). Jensen: "Open models are the lifeblood of innovation."</div>
       </div>
     </div>
   </div>
@@ -317,7 +363,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="comp">
         <div class="name">DSX AI Factory Reference Design <span class="chip new">BLUEPRINT</span></div>
         <div class="role">NVIDIA's complete factory blueprint. Use it.</div>
-        <div class="desc"><strong>NEW at GTC 2026.</strong> Full AI factory architecture: physical layouts, power specs, cooling specs, network topology. Comes with <strong>Omniverse DSX digital twin</strong> &mdash; simulate your factory before you build it. <strong>DSX Air</strong> accelerates design iterations. Jensen: "factor of two in efficiency gains." This is the path for Willow Glen.</div>
+        <div class="desc"><strong>NEW at GTC 2026.</strong> Full AI factory architecture: physical layouts, power specs, cooling specs, network topology. Comes with <strong>Omniverse DSX digital twin</strong> &mdash; simulate your factory before you build it. <strong>DSX Air</strong> (cloud SaaS) for network simulation. <strong>DSX Max-Q:</strong> dynamic power provisioning &mdash; deploy <strong>30% more AI infrastructure</strong> within a fixed-power facility. <strong>DSX Flex:</strong> AI factories as grid-flexible assets, unlocking <strong>100 GW of stranded grid power</strong>. 200+ infrastructure partners. This is the path for Willow Glen.</div>
       </div>
       <div class="comp">
         <div class="name">Liquid Cooling (NVIDIA Integrated) <span class="chip stor">THERMAL</span></div>
@@ -331,8 +377,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       </div>
       <div class="comp">
         <div class="name">Storage (BlueField-4 STX + GPUDirect) <span class="chip stor">STORAGE</span></div>
-        <div class="role">AI-native storage racks. Feed the GPUs.</div>
-        <div class="desc"><strong>BlueField-4 STX Storage Rack:</strong> 5x token throughput, 4x energy efficiency. <strong>GPUDirect Storage</strong> sends data straight from NVMe to GPU memory, bypassing CPU. Parallel file systems (Lustre, WekaFS) stripe across hundreds of drives. Training data must flow faster than GPUs consume it.</div>
+        <div class="role">AI-native context memory. KV cache across the POD.</div>
+        <div class="desc"><strong>BlueField-4 STX Storage Rack:</strong> powered by BF-4 (Vera CPU + ConnectX-9). <strong>DOCA Memos</strong> &mdash; new framework for dedicated KV cache storage processing, <strong>5x inference throughput boost</strong>. Extends GPU memory seamlessly across the entire POD. POD-wide context = faster multi-turn agent interactions, more scalable AI services. <strong>GPUDirect Storage</strong> sends data straight from NVMe to GPU memory, bypassing CPU. Mistral AI CTO: "a critical performance boost needed to exponentially scale our agentic AI efforts."</div>
       </div>
     </div>
   </div>
@@ -440,6 +486,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div>
         <div class="rm-gen">Vera Rubin Ultra + Kyber Racks</div>
         <div class="rm-det">144 GPUs in single NVLink domain. Vertical compute layout. LP35 + NVFP4.</div>
+      </div>
+    </div>
+    <div class="rm-row">
+      <span class="rm-year">2027+</span>
+      <div>
+        <div class="rm-gen">Vera Rubin Space 1 (Orbital AI)</div>
+        <div class="rm-det">Radiation-hardened. 25x H100 in orbit. Aetherflux, Axiom, Starcloud.</div>
       </div>
     </div>
     <div class="rm-row">

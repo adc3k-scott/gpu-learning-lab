@@ -33,8 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(6,10
 .mobile-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
 .pad{max-width:1200px;margin:0 auto;padding:120px 40px 80px}
 .pad-sm{max-width:960px;margin:0 auto;padding:100px 40px 80px}
-.page{display:none;min-height:100vh}.page.active{display:block}#pg-marlie.active,#pg-klft.active,#pg-skydio.active,#pg-trappeys.active,#pg-willowglen.active{display:block;height:100vh;min-height:0;overflow:hidden}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.page{display:none;min-height:100vh}.page.active{display:block}.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
 .eyebrow.green{color:var(--green)}.eyebrow.green::before{background:var(--green)}
 .eyebrow.purple{color:var(--purple)}.eyebrow.purple::before{background:var(--purple)}
@@ -713,9 +712,6 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <h2 class="stitle">The technology stack<br/>behind ADC3K.</h2>
   <p class="ssub">NVIDIA integrated liquid cooling, 3-layer resilient power, and multi-path connectivity. Every system engineered for continuous industrial operation.</p>
 
-  <div style="margin-top:40px;margin-bottom:48px;width:100%;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
-    <img src="immersion-tech.jpg" alt="Liquid cooling technology for AI compute infrastructure" style="width:100%;display:block;max-height:480px;object-fit:cover">
-  </div>
 
   <div style="margin-top:48px">
     <div class="sn">01 — COOLING</div>
@@ -731,10 +727,6 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="sv"><div class="svv">0</div><div class="svl">Gallons Water Per Year</div></div>
       <div class="sv g"><div class="svv" style="color:var(--green);font-size:20px">1,200x</div><div class="svl">Better Heat Transfer vs Air</div></div>
       <div class="sv"><div class="svv">30%</div><div class="svl">Lower Cooling OpEx</div></div>
-    </div>
-    <!-- COOLING COMPARISON VISUAL -->
-    <div style="margin-top:36px;text-align:center">
-      <img src="pod-img-3.jpg" alt="AI Factory Cooling Designs — Air vs Cold Plate vs Liquid Cooling comparison" style="width:100%;max-width:700px;border-radius:8px;border:1px solid var(--border);display:inline-block" />
     </div>
 
     <div class="sn" style="margin-top:36px">NVIDIA INTEGRATED LIQUID COOLING</div>
@@ -1278,7 +1270,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <div class="pcard reveal" style="margin-top:40px;border-top:3px solid #3b9eff">
     <div class="sbadge" style="background:rgba(59,154,255,0.08);color:#3b9eff;border:1px solid rgba(59,154,255,0.25)">AI FACTORY + MINI GRID — ENGINEERING BLUEPRINT</div>
     <h3>Willow Glen Terminal — Mississippi River</h3>
-    <div class="ploc">2605 LA-75, St. Gabriel, LA (Iberville Parish) &nbsp;&middot;&nbsp; 30.2470&deg;N, 91.0985&deg;W</div>
+    <div class="ploc">St. Gabriel, LA (Iberville Parish) &nbsp;&middot;&nbsp; Mississippi River Corridor</div>
     <p class="bd">Former 2,200 MW Entergy power station reborn as a DSX-compliant AI factory campus and renewable mini grid. 700 acres on the Mississippi with a live 230kV substation, deepwater dock, pipeline corridor, and 20,000 SF warehouse ready for immediate deployment. NVIDIA liquid-cooled racks. Dynamo inference OS. Solar + renewable fuel generation. Grid export revenue. Louisiana's neocloud hub.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Power</div><div class="sval">12 MW Phase 1</div></div>
@@ -1286,13 +1278,13 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="spec"><div class="slbl">Site</div><div class="sval">700 Acres</div></div>
       <div class="spec"><div class="slbl">Score</div><div class="sval" style="color:#00e87a">94 — Tier A</div></div>
     </div>
-    <button class="deck-link" onclick="showPage('willowglen')" style="border-color:rgba(59,154,255,0.3);color:#3b9eff">VIEW FULL DECK &rarr;</button>
+    <a class="deck-link" href="/investor" style="border-color:rgba(59,154,255,0.3);color:#3b9eff;text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
   </div>
 
   <div class="pcard reveal" style="margin-top:20px;border-top:3px solid var(--accent)">
     <div class="sbadge p1">PHASE 1 — ENGINEERING COMPLETE</div>
     <h3>MARLIE I — Lafayette AI Factory</h3>
-    <div class="ploc">1201 SE Evangeline Thruway, Lafayette, LA &nbsp;&middot;&nbsp; 30.21975&deg;N, 92.00645&deg;W</div>
+    <div class="ploc">Lafayette, LA &nbsp;&middot;&nbsp; Evangeline Corridor</div>
     <p class="bd">Flagship permanent AI compute facility. Converts an existing industrial building into Louisiana's first purpose-built AI factory. Two NVIDIA Vera Rubin NVL72 racks, CDU liquid cooling, 3-layer power stack, 24/7 NOC operations — and the command center for the entire ADC 3K pod network.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Power</div><div class="sval">2 MW Phase 1</div></div>
@@ -1300,14 +1292,14 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="spec"><div class="slbl">Cooling</div><div class="sval">CDU Liquid</div></div>
       <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--amber)">LOI Pending</div></div>
     </div>
-    <button class="deck-link" onclick="showPage('marlie')">VIEW FULL DECK &rarr;</button>
+    <a class="deck-link" href="/investor" style="text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
   </div>
 
 
   <div class="pcard reveal d2" style="border-top:3px solid var(--green)">
     <div class="sbadge" style="background:var(--green-soft);color:var(--green);border:1px solid rgba(0,214,143,0.2)">FIRST ADC 3K DEPLOYMENT SITE</div>
     <h3>Trappey's Cannery — Vermilion River</h3>
-    <div class="ploc">SE Evangeline Thruway Corridor, Lafayette, LA &nbsp;&middot;&nbsp; 30.21356&deg;N, 92.00163&deg;W</div>
+    <div class="ploc">Lafayette, LA &nbsp;&middot;&nbsp; Vermilion River</div>
     <p class="bd">The historic Trappey's cannery — a Lafayette landmark on the Vermilion River — is the first site for ADC 3K pod deployment. Metal warehouse, no construction required, 0.3 miles from MARLIE I NOC. UL Lafayette is the target anchor tenant.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Type</div><div class="sval">ADC 3K Pods</div></div>
@@ -1315,13 +1307,13 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="spec"><div class="slbl">NOC</div><div class="sval">MARLIE I Remote</div></div>
       <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--accent)">Site Identified</div></div>
     </div>
-    <button class="deck-link" onclick="showPage('trappeys')">VIEW FULL DECK &rarr;</button>
+    <a class="deck-link" href="/investor" style="text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
   </div>
 
   <div class="pcard reveal" style="border-top:3px solid var(--purple)">
     <div class="sbadge pl">AUTONOMOUS AIRSPACE HUB</div>
     <h3>KLFT 1.1 — Lafayette Regional Airport</h3>
-    <div class="ploc">Lafayette Regional Airport, Lafayette, LA &nbsp;&middot;&nbsp; 30.21256&deg;N, 91.99069&deg;W</div>
+    <div class="ploc">Lafayette Regional Airport, Lafayette, LA</div>
     <p class="bd">AI-powered autonomous airspace operations hub at KLFT. SkyCommand platform manages BVLOS drone operations across Acadiana — oil &amp; gas, agriculture, infrastructure, emergency response. AIKCC software available as a licensable SaaS for other operators.</p>
     <div class="pspecs">
       <div class="spec"><div class="slbl">Platform</div><div class="sval">SkyCommand</div></div>
@@ -1329,7 +1321,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
       <div class="spec"><div class="slbl">Coverage</div><div class="sval">Acadiana Region</div></div>
       <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--purple)">Phase 1 Planning</div></div>
     </div>
-    <button type="button" class="deck-link" onclick="showPage('skydio')" style="border-color:rgba(168,85,247,0.3);color:var(--purple)">VIEW FULL DECK &rarr;</button>
+    <a class="deck-link" href="/investor" style="border-color:rgba(168,85,247,0.3);color:var(--purple);text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
   </div>
 
   <div class="pcard reveal" style="border-top:3px solid var(--amber)">
@@ -1361,57 +1353,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 </div>
 </div>
 
-<!-- WILLOW GLEN DECK -->
-<div class="page" id="pg-willowglen" style="padding-top:56px">
-  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">WILLOW GLEN &nbsp;·&nbsp; AI FACTORY + MINI GRID</div>
-    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Partnership Info</button>
-  </div>
-  <iframe src="willow-glen-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
-</div>
-
-<!-- MARLIE I DECK -->
-<div class="page" id="pg-marlie" style="padding-top:56px">
-  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">MARLIE I &nbsp;·&nbsp; LAFAYETTE AI FACTORY</div>
-    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
-  </div>
-  <iframe src="marlie-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
-</div>
-
-<!-- ADC 3K DECK -->
-
-<!-- TRAPPEYS DECK -->
-<div class="page" id="pg-trappeys" style="padding-top:56px">
-  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">TRAPPEYS AI CENTER &nbsp;·&nbsp; VERMILION RIVER RESTORATION</div>
-    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
-  </div>
-  <iframe src="trappeys-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
-</div>
-
-<!-- KLFT 1.1 DECK -->
-<div class="page" id="pg-klft" style="padding-top:56px">
-  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">KLFT 1.1 &nbsp;·&nbsp; AUTONOMOUS AIRSPACE OPS HUB</div>
-    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
-  </div>
-  <iframe src="klft-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
-</div>
-
-<!-- SKYDIO DECK -->
-<div class="page" id="pg-skydio" style="padding-top:56px">
-  <div style="position:sticky;top:56px;left:0;right:0;z-index:200;background:rgba(6,10,16,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <button class="back-btn" style="margin:0;flex-shrink:0" onclick="showPage('projects')">Back to Projects</button>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;white-space:nowrap">SKYDIO &nbsp;·&nbsp; GULF COAST DRONE DEPLOYMENT HUB</div>
-    <button class="nav-cta" style="flex-shrink:0;white-space:nowrap" onclick="showPage('connect')">Request Investor Package</button>
-  </div>
-  <iframe src="skydio-deck.html" style="display:block;border:none;width:100%;height:calc(100vh - 97px)" sandbox="allow-same-origin allow-scripts allow-popups" allowfullscreen></iframe>
-</div>
+<!-- DECK PAGES REMOVED — Available under NDA only. Files in /decks-private/ -->
 
 <!-- LEARN -->
 <div class="page" id="pg-learn">
@@ -1775,7 +1717,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
 
 <script>
 const pages=['home','ecosystem','technology','security','whyadc','louisiana','projects','willowglen','marlie','trappeys','klft','skydio','learn','connect'];
-const deckPages=['marlie','klft','skydio','trappeys','willowglen'];
+const deckPages=[];
 function showPage(id){
   pages.forEach(p=>{
     const el=document.getElementById('pg-'+p);if(el)el.classList.remove('active');

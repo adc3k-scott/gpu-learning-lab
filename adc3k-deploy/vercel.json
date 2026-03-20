@@ -30,6 +30,8 @@
     { "source": "/gtc", "destination": "/gtc-plan.html" },
     { "source": "/stack", "destination": "/stack.html" },
     { "source": "/boot", "destination": "/boot.html" },
+    { "source": "/investor", "destination": "/investor.html" },
+    { "source": "/lafayette", "destination": "/lafayette.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
