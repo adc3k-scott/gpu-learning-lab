@@ -148,6 +148,7 @@ def create_pod(gpu_type_id: str):
             "gpuCount": POD_CONFIG["gpuCount"],
             "volumeInGb": POD_CONFIG["volumeInGb"],
             "containerDiskInGb": POD_CONFIG["containerDiskInGb"],
+            "volumeMountPath": "/workspace",
             "ports": POD_CONFIG["ports"],
             "env": env_vars,
             "cloudType": "COMMUNITY",  # Cheaper than SECURE
