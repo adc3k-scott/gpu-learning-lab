@@ -10,7 +10,7 @@ Requires:
 What it does:
     1. Checks your RunPod balance
     2. Finds available L40S / A6000 / RTX 4090 GPUs (in that preference order)
-    3. Creates a GPU pod with Ubuntu 22.04, 50GB volume, exposed ports
+    3. Creates a GPU pod with Ubuntu 22.04, 100GB volume, exposed ports
     4. Prints SSH command and web terminal URL
     5. Prints the setup script command to run inside the pod
 """
@@ -27,9 +27,9 @@ API_KEY = os.environ.get("RUNPOD_API_KEY", "")
 # Pod configuration
 POD_CONFIG = {
     "name": "adc-omniverse-dsx",
-    "imageName": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "imageName": "runpod/base:0.6.2-cuda12.2.0",  # Lightweight CUDA base — no PyTorch bloat
     "gpuCount": 1,
-    "volumeInGb": 50,  # For DSX Content Pack + repo
+    "volumeInGb": 100,  # 32GB Content Pack + repo + headroom
     "containerDiskInGb": 20,
     "ports": "8081/http,49100/http,22/tcp",
     "env": [],
@@ -119,11 +119,14 @@ def list_existing_pods():
 
 def create_pod(gpu_type_id: str):
     """Create a new GPU pod."""
-    # Add NVIDIA API key to env if available
+    # Add API keys to pod env if available
     env_vars = []
     nvidia_key = os.environ.get("NVIDIA_API_KEY", "")
     if nvidia_key:
         env_vars.append({"key": "NVIDIA_API_KEY", "value": nvidia_key})
+    ngc_key = os.environ.get("NGC_CLI_API_KEY", "")
+    if ngc_key:
+        env_vars.append({"key": "NGC_CLI_API_KEY", "value": ngc_key})
 
     query = """
         mutation CreatePod($input: PodFindAndDeployOnDemandInput!) {
