@@ -69,17 +69,35 @@
 
 ---
 
+## Realistic Margin Analysis
+
+**Raw compute cost ($0.004/M tokens) is misleading.** Operational margins include depreciation, power, staffing, MLOps, support, and SLA overhead.
+
+| Business Model | Gross Margin | Notes |
+|----------------|-------------|-------|
+| BMaaS (bare metal GPU rental) | 55-65% | Declining due to H100 price collapse (60-75% from peak) |
+| Managed inference (early stage) | ~25% | Unoptimized infra, experimental pricing |
+| Managed inference (mature) | ~60% | Custom models, refined pricing, optimized stack |
+| Traditional SaaS (benchmark) | 80-90% | What investors expect |
+| AI-native companies (average) | 50-60% | General range across sector |
+
+**ADC target: 60% gross margin at maturity** (managed inference via Dynamo + Groq decode). The energy-first model (Henry Hub gas) is what sustains margins as token prices deflate ~10x/year.
+
+---
+
 ## ADC Pricing Framework (Recommended)
 
-| Tier | $/M Tokens | Target Workload | Gross Margin |
-|------|-----------|-----------------|--------------|
-| Batch | $0.20 | Dev, non-urgent, async | ~98% |
-| Standard | $1.00 | General inference | ~99% |
-| Premium | $6.00 | Real-time agents, low-latency | ~99% |
-| Enterprise | $45.00 | Mission-critical, 99.99% SLA | ~98% (ops overhead) |
-| Real-time Interactive | $150.00 | <50ms latency (Groq decode) | ~97% (premium LPU) |
+| Tier | $/M Tokens | Target Workload |
+|------|-----------|-----------------|
+| Batch | $0.20 | Dev, non-urgent, async |
+| Standard | $1.00 | General inference |
+| Premium | $6.00 | Real-time agents, low-latency |
+| Enterprise | $45.00 | Mission-critical, 99.99% SLA |
+| Real-time Interactive | $150.00 | <50ms latency (Groq decode) |
 
-**Positioning:** Undercut OpenAI ($2.50) but above Groq ($0.59) for mid-market enterprises seeking reliability + governance + confidential computing.
+**Positioning:** Price between commodity open-model floor ($0.13-$0.25 input) and Groq speed-premium ($0.50+ input). Capture latency advantage margin.
+
+**Closest comp: Nebius** — literally calling their product "Token Factory." NVIDIA $2B investment. Will get Vera Rubin NVL72 in H2 2026. Pricing Llama 3.3 70B at $0.13/$0.40 (base tier).
 
 ### Output Tokens Are the Profit Center
 - Input pricing: $0.10-$1.00/M (low margin relative to output)
@@ -122,13 +140,13 @@ Assumptions: Dynamo 7x boost, 70% utilization, blended $1.50/M tokens
 
 | Provider | Model | Positioning | Margin Strategy |
 |----------|-------|-------------|-----------------|
-| OpenAI | GPT-4o | Closed, quality premium | Ultra-high (99%+), brand tax |
-| Groq | Native LPU | Speed + cost leader | Aggressive ($0.59), high volume |
-| DeepSeek | R1 + open | Reasoning at scale | 80% margins at low price |
+| OpenAI | GPT-5 ($1.25/$10) | Closed, quality premium | Brand tax, high volume |
+| Groq | Native LPU | Speed + cost leader | Aggressive ($0.11-$0.59), latency premium |
+| **Nebius** | **Token Factory** | **Closest ADC comp** | **$0.13/$0.40 base, NVIDIA $2B invested, Vera Rubin H2 2026** |
+| DeepSeek | R1 + open | Reasoning at scale | Aggressive pricing |
 | Anthropic | Claude | Reasoning + safety | Mid-tier ($3-5) |
 | Google | Gemini | Multimodal + caching | Mid-tier ($0.30-$1.25) |
-| CoreWeave | BMaaS + managed | GPU rental + inference | Lower margin (14-16% BMaaS) |
-| Nebius | Token Factory | 60+ models, 70% cost improvement | Volume play |
+| CoreWeave | BMaaS + managed | GPU rental + inference | 55-65% gross (BMaaS), declining |
 
 ### 2027 Outlook
 - Token prices continue 3-5x annual reduction (slowing from 10x)
@@ -141,19 +159,21 @@ Assumptions: Dynamo 7x boost, 70% utilization, blended $1.50/M tokens
 
 ## Key Insights for ADC
 
-1. **Margin floor is ~$0.004/M, but service delivery costs 10-100x more.** Smart providers maintain 70-90% margins even at $0.10/M by automating compliance and running Dynamo at 70%+ utilization.
+1. **Realistic margins are 25-60%, not 95%.** Raw compute ($0.004/M) ignores depreciation, power, staffing, MLOps, support. Target 60% gross at maturity with Dynamo + Groq optimization.
 
-2. **Output tokens are the profit center.** Input is cheap, output is 3-8x markup. Agentic workloads (output-heavy) are where the money is.
+2. **Nebius is the closest competitor.** Same "Token Factory" branding, NVIDIA $2B invested, getting Vera Rubin H2 2026. ADC differentiates on: energy cost (Henry Hub), confidential computing, Louisiana incentives.
 
-3. **GPU utilization is the real moat.** Industry average 30%, optimized 70-80%. At 2.5x utilization, ADC's cost floor drops from $0.004 to $0.0016/M.
+3. **Output tokens are the profit center.** Input is cheap, output is 3-8x markup. Agentic workloads (output-heavy) are where the money is.
 
-4. **Power efficiency (tokens/watt) beats GPU cost.** Vera Rubin does 10x throughput/MW. Groq does 35x vs prior gen. ADC's renewable power stack means ADC can afford 25% Groq capacity while competitors can't.
+4. **GPU utilization is the real moat.** Industry average 30%, optimized 70-80%. At 2.5x utilization, ADC's cost-per-token drops proportionally.
 
-5. **The LLM Cost Paradox = opportunity.** Prices dropped 10x, usage up 100x. Enterprises can't control costs. ADC offers token budgeting + transparent reasoning cost + per-request caps as premium features.
+5. **Token prices deflate ~10x/year.** GPT-4-equivalent performance now costs $0.40/M vs $20 in late 2022. Energy-first model (Henry Hub gas) is the moat that survives deflation.
 
-6. **Reasoning models break traditional economics.** o1/o3/Claude Opus internal reasoning eats 10-100x tokens per query. Enterprise must budget for hidden cost or face surprise bills. ADC positions as "transparent token economics."
+6. **BMaaS is a race to the bottom.** H100 rental prices collapsed 60-75% from peak. BMaaS margins (55-65%) are structurally declining. Managed inference is the play.
 
-7. **ADC should NOT compete on price alone.** Compete on: energy cost advantage, confidential computing (BlueField-4 + NemoClaw), Louisiana tax incentives (lower OpEx), and real-time SLA (Groq decode).
+7. **Speed-premium pricing works.** Groq charges more for LPU inference ($0.50+ vs $0.13 for same model elsewhere). ADC's Groq 3 LPX decode enables similar premium positioning.
+
+8. **ADC should NOT compete on price alone.** Compete on: energy cost advantage, confidential computing (BlueField-4 + NemoClaw), Louisiana tax incentives (lower OpEx), and real-time SLA (Groq decode).
 
 ---
 
