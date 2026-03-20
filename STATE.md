@@ -1,9 +1,38 @@
 # Mission Control — Project State
-Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
+Last updated: 2026-03-19 (Business Model Build + 7-Chip Fix)
 
 ---
 
-## What Was Done This Session (2026-03-19)
+## What Was Done This Session (2026-03-19 Evening)
+
+### Business Model Folder — Complete Build
+Created `business-model/` with 8 documents from parallel research:
+- **token-economics.md** — Full market pricing (OpenAI, Anthropic, Google, Groq, Together, Fireworks). Raw cost floor ~$0.004/M tokens. ADC pricing tiers $0.20-$150/M. 95%+ margins.
+- **power-economics.md** — 4-layer power stack economics. Phase 1 (3 MW): $0.058-0.068/kWh (recip engines). At scale (100+ MW): $0.04-0.05/kWh (CCGT). MISO ancillary ~$4M/yr.
+- **itep-filing.md** — Full ITEP filing process. NAICS code is a risk (AI compute ≠ manufacturing). Must pre-qualify with LED (Kristin Johnson, 225-342-2083). $8-16M savings at stake. Act 730 also identified ($200M+, 20-year sales tax exemption).
+- **iberville-permits.md** — Full permitting timeline. 5-6 months optimistic, 8-10 conservative. M2 zoning = no variance. Brownfield advantage (EO 14318). ITEP is critical path driver.
+- **ul-lafayette-approach.md** — Approach strategy for UL Lafayette. New president Dr. Ramesh Kolluru (CS PhD, built R1 profile, appointed Feb 2026) is perfect target. LEDA for warm intro. No GPU infra at UL (CPU-only Firebird cluster). $160M NSF FUEL consortium is natural co-funding opportunity.
+- **npn-registration.md** — 5-minute web form checklist. NPN → DGX-Ready → NCP certification ladder.
+- **investor-gaps.md** — Updated with ITEP NAICS risk + power cost numbers
+- **partner-stack.md** — Named partners by function
+- **capex-model.md** — CapEx by phase
+- **revenue-streams.md** — 6 revenue streams with unit economics
+
+### Home Page — Seven Chips Fix
+- Updated "Six Chips" to "Seven Chips" in 3 places on index.html
+- Added full-width Groq 3 LPX card (500 MB SRAM, 640 TB/s, 35x tokens/watt)
+- Deployed to adc3k.com
+
+### Key Discoveries
+1. **NAICS code is a real risk for ITEP** — must frame as "emerging industry" token manufacturing, not data center
+2. **Phase 1 power costs are higher than initially estimated** — $0.058-0.068/kWh at 3 MW (no CCGT at that scale)
+3. **UL Lafayette's new president is ideal** — CS PhD, built R1 research profile, just appointed
+4. **Act 730** — separate 20-year sales tax exemption for $200M+ facilities (can stack with ITEP)
+5. **Iberville Parish is M2 zoning** — no variance needed, brownfield status is an advantage
+
+---
+
+## Previous Session (2026-03-19 Earlier)
 
 ### Stack Page — Full GTC 2026 Press Release Integration
 - **Dynamo 1.0**: Updated to "SHIPPING NOW", Jensen "inference is the engine of intelligence" quote, KVBM/NIXL/Grove modules, LangChain/vLLM/SGLang integrations, full adoption list (AWS, Azure, Google Cloud, CoreWeave, Crusoe, Cursor, Perplexity, PayPal, BlackRock)
@@ -42,12 +71,20 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 - **NVIDIA + Nokia 6G AI-RAN**: $1B investment, ARC-Pro, ISAC, KLFT fit. → `nvidia_nokia_6g.md`
 
 ### Site Updates
-- hub.html: Lafayette AI Initiative tile added (top position)
-- vercel.json: /investor and /lafayette rewrites added
-- Decks moved to decks-private/ (not deployed)
+- hub.html: Lafayette AI Initiative tile added (top position), Factory Sim + NCA Study + Quiz tiles added, dead Blackwell vs Rubin tile removed
+- vercel.json: /investor and /lafayette rewrites added, dead /compare rewrite removed
+- Decks moved to decks-private/ (not deployed, added to .gitignore)
+
+### File Structure Cleanup
+- Removed 4 duplicate deck files from web/ (originals in decks-private/)
+- Deleted factory/nvidia-inception-draft.md (Inception is for software startups, not ADC)
+- Added decks-private/ to .gitignore
+- All deployed pages now linked from hub
 
 ### Git
-- Commit pending (this close-out)
+- `88e0d7a` — feat: GTC 2026 press releases, investor page, Lafayette city pitch
+- `b76d5c5` — fix: replace NVIDIA Inception refs with Partner Network (NPN)
+- `38ba441` — fix: clean up file structure — remove duplicate decks, dead routes, outdated Inception draft
 
 ---
 
@@ -73,9 +110,10 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 ## Open Blockers (Require Scott Action)
 
 ### Immediate — Time Sensitive
-- **ITEP filing** — must file BEFORE groundbreaking. Most critical single item.
-- **NVIDIA Partner Network (NPN)** — register ADC as partner. Path: NPN → DGX-Ready → NCP
-- **UL Lafayette contact** — president, provost, or research computing director. Single biggest domino.
+- **ITEP filing** — must file BEFORE groundbreaking. **NAICS code risk identified** — call LED (Kristin Johnson, 225-342-2083) to pre-qualify "emerging industry" angle. See `business-model/itep-filing.md`.
+- **NVIDIA Partner Network (NPN)** — register ADC as partner. 5-minute web form. See `business-model/npn-registration.md`.
+- **UL Lafayette contact** — target Dr. Ramesh Kolluru (new president, CS PhD, appointed Feb 2026). Via LEDA for warm intro. See `business-model/ul-lafayette-approach.md`.
+- **Solar partner meeting** — 2026-03-20. Get company name, specs, EPC pricing.
 
 ### Willow Glen
 - **CBRE contact** — Bryce French, Senior VP — warehouse lease inquiry
@@ -89,8 +127,8 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 
 ### ADC 3K Investor-Critical
 1. Customer LOI — zero signed anchor tenants
-2. NVIDIA Vera Rubin NVL72 TDP — unpublished
-3. Financial model: token factory economics, fix 5.5% tax rate
+2. NVIDIA Vera Rubin NVL72 TDP — unpublished (blocks per-rack revenue calc)
+3. Financial model: token economics DONE (`business-model/token-economics.md`), power economics DONE, scenarios.md still TODO
 4. Deck: add management team slide
 
 ---
@@ -110,9 +148,9 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 - Cloudflare: gofast@stfumotorcycles.com
 
 ## Next Session — Starting Points
-1. **ITEP filing prep** — what's needed, timeline, forms
-2. **UL Lafayette approach** — who to contact, what to say, how to frame
-3. **NVIDIA Partner Network registration** — NPN → DGX-Ready → NCP path
-4. **Financial model update** — token factory economics (Dynamo 7x, Groq 35x)
-5. **Manufacturing re-scope** — factory station layout for DSX facility modules
-6. **Deep-dive education images** — replace remaining immersion images on site
+1. **Solar partner debrief** — update power-economics.md with EPC pricing after 2026-03-20 meeting
+2. **Build scenarios.md** — Bear/Base/Bull financial projections (token + power economics now available)
+3. **Manufacturing re-scope** — factory station layout for DSX facility modules
+4. **Update investor page** — add power partner names (Eaton, Siemens) + solar partner
+5. **Deep-dive education images** — replace remaining immersion images on site
+6. **Raise structure** — define amount, structure, use of proceeds (needs advisor/attorney input)
