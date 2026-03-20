@@ -39,13 +39,13 @@
 - **What's needed:** At minimum a key hires plan with roles and timeline. Ideally 1-2 committed team members or advisors.
 - **Roles needed:** CFO/finance, VP Operations, Chief Engineer
 
-### 7. ITEP Filing
-- **Status:** Not filed. NAICS code is a potential blocker (AI compute ≠ traditional manufacturing).
-- **What's needed:** Must file BEFORE groundbreaking. 80% property tax exemption for 5+5 years. $1.6M/yr savings on $150M investment.
-- **Why it matters:** $8-16M total tax savings. Also signals seriousness to Louisiana government contacts.
-- **NAICS Risk:** ITEP requires NAICS 31-33 (Manufacturing). ADC's natural code is 518200 (Data Center) which doesn't qualify. Must frame as "emerging industry" token manufacturing.
-- **Action:** Call LED (Kristin Johnson, 225-342-2083) to pre-qualify NAICS approach BEFORE filing. See `itep-filing.md` for full process.
-- **Timeline:** 3.5-5.5 months from application to approval (realistic)
+### 7. Property Tax Strategy (ITEP vs PILOT)
+- **Status:** Not filed. **PILOT agreement is likely the better path** (no NAICS restriction).
+- **ITEP risk:** Requires NAICS 31-33 (Manufacturing). AI compute = NAICS 518200 (doesn't qualify). Hut 8, Meta, Amazon all use PILOT, not ITEP.
+- **PILOT:** Payment in Lieu of Taxes. Negotiated directly with Iberville Parish Industrial Development Board. No NAICS gate.
+- **Why it matters:** $8-16M+ in property tax savings. Signals seriousness to Louisiana contacts.
+- **Action:** (1) Call LED (Kristin Johnson, 225-342-2083) to discuss both PILOT and ITEP options. (2) Contact Iberville Parish IDB about PILOT. See `itep-filing.md` for full analysis.
+- **Also stack:** Act 730 (sales tax exemption, 20 years, $200M+ threshold) + Federal ITC (solar/battery, up to 50%)
 
 ### 8. Power Cost Model
 - **Status:** Draft complete. See `power-economics.md`.

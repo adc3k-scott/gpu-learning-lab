@@ -1,6 +1,41 @@
-# Louisiana ITEP Filing — ADC Willow Glen Terminal
+# Louisiana Tax Incentives — ADC Willow Glen Terminal
 
-## What Is ITEP?
+## CRITICAL UPDATE: ITEP May Not Be the Right Vehicle
+
+Research shows **Hut 8 ($2.5B), Meta ($10B), and Amazon** are all using **PILOT agreements** (Payment in Lieu of Taxes), NOT ITEP, for their AI/data center facilities in Louisiana. PILOT has NO NAICS restriction. This may be a better path for ADC.
+
+**Recommended strategy: PILOT + Act 730 (sales tax) + Federal ITC (solar)**
+
+---
+
+## Option 1: PILOT Agreement (RECOMMENDED)
+
+### What Is PILOT?
+**Payment in Lieu of Taxes** — negotiated directly with Iberville Parish through an Industrial Development Board. Property tax payments at a negotiated rate (typically 10-30% of full tax).
+
+### Why PILOT Instead of ITEP
+- **No NAICS restriction** — no need to prove "manufacturing"
+- **More flexible** — negotiated rate, not fixed 80%
+- **What the big players use** — Hut 8 (West Feliciana, up to $90M/yr PILOT), Meta (Richland), Amazon
+- **Iberville Parish is receptive** — ranks 5th statewide in industrial tax exemptions, $48.8M. Shintech, Dow, BASF, Syngenta all have active contracts.
+
+### How to Pursue
+1. Contact Iberville Parish Industrial Development Board
+2. Propose PILOT structure for AI compute facility
+3. Negotiate payment rate based on capital investment and job creation
+4. No NAICS restriction = no "emerging industry" argument needed
+
+### Precedent: Hut 8 River Bend (West Feliciana Parish)
+- $2.5B AI factory investment
+- PILOT agreement through parish Industrial Development Board
+- Up to $90M/year in PILOT payments to parish
+- NOT using ITEP
+
+---
+
+## Option 2: ITEP (Backup — Higher Risk)
+
+### What Is ITEP?
 **80% property tax abatement** on new capital investment (buildings + equipment, NOT land) for 5 years, renewable for another 5 years at 80%. Mega-projects ($150M+) may qualify for 93-100%.
 
 ## Dollar Impact
