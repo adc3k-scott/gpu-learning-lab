@@ -1,9 +1,9 @@
-# SMB AI Install Playbooks — Master Index
+# AI Advantage — Master Index
 
-**This is a separate business from ADC's neocloud/AI factory operations.** Different name TBD. Different entity. Different customers. This folder is 100% standalone.
+**AI Advantage is a separate business from ADC's neocloud/AI factory operations.** Separate entity. Different customers. This folder is 100% standalone. ADC builds the AI factories. AI Advantage deploys AI agents to the businesses that use them.
 
 ## The Business Model
-Turnkey AI systems for small and medium businesses. An installer walks into the business, sets everything up in 2-3 hours, trains the staff, and walks out. The business pays a monthly subscription. Recurring revenue.
+Turnkey AI systems for small and medium businesses. An AI Advantage installer walks into the business, sets everything up in 2-3 hours, trains the staff, and walks out. The business pays a monthly subscription. Recurring revenue.
 
 **What makes this scalable:** The playbooks. Anyone who can follow instructions can do the install — your daughter, your brother Josh, a friend. No computer science degree needed. The playbooks tell them what to click, what to say, and what to do when things go wrong.
 
@@ -59,13 +59,70 @@ Every business falls into one of these patterns. Once an installer learns the pa
 
 ---
 
+## Security Layer: NVIDIA NemoClaw
+
+Every agent we deploy runs inside a **NemoClaw sandbox** — NVIDIA's open source security stack for AI agents. This is non-negotiable.
+
+| What It Does | Why It Matters |
+|-------------|---------------|
+| **Sandboxed execution** | Agent can't access anything outside its workspace. Landlock + seccomp + network isolation. |
+| **Network policy** | Only approved endpoints allowed. Unknown requests blocked and surfaced to our monitoring team. |
+| **Inference routing** | All AI processing routes through AI Advantage / ADC infrastructure — we control cost, model selection, and data flow. |
+| **Remote monitoring** | AI Advantage manages every sandbox from MARLIE I. We see blocked requests, approve/deny, push updates. |
+| **Vertical-specific policies** | Medical gets HIPAA lockdown. Legal gets privilege lockdown. Restaurant gets basic lockdown. |
+
+**Key docs:**
+- `playbooks/nemoclaw-installer-guide.md` — Full installer training on NemoClaw deployment
+- `client-process.md` — Client-facing 5-step process + advertising copy + FAQ
+- `installer-kit.md` — Field kit checklist, scope of work, what you do and don't do
+
+**How inference routing generates revenue:**
+```
+Client's Agent → NemoClaw Sandbox → AI Advantage / ADC Infrastructure (MARLIE I / Willow Glen) → AI Model → Response
+                                     ↑
+                            We bill per token here.
+                            Client pays subscription.
+                            We keep the spread.
+```
+
+Every client agent consuming tokens flows through our infrastructure. 96 clients per installer per year × average 50,000+ tokens per day per agent = massive token volume on ADC GPUs. AI Advantage feeds the token factory.
+
+---
+
 ## Hardware Tiers (Same Across All Verticals)
 
 | Tier | What It Is | Cost Range | Best For |
 |------|-----------|------------|----------|
 | **Tier 1: Cloud-Only** | Use their existing stuff + our cloud | $0-500 | Small operations, good equipment already |
-| **Tier 2: ADC Starter Kit** | We sell/provide hardware | $1,000-2,700 | Old equipment, dedicated setup |
-| **Tier 3: NVIDIA DGX Spark** | On-site AI supercomputer | $5,500-10,000+ | Privacy-critical, high volume, offline capability |
+| **Tier 2: AI Advantage Starter Kit** | We sell/provide hardware | $1,000-2,700 | Old equipment, dedicated setup |
+| **Tier 3: Mac Mini (On-Site AI)** | Apple M4 Pro/Max running local inference | $1,400-3,200 | Privacy-aware, good performance, cost-conscious |
+| **Tier 4: NVIDIA DGX Spark** | On-site AI supercomputer | $5,500-10,000+ | Privacy-critical, high volume, HIPAA/legal, offline |
+
+### Mac Mini M4 ($1,399-3,199) — When to Recommend
+- Client wants local AI but doesn't need HIPAA/legal-grade compliance
+- Good internet but client prefers data stays on-site
+- Budget-conscious — wants on-prem without DGX Spark price tag
+- Small team (1-5 users) with moderate AI usage
+- Runs Nemotron Nano 30B locally at usable speeds
+- Fits on a shelf, silent, draws ~40W, client forgets it's there
+- NemoClaw sandbox runs the same way — sandboxed, policy-controlled, monitored
+
+**Configs:**
+| Model | RAM | Storage | Price | Best For |
+|-------|-----|---------|-------|----------|
+| M4 Pro (12-core) | 24 GB | 512 GB | ~$1,399 | 1-3 users, single agent, basic verticals |
+| M4 Pro (14-core) | 48 GB | 1 TB | ~$2,199 | 3-5 users, runs larger models, room to grow |
+| M4 Max | 64 GB | 1 TB | ~$3,199 | 5+ users, concurrent agents, multi-task |
+
+**Trade-offs vs DGX Spark:**
+| | Mac Mini M4 | DGX Spark |
+|--|-------------|-----------|
+| Price | $1,400-3,200 | $4,700-9,400 |
+| AI performance | Good (Nano 30B) | Excellent (Super 120B locally) |
+| Compliance-grade | No (privacy-aware, not HIPAA-certified) | Yes (full isolation, audit trail) |
+| Concurrent agents | 1-2 | 3-5+ |
+| Power draw | ~40W | ~200W |
+| When to pick | Cost matters, basic privacy | Compliance matters, heavy workload |
 
 ### DGX Spark ($4,699) — When to Recommend
 - Client handles sensitive data (HIPAA, financial, legal privilege)
@@ -190,6 +247,9 @@ Based on value delivered, complexity, and what the market will bear. Three subsc
 | Hardware | Our Cost (est) | Sale Price | Margin |
 |----------|---------------|------------|--------|
 | Starter Kit (tablet + router + scanner) | ~$800 | $1,200 | $400 (33%) |
+| Mac Mini M4 Pro 24GB | $1,399 | $1,699 | $300 (18%) |
+| Mac Mini M4 Pro 48GB | $2,199 | $2,599 | $400 (15%) |
+| Mac Mini M4 Max 64GB | $3,199 | $3,699 | $500 (14%) |
 | DGX Spark (single) | $4,699 | $5,499 | $800 (15%) |
 | DGX Spark Bundle (2-pack) | ~$9,400 | $10,500 | $1,100 (12%) |
 | Field Truck Kit (mount + charger + case) | ~$65 | $105 | $40 (38%) |
@@ -198,7 +258,7 @@ Based on value delivered, complexity, and what the market will bear. Three subsc
 
 ## Dashboard
 
-`dashboard.html` — Install Command Center (ServiceNow-inspired dispatch UI)
+`dashboard.html` — AI Advantage Install Command Center (ServiceNow-inspired dispatch UI)
 
 Features:
 - Team roster with real-time status (available / on-install / training / off)
