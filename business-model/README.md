@@ -10,7 +10,7 @@ Working documents for ADC's business model, financial projections, and investor 
 - `power-economics.md` — Blended cost of power, fuel contracts, grid revenue
 - `token-economics.md` — Token pricing, margins, utilization scenarios
 - `partner-stack.md` — Named partners and their role in the cost/revenue model
-- `scenarios.md` — Bear / Base / Bull financial projections (TODO)
+- `scenarios.md` — Bear / Base / Bull financial projections (Phase 1A → Full Campus)
 
 ### Investor Readiness
 - `investor-gaps.md` — What's missing and what needs to happen before raise
