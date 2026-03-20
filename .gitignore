@@ -216,3 +216,6 @@ output/
 *.key
 *.url
 Skydio_extracted/
+
+# Private decks (sensitive business content)
+decks-private/

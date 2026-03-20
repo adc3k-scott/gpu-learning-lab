@@ -25,7 +25,6 @@
     { "source": "/cheatsheet", "destination": "/cheatsheet.html" },
     { "source": "/ncp-study", "destination": "/ncp-study.html" },
     { "source": "/ncp-cheat", "destination": "/ncp-cheat.html" },
-    { "source": "/compare", "destination": "/compare.html" },
     { "source": "/hub", "destination": "/hub.html" },
     { "source": "/gtc", "destination": "/gtc-plan.html" },
     { "source": "/stack", "destination": "/stack.html" },
