@@ -222,7 +222,7 @@ def main():
     print()
     print("     cd /workspace")
     print("     apt-get update && apt-get install -y curl")
-    print("     curl -sSL https://raw.githubusercontent.com/adhscott/gpu-learning-lab/main/scripts/runpod_omniverse_setup.sh | bash")
+    print("     curl -sSL https://raw.githubusercontent.com/adc3k-scott/gpu-learning-lab/main/scripts/runpod_omniverse_setup.sh | bash")
     print()
     print("  OR copy-paste the script manually from:")
     print("     scripts/runpod_omniverse_setup.sh")
