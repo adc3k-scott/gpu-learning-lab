@@ -3,8 +3,29 @@
 **Project:** ADC Manufacturing — Step 1 (Bootstrap Factory)
 **Location:** Lafayette, LA (Baton Rouge Corridor — lease TBD)
 **Owner:** Advantage Design & Construction (ADC)
-**Document:** Terminal Engineering Specification v1.0
-**Date:** 2026-03-11
+**Document:** Terminal Engineering Specification v2.0 (DSX PIVOT)
+**Date:** 2026-03-20 (Updated from v1.0 2026-03-11)
+
+---
+
+## DSX PIVOT (March 2026)
+
+**This spec has been updated post-GTC 2026.** The pod product pivoted from immersion-cooled GPU pods to **DSX-compliant facility modules** — manufactured enclosures that receive NVIDIA's standard liquid-cooled racks.
+
+### What Changed
+- **No more immersion cooling.** EC-110 eliminated. No dielectric fluid, no immersion tanks, no GPU sled insertion.
+- **Facility water loop replaces immersion.** Modules include plumbed water supply/return for NVIDIA's rack-level 45°C liquid cooling.
+- **800 VDC power distribution** designed into every module. Cannot be retrofitted.
+- **Rack receiving bays** replace compute install. NVIDIA ships complete racks — ADC builds the enclosure they go into.
+- **Test scope changes.** Validate infrastructure (power, water, network) — not GPU burn-in. NVIDIA validates their own racks.
+- **Consumables drop ~$6K/pod.** No EC-110 coolant. Add water loop components (~$3K).
+
+### What Didn't Change
+- 6-station linear flow (same layout)
+- Container-based modular form factor
+- Manual bootstrap → automated factory pipeline
+- Two-step strategy (Baton Rouge → New Iberia)
+- Electrical is still the bottleneck station
 
 ---
 
@@ -131,71 +152,78 @@ Each station needs approximately 20ft × 12ft clear space (container footprint +
 | Staff | 2 people (1 sprayer + 1 barrier installer) |
 | Time | 4-6 hours (includes cure) |
 
-### Station 3 — Electrical (BOTTLENECK)
-**Purpose:** Main panel, sub-panels, PDUs, bus bars, all wire runs.
+### Station 3 — Electrical + 800 VDC (BOTTLENECK)
+**Purpose:** Main panel, 800 VDC power distribution, sub-panels, PDUs, bus bars, all wire runs.
 
 | Item | Detail |
 |------|--------|
-| Process | Mount main 400A panel and sub-panels. Run conduit and wire per pod wiring diagram. Terminate all connections. Install bus bars and PDUs. Megger test all circuits. |
-| Equipment | Standard electrician hand tools, wire pulling equipment, Megger insulation tester, torque wrenches |
+| Process | Mount main 400A panel and 800 VDC distribution. Run conduit and wire per module wiring diagram. Install 800 VDC bus bars, rack PDUs, and NVIDIA rack power connections. Terminate all connections. Megger test all circuits. |
+| Equipment | Standard electrician hand tools, wire pulling equipment, Megger insulation tester, torque wrenches, DC-rated tools and PPE |
 | Staff | 2 licensed electricians |
-| Time | 10-14 hours (BOTTLENECK — most labor-intensive station) |
-| NEC compliance | All work to NEC 2023. Inspector sign-off on each pod. |
+| Time | 10-14 hours (BOTTLENECK — most labor-intensive station, 800 VDC adds complexity) |
+| NEC compliance | All work to NEC 2023. 800 VDC per Article 712 (Direct-Current Microgrids). Inspector sign-off on each module. |
+| Safety | 800 VDC requires arc flash analysis, DC-rated PPE, lockout/tagout procedures specific to DC systems. |
 
-### Station 4 — Cooling System
-**Purpose:** Immersion tanks, plumbing, coolant fill.
+### Station 4 — Facility Water Loop
+**Purpose:** Plumb facility water supply/return for NVIDIA rack-level liquid cooling. CDU connections. Heat rejection interface.
 
 | Item | Detail |
 |------|--------|
-| Process | Position immersion cooling tanks on mounts. Pipe all coolant supply/return lines. Thread and fit all connections. Pressure test (45 PSI, 30 min). Fill with EC-110 coolant. |
-| Equipment | Pipe threader, pipe wrenches, pressure test gauge, EC-110 drum + pump |
+| Process | Position CDU (Coolant Distribution Unit) connection points. Pipe all water supply/return lines (45°C hot water from NVIDIA racks). Thread and fit all connections. Install isolation valves, flow meters, temperature sensors. Pressure test (45 PSI, 30 min). Flush and fill with treated water. |
+| Equipment | Pipe threader, pipe wrenches, pressure test gauge, water treatment chemicals, flow meter test equipment |
 | Staff | 2 pipe fitters |
-| Time | 8-10 hours |
+| Time | 6-8 hours |
+| Notes | Simpler than old immersion station — no EC-110 coolant, no immersion tanks. Standard facility water plumbing. Water exits module to external heat rejection (cooling tower / dry cooler, customer-supplied or ADC-supplied). |
 
-### Station 5 — Compute Install
-**Purpose:** GPU server racks, networking, cabling.
+### Station 5 — Rack Receiving Bay + Network
+**Purpose:** Prepare rack receiving positions, network infrastructure, and cable management for NVIDIA liquid-cooled racks.
 
 | Item | Detail |
 |------|--------|
-| Process | Position server racks on vibration-damped mounts. Insert GPU sleds into immersion tanks. Route and terminate all network cables (100GbE spine, 25GbE leaf). Route and terminate power cables. Verify all connectors seated. |
-| Equipment | Server lift, cable management tools, crimping tools, cable tester |
+| Process | Install rack mounting positions on vibration-damped floor mounts. Pre-route 800 VDC power cables to each rack position. Pre-route water supply/return to each rack CDU connection point. Route and terminate all network cables (InfiniBand or 400GbE — customer spec). Install cable management (overhead trays, vertical managers). Label all connections. |
+| Equipment | Cable management tools, crimping tools, cable tester, laser level for rack alignment |
 | Staff | 2 electronics technicians |
-| Time | 8-10 hours |
+| Time | 6-8 hours |
+| Notes | ADC does NOT install NVIDIA racks — they arrive pre-assembled with integrated liquid cooling and drop in. This station prepares the infrastructure the racks connect to. NVIDIA's 2-hour rack install happens at the customer site, not in our factory. |
 
 ### Station 6 — Test & QA
-**Purpose:** Full system validation, burn-in, and sign-off.
+**Purpose:** Full infrastructure validation — power, water, network. Module-level QA (not GPU burn-in — NVIDIA validates their own racks).
 
 | Item | Detail |
 |------|--------|
-| Process | Connect pod to facility power + network. Power-on self-test. Network throughput test. Thermal ramp to 100% GPU load. 4-hour burn-in at full TDP. Cooldown + visual inspection. QA checklist + sign-off. Generate test certificate. |
-| Equipment | Facility power connection (100A 480V), network test equipment, thermal camera (FLIR handheld), multimeter, laptop for monitoring |
+| Process | Connect module to facility power + water + network. Power-on self-test (800 VDC energize, all circuits). Water loop flow test (pressure, flow rate, leak check under pressure). Network throughput test (all ports). Thermal test (run water at 45°C for 2 hours, verify no leaks under thermal expansion). Visual inspection of all connections. QA checklist + sign-off. Generate infrastructure test certificate. |
+| Equipment | Facility power connection (100A 480V + 800 VDC test supply), water loop test rig (pump + heater), network test equipment, thermal camera (FLIR handheld), multimeter, laptop for monitoring |
 | Staff | 1 QA technician + 1 electronics tech |
-| Time | 8-10 hours (includes 4hr burn-in) |
+| Time | 4-6 hours (shorter — no 4hr GPU burn-in) |
+| Notes | Test validates that the MODULE infrastructure works. GPU/rack validation is NVIDIA's responsibility after rack installation at customer site. |
 
 ---
 
-## 6. CYCLE TIME ANALYSIS
+## 6. CYCLE TIME ANALYSIS (DSX MODULE)
 
 | Station | Process | Time | Crew |
 |---------|---------|------|------|
 | S1 | Container Prep | 6-8 hr | 2 |
 | S2 | Insulation | 4-6 hr | 2 |
-| S3 | Electrical | 10-14 hr | 2 |
-| S4 | Cooling | 8-10 hr | 2 |
-| S5 | Compute | 8-10 hr | 2 |
-| S6 | Test & QA | 8-10 hr | 2 |
-| **Total** | **End-to-end** | **44-58 hr** | **—** |
+| S3 | Electrical + 800 VDC | 10-14 hr | 2 |
+| S4 | Facility Water Loop | 6-8 hr | 2 |
+| S5 | Rack Receiving Bay + Network | 6-8 hr | 2 |
+| S6 | Infrastructure Test & QA | 4-6 hr | 2 |
+| **Total** | **End-to-end** | **36-50 hr** | **—** |
+
+**Improvement vs old spec:** 8-12 hours faster per module. No immersion tank install, no EC-110 fill, no GPU burn-in. Water loop is simpler than immersion. Rack bay prep is simpler than GPU sled insertion. Test is shorter without 4hr burn-in.
 
 **Throughput calculation:**
 - Working hours: 10 hr/day × 4 days/week = 40 hr/week
-- Bottleneck: Station 3 (Electrical) at 10-14 hours
-- With 2 pods in pipeline: 1 pod completes every 5-7 working days
-- Monthly output: **2-3 pods/month**
+- Bottleneck: Station 3 (Electrical + 800 VDC) at 10-14 hours
+- With 2 modules in pipeline: 1 module completes every 4-6 working days
+- Monthly output: **3-4 modules/month** (up from 2-3)
 
 **Bottleneck mitigation (future):**
 - Pre-fabricate wire harnesses off-line (parallel work during other station ops)
+- Pre-fabricate 800 VDC bus bar assemblies
 - Add 3rd electrician during S3 to overlap tasks
-- Template conduit runs for repeated pod configs (cut learning curve)
+- Template conduit runs for repeated module configs (cut learning curve)
 
 ---
 
@@ -223,21 +251,23 @@ Each station needs approximately 20ft × 12ft clear space (container footprint +
 | — | IT setup (office + QA station) | $8,000 | Laptops, monitors, network switch, printer |
 | | | **Total: ~$165,000** | |
 
-### Consumables (Per Pod)
+### Consumables (Per Module — DSX Updated)
 
-| Item | Est. Cost/Pod |
-|------|---------------|
+| Item | Est. Cost/Module |
+|------|-----------------|
 | Shipping container (20ft, used, one-trip) | $3,000-4,000 |
 | Spray foam (closed cell, 3" × ~900 SF) | $2,500 |
 | Vapor barrier membrane | $400 |
-| Electrical (panels, wire, conduit, PDUs, bus bars) | $8,000-12,000 |
-| Plumbing (pipe, fittings, valves) | $2,000-3,000 |
-| EC-110 coolant | $4,000-6,000 |
-| Network cable + connectors | $1,500-2,500 |
+| Electrical (panels, 800 VDC distribution, wire, conduit, PDUs, bus bars) | $10,000-15,000 |
+| Facility water loop (pipe, fittings, valves, CDU connections, sensors) | $3,000-4,500 |
+| Network cable + connectors (InfiniBand or 400GbE) | $2,000-3,500 |
+| Rack mounting hardware (damped mounts, rails, cable management) | $1,500-2,500 |
 | Misc (fasteners, sealant, labels, hardware) | $1,000 |
-| **Total materials per pod** | **$22,400-31,900** |
+| **Total materials per module** | **$23,400-33,400** |
 
-GPU hardware and server racks are customer-supplied or purchased separately per order — not included in pod cost.
+**vs old spec:** EC-110 coolant ($4-6K) eliminated. 800 VDC distribution adds ~$2-3K to electrical. Water loop components ~$3-4.5K (simpler than immersion). Net cost roughly neutral, but the module is simpler to build and test.
+
+NVIDIA liquid-cooled racks are NOT installed at the factory — they ship directly to the customer site and drop into the prepared module. NVIDIA's 2-hour rack install happens on-site.
 
 ---
 
@@ -287,15 +317,17 @@ GPU hardware and server racks are customer-supplied or purchased separately per 
 | **Total Monthly OpEx** | **$110,500-183,500** |
 | | |
 | **Monthly Revenue** | |
-| 2 pods × $180K (conservative) | $360,000 |
-| 3 pods × $180K (capacity) | $540,000 |
-| **Monthly Gross Profit** | **$176,500-429,500** |
+| 3 modules × $180K (conservative) | $540,000 |
+| 4 modules × $180K (capacity) | $720,000 |
+| **Monthly Gross Profit** | **$356,500-609,500** |
 | | |
-| **Payback** | **1-2 months** |
+| **Payback** | **1 month at capacity** |
 
 ### Key Economic Points
 - Under $500K startup — financeable with equipment loan or SBA
-- Profitable from Pod #1 at $180K selling price
+- Profitable from Module #1 at $180K selling price
+- DSX modules are faster to build than old immersion pods (36-50 hrs vs 44-58 hrs)
+- Higher monthly output (3-4 vs 2-3) = faster cash flow for New Iberia
 - Cash flow funds New Iberia factory construction
 - Becomes specialty shop (higher margins) once New Iberia opens
 
@@ -349,12 +381,13 @@ When New Iberia opens and takes over standard production, Baton Rouge Terminal t
 | Commodity | Premium margin |
 
 ### Custom Shop Products
-- **Defense-spec pods** — TEMPEST shielding, SCIF-rated, hardened connectors, anti-tamper
-- **Mobile deployment** — rapid-deploy pods for disaster response, military forward operating
-- **R&D / prototype** — new cooling configs, new rack layouts, experimental hardware
-- **Retrofit / upgrade** — field-returned pods for cooling system upgrade or GPU refresh
+- **Defense-spec modules** — TEMPEST shielding, SCIF-rated, hardened connectors, anti-tamper
+- **Mobile deployment** — rapid-deploy modules for disaster response, military forward operating
+- **Edge/remote modules** — wetland-rated (pilings), offshore-rated (barge/rig), extreme environment hardening
+- **R&D / prototype** — new water loop configs, new rack layouts, experimental form factors
+- **Retrofit / upgrade** — field-returned modules for water loop upgrade or power distribution refresh
 
 ---
 
 *ADC — Advantage Design & Construction*
-*Mission Control — Document generated 2026-03-11*
+*Mission Control — Document updated 2026-03-20 (DSX Pivot)*
