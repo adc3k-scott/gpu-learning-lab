@@ -1,7 +1,9 @@
-# ADC AI Install Playbooks — Master Index
+# SMB AI Install Playbooks — Master Index
+
+**This is a separate business from ADC's neocloud/AI factory operations.** Different name TBD. Different entity. Different customers. This folder is 100% standalone.
 
 ## The Business Model
-ADC sells turnkey AI systems to small and medium businesses. An ADC installer walks into the business, sets everything up in 2-3 hours, trains the staff, and walks out. The business pays a monthly subscription. Recurring revenue.
+Turnkey AI systems for small and medium businesses. An installer walks into the business, sets everything up in 2-3 hours, trains the staff, and walks out. The business pays a monthly subscription. Recurring revenue.
 
 **What makes this scalable:** The playbooks. Anyone who can follow instructions can do the install — your daughter, your brother Josh, a friend. No computer science degree needed. The playbooks tell them what to click, what to say, and what to do when things go wrong.
 
@@ -11,18 +13,18 @@ ADC sells turnkey AI systems to small and medium businesses. An ADC installer wa
 
 | # | Vertical | Playbook File | Install Time | Killer Feature | Workflow Pattern |
 |---|----------|---------------|-------------|----------------|-----------------|
-| 1 | **Law Firm** | `install-playbook-law-firm.md` | ~2 hrs | Document Q&A + drafting | Document shop |
-| 2 | **Field Services** (plumber, electrician, HVAC) | `install-playbook-field-services.md` | ~2.5-3 hrs | AI phone + dispatch + field quoting | Dispatch shop |
-| 3 | **Medical / Dental** | `install-playbook-medical-dental.md` | ~2.5 hrs | Insurance verification + clinical notes | Appointment shop |
-| 4 | **Restaurant / Bar** | `install-playbook-restaurant.md` | ~2.5 hrs | Real-time food cost tracking | Inventory shop |
-| 5 | **Auto Shop / Mechanic** | `install-playbook-auto-shop.md` | ~2.5 hrs | Photo-to-estimate with customer approval | Inventory + approval shop |
-| 6 | **Real Estate** | `install-playbook-real-estate.md` | ~2 hrs | Speed-to-lead + instant listing descriptions | Deal shop |
-| 7 | **Construction / GC** | `install-playbook-construction.md` | ~3 hrs | Change orders + draw schedules + daily logs | Project shop |
-| 8 | **Property Management** | `install-playbook-property-management.md` | ~2.5 hrs | AI maintenance dispatch + tenant portal | Dispatch + portal shop |
-| 9 | **Retail Store** | `install-playbook-retail.md` | ~2.5 hrs | Auto-reorder + margin analysis | Inventory shop |
-| 10 | **Accounting / CPA** | `install-playbook-accounting-cpa.md` | ~2 hrs | Tax document AI intake + deadline tracking | Document shop |
-| 11 | **Salon / Barber / Spa** | `install-playbook-salon-barber.md` | ~1.5 hrs | Automated rebooking reminders | Appointment shop |
-| 12 | **Insurance Agency** | `install-playbook-insurance.md` | ~2 hrs | Multi-carrier comparative quoting + renewal tracking | Deal shop |
+| 1 | **Law Firm** | `playbooks/law-firm.md` | ~2 hrs | Document Q&A + drafting | Document shop |
+| 2 | **Field Services** (plumber, electrician, HVAC) | `playbooks/field-services.md` | ~2.5-3 hrs | AI phone + dispatch + field quoting | Dispatch shop |
+| 3 | **Medical / Dental** | `playbooks/medical-dental.md` | ~2.5 hrs | Insurance verification + clinical notes | Appointment shop |
+| 4 | **Restaurant / Bar** | `playbooks/restaurant.md` | ~2.5 hrs | Real-time food cost tracking | Inventory shop |
+| 5 | **Auto Shop / Mechanic** | `playbooks/auto-shop.md` | ~2.5 hrs | Photo-to-estimate with customer approval | Inventory + approval shop |
+| 6 | **Real Estate** | `playbooks/real-estate.md` | ~2 hrs | Speed-to-lead + instant listing descriptions | Deal shop |
+| 7 | **Construction / GC** | `playbooks/construction.md` | ~3 hrs | Change orders + draw schedules + daily logs | Project shop |
+| 8 | **Property Management** | `playbooks/property-management.md` | ~2.5 hrs | AI maintenance dispatch + tenant portal | Dispatch + portal shop |
+| 9 | **Retail Store** | `playbooks/retail.md` | ~2.5 hrs | Auto-reorder + margin analysis | Inventory shop |
+| 10 | **Accounting / CPA** | `playbooks/accounting-cpa.md` | ~2 hrs | Tax document AI intake + deadline tracking | Document shop |
+| 11 | **Salon / Barber / Spa** | `playbooks/salon-barber.md` | ~1.5 hrs | Automated rebooking reminders | Appointment shop |
+| 12 | **Insurance Agency** | `playbooks/insurance.md` | ~2 hrs | Multi-carrier comparative quoting + renewal tracking | Deal shop |
 
 ---
 
@@ -160,9 +162,55 @@ Every playbook follows the same structure so installers only learn one format:
 
 ---
 
+## Pricing by Vertical (DRAFT — Scott to Approve)
+
+Based on value delivered, complexity, and what the market will bear. Three subscription tiers per vertical.
+
+| Vertical | Install Fee | Basic/mo | Pro/mo | Enterprise/mo | Notes |
+|----------|-----------|----------|--------|---------------|-------|
+| **Salon/Barber** | $500 | $199 | $349 | $499 | Simplest install, lowest touch |
+| **Law Firm** | $750 | $499 | $799 | $1,299 | High value per doc, privacy premium |
+| **Real Estate** | $750 | $399 | $699 | $999 | Per-agent pricing potential |
+| **Insurance** | $750 | $499 | $799 | $1,299 | Multi-carrier = high complexity value |
+| **Accounting/CPA** | $750 | $399 | $699 | $1,099 | Seasonal — discount off-season |
+| **Retail** | $1,000 | $349 | $599 | $999 | POS integration complexity |
+| **Field Services** | $1,000 | $499 | $899 | $1,499 | Dispatch + field = dual value |
+| **Property Mgmt** | $1,000 | $599 | $999 | $1,499 | Per-unit pricing potential ($/door) |
+| **Medical/Dental** | $1,500 | $699 | $1,199 | $1,999 | HIPAA compliance premium |
+| **Auto Shop** | $1,000 | $499 | $799 | $1,299 | DVI = high close value |
+| **Restaurant** | $1,000 | $399 | $699 | $1,099 | POS integration + food cost |
+| **Construction** | $1,500 | $799 | $1,299 | $1,999 | Most complex, highest value |
+
+### Tier Breakdown
+- **Basic**: Core AI features for the vertical. 1-2 users. Email support.
+- **Pro**: All features + integrations + AI phone. 5 users. Phone support. Most installs land here.
+- **Enterprise**: Unlimited users, multi-location, priority support, custom workflows. DGX Spark recommended.
+
+### Hardware Pricing (On Top of Subscription)
+| Hardware | Our Cost (est) | Sale Price | Margin |
+|----------|---------------|------------|--------|
+| Starter Kit (tablet + router + scanner) | ~$800 | $1,200 | $400 (33%) |
+| DGX Spark (single) | $4,699 | $5,499 | $800 (15%) |
+| DGX Spark Bundle (2-pack) | ~$9,400 | $10,500 | $1,100 (12%) |
+| Field Truck Kit (mount + charger + case) | ~$65 | $105 | $40 (38%) |
+
+---
+
+## Dashboard
+
+`dashboard.html` — Install Command Center (ServiceNow-inspired dispatch UI)
+
+Features:
+- Team roster with real-time status (available / on-install / training / off)
+- 6-column Kanban: Leads > Scheduled > Installing > Training > Active > Follow-Up
+- Right panel: metrics, client health, activity feed, top verticals
+- Tabs: Dispatch Board, Client Pipeline, Playbooks (quick reference), Revenue
+- Revenue tab: per-installer performance, monthly growth chart, YTD totals
+
+---
+
 ## What's NOT in These Playbooks (Yet)
 
-- [ ] Pricing tiers per vertical (need to set subscription rates)
 - [ ] Commission structure for installers
 - [ ] Referral program details
 - [ ] Multi-location / franchise playbook variant

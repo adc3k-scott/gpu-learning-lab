@@ -1,9 +1,36 @@
 # Mission Control — Project State
-Last updated: 2026-03-19 (Business Model Build + 7-Chip Fix)
+Last updated: 2026-03-20 (DSX Architecture + Financial Scenarios)
 
 ---
 
-## What Was Done This Session (2026-03-19 Evening)
+## What Was Done This Session (2026-03-20)
+
+### DSX Architecture Deep-Dive
+- Researched NVIDIA DSX reference architecture from GTC video
+- Created `memory/projects/dsx_architecture.md` — three pillars (Flex/Boost/Exchange), 800 VDC power, 5-phase deployment pipeline, partner ecosystem mapping
+- Updated `memory/projects/willow_glen.md` — added DSX pillars, 800 VDC Day 1 requirement, software pipeline build sequence, updated next actions
+- Updated `memory/projects/nvidia_strategy.md` — cross-referenced DSX deep-dive
+- Key findings: DSX Boost gives 30% more throughput in same power envelope (critical for Phase 1's 3 MW constraint), 800 VDC cannot be retrofitted (Day 1 decision), 200+ certified partners for non-GPU infrastructure
+
+### Financial Scenarios (Bear / Base / Bull)
+- Built `business-model/scenarios.md` — complete 3-scenario financial model
+- Phase 1A (3 MW): Bear -$3.4M EBITDA, Base +$3.8M, Bull +$14.1M
+- Phase 1C (12 MW): Base turns cash-positive at $38.3M EBITDA (80% margin)
+- Phase 2 (50 MW): Base $169.5M EBITDA — 1.8x Hut 8's NOI/MW
+- Phase 3 (100+ MW): Base $600M revenue, $500M EBITDA
+- Used revenue-per-MW benchmarks (not raw token math — NVIDIA's 700M tokens/sec is a marketing peak)
+- Token deflation sensitivity, Louisiana tax incentive stack, valuation comps, risk matrix
+- Cumulative CapEx: $88-140M Phase 1, $748M-$1.14B full campus
+
+### SMB AI Install Playbooks (Prior Session)
+- Built 12 vertical playbooks in `smb-ai-playbooks/playbooks/`
+- Separated from ADC neocloud business (different company, name TBD)
+- 5 workflow patterns, 3 hardware tiers (Cloud / Starter Kit / DGX Spark)
+- Revenue model: $48K/month recurring per installer by month 12
+
+---
+
+## Previous Session (2026-03-19 Evening)
 
 ### Business Model Folder — Complete Build
 Created `business-model/` with 8 documents from parallel research:
@@ -128,7 +155,7 @@ Created `business-model/` with 8 documents from parallel research:
 ### ADC 3K Investor-Critical
 1. Customer LOI — zero signed anchor tenants
 2. NVIDIA Vera Rubin NVL72 TDP — unpublished (blocks per-rack revenue calc)
-3. Financial model: token economics DONE (`business-model/token-economics.md`), power economics DONE, scenarios.md still TODO
+3. Financial model: token economics DONE, power economics DONE, scenarios DONE (`business-model/scenarios.md`)
 4. Deck: add management team slide
 
 ---
@@ -149,8 +176,10 @@ Created `business-model/` with 8 documents from parallel research:
 
 ## Next Session — Starting Points
 1. **Solar partner debrief** — update power-economics.md with EPC pricing after 2026-03-20 meeting
-2. **Build scenarios.md** — Bear/Base/Bull financial projections (token + power economics now available)
-3. **Manufacturing re-scope** — factory station layout for DSX facility modules
-4. **Update investor page** — add power partner names (Eaton, Siemens) + solar partner
-5. **Deep-dive education images** — replace remaining immersion images on site
-6. **Raise structure** — define amount, structure, use of proceeds (needs advisor/attorney input)
+2. **SMB dispatch dashboard** — ServiceNow-inspired installer management UI (discussed, not built)
+3. **SMB playbook pricing** — set install fees + monthly subscription rates for all 12 verticals
+4. **Manufacturing re-scope** — factory station layout for DSX facility modules
+5. **Update investor page** — add power partner names (Eaton, Siemens) + solar partner + DSX architecture
+6. **Deep-dive education images** — replace remaining immersion images on site
+7. **Raise structure** — define amount, structure, use of proceeds (needs advisor/attorney input)
+8. **DSX Air signup** — model Willow Glen topology (free trial at air.nvidia.com)
