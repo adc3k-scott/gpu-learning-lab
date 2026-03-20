@@ -217,5 +217,12 @@ output/
 *.url
 Skydio_extracted/
 
+# Duplicate image folders (originals live in adc3k-deploy/)
+web/skydio-images/
+web/trappeys-images/
+
+# Old site rebuild — NEVER deploy
+web/adc3k-site.html
+
 # Private decks (sensitive business content)
 decks-private/
