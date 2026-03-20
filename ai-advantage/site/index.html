@@ -132,6 +132,23 @@ nav a:hover{color:var(--bright);text-decoration:none}
 .cta-section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:12px}
 .cta-section p{font-size:16px;color:var(--dim);margin-bottom:32px}
 
+/* FAQ */
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;gap:16px}
+.faq-q h3{font-size:15px;font-weight:600;color:var(--bright);margin:0;line-height:1.4}
+.faq-q .faq-icon{font-size:20px;color:var(--dim);flex-shrink:0;transition:transform .2s;font-weight:300}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:20px}
+.faq-a p{font-size:13px;color:var(--dim);line-height:1.7}
+.faq-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.faq-cat{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.faq-cat:hover,.faq-cat.active{border-color:var(--blue);color:var(--blue);background:rgba(59,158,255,0.06)}
+.faq-ally-cta{margin-top:48px;text-align:center;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.faq-ally-cta h3{font-size:18px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.faq-ally-cta p{font-size:14px;color:var(--dim);margin-bottom:20px}
+
 /* FOOTER */
 footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim)}
 
@@ -158,6 +175,7 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
     <li><a href="#industries">Industries</a></li>
     <li><a href="#portal">Your Portal</a></li>
     <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Free Discovery Call</a>
 </nav>
@@ -479,20 +497,337 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
   </div>
 </div>
 
+<!-- FAQ -->
+<div class="section" id="faq" style="border-top:1px solid var(--border)">
+  <div class="section-label">Questions &amp; Answers</div>
+  <h2>Everything you want to know. No runaround.</h2>
+  <p class="sub">We get these questions every day. Here are straight answers. If you don't see yours, ask Ally — our AI assistant — in the chat bubble below.</p>
+
+  <div class="faq-cats">
+    <button class="faq-cat active" data-cat="all">All</button>
+    <button class="faq-cat" data-cat="basics">The Basics</button>
+    <button class="faq-cat" data-cat="equipment">Equipment</button>
+    <button class="faq-cat" data-cat="security">Security &amp; Privacy</button>
+    <button class="faq-cat" data-cat="cost">Cost &amp; Billing</button>
+    <button class="faq-cat" data-cat="support">Support &amp; Service</button>
+  </div>
+
+  <div class="faq-list">
+    <!-- BASICS -->
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>What exactly does AI Advantage do?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We install a dedicated AI agent at your business, configured specifically for your industry. It can answer phones, manage schedules, track inventory, draft documents, handle customer follow-ups — whatever your business needs. We set it up, train your team, and manage it remotely. You just use it.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>Is this like ChatGPT?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>ChatGPT is a general chatbot on a website. This is a dedicated AI agent built for your specific industry, running on secure hardware, monitored by professionals, and integrated into your actual business tools. It's the difference between googling a legal question and hiring a paralegal.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>How long does setup take?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>One visit. 2-3 hours. Our installer shows up with everything, sets up the hardware and software, configures it for your business, trains your team in 30 minutes, and verifies everything is running before they leave. You're using it the same day.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>Do I need to be tech-savvy to use this?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>If you can send a text message, you can use this. You talk to your AI agent in plain English — through a chat window, text message, or even a phone call. No menus, no training manuals, no learning curve. We train your whole team in 30 minutes before we leave.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>What industries do you work with?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We have pre-built playbooks for 12 industries: law firms, medical/dental, field services (plumbing, HVAC, electrical), restaurants, auto shops, real estate, construction, property management, retail, accounting/CPA, salons/barbers, and insurance agencies. If your industry isn't listed, ask us — we can likely build a custom playbook.</p></div>
+    </div>
+
+    <!-- EQUIPMENT -->
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What equipment do I need?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>It depends on your plan. Cloud Only ($0 hardware) — just your existing computer and internet. Starter Kit ($1,200) — we bring a tablet, router, and scanner. Mac Mini ($1,699) — a small silent device that sits on your desk. DGX Spark ($5,499) — NVIDIA's AI supercomputer for compliance-heavy industries. Most businesses start with Cloud Only or Mac Mini.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>Do I need to buy new computers?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No. Our Cloud Only tier works with whatever you already have — laptop, desktop, tablet, even your phone. If your equipment is really outdated, our Starter Kit ($1,200) includes everything you'd need. But most businesses can start with what they've got.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What's the Mac Mini option and why would I want it?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>The Mac Mini is a small, silent computer (7 inches square) that sits on a desk or shelf. It runs your AI agent locally — meaning your data never leaves your building. It uses about 40 watts (less than a light bulb), requires zero maintenance, and gives you the fastest response times. It's our most popular option for businesses that care about privacy.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What internet speed do I need?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>For Cloud Only plans, any stable internet connection works — even basic broadband. For Mac Mini and DGX Spark plans, the AI runs locally on your device, so internet speed barely matters. We bring a backup hotspot to every install just in case your connection has issues.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What if my internet goes down?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>If you're on a Mac Mini or DGX Spark plan, your AI agent keeps running — it's on your local device and doesn't need internet to think. Cloud-only plans need internet, but we set up automatic failover messaging so your customers still get a response even when you're offline.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>Where does the hardware actually go?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Wherever you want. The Mac Mini is 7 inches square — it fits on a desk, shelf, or in a closet. The DGX Spark is a bit larger but still desktop-sized. We connect it to your existing network with one ethernet cable, plug it in, and that's it. No server room needed. No special wiring.</p></div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Can the AI see my personal files, email, or bank account?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No. Your AI agent runs inside an isolated sandbox — think of it as a locked room. It can only see files in its own workspace. It cannot access your email, personal files, bank accounts, or anything else on your computer or network. We configure exactly what it can touch, together with you, during install.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Can you see my business data?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We monitor your agent's behavior — what it's connecting to, whether it's running properly, if anything looks unusual. We do not read your business data. On Mac Mini and DGX Spark plans, your data stays entirely on your hardware in your building. We can't see it even if we wanted to.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Is this HIPAA compliant? What about law firms?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Yes. Medical and legal clients get compliance-grade security: strict filesystem isolation (patient data / case files never leave the device), full audit logging of every agent action, blocked access to cloud storage and email, and on-site hardware so nothing travels over the internet. We recommend DGX Spark for all HIPAA and attorney-privilege environments.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>What if the AI tries to do something it shouldn't?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Every network connection your agent makes is checked against an approved list. If it tries to reach a website or service we didn't approve, it gets blocked automatically and our team is notified immediately. We review every blocked request and take action if anything looks wrong. You're covered 24/7.</p></div>
+    </div>
+
+    <!-- COST -->
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>What does it actually cost per month?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Three plans: Basic at $199/month (core AI features, 1-2 users, email support), Pro at $699/month (all features, AI phone answering, 5 users, phone support — our most popular), and Enterprise at $1,299/month (unlimited users, multi-location, custom workflows, dedicated account manager). Hardware is a separate one-time purchase. No long-term contracts.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>Are there any hidden fees or long-term contracts?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No and no. Your monthly subscription covers everything — the agent, security monitoring, updates, support, and model upgrades. Hardware is a one-time cost. No setup fees, no cancellation penalties, no surprise charges. If you cancel, we remove the agent and you keep your data. That's it.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>Is the hardware a rental or do I own it?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>You own it. The Mac Mini, DGX Spark, Starter Kit — whatever you buy is yours. If you cancel your subscription, you keep the hardware. We remove our software, and the device is yours to repurpose however you want.</p></div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What happens after install? Do I manage this myself?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>You never manage anything technical. After install, we monitor your agent remotely 24/7. If something needs updating, we handle it. If the AI needs a model upgrade, we push it — no disruption, no downtime. You just use the agent. Think of it like a managed alarm system — you arm it and go to bed, we watch the cameras.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What if something breaks or the AI stops working?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We catch most issues before you even notice — our monitoring detects problems in real time. If something does go down, Pro and Enterprise plans include phone support for immediate help. Basic plan has email support with fast response times. In most cases, we can fix issues remotely without visiting your location.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What if I want to cancel?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Cancel anytime — no penalties, no guilt trip. We remove the AI agent, return your systems to how they were, and your data stays yours. Hardware you purchased is yours to keep. We don't do lock-in. If we're not earning your business every month, that's on us.</p></div>
+    </div>
+  </div>
+
+  <div class="faq-ally-cta">
+    <h3>Don't see your question?</h3>
+    <p>Ask Ally — our AI assistant. She knows everything about AI Advantage and can answer instantly.</p>
+    <button class="btn btn-primary" onclick="document.getElementById('ally-toggle').click()">Ask Ally</button>
+  </div>
+</div>
+
 <!-- CTA -->
 <div class="cta-section" id="contact">
   <h2>Ready to give your business an unfair advantage?</h2>
   <p>15-minute discovery call. No pitch. We just learn about your business and tell you exactly what we'd install.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-    <button class="btn btn-primary" disabled style="opacity:0.6;cursor:default">Coming Soon</button>
+    <a href="tel:+13374863149" class="btn btn-primary" style="text-decoration:none">(337) 486-3149</a>
+    <a href="mailto:contact@ai-advantage.info" class="btn btn-outline" style="text-decoration:none">contact@ai-advantage.info</a>
   </div>
-  <p style="margin-top:16px;font-size:12px;color:var(--dim)">Lafayette, Louisiana &middot; Serving businesses nationwide</p>
+  <p style="margin-top:20px;font-size:13px;color:var(--dim)">1201 SE Evangeline Thruway, Lafayette, LA 70501</p>
+  <p style="margin-top:4px;font-size:12px;color:var(--dim)">Serving businesses nationwide</p>
 </div>
 
 <footer>
-  AI Advantage &middot; A division of Advantage Design &amp; Construction &middot; Lafayette, LA<br>
+  AI Advantage &middot; A division of Advantage Design &amp; Construction<br>
+  <span style="font-size:10px;margin-top:4px;display:inline-block">1201 SE Evangeline Thruway, Lafayette, LA 70501 &middot; <a href="tel:+13374863149" style="color:var(--dim)">(337) 486-3149</a> &middot; <a href="mailto:contact@ai-advantage.info" style="color:var(--dim)">contact@ai-advantage.info</a></span><br>
   <span style="color:var(--dim);font-size:10px;margin-top:4px;display:inline-block">Powered by NVIDIA AI infrastructure</span>
 </footer>
+
+<!-- FLOATING CHAT WIDGET -->
+<style>
+/* Chat Toggle Button */
+#ally-toggle{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(59,158,255,0.4);transition:transform .2s,box-shadow .2s}
+#ally-toggle:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(59,158,255,0.5)}
+#ally-toggle svg{width:28px;height:28px;fill:#000}
+
+/* Chat Panel */
+#ally-panel{position:fixed;bottom:92px;right:24px;width:350px;height:500px;background:var(--card);border:1px solid var(--border);border-radius:12px;z-index:9999;display:none;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
+#ally-panel.open{display:flex}
+
+#ally-panel .ally-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+#ally-panel .ally-header .ally-title{font-size:14px;font-weight:700;color:var(--bright);display:flex;align-items:center;gap:8px}
+#ally-panel .ally-header .ally-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+#ally-panel .ally-header .ally-close{background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+#ally-panel .ally-header .ally-close:hover{color:var(--bright)}
+
+#ally-messages{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+#ally-messages .ally-msg{font-size:13px;line-height:1.5;padding:10px 14px;border-radius:10px;max-width:88%;word-wrap:break-word;white-space:pre-wrap}
+#ally-messages .ally-msg.bot{background:rgba(59,158,255,0.1);color:var(--text);border:1px solid rgba(59,158,255,0.15);align-self:flex-start}
+#ally-messages .ally-msg.usr{background:rgba(0,232,122,0.08);color:var(--text);border:1px solid rgba(0,232,122,0.12);align-self:flex-end}
+#ally-messages .ally-typing{align-self:flex-start;padding:10px 14px;background:rgba(59,158,255,0.1);border:1px solid rgba(59,158,255,0.15);border-radius:10px;font-size:13px;color:var(--dim)}
+#ally-messages .ally-typing span{animation:allyBlink 1.4s infinite both}
+#ally-messages .ally-typing span:nth-child(2){animation-delay:.2s}
+#ally-messages .ally-typing span:nth-child(3){animation-delay:.4s}
+@keyframes allyBlink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+#ally-input-bar{display:flex;border-top:1px solid var(--border);padding:8px 10px;gap:8px;background:var(--surface)}
+#ally-input-bar input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--bright);font-size:13px;padding:10px 12px;outline:none;font-family:'Inter',sans-serif}
+#ally-input-bar input:focus{border-color:var(--blue)}
+#ally-input-bar input::placeholder{color:var(--dim)}
+#ally-input-bar button{background:var(--blue);border:none;color:#000;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap}
+#ally-input-bar button:hover{background:#5aafff}
+#ally-input-bar button:disabled{opacity:0.5;cursor:default}
+
+@media(max-width:600px){
+  #ally-panel{right:0;left:0;bottom:0;width:100%;height:100%;border-radius:0;bottom:0}
+  #ally-toggle{bottom:16px;right:16px}
+}
+</style>
+
+<button id="ally-toggle" aria-label="Open chat">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+</button>
+
+<div id="ally-panel">
+  <div class="ally-header">
+    <div class="ally-title"><div class="ally-dot"></div>Ally &mdash; AI Advantage</div>
+    <button class="ally-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div id="ally-messages"></div>
+  <div id="ally-input-bar">
+    <input type="text" id="ally-input" placeholder="Ask Ally anything..." maxlength="2000" autocomplete="off">
+    <button id="ally-send">Send</button>
+  </div>
+</div>
+
+<script>
+/* FAQ accordion + category filter */
+(function(){
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement;
+      var wasOpen=item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open')});
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+  document.querySelectorAll('.faq-cat').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.faq-cat').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      var cat=btn.getAttribute('data-cat');
+      document.querySelectorAll('.faq-item').forEach(function(item){
+        if(cat==='all'||item.getAttribute('data-cat')===cat){
+          item.style.display='';
+        }else{
+          item.style.display='none';
+          item.classList.remove('open');
+        }
+      });
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  const toggle = document.getElementById('ally-toggle');
+  const panel = document.getElementById('ally-panel');
+  const closeBtn = panel.querySelector('.ally-close');
+  const messages = document.getElementById('ally-messages');
+  const input = document.getElementById('ally-input');
+  const sendBtn = document.getElementById('ally-send');
+  let opened = false;
+  let sending = false;
+
+  function addMsg(text, cls) {
+    const div = document.createElement('div');
+    div.className = 'ally-msg ' + cls;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'ally-typing';
+    div.id = 'ally-typing-ind';
+    div.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('ally-typing-ind');
+    if (el) el.remove();
+  }
+
+  toggle.addEventListener('click', function() {
+    panel.classList.toggle('open');
+    if (!opened) {
+      opened = true;
+      addMsg("Hey! I'm Ally, your AI Advantage assistant. Ask me anything about how we can help your business \u2014 pricing, industries, how it works, security. What's on your mind?", 'bot');
+    }
+    if (panel.classList.contains('open')) {
+      input.focus();
+    }
+  });
+
+  closeBtn.addEventListener('click', function() {
+    panel.classList.remove('open');
+  });
+
+  async function send() {
+    const text = input.value.trim();
+    if (!text || sending) return;
+
+    addMsg(text, 'usr');
+    input.value = '';
+    sending = true;
+    sendBtn.disabled = true;
+    showTyping();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      const data = await res.json();
+      hideTyping();
+      if (data.reply) {
+        addMsg(data.reply, 'bot');
+      } else if (data.error) {
+        addMsg(data.error, 'bot');
+      } else {
+        addMsg("Sorry, something went wrong. Please try again.", 'bot');
+      }
+    } catch (err) {
+      hideTyping();
+      addMsg("Couldn't reach the server. Please check your connection and try again.", 'bot');
+    }
+
+    sending = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
+
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
