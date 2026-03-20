@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ADC — Investor Overview</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.wrap{max-width:600px;margin:0 auto;padding:16px 16px 60px}
+
+.back{display:inline-block;color:#76b900;text-decoration:none;font-size:12px;font-weight:700;margin-bottom:8px}
+
+/* Header */
+.hdr{text-align:center;padding:20px 0 12px;border-bottom:1px solid #1a2436;margin-bottom:16px}
+.hdr .co{font-size:24px;font-weight:800;color:#e8edf2;letter-spacing:1px}
+.hdr .co span{color:#76b900}
+.hdr .tagline{font-size:13px;color:#ff6b35;margin-top:6px;font-weight:600}
+.hdr .sub{font-size:11px;color:#607080;margin-top:6px}
+.hdr .conf{font-size:9px;color:#3a4a5a;margin-top:8px;text-transform:uppercase;letter-spacing:1px}
+
+/* Section */
+.sec{background:#111820;border:1px solid #1a2436;border-radius:12px;margin-bottom:14px;overflow:hidden}
+.sec-hdr{padding:14px 16px 8px}
+.sec-hdr h2{font-size:15px;font-weight:700;color:#76b900;line-height:1.3}
+.sec-hdr h2 small{display:block;font-size:11px;font-weight:400;color:#607080;margin-top:2px}
+.sec-body{padding:0 16px 14px}
+
+/* Stat rows */
+.stat{padding:10px 0;border-bottom:1px solid #1a2436}
+.stat:last-child{border-bottom:none}
+.stat .label{font-size:10px;font-weight:700;color:#607080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px}
+.stat .value{font-size:14px;font-weight:700;color:#e8edf2}
+.stat .value em{font-style:normal;color:#76b900}
+.stat .note{font-size:11px;color:#8090a0;margin-top:2px}
+
+/* Numbers grid */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 0}
+.num{background:#0d1218;border-radius:8px;padding:10px 8px;text-align:center}
+.num .val{font-size:18px;font-weight:800;color:#76b900}
+.num .lbl{font-size:9px;color:#607080;margin-top:2px;text-transform:uppercase;letter-spacing:0.3px}
+
+/* Highlight box */
+.hl-box{background:linear-gradient(135deg,#1a2a1a,#111820);border:1px solid #2a4a2a;border-radius:12px;padding:16px;margin-bottom:14px}
+.hl-box h2{font-size:15px;font-weight:700;color:#76b900;margin-bottom:10px}
+.hl-box p{font-size:12px;color:#c0ccd8;margin-bottom:8px;padding-left:12px;border-left:2px solid #76b900}
+.hl-box p:last-child{margin-bottom:0}
+
+/* Orange highlight */
+.hl-orange{background:linear-gradient(135deg,#2a1a1a,#111820);border:1px solid #4a2a1a}
+.hl-orange h2{color:#ff6b35}
+.hl-orange p{border-left-color:#ff6b35}
+
+/* Blue highlight */
+.hl-blue{background:linear-gradient(135deg,#1a1a2a,#111820);border:1px solid #1a2a4a}
+.hl-blue h2{color:#3b9eff}
+.hl-blue p{border-left-color:#3b9eff}
+
+/* Purple highlight */
+.hl-purple{background:linear-gradient(135deg,#2a1a2a,#111820);border:1px solid #4a2a4a}
+.hl-purple h2{color:#e040fb}
+.hl-purple p{border-left-color:#e040fb}
+
+/* Comparison table */
+.comp-tbl{width:100%;border-collapse:collapse;margin:8px 0}
+.comp-tbl th{font-size:10px;font-weight:700;color:#607080;text-transform:uppercase;letter-spacing:0.5px;text-align:left;padding:8px 6px;border-bottom:1px solid #1a2436}
+.comp-tbl td{font-size:12px;color:#c0ccd8;padding:8px 6px;border-bottom:1px solid #0d1218}
+.comp-tbl td:first-child{font-weight:700;color:#e8edf2}
+.comp-tbl .green{color:#76b900}
+.comp-tbl .amber{color:#f5a623}
+
+/* Timeline */
+.tl{padding:8px 0}
+.tl-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #1a2436;align-items:baseline}
+.tl-row:last-child{border-bottom:none}
+.tl-phase{font-size:11px;font-weight:800;color:#76b900;min-width:70px}
+.tl-desc{font-size:12px;color:#c0ccd8}
+.tl-desc strong{color:#e8edf2}
+
+/* Chip badges */
+.chip{font-size:9px;font-weight:800;padding:1px 6px;border-radius:3px;vertical-align:middle;margin-left:4px}
+.chip-green{background:#76b900;color:#0a0e14}
+.chip-orange{background:#ff6b35;color:#fff}
+.chip-blue{background:#3b9eff;color:#fff}
+
+/* Jensen quote box */
+.quote-box{background:#0d1218;border-left:3px solid #ff6b35;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:14px}
+.quote-box .qt{font-size:13px;color:#e8edf2;font-style:italic;line-height:1.5}
+.quote-box .src{font-size:10px;color:#607080;margin-top:6px}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#1a2a1a,#0d1218);border:2px solid #76b900;border-radius:12px;padding:20px;margin:20px 0;text-align:center}
+.cta-box h2{font-size:18px;font-weight:800;color:#e8edf2;margin-bottom:6px}
+.cta-box p{font-size:12px;color:#8090a0;margin-bottom:12px}
+.cta-box a{display:inline-block;background:#76b900;color:#0a0e14;font-size:13px;font-weight:800;padding:10px 24px;border-radius:8px;text-decoration:none;letter-spacing:0.5px}
+
+/* Footer */
+.tagline{text-align:center;padding:16px 0;font-size:10px;color:#3a4a5a}
+.tagline a{color:#607080;text-decoration:none}
+
+@media(max-width:380px){.nums{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:768px){.wrap{max-width:700px;padding:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; adc3k.com</a>
+
+  <div class="hdr">
+    <div class="co">ADC<span>3K</span></div>
+    <div class="tagline">Louisiana's NVIDIA Neocloud</div>
+    <div class="sub">Advantage Design &amp; Construction &mdash; AI Infrastructure</div>
+    <div class="conf">Confidential &mdash; For Qualified Parties Only</div>
+  </div>
+
+  <!-- JENSEN QUOTE -->
+  <div class="quote-box">
+    <div class="qt">"When you come to work, they give you laptop and tokens. Token budget is now a real thing. Every engineer is going to have a token budget."</div>
+    <div class="src">Jensen Huang, NVIDIA CEO &mdash; GTC 2026 Financial Analyst Q&amp;A (Mar 17, 2026)</div>
+  </div>
+
+  <!-- INDUSTRY QUOTES -->
+  <div class="quote-box">
+    <div class="qt">"NVIDIA's Vera Rubin platform gives us the compute, networking and system design to keep delivering while advancing the safety and reliability our customers depend on."</div>
+    <div class="src">Dario Amodei, CEO &amp; Co-Founder, Anthropic</div>
+  </div>
+  <div class="quote-box">
+    <div class="qt">"With NVIDIA Vera Rubin, we'll run more powerful models and agents at massive scale and deliver faster, more reliable systems to hundreds of millions of people."</div>
+    <div class="src">Sam Altman, CEO, OpenAI</div>
+  </div>
+  <div class="quote-box">
+    <div class="qt">"Inference is the engine of intelligence, powering every query, every agent and every application."</div>
+    <div class="src">Jensen Huang, NVIDIA CEO &mdash; Dynamo 1.0 Launch (GTC 2026)</div>
+  </div>
+
+  <!-- THE OPPORTUNITY -->
+  <div class="hl-box">
+    <h2>The Opportunity</h2>
+    <p><strong>$1 trillion</strong> in AI infrastructure demand through 2027. Tokens are the new unit of commerce. Every enterprise will have a token budget. The entire IT industry becomes a token reseller.</p>
+    <p>Neocloud market: <strong>$42B today, $250B+ by 2030</strong> (69% CAGR). 100+ neoclouds globally, 10-15 at meaningful US scale. Zero in Louisiana.</p>
+    <p>ADC is building <strong>Louisiana's first NVIDIA neocloud</strong> &mdash; energy-first, DSX-compliant, full NVIDIA stack. The same model that made Crusoe a $10B+ company.</p>
+  </div>
+
+  <!-- WHAT WE DO -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>What ADC Does<small>Token factory &mdash; not a data center, not a colo</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="stat">
+        <div class="label">Business Model</div>
+        <div class="value">Token Factory &mdash; Managed AI Inference</div>
+        <div class="note">Sell optimized tokens via NVIDIA Dynamo, not raw GPU hours. Software margin on top of hardware.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Stack</div>
+        <div class="value">100% NVIDIA &mdash; No Alternatives</div>
+        <div class="note">GPU + CPU + LPU + DPU + NIC + Switch + NVSwitch. Seven chips, one vendor, one reference design.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Inference Advantage</div>
+        <div class="value"><em>Dynamo 7x</em> + <em>Groq 35x</em> tokens/watt</div>
+        <div class="note">GPU handles heavy reasoning (prefill). Groq LPU handles fast output (decode). Dynamo orchestrates both. Best price per token in the market.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Revenue Streams</div>
+        <div class="value">Tokens + Power + Facility Modules</div>
+        <div class="note">1) Managed inference (primary). 2) Training capacity (BMaaS). 3) Grid power export. 4) ADC 3K facility module sales. 5) Heat recovery (future).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY NOT BMaaS -->
+  <div class="quote-box">
+    <div class="qt">"100% of the world's IT industry will become resellers of OpenAI and Anthropic" &mdash; while integrating open models for domain-specific work.</div>
+    <div class="src">Jensen Huang, GTC 2026 &mdash; on the token economy and why infrastructure operators must sell optimized tokens, not GPU hours</div>
+  </div>
+
+  <!-- WILLOW GLEN -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Willow Glen Terminal <span class="chip chip-blue">PRIMARY SITE</span><small>Former 2,200 MW Entergy station &mdash; St. Gabriel, LA (Iberville Parish)</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="nums">
+        <div class="num"><div class="val">700</div><div class="lbl">Acres</div></div>
+        <div class="num"><div class="val">230kV</div><div class="lbl">Substation</div></div>
+        <div class="num"><div class="val">3,500'</div><div class="lbl">River Front</div></div>
+        <div class="num"><div class="val">43'</div><div class="lbl">Deep Dock</div></div>
+        <div class="num"><div class="val">20K SF</div><div class="lbl">Warehouse</div></div>
+        <div class="num"><div class="val">94/100</div><div class="lbl">Site Score</div></div>
+      </div>
+      <div class="stat">
+        <div class="label">Infrastructure Already On-Site</div>
+        <div class="value">$10-20M in existing infrastructure</div>
+        <div class="note">Live 230kV + 138kV bidirectional Entergy substation. 2.33M barrel tank farm. CN Railway access. Pipeline corridor. M2 Heavy Industrial zoning. FEMA Zone X (minimal flood risk). I-10 highway access. Former river water cooling intake from power station era.</div>
+      </div>
+      <div class="stat">
+        <div class="label">What ADC Brings to This Property</div>
+        <div class="value">NVIDIA neocloud &mdash; <em>revenue from day one</em></div>
+        <div class="note">NVIDIA ships complete liquid-cooled racks. ADC builds the facility: water loop, heat rejection (river-enhanced), power connection, InfiniBand spine, security, permitting. Licensed GC in Louisiana. Weeks from lease signing to operational.</div>
+      </div>
+      <div class="stat">
+        <div class="label">For the Property Owner</div>
+        <div class="value">Compute revenue on existing acreage</div>
+        <div class="note">Revenue share on AI compute. Property value multiplied. Complementary to current bulk liquids terminal. Renewable energy aligns with ownership's green brand. NVIDIA's name on the site changes the conversation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POWER ARCHITECTURE -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Power Architecture <span class="chip chip-green">ENERGY MOAT</span><small>AI factories are power plants that think</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="stat">
+        <div class="label">Layer 1 &mdash; Primary</div>
+        <div class="value">Renewable Fuels + Solar + Battery</div>
+        <div class="note">Dock-imported renewable fuels. Ground-mount solar on cleared acreage. Battery storage for peak shaving. 24/7 baseload.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Layer 2 &mdash; Secondary</div>
+        <div class="value">Natural Gas (Henry Hub Pipeline)</div>
+        <div class="note">Pipeline on-site. Henry Hub pricing ~60 miles away. Cheapest nat gas in the country at source.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Layer 3 &mdash; Dual Direction</div>
+        <div class="value">Grid 230kV Bidirectional</div>
+        <div class="note">Import when needed, export when generating surplus. Revenue from grid sales. Live Entergy substation already on-site.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Layer 4 &mdash; Emergency</div>
+        <div class="value">Diesel Gensets</div>
+        <div class="note">On-site fuel. Pipeline-independent. Last resort only.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASING -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Deployment Phases<small>Weeks to first rack &mdash; not years</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="tl">
+        <div class="tl-row">
+          <div class="tl-phase">Phase 1A</div>
+          <div class="tl-desc"><strong>3 MW &mdash; First racks in existing 20K SF warehouse.</strong> Prove concept, establish InfiniBand spine. NVIDIA liquid-cooled racks + facility water loop + river-enhanced heat rejection.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase 1B</div>
+          <div class="tl-desc"><strong>6 MW &mdash; Scale to full warehouse.</strong> Add racks to spine. Groq LPX inference racks for token factory operations.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase 1C</div>
+          <div class="tl-desc"><strong>12 MW &mdash; Warehouse maxed.</strong> Full fat-tree InfiniBand topology operational. Token revenue at scale.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase 2</div>
+          <div class="tl-desc"><strong>50+ MW &mdash; Campus expansion (Y2-3).</strong> 2-3 new buildings on acreage. Ground-mount solar farm. Extended InfiniBand fabric across buildings.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase 3</div>
+          <div class="tl-desc"><strong>100+ MW &mdash; Full campus (Y3-5).</strong> Largest DSX-compliant deployment in Louisiana. NVIDIA reference site. Grid export revenue.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKET COMP -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Market Validation<small>Neoclouds with NVIDIA investment</small></h2>
+    </div>
+    <div class="sec-body">
+      <table class="comp-tbl">
+        <tr><th>Company</th><th>Valuation</th><th>NVIDIA</th><th>Model</th></tr>
+        <tr><td>CoreWeave</td><td>$71B</td><td>$3.3B stake</td><td>Scale</td></tr>
+        <tr><td>Nebius</td><td>$22-24B</td><td>$2B stake</td><td>Sovereign</td></tr>
+        <tr><td>Crusoe</td><td>$10B+</td><td>Indirect</td><td class="green">Energy-first</td></tr>
+        <tr><td>Lambda</td><td>$5.9B+</td><td>$1.5B lease</td><td>Developer</td></tr>
+        <tr><td>IREN</td><td>$3.7B</td><td>GPU orders</td><td>Microsoft</td></tr>
+        <tr><td class="green">ADC</td><td class="amber">Pre-raise</td><td>Target: NCP</td><td class="green">Energy-first</td></tr>
+      </table>
+      <div class="stat" style="margin-top:8px">
+        <div class="label">Local Comp &mdash; Hut 8 River Bend (45 min north)</div>
+        <div class="value">$10B Phase 1 &mdash; 245 MW &mdash; Google backstop</div>
+        <div class="note">611 acres in West Feliciana Parish. 15-year $7B NNN lease, $454M avg annual NOI, 3% escalator. Jacobs EPCM, JP Morgan + Goldman financing. Q2 2027 operational. Same Mississippi River corridor as Willow Glen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT NVIDIA SHIPS -->
+  <div class="hl-box hl-purple">
+    <h2>What NVIDIA Ships (We Receive)</h2>
+    <p><strong>Vera Rubin NVL72 GPU Racks</strong> &mdash; 72 GPUs + 36 CPUs, 700M tokens/sec per rack. Liquid cooled, 2-hour install. 45&deg;C hot water.</p>
+    <p><strong>Groq 3 LPX Inference Racks</strong> &mdash; 256 LPUs, 128 GB SRAM, 35x tokens/watt. The decode engine.</p>
+    <p><strong>Vera CPU Racks</strong> &mdash; 256 processors, agentic workloads, KV cache management.</p>
+    <p><strong>BlueField-4 STX Storage + Spectrum-6 SPX Networking</strong> &mdash; AI-native storage and co-packaged optics networking.</p>
+    <p><strong>Dynamo 1.0 + NemoClaw</strong> &mdash; Inference OS + agent OS. Open source. The software multiplier.</p>
+  </div>
+
+  <!-- WHAT ADC BUILDS -->
+  <div class="hl-box">
+    <h2>What ADC Builds (Our Value-Add)</h2>
+    <p><strong>DSX-compliant facility</strong> &mdash; built to NVIDIA's reference design. Power, cooling, network topology per spec.</p>
+    <p><strong>Facility water loop + heat rejection</strong> &mdash; Mississippi River water for enhanced cooling. Cooling towers / dry coolers.</p>
+    <p><strong>Power connection</strong> &mdash; on-site 230kV substation + 4-layer mini grid (renewable + gas + grid + diesel).</p>
+    <p><strong>InfiniBand spine</strong> &mdash; Quantum-X800 switches between racks. Fat-tree topology.</p>
+    <p><strong>Physical security</strong> &mdash; autonomous drone perimeter (Skydio X10) + environmental monitoring.</p>
+    <p><strong>Permitting + GC buildout</strong> &mdash; licensed General Contractor in Louisiana. We pull our own permits. Weeks, not months.</p>
+    <p><strong>Operations</strong> &mdash; 24/7 NOC, managed inference via Dynamo, token sales, customer onboarding.</p>
+  </div>
+
+  <!-- LOUISIANA ADVANTAGE -->
+  <div class="hl-box hl-orange">
+    <h2>Louisiana Advantage</h2>
+    <p><strong>Best AI tax incentives in the country.</strong> LED Act 730 (Quality Jobs): up to 25% payroll rebate. ITEP: 80% property tax exemption for 10 years. Digital Media: 40% tax credit on infrastructure. Enterprise Zone: $2,500/job + 4% sales tax rebate.</p>
+    <p><strong>Energy at source.</strong> Henry Hub pipeline gas pricing. Solar irradiance comparable to parts of Arizona. Cheapest reliable power available.</p>
+    <p><strong>Workforce.</strong> 25+ years of ROV/subsea robotics operators &mdash; field-proven people who already troubleshoot remote, mission-critical electronic systems. A hiring moat no other AI company can access.</p>
+    <p><strong>No NVIDIA neocloud in the Gulf South.</strong> The only NCP between Houston and Atlanta. Regional monopoly position.</p>
+  </div>
+
+  <!-- JENSEN TAKEAWAYS -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Jensen Huang &mdash; GTC 2026 Key Takeaways <span class="chip chip-orange">ANALYST Q&amp;A</span><small>Financial analyst meeting, March 17, 2026</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="stat">
+        <div class="label">Token Economy</div>
+        <div class="value">"Token budget is now a real thing"</div>
+        <div class="note">Every engineer gets a laptop and tokens. Token budgets are corporate infrastructure. Tokens are the unit of AI commerce.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Model Layer Ranking</div>
+        <div class="value">OpenAI &rarr; Open Source &rarr; Anthropic &rarr; xAI</div>
+        <div class="note">Jensen ranked the model providers. Open source (Nemotron/OpenClaw) is #2 &mdash; goal is "near the frontier." 100% of IT becomes token resellers.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Revenue Growth</div>
+        <div class="value">OpenAI + Anthropic: "$1-2 billion a week"</div>
+        <div class="note">Jensen wished they were public companies to prove the tokens-to-revenue equation. The demand curve is exponential.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Infrastructure Demand</div>
+        <div class="value">$1 trillion in orders through 2027</div>
+        <div class="note">Blackwell + Vera Rubin combined. Every rack NVIDIA ships needs a facility to receive it. That's ADC's business.</div>
+      </div>
+      <div class="stat">
+        <div class="label">OpenClaw</div>
+        <div class="value">"The operating system of an AI computer"</div>
+        <div class="note">Every company needs an OpenClaw strategy. Jensen compared it to Linux, Internet, mobile/cloud shifts. Agentic AI is at an inflection point.</div>
+      </div>
+      <div class="stat">
+        <div class="label">The Multiplier</div>
+        <div class="value">350x inference gain in 2 years</div>
+        <div class="note">Hardware (Rubin 5x) x Software (Dynamo 7x) x Architecture (Groq decode 10x) = 350x. Same power budget, 350x more tokens.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NVIDIA CERTIFICATION PATH -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>NVIDIA Partnership Path<small>Certification ladder to full NCP designation</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="tl">
+        <div class="tl-row">
+          <div class="tl-phase" style="color:#ff6b35">NOW</div>
+          <div class="tl-desc"><strong>NPN Portal Registration</strong> &mdash; NVIDIA Partner Network. Data Center Partner + Cloud Partner tracks. Enterprise sales engagement.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">PHASE 1</div>
+          <div class="tl-desc"><strong>DGX-Ready Facility Certification</strong> &mdash; validates power, cooling, high-density capacity. Willow Glen target.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">OPERATE</div>
+          <div class="tl-desc"><strong>NVIDIA Cloud Partner (NCP)</strong> &mdash; hosted GPU compute provider. Part of NPN. NCPs have deployed 1M+ GPUs / 1.7 GW capacity.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">SCALE</div>
+          <div class="tl-desc"><strong>Reference Platform NCP</strong> &mdash; co-design partnership with NVIDIA. Early hardware access. Where CoreWeave and Nebius sit.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDER -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <h2>Founder<small>Scott Tomsu &mdash; 25+ years mission-critical operations</small></h2>
+    </div>
+    <div class="sec-body">
+      <div class="stat">
+        <div class="label">Background</div>
+        <div class="value">ROV Superintendent &mdash; Deepwater Robotics</div>
+        <div class="note">25+ years operating mission-critical robotic systems at 3,000+ meters depth. Gulf of America, West Africa, Brazil, Canada. Commercial saturation diver (760 ft). 48+ documented deployments across 5 countries.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Certifications</div>
+        <div class="value">NCA-AIIO + CompTIA A+/Net+ + 30+ Technical</div>
+        <div class="note">NVIDIA Certified Associate &mdash; AI Infrastructure &amp; Operations. 8 NVIDIA credentials. CompTIA A+, Network+. IMCA R01 ROV Supervisor. Commercial Diver. FAA Private Pilot. Crane Operator. NDT Ultrasonics.</div>
+      </div>
+      <div class="stat">
+        <div class="label">Why This Matters</div>
+        <div class="value">Infrastructure operator who moved into tech</div>
+        <div class="note">Not a tech founder who read about infrastructure. 25 years keeping mission-critical systems running in the most extreme environments on earth. Licensed GC. Knows power, cooling, deployment, 24/7 ops, and where to find the workforce.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2>Let's Talk</h2>
+    <p>Confidential discussions. NDA available on request.</p>
+    <a href="mailto:scott@adc3k.com">scott@adc3k.com</a>
+    <p style="margin-top:10px;font-size:11px;color:#607080">337-780-1535 &nbsp;&middot;&nbsp; Lafayette, Louisiana</p>
+  </div>
+
+  <div class="tagline">
+    Advantage Design &amp; Construction &nbsp;|&nbsp; Lafayette, LA<br>
+    <a href="/hub">Mission Control</a> &nbsp;|&nbsp; <a href="/stack">NVIDIA Stack</a> &nbsp;|&nbsp; <a href="/">adc3k.com</a>
+  </div>
+</div>
+</body>
+</html>
