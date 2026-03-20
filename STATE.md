@@ -55,7 +55,7 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 
 | Project | Status | Next Action |
 |---------|--------|-------------|
-| **Willow Glen** | Deck live. DSX reference. Neocloud pitch. Investor page live. | CBRE/Bryce French. NVIDIA Inception. WGT partnership. ITEP. |
+| **Willow Glen** | Deck live. DSX reference. Neocloud pitch. Investor page live. | CBRE/Bryce French. NPN registration. WGT partnership. ITEP. |
 | **MARLIE I** | Engineering complete. Part of Lafayette city pitch. | City alignment via Lafayette AI Initiative. |
 | **ADC 3K** | DSX-compliant facility modules. Neocloud nodes. | Customer LOI. Financial model (token economics). |
 | **Trappeys** | Part of Lafayette city pitch. Historic tax credits angle. | UL Lafayette first contact (critical unlock). |
@@ -66,7 +66,7 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 | **NCA-AIIO Cert** | PASSED 2026-03-13. | Done. |
 | **NCP-AII Cert** | Did not pass. NVIDIA updating exam. | Retake when new version available. |
 | **GTC 2026** | Attended. All press releases integrated into stack page. | Debrief complete. |
-| **Neocloud Strategy** | Complete. Investor page live. Lafayette pitch live. | Submit NVIDIA Inception. Target DGX-Ready. |
+| **Neocloud Strategy** | Complete. Investor page live. Lafayette pitch live. | NPN registration. Target DGX-Ready certification. |
 
 ---
 
@@ -74,7 +74,7 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 
 ### Immediate — Time Sensitive
 - **ITEP filing** — must file BEFORE groundbreaking. Most critical single item.
-- **NVIDIA Inception** — application package ready, submit now
+- **NVIDIA Partner Network (NPN)** — register ADC as partner. Path: NPN → DGX-Ready → NCP
 - **UL Lafayette contact** — president, provost, or research computing director. Single biggest domino.
 
 ### Willow Glen
@@ -112,7 +112,7 @@ Last updated: 2026-03-19 (GTC 2026 Press Release Sprint + Lafayette City Pitch)
 ## Next Session — Starting Points
 1. **ITEP filing prep** — what's needed, timeline, forms
 2. **UL Lafayette approach** — who to contact, what to say, how to frame
-3. **NVIDIA Inception submission** — final review and submit
+3. **NVIDIA Partner Network registration** — NPN → DGX-Ready → NCP path
 4. **Financial model update** — token factory economics (Dynamo 7x, Groq 35x)
 5. **Manufacturing re-scope** — factory station layout for DSX facility modules
 6. **Deep-dive education images** — replace remaining immersion images on site
