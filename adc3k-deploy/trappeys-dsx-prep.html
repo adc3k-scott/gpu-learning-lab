@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappeys DSX Prep Kit — Every Input Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#06b6d4;--solar:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+
+.header{text-align:center;padding:60px 24px 40px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.header h1{font-size:clamp(24px,3.5vw,42px);font-weight:800;color:var(--bright);line-height:1.1}
+.header h1 span{color:var(--green)}
+.header .sub{font-size:15px;color:var(--dim);max-width:750px;margin:16px auto 0}
+
+.section{padding:48px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:26px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:28px;max-width:700px}
+
+/* STATUS BANNER */
+.status-banner{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:24px auto;max-width:1100px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.status-banner .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-ready{background:var(--green);box-shadow:0 0 8px rgba(0,232,122,0.5)}
+.dot-pending{background:var(--amber);box-shadow:0 0 8px rgba(255,165,0,0.5)}
+.dot-future{background:var(--dim)}
+.status-banner .s-label{font-size:13px;font-weight:600;color:var(--bright);min-width:160px}
+.status-banner .s-note{font-size:12px;color:var(--dim);flex:1}
+
+/* SPEC TABLE */
+.spec-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px}
+.spec-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);padding:10px 14px;border-bottom:2px solid var(--border);font-weight:600}
+.spec-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.spec-table .field{font-weight:600;color:var(--bright);white-space:nowrap}
+.spec-table .value{font-family:'IBM Plex Mono',monospace;color:var(--green)}
+.spec-table .note{font-size:11px;color:var(--dim);max-width:340px}
+.spec-table tr:last-child td{border-bottom:none}
+.spec-table .group-header td{border-bottom:2px solid var(--border);padding-top:20px;font-weight:700;color:var(--blue);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+
+/* COPY BLOCK */
+.copy-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin:16px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.8;color:var(--text);overflow-x:auto;white-space:pre-wrap;position:relative}
+.copy-block .label{position:absolute;top:8px;right:12px;font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;font-family:'Inter',sans-serif}
+
+/* CARDS */
+.prep-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:20px}
+.prep-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative}
+.prep-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.prep-card .card-type{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.prep-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.prep-card .card-spec{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 12px;border-radius:6px;line-height:1.8}
+
+/* TOPOLOGY DIAGRAM */
+.topo{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;margin-top:24px;overflow-x:auto}
+.topo h3{font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;text-align:center}
+.topo pre{font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.7;color:var(--text);text-align:center;white-space:pre}
+.topo .highlight{color:var(--green);font-weight:700}
+.topo .dimmed{color:var(--dim)}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin-top:16px}
+.checklist li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.checklist li:last-child{border-bottom:none}
+.check{font-family:'IBM Plex Mono',monospace;font-weight:700;flex-shrink:0;width:20px;text-align:center}
+.check-done{color:var(--green)}
+.check-todo{color:var(--amber)}
+.check-future{color:var(--dim)}
+
+/* CALLOUT */
+.callout{padding:20px;border-radius:8px;margin:20px 0;font-size:13px;line-height:1.7}
+.callout-green{background:rgba(0,232,122,0.08);border-left:3px solid var(--green)}
+.callout-amber{background:rgba(255,165,0,0.08);border-left:3px solid var(--amber)}
+.callout-blue{background:rgba(59,158,255,0.08);border-left:3px solid var(--blue)}
+.callout-red{background:rgba(239,68,68,0.08);border-left:3px solid var(--red)}
+
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim)}
+
+@media(max-width:768px){
+  .prep-cards{grid-template-columns:1fr}
+  .status-banner{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">DSX Prep Kit // adc3k.com/trappeys-dsx-prep</div>
+  <h1>Trappeys Cannery<br><span>NVIDIA DSX Input Package</span></h1>
+  <p class="sub">Every value pre-filled. Every topology pre-calculated. Walk into DSX Air with copy-paste inputs, not questions. Save Omniverse for last &mdash; it needs hardware we don't have yet.</p>
+</div>
+
+<!-- STATUS BANNERS -->
+<div style="padding:24px;max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:8px">
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">DSX Air Inputs</div>
+    <div class="s-note">READY &mdash; all network topology values pre-filled below. Sign up at air.nvidia.com and enter these.</div>
+  </div>
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">DSX Boost Config</div>
+    <div class="s-note">READY &mdash; power envelope and optimization targets calculated for solar-constrained site.</div>
+  </div>
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">DSX Flex Power Map</div>
+    <div class="s-note">READY &mdash; 3-layer power stack mapped to DSX Flex grid collaboration parameters.</div>
+  </div>
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">DSX Exchange I/O Map</div>
+    <div class="s-note">READY &mdash; IT/OT integration points cataloged. Sensor list and dashboard layout defined.</div>
+  </div>
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">Certification Checklist</div>
+    <div class="s-note">READY &mdash; NPN &rarr; DGX-Ready &rarr; NCP path mapped with Trappeys-specific milestones.</div>
+  </div>
+  <div class="status-banner">
+    <div class="dot dot-ready"></div>
+    <div class="s-label">Omniverse Blueprint</div>
+    <div class="s-note">READY VIA RUNPOD &mdash; L40S cloud GPU ($0.74/hr, ~270 hrs on $200 balance). Setup script built. No $7K workstation needed. Full docs + quick start below.</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: DSX AIR — NETWORK TOPOLOGY -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Tool 1 &mdash; DSX Air</div>
+  <h2>Network Topology — Pre-Filled for Trappeys</h2>
+  <p class="sub">DSX Air models the logical infrastructure: switches, NICs, fabrics, software stack. These are the exact values to enter when you open the free trial at <strong>air.nvidia.com</strong>.</p>
+
+  <div class="callout callout-green">
+    <strong>Why these numbers:</strong> Trappeys Phase 3 starts with 4 NVL72 racks in the clear-span warehouse. That's 288 Blackwell GPUs, ~520 kW IT load, manageable on grid + solar. Phase 4 scales to 8 racks (576 GPUs, ~1 MW). The network is designed for 8 but deployed at 4.
+  </div>
+
+  <!-- COMPUTE PROFILE -->
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Compute Profile</h3>
+  <table class="spec-table">
+    <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="group-header"><td colspan="3">GPU Compute</td></tr>
+      <tr><td class="field">GPU Platform</td><td class="value">GB200 NVL72</td><td class="note">Single rack = 72 Blackwell GPUs + 36 Grace CPUs. Liquid cooled.</td></tr>
+      <tr><td class="field">Phase 3 Racks</td><td class="value">4</td><td class="note">Initial deployment. 288 GPUs. Fits clear-span warehouse row 1.</td></tr>
+      <tr><td class="field">Phase 4 Racks</td><td class="value">8</td><td class="note">Full scale. 576 GPUs. Design network for this, deploy at 4.</td></tr>
+      <tr><td class="field">GPUs Total (Phase 3)</td><td class="value">288</td><td class="note">4 racks &times; 72 GPUs/rack</td></tr>
+      <tr><td class="field">GPUs Total (Phase 4)</td><td class="value">576</td><td class="note">8 racks &times; 72 GPUs/rack = 1 Scalable Unit (B300 equivalent)</td></tr>
+      <tr><td class="field">Power per Rack</td><td class="value">130 kW</td><td class="note">120-140 kW range. Using 130 kW for planning.</td></tr>
+      <tr><td class="field">IT Load (Phase 3)</td><td class="value">520 kW</td><td class="note">4 racks &times; 130 kW. Plus cooling + network + storage overhead.</td></tr>
+      <tr><td class="field">IT Load (Phase 4)</td><td class="value">1,040 kW</td><td class="note">8 racks &times; 130 kW. Requires full solar + grid.</td></tr>
+      <tr><td class="field">Total Facility Load (Phase 3)</td><td class="value">~650 kW</td><td class="note">520 kW IT + ~130 kW cooling/network/storage (PUE ~1.25)</td></tr>
+      <tr><td class="field">Total Facility Load (Phase 4)</td><td class="value">~1,300 kW</td><td class="note">1,040 kW IT + ~260 kW overhead. Matches solar capacity.</td></tr>
+      <tr><td class="field">NVLink BW per GPU</td><td class="value">1,800 GB/s</td><td class="note">NVLink 5.0. 72 GPUs all-to-all within rack via NVSwitch 4.0.</td></tr>
+      <tr><td class="field">Inference Engine</td><td class="value">Dynamo 1.0</td><td class="note">7x throughput. Disaggregated prefill/decode. KV-aware routing.</td></tr>
+
+      <tr class="group-header"><td colspan="3">InfiniBand Compute Fabric</td></tr>
+      <tr><td class="field">Fabric Type</td><td class="value">InfiniBand XDR 800G</td><td class="note">Quantum-X800 switches. Rail-optimized fat-tree topology.</td></tr>
+      <tr><td class="field">Switch Model</td><td class="value">Quantum-X800 (Q3400-RA)</td><td class="note">144 ports &times; 800 Gb/s. Sub-100ns latency. 14.4 TFLOPS SHARP.</td></tr>
+      <tr><td class="field">NIC Model</td><td class="value">ConnectX-8</td><td class="note">XDR 800 Gb/s. PCIe Gen6. First 800G SuperNIC.</td></tr>
+      <tr><td class="field">Topology</td><td class="value">2-level fat-tree (rail-optimized)</td><td class="note">Leaf + spine. Non-blocking at 8-rack scale.</td></tr>
+      <tr><td class="field">Leaf Switches (Phase 3)</td><td class="value">4</td><td class="note">1 leaf per NVL72 rack (maps to B300 SU table: 1 SU = 4 leaf).</td></tr>
+      <tr><td class="field">Leaf Switches (Phase 4)</td><td class="value">8</td><td class="note">Scale to 8 leafs at full deployment.</td></tr>
+      <tr><td class="field">Spine Switches</td><td class="value">2</td><td class="note">Two-plane spine. Non-blocking for up to 8 racks. Handles Phase 3+4.</td></tr>
+      <tr><td class="field">ConnectX-8 NICs (Phase 3)</td><td class="value">288</td><td class="note">1 per GPU (NVL72 rack has integrated NICs).</td></tr>
+      <tr><td class="field">Node-to-Leaf Cables (Phase 3)</td><td class="value">288</td><td class="note">OSFP 800G. DAC for in-row, AOC for cross-row.</td></tr>
+      <tr><td class="field">Leaf-to-Spine Cables (Phase 3)</td><td class="value">288</td><td class="note">Matching uplinks. Full bisection bandwidth.</td></tr>
+      <tr><td class="field">SHARP</td><td class="value">Enabled</td><td class="note">In-network reduction. 14.4 TFLOPS per Q-X800. Cuts GPU SM usage for collectives.</td></tr>
+      <tr><td class="field">Adaptive Routing</td><td class="value">Enabled</td><td class="note">Port-load balancing + ARN congestion notification.</td></tr>
+
+      <tr class="group-header"><td colspan="3">Storage Fabric</td></tr>
+      <tr><td class="field">Storage Type</td><td class="value">DDN or WEKA or VAST</td><td class="note">InfiniBand-attached, POSIX-compliant, GDS-capable.</td></tr>
+      <tr><td class="field">Storage Fabric</td><td class="value">InfiniBand NDR 400G</td><td class="note">QM9700 switches. Separate from compute fabric.</td></tr>
+      <tr><td class="field">Storage Switch</td><td class="value">Quantum-2 QM9700-NS2F</td><td class="note">64 ports &times; NDR 400 Gb/s.</td></tr>
+      <tr><td class="field">Storage Switches</td><td class="value">2</td><td class="note">Redundant pair. Handles all 8 racks.</td></tr>
+      <tr><td class="field">Min I/O per Node</td><td class="value">40 GB/s</td><td class="note">NVIDIA requirement. GPUDirect Storage path.</td></tr>
+      <tr><td class="field">BlueField DPU</td><td class="value">BlueField-3</td><td class="note">Storage fabric offload. NVMe-oF/TCP. 16 Arm cores.</td></tr>
+      <tr><td class="field">GPUDirect Storage</td><td class="value">Enabled</td><td class="note">Bypass CPU. DMA direct to GPU memory. 3.5x bandwidth.</td></tr>
+      <tr><td class="field">Storage Capacity (Phase 3)</td><td class="value">~500 TB usable</td><td class="note">Model/dataset storage. Scale with compute.</td></tr>
+
+      <tr class="group-header"><td colspan="3">Management Networks</td></tr>
+      <tr><td class="field">In-Band Mgmt Switch</td><td class="value">Spectrum-4 SN5610</td><td class="note">64 &times; 800G Ethernet. Manages OS, provisioning, monitoring.</td></tr>
+      <tr><td class="field">In-Band Switches</td><td class="value">1</td><td class="note">Single switch handles 8 racks in-band.</td></tr>
+      <tr><td class="field">Out-of-Band Mgmt Switch</td><td class="value">SN2201</td><td class="note">48 &times; 1G + 4 &times; 100G. BMC/IPMI. Lights-out management.</td></tr>
+      <tr><td class="field">OOB Switches</td><td class="value">1</td><td class="note">Single switch. Connected to NOC (riverfront 2F) + MARLIE I backup.</td></tr>
+
+      <tr class="group-header"><td colspan="3">Software Stack</td></tr>
+      <tr><td class="field">Cluster Management</td><td class="value">Base Command Manager</td><td class="note">cmsh CLI. Provisioning, imaging, workload scheduling.</td></tr>
+      <tr><td class="field">GPU Health</td><td class="value">DCGM + DCGM-Exporter</td><td class="note">Prometheus metrics. GPU temp, ECC, XID, utilization.</td></tr>
+      <tr><td class="field">Fabric Management</td><td class="value">UFM Enterprise</td><td class="note">InfiniBand health, adaptive routing, SHARP tree mgmt.</td></tr>
+      <tr><td class="field">Workload Scheduler</td><td class="value">Run:ai</td><td class="note">Multi-tenant GPU scheduling. Fractional allocation. Fair-share.</td></tr>
+      <tr><td class="field">Inference Engine</td><td class="value">Dynamo 1.0</td><td class="note">7x throughput. Open-source. Prefill/decode disaggregation.</td></tr>
+      <tr><td class="field">Facility Management</td><td class="value">NVIDIA Mission Control</td><td class="note">Power, cooling, compute health. NOC dashboard.</td></tr>
+      <tr><td class="field">Container Platform</td><td class="value">Kubernetes + GPU Operator</td><td class="note">NVIDIA device plugin, GFD, MIG manager, DCGM DaemonSet.</td></tr>
+      <tr><td class="field">Multi-Tenancy</td><td class="value">Run:ai + MIG (mixed)</td><td class="note">UL Lafayette + commercial workloads on same cluster. Isolated.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- TOPOLOGY DIAGRAM -->
+  <div class="topo">
+    <h3>Trappeys InfiniBand Fabric &mdash; Phase 3 (4 Racks) / Phase 4 (8 Racks)</h3>
+    <pre>
+                    ┌──────────────────────────────────────┐
+                    │        <span class="highlight">SPINE LAYER (2 switches)</span>        │
+                    │  Quantum-X800 #1     Quantum-X800 #2 │
+                    │  (144p × 800G)       (144p × 800G)   │
+                    └─────┬───┬───┬───┬───┬───┬───┬────────┘
+                          │   │   │   │   │   │   │
+                    ┌─────┴───┴───┴───┴───┴───┴───┴────────┐
+                    │        <span class="highlight">LEAF LAYER (4-8 switches)</span>       │
+                    │  Leaf #1  Leaf #2  Leaf #3  Leaf #4   │
+                    │  <span class="dimmed">[Leaf #5  Leaf #6  Leaf #7  Leaf #8]</span>  │
+                    └─────┬───┬───┬───┬───┬───┬───┬────────┘
+                          │   │   │   │   │   │   │
+          ┌───────────────┴───┴───┴───┴───┴───┴───┴──────────────────┐
+          │                  <span class="highlight">COMPUTE RACKS</span>                           │
+          │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐        │
+          │  │ NVL72 #1│ │ NVL72 #2│ │ NVL72 #3│ │ NVL72 #4│        │
+          │  │ 72 GPUs │ │ 72 GPUs │ │ 72 GPUs │ │ 72 GPUs │        │
+          │  │ 130 kW  │ │ 130 kW  │ │ 130 kW  │ │ 130 kW  │        │
+          │  └─────────┘ └─────────┘ └─────────┘ └─────────┘        │
+          │  <span class="dimmed">┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐</span>        │
+          │  <span class="dimmed">│ NVL72 #5│ │ NVL72 #6│ │ NVL72 #7│ │ NVL72 #8│  Phase 4</span> │
+          │  <span class="dimmed">│ 72 GPUs │ │ 72 GPUs │ │ 72 GPUs │ │ 72 GPUs │</span>        │
+          │  <span class="dimmed">└─────────┘ └─────────┘ └─────────┘ └─────────┘</span>        │
+          └──────────────────────────────────────────────────────────┘
+                          │                     │
+          ┌───────────────┴─────────────────────┴──────────────────┐
+          │              <span class="highlight">STORAGE FABRIC</span> (separate)                  │
+          │  QM9700 #1 (NDR 400G)     QM9700 #2 (NDR 400G)        │
+          │  └── DDN / WEKA / VAST storage array (~500 TB)         │
+          └────────────────────────────────────────────────────────┘
+          ┌────────────────────────────────────────────────────────┐
+          │              <span class="highlight">MANAGEMENT</span>                                 │
+          │  In-Band:  SN5610 (800G Eth)  &rarr;  BCM, DCGM, UFM       │
+          │  Out-Band: SN2201 (1G Eth)    &rarr;  BMC/IPMI, lights-out  │
+          │  Uplink:   LUS Fiber          &rarr;  Internet, MARLIE I    │
+          └────────────────────────────────────────────────────────┘
+    </pre>
+  </div>
+
+  <!-- SWITCH BILL OF MATERIALS -->
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:32px 0 12px">Switch + NIC Bill of Materials</h3>
+  <table class="spec-table">
+    <thead><tr><th>Component</th><th>Model</th><th>Qty (Ph3)</th><th>Qty (Ph4)</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="field">Compute Spine</td><td class="value">Quantum-X800 Q3400-RA</td><td class="value">2</td><td class="value">2</td><td class="note">144p &times; 800G each. Handles full scale.</td></tr>
+      <tr><td class="field">Compute Leaf</td><td class="value">Quantum-X800 Q3400-RA</td><td class="value">4</td><td class="value">8</td><td class="note">1 per NVL72 rack. Rail-optimized.</td></tr>
+      <tr><td class="field">Storage Switch</td><td class="value">Quantum-2 QM9700-NS2F</td><td class="value">2</td><td class="value">2</td><td class="note">64p &times; NDR 400G. Redundant pair.</td></tr>
+      <tr><td class="field">In-Band Mgmt</td><td class="value">Spectrum-4 SN5610</td><td class="value">1</td><td class="value">1</td><td class="note">64p &times; 800G Ethernet.</td></tr>
+      <tr><td class="field">OOB Mgmt</td><td class="value">SN2201</td><td class="value">1</td><td class="value">1</td><td class="note">48p &times; 1G + 4 &times; 100G.</td></tr>
+      <tr><td class="field">Compute NIC</td><td class="value">ConnectX-8 SuperNIC</td><td class="value">288</td><td class="value">576</td><td class="note">800G XDR IB. Integrated in NVL72.</td></tr>
+      <tr><td class="field">Storage DPU</td><td class="value">BlueField-3</td><td class="value">4</td><td class="value">8</td><td class="note">1 per rack. NVMe-oF offload.</td></tr>
+      <tr><td class="field">UFM Appliance</td><td class="value">UFM 3.5 Enterprise</td><td class="value">1</td><td class="value">1</td><td class="note">Fabric management. Single instance.</td></tr>
+      <tr style="font-weight:700;color:var(--solar)"><td>Total Switches</td><td></td><td class="value" style="color:var(--solar)">10</td><td class="value" style="color:var(--solar)">14</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: DSX BOOST — POWER OPTIMIZATION -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Tool 2 &mdash; DSX Boost</div>
+  <h2>Power Optimization — Solar-Constrained Site</h2>
+  <p class="sub">DSX Boost delivers 93% throughput at 85% power. On a site where every watt comes from First Solar panels or metered grid, this is the single biggest revenue multiplier.</p>
+
+  <div class="prep-cards">
+    <div class="prep-card">
+      <h3>Without DSX Boost</h3>
+      <div class="card-type" style="color:var(--dim)">Baseline</div>
+      <div class="card-spec">
+Phase 3 IT Load: 520 kW<br>
+GPU Throughput: 100% baseline<br>
+Tokens/sec (4 racks): ~2.8B tokens/sec<br>
+Revenue at $0.20/M tokens: ~$48K/day<br>
+Power cost (solar+grid): ~$0.06/kWh<br>
+Daily power cost: ~$750
+      </div>
+    </div>
+    <div class="prep-card">
+      <h3>With DSX Boost</h3>
+      <div class="card-type" style="color:var(--green)">Optimized</div>
+      <div class="card-spec">
+Phase 3 IT Load: <strong style="color:var(--green)">442 kW (85%)</strong><br>
+GPU Throughput: <strong style="color:var(--green)">93% (only 7% loss)</strong><br>
+Tokens/sec (4 racks): ~2.6B tokens/sec<br>
+Revenue at $0.20/M tokens: ~$44.6K/day<br>
+Power cost: ~$637/day<br>
+<strong style="color:var(--green)">Net: $113/day saved, or fit MORE racks in same envelope</strong>
+      </div>
+    </div>
+    <div class="prep-card">
+      <h3>The Real Play</h3>
+      <div class="card-type" style="color:var(--solar)">More Racks Same Power</div>
+      <div class="card-spec">
+520 kW power budget stays the same<br>
+With Boost: each rack draws 110 kW (not 130)<br>
+<strong style="color:var(--solar)">Fit ~4.7 racks instead of 4</strong><br>
+Translation: 5th rack feasible in Phase 3<br>
+That's 360 GPUs instead of 288<br>
++25% more compute, same power bill<br>
+<strong style="color:var(--green)">Boost pays for itself instantly</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-green">
+    <strong>DSX Boost activates at the GPU firmware level.</strong> It ships with NVL72 racks. No additional hardware purchase. You configure it via Base Command Manager. The optimization is automatic once enabled &mdash; Max-Q power profiles on Blackwell GPUs.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: DSX FLEX — POWER STACK MAPPING -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Tool 3 &mdash; DSX Flex</div>
+  <h2>3-Layer Power Stack &rarr; DSX Flex Parameters</h2>
+  <p class="sub">DSX Flex manages dynamic power balancing between generation sources, compute demand, and grid interaction. Here's how ADC's 3-layer stack maps to Flex's input model.</p>
+
+  <table class="spec-table">
+    <thead><tr><th>DSX Flex Parameter</th><th>Trappeys Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="group-header"><td colspan="3">Layer 1 &mdash; Primary (Solar + Battery)</td></tr>
+      <tr><td class="field">Generation Source</td><td class="value">First Solar Series 7 Array</td><td class="note">1,005 kW nameplate. 1,830 panels. Rooftop only (concrete pad = infrastructure yard).</td></tr>
+      <tr><td class="field">Nameplate Capacity</td><td class="value">1,005 kW DC</td><td class="note">Rooftops only. Concrete pad reserved for gensets/switchgear/cooling.</td></tr>
+      <tr><td class="field">AC Output (after inverter)</td><td class="value">~854 kW</td><td class="note">Assuming 85% DC-to-AC inverter efficiency.</td></tr>
+      <tr><td class="field">Peak Sun Hours</td><td class="value">4.5 hrs/day</td><td class="note">Lafayette, LA average. Seasonal range 3.5-5.5.</td></tr>
+      <tr><td class="field">Daily Solar Generation</td><td class="value">~3,843 kWh</td><td class="note">854 kW &times; 4.5 hrs. Real production varies.</td></tr>
+      <tr><td class="field">Battery Storage</td><td class="value">TBD (Phase 2+)</td><td class="note">On infrastructure yard (concrete pad). Size to cover 2-4 hours.</td></tr>
+      <tr><td class="field">Solar Cost</td><td class="value">$0.00/kWh</td><td class="note">No fuel cost. CapEx amortized. 30% ITC covers it.</td></tr>
+      <tr><td class="field">Nat Gas Gensets (Phase 5+)</td><td class="value">3-6 MW on concrete pad</td><td class="note">Infrastructure yard. Scale power ahead of compute.</td></tr>
+
+      <tr class="group-header"><td colspan="3">Layer 2 &mdash; Backup (LUS Grid)</td></tr>
+      <tr><td class="field">Grid Provider</td><td class="value">LUS (Lafayette Utilities System)</td><td class="note">Municipal utility. LUS Fiber 0.8 mi from site.</td></tr>
+      <tr><td class="field">Grid Connection</td><td class="value">Existing 3-phase on site</td><td class="note">Transformer bank visible in Power1.jpg. Needs upgrade for full load.</td></tr>
+      <tr><td class="field">Grid Rate</td><td class="value">~$0.08/kWh</td><td class="note">LUS commercial rate. Confirm with utility.</td></tr>
+      <tr><td class="field">Grid Role</td><td class="value">Night + cloudy backup</td><td class="note">Fills gap when solar &lt; compute demand. Never primary.</td></tr>
+      <tr><td class="field">Net Metering</td><td class="value">TBD &mdash; check LUS policy</td><td class="note">Sell excess midday solar back to grid if policy allows.</td></tr>
+      <tr><td class="field">Bidirectional</td><td class="value">Yes (if net metering)</td><td class="note">DSX Flex export capability. Revenue during low-compute periods.</td></tr>
+
+      <tr class="group-header"><td colspan="3">Layer 3 &mdash; Emergency (Diesel)</td></tr>
+      <tr><td class="field">Generator</td><td class="value">Diesel genset (TBD size)</td><td class="note">Size for full facility load: ~650 kW Phase 3, ~1,300 kW Phase 4.</td></tr>
+      <tr><td class="field">Fuel Storage</td><td class="value">On-site tank</td><td class="note">Pipeline-independent. Hurricane resilience.</td></tr>
+      <tr><td class="field">Runtime Target</td><td class="value">72 hours minimum</td><td class="note">At full load. ~72 hrs &times; 650 kW = ~47 MWh of fuel.</td></tr>
+      <tr><td class="field">Transfer Switch</td><td class="value">Automatic (ATS)</td><td class="note">Grid loss &rarr; diesel in &lt;10 seconds. UPS bridges gap.</td></tr>
+      <tr><td class="field">Trigger</td><td class="value">Grid + solar both down</td><td class="note">Only activates when Layer 1 AND Layer 2 fail simultaneously.</td></tr>
+
+      <tr class="group-header"><td colspan="3">DSX Flex Control Parameters</td></tr>
+      <tr><td class="field">Power Priority</td><td class="value">Solar &rarr; Battery &rarr; Grid &rarr; Diesel</td><td class="note">Always use cheapest source first.</td></tr>
+      <tr><td class="field">Compute Scaling</td><td class="value">Dynamic GPU power capping</td><td class="note">When solar dips, Boost reduces GPU power (85% power = 93% throughput).</td></tr>
+      <tr><td class="field">Grid Export Threshold</td><td class="value">Solar &gt; compute + charge</td><td class="note">Export surplus to grid when battery full and compute satisfied.</td></tr>
+      <tr><td class="field">Emergency Cutover</td><td class="value">&lt;10 sec (ATS)</td><td class="note">UPS covers gap. No GPU job loss.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: DSX EXCHANGE — IT/OT INTEGRATION -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Tool 4 &mdash; DSX Exchange</div>
+  <h2>IT/OT Integration — NOC Dashboard Map</h2>
+  <p class="sub">DSX Exchange bridges compute (IT) and facility operations (OT) into one view. This is what the NOC on the 2nd floor of the riverfront building sees on screen.</p>
+
+  <div class="prep-cards">
+    <div class="prep-card">
+      <h3>IT Layer (Compute)</h3>
+      <div class="card-type" style="color:var(--blue)">GPU + Network + Storage</div>
+      <div class="card-spec">
+<strong>DCGM Metrics:</strong><br>
+&bull; GPU utilization (per-GPU, per-rack)<br>
+&bull; GPU temperature (throttle alerts)<br>
+&bull; ECC errors (single-bit, double-bit)<br>
+&bull; XID error counts (fatal GPU errors)<br>
+&bull; Memory usage (HBM3e per GPU)<br>
+&bull; Power draw (per-GPU, per-rack)<br><br>
+<strong>UFM Metrics:</strong><br>
+&bull; InfiniBand port health (BER, errors)<br>
+&bull; Fabric utilization (% bandwidth used)<br>
+&bull; Adaptive routing decisions/sec<br>
+&bull; SHARP aggregation status<br><br>
+<strong>Workload Metrics (Run:ai):</strong><br>
+&bull; Tenant utilization (UL vs commercial)<br>
+&bull; Job queue depth<br>
+&bull; GPU allocation vs. capacity<br>
+&bull; Token throughput (tokens/sec)
+      </div>
+    </div>
+    <div class="prep-card">
+      <h3>OT Layer (Facility)</h3>
+      <div class="card-type" style="color:var(--solar)">Power + Cooling + Physical</div>
+      <div class="card-spec">
+<strong>Power Metrics:</strong><br>
+&bull; Solar array output (kW, real-time)<br>
+&bull; Inverter status (per string)<br>
+&bull; Battery SOC (% charge, if installed)<br>
+&bull; Grid draw (kW, $/hr running cost)<br>
+&bull; Diesel genset status (standby/running)<br>
+&bull; Total facility PUE (live calculation)<br><br>
+<strong>Cooling Metrics:</strong><br>
+&bull; Water tower tank temperature (buffer)<br>
+&bull; Water tower level (gallons)<br>
+&bull; CDU inlet/outlet temperature<br>
+&bull; Coolant flow rate (LPM per rack)<br>
+&bull; Gravity return pressure (tower to CDU)<br>
+&bull; Dry cooler fan speed + ambient (backup)<br>
+&bull; Coolant pressure differential<br><br>
+<strong>Physical Plant (CRITICAL — Lafayette humidity):</strong><br>
+&bull; Ambient temp (warehouse interior)<br>
+&bull; Relative humidity (TARGET: 40-50% RH)<br>
+&bull; Desiccant dehumidifier status + output<br>
+&bull; HVLS ceiling fan speed + air velocity<br>
+&bull; Underfloor airflow (elevated rack pedestals)<br>
+&bull; Water leak detection<br>
+&bull; Door/access sensors (Metropolis)
+      </div>
+    </div>
+    <div class="prep-card">
+      <h3>NOC Layout — Riverfront 2F</h3>
+      <div class="card-type" style="color:var(--green)">Command Center</div>
+      <div class="card-spec">
+<strong>Primary Display Wall:</strong><br>
+&bull; Screen 1: GPU cluster health (DCGM)<br>
+&bull; Screen 2: InfiniBand fabric (UFM)<br>
+&bull; Screen 3: Power stack (solar/grid/diesel)<br>
+&bull; Screen 4: Cooling + thermal map<br>
+&bull; Screen 5: Workload dashboard (Run:ai)<br>
+&bull; Screen 6: Security cameras (Metropolis)<br><br>
+<strong>Operator Stations:</strong><br>
+&bull; 2 workstations (Phase 3)<br>
+&bull; Remote access: MARLIE I backup NOC<br>
+&bull; Alerts: PagerDuty/OpsGenie integration<br><br>
+<strong>NVIDIA Mission Control</strong><br>
+&bull; Single pane aggregating all above<br>
+&bull; ADC Mission Control sits on top
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5A: RUNPOD DEPLOYMENT -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Tool 5A &mdash; RunPod Cloud Deployment</div>
+  <h2>Run Omniverse on RunPod — No $7K GPU Needed</h2>
+  <p class="sub">Instead of buying an RTX Pro 6000 Blackwell workstation, run the entire Omniverse DSX Blueprint on a RunPod L40S cloud GPU for $0.74/hr. $200 in credits = ~270 hours of simulation time. One-click setup.</p>
+
+  <div class="callout callout-green">
+    <strong>Why L40S:</strong> Same Ada Lovelace architecture as RTX workstation GPUs. 48GB VRAM. Full ray tracing cores for Omniverse Kit rendering. Data center form factor. Available on RunPod at community pricing.
+  </div>
+
+  <table class="spec-table">
+    <thead><tr><th>RunPod GPU</th><th>VRAM</th><th>Price/hr</th><th>$200 Budget</th><th>Omniverse Compatible</th></tr></thead>
+    <tbody>
+      <tr><td class="field">L40S</td><td class="value">48 GB</td><td class="value">~$0.74/hr</td><td class="note">~270 hours</td><td style="color:var(--green);font-weight:600">Best choice</td></tr>
+      <tr><td class="field">RTX A6000</td><td class="value">48 GB</td><td class="value">~$0.76/hr</td><td class="note">~263 hours</td><td style="color:var(--green);font-weight:600">Yes</td></tr>
+      <tr><td class="field">RTX 4090</td><td class="value">24 GB</td><td class="value">~$0.69/hr</td><td class="note">~290 hours</td><td style="color:var(--green);font-weight:600">Yes</td></tr>
+      <tr><td class="field">A100 / H100</td><td class="value">40-80 GB</td><td class="value">varies</td><td class="note">varies</td><td style="color:var(--red);font-weight:600">No display pipeline</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Option A: Automated (Python Script)</h3>
+  <div class="copy-block"><span class="label">ONE-CLICK DEPLOY</span># Set your RunPod API key (get from runpod.io → Settings → API Keys)
+export RUNPOD_API_KEY='rp_...'
+
+# Optional: Set NVIDIA API key for the AI Agent feature
+export NVIDIA_API_KEY='nvapi-...'
+
+# Run the deployment script
+python scripts/runpod_create_omniverse_pod.py
+
+# Script will:
+#   1. Check your RunPod balance
+#   2. Find the cheapest L40S / A6000 / RTX 4090 available
+#   3. Create a pod (Ubuntu 22.04, 50GB volume, ports 8081 + 49100)
+#   4. Print the connection URL</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Option B: Manual (RunPod Console)</h3>
+  <div class="copy-block"><span class="label">STEP BY STEP</span># 1. Go to runpod.io → Console → GPU Pods → Deploy
+# 2. Select GPU: NVIDIA L40S (or A6000 / RTX 4090)
+# 3. Template: RunPod PyTorch 2.4 (Ubuntu 22.04 + CUDA 12.4)
+# 4. Volume: 50 GB (for DSX Content Pack)
+# 5. Expose Ports: 8081/http, 49100/http
+# 6. Deploy
+
+# Once pod is running, open Web Terminal and run:
+cd /workspace
+apt-get update && apt-get install -y curl
+curl -sSL https://raw.githubusercontent.com/adhscott/gpu-learning-lab/main/scripts/runpod_omniverse_setup.sh | bash
+
+# Then launch (two terminals):
+# Terminal 1:
+cd /workspace/omniverse-dsx-blueprint && ./run_streaming.sh
+
+# Terminal 2:
+cd /workspace/omniverse-dsx-blueprint && ./run_web.sh
+
+# Access in browser:
+# https://&lt;POD_ID&gt;-8081.proxy.runpod.net/streaming.html</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Connecting: SSH Tunnel (Recommended)</h3>
+  <div class="copy-block"><span class="label">SSH TUNNEL</span># RunPod doesn't support UDP — WebRTC streaming needs it.
+# SSH tunnel bypasses this completely. Run from YOUR local machine:
+
+ssh -L 8081:localhost:8081 -L 49100:localhost:49100 root@&lt;RUNPOD_IP&gt; -p &lt;RUNPOD_PORT&gt;
+
+# Get SSH details: RunPod Console → Pod → Connect → SSH
+# Then open in YOUR local browser:
+#   http://localhost:8081/streaming.html
+
+# Alternative: RunPod HTTP proxy (quick checks only, 100s timeout):
+#   https://&lt;POD_ID&gt;-8081.proxy.runpod.net/streaming.html</div>
+
+  <div class="callout callout-amber">
+    <strong>STOP the pod when done!</strong> RunPod charges by the hour even when idle. Console &rarr; Pods &rarr; Stop. Your 50GB network volume persists ($3.50/month) so next launch is instant &mdash; no reinstall.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5B: OMNIVERSE BLUEPRINT — BUILDING INPUTS -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Tool 5B &mdash; Omniverse DSX Blueprint</div>
+  <h2>3D Digital Twin — Full Setup Guide + Building Inputs</h2>
+  <p class="sub">The NVIDIA Omniverse DSX Blueprint is an open-source framework for building, simulating, and optimizing AI factories as interactive 3D digital twins. Free on GitHub. Ships with a 50-acre reference site, GB200/GB300 NVL72 configs, thermal CFD, electrical simulation, and an AI agent you can talk to.</p>
+
+  <div class="callout callout-amber">
+    <strong>ADC Path:</strong> RunPod L40S cloud GPU ($0.74/hr) &mdash; see Tool 5A above for one-click setup. No $7K workstation purchase needed.<br>
+    <strong>Local option:</strong> RTX Pro 6000 Blackwell (~$7-8K) &bull; Driver 570.169+ &bull; 64 GB DDR5 &bull; 1 TB NVMe &bull; Win10/11 or Ubuntu 22.04/24.04<br>
+    <strong>Software:</strong> Git + Git LFS &bull; Node.js 20+ &bull; NVIDIA API Key (build.nvidia.com) &bull; Browser with WebGL2<br>
+    <strong>GitHub:</strong> <code>github.com/NVIDIA-Omniverse-blueprints/omniverse-dsx-blueprint-for-ai-factories</code>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Quick Start (15-20 min setup)</h3>
+  <div class="copy-block"><span class="label">SETUP COMMANDS</span># 1. Clone the repo
+git clone https://github.com/NVIDIA-Omniverse-blueprints/omniverse-dsx-blueprint-for-ai-factories.git
+cd omniverse-dsx-blueprint-for-ai-factories
+
+# 2. Download DSX Content Pack from NGC (search "DSX Content Pack")
+#    Extract to C:\data\dsx\
+
+# 3. Edit source/apps/dsx.kit — set scene path:
+#    [settings.app]
+#    auto_load_usd = "C:\data\dsx\DSX_BP\Assembly\DSX_Main_BP.usda"
+
+# 4. Set NVIDIA API Key (PowerShell, one time):
+#    [System.Environment]::SetEnvironmentVariable("NVIDIA_API_KEY", "nvapi-...", "User")
+
+# 5. Terminal 1: Start Kit streaming server
+./run_streaming.bat
+
+# 6. Terminal 2: Start web frontend
+./run_web.bat
+
+# 7. Browser: http://localhost:8081/streaming.html
+# First launch: 5-8 min shader compilation. After that: 2-3 min.</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">What Ships in the Box</h3>
+  <table class="spec-table">
+    <thead><tr><th>Feature</th><th>What It Does</th><th>Trappeys Use</th></tr></thead>
+    <tbody>
+      <tr><td class="field">50-Acre Reference Site</td><td class="note">Complete DSX design with compute building + support infrastructure (OpenUSD)</td><td class="note">Starting template &mdash; customize to Trappeys campus</td></tr>
+      <tr><td class="field">GB200 / GB300 NVL72 Configs</td><td class="note">Pre-built rack configurations. Switch between them in the Configurator</td><td class="note">Load GB300 NVL72, compare Token Efficiency + PUE</td></tr>
+      <tr><td class="field">Thermal CFD Simulation</td><td class="note">Hot-aisle temperature gradients (25&deg;C&ndash;45&deg;C). Heat Load slider for failure scenarios</td><td class="note">Validate water tower cooling loop + HVLS fan placement in Lafayette humidity</td></tr>
+      <tr><td class="field">Electrical Simulation</td><td class="note">RPP failure scenarios. Color-coded: Energized / De-Energized / Overloaded. Load % slider</td><td class="note">Test 3-layer power stack failover (solar &rarr; grid &rarr; diesel)</td></tr>
+      <tr><td class="field">AI Agent</td><td class="note">Natural language control: "Switch to GB200", "Run power failure with 2 failed RPPs at 75% load"</td><td class="note">Investor demos, operations, what-if scenarios</td></tr>
+      <tr><td class="field">Compare Configs</td><td class="note">Save GPU configurations, compare KPIs side by side (Token Efficiency, PUE, WUE, Cost)</td><td class="note">GB200 vs GB300 decision for Trappeys Phase 3</td></tr>
+      <tr><td class="field">App Streaming (WebRTC)</td><td class="note">Stream 3D twin to remote browsers. No local GPU needed for viewers</td><td class="note">Show investors, UL Lafayette, NVIDIA partners the live twin</td></tr>
+      <tr><td class="field">SimReady Asset Pipeline</td><td class="note">CAD &rarr; OpenUSD &rarr; validated simulation-ready assets with power/thermal/connection metadata</td><td class="note">Convert Trappeys CAD/architect drawings into digital twin assets</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Architecture (4 Layers)</h3>
+  <div class="copy-block"><span class="label">SYSTEM ARCHITECTURE</span>┌─────────────────────────────────────────────────────────────────┐
+│  SimReady Asset Pipeline                                        │
+│  CAD models → OpenUSD geometry → SimReady metadata              │
+│  (power, thermal, cooling, connection points)                   │
+├─────────────────────────────────────────────────────────────────┤
+│  Simulation Layer                                               │
+│  Network │ Grid │ Thermal │ Site │ Electrical                   │
+│  + Surrogate Model (AI-accelerated fast approximation)          │
+├─────────────────────────────────────────────────────────────────┤
+│  AIF-DT Runtime (AI Factory Digital Twin)                       │
+│  Kit Engine │ App Streaming │ AI Agent │ Data Lake │ USD Store  │
+├─────────────────────────────────────────────────────────────────┤
+│  User Access                                                    │
+│  Design Engineers │ Network Admins │ Mechanical Engineers        │
+│  Electrical Engineers │ AI Engineers │ Reviewers (browser only)  │
+└─────────────────────────────────────────────────────────────────┘</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Trappeys Campus — Building Inputs</h3>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:12px">All dimensions estimated from site photos. These map directly into OpenUSD scene geometry.</p>
+
+  <table class="spec-table">
+    <thead><tr><th>Building</th><th>Est. Dimensions</th><th>Omniverse Use</th><th>Photo Reference</th></tr></thead>
+    <tbody>
+      <tr><td class="field">Clear-Span Warehouse</td><td class="value">~150' &times; 120' &times; 28'</td><td class="note">PRIMARY &mdash; rack placement, CDU layout, cooling loop, thermal CFD simulation. NVL72 racks here. Model HVLS fans (20-24 ft) + desiccant dehumidifiers.</td><td class="note">Rear_warehouse1-4.jpg</td></tr>
+      <tr><td class="field">Metal Warehouse</td><td class="value">~100' &times; 120' &times; 20'</td><td class="note">Staging area. Future expansion. Roof solar model.</td><td class="note">Rear_warehouse5-6.jpg</td></tr>
+      <tr><td class="field">Main Cannery</td><td class="value">~130' &times; 120' &times; 25'</td><td class="note">Sawtooth roof thermal model. Compute or storage depending on structural assessment.</td><td class="note">Middle2-4.jpg</td></tr>
+      <tr><td class="field">Partner Hub (Loading Dock)</td><td class="value">~90' &times; 100' &times; 18'</td><td class="note">ADC + NVIDIA + UL Lafayette + First Solar + City offices. No thermal load (non-compute).</td><td class="note">Middle1.jpg</td></tr>
+      <tr><td class="field">Riverfront Building</td><td class="value">~80' &times; 60' &times; 30'</td><td class="note">NOC on 2F. Model cable paths from warehouse to NOC. River heat exchanger.</td><td class="note">Front1-5.jpg</td></tr>
+      <tr><td class="field">Infrastructure Yard (Concrete Pad)</td><td class="value">~200' &times; 140'</td><td class="note">Gensets, switchgear, dry coolers, battery storage, transformers. Model power distribution + cooling plant layout. NOT solar (solar on rooftops only).</td><td class="note">WT2-3.jpg</td></tr>
+      <tr><td class="field">Water Tower</td><td class="value">~70' tall, 15' tank dia</td><td class="note">DUAL PURPOSE &mdash; branded landmark + 15,000 gal thermal buffer tank. Model gravity-fed return to CDUs, passive radiator, emergency cooling UPS.</td><td class="note">WT1.jpg</td></tr>
+      <tr><td class="field">Riverwalk</td><td class="value">~400' along Vermilion</td><td class="note">Seawall reconstruction + walkway. River heat exchanger intake/discharge points.</td><td class="note">Front1-5.jpg</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Site Coordinates</h3>
+  <div class="copy-block"><span class="label">GPS</span>Latitude:  30.21356 N
+Longitude: 92.00163 W
+Site:      Trappeys Cannery, Lafayette, LA
+Address:   East of Evangeline Thruway, along Vermilion River
+Parcel:    ~7 acres, 12 structures, 1921 industrial</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Omniverse Simulation Priorities</h3>
+  <ul class="checklist">
+    <li><span class="check check-todo">1</span><strong>Clear-span warehouse thermal CFD</strong> &mdash; Model heat rejection from 4-8 NVL72 racks (520-1,040 kW) in a 28-ft ceiling metal building. Use built-in Heat Load slider. Add Lafayette humidity (75-80% RH) and water tower cooling loop. Validate CDU placement + dry cooler exhaust path.</li>
+    <li><span class="check check-todo">2</span><strong>Electrical power failure simulation</strong> &mdash; Use the built-in RPP failure test. Simulate solar dropout (cloud cover) + grid loss. Test diesel ATS cutover timing. Adjust Load % slider to find max safe capacity. Compare EDP 1.2 vs 1.5 settings.</li>
+    <li><span class="check check-todo">3</span><strong>Liquid cooling loop layout</strong> &mdash; Rack-to-CDU-to-water-tower-to-dry-cooler piping. 45&deg;C hot water, 130 LPM per rack. Gravity-fed return from water tower. Route through warehouse wall to infrastructure yard.</li>
+    <li><span class="check check-todo">4</span><strong>GPU config comparison</strong> &mdash; Use the built-in Configurator: load GB200, save config. Load GB300, save config. Compare side-by-side: Token Efficiency, PUE, WUE, CUE, cost breakdown.</li>
+    <li><span class="check check-todo">5</span><strong>Investor walkthrough</strong> &mdash; Photorealistic render of campus: First Solar panels on all roofs, branded water tower with ADC logo, NVL72 racks visible through warehouse, NOC with display wall, riverwalk, Vermilion River, infrastructure yard with American-made equipment. Stream via WebRTC to remote investors.</li>
+  </ul>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">AI Agent Commands (Built-In)</h3>
+  <div class="copy-block"><span class="label">NATURAL LANGUAGE COMMANDS</span># GPU Configuration
+"Switch to GB300"
+"Compare GB200 vs GB300 for this site"
+"Save this configuration"
+
+# Thermal Simulation
+"Show me the thermal CFD results"
+"Set heat load to 90%"
+"Where are the hotspots in the data hall?"
+
+# Electrical Simulation
+"Run power failure test with 2 failed RPPs at 75% load"
+"Set EDP to 1.5"
+"What happens if we lose 3 panels?"
+
+# General
+"Hide the RPPs that are not failing"
+"Stop test"
+"Switch to overview camera"</div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Key Links</h3>
+  <table class="spec-table">
+    <tbody>
+      <tr><td class="field">Blueprint Docs</td><td class="value"><a href="https://docs.omniverse.nvidia.com/dsx/latest/index.html" target="_blank">docs.omniverse.nvidia.com/dsx/latest</a></td></tr>
+      <tr><td class="field">GitHub Repo</td><td class="value"><a href="https://github.com/NVIDIA-Omniverse-blueprints/omniverse-dsx-blueprint-for-ai-factories" target="_blank">NVIDIA-Omniverse-blueprints/omniverse-dsx-blueprint-for-ai-factories</a></td></tr>
+      <tr><td class="field">NVIDIA API Key</td><td class="value"><a href="https://build.nvidia.com" target="_blank">build.nvidia.com</a> &rarr; Account &rarr; API Keys</td></tr>
+      <tr><td class="field">DSX Content Pack</td><td class="value">Download from NGC (search "DSX Content Pack")</td></tr>
+      <tr><td class="field">DSX Air (Network Sim)</td><td class="value"><a href="https://air.nvidia.com/login" target="_blank">air.nvidia.com</a></td></tr>
+      <tr><td class="field">Kit-CAE Docs</td><td class="value">For connecting real simulation solvers to live KPI data</td></tr>
+      <tr><td class="field">Partners Using It</td><td class="value">Cadence, Eaton, Siemens, Jacobs, Schneider, GE Vernova, Bechtel, CoreWeave, DDN, Vertiv, Trane</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: MULTI-TENANT CONFIG -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Multi-Tenancy</div>
+  <h2>UL Lafayette + Commercial Isolation</h2>
+  <p class="sub">Trappeys runs two workload classes on the same cluster. Run:ai handles scheduling. MIG handles GPU partitioning. DSX Air validates the isolation before deployment.</p>
+
+  <table class="spec-table">
+    <thead><tr><th>Parameter</th><th>UL Lafayette</th><th>Commercial</th></tr></thead>
+    <tbody>
+      <tr><td class="field">Workload Type</td><td class="value">Research (training + inference)</td><td class="value">Production inference (token sales)</td></tr>
+      <tr><td class="field">GPU Allocation</td><td class="value">1-2 racks (72-144 GPUs)</td><td class="value">2-6 racks (144-432 GPUs)</td></tr>
+      <tr><td class="field">Priority</td><td class="value">Preemptible (yield to commercial)</td><td class="value">Guaranteed (SLA-backed)</td></tr>
+      <tr><td class="field">MIG Strategy</td><td class="value">Mixed (fractional GPUs for students)</td><td class="value">Full GPU (maximum throughput)</td></tr>
+      <tr><td class="field">Network Isolation</td><td class="value">Separate Run:ai namespace</td><td class="value">Separate Run:ai namespace</td></tr>
+      <tr><td class="field">Storage</td><td class="value">Dedicated namespace on shared storage</td><td class="value">Dedicated namespace on shared storage</td></tr>
+      <tr><td class="field">Billing</td><td class="value">Grant-funded / partnership rate</td><td class="value">Market rate ($0.20-$150/M tokens)</td></tr>
+      <tr><td class="field">SLA</td><td class="value">Best effort</td><td class="value">99.5% uptime</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: CERTIFICATION CHECKLIST -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Certification Path</div>
+  <h2>NPN &rarr; DGX-Ready &rarr; NCP Checklist</h2>
+  <p class="sub">Every tool used and every spec documented feeds into the certification ladder. This is the punch list.</p>
+
+  <ul class="checklist">
+    <li><span class="check check-todo">[ ]</span><strong>NPN Registration</strong> &mdash; 5-minute web form. Do before DSX Air trial. Gives access to partner portal + deal registration.</li>
+    <li><span class="check check-todo">[ ]</span><strong>DSX Air Trial</strong> &mdash; air.nvidia.com. Model Trappeys topology with values from this page. Export validated network design.</li>
+    <li><span class="check check-future">[ ]</span><strong>NVIDIA Sales Contact</strong> &mdash; After DSX Air, request meeting with NVIDIA Enterprise Sales (Gulf South region). Bring this prep kit + DSX Air simulation results.</li>
+    <li><span class="check check-future">[ ]</span><strong>DGX-Ready Assessment</strong> &mdash; NVIDIA evaluates: power (check), cooling (check), high-density capacity (check), adaptable space (check). Trappeys clear-span warehouse qualifies.</li>
+    <li><span class="check check-future">[ ]</span><strong>Omniverse Blueprint</strong> &mdash; Build 3D digital twin. Thermal validation. Investor walkthrough. Demonstrates NVIDIA toolchain adoption.</li>
+    <li><span class="check check-future">[ ]</span><strong>First Rack Install</strong> &mdash; 4 NVL72 racks in clear-span warehouse. BCM provisioning. UFM fabric validation. DCGM health baseline.</li>
+    <li><span class="check check-future">[ ]</span><strong>NCP Application</strong> &mdash; Operational facility with NVIDIA compute deployed. Full software stack running. Token production live via Dynamo.</li>
+    <li><span class="check check-future">[ ]</span><strong>Reference Platform NCP</strong> &mdash; Scale target. Multi-site (Trappeys + Willow Glen). Co-design partnership. Early hardware access.</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: QUICK-COPY CHEATSHEET -->
+<!-- ============================================================ -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Quick Reference</div>
+  <h2>Copy-Paste Cheatsheet for DSX Air</h2>
+  <p class="sub">When you're in the DSX Air interface, copy these values directly.</p>
+
+  <div class="copy-block"><span class="label">Site Identity</span>Site Name:        Trappeys Cannery Solar AI Factory
+Location:         Lafayette, Louisiana, USA
+GPS:              30.21356N, 92.00163W
+Operator:         Advantage Design & Construction (ADC)
+Contact:          scott@adc3k.com</div>
+
+  <div class="copy-block"><span class="label">Compute Config</span>GPU Platform:     GB200 NVL72
+Racks Phase 3:    4 (288 GPUs)
+Racks Phase 4:    8 (576 GPUs)
+Power/Rack:       130 kW
+Total IT (Ph3):   520 kW
+Total IT (Ph4):   1,040 kW
+Inference Engine: Dynamo 1.0
+Workload Mix:     80% inference / 20% training</div>
+
+  <div class="copy-block"><span class="label">Compute Fabric</span>Type:             InfiniBand XDR 800G
+Topology:         2-level fat-tree (rail-optimized)
+Spine Switches:   2x Quantum-X800 Q3400-RA (144p x 800G)
+Leaf Switches:    4x Quantum-X800 (Phase 3), 8x (Phase 4)
+NICs:             ConnectX-8 SuperNIC (800G, PCIe Gen6)
+SHARP:            Enabled
+Adaptive Routing: Enabled</div>
+
+  <div class="copy-block"><span class="label">Storage Fabric</span>Type:             InfiniBand NDR 400G
+Switches:         2x Quantum-2 QM9700-NS2F (64p x 400G)
+Storage Vendor:   DDN / WEKA / VAST (TBD)
+Capacity:         ~500 TB usable (Phase 3)
+DPU:              BlueField-3 (1 per rack)
+GPUDirect:        Enabled</div>
+
+  <div class="copy-block"><span class="label">Management</span>In-Band:          1x Spectrum-4 SN5610 (64p x 800G Ethernet)
+Out-of-Band:      1x SN2201 (48x 1G + 4x 100G)
+Cluster Mgmt:     Base Command Manager
+GPU Health:       DCGM + DCGM-Exporter (Prometheus)
+Fabric Mgmt:      UFM 3.5 Enterprise
+Scheduler:        Run:ai (multi-tenant)
+Containers:       Kubernetes + GPU Operator</div>
+
+  <div class="copy-block"><span class="label">Power Profile</span>Solar:            1,005 kW DC rooftop (First Solar Series 7)
+Grid Backup:      LUS 3-phase (existing, needs upgrade)
+Emergency:        Diesel genset on infrastructure yard (72-hr runtime)
+Cooling:          Water tower thermal buffer (15K+ gal) + gravity return
+                  Dry coolers on infrastructure yard (backup)
+                  Vermilion River HX (future)
+Nat Gas (Ph5+):   3-6 MW gensets on concrete pad
+Total Facility:   ~650 kW (Phase 3), ~1,300 kW (Phase 4)
+PUE Target:       1.15-1.25 (liquid cooling + water tower)
+DSX Boost:        Enabled (85% power = 93% throughput)
+Net Metering:     TBD (check LUS policy)</div>
+
+  <div class="copy-block"><span class="label">Multi-Tenancy</span>Tenant 1:         UL Lafayette (research, preemptible, MIG mixed)
+Tenant 2:         Commercial (inference, guaranteed, full GPU)
+Isolation:        Run:ai namespaces + separate storage paths
+Scheduling:       Fair-share with commercial priority</div>
+</div>
+
+<footer>
+  Trappeys DSX Prep Kit &mdash; Advantage Design &amp; Construction &mdash; Lafayette, Louisiana<br>
+  <span style="margin-top:4px;display:inline-block">adc3k.com &mdash; scott@adc3k.com</span><br>
+  <span style="margin-top:4px;display:inline-block;color:var(--green)">Walk in ready. Copy. Paste. Validate. Walk out with a certified design.</span>
+</footer>
+
+</body>
+</html>

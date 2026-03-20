@@ -30,6 +30,8 @@
     { "source": "/boot", "destination": "/boot.html" },
     { "source": "/investor", "destination": "/investor.html" },
     { "source": "/lafayette", "destination": "/lafayette.html" },
+    { "source": "/trappeys-plan", "destination": "/trappeys-plan.html" },
+    { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
