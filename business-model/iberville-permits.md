@@ -1,11 +1,14 @@
 # Iberville Parish Permitting — Willow Glen Terminal
 
 ## Site Context
-- **Location:** Willow Glen Terminal, St. Gabriel, Iberville Parish, LA
+- **Location:** Willow Glen Terminal, 2605 LA-75, St. Gabriel, Iberville Parish, LA 70776
 - **Zoning:** M2 Heavy Industrial (confirmed — no variance needed)
-- **Prior use:** Former 2,200 MW Entergy power station
-- **Existing infrastructure:** 230kV substation, water intake, switchyard, transmission
+- **Prior use:** Former 2,200 MW Entergy power station (gas/oil, built 1960, retired 2016)
+- **Developable acreage:** 400+ acres (not 50 — the 50-acre figure was the FTZ subzone application area)
+- **Existing infrastructure:** 230kV substation, water intake, switchyard, transmission, dock (Mississippi River)
+- **Foreign Trade Zone 154D:** Approved September 18, 2024. Duty deferral on imported equipment (GPU servers, networking, cooling hardware).
 - **ADC is licensed GC** — can pull own permits
+- **IMPORTANT:** Building permits go through **City of St. Gabriel** (not Iberville Parish) — site is within city limits
 
 ---
 
@@ -15,29 +18,35 @@
 
 | Permit | Authority | Lead Time | Notes |
 |--------|-----------|-----------|-------|
-| **ITEP Application** | LED / BC&I | 4-6 months | **FIRST — before any construction** |
-| Building / Use Change | Iberville Parish | 4-12 weeks | Parallel with ITEP |
-| Planning Commission | Iberville Parish | 4-6 weeks | Parallel with building permit |
+| **PILOT / Tax Incentive** | Iberville Parish IDB / LED | Parallel | **File before construction** (see itep-filing.md) |
+| Zoning verification (M2) | St. Gabriel P&Z | 1-2 weeks | Should be straightforward |
+| Building permit (plan review) | St. Gabriel | 2-4 weeks | Plans need LA-licensed architect/PE stamp |
+| **Fire Marshal plan review** | LA State Fire Marshal (OSFM) | 4-8 weeks | Required before building permit issued |
 | Electrical Installation | Parish Building | 2-4 weeks | Part of building permit |
 | LPDES Water Discharge | LDEQ | 2-4 months | Parallel; 6 months if public notice |
 | Army Corps Section 404 | Corps, New Orleans | 2-3 months | Only if new river intake |
 | On-Site Generation Interconnect | Entergy / LPSC | 4-8 weeks | Parallel |
-| Air Quality | LDEQ | 2-4 months | Minor permit likely |
-| Fire / Life Safety | Iberville Fire Marshal | 2-4 weeks | Final inspection before occupancy |
-| Phase I ESA | Environmental Consultant | 2-4 weeks | Recommended; may be LDEQ requirement |
+| **Air Quality (ATC)** | LDEQ | **3-6 months** | **CRITICAL PATH** — minor source. If PSD (major source): 12-18 months |
+| Construction Stormwater | LDEQ | Immediate | Self-implementing, submit NOI with SWPPP |
+| Industrial Stormwater (MSGP) | LDEQ | 30 days | After NOI receipt |
+| Fire / Life Safety | LA State Fire Marshal | 2-4 weeks | Final inspection before occupancy |
+| Phase I ESA | Environmental Consultant | 2-4 weeks | Recommended; $3-8K |
+
+**Water discharge:** If closed-loop cooling (recommended), NO LPDES permit needed. Only if discharging to surface water.
 
 ### Realistic Timeline
-- **Optimistic:** 5-6 months
-- **Conservative:** 8-10 months
-- **Critical path driver:** ITEP filing (must be first)
+- **Optimistic (minor source air):** 6-9 months
+- **Conservative:** 9-12 months
+- **If PSD triggered (major source):** 18+ months
+- **Critical path driver:** LDEQ air quality ATC (not ITEP — that's a tax incentive, file in parallel)
 
-### Month-by-Month (Optimistic)
+### Month-by-Month (Optimistic — Minor Source)
 | Month | Action |
 |-------|--------|
-| 0 | ITEP application filed |
-| 1-2 | Building permit + planning commission approval |
-| 2-4 | LPDES + air quality permits (parallel) |
-| 3-4 | Corps Section 404 (if river intake) + interconnection |
+| 0 | File PILOT/tax incentive + air quality ATC application + Phase I ESA |
+| 1-2 | Building permit + fire marshal plan review + zoning verification |
+| 2-4 | Air quality ATC processing (parallel) |
+| 3-4 | Entergy interconnection agreement |
 | 4-5 | Electrical + fire safety final inspection |
 | 5-6 | ITEP contract execution + groundbreaking authorized |
 
@@ -117,12 +126,16 @@
 
 ## Strategic Advantages
 
-1. **Brownfield accelerator** — EO 14318 prioritizes data center redevelopment on former power sites
+1. **Foreign Trade Zone 154D** — already approved (Sept 2024). Duty deferral on imported GPU servers, networking, cooling hardware.
 2. **M2 zoning** — no variance needed, industrial AI compute is compatible
-3. **Existing permits may transfer** — old LPDES, air quality, Corps permits can be modified vs. new
-4. **No wetland impact (Phase 1)** — warehouse conversion is on existing developed footprint
-5. **ITEP timing** — 2025 rules favor data center/AI facilities under Governor Landry
-6. **ADC is licensed GC** — pull own permits, no contractor delays
+3. **230kV substation on-site** — eliminates what would otherwise be the longest lead item (utility infrastructure, typically 3-5 years)
+4. **400+ developable acres** — massive campus expansion potential
+5. **Existing permits may transfer** — old LPDES, air quality, Corps permits can be modified vs. new
+6. **Brownfield accelerator** — EO 14318 prioritizes data center redevelopment on former power sites
+7. **No wetland impact (Phase 1)** — warehouse conversion is on existing developed footprint
+8. **Closed-loop cooling = no LPDES** — if no discharge to surface water, skip water discharge permit entirely
+9. **ADC is licensed GC** — pull own permits, no contractor delays
+10. **Lightning Amendment (Dec 2025)** — LPSC fast-track for utility-built power plants serving AI facilities (8 months vs 2 years)
 
 ---
 
@@ -130,11 +143,13 @@
 
 | Entity | Contact | Phone |
 |--------|---------|-------|
-| Iberville Parish Permits | Online portal | (225) 687-5150 |
+| **St. Gabriel City Hall (permits, zoning)** | 5035 Iberville St, St. Gabriel 70776 | **(225) 642-9600** |
+| Iberville Parish Permits (outside city limits) | 58030 Meriam St, Plaquemine 70764 | (225) 687-5150 |
+| LA State Fire Marshal (OSFM) | 8181 Independence Blvd, Baton Rouge | (800) 256-5452 |
+| LDEQ Air Permits | deq.louisiana.gov/air | (225) 219-3417 |
 | LDEQ Water Permits | DEQ-WWWWaterPermits@la.gov | (225) 219-9371 |
-| LDEQ Air Permits | deq.louisiana.gov/air | |
 | Corps of Engineers (NOLA) | mvn.usace.army.mil | (504) 862-1001 |
-| LED / ITEP | opportunitylouisiana.gov | FastLane NextGen portal |
+| LED / PILOT / Incentives | opportunitylouisiana.gov | FastLane NextGen portal |
 | Entergy Louisiana | entergylouisiana.com | |
 | LPSC | lpsc.louisiana.gov | |
 
@@ -142,9 +157,10 @@
 
 ## Immediate Action Items
 
-1. **File ITEP** — before lease signed or construction starts (FastLane NextGen portal)
-2. **Get permit history from WGT/Entergy** — old LPDES, air, electrical permits for modification baseline
-3. **Phase I ESA** — contract environmental firm ($3-8K, 2-3 week turnaround)
-4. **Entergy meeting** — interconnection requirements for on-site generation
-5. **Fire Marshal pre-check** — consult on GPU liquid cooling + battery fire suppression design
-6. **Building permit pre-application** — submit preliminary site/cooling plan to confirm M2 compatibility
+1. **File PILOT application** — contact Iberville Parish IDB before construction (see itep-filing.md)
+2. **Start LDEQ air quality ATC** — this is the critical path permit (3-6 months for minor source)
+3. **Get permit history from WGT/Entergy** — old LPDES, air, electrical permits for modification baseline
+4. **Phase I ESA** — contract environmental firm ($3-8K, 2-3 week turnaround)
+5. **Entergy meeting** — interconnection requirements for on-site generation
+6. **Fire Marshal pre-check** — consult OSFM on GPU liquid cooling + battery fire suppression design
+7. **Building permit pre-application** — submit to **St. Gabriel** (not Iberville Parish) to confirm M2 compatibility
