@@ -69,7 +69,7 @@ echo "  Done."
 echo "[4/10] Installing NGC CLI..."
 if ! command -v ngc &> /dev/null; then
     cd /tmp
-    wget -q --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.55.0/files/ngcli_linux.zip -O ngc_cli.zip
+    wget -q --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/ngc-apps/ngc_cli/versions/3.41.3/files/ngccli_linux.zip -O ngc_cli.zip
     unzip -q -o ngc_cli.zip -d /usr/local/
     rm -f ngc_cli.zip
     # NGC CLI extracts to /usr/local/ngc-cli/
