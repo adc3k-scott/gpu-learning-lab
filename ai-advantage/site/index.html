@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Advantage — AI That Works For Your Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;
+  --text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;
+  --blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;
+  --cyan:#06b6d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;background:rgba(10,11,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-weight:800;font-size:18px;color:var(--bright);letter-spacing:-0.5px}
+.logo span{color:var(--blue)}
+nav ul{list-style:none;display:flex;gap:28px}
+nav a{color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+nav a:hover{color:var(--bright);text-decoration:none}
+.nav-cta{background:var(--blue);color:#000;padding:8px 20px;border-radius:6px;font-weight:700;font-size:12px}
+.nav-cta:hover{background:#5aafff;text-decoration:none}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;background:radial-gradient(ellipse at 50% 0%,rgba(59,158,255,0.08),transparent 60%)}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--bright);line-height:1.1;max-width:800px;letter-spacing:-1px}
+.hero h1 span{color:var(--blue)}
+.hero p{font-size:18px;color:var(--dim);max-width:600px;margin-top:20px;line-height:1.7}
+.hero-cta{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;justify-content:center}
+.btn{padding:14px 32px;border-radius:8px;font-weight:700;font-size:14px;border:none;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--blue);color:#000}.btn-primary:hover{background:#5aafff}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+
+/* SECTIONS */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:32px;font-weight:800;color:var(--bright);line-height:1.2;margin-bottom:16px}
+.section .sub{font-size:16px;color:var(--dim);max-width:700px;line-height:1.7;margin-bottom:40px}
+
+/* WHY NOW */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:32px}
+.why-card{background:var(--card);border:1px solid var(--border);padding:32px}
+.why-card .num{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:700;margin-bottom:8px}
+.why-card h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.why-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* 5 STEPS */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:32px}
+.step{background:var(--card);border:1px solid var(--border);padding:24px;text-align:center;position:relative}
+.step::after{content:'';position:absolute;right:-2px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:8px solid var(--border);border-top:8px solid transparent;border-bottom:8px solid transparent;z-index:1}
+.step:last-child::after{display:none}
+.step .snum{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:8px}
+.step h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.step .time{font-size:11px;color:var(--dim);margin-bottom:8px}
+.step p{font-size:12px;color:var(--dim);line-height:1.5}
+
+/* INDUSTRIES */
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:32px}
+.ind{background:var(--card);border:1px solid var(--border);padding:20px;transition:border-color .2s}
+.ind:hover{border-color:var(--blue)}
+.ind h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.ind p{font-size:11px;color:var(--dim);line-height:1.5}
+.ind .tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--green);font-weight:600;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+
+/* HARDWARE */
+.hw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:32px}
+.hw{background:var(--card);border:1px solid var(--border);padding:24px;text-align:center}
+.hw.popular{border-top:3px solid var(--blue)}
+.hw .tier{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+.hw h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.hw .price{font-size:24px;font-weight:800;color:var(--green);margin:12px 0}
+.hw p{font-size:12px;color:var(--dim);line-height:1.5}
+.hw ul{list-style:none;text-align:left;margin-top:12px}
+.hw li{font-size:12px;color:var(--dim);padding:4px 0;border-bottom:1px solid var(--border)}
+.hw li::before{content:'+ ';color:var(--green);font-weight:700}
+
+/* SECURITY */
+.sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:32px}
+.sec-card{background:var(--card);border:1px solid var(--border);padding:24px}
+.sec-card h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.sec-card p{font-size:12px;color:var(--dim);line-height:1.6}
+
+/* CLIENT PORTAL PREVIEW */
+.portal-preview{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:32px}
+.portal-bar{background:var(--card);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.portal-bar .title{font-size:13px;font-weight:700;color:var(--bright)}
+.portal-bar .status{font-size:11px;color:var(--green);font-family:'IBM Plex Mono',monospace}
+.portal-body{padding:24px;display:grid;grid-template-columns:200px 1fr 300px;gap:16px;min-height:400px}
+.portal-sidebar{display:flex;flex-direction:column;gap:8px}
+.portal-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:left;cursor:pointer;transition:all .2s}
+.portal-btn:hover{border-color:var(--blue);background:rgba(59,158,255,0.06)}
+.portal-btn .label{font-size:12px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.portal-btn .desc{font-size:10px;color:var(--dim)}
+.portal-btn.active{border-color:var(--blue);background:rgba(59,158,255,0.08)}
+.portal-main{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;display:flex;flex-direction:column}
+.portal-main .file-header{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.file-list{flex:1}
+.file-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.file-row .fname{color:var(--bright)}.file-row .fmeta{color:var(--dim)}
+.portal-chat{background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--bright);display:flex;align-items:center;gap:8px}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.chat-body{flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.chat-msg{font-size:12px;line-height:1.5;padding:8px 12px;border-radius:8px;max-width:90%}
+.chat-msg.agent{background:rgba(59,158,255,0.1);color:var(--text);border:1px solid rgba(59,158,255,0.15)}
+.chat-msg.user{background:rgba(0,232,122,0.08);color:var(--text);border:1px solid rgba(0,232,122,0.12);align-self:flex-end}
+.chat-input{display:flex;border-top:1px solid var(--border);padding:8px}
+.chat-input input{flex:1;background:transparent;border:none;color:var(--bright);font-size:12px;padding:8px;outline:none;font-family:'Inter',sans-serif}
+.chat-input button{background:var(--blue);border:none;color:#000;padding:6px 14px;border-radius:6px;font-weight:700;font-size:11px;cursor:pointer}
+
+/* PRICING PREVIEW */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:32px}
+.price-card{background:var(--card);border:1px solid var(--border);padding:28px;text-align:center}
+.price-card.featured{border-top:3px solid var(--blue)}
+.price-card .ptier{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.price-card h3{font-size:18px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.price-card .pprice{font-size:32px;font-weight:800;color:var(--green);margin:16px 0 4px}
+.price-card .pper{font-size:11px;color:var(--dim);margin-bottom:16px}
+.price-card ul{list-style:none;text-align:left}
+.price-card li{font-size:12px;color:var(--dim);padding:6px 0;border-bottom:1px solid var(--border)}
+.price-card li::before{content:'+ ';color:var(--green);font-weight:700}
+
+/* CTA */
+.cta-section{text-align:center;padding:80px 24px;background:linear-gradient(180deg,transparent,rgba(59,158,255,0.04))}
+.cta-section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.cta-section p{font-size:16px;color:var(--dim);margin-bottom:32px}
+
+/* FOOTER */
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .why-grid,.steps,.ind-grid,.hw-grid,.sec-grid,.price-grid{grid-template-columns:1fr 1fr}
+  .portal-body{grid-template-columns:1fr}
+  .portal-sidebar{flex-direction:row;flex-wrap:wrap}
+  .portal-chat{min-height:300px}
+  nav ul{display:none}
+}
+@media(max-width:600px){
+  .why-grid,.steps,.ind-grid,.hw-grid,.sec-grid,.price-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI <span>Advantage</span></div>
+  <ul>
+    <li><a href="#why">Why Now</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#portal">Your Portal</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Free Discovery Call</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>AI that <span>works</span> for your business.</h1>
+  <p>We install a dedicated AI agent at your location, configure it for your industry, and manage it remotely. You just use it. Starting at $199/month.</p>
+  <div class="hero-cta">
+    <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a 15-Minute Call</button>
+    <button class="btn btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+  </div>
+</div>
+
+<!-- WHY NOW -->
+<div class="section" id="why">
+  <div class="section-label">Why Now</div>
+  <h2>AI just changed. Most people don't know it yet.</h2>
+  <p class="sub">ChatGPT was the beginning. But AI agents — systems that work independently, 24/7, without being asked — are the real revolution. And they're here now.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="num" style="color:var(--dim)">0</div>
+      <h3>Search Era (2000-2022)</h3>
+      <p>You typed a query, got links. No AI. No automation. Just web pages.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--dim)">1K</div>
+      <h3>Chatbot Era (2023-2024)</h3>
+      <p>Ask a question, get an answer. Impressive, but you still do all the work. One query at a time.</p>
+    </div>
+    <div class="why-card" style="border:1px solid var(--amber);background:rgba(255,165,0,0.04)">
+      <div class="num" style="color:var(--amber)">500K</div>
+      <h3 style="color:var(--amber)">Agentic Era (2025-2026) — We Are Here</h3>
+      <p>AI agents do multi-step work on their own. They answer your phones, manage your schedule, track your inventory, draft your documents — while you sleep. One task triggers dozens of AI decisions.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--green)">Millions</div>
+      <h3>Autonomous Era (2027+)</h3>
+      <p>AI systems running 24/7 with no human prompt. Every business will have 10-50 AI agents working around the clock. The businesses that start now will be years ahead.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how" style="border-top:1px solid var(--border)">
+  <div class="section-label">How It Works</div>
+  <h2>Five steps. One visit. Done.</h2>
+  <p class="sub">No learning curve. No tech skills. No ongoing maintenance on your end. We handle everything.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="snum">Step 1</div>
+      <h3>Discovery</h3>
+      <div class="time">15 minutes</div>
+      <p>Quick call. We learn your business, match you to a pre-built industry playbook.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 2</div>
+      <h3>Install</h3>
+      <div class="time">2-3 hours</div>
+      <p>We show up with everything. Set up hardware, install your AI agent, lock it down.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 3</div>
+      <h3>Training</h3>
+      <div class="time">30 minutes</div>
+      <p>We train your whole team before we leave. If you can text, you can use this.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 4</div>
+      <h3>Monitor</h3>
+      <div class="time">24/7</div>
+      <p>We monitor your agent remotely. Security, updates, optimization — all handled.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 5</div>
+      <h3>Grow</h3>
+      <div class="time">Ongoing</div>
+      <p>Your agent gets smarter. We push updates. No disruption. No downtime.</p>
+    </div>
+  </div>
+</div>
+
+<!-- INDUSTRIES -->
+<div class="section" id="industries" style="border-top:1px solid var(--border)">
+  <div class="section-label">Industries</div>
+  <h2>Pre-built for 12 industries. Not a science project.</h2>
+  <p class="sub">We've already built the playbook for your business type. Our installer follows the same proven process every time. You're not our experiment — you're our next success.</p>
+
+  <div class="ind-grid">
+    <div class="ind"><div class="tag">Document Shop</div><h3>Law Firm</h3><p>Document Q&A, contract drafting, case file search. Attorney-client privilege stays on your device.</p></div>
+    <div class="ind"><div class="tag">Dispatch Shop</div><h3>Field Services</h3><p>AI phone, smart dispatch, field quoting. Plumbers, electricians, HVAC — one system for all.</p></div>
+    <div class="ind"><div class="tag">Appointment Shop</div><h3>Medical / Dental</h3><p>Insurance verification, clinical notes, auto-scheduling. HIPAA-compliant from day one.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Restaurant / Bar</h3><p>Real-time food cost tracking, auto-reorder, recipe costing. Know your margins tonight.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Auto Shop</h3><p>Photo-to-estimate, customer approval workflows, parts ordering. Close more jobs faster.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Real Estate</h3><p>Speed-to-lead response, instant listing descriptions, CRM automation. Never lose a lead to slow follow-up.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Construction / GC</h3><p>Change orders, draw schedules, daily logs, subcontractor coordination. Your project brain.</p></div>
+    <div class="ind"><div class="tag">Dispatch Shop</div><h3>Property Management</h3><p>AI maintenance dispatch, tenant portal, owner reporting. Per-door pricing available.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Retail Store</h3><p>Auto-reorder, margin analysis, inventory prediction. Stop stock-outs and overstocking.</p></div>
+    <div class="ind"><div class="tag">Document Shop</div><h3>Accounting / CPA</h3><p>Tax document AI intake, deadline tracking, client portal. Peak season handled.</p></div>
+    <div class="ind"><div class="tag">Appointment Shop</div><h3>Salon / Barber / Spa</h3><p>Automated rebooking, no-show follow-ups, client history. Your simplest install — biggest impact.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Insurance Agency</h3><p>Multi-carrier quoting, renewal tracking, policy comparison. Speed kills in this business — be faster.</p></div>
+  </div>
+</div>
+
+<!-- CLIENT PORTAL -->
+<div class="section" id="portal" style="border-top:1px solid var(--border)">
+  <div class="section-label">Your Portal</div>
+  <h2>Simple. Visual. Talk to your agent like a person.</h2>
+  <p class="sub">No training manual. No tech skills. Big buttons, clean file system, and your AI agent ready to chat. Load your files when you're ready — your data stays private.</p>
+
+  <div class="portal-preview">
+    <div class="portal-bar">
+      <div class="title">AI Advantage Portal — Acme Field Services</div>
+      <div class="status">Agent Online</div>
+    </div>
+    <div class="portal-body">
+      <!-- Sidebar -->
+      <div class="portal-sidebar">
+        <div class="portal-btn active">
+          <div class="label">Load Files</div>
+          <div class="desc">Drop folders, photos, documents</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">File System</div>
+          <div class="desc">Browse your organized files</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Jobs Today</div>
+          <div class="desc">Scheduled dispatch board</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Reports</div>
+          <div class="desc">Revenue, jobs, performance</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Settings</div>
+          <div class="desc">Account, team, integrations</div>
+        </div>
+      </div>
+
+      <!-- Main content area -->
+      <div class="portal-main">
+        <div class="file-header">Recent Files</div>
+        <div class="file-list">
+          <div class="file-row"><span class="fname">Invoice_March_2026.pdf</span><span class="fmeta">2.1 MB &middot; Today</span></div>
+          <div class="file-row"><span class="fname">Job_Photos_Hernandez/</span><span class="fmeta">47 files &middot; Yesterday</span></div>
+          <div class="file-row"><span class="fname">Estimate_Template_v3.docx</span><span class="fmeta">340 KB &middot; Mar 18</span></div>
+          <div class="file-row"><span class="fname">Vehicle_Inspection_03-15.jpg</span><span class="fmeta">4.8 MB &middot; Mar 15</span></div>
+          <div class="file-row"><span class="fname">QuickBooks_Export_Q1.csv</span><span class="fmeta">1.2 MB &middot; Mar 12</span></div>
+          <div class="file-row"><span class="fname">Customer_Photos/ <span style="color:var(--amber);font-size:10px">12 duplicates found</span></span><span class="fmeta">234 files</span></div>
+          <div class="file-row"><span class="fname">Old_Estimates_2024/</span><span class="fmeta">89 files &middot; Archived</span></div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(255,165,0,0.06);border:1px solid rgba(255,165,0,0.15);border-radius:6px;font-size:11px;color:var(--dim)">
+          <strong style="color:var(--amber)">Tip:</strong> Your agent found 12 duplicate photos in Customer_Photos. Say "clean up my photos" to review and remove them.
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="portal-chat">
+        <div class="chat-header"><div class="chat-dot"></div>Your AI Agent</div>
+        <div class="chat-body">
+          <div class="chat-msg agent">Good morning! You have 6 jobs scheduled today. The Hernandez job photos are uploaded and the estimate is ready for your review. Want me to send it to the customer?</div>
+          <div class="chat-msg user">Yeah send it. What's my schedule look like?</div>
+          <div class="chat-msg agent">Sent. Here's today: 8am Johnson (water heater), 10am Patel (AC tune-up), 12pm lunch, 1:30pm Garcia (leak repair), 3pm Williams (estimate), 4:30pm Rodriguez (follow-up). You're booked solid but no overlaps.</div>
+          <div class="chat-msg user">Can you clean up those duplicate photos?</div>
+          <div class="chat-msg agent">Found 12 duplicates in Customer_Photos (38 MB). I'll move them to a "Review" folder so you can check before I delete. Want me to do that now?</div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Ask your agent anything...">
+          <button>Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div class="section" id="security" style="border-top:1px solid var(--border)">
+  <div class="section-label">Security</div>
+  <h2>Your data stays yours. Period.</h2>
+  <p class="sub">Every AI agent runs inside a locked-down sandbox powered by NVIDIA NemoClaw. It can only access what we approve together. Nothing else gets through.</p>
+
+  <div class="sec-grid">
+    <div class="sec-card" style="border-top:3px solid var(--green)">
+      <h3>Sandboxed Execution</h3>
+      <p>Your agent runs in an isolated container. It cannot see anything outside its workspace — not your email, not your personal files, not your bank. Hardware-enforced isolation.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--blue)">
+      <h3>Network Policy</h3>
+      <p>Only approved connections allowed. If the agent tries to reach a website we didn't approve, it gets blocked instantly and our team is notified. You control the list.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--purple)">
+      <h3>Monitored 24/7</h3>
+      <p>Our team monitors every agent remotely. We handle security updates, policy changes, and model upgrades. You never touch anything technical.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--amber)">
+      <h3>Your Files, Your Pace</h3>
+      <p>Load files when you're ready. We set up the folders — you decide what goes in them. Your agent can help organize, find duplicates, and clean up storage.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--cyan)">
+      <h3>On-Site Option</h3>
+      <p>Choose our Mac Mini or DGX Spark plans and your data never leaves your building. The AI runs entirely on hardware sitting in your office.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--red)">
+      <h3>HIPAA / Legal Ready</h3>
+      <p>Medical and legal clients get compliance-grade lockdown. Full audit logging, strict filesystem isolation, no data leaves the device. Built for regulated industries.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HARDWARE -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Hardware Options</div>
+  <h2>Four tiers. Pick what fits.</h2>
+  <p class="sub">Use your existing equipment, add our starter kit, or go all-in with on-site AI hardware. Same agent, same security, same monitoring — different horsepower.</p>
+
+  <div class="hw-grid">
+    <div class="hw">
+      <div class="tier">Tier 1</div>
+      <h3>Cloud Only</h3>
+      <div class="price">$0</div>
+      <p>Use your existing computer and internet. Agent runs on our cloud.</p>
+      <ul>
+        <li>No hardware purchase</li>
+        <li>Works on any modern device</li>
+        <li>Requires stable internet</li>
+        <li>Best for: small operations</li>
+      </ul>
+    </div>
+    <div class="hw">
+      <div class="tier">Tier 2</div>
+      <h3>Starter Kit</h3>
+      <div class="price">$1,200</div>
+      <p>Tablet, router, scanner — everything you need if your equipment is outdated.</p>
+      <ul>
+        <li>Pre-configured hardware</li>
+        <li>Dedicated WiFi network</li>
+        <li>Scanner for document shops</li>
+        <li>Best for: aging equipment</li>
+      </ul>
+    </div>
+    <div class="hw popular">
+      <div class="tier" style="color:var(--green)">Most Popular</div>
+      <h3>Mac Mini</h3>
+      <div class="price">$1,699</div>
+      <p>On-site AI. Silent. Fits on a shelf. Your data stays in your building.</p>
+      <ul>
+        <li>Local AI processing</li>
+        <li>Data never leaves your office</li>
+        <li>Silent, 40W, maintenance-free</li>
+        <li>Best for: privacy-aware businesses</li>
+      </ul>
+    </div>
+    <div class="hw">
+      <div class="tier">Tier 4</div>
+      <h3>DGX Spark</h3>
+      <div class="price">$5,499</div>
+      <p>NVIDIA AI supercomputer. For HIPAA, legal, and high-volume operations.</p>
+      <ul>
+        <li>Compliance-grade isolation</li>
+        <li>Full audit trail</li>
+        <li>Runs largest AI models locally</li>
+        <li>Best for: medical, legal, finance</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section" id="pricing" style="border-top:1px solid var(--border)">
+  <div class="section-label">Pricing</div>
+  <h2>Simple monthly subscription. No surprises.</h2>
+  <p class="sub">Hardware is a one-time cost. Everything else is included in your monthly subscription — agent, security, monitoring, updates, and support.</p>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="ptier">Basic</div>
+      <h3>Get Started</h3>
+      <div class="pprice">$199</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>Core AI features for your industry</li>
+        <li>1-2 users</li>
+        <li>Email support</li>
+        <li>24/7 remote monitoring</li>
+        <li>Monthly agent updates</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="ptier" style="color:var(--green)">Most Popular</div>
+      <h3>Pro</h3>
+      <div class="pprice">$699</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>All features + integrations</li>
+        <li>AI phone answering</li>
+        <li>5 users</li>
+        <li>Phone support</li>
+        <li>Priority monitoring</li>
+        <li>File organization tools</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="ptier">Enterprise</div>
+      <h3>Full Power</h3>
+      <div class="pprice">$1,299</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>Unlimited users</li>
+        <li>Multi-location support</li>
+        <li>Custom workflows</li>
+        <li>Priority phone support</li>
+        <li>Dedicated account manager</li>
+        <li>DGX Spark recommended</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2>Ready to give your business an unfair advantage?</h2>
+  <p>15-minute discovery call. No pitch. We just learn about your business and tell you exactly what we'd install.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-primary" disabled style="opacity:0.6;cursor:default">Coming Soon</button>
+  </div>
+  <p style="margin-top:16px;font-size:12px;color:var(--dim)">Lafayette, Louisiana &middot; Serving businesses nationwide</p>
+</div>
+
+<footer>
+  AI Advantage &middot; A division of Advantage Design &amp; Construction &middot; Lafayette, LA<br>
+  <span style="color:var(--dim);font-size:10px;margin-top:4px;display:inline-block">Powered by NVIDIA AI infrastructure</span>
+</footer>
+
+</body>
+</html>
