@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappeys Cannery — Solar AI Factory Master Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#06b6d4;--solar:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+
+/* HEADER */
+.header{text-align:center;padding:60px 24px 40px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--solar);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--bright);line-height:1.1}
+.header h1 span{color:var(--solar)}
+.header .sub{font-size:16px;color:var(--dim);max-width:700px;margin:16px auto 0}
+.header .stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.header .stat{text-align:center}
+.header .stat .num{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--solar)}
+.header .stat .label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
+
+/* SECTIONS */
+.section{padding:60px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:32px;max-width:700px}
+
+/* SITE MAP */
+.site-map{position:relative;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px;margin:32px 0;overflow:hidden}
+.site-map h3{font-size:14px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px;text-align:center}
+
+.map-grid{display:grid;grid-template-columns:1fr 2fr 1fr;grid-template-rows:auto auto auto auto;gap:12px;max-width:800px;margin:0 auto}
+
+.map-block{border-radius:8px;padding:16px;font-size:12px;position:relative;min-height:80px;display:flex;flex-direction:column;justify-content:center}
+.map-block .block-name{font-weight:700;font-size:13px;color:var(--bright);margin-bottom:4px}
+.map-block .block-use{font-size:11px;color:var(--dim)}
+.map-block .block-solar{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--solar);margin-top:6px;font-weight:600}
+
+.b-solar{background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3)}
+.b-compute{background:rgba(59,158,255,0.1);border:1px solid rgba(59,158,255,0.25)}
+.b-ops{background:rgba(0,232,122,0.08);border:1px solid rgba(0,232,122,0.2)}
+.b-landmark{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.25)}
+.b-power{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)}
+.b-river{background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2)}
+
+/* BUILDING CARDS */
+.buildings{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:24px}
+.bldg{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.bldg img{width:100%;height:200px;object-fit:cover}
+.bldg-body{padding:20px}
+.bldg-body h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.bldg-body .bldg-type{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.type-solar{color:var(--solar)}
+.type-compute{color:var(--blue)}
+.type-ops{color:var(--green)}
+.type-landmark{color:var(--purple)}
+.type-power{color:var(--red)}
+.bldg-body p{font-size:13px;color:var(--dim);line-height:1.6}
+.bldg-body .spec{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 12px;border-radius:6px;line-height:1.8}
+
+/* SOLAR TABLE */
+.solar-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:13px}
+.solar-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--border)}
+.solar-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.solar-table tr:last-child td{border-bottom:none;font-weight:700;color:var(--solar)}
+.solar-table .num{font-family:'IBM Plex Mono',monospace;text-align:right}
+
+/* PHASES */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px}
+.phase{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.phase .phase-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:6px}
+.phase h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:10px}
+.phase ul{list-style:none;font-size:13px;color:var(--dim)}
+.phase ul li{padding:4px 0;padding-left:16px;position:relative}
+.phase ul li::before{content:'>';position:absolute;left:0;color:var(--blue);font-family:'IBM Plex Mono',monospace;font-weight:700}
+
+/* PARTNERS */
+.partners{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.partner{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center}
+.partner .p-name{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.partner .p-role{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.partner p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* WATER TOWER */
+.tower-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px;margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.tower-section img{width:100%;border-radius:8px}
+.tower-section h3{font-size:22px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.tower-section p{font-size:14px;color:var(--dim);line-height:1.7}
+.tower-brands{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tower-brands .brand{padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.brand-nvidia{background:rgba(0,232,122,0.12);color:var(--green);border:1px solid rgba(0,232,122,0.3)}
+.brand-adc{background:rgba(59,158,255,0.12);color:var(--blue);border:1px solid rgba(59,158,255,0.3)}
+.brand-solar{background:rgba(245,158,11,0.12);color:var(--solar);border:1px solid rgba(245,158,11,0.3)}
+.brand-ul{background:rgba(168,85,247,0.12);color:var(--purple);border:1px solid rgba(168,85,247,0.3)}
+.brand-city{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+
+/* NVIDIA TOOLS */
+.nvidia-stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.nv-tool{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.nv-tool::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.nv-air::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.nv-omni::before{background:linear-gradient(90deg,var(--purple),var(--blue))}
+.nv-boost::before{background:linear-gradient(90deg,var(--solar),var(--amber))}
+.nv-exchange::before{background:linear-gradient(90deg,var(--red),var(--solar))}
+.nv-metro::before{background:linear-gradient(90deg,var(--cyan),var(--green))}
+.nv-tool .nv-name{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.nv-tool .nv-type{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.nv-tool p{font-size:13px;color:var(--dim);line-height:1.6}
+.nv-tool .nv-action{margin-top:14px;padding:10px 12px;background:var(--surface);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);line-height:1.7}
+.nv-tool .nv-action strong{color:var(--green)}
+.nv-pipeline{margin-top:32px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative}
+.nv-pipeline h3{font-size:14px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;text-align:center}
+.pipe-steps{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0}
+.pipe-step{text-align:center;padding:12px 20px;min-width:140px}
+.pipe-step .step-name{font-size:13px;font-weight:700;color:var(--bright)}
+.pipe-step .step-tool{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);margin-top:2px}
+.pipe-step .step-when{font-size:10px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+.pipe-arrow{color:var(--dim);font-size:20px;font-weight:700;padding:0 4px}
+
+/* ECONOMICS */
+.econ-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
+.econ{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center}
+.econ .e-num{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:700;margin-bottom:4px}
+.e-solar{color:var(--solar)}
+.e-green{color:var(--green)}
+.e-blue{color:var(--blue)}
+.e-purple{color:var(--purple)}
+.econ .e-label{font-size:12px;color:var(--dim)}
+
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim)}
+
+@media(max-width:768px){
+  .map-grid{grid-template-columns:1fr;gap:8px}
+  .tower-section{grid-template-columns:1fr}
+  .header .stats{gap:16px}
+  .pipe-steps{flex-direction:column}
+  .pipe-arrow{transform:rotate(90deg)}
+  .nvidia-stack{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Master Plan // adc3k.com/trappeys-plan</div>
+  <h1>Trappeys Cannery<br><span>Solar AI Factory</span></h1>
+  <p class="sub">7 acres. 12 buildings. 1921 industrial heritage. 46,000 sq ft of compute space. 1 MW rooftop solar. Water tower cooling. Riverwalk on the Vermilion. Louisiana's first solar-powered AI compute campus.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">7</div><div class="label">Acres</div></div>
+    <div class="stat"><div class="num">46K</div><div class="label">Sq Ft Compute</div></div>
+    <div class="stat"><div class="num">~1 MW</div><div class="label">Rooftop Solar</div></div>
+    <div class="stat"><div class="num">36-84</div><div class="label">Max NVL72 Racks</div></div>
+    <div class="stat"><div class="num">$1M</div><div class="label">Acquisition</div></div>
+  </div>
+</div>
+
+<!-- SITE LAYOUT -->
+<div class="section">
+  <div class="section-label">Site Layout</div>
+  <h2>Building Assignments</h2>
+  <p class="sub">Every structure has a purpose. Every rooftop generates power. The concrete pad becomes the power and cooling infrastructure yard. The water tower does double duty &mdash; branding AND cooling.</p>
+
+  <div class="site-map">
+    <h3>Trappeys Campus — Overhead Layout (North Up)</h3>
+    <div class="map-grid">
+      <!-- Row 1: Front / Evangeline Thruway side -->
+      <div class="map-block b-power" style="grid-column:1">
+        <div class="block-name">Power Feed</div>
+        <div class="block-use">Existing 3-phase transformer bank. Grid interconnect point.</div>
+        <div class="block-solar">UTILITY TIE-IN</div>
+      </div>
+      <div class="map-block b-ops" style="grid-column:2">
+        <div class="block-name">Partner Hub (Loading Dock)</div>
+        <div class="block-use">Restored brick facade. ADC + NVIDIA + UL + First Solar + City offices. The front door.</div>
+        <div class="block-solar">~9,000 sq ft roof = 165 kW</div>
+      </div>
+      <div class="map-block b-landmark" style="grid-column:3">
+        <div class="block-name">Water Tower</div>
+        <div class="block-use">Branding landmark + thermal buffer tank for liquid cooling loop. Dual purpose.</div>
+        <div class="block-solar">PHASE 1 — DO FIRST</div>
+      </div>
+
+      <!-- Row 2: Middle -->
+      <div class="map-block b-compute" style="grid-column:1">
+        <div class="block-name">Metal Warehouse</div>
+        <div class="block-use">Cream-sided, flat metal roof. Storage, staging, future expansion.</div>
+        <div class="block-solar">~12,000 sq ft roof = 220 kW</div>
+      </div>
+      <div class="map-block b-compute" style="grid-column:2">
+        <div class="block-name">Main Cannery</div>
+        <div class="block-use">Sawtooth roof, tall ceilings. Primary AI compute hall. Pods go here.</div>
+        <div class="block-solar">~16,000 sq ft roof = 290 kW</div>
+      </div>
+      <div class="map-block b-power" style="grid-column:3">
+        <div class="block-name">Infrastructure Yard</div>
+        <div class="block-use">28,000 sq ft concrete slab. Gensets, switchgear, dry coolers, battery storage. Power scales here.</div>
+        <div class="block-solar">POWER PLANT SITE</div>
+      </div>
+
+      <!-- Row 3: Rear -->
+      <div class="map-block b-compute" style="grid-column:1/3">
+        <div class="block-name">Clear-Span Warehouse</div>
+        <div class="block-use">Massive open floor, steel frame, 25-30 ft ceilings, skylights. PERFECT for containerized compute pods. This is the engine room.</div>
+        <div class="block-solar">~18,000 sq ft roof = 330 kW</div>
+      </div>
+      <div class="map-block b-ops" style="grid-column:3">
+        <div class="block-name">Support Bldgs</div>
+        <div class="block-use">Smaller structures. Mechanical, cooling, electrical rooms.</div>
+      </div>
+
+      <!-- Row 4: River -->
+      <div class="map-block b-river" style="grid-column:1/3">
+        <div class="block-name">Two-Story Brick Riverfront Building &mdash; NOC + Command</div>
+        <div class="block-use">NOC / command center (2nd floor, 6-screen display wall). Edge compute, workshops, client demos (1st floor). Restored brick, river views. The face of the campus.</div>
+        <div class="block-solar">River HX for supplemental cooling (future)</div>
+      </div>
+      <div class="map-block b-river" style="grid-column:3">
+        <div class="block-name">Riverwalk</div>
+        <div class="block-use">Rebuilt seawall + walkway along Vermilion River. Outdoor meeting space. Beautiful. Every photo backdrop.</div>
+        <div class="block-solar">~$50-100K BUILD</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUILDINGS WITH PHOTOS -->
+<div class="section">
+  <div class="section-label">Structures</div>
+  <h2>Building Detail</h2>
+  <p class="sub">20 site photos analyzed. Each building assigned by function.</p>
+
+  <div class="buildings">
+    <div class="bldg">
+      <img src="trappeys-photos/Rear_warehouse1.jpg" alt="Clear-span warehouse interior">
+      <div class="bldg-body">
+        <h3>Clear-Span Warehouse</h3>
+        <div class="bldg-type type-compute">PRIMARY COMPUTE</div>
+        <p>Massive clear-span interior, steel frame, concrete floor, 25-30 ft ceilings. Skylights confirm intact roof structure. NVL72 racks go here on raised pedestals with underfloor airflow. HVLS ceiling fans for circulation. Desiccant dehumidification to keep 40-50% RH. Water tower cooling loop + dry coolers on the infrastructure yard behind.</p>
+        <div class="spec">Est. floor: 18,000 sq ft<br>Roof solar: ~330 kW (600 panels)<br>Rack capacity: 36-84 NVL72 racks<br>Elevated racks + underfloor airflow<br>HVLS fans + desiccant dehumidification</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/WT2.jpg" alt="Concrete pad and water tower">
+      <div class="bldg-body">
+        <h3>Infrastructure Yard (Concrete Pad)</h3>
+        <div class="bldg-type type-power">POWER + COOLING PLANT</div>
+        <p>Former metal building footprint &mdash; 28,000 sq ft of heavy-duty concrete. Clear, flat, accessible from road. This is where the power scales: natural gas gensets, transformer/switchgear yard, dry coolers (backup to water tower), battery storage, diesel emergency genset. Visible from US 90 &mdash; make it look professional, it's marketing.</p>
+        <div class="spec">Est. area: 28,000 sq ft<br>Phase 3: Diesel genset + switchgear<br>Phase 5+: Nat gas gensets (3-6 MW)<br>Battery storage as funded</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/WT1.jpg" alt="Water tower">
+      <div class="bldg-body">
+        <h3>Water Tower &mdash; Dual Purpose</h3>
+        <div class="bldg-type type-landmark">BRANDING + COOLING INFRASTRUCTURE</div>
+        <p>Classic elevated steel water tank, ~60-80 ft tall, 15,000+ gallon capacity. Currently an eyesore &mdash; sandblast, prime, paint dark navy blue. But it's not just a sign. Repurposed as <strong>thermal buffer tank</strong> in the liquid cooling loop: hot water from NVL72 racks pumps up, gravity-feeds cold water back down to CDUs. The tower is a giant radiator &mdash; steel surface area, elevated in the wind, natural convection 24/7. In winter, may handle cooling load alone. Acts as a cooling UPS &mdash; if pumps trip, gravity-fed reserves buy 10-15 minutes. Nobody else in the neocloud space has this.</p>
+        <div class="spec">Branding: Sandblast + prime + navy blue<br>Logos: NVIDIA, ADC, First Solar, UL, City<br>Cooling: Thermal buffer tank (15K+ gal)<br>Gravity-fed return to CDUs (no pump needed)<br>Priority: DO FIRST</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/Rear_warehouse5.jpg" alt="Metal warehouse exterior">
+      <div class="bldg-body">
+        <h3>Metal Warehouse</h3>
+        <div class="bldg-type type-compute">STAGING + EXPANSION</div>
+        <p>Cream/tan metal-sided warehouse. Large footprint, flat metal roof — easiest solar installation on site (clamp-on rail mounts). Interior for staging, storage, future compute expansion.</p>
+        <div class="spec">Est. roof: 12,000 sq ft<br>Roof solar: ~220 kW (400 panels)<br>Roof type: Standing seam metal (ideal)</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/Middle1.jpg" alt="Loading dock building">
+      <div class="bldg-body">
+        <h3>Partner Hub (Loading Dock Building)</h3>
+        <div class="bldg-type type-ops">PARTNER OFFICES + FRONT DOOR</div>
+        <p>Red brick with loading bays, hip roof. Restore the facade, convert bays to entrance/lobby. Everyone gets a space with their name on the door: ADC operations, NVIDIA regional presence, UL Lafayette research liaison, First Solar O&amp;M monitoring, City of Lafayette smart city coordination. Shared conference room for partner meetings, investor tours, city council presentations. Everyone has skin in the game.</p>
+        <div class="spec">Est. roof: 9,000 sq ft<br>Roof solar: ~165 kW (300 panels)<br>Tenants: ADC, NVIDIA, UL, First Solar, City<br>Shared: Conference room, lobby, reception</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/Front5.jpg" alt="Riverfront building from river">
+      <div class="bldg-body">
+        <h3>Riverfront Building (2-Story) + Riverwalk</h3>
+        <div class="bldg-type type-ops">NOC / COMMAND CENTER</div>
+        <p>Two-story red brick, directly on the Vermilion River. Solid masonry construction. 2nd floor: NOC with 6-screen display wall and river views. 1st floor: edge compute, workshops, client demos. Restored brick = the showcase. Rebuild the seawall, add a riverwalk (~$50-100K) &mdash; outdoor meeting space, every photo backdrop. "The AI factory on the Vermilion River." Future: river heat exchanger for essentially unlimited cooling capacity.</p>
+        <div class="spec">Floors: 2<br>NOC (2F): 6 screens &mdash; GPU health, fabric, power, cooling, workloads, security<br>1F: Edge compute, workshops, demos<br>Riverwalk: Seawall + walkway (~$50-100K)<br>River: Heat exchanger (future &mdash; unlimited cooling)</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/Power1.jpg" alt="Existing power infrastructure">
+      <div class="bldg-body">
+        <h3>Power Infrastructure</h3>
+        <div class="bldg-type type-power">ELECTRICAL / GRID</div>
+        <p>Existing utility pole with transformer bank — three-phase power already on site. Elevated platform/substation structure. Grid interconnect exists. Solar inverters tie in here. Upgrade transformers as load grows.</p>
+        <div class="spec">Existing: 3-phase utility feed<br>Add: Solar inverters + switchgear<br>Add: Battery storage (future)<br>Add: Nat gas genset backup (future)</div>
+      </div>
+    </div>
+
+    <div class="bldg">
+      <img src="trappeys-photos/Middle3.jpg" alt="Full campus view with water tower">
+      <div class="bldg-body">
+        <h3>Campus Overview</h3>
+        <div class="bldg-type type-solar">FULL COVERAGE</div>
+        <p>View from the middle showing the metal warehouse (left), partner hub (center), main cannery (right), and water tower behind. Every rooftop gets covered in First Solar Series 7 panels. Concrete pad behind = infrastructure yard (gensets, switchgear, dry coolers). 46,000 sq ft of indoor compute space across three buildings. Power-limited, not space-limited.</p>
+        <div class="spec">Total rooftop solar: ~1,005 kW (1 MW)<br>Indoor compute space: 46,000 sq ft<br>Max capacity: 36-84 NVL72 racks (warehouse alone)<br>Full campus: 92-215 racks (all buildings)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLAR ECONOMICS -->
+<div class="section">
+  <div class="section-label">Solar Economics</div>
+  <h2>First Solar Installation Spec</h2>
+  <p class="sub">Series 7 thin-film CdTe panels. Manufactured at First Solar's $1.1B factory in New Iberia, Louisiana — 30 miles from this site. Zero Chinese supply chain. AI-enabled quality control.</p>
+
+  <div class="econ-grid">
+    <div class="econ"><div class="e-num e-solar">~1 MW</div><div class="e-label">Rooftop Solar</div></div>
+    <div class="econ"><div class="e-num e-green">1,830</div><div class="e-label">First Solar Panels</div></div>
+    <div class="econ"><div class="e-num e-blue">1,650+</div><div class="e-label">MWh per Year</div></div>
+    <div class="econ"><div class="e-num e-purple">$132K+</div><div class="e-label">Annual Energy Value</div></div>
+  </div>
+
+  <table class="solar-table">
+    <thead>
+      <tr><th>Surface</th><th>Type</th><th class="num">Area (sq ft)</th><th class="num">Panels</th><th class="num">kW</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Clear-Span Warehouse</td><td>Rooftop</td><td class="num">18,000</td><td class="num">600</td><td class="num">330</td></tr>
+      <tr><td>Metal Warehouse</td><td>Rooftop</td><td class="num">12,000</td><td class="num">400</td><td class="num">220</td></tr>
+      <tr><td>Main Cannery</td><td>Rooftop (partial)</td><td class="num">16,000</td><td class="num">530</td><td class="num">290</td></tr>
+      <tr><td>Partner Hub (Loading Dock)</td><td>Rooftop</td><td class="num">9,000</td><td class="num">300</td><td class="num">165</td></tr>
+      <tr><td><strong>ROOFTOP TOTAL</strong></td><td></td><td class="num"><strong>55,000</strong></td><td class="num"><strong>1,830</strong></td><td class="num"><strong>1,005</strong></td></tr>
+      <tr><td colspan="5" style="font-size:11px;color:var(--dim);text-align:center;padding-top:12px">Concrete pad reserved for infrastructure yard (gensets, switchgear, dry coolers, battery). Solar on rooftops only.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:24px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--solar)">
+    <p style="font-size:13px;color:var(--text)"><strong>Panel:</strong> First Solar Series 7 TR1 &mdash; 525-550W, thin-film CdTe, 30 sq ft each</p>
+    <p style="font-size:13px;color:var(--text);margin-top:4px"><strong>Warranty:</strong> 12-year product, 30-year performance, 0.3%/yr degradation (industry best)</p>
+    <p style="font-size:13px;color:var(--text);margin-top:4px"><strong>Origin:</strong> First Solar, 1400 Corporate Drive, New Iberia, LA &mdash; 30 miles from site</p>
+    <p style="font-size:13px;color:var(--text);margin-top:4px"><strong>Supply chain:</strong> 100% American &mdash; glass (IL/OH), steel (MS), fabricated (LA). Zero Chinese dependency.</p>
+  </div>
+</div>
+
+<!-- WATER TOWER -->
+<div class="section">
+  <div class="section-label">Landmark</div>
+  <h2>Water Tower — Branding + Cooling</h2>
+  <p class="sub">Not just a sign. It's a 15,000+ gallon thermal buffer tank that also happens to be the most visible landmark on Evangeline Thruway.</p>
+
+  <div class="tower-section">
+    <img src="trappeys-photos/WT1.jpg" alt="Water tower current state">
+    <div>
+      <h3>Dual Purpose: Symbol + Infrastructure</h3>
+      <p>Sandblast the rust, prime with industrial zinc, paint dark navy blue. Mount sponsor logos. But inside, it's working: hot water from NVL72 racks pumps up into the tank, gravity-feeds cold water back down to the CDUs. The elevated steel surface area acts as a passive radiator &mdash; natural convection, wind, 24/7 heat rejection. In winter (40-50&deg;F nights), the tower alone may handle cooling for the first racks. In summer, it supplements dry coolers. If pumps trip, gravity-fed reserves buy 10-15 minutes of emergency cooling with zero power.</p>
+      <div class="tower-brands">
+        <span class="brand brand-nvidia">NVIDIA</span>
+        <span class="brand brand-adc">ADC</span>
+        <span class="brand brand-solar">First Solar</span>
+        <span class="brand brand-ul">UL Lafayette</span>
+        <span class="brand brand-city">City of Lafayette</span>
+      </div>
+      <div style="margin-top:20px;padding:16px;background:var(--surface);border-radius:8px">
+        <p style="font-size:12px;color:var(--dim);line-height:1.7"><strong style="color:var(--bright)">Priority: Phase 1.</strong> Paint the tower, connect to cooling loop. It signals that this project is real AND it's the first piece of compute infrastructure. Nobody else in the neocloud space has a 100-year-old water tower as part of their cooling architecture. That's a magazine cover. That's a case study.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POWER ARCHITECTURE -->
+<div class="section">
+  <div class="section-label">Power Stack</div>
+  <h2>3-Layer Power + Cooling Architecture</h2>
+  <p class="sub">Solar rooftops. Grid backup. Gensets on the concrete pad. Water tower cooling loop. River heat exchanger future. Power scales on the infrastructure yard.</p>
+
+  <div class="phases" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="phase" style="border-top:3px solid var(--solar)">
+      <div class="phase-num">LAYER 1 — PRIMARY</div>
+      <h3>Rooftop Solar</h3>
+      <ul>
+        <li>~1 MW across all rooftops</li>
+        <li>1,830 First Solar Series 7 panels</li>
+        <li>Daytime primary power</li>
+        <li>Battery storage on pad (Phase 2)</li>
+        <li>30-year performance warranty</li>
+        <li>Nat gas gensets as compute scales</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--dim)">
+      <div class="phase-num">LAYER 2 — BACKUP</div>
+      <h3>LUS Grid</h3>
+      <ul>
+        <li>Existing 3-phase on site</li>
+        <li>LUS Fiber 0.8 mi away</li>
+        <li>Night / cloudy backup</li>
+        <li>Net metering potential</li>
+        <li>Substation up the road</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--red)">
+      <div class="phase-num">LAYER 3 — EMERGENCY</div>
+      <h3>Diesel Genset</h3>
+      <ul>
+        <li>On infrastructure yard (concrete pad)</li>
+        <li>On-site fuel storage</li>
+        <li>Hurricane resilience</li>
+        <li>Auto-transfer switch</li>
+        <li>72-hour runtime minimum</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--cyan)">
+      <div class="phase-num">COOLING</div>
+      <h3>Water Tower + River</h3>
+      <ul>
+        <li>Water tower = thermal buffer (15K+ gal)</li>
+        <li>Gravity-fed return to CDUs</li>
+        <li>Passive radiator (natural convection)</li>
+        <li>Dry coolers on pad (backup)</li>
+        <li>Vermilion River HX (future)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PHASING -->
+<div class="section">
+  <div class="section-label">Execution</div>
+  <h2>Humidity + Airflow &mdash; Lafayette Reality</h2>
+  <p class="sub">Lafayette averages 75-80% relative humidity. ASHRAE recommends 40-60% for compute. NVL72 racks have internal fans for power supplies, NVSwitches, and networking &mdash; they need dry, moving air. This is not optional.</p>
+
+  <div class="phases" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <div class="phase" style="border-top:3px solid var(--cyan)">
+      <div class="phase-num">DEHUMIDIFICATION</div>
+      <h3>Desiccant System</h3>
+      <ul>
+        <li>Industrial desiccant dehumidifiers (no refrigerant)</li>
+        <li>Target: 40-50% RH inside warehouse</li>
+        <li>Solar-powered during daytime (energy-efficient)</li>
+        <li>Prevents condensation on cold surfaces</li>
+        <li>Prevents corrosion on electronics + connectors</li>
+        <li>Drop ceiling or containment zone optional</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--blue)">
+      <div class="phase-num">AIRFLOW</div>
+      <h3>HVLS Fans + Circulation</h3>
+      <ul>
+        <li>HVLS (High Volume Low Speed) ceiling fans</li>
+        <li>Big Ass Fans or equivalent &mdash; 20-24 ft diameter</li>
+        <li>Move air throughout 25-30 ft warehouse ceiling</li>
+        <li>Prevent moisture stratification</li>
+        <li>Assist rack internal fans (dry ambient air intake)</li>
+        <li>Very low power draw (~1-2 kW per fan)</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--green)">
+      <div class="phase-num">ELEVATED RACKS</div>
+      <h3>Underfloor Airflow</h3>
+      <ul>
+        <li>NVL72 racks on raised pedestals/stands</li>
+        <li>12-18 inches above concrete floor</li>
+        <li>Air flows underneath &mdash; assists rack intake fans</li>
+        <li>Front-to-back airflow path (cold aisle / warm aisle)</li>
+        <li>Concrete floor is 100+ years strong &mdash; handles the weight</li>
+        <li>Moisture doesn't pool under racks</li>
+        <li>Cable routing underneath</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--cyan)">
+    <p style="font-size:13px;color:var(--text);line-height:1.7"><strong>NVL72 racks have internal fans.</strong> The liquid cooling handles GPU heat (cold plates + 45&deg;C hot water). But the power supplies, NVSwitches, networking gear, and motherboard components still use internal fans for airflow. Those fans pull in ambient air &mdash; if that air is 80% humidity, you're blowing moisture over hot electronics. Dehumidification is mandatory for a first-class setup in Louisiana. Not refrigerant, not air conditioning &mdash; just dry air and good circulation. Solar panels can power the dehumidifiers during the day.</p>
+  </div>
+</div>
+
+<!-- PHASING -->
+<div class="section">
+  <div class="section-label">Execution</div>
+  <h2>Phased Deployment</h2>
+  <p class="sub">Tower first. Solar + infrastructure yard second. First racks third. Then just keep adding.</p>
+
+  <div class="phases">
+    <div class="phase" style="border-top:3px solid var(--purple)">
+      <div class="phase-num">PHASE 1 — SIGNAL</div>
+      <h3>Water Tower + Cleanup</h3>
+      <ul>
+        <li>Acquire site (~$1M)</li>
+        <li>Paint water tower (branding + cooling prep)</li>
+        <li>Site cleanup + debris removal</li>
+        <li>Structural assessments (all roofs)</li>
+        <li>First Solar site survey</li>
+        <li>UL Lafayette partnership formalized</li>
+        <li>City council presentation</li>
+        <li>Riverwalk seawall construction</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--solar)">
+      <div class="phase-num">PHASE 2 — POWER</div>
+      <h3>Solar + Infrastructure Yard</h3>
+      <ul>
+        <li>Metal warehouse rooftop solar (220 kW) &mdash; easiest install</li>
+        <li>Remaining rooftops as budget allows</li>
+        <li>Inverters + grid interconnect upgrade</li>
+        <li>Infrastructure yard prep (concrete pad)</li>
+        <li>Diesel genset + ATS installed on pad</li>
+        <li>Water tower plumbing for cooling loop</li>
+        <li>Partner hub restoration (front building)</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--blue)">
+      <div class="phase-num">PHASE 3 — FIRST RACKS</div>
+      <h3>4 NVL72 Racks (288 GPUs)</h3>
+      <ul>
+        <li>4 NVL72 racks in clear-span warehouse</li>
+        <li>CDUs + water tower cooling loop live</li>
+        <li>LUS Fiber backhaul + InfiniBand fabric</li>
+        <li>NOC buildout (riverfront 2F, 6 screens)</li>
+        <li>UL Lafayette research compute live</li>
+        <li>Dynamo inference &mdash; tokens flowing</li>
+        <li>520 kW IT &mdash; solar + grid handles it</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--green)">
+      <div class="phase-num">PHASE 4 — SCALE</div>
+      <h3>8 Racks &rarr; 20 &rarr; 50+</h3>
+      <ul>
+        <li>Double to 8 racks (576 GPUs, 1 MW IT)</li>
+        <li>All rooftops solar-covered (~1 MW total)</li>
+        <li>First nat gas genset on pad (3 MW)</li>
+        <li>Second genset as needed (6 MW total)</li>
+        <li>Expand into metal warehouse + cannery</li>
+        <li>Vera Rubin NVL72 racks drop in same slots</li>
+        <li>Just keep adding &mdash; power is the only limit</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FULL-SCALE CAPACITY -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Scale</div>
+  <h2>Full Campus Capacity &mdash; Power Is the Only Limit</h2>
+  <p class="sub">46,000 sq ft of indoor compute space across three buildings. The clear-span warehouse alone holds 36-84 NVL72 racks. You just keep adding &mdash; next platform (Vera Rubin), same rack, same building, same install.</p>
+
+  <table class="solar-table">
+    <thead><tr><th>Building</th><th class="num">Sq Ft</th><th class="num">Racks (conservative)</th><th class="num">Racks (max)</th><th class="num">GPUs (max)</th></tr></thead>
+    <tbody>
+      <tr><td>Clear-Span Warehouse</td><td class="num">18,000</td><td class="num">36</td><td class="num">84</td><td class="num">6,048</td></tr>
+      <tr><td>Metal Warehouse</td><td class="num">12,000</td><td class="num">24</td><td class="num">56</td><td class="num">4,032</td></tr>
+      <tr><td>Main Cannery</td><td class="num">16,000</td><td class="num">32</td><td class="num">75</td><td class="num">5,400</td></tr>
+      <tr><td><strong>TOTAL</strong></td><td class="num"><strong>46,000</strong></td><td class="num"><strong>92</strong></td><td class="num"><strong>215</strong></td><td class="num"><strong>15,480</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--bright);margin:28px 0 12px">Power Growth Path</h3>
+  <table class="solar-table">
+    <thead><tr><th>Phase</th><th class="num">Racks</th><th class="num">IT Power</th><th class="num">Total Load</th><th>Power Source</th></tr></thead>
+    <tbody>
+      <tr><td>Phase 3 (start)</td><td class="num">4</td><td class="num">520 kW</td><td class="num">~650 kW</td><td>Solar (1 MW) + grid</td></tr>
+      <tr><td>Phase 4</td><td class="num">8</td><td class="num">1,040 kW</td><td class="num">~1,300 kW</td><td>Solar + grid (tight)</td></tr>
+      <tr><td>Phase 5</td><td class="num">20</td><td class="num">2,600 kW</td><td class="num">~3,000 kW</td><td>Add 1st nat gas genset (3 MW)</td></tr>
+      <tr><td>Phase 6</td><td class="num">36</td><td class="num">4,680 kW</td><td class="num">~5,400 kW</td><td>Add 2nd genset (6 MW total)</td></tr>
+      <tr><td><strong>Phase 7+</strong></td><td class="num"><strong>50+</strong></td><td class="num"><strong>6,500+ kW</strong></td><td class="num"><strong>~7,500+ kW</strong></td><td><strong>Dedicated power yard on pad</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ADJACENT INFRASTRUCTURE -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Surroundings</div>
+  <h2>Adjacent City Infrastructure &mdash; Already There</h2>
+  <p class="sub">Across the street on US 90: water department, city sewer. Substation up the road. You're inside the city's infrastructure ecosystem, not fighting to build one.</p>
+
+  <div class="phases" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="phase" style="border-top:3px solid var(--cyan)">
+      <div class="phase-num">WATER</div>
+      <h3>City Water Dept</h3>
+      <ul>
+        <li>Across the street on US 90</li>
+        <li>Utility water for cooling loops</li>
+        <li>Clean, permitted, city-maintained</li>
+        <li>No well drilling needed</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--dim)">
+      <div class="phase-num">SEWER</div>
+      <h3>City Sewer System</h3>
+      <ul>
+        <li>Across the street on US 90</li>
+        <li>Permitted discharge path</li>
+        <li>Cooling tower blowdown</li>
+        <li>Already connected</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--solar)">
+      <div class="phase-num">POWER</div>
+      <h3>Substation</h3>
+      <ul>
+        <li>Major substation up the road</li>
+        <li>High-voltage power available</li>
+        <li>No new transmission lines</li>
+        <li>Grid capacity for scaling</li>
+      </ul>
+    </div>
+    <div class="phase" style="border-top:3px solid var(--green)">
+      <div class="phase-num">FIBER</div>
+      <h3>LUS Fiber</h3>
+      <ul>
+        <li>LUS Fiber 0.8 mi away</li>
+        <li>Municipal broadband</li>
+        <li>Backhaul to MARLIE I (0.5 mi)</li>
+        <li>Internet uplink for token delivery</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<div class="section">
+  <div class="section-label">Partnership</div>
+  <h2>The Team</h2>
+  <p class="sub">Every partner gets visibility. Every partner gets value. Everyone gets an office. Water tower tells the story.</p>
+
+  <div class="partners">
+    <div class="partner">
+      <div class="p-name">NVIDIA</div>
+      <div class="p-role">AI Compute Platform</div>
+      <p>GPU infrastructure, DSX reference design, Dynamo inference OS. The compute brain of the campus.</p>
+    </div>
+    <div class="partner">
+      <div class="p-name">First Solar</div>
+      <div class="p-role">Solar Manufacturer</div>
+      <p>Series 7 panels from New Iberia. $1.1B factory, 30 miles away. Louisiana-made solar powering Louisiana AI.</p>
+    </div>
+    <div class="partner">
+      <div class="p-name">UL Lafayette</div>
+      <div class="p-role">Research + Workforce</div>
+      <p>Anchor tenant for research compute. Student workforce pipeline. Professors on board. Right down the road.</p>
+    </div>
+    <div class="partner">
+      <div class="p-name">City of Lafayette</div>
+      <div class="p-role">Community + Incentives</div>
+      <p>Historic tax credits (45%), Act 730 qualification, city restoration project. Put Lafayette on the map.</p>
+    </div>
+    <div class="partner">
+      <div class="p-name">ADC</div>
+      <div class="p-role">Developer + Operator</div>
+      <p>Advantage Design &amp; Construction. Site acquisition, buildout, operations, management. Scott Tomsu, Founder.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NVIDIA DESIGN TOOLS -->
+<div class="section">
+  <div class="section-label">NVIDIA Design Stack</div>
+  <h2>Every NVIDIA Tool — Applied to Trappeys</h2>
+  <p class="sub">NVIDIA built a complete simulation-to-operation pipeline for AI factories. ADC uses every layer — design it digitally, validate it virtually, build it physically, optimize it continuously.</p>
+
+  <div class="nvidia-stack">
+    <div class="nv-tool nv-air">
+      <div class="nv-name">DSX Air</div>
+      <div class="nv-type" style="color:var(--green)">Network Simulation — Cloud SaaS</div>
+      <p>Model Trappeys' entire compute network before buying a single switch. Validate InfiniBand topology, NVLink fabric, Spectrum-X switching, multi-tenant isolation, and Base Command Manager orchestration. Cloud-hosted — no hardware needed.</p>
+      <div class="nv-action">
+        <strong>STATUS: START NOW</strong><br>
+        Free trial: air.nvidia.com<br>
+        Model: Trappeys pod network (6-8 pods)<br>
+        Validate: InfiniBand spine, NVLink, storage fabric<br>
+        Output: Investor-ready network design
+      </div>
+    </div>
+
+    <div class="nv-tool nv-omni">
+      <div class="nv-name">Omniverse DSX Blueprint</div>
+      <div class="nv-type" style="color:var(--purple)">3D Physical Digital Twin</div>
+      <p>Photorealistic 3D model of the entire Trappeys campus — every building, every rack, every cooling loop, every solar panel. Run CFD thermal simulations on the clear-span warehouse. Validate liquid cooling paths. Walk investors through the facility before breaking ground.</p>
+      <div class="nv-action">
+        <strong>STATUS: PRE-CONSTRUCTION</strong><br>
+        Requires: RTX Pro 6000 workstation (~$7K)<br>
+        Alt: Cloud streaming (no local GPU)<br>
+        GitHub: NVIDIA-Omniverse-blueprints repo (free)<br>
+        Ships with: 50-acre reference site, NVL72 configs<br>
+        Output: 3D walkthroughs, thermal validation, investor tours
+      </div>
+    </div>
+
+    <div class="nv-tool nv-boost">
+      <div class="nv-name">DSX Boost</div>
+      <div class="nv-type" style="color:var(--solar)">Power Optimization — 30% More Throughput</div>
+      <p>CRITICAL for a solar-constrained site. DSX Boost delivers 93% compute throughput at 85% power draw — 30% more GPU output in the same power envelope. When your power comes from 1.5 MW of rooftop solar, every watt matters. This is how ADC's token margins beat commodity GPU rental.</p>
+      <div class="nv-action">
+        <strong>TRAPPEYS IMPACT</strong><br>
+        Without Boost: 1.5 MW solar = X tokens/sec<br>
+        With Boost: 1.5 MW solar = 1.3X tokens/sec<br>
+        Translation: 30% more revenue, same panels<br>
+        Activates: GPU firmware level (automatic with NVL72)
+      </div>
+    </div>
+
+    <div class="nv-tool nv-exchange">
+      <div class="nv-name">DSX Exchange</div>
+      <div class="nv-type" style="color:var(--red)">IT/OT Integration — Single Pane of Glass</div>
+      <p>Bridges compute (IT) and facility operations (OT) into one dashboard. Solar output, battery state, grid draw, cooling temps, GPU utilization, token throughput — all visible in real time from the riverfront NOC. Maps to NVIDIA Mission Control (their facility management platform).</p>
+      <div class="nv-action">
+        <strong>TRAPPEYS FIT</strong><br>
+        IT side: GPU health (DCGM), fabric (UFM), workloads (Run:ai)<br>
+        OT side: Solar (inverters), cooling (CDUs), power (switchgear)<br>
+        Dashboard: NOC on 2nd floor, riverfront building<br>
+        ADC Mission Control sits ON TOP of this layer
+      </div>
+    </div>
+
+    <div class="nv-tool nv-air">
+      <div class="nv-name">DSX Flex</div>
+      <div class="nv-type" style="color:var(--cyan)">Grid Collaboration — Power Balancing</div>
+      <p>Manages the 3-Layer Power Stack intelligently. Solar generation peaks midday, compute demand is 24/7. DSX Flex coordinates solar → battery → grid → diesel transitions automatically. Net metering with LUS. Sell excess solar back to the grid during low-compute periods.</p>
+      <div class="nv-action">
+        <strong>POWER STACK MAPPING</strong><br>
+        Layer 1: First Solar array (1.5 MW) + battery<br>
+        Layer 2: LUS grid (backup, net metering)<br>
+        Layer 3: Diesel genset (emergency, 72hr)<br>
+        Flex manages transitions + grid revenue
+      </div>
+    </div>
+
+    <div class="nv-tool nv-metro">
+      <div class="nv-name">Metropolis + Jetson</div>
+      <div class="nv-type" style="color:var(--cyan)">Video AI — Campus Security + Monitoring</div>
+      <p>NVIDIA Metropolis video AI on Jetson edge devices for campus security. Natural language queries on camera feeds ("show me anyone in the warehouse after 10pm"). Solar array monitoring (panel health, debris detection). Perimeter security. Also: UL Lafayette research project — students deploy and train models on campus cameras.</p>
+      <div class="nv-action">
+        <strong>CAMPUS APPLICATION</strong><br>
+        Jetson Orin: Edge inference at every building<br>
+        Metropolis VSS: Video search on all cameras<br>
+        Solar monitoring: Panel health + thermal imaging<br>
+        UL project: Students train + deploy vision models
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="nv-pipeline">
+    <h3>NVIDIA Design-to-Operation Pipeline — Trappeys Sequence</h3>
+    <div class="pipe-steps">
+      <div class="pipe-step">
+        <div class="step-name">Simulate Network</div>
+        <div class="step-tool">DSX Air</div>
+        <div class="step-when">Now (free)</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="step-name">3D Digital Twin</div>
+        <div class="step-tool">Omniverse Blueprint</div>
+        <div class="step-when">Pre-Construction</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="step-name">Physical Build</div>
+        <div class="step-tool">DSX Partners</div>
+        <div class="step-when">Post-Acquisition</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="step-name">Deploy Racks</div>
+        <div class="step-tool">Base Command Mgr</div>
+        <div class="step-when">Phase 3</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="step-name">Optimize + Operate</div>
+        <div class="step-tool">Boost + Exchange + Flex</div>
+        <div class="step-when">Ongoing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOFTWARE STACK -->
+  <div style="margin-top:24px;padding:24px;background:var(--surface);border-radius:8px;border-left:3px solid var(--green)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:12px">Full NVIDIA Software Stack at Trappeys</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;font-size:12px;color:var(--text)">
+      <div><strong style="color:var(--green)">Dynamo 1.0</strong> — Inference OS. 7x throughput per GPU. Disaggregated prefill/decode. KV-aware routing. THE token factory engine.</div>
+      <div><strong style="color:var(--blue)">Base Command Manager</strong> — SuperPOD orchestration. Cluster provisioning. Job scheduling. The control plane.</div>
+      <div><strong style="color:var(--purple)">DCGM</strong> — GPU health monitoring. Thermal alerts. XID error tracking. Predictive maintenance.</div>
+      <div><strong style="color:var(--cyan)">UFM</strong> — InfiniBand fabric management. Port diagnostics. Adaptive routing. Congestion control.</div>
+      <div><strong style="color:var(--solar)">Run:ai</strong> — GPU workload scheduling. Multi-tenant isolation. Fractional GPU allocation. Fair-share queuing.</div>
+      <div><strong style="color:var(--red)">NVIDIA Mission Control</strong> — Facility management platform. Power, cooling, compute health. NOC dashboard.</div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATION PATH -->
+  <div style="margin-top:24px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:8px">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:12px">Certification Path — Using These Tools IS the Path</p>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px">
+      <span style="padding:6px 14px;background:rgba(59,158,255,0.12);color:var(--blue);border:1px solid rgba(59,158,255,0.25);border-radius:6px;font-weight:600">NPN Register</span>
+      <span style="color:var(--dim)">&rarr;</span>
+      <span style="padding:6px 14px;background:rgba(0,232,122,0.12);color:var(--green);border:1px solid rgba(0,232,122,0.25);border-radius:6px;font-weight:600">DSX Air Sim</span>
+      <span style="color:var(--dim)">&rarr;</span>
+      <span style="padding:6px 14px;background:rgba(168,85,247,0.12);color:var(--purple);border:1px solid rgba(168,85,247,0.25);border-radius:6px;font-weight:600">Omniverse Twin</span>
+      <span style="color:var(--dim)">&rarr;</span>
+      <span style="padding:6px 14px;background:rgba(245,158,11,0.12);color:var(--solar);border:1px solid rgba(245,158,11,0.25);border-radius:6px;font-weight:600">DGX-Ready</span>
+      <span style="color:var(--dim)">&rarr;</span>
+      <span style="padding:6px 14px;background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.25);border-radius:6px;font-weight:600">NCP Certified</span>
+    </div>
+    <p style="font-size:12px;color:var(--dim);margin-top:12px">Every tool ADC uses feeds directly into the NVIDIA Partner Network certification ladder. DSX Air validates your network design. Omniverse Blueprint validates your physical plant. Building to DSX spec = fastest path to DGX-Ready and NCP.</p>
+  </div>
+</div>
+
+<!-- INCENTIVES -->
+<div class="section">
+  <div class="section-label">Incentives</div>
+  <h2>Money on the Table</h2>
+
+  <div class="econ-grid">
+    <div class="econ"><div class="e-num e-green">45%</div><div class="e-label">Historic Tax Credits (Fed+State)</div></div>
+    <div class="econ"><div class="e-num e-solar">30%</div><div class="e-label">Federal Solar ITC</div></div>
+    <div class="econ"><div class="e-num e-blue">10yr</div><div class="e-label">Property Tax Abatement (ITEP)</div></div>
+    <div class="econ"><div class="e-num e-purple">20yr</div><div class="e-label">Act 730 Sales Tax Exemption</div></div>
+  </div>
+  <div style="margin-top:24px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--green)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px">UL Lafayette Funding Angles</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.7">NSF MRI (Major Research Instrumentation) for GPU cluster &mdash; $100K-$4M. NSF EPSCoR (Louisiana is eligible) &mdash; $500K-$20M for research infrastructure. DOE clean energy computing. Louisiana Board of Regents LEQSF grants. HUD/EDA community development. USDA rural development. The university brings its own money to the table &mdash; ADC provides the facility, UL brings the grants. "Look how much money the college is gonna get."</p>
+  </div>
+  <div style="margin-top:12px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--solar)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px">The Key Insight</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.7">"We don't care what the solar panels cost &mdash; the government's paying for it. The city doesn't care what it costs &mdash; the government's paying for it. The expensive part is the GPU racks. But if we have something this big and this green going on, we're setting ourselves up as front runners. Get this right, everything else falls in our lap."</p>
+  </div>
+</div>
+
+<!-- 50-STATE PLAN -->
+<div class="section">
+  <div class="section-label">NVIDIA 50-State Plan</div>
+  <h2>Louisiana's Answer to the Florida Blueprint</h2>
+  <div class="sub">At GTC 2026, NVIDIA co-founder Chris Malachowsky unveiled "The 50-State Plan" &mdash; a call for every state to replicate what the University of Florida built. ADC + UL Lafayette is Louisiana's response.</div>
+
+  <div style="padding:24px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:24px">
+    <p style="font-size:18px;font-weight:700;color:var(--bright);margin-bottom:12px;text-align:center">"We've created a replicable, powerful model of public-private cooperation for everyone's benefit."</p>
+    <p style="font-size:13px;color:var(--dim);text-align:center">&mdash; Chris Malachowsky, Co-Founder, NVIDIA &amp; UF Alumnus</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:24px;border-radius:12px;overflow:hidden">
+    <div style="background:var(--card);padding:20px">
+      <p style="font-size:12px;color:var(--amber);font-family:'IBM Plex Mono',monospace;letter-spacing:1px;margin-bottom:12px;font-weight:600">FLORIDA MODEL (UF)</p>
+      <ul style="list-style:none;font-size:13px;line-height:2;color:var(--dim)">
+        <li>$50M GPU donation from billionaire alum</li>
+        <li>$100M state facility + $15M/yr faculty</li>
+        <li>HiPerGator SuperPOD on campus</li>
+        <li>Shared with 12 FL public universities</li>
+        <li>K-12 pipeline in 3 school districts</li>
+        <li>NVIDIA AI Technology Center on campus</li>
+        <li>106 new AI faculty hired</li>
+        <li>12,000+ students/year in AI courses</li>
+      </ul>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--amber);margin-top:12px">$180M+ total investment</p>
+    </div>
+    <div style="background:var(--card);padding:20px">
+      <p style="font-size:12px;color:var(--green);font-family:'IBM Plex Mono',monospace;letter-spacing:1px;margin-bottom:12px;font-weight:600">LOUISIANA MODEL (ADC + UL)</p>
+      <ul style="list-style:none;font-size:13px;line-height:2;color:var(--dim)">
+        <li>ADC provides NVL72 racks at Trappeys</li>
+        <li>NSF + state grants fund research compute</li>
+        <li>Trappeys AI Factory &mdash; half mile from campus</li>
+        <li>Available to LA university system</li>
+        <li>Lafayette Parish K-12 pipeline</li>
+        <li>NVIDIA office in Partner Hub</li>
+        <li>NSF MRI + EPSCoR fund faculty positions</li>
+        <li>ADC generates commercial revenue too</li>
+      </ul>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--green);margin-top:12px">Fraction of the cost</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+    <div style="background:var(--surface);padding:16px;border-radius:8px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--green)">K-12</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">Public + Private Schools</div>
+      <p style="font-size:12px;color:var(--dim);margin-top:8px"><strong style="color:var(--bright)">Public:</strong> 31K students, 44 schools. David Thibodaux STEM Magnet already running. <strong style="color:var(--bright)">Private:</strong> 10K+ students, 23 schools. Teurlings, Lafayette Christian, Ascension Episcopal, ESA robotics. 4-course AI curriculum from UF/Florida model. NVIDIA DLI certifications while still in school.</p>
+    </div>
+    <div style="background:var(--surface);padding:16px;border-radius:8px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--blue)">University</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">Research + Workforce</div>
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">UL Lafayette students get GPU access at Trappeys. AI across the curriculum &mdash; not just CS. Research compute for every department. Graduates go straight to ADC operations.</p>
+    </div>
+    <div style="background:var(--surface);padding:16px;border-radius:8px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--amber)">Industry</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">Commercial Revenue</div>
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">Unlike UF's academic-only model, ADC generates commercial token revenue alongside research compute. Self-sustaining from day one. LED FastStart provides free workforce training.</p>
+    </div>
+  </div>
+
+  <div style="padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--purple)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px">Why ADC's Model Is Better</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.7">Florida needed $180M and a billionaire alumnus. Louisiana can do it with ADC providing the facility and NVIDIA-certified infrastructure, UL Lafayette providing grants and students, and the state's incentive stack covering the gap. ADC's compute generates commercial revenue AND serves academic research simultaneously &mdash; a self-sustaining model that doesn't depend on donations. Energy-first, American-made, historic restoration. Same outcome, better economics.</p>
+  </div>
+
+  <div style="margin-top:16px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--blue)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px">UF Framework Documents &amp; Source Material</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">The University of Florida published the complete playbook for institutional AI transformation. We're adapting it for Louisiana.</p>
+    <div style="display:grid;gap:8px">
+      <a href="https://ai.ufl.edu/media/aiufledu/resources/AI-Across-the-Curriculum--Governance,-Taxonomy,-and-Institutional-Strategy-Final.docx" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">AI Across the Curriculum: Governance, Taxonomy &amp; Institutional Strategy (Wise, 2025) &rarr;</a>
+      <a href="https://ai.ufl.edu/media/aiufledu/resources/AI-Infrastructure-Final-1.20.26.docx" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">Building University Technological Infrastructure to Support AI (Wise, 2026) &rarr;</a>
+      <a href="https://ai.ufl.edu/media/aiufledu/resources/25_01.08_UF-QEP_AI-Across-the-Curriculum.pdf" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">Quality Enhancement Plan: AI Across the Curriculum (Full QEP Document) &rarr;</a>
+      <a href="https://ai.ufl.edu/media/aiufledu/resources/Developing-a-Model-for-AI-Across-the-Curriculum-Transforming-the-higher-ed-landscape-via-innovation-in-AI-literacy.pdf" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">Developing a Model for AI Across the Curriculum (Published Research Paper) &rarr;</a>
+      <a href="https://ai.ufl.edu/media/aiufledu/resources/GenAIBestPractices.pdf" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">AI Technologies in Education: GenAI Best Practices &rarr;</a>
+      <a href="https://ai.ufl.edu/about/building-an-ai-university/" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">Building an AI University &mdash; UF Master Page (Timeline, Metrics, Infrastructure) &rarr;</a>
+      <a href="https://ai.ufl.edu/teaching-with-ai/k-12-ai-education-program/" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--blue);text-decoration:none">K-12 AI Education Program (4-Course Curriculum Framework) &rarr;</a>
+      <a href="https://www.nvidia.com/gtc/session-catalog/sessions/gtc26-s82238/" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--green);text-decoration:none">GTC 2026: The 50-State Plan Session (S82238) &rarr;</a>
+      <a href="https://blogs.nvidia.com/blog/economic-development-us/" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--green);text-decoration:none">NVIDIA Blog: Fueling Economic Development Across the US &rarr;</a>
+      <a href="https://nvidianews.nvidia.com/news/nvidia-partners-ai-infrastructure-america" target="_blank" style="display:block;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--green);text-decoration:none">NVIDIA Newsroom: Partners Build America's AI Infrastructure &rarr;</a>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:20px;background:var(--surface);border-radius:8px;border-left:3px solid var(--amber)">
+    <p style="font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px">Other States Already Moving</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.7"><strong>Utah</strong> &mdash; $50M AI factory with NVIDIA + HPE (tripling compute). <strong>California</strong> &mdash; State-NVIDIA AI collaboration (Gov. Newsom). <strong>Mississippi, Oregon</strong> &mdash; AI education + workforce. <strong>Alabama</strong> &mdash; Miles College HBCU initiative. <strong>Tennessee</strong> &mdash; UTK on the GTC panel. <strong>Pennsylvania</strong> &mdash; Carnegie Mellon on the GTC panel. Louisiana is NOT on this list yet. ADC + UL Lafayette changes that.</p>
+  </div>
+</div>
+
+<!-- AMERICAN-MADE -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Supply Chain</div>
+  <h2>American-Made, Louisiana-Built</h2>
+  <div class="sub">Every component US-manufactured wherever possible. American energy, American parts, American AI factory.</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">NVIDIA</div>
+      <div style="font-size:11px;color:var(--dim)">Santa Clara, CA</div>
+      <div style="font-size:12px;color:var(--green);margin-top:6px">GPUs, NICs, Switches</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">First Solar</div>
+      <div style="font-size:11px;color:var(--dim)">New Iberia, LA (30 mi)</div>
+      <div style="font-size:12px;color:var(--solar);margin-top:6px">Series 7 Solar Panels</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Eaton</div>
+      <div style="font-size:11px;color:var(--dim)">Cleveland, OH</div>
+      <div style="font-size:12px;color:var(--blue);margin-top:6px">PDUs, Switchgear, UPS</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Caterpillar</div>
+      <div style="font-size:11px;color:var(--dim)">Irving, TX</div>
+      <div style="font-size:12px;color:var(--amber);margin-top:6px">Natural Gas Gensets</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Powell Industries</div>
+      <div style="font-size:11px;color:var(--dim)">Houston, TX</div>
+      <div style="font-size:12px;color:var(--purple);margin-top:6px">Custom Switchgear</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Big Ass Fans</div>
+      <div style="font-size:11px;color:var(--dim)">Lexington, KY</div>
+      <div style="font-size:12px;color:var(--cyan);margin-top:6px">HVLS Ceiling Fans</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">BAC</div>
+      <div style="font-size:11px;color:var(--dim)">Jessup, MD</div>
+      <div style="font-size:12px;color:var(--red);margin-top:6px">Dry Coolers</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Cummins</div>
+      <div style="font-size:11px;color:var(--dim)">Columbus, IN</div>
+      <div style="font-size:12px;color:var(--green);margin-top:6px">Emergency Diesel Gensets</div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:14px;font-weight:700;color:var(--bright)">Siemens Energy</div>
+      <div style="font-size:11px;color:var(--dim)">Atlanta HQ (US Ops)</div>
+      <div style="font-size:12px;color:var(--blue);margin-top:6px">Grid &amp; Generation Control</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Trappeys Cannery Solar AI Factory &mdash; Advantage Design &amp; Construction &mdash; Lafayette, Louisiana<br>
+  <span style="margin-top:4px;display:inline-block">1201 SE Evangeline Thruway, Lafayette, LA 70501 &mdash; adc3k.com</span>
+</footer>
+
+</body>
+</html>
