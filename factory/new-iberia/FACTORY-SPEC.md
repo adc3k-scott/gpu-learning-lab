@@ -1,10 +1,28 @@
-# NEW IBERIA POD FACTORY — ENGINEERING SPECIFICATION
+# NEW IBERIA MODULE FACTORY — ENGINEERING SPECIFICATION
 
 **Project:** ADC Manufacturing — Step 2 (AI-Automated Factory)
 **Location:** 14th Street & Highway 90, New Iberia, LA
 **Owner:** Advantage Design & Construction (ADC)
-**Document:** Master Engineering Specification v1.0
-**Date:** 2026-03-11
+**Document:** Master Engineering Specification v2.0 (DSX PIVOT)
+**Date:** 2026-03-20 (Updated from v1.0 2026-03-11)
+
+---
+
+## DSX PIVOT (March 2026)
+
+**This spec has been updated post-GTC 2026.** Product pivoted from immersion-cooled GPU pods to **DSX-compliant facility modules** receiving NVIDIA standard liquid-cooled racks.
+
+### Key Station Changes
+- **S4 (Electrical)**: Now includes 800 VDC power distribution — adds complexity but is the industry standard for AI factories
+- **S5 (Cooling)**: Renamed "Facility Water Loop." No immersion tanks or EC-110 coolant. Standard facility water plumbing for NVIDIA rack-level 45°C liquid cooling.
+- **S6 (Compute)**: Renamed "Rack Receiving Bay + Network." No GPU sled insertion. Prepares mounting positions, power, water, and network connections for NVIDIA racks that install at customer site.
+- **S7 (Test)**: Infrastructure validation only. No GPU burn-in. Validates power (800 VDC), water loop (flow, pressure, thermal), and network (throughput).
+
+### Economic Impact
+- Faster cycle time (37-43 hrs vs 41 hrs) — water loop simpler than immersion
+- Lower material cost (~$3-6K/module savings from EC-110 elimination, partially offset by 800 VDC components)
+- Higher throughput: 10-14 modules/month (up from 8-12)
+- Selling price unchanged ($180K avg) — value is in DSX compliance, not cooling method
 
 ---
 
@@ -53,7 +71,7 @@
 - CNC plasma table requires 10'×6' isolated slab section to prevent vibration transfer
 - Test cell has 6" acoustic wall separation from production hall
 - Overhead crane rated for full container weight (empty 20ft container = ~5,000 lbs)
-- All floor drains in cooling station (S5) tied to coolant recovery system, NOT sewer
+- All floor drains in water loop station (S5) tied to water recovery system, NOT sewer
 
 ---
 
@@ -107,15 +125,17 @@ Containers enter from the north (receiving dock) and travel through 7 stations i
 | S1 | Container prep + CNC cut | 4 hours | Plasma cut time |
 | S2 | Fabrication + welding | 6 hours | Weld cycle count |
 | S3 | Insulation + cure | 3 hours | Foam cure time |
-| S4 | Electrical | 8 hours | Connection count (bottleneck) |
-| S5 | Cooling system | 6 hours | Pressure test hold |
-| S6 | Compute install | 6 hours | Precision placement |
-| S7 | Test + burn-in | 8 hours | 4hr GPU burn-in |
-| **Total** | **End-to-end** | **41 hours (~5 shifts)** | **S4 is the bottleneck** |
+| S4 | Electrical + 800 VDC | 8 hours | Connection count + DC distribution (bottleneck) |
+| S5 | Facility water loop | 5 hours | Pressure test hold |
+| S6 | Rack receiving bay + network | 5 hours | Cable routing precision |
+| S7 | Infrastructure test | 5 hours | 2hr thermal water test |
+| **Total** | **End-to-end** | **36 hours (~4.5 shifts)** | **S4 is the bottleneck** |
+
+**Improvement vs old spec:** 5 hours faster per module. Water loop simpler than immersion. No GPU burn-in (NVIDIA's responsibility). Rack bay prep simpler than GPU sled insertion.
 
 **Throughput at 2 shifts/day, 4 days/week:**
-- 1 pod every 2.5–3 working days
-- 8–12 pods/month depending on model complexity
+- 1 module every 2–2.5 working days
+- 10–14 modules/month depending on configuration complexity
 
 ---
 
@@ -187,108 +207,117 @@ Containers enter from the north (receiving dock) and travel through 7 stations i
 
 ---
 
-### Station 4 — Electrical (BOTTLENECK STATION)
+### Station 4 — Electrical + 800 VDC Distribution (BOTTLENECK STATION)
 
-**Purpose:** Main panels, sub-panels, PDUs, bus bars, and all wire runs. Human-robot collaborative station.
+**Purpose:** Main panels, 800 VDC power distribution, sub-panels, PDUs, bus bars, rack power connections. Human-robot collaborative station.
 
 | Equipment | Model | Spec |
 |-----------|-------|------|
 | Cobot #1 | Universal Robots UR10e | 10kg payload, 1300mm reach. Panel mount + wire routing. |
 | Cobot #2 | Universal Robots UR10e | Wire termination + torque application. |
-| Human | Licensed Electrician | Code compliance oversight, final sign-off. |
+| Human | Licensed Electrician | Code compliance oversight, 800 VDC safety, final sign-off. |
 | Vision | 3× Metropolis cameras | Connection verification, wire color/gauge, torque values. |
-| Panel | 400A main service | Sub-panels + PDUs per pod configuration. |
+| Panel | 400A main service + 800 VDC distribution | Sub-panels + PDUs + DC bus bars per module configuration. |
 
-**This is the bottleneck station at 8 hours.** Electrical connections require the most precision and have the highest regulatory compliance burden. The cobots handle repetitive routing while the electrician focuses on code-critical decisions.
+**This is the bottleneck station at 8 hours.** 800 VDC adds complexity — DC-rated components, arc flash analysis, NEC Article 712 compliance. The cobots handle repetitive routing while the electrician focuses on code-critical decisions and DC safety.
 
 **Process:**
-1. Cobot #1 mounts main panel, sub-panels, and PDUs per Omniverse layout
+1. Cobot #1 mounts main panel, 800 VDC distribution, sub-panels, and PDUs per Omniverse layout
 2. Cobot #2 routes wire through pre-installed conduit (from S2 framing)
 3. Both cobots terminate wires — pre-programmed torque profiles per connector
-4. Electrician verifies all connections against NEC code
-5. Metropolis photographs and logs every single connection (digital record)
-6. Megger test on all circuits before advancing
+4. 800 VDC bus bar assembly installed and torqued to spec
+5. Electrician verifies all connections against NEC code (Article 712 for DC microgrids)
+6. Metropolis photographs and logs every single connection (digital record)
+7. Megger test on all circuits (AC and DC) before advancing
 
 **Bottleneck Mitigation:**
-- Future: Add 3rd cobot dedicated to bus bar assembly
+- Future: Add 3rd cobot dedicated to 800 VDC bus bar assembly
 - Future: Pre-fabricate wire harnesses at Station 2 (parallel path)
+- Future: Pre-fabricate 800 VDC bus bar assemblies off-line
 - Future: Automated wire labeling and heat-shrink station
 
 ---
 
-### Station 5 — Cooling System
+### Station 5 — Facility Water Loop
 
-**Purpose:** Immersion tank placement, all coolant plumbing, EC-110 fill, pressure test.
+**Purpose:** Plumb facility water supply/return for NVIDIA rack-level liquid cooling. CDU connection points. Heat rejection interface. Temperature and flow sensors.
 
 | Equipment | Model | Spec |
 |-----------|-------|------|
-| Robot | Fanuc CRX-25iA | 25kg payload, 1889mm reach. Collaborative. Tank placement. |
+| Robot | Fanuc CRX-25iA | 25kg payload, 1889mm reach. Collaborative. CDU positioning + pipe handling. |
 | Pipe System | Automated threading + fitting | Pre-measured pipe from Omniverse BOM. Robotic torque. |
-| Coolant | Engineered Fluids EC-110 | Dielectric immersion coolant. Automated dispense system. |
-| Vision | 3× Metropolis cameras | Leak detection, fill level, fitting torque verification. |
+| Sensors | Temperature + flow | Inline sensors for monitoring water loop performance. |
+| Vision | 3× Metropolis cameras | Leak detection, fitting torque verification, sensor placement. |
 
 **Process:**
-1. CRX-25iA places immersion tanks on pre-positioned mounts
-2. Automated pipe system threads, cuts, and fits all coolant supply/return lines
-3. All fittings torqued to spec by robotic wrench (logged)
-4. System pressurized to 45 PSI, held 30 minutes
-5. Metropolis monitors for any pressure drop >0.5 PSI (leak detection)
-6. EC-110 coolant dispensed to fill level via automated system
-7. Metropolis verifies fill level ±0.5" of target
+1. CRX-25iA positions CDU connection manifolds at each rack receiving bay
+2. Automated pipe system threads, cuts, and fits all water supply/return lines (45°C hot water)
+3. Install isolation valves, flow meters, temperature sensors at each branch
+4. All fittings torqued to spec by robotic wrench (logged)
+5. System pressurized to 45 PSI, held 30 minutes
+6. Metropolis monitors for any pressure drop >0.5 PSI (leak detection)
+7. System flushed and filled with treated water
+
+**Note:** Simpler than old immersion station — no EC-110 coolant, no immersion tanks, no dielectric fluid handling. Standard facility water plumbing with automated threading.
 
 ---
 
-### Station 6 — Compute Install
+### Station 6 — Rack Receiving Bay + Network
 
-**Purpose:** GPU server racks, GPU sled insertion into immersion tanks, all network cabling.
+**Purpose:** Install rack mounting positions, pre-route power/water/network to each bay. Prepare infrastructure for NVIDIA liquid-cooled racks that install at customer site.
 
 | Equipment | Model | Spec |
 |-----------|-------|------|
-| Robot #1 | Fanuc CRX-25iA | Rack placement on vibration-damped mounts. |
-| Robot #2 | Fanuc CRX-25iA | GPU sled insertion into immersion tanks. Force-feedback. |
-| Cobot | Universal Robots UR10e | Cable management — route, bundle, terminate. |
-| Vision | 3× Metropolis cameras | Rack alignment, cable routing, connector seating. |
-| Network | 100GbE spine + 25GbE leaf | All cables pre-made to Omniverse-specified lengths. |
+| Robot #1 | Fanuc CRX-25iA | Rack mount hardware placement on vibration-damped mounts. |
+| Robot #2 | Fanuc CRX-25iA | 800 VDC power cable routing to each rack position. |
+| Cobot | Universal Robots UR10e | Network cable management — route, bundle, terminate. |
+| Vision | 3× Metropolis cameras | Mount alignment, cable routing, connector seating. |
+| Network | InfiniBand or 400GbE | All cables pre-made to Omniverse-specified lengths. Customer spec. |
 
 **Process:**
-1. CRX-25iA #1 lifts server racks from staging, places on damped mounts (±2mm tolerance)
-2. CRX-25iA #2 picks GPU sleds, lowers into immersion tanks with force-feedback (prevents damage)
-3. UR10e routes all network and power cables per Omniverse cable map
+1. CRX-25iA #1 installs rack mounting hardware on damped floor mounts (±2mm tolerance)
+2. CRX-25iA #2 routes 800 VDC power cables and water loop connections to each rack position
+3. UR10e routes all network cables per Omniverse cable map (InfiniBand or 400GbE per customer spec)
 4. UR10e terminates all connections with calibrated crimping tool
-5. Metropolis verifies every connector is fully seated (vision + force data)
+5. Metropolis verifies every connector is fully seated (vision data)
 6. Metropolis checks cable bend radius — flags any below minimum spec
+7. All rack positions labeled and connection points documented
+
+**Note:** ADC does NOT install NVIDIA racks in the factory. The module ships with prepared infrastructure. NVIDIA liquid-cooled racks arrive at the customer site and drop into the prepared bays (2-hour install per rack).
 
 ---
 
-### Station 7 — Test Cell
+### Station 7 — Infrastructure Test Cell
 
-**Purpose:** Full system validation — power, thermal, network, storage, GPU burn-in. Zero assembly — measurement only.
+**Purpose:** Full infrastructure validation — power (AC + 800 VDC), water loop, network. Module-level QA. No GPU burn-in (NVIDIA validates their own racks at customer site).
 
 | Equipment | Model | Spec |
 |-----------|-------|------|
-| Vision Array | Metropolis 16-cam thermal + 4 visible | AI-trained on known-good thermal signatures. |
-| Power | Facility power connection | Full pod load on genset power. |
-| Network | 100GbE test connection | Throughput + latency validation. |
+| Vision Array | Metropolis 8-cam thermal + 4 visible | AI-trained on known-good infrastructure thermal signatures. |
+| Power | Facility power connection + 800 VDC test supply | Full module infrastructure load. |
+| Water | Test rig (pump + heater) | Simulates NVIDIA rack heat load at 45°C. |
+| Network | InfiniBand or 400GbE test connection | Throughput + latency validation per customer spec. |
 | Monitoring | Omniverse real-time dashboard | Every sensor value displayed in digital twin. |
 
-**Test Sequence (8 hours):**
+**Test Sequence (5 hours):**
 
 | Phase | Duration | Test |
 |-------|----------|------|
-| 1. Power-On Self-Test | 15 min | All circuits energize, no faults, UPS charges |
-| 2. Network Validation | 30 min | 100GbE throughput, latency <1ms, all ports active |
-| 3. Storage IOPS | 30 min | NVMe drives, sequential + random read/write |
-| 4. Cooling Ramp | 30 min | Coolant flow verified, pump pressures nominal |
-| 5. GPU Thermal Ramp | 30 min | All GPUs to 100% TDP, watch thermal curves |
-| 6. GPU Burn-In | 4 hours | Sustained 100% TDP, Metropolis thermal monitoring |
-| 7. Cooldown + Final Scan | 30 min | Thermal decay curve analysis, visual inspection |
-| 8. QA Sign-Off | 45 min | Report generation, certificate, ship prep |
+| 1. Power-On Self-Test | 15 min | All AC + 800 VDC circuits energize, no faults |
+| 2. 800 VDC Load Test | 30 min | Full DC distribution under simulated rack load |
+| 3. Network Validation | 30 min | All ports active, throughput verified, latency <1ms |
+| 4. Water Loop Cold Test | 30 min | Flow rate, pressure, leak check at ambient temp |
+| 5. Water Loop Thermal Test | 2 hours | Run water at 45°C, verify no leaks under thermal expansion, check all joints |
+| 6. Sensor Validation | 15 min | All temperature sensors, flow meters, pressure gauges reading correctly |
+| 7. Cooldown + Final Scan | 15 min | Thermal decay analysis, visual inspection |
+| 8. QA Sign-Off | 45 min | Report generation, infrastructure certificate, ship prep |
 
 **Pass Criteria:**
-- All GPUs sustained 100% TDP for 4 hours with no throttling
-- Coolant temperature delta <15°C across any tank
-- No thermal anomalies flagged by Metropolis AI
+- All AC and 800 VDC circuits pass under load with no faults
+- Water loop maintains pressure at 45°C for 2 hours with zero leaks
+- Flow rate within ±5% of design spec at all rack positions
 - All network ports pass throughput test
+- All sensors reading within calibration range
 - Zero electrical faults during entire sequence
 - **Target: 98% first-pass yield**
 
@@ -306,12 +335,12 @@ Containers enter from the north (receiving dock) and travel through 7 stations i
 | 6 | ABB IRB 2600 | S3 | Vapor barrier install | 12 kg | 1850 mm |
 | 7 | Universal Robots UR10e | S4 | Panel mount + wire route | 10 kg | 1300 mm |
 | 8 | Universal Robots UR10e | S4 | Wire termination | 10 kg | 1300 mm |
-| 9 | Fanuc CRX-25iA | S5 | Immersion tank placement | 25 kg | 1889 mm |
-| 10 | Auto Pipe System | S5 | Pipe thread + fit | — | — |
-| 11 | Fanuc CRX-25iA | S6 | Rack placement | 25 kg | 1889 mm |
-| 12 | Fanuc CRX-25iA | S6 | GPU sled insertion | 25 kg | 1889 mm |
-| 13 | Universal Robots UR10e | S6 | Cable management | 10 kg | 1300 mm |
-| 14 | Metropolis Vision Array | S7 | Automated QA (20 cameras) | — | — |
+| 9 | Fanuc CRX-25iA | S5 | CDU positioning + pipe handling | 25 kg | 1889 mm |
+| 10 | Auto Pipe System | S5 | Pipe thread + fit (water loop) | — | — |
+| 11 | Fanuc CRX-25iA | S6 | Rack mount hardware placement | 25 kg | 1889 mm |
+| 12 | Fanuc CRX-25iA | S6 | 800 VDC + water routing to rack positions | 25 kg | 1889 mm |
+| 13 | Universal Robots UR10e | S6 | Network cable management | 10 kg | 1300 mm |
+| 14 | Metropolis Vision Array | S7 | Automated infrastructure QA (12 cameras) | — | — |
 
 **Total: 14 robotic systems across 7 stations**
 
@@ -368,9 +397,9 @@ Every robot path is programmed and validated in Isaac Sim before running on phys
 | S2 | 2 | Weld defect classification, dimensional tolerance |
 | S3 | 2 | Foam coverage mapping, thermal uniformity |
 | S4 | 3 | Wire color/gauge verification, connection seating, torque |
-| S5 | 3 | Leak detection (pressure), fill level, fitting quality |
-| S6 | 3 | Rack alignment, cable routing, connector seating |
-| S7 | 4+16 thermal | Full thermal signature analysis, anomaly detection |
+| S5 | 3 | Leak detection (pressure), fitting quality, sensor placement |
+| S6 | 3 | Rack mount alignment, cable routing, connector seating |
+| S7 | 4+8 thermal | Infrastructure thermal analysis, water loop thermal expansion |
 
 **Edge Inference:**
 - NVIDIA Jetson AGX Orin at each station (7 units)
@@ -512,10 +541,10 @@ Every robot path is programmed and validated in Isaac Sim before running on phys
 | **Total Monthly OpEx** | **$360K** |
 | | |
 | **Revenue (Monthly at Capacity)** | |
-| 10 pods × $180K average selling price | $1,800K |
-| **Gross Profit** | **$1,440K/month** |
-| **Annual Gross Profit** | **$17.3M** |
-| **Capital Payback** | **~6 months at full capacity** |
+| 12 modules × $180K average selling price | $2,160K |
+| **Gross Profit** | **$1,800K/month** |
+| **Annual Gross Profit** | **$21.6M** |
+| **Capital Payback** | **~5 months at full capacity** |
 
 ---
 
@@ -571,7 +600,7 @@ Every robot path is programmed and validated in Isaac Sim before running on phys
 
 ---
 
-*This document is the engineering basis of design for the New Iberia Pod Factory. All specifications subject to refinement during detailed engineering and Omniverse simulation.*
+*This document is the engineering basis of design for the New Iberia Module Factory. All specifications subject to refinement during detailed engineering and Omniverse simulation.*
 
 *ADC — Advantage Design & Construction*
-*Mission Control — Document generated 2026-03-11*
+*Mission Control — Document updated 2026-03-20 (DSX Pivot)*

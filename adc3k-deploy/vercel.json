@@ -18,7 +18,6 @@
   "rewrites": [
     { "source": "/card", "destination": "/card.html" },
     { "source": "/qr", "destination": "/qr.html" },
-    { "source": "/factory", "destination": "/floor-plan.html" },
     { "source": "/factory-sim", "destination": "/production-sim.html" },
     { "source": "/study", "destination": "/study.html" },
     { "source": "/quiz", "destination": "/quiz.html" },
