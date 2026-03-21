@@ -226,3 +226,15 @@ web/adc3k-site.html
 
 # Private decks (sensitive business content)
 decks-private/
+
+# SSH keys
+*.pem
+id_rsa*
+id_ed25519*
+*.pub
+
+# Secret files
+*.secret
+*secret*.json
+.env.*
+!.env.example
