@@ -1,9 +1,40 @@
 # Mission Control — Project State
-Last updated: 2026-03-20 (Omniverse RunPod deployment + Crusoe intel + Trappeys pages)
+Last updated: 2026-03-21 (Security hardening + RunPod exec bridge + Omniverse learnings)
 
 ---
 
-## What Was Done This Session (2026-03-20 Evening)
+## What Was Done This Session (2026-03-21)
+
+### Security Hardening
+- Removed hardcoded JUPYTER_TOKEN default from runpod_exec.py (now fails if unset)
+- Removed Stripe webhook secret from memory/projects/missioncontrolhd.md
+- Added SSH keys, .pem, secret files to .gitignore
+- Updated pod specs (50GB container + 200GB volume)
+- Verified .env and Skydio.key NOT tracked at HEAD (cleaned in prior commit 4e97deb)
+- NOTE: .env and Skydio.key still in git HISTORY — rotate all API keys in dashboards
+
+### RunPod Remote Execution Bridge (NEW)
+- Built `scripts/runpod_exec.py` — stdlib-only Jupyter WebSocket command execution
+- Bypasses ISP TCP blocking via Cloudflare HTTPS proxy
+- Zero pip dependencies — works on any machine with Python 3.10+
+- Permanent solution for autonomous pod operation
+
+### Omniverse DSX Blueprint — Lessons Learned
+- Pod to53z2zsxrtgp5 (L40S SECURE, $0.86/hr) — stopped, volume preserved with 74GB Content Pack
+- Build failed due to disk constraints: 20GB container + 100GB volume too small
+- **Correct specs: 50GB container + 200GB volume** (updated in runpod_create_omniverse_pod.py)
+- Packman cache needs ~15GB on container disk; CUDA package alone needs 10GB extraction space
+- Content Pack is 74GB extracted — leaves only 26GB on 100GB volume, not enough for build artifacts
+- RunPod was fully sold out when we tried to create properly-sized pod (Friday night demand)
+
+### Trappeys Power Hierarchy (LOCKED)
+- Fixed 4-layer hierarchy: Solar (offset) > Natural Gas (backbone 24/7) > Diesel (emergency) > Grid (sell-back ONLY)
+- Grid is NOT a power source — excess goes back to grid for revenue
+- Updated memory/projects/trappeys.md and MEMORY.md
+
+---
+
+## What Was Done Previous Session (2026-03-20 Evening)
 
 ### Omniverse DSX Blueprint — RunPod Deployment (IN PROGRESS)
 - Created NGC Cloud Account (org name: "ADC", scott@adc3k.com)
@@ -74,7 +105,7 @@ Last updated: 2026-03-20 (Omniverse RunPod deployment + Crusoe intel + Trappeys 
 | **KLFT 1.1** | Smart city convergence documented. Drone stations spec'd. | Airport Authority meeting. First responder pilot. |
 | **Lafayette AI Initiative** | City pitch LIVE at adc3k.com/lafayette. | Schedule City Council meeting. UL introduction. |
 | **ADC3K.com** | LIVE. Trappeys pages added. Crusoe intel on investor page. | Deep-dive education images (cosmetic). |
-| **Omniverse DSX** | Pod running. Content Pack downloading. | Launch streaming + web. Run thermal/electrical sims. |
+| **Omniverse DSX** | Pod stopped (volume preserved, 74GB Content Pack). Need 50GB+200GB pod. | Resume when RunPod has stock. Launch streaming + web. Run sims. |
 | **Mission Control** | Auth middleware. 303 tests. Full observability. | Set MC_API_KEY for production. |
 | **NCA-AIIO Cert** | PASSED 2026-03-13. | Done. |
 | **NCP-AII Cert** | Did not pass. NVIDIA updating exam. | Retake when new version available. |
@@ -89,12 +120,13 @@ Last updated: 2026-03-20 (Omniverse RunPod deployment + Crusoe intel + Trappeys 
 - **NVIDIA Partner Network (NPN)** — 5-minute web form. See `business-model/npn-registration.md`.
 - **UL Lafayette contact** — target Dr. Ramesh Kolluru via LEDA warm intro.
 
-### Omniverse (After Content Pack Downloads)
-- Launch Kit streaming server (`./run_streaming.sh`) — first run: 5-8 min shader compile
-- Launch web frontend (`./run_web.sh`)
-- Set up SSH tunnel for WebRTC streaming
+### Omniverse (Pod Stopped — Resume When Stock Available)
+- Pod to53z2zsxrtgp5 stopped. 74GB Content Pack on volume.
+- Need new pod: 50GB container + 200GB volume (script updated)
+- Use `scripts/runpod_exec.py` for all remote commands (no SSH needed)
+- Build steps: kit-cae (done) → kit-usd-agents → precache → DSX build → launch streaming
 - Run Trappeys thermal + electrical simulations
-- STOP POD when done ($1.66/hr)
+- STOP POD when done
 
 ### Willow Glen
 - **CBRE contact** — Bryce French, Senior VP
@@ -118,7 +150,8 @@ Last updated: 2026-03-20 (Omniverse RunPod deployment + Crusoe intel + Trappeys 
 - `adc3k-deploy/trappeys-plan.html` — Trappeys plan page
 - `adc3k-deploy/trappeys-dsx-prep.html` — Trappeys DSX prep kit
 - `adc3k-deploy/lafayette.html` — Lafayette AI Initiative
-- `scripts/runpod_create_omniverse_pod.py` — RunPod pod creation
+- `scripts/runpod_exec.py` — Remote command execution via Jupyter WebSocket (stdlib-only)
+- `scripts/runpod_create_omniverse_pod.py` — RunPod pod creation (50GB container + 200GB volume)
 - `scripts/runpod_omniverse_setup.sh` — Omniverse setup automation
 
 ## Deployment
@@ -127,7 +160,8 @@ Last updated: 2026-03-20 (Omniverse RunPod deployment + Crusoe intel + Trappeys 
 - Cloudflare: gofast@stfumotorcycles.com
 
 ## Next Session — Starting Points
-1. **Omniverse results** — run thermal + electrical sims, capture screenshots for Trappeys pitch
+1. **ROTATE ALL API KEYS** — .env history exposed Anthropic, Notion, RunPod, NGC, ElevenLabs, Pexels, MC_API_KEY. Rotate in each dashboard, update .env.
+2. **Omniverse results** — resume pod (50GB+200GB), complete build, run thermal + electrical sims
 2. **Solar partner debrief** — update power-economics.md with EPC pricing
 3. **NPN registration** — do it
 4. **SMB dispatch dashboard** — installer management UI

@@ -29,8 +29,8 @@ POD_CONFIG = {
     "name": "adc-omniverse-dsx",
     "imageName": "runpod/base:0.6.2-cuda12.2.0",  # Lightweight CUDA base — no PyTorch bloat
     "gpuCount": 1,
-    "volumeInGb": 100,  # 32GB Content Pack + repo + headroom
-    "containerDiskInGb": 20,
+    "volumeInGb": 200,  # 74GB Content Pack + 50GB build artifacts + headroom
+    "containerDiskInGb": 50,  # Packman cache (~15GB) + system + build tools
     "ports": "8081/http,49100/http,22/tcp",
     "env": [],
     # GPU preference order: RTX PRO 6000 (Blackwell, meets official spec) > L40S > A6000 > RTX 4090
