@@ -6,425 +6,786 @@
 <title>Trappeys AI Factory — Lafayette, Louisiana</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#fff;overflow:hidden;height:100vh}
-.slide{display:none;width:100vw;height:100vh;position:relative;flex-direction:column;justify-content:center;align-items:center;overflow-y:auto}
-.slide.active{display:flex}
-.slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
-.slide-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.75))}
-.slide-content{position:relative;z-index:1;max-width:1000px;width:92%;text-align:center;padding:30px 20px}
-h1{font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:14px;letter-spacing:-1px}
-h2{font-size:clamp(1.3rem,3vw,2.2rem);font-weight:700;line-height:1.2;margin-bottom:10px}
-p{font-size:clamp(0.9rem,1.6vw,1.2rem);line-height:1.5;color:#ccc;max-width:800px;margin:0 auto}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#000;color:#fff;overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
+
+/* SLIDES */
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;overflow-y:auto}
+.slide.active{display:flex;flex-direction:column;justify-content:center;align-items:center}
+
+/* BACKGROUNDS */
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;transform:scale(1.02)}
+.bg::after{content:'';position:absolute;inset:0}
+.bg.dark::after{background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.7) 50%,rgba(0,0,0,0.85) 100%)}
+.bg.heavy::after{background:linear-gradient(180deg,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.85) 100%)}
+.bg.left-dark::after{background:linear-gradient(90deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.6) 40%,rgba(0,0,0,0.3) 100%)}
+.bg.bottom-dark::after{background:linear-gradient(0deg,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.2) 100%)}
+.bg.vignette::after{background:radial-gradient(ellipse at center,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.8) 100%)}
+
+/* CONTENT — safe area padding so text never clips edges */
+.cnt{position:relative;z-index:1;width:88%;max-width:1100px;padding:48px 24px 56px}
+.cnt.left{text-align:left;align-self:flex-start;margin-left:6%}
+.cnt.center{text-align:center}
+.slide.active{padding:40px 0}
+
+/* TYPOGRAPHY */
+.mega{font-size:clamp(2.2rem,6vw,5rem);font-weight:900;line-height:0.95;letter-spacing:-3px;margin-bottom:12px}
+.mega .green{color:#76b900}
+.huge{font-size:clamp(2rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:10px}
+.big{font-size:clamp(1.4rem,3vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-1px;margin-bottom:10px}
+.sub{font-size:clamp(0.95rem,1.6vw,1.3rem);line-height:1.5;color:rgba(255,255,255,0.7);max-width:700px}
+.sub strong{color:#fff}
+.tag{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#76b900;margin-bottom:10px;border:1px solid rgba(118,185,0,0.3);padding:4px 12px;border-radius:3px}
 .accent{color:#76b900}
-.quote{font-style:italic;font-size:clamp(1.1rem,2.2vw,1.7rem);color:#fff;border-left:4px solid #76b900;padding-left:20px;text-align:left;max-width:750px;margin:20px auto;line-height:1.4}
-.quote-attr{font-style:normal;font-size:0.7em;color:#999;display:block;margin-top:8px}
-.stat-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:18px 0}
-.stat{text-align:center}
-.stat-num{font-size:clamp(1.5rem,3.5vw,2.8rem);font-weight:800;color:#76b900}
-.stat-label{font-size:0.8rem;color:#999;margin-top:2px}
-.photo-grid{display:grid;gap:6px;margin:14px auto;max-width:900px}
-.photo-grid.g2{grid-template-columns:1fr 1fr}
-.photo-grid.g3{grid-template-columns:1fr 1fr 1fr}
-.photo-grid img{width:100%;height:100%;object-fit:cover;border-radius:4px;max-height:32vh}
-.single-photo{max-width:700px;max-height:40vh;border-radius:6px;margin:14px auto;display:block;object-fit:contain}
-.timeline{text-align:left;max-width:650px;margin:14px auto}
-.timeline-item{display:flex;gap:12px;margin-bottom:10px;align-items:baseline}
-.timeline-year{font-weight:800;color:#76b900;min-width:80px;text-align:right;font-size:1rem}
-.timeline-text{color:#ccc;font-size:0.9rem;line-height:1.3}
-.power-stack{text-align:left;max-width:550px;margin:14px auto}
-.power-layer{display:flex;align-items:center;gap:12px;padding:10px 16px;margin-bottom:6px;border-radius:6px;border-left:4px solid}
-.power-layer.solar{background:rgba(255,213,79,0.1);border-color:#ffd54f}
-.power-layer.gas{background:rgba(118,185,0,0.1);border-color:#76b900}
-.power-layer.diesel{background:rgba(255,152,0,0.1);border-color:#ff9800}
-.power-layer.grid{background:rgba(79,195,247,0.1);border-color:#4fc3f7}
-.power-label{font-weight:700;font-size:1rem;min-width:110px}
-.power-desc{color:#999;font-size:0.85rem}
-.video-container{width:80%;max-width:800px;aspect-ratio:16/9;margin:14px auto;background:#111;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid #333}
-.video-container iframe{width:100%;height:100%;border:none;border-radius:6px}
-.video-placeholder{color:#666;font-size:1rem}
-.nav{position:fixed;top:12px;right:12px;z-index:100;display:flex;gap:4px}
-.nav button{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.75rem;backdrop-filter:blur(10px);transition:all 0.2s}
-.nav button:hover{background:rgba(118,185,0,0.3);border-color:#76b900}
-.progress{position:fixed;bottom:0;left:0;height:2px;background:#76b900;z-index:100;transition:width 0.3s}
-.slide-num{position:fixed;top:14px;left:12px;z-index:100;color:#444;font-size:0.7rem}
-.benefit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:800px;margin:16px auto;text-align:left}
-.benefit{padding:14px 16px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:3px solid #76b900}
-.benefit-title{font-weight:700;font-size:0.95rem;color:#fff;margin-bottom:4px}
-.benefit-desc{font-size:0.8rem;color:#999;line-height:1.3}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left;max-width:900px;margin:14px auto;align-items:center}
-.two-col img{width:100%;border-radius:6px;max-height:38vh;object-fit:cover}
-ul.simple{list-style:none;text-align:left;max-width:650px;margin:10px auto}
-ul.simple li{padding:5px 0;color:#ccc;font-size:0.95rem;display:flex;align-items:baseline;gap:8px}
-ul.simple li::before{content:'';width:6px;height:6px;background:#76b900;border-radius:50%;flex-shrink:0;margin-top:6px}
-.partners{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0}
-.partner{text-align:center;padding:12px 16px;background:rgba(255,255,255,0.04);border-radius:8px;min-width:100px}
-.partner-name{font-weight:700;font-size:0.95rem;color:#fff}
-.partner-role{font-size:0.75rem;color:#999;margin-top:2px}
+.gold{color:#ffd54f}
+.red{color:#ff5252}
+.blue{color:#4fc3f7}
+.dim{color:rgba(255,255,255,0.4)}
+.divider{width:60px;height:3px;background:#76b900;margin:16px 0}
+.divider.center{margin:16px auto}
+
+/* QUOTE */
+.quote{font-size:clamp(1.2rem,2.5vw,2rem);font-weight:300;font-style:italic;line-height:1.4;color:#fff;max-width:800px}
+.quote-name{font-size:0.9rem;font-weight:700;color:#76b900;margin-top:12px;font-style:normal}
+
+/* NUMBERS ROW */
+.nums{display:flex;gap:clamp(20px,4vw,48px);flex-wrap:wrap;margin:20px 0}
+.nums.center{justify-content:center}
+.num{text-align:center}
+.num-val{font-size:clamp(2rem,5vw,3.8rem);font-weight:900;color:#76b900;letter-spacing:-2px;line-height:1}
+.num-val.white{color:#fff}
+.num-val.gold{color:#ffd54f}
+.num-val.red{color:#ff5252}
+.num-label{font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* PHOTO GRIDS */
+.photos{display:grid;gap:4px;margin:16px 0;width:100%}
+.photos.g2{grid-template-columns:1fr 1fr}
+.photos.g3{grid-template-columns:1fr 1fr 1fr}
+.photos.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+.photos img{width:100%;height:100%;object-fit:cover;border-radius:3px}
+.photos.tall img{max-height:35vh}
+.photos.short img{max-height:25vh}
+
+/* POWER STACK */
+.pwr{max-width:600px;margin:16px 0}
+.pwr-row{display:flex;align-items:center;gap:16px;padding:12px 20px;margin-bottom:4px;border-radius:6px;border-left:4px solid}
+.pwr-row.solar{background:rgba(255,213,79,0.08);border-color:#ffd54f}
+.pwr-row.gas{background:rgba(118,185,0,0.08);border-color:#76b900}
+.pwr-row.diesel{background:rgba(255,152,0,0.08);border-color:#ff9800}
+.pwr-row.grid{background:rgba(79,195,247,0.08);border-color:#4fc3f7}
+.pwr-name{font-weight:800;font-size:1rem;min-width:110px}
+.pwr-desc{font-size:0.85rem;color:rgba(255,255,255,0.5)}
+.pwr-tag{font-size:0.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-left:auto;white-space:nowrap}
+
+/* BENEFIT GRID */
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;max-width:900px}
+.ben{padding:16px 18px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:3px solid #76b900;text-align:left}
+.ben h4{font-size:0.95rem;font-weight:700;margin-bottom:3px}
+.ben p{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.3}
+.ben.fire{border-color:#ff5252}.ben.blue{border-color:#4fc3f7}.ben.gold{border-color:#ffd54f}.ben.green{border-color:#76b900}
+
+/* PARTNERS */
+.partners{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.partner{text-align:center;padding:14px 20px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06);min-width:110px}
+.partner b{display:block;font-size:1rem;margin-bottom:2px}
+.partner span{font-size:0.7rem;color:rgba(255,255,255,0.4)}
+
+/* SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:32px;width:90%;max-width:1100px;align-items:center}
+.split img{width:100%;border-radius:6px;max-height:55vh;object-fit:cover}
+
+/* TIMELINE */
+.tl{max-width:700px;margin:14px 0}
+.tl-row{display:flex;gap:16px;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.tl-year{font-weight:900;color:#76b900;min-width:80px;text-align:right;font-size:1rem}
+.tl-text{font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.3}
+
+/* COMPARISON */
+.vs{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;max-width:800px;margin:16px 0;align-items:start}
+.vs-col{padding:20px;border-radius:8px}
+.vs-col.them{background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.15)}
+.vs-col.us{background:rgba(118,185,0,0.06);border:1px solid rgba(118,185,0,0.15)}
+.vs-mid{display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;color:rgba(255,255,255,0.2)}
+.vs-col h4{font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.vs-col li{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:6px;list-style:none;padding-left:12px;position:relative}
+.vs-col li::before{content:'';width:4px;height:4px;border-radius:50%;position:absolute;left:0;top:8px}
+.vs-col.them li::before{background:#ff5252}
+.vs-col.us li::before{background:#76b900}
+
+/* VIDEO */
+.vid{width:80%;max-width:850px;aspect-ratio:16/9;margin:16px auto;background:#0a0a0a;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden}
+.vid::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(118,185,0,0.03) 0%,transparent 50%)}
+.vid iframe{width:100%;height:100%;border:none;border-radius:8px}
+.vid span{color:rgba(255,255,255,0.2);font-size:0.9rem;letter-spacing:1px}
+
+/* NAV */
+.nav{position:fixed;bottom:20px;right:20px;z-index:100;display:flex;gap:6px}
+.nav button{width:40px;height:40px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:50%;cursor:pointer;font-size:1rem;backdrop-filter:blur(20px);transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.nav button:hover{background:rgba(118,185,0,0.2);border-color:rgba(118,185,0,0.4)}
+.progress{position:fixed;bottom:0;left:0;height:2px;background:linear-gradient(90deg,#76b900,#9be22e);z-index:100;transition:width 0.4s ease}
+.snum{position:fixed;bottom:24px;left:20px;z-index:100;font-size:0.65rem;color:rgba(255,255,255,0.2);letter-spacing:2px}
+
+/* RESPONSIVE */
 @media(max-width:768px){
-.benefit-grid,.two-col{grid-template-columns:1fr}
-.photo-grid.g3{grid-template-columns:1fr 1fr}
-h1{font-size:1.6rem}h2{font-size:1.2rem}
+.benefits{grid-template-columns:1fr}
+.split{grid-template-columns:1fr}
+.photos.g3{grid-template-columns:1fr 1fr}
+.photos.g4{grid-template-columns:1fr 1fr}
+.vs{grid-template-columns:1fr;gap:10px}
+.vs-mid{display:none}
+.nums{gap:16px}
+.cnt{padding:16px}
 }
 </style>
 </head>
 <body>
-<div class="progress" id="progress"></div>
-<div class="slide-num" id="slideNum"></div>
 
-<!-- S1: TITLE -->
+<div class="progress" id="prog"></div>
+<div class="snum" id="snum"></div>
+
+<!-- ═══════════════════════════════════════════
+     S1 — TITLE
+═══════════════════════════════════════════ -->
 <div class="slide active">
-<div class="slide-bg" style="background-image:url('trappeys-photos/605236deb14e4.image.webp')"></div>
-<div class="slide-content">
-<h1>Trappeys AI Factory</h1>
-<p style="color:#76b900;font-size:clamp(1rem,2vw,1.4rem);font-weight:600;margin-bottom:8px">Mission Critical Infrastructure for Lafayette</p>
-<p style="color:#999">Just like water, gas, and electricity &mdash;<br>AI computing is the next essential infrastructure. And Lafayette doesn't have it yet.</p>
-<div style="margin-top:30px;color:#555;font-size:0.8rem">ADC &mdash; Advantage Design &amp; Construction<br>scott@adc3k.com</div>
+<div class="bg dark" style="background-image:url('trappeys-photos/Riverfront_8.jpg')"></div>
+<div class="cnt center">
+<div class="tag">Advantage Design &amp; Construction</div>
+<div class="mega">TRAPPEYS<br><span class="green">AI FACTORY</span></div>
+<div class="sub" style="margin:0 auto">Mission critical infrastructure for Lafayette, Louisiana.<br>Not a concept. Not a rendering. <strong>The buildings are standing right now.</strong></div>
+<div style="margin-top:30px;color:rgba(255,255,255,0.25);font-size:0.75rem">scott@adc3k.com &bull; adc3k.com/trappeys</div>
 </div>
 </div>
 
-<!-- S2: VIDEO — The Revolution -->
+<!-- ═══════════════════════════════════════════
+     S2 — THE PROBLEM
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>Where It All Started</h2>
-<p style="margin-bottom:10px">1993 &mdash; Jensen Huang founds NVIDIA with $40,000 in a Denny's booth. American innovation.</p>
-<div class="video-container">
-<div class="video-placeholder">[ NVIDIA Origin Story ]</div>
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">The Problem</div>
+<div class="huge">The World Needs <span class="accent">AI Computing</span>.<br>Louisiana Has <span class="red">Zero.</span></div>
+<div class="nums center" style="margin-top:24px">
+<div class="num"><div class="num-val red">0</div><div class="num-label">GPU Facilities in Louisiana</div></div>
+<div class="num"><div class="num-val gold">$2B+</div><div class="num-label">Crusoe Energy Revenue</div></div>
+<div class="num"><div class="num-val">100%</div><div class="num-label">Sold Out Everywhere</div></div>
 </div>
+<div class="sub" style="margin:20px auto 0">March 20, 2026 &mdash; every GPU on every cloud in every region was <strong>sold out</strong>. Not slow. Not expensive. <strong>Gone.</strong> The demand is real. The infrastructure doesn't exist here. That's the opportunity.</div>
 </div>
 </div>
 
-<!-- S3: VIDEO — GTC 2026 -->
+<!-- ═══════════════════════════════════════════
+     S3 — NVIDIA ORIGIN
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>2026 &mdash; AI Is Now Infrastructure</h2>
-<p style="margin-bottom:10px">AI computing has become as essential as the power grid. Every hospital, school, police department, and business will depend on it. This is <span class="accent">mission critical</span>.</p>
-<div class="video-container">
-<div class="video-placeholder">[ GTC 2026 Keynote ]</div>
-</div>
+<div class="bg heavy" style="background:#050505"></div>
+<div class="cnt center">
+<div class="tag">GTC Washington D.C. &mdash; October 2025</div>
+<div class="big">America. The Land of Innovation.</div>
+<div class="sub" style="margin:0 auto 16px">Edison. Bell Labs. Silicon Valley. Every era, a leap &mdash; every leap, America led.<br>This is the official NVIDIA opening from GTC D.C. <strong>Watch this.</strong></div>
+<div class="vid"><iframe src="https://www.youtube.com/embed/lQHK61IDFH4?start=0&end=195" allowfullscreen></iframe></div>
 </div>
 </div>
 
-<!-- S4: WHY THIS MATTERS TO LAFAYETTE -->
+<!-- ═══════════════════════════════════════════
+     S4 — GTC 2026
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>Why This Matters to <span class="accent">Every Person</span> in Lafayette</h2>
-<div class="benefit-grid">
-<div class="benefit"><div class="benefit-title">Fire Department</div><div class="benefit-desc">AI-powered dispatch, drone surveillance for wildfires and structure fires, real-time building analysis</div></div>
-<div class="benefit"><div class="benefit-title">Police &amp; Sheriff</div><div class="benefit-desc">Drone-as-first-responder, AI video analysis, predictive resource deployment, faster 911 response</div></div>
-<div class="benefit"><div class="benefit-title">Hospitals &amp; EMS</div><div class="benefit-desc">Medical imaging AI, patient data analysis, ambulance routing, telemedicine at scale</div></div>
-<div class="benefit"><div class="benefit-title">Schools &amp; UL Lafayette</div><div class="benefit-desc">AI training programs, robotics, CUDA programming, research computing &mdash; students need this NOW</div></div>
-<div class="benefit"><div class="benefit-title">Water &amp; Sewer</div><div class="benefit-desc">Leak detection AI, pressure monitoring, infrastructure maintenance prediction, flood modeling</div></div>
-<div class="benefit"><div class="benefit-title">Small Businesses</div><div class="benefit-desc">Affordable AI tools for every shop, restaurant, and service company in Acadiana</div></div>
-<div class="benefit"><div class="benefit-title">Airport (KLFT)</div><div class="benefit-desc">Emergency drone hub, autonomous airspace operations, AI-powered air traffic management</div></div>
-<div class="benefit"><div class="benefit-title">Hurricane Response</div><div class="benefit-desc">AI weather modeling, damage assessment drones, emergency communications, power grid management</div></div>
-</div>
-<p style="margin-top:12px;font-size:0.95rem">This is <span class="accent">infrastructure</span>. Not one department benefits &mdash; <strong>every department benefits</strong>.</p>
+<div class="bg heavy" style="background:#050505"></div>
+<div class="cnt center">
+<div class="tag">GTC 2026 Keynote &mdash; March 16, 2026</div>
+<div class="big">Tokens: The Building Blocks of AI</div>
+<div class="sub" style="margin:0 auto 16px">"Every nation, every company needs AI factories." &mdash; Jensen Huang.<br><strong>NVIDIA Dynamo OS</strong> delivers 7x performance. <strong>Groq LPU decode</strong> hits 35x tokens per watt. The economics just broke wide open.</div>
+<div class="vid"><iframe src="https://www.youtube.com/embed/jw_o0xr8MWU" allowfullscreen></iframe></div>
 </div>
 </div>
 
-<!-- S5: SCOTT'S QUOTE -->
+<!-- ═══════════════════════════════════════════
+     S5 — THIS IS THE SITE (AERIAL)
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-bg" style="background-image:url('trappeys-photos/Middle_high_7.jpg');background-position:center top"></div>
-<div class="slide-content">
-<div class="quote">
-"This place had its own power generation from day one. We're just bringing it back online."
-<span class="quote-attr">&mdash; Scott Tomsu, Founder, ADC</span>
-</div>
-<p style="margin-top:24px">25 years in deepwater robotics and remote operations worldwide.<br>Now building <span class="accent">mission critical infrastructure</span> for Lafayette.</p>
-</div>
-</div>
-
-<!-- S6: 4,000 YEARS -->
-<div class="slide">
-<div class="slide-content">
-<h2>4,000 Years on One Piece of Land</h2>
-<div class="timeline">
-<div class="timeline-item"><span class="timeline-year" style="color:#4fc3f7">~2000 BC</span><span class="timeline-text">Atakapa-Ishak people &mdash; the Ciwat (Alligator Band) &mdash; live along the Vermilion River.</span></div>
-<div class="timeline-item"><span class="timeline-year">1920s</span><span class="timeline-text">Texaco leases to Baldwin Lumber &amp; Star Salt.</span></div>
-<div class="timeline-item"><span class="timeline-year" style="color:#ff9800">1927</span><span class="timeline-text">Great Flood &mdash; 10 feet of water. Buildings damaged but survive.</span></div>
-<div class="timeline-item"><span class="timeline-year">1930</span><span class="timeline-text">Trappey's opens. Builds its own electric powerhouse. 350-600 workers.</span></div>
-<div class="timeline-item"><span class="timeline-year" style="color:#ffd54f">1941-45</span><span class="timeline-text">WWII &mdash; 12 million lbs of candied yams for Allied troops.</span></div>
-<div class="timeline-item"><span class="timeline-year">1991</span><span class="timeline-text">Plant closes. Sits empty for 30+ years.</span></div>
-<div class="timeline-item"><span class="timeline-year" style="color:#76b900">2026</span><span class="timeline-text"><strong>ADC restores it as mission critical AI infrastructure for all of Lafayette.</strong></span></div>
+<div class="bg dark" style="background-image:url('trappeys-photos/605236deb14e4.image.webp')"></div>
+<div class="cnt left">
+<div class="tag">The Site</div>
+<div class="mega">22 ACRES.<br><span class="green">VERMILION RIVER.</span></div>
+<div class="nums">
+<div class="num"><div class="num-val">112,500</div><div class="num-label">Square Feet</div></div>
+<div class="num"><div class="num-val gold">4</div><div class="num-label">Buildings</div></div>
+<div class="num"><div class="num-val">~$1M</div><div class="num-label">Acquisition</div></div>
 </div>
 </div>
 </div>
 
-<!-- S7: VINTAGE ADS -->
+<!-- ═══════════════════════════════════════════
+     S6 — SATELLITE MAP
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>Lafayette's Heritage</h2>
-<p style="margin-bottom:12px">B.F. Trappey's Sons &mdash; 60 years of feeding America from this very spot.</p>
-<div class="photo-grid g3">
-<img src="trappeys-photos/trappeysyams.webp" alt="Trappey's Yams ad">
-<img src="trappeys-photos/1946TrappeysDehydratedSweetPotatoesAdvertisement.webp" alt="1946 Sweet Potatoes">
-<img src="trappeys-photos/trappeysbeans.webp" alt="Trappey's beans">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Location &mdash; Lafayette, Louisiana</div>
+<div class="huge">Half Mile from <span class="accent">UL Lafayette.</span><br>30 Miles from <span class="gold">First Solar.</span></div>
+<div style="width:90%;max-width:900px;aspect-ratio:16/9;margin:14px auto;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.1)">
+<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-92.0065%2C30.2105%2C-91.9965%2C30.2165&amp;layer=mapnik&amp;marker=30.21356%2C-92.00163" width="100%" height="100%" style="border:0"></iframe>
 </div>
-<p style="margin-top:10px;color:#999">National Register of Historic Places. 9 contributing buildings.<br>45-55% tax credits for restoration &mdash; the government pays to bring it back.</p>
-</div>
-</div>
-
-<!-- S8: THE VATS -->
-<div class="slide">
-<div class="slide-content">
-<h2>Where America's Soldiers Were Fed</h2>
-<p style="margin-bottom:10px">12 million pounds of candied yams &mdash; processed in these vats for troops overseas.</p>
-<div class="photo-grid g2">
-<img src="trappeys-photos/605236d342122.image.jpg" alt="Vat holes from above">
-<img src="trappeys-photos/605236d25ce8a.image.webp" alt="Vats through arch">
-</div>
-<p style="margin-top:10px;color:#999">Glass floors over the vats. LED lighting below. A living museum.<br>School field trips. Investor tours. The story of Lafayette under your feet.</p>
-</div>
-</div>
-
-<!-- S9: THE BUILDINGS -->
-<div class="slide">
-<div class="slide-content">
-<h2>112,500 Square Feet &mdash; Standing Right Now</h2>
-<div class="photo-grid g3">
-<img src="trappeys-photos/Middle1.jpg" alt="Exterior">
-<img src="trappeys-photos/6052359b92e88.image.webp" alt="Brick facade">
-<img src="trappeys-photos/Middle2.jpg" alt="Water tower">
-</div>
-<div class="stat-row" style="margin-top:14px">
-<div class="stat"><div class="stat-num">4</div><div class="stat-label">Buildings</div></div>
-<div class="stat"><div class="stat-num">8</div><div class="stat-label">Acres</div></div>
-<div class="stat"><div class="stat-num">1930</div><div class="stat-label">Year Built</div></div>
-<div class="stat"><div class="stat-num">Ready</div><div class="stat-label">Structurally Sound</div></div>
-</div>
-<p style="color:#999">Not a concept. Not a rendering. These buildings are standing right now on the Vermilion River.</p>
-</div>
-</div>
-
-<!-- S10: BUILDING #3 -->
-<div class="slide">
-<div class="slide-bg" style="background-image:url('trappeys-photos/Middle_high_7.jpg');background-position:center top"></div>
-<div class="slide-content">
-<h2>The Compute Hall</h2>
-<p>Original wood timber trusses. Brick walls. Concrete floor. 25-foot ceilings.<br>This is where the AI computers go. Ready for equipment in weeks, not years.</p>
-</div>
-</div>
-
-<!-- S11: RIVERFRONT -->
-<div class="slide">
-<div class="slide-bg" style="background-image:url('trappeys-photos/Riverfront_8.jpg')"></div>
-<div class="slide-content">
-<h2>The Vermilion River</h2>
-<p>Direct waterfront. Beaver Park across the river. The most beautiful spot in Lafayette &mdash; hidden for 30 years.</p>
-<p style="margin-top:16px">Riverwalk. Pedestrian bridge to the park. Outdoor event space.<br>Technology museum. History under glass floors. Open to the public.</p>
-</div>
-</div>
-
-<!-- S12: FIRST RESPONDERS -->
-<div class="slide">
-<div class="slide-content">
-<h2><span class="accent">Mission Critical</span> for First Responders</h2>
-<p style="margin-bottom:14px">AI infrastructure saves lives. This isn't theoretical &mdash; departments across the country are deploying this NOW.</p>
-<div class="benefit-grid">
-<div class="benefit" style="border-color:#ff5252"><div class="benefit-title">Fire Department</div><div class="benefit-desc">AI thermal imaging from drones. Building structural analysis in real-time. Faster dispatch. Wildfire prediction.</div></div>
-<div class="benefit" style="border-color:#4fc3f7"><div class="benefit-title">Police / Sheriff</div><div class="benefit-desc">Drone-as-first-responder to 911 calls. AI video for missing persons. Traffic management. Evidence processing.</div></div>
-<div class="benefit" style="border-color:#ffd54f"><div class="benefit-title">EMS / Hospitals</div><div class="benefit-desc">AI reads X-rays and MRIs faster than humans. Route optimization for ambulances. Telemedicine for rural areas.</div></div>
-<div class="benefit" style="border-color:#76b900"><div class="benefit-title">Hurricane Response</div><div class="benefit-desc">AI weather modeling days in advance. Drone damage assessment. Emergency power. Communications backbone.</div></div>
-</div>
-<p style="margin-top:10px">KLFT airport is half a mile away. <span class="accent">Gulf Coast Emergency Drone Hub</span> &mdash; operational from day one.</p>
-</div>
-</div>
-
-<!-- S13: SCHOOLS & EDUCATION -->
-<div class="slide">
-<div class="slide-content">
-<h2><span class="accent">Mission Critical</span> for Education</h2>
-<p style="margin-bottom:14px">The game has changed. Students aren't learning Microsoft Word anymore. They need to learn AI, robotics, and programming &mdash; or they fall behind.</p>
-<div class="benefit-grid">
-<div class="benefit"><div class="benefit-title">UL Lafayette</div><div class="benefit-desc">The most powerful computers in the state, 5 minutes from campus. $28-55M in grants available. Research that puts UL on the map.</div></div>
-<div class="benefit"><div class="benefit-title">K-12 Schools</div><div class="benefit-desc">AI training programs for every school in Lafayette Parish. Robotics clubs. CUDA programming. The skills that get you hired.</div></div>
-<div class="benefit"><div class="benefit-title">Workforce Development</div><div class="benefit-desc">LED FastStart training &mdash; FREE. Students graduate into jobs at the facility. Tech careers without leaving Lafayette.</div></div>
-<div class="benefit"><div class="benefit-title">Research</div><div class="benefit-desc">Medical AI. Agricultural AI. Oil &amp; gas AI. Environmental AI. Every department at UL gets compute access.</div></div>
-</div>
-<p style="margin-top:10px">Without this infrastructure, students train on outdated equipment. With it, Lafayette leads the state.</p>
-</div>
-</div>
-
-<!-- S14: CITY INFRASTRUCTURE -->
-<div class="slide">
-<div class="slide-content">
-<h2><span class="accent">Mission Critical</span> for City Infrastructure</h2>
-<p style="margin-bottom:14px">Every city department runs on data. AI makes that data work harder.</p>
-<div class="benefit-grid">
-<div class="benefit"><div class="benefit-title">Water Department</div><div class="benefit-desc">AI detects leaks before they become breaks. Pressure monitoring. Water quality analysis. Save millions in repairs.</div></div>
-<div class="benefit"><div class="benefit-title">Public Works</div><div class="benefit-desc">Road condition monitoring. Equipment maintenance prediction. Work order optimization. Right next door to the facility.</div></div>
-<div class="benefit"><div class="benefit-title">Utilities (LUS)</div><div class="benefit-desc">Grid management. Buried fiber and power lines. Modernized infrastructure corridor. We help LUS upgrade.</div></div>
-<div class="benefit"><div class="benefit-title">City Planning</div><div class="benefit-desc">Flood modeling. Traffic analysis. Zoning optimization. Digital twin of the entire city. Data-driven decisions.</div></div>
-</div>
-<p style="margin-top:10px">The infrastructure zone around Trappeys is already city operations territory. Public Works is next door. We make it better for everyone.</p>
-</div>
-</div>
-
-<!-- S15: THE INFRASTRUCTURE IS THERE -->
-<div class="slide">
-<div class="slide-content">
-<h2>The Infrastructure Is Already There</h2>
-<p style="margin-bottom:10px">Gas, electricity, water, sewer &mdash; all within 1,000 feet. No new roads. No new transmission lines.</p>
-<div class="photo-grid g2">
-<img src="trappeys-photos/ATMOS_Gas_by_Pinhook.jpg" alt="ATMOS gas hub">
-<img src="trappeys-photos/E_Grid1.jpg" alt="LUS substation">
-</div>
-<div class="two-col" style="margin-top:12px">
-<div><p style="font-size:0.9rem"><strong style="color:#ffd54f">Gas:</strong> ATMOS Energy pipeline hub at Pinhook. Gas already running through the buildings. Cheapest energy in the country.</p></div>
-<div><p style="font-size:0.9rem"><strong style="color:#4fc3f7">Electric:</strong> LUS Pin Hook Substation (Curtis A. Rodemacher) right next door. New poles to Public Works. We sell excess power BACK to the grid.</p></div>
+<div style="display:flex;gap:32px;justify-content:center;margin-top:10px;font-size:0.85rem;color:rgba(255,255,255,0.5)">
+<span><strong style="color:#76b900">ATMOS Energy</strong> gas hub at Pinhook</span>
+<span><strong style="color:#4fc3f7">LUS</strong> Pin Hook Substation next door</span>
+<span><strong style="color:#ffd54f">Public Works</strong> adjacent</span>
 </div>
 </div>
 </div>
 
-<!-- S16: POWER INDEPENDENCE -->
+<!-- ═══════════════════════════════════════════
+     S7 — THE BUILDINGS (PHOTO GRID)
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>We Make Our Own Power</h2>
-<p style="margin-bottom:14px">Just like water and gas, we generate our own. We don't burden the grid &mdash; we <span class="accent">help</span> the grid.</p>
-<div class="power-stack">
-<div class="power-layer solar"><span class="power-label" style="color:#ffd54f">Solar</span><span class="power-desc">2 MW from First Solar panels &mdash; made 30 miles away in New Iberia</span></div>
-<div class="power-layer gas"><span class="power-label" style="color:#76b900">Natural Gas</span><span class="power-desc">Backbone &mdash; runs 24/7, cheapest energy in the country</span></div>
-<div class="power-layer diesel"><span class="power-label" style="color:#ff9800">Diesel</span><span class="power-desc">Emergency backup &mdash; on-site fuel, always ready</span></div>
-<div class="power-layer grid"><span class="power-label" style="color:#4fc3f7">Grid (LUS)</span><span class="power-desc">Sell-back only &mdash; we GIVE power to the grid, not take it</span></div>
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Standing Right Now</div>
+<div class="huge">Not a Concept. <span class="accent">Built in 1930.</span></div>
+<div class="photos g4 short" style="max-width:1000px;margin:16px auto">
+<img src="trappeys-photos/Rear_warehouse1.jpg" alt="Rear warehouse">
+<img src="trappeys-photos/Middle_high_6.jpg" alt="Middle building">
+<img src="trappeys-photos/Front1.jpg" alt="Front facade">
+<img src="trappeys-photos/WT2.jpg" alt="Water tower">
 </div>
-<p style="margin-top:12px;color:#999">97% of the sun's energy reaches the computers directly. No waste.<br>This is the most efficient power system of any AI facility in the country.</p>
+<div class="sub" style="margin:8px auto 0">Structurally sound. Metal intact. Brick intact. Gas already running through the buildings.<br>Fire suppression piped. 25-foot ceilings. Concrete floors. <strong>Ready for equipment.</strong></div>
 </div>
 </div>
 
-<!-- S17: FIRST SOLAR -->
+<!-- ═══════════════════════════════════════════
+     S7 — 4,000 YEARS
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>First Solar &mdash; Made 30 Miles Away</h2>
-<div class="stat-row">
-<div class="stat"><div class="stat-num">3,731</div><div class="stat-label">Panels</div></div>
-<div class="stat"><div class="stat-num">2 MW</div><div class="stat-label">Solar Power</div></div>
-<div class="stat"><div class="stat-num">30 mi</div><div class="stat-label">Factory to Roof</div></div>
-<div class="stat"><div class="stat-num">$1.1B</div><div class="stat-label">Their LA Factory</div></div>
+<div class="bg dark" style="background-image:url('trappeys-photos/6052359b92e88.image.webp')"></div>
+<div class="cnt left">
+<div class="tag">Heritage</div>
+<div class="huge">4,000 Years.<br>One Piece of Land.</div>
+<div class="tl">
+<div class="tl-row"><span class="tl-year" style="color:#4fc3f7">~2000 BC</span><span class="tl-text">Atakapa-Ishak people &mdash; the Ciwat (Alligator Band) &mdash; live along the Vermilion River for thousands of years</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#ffd54f">1898</span><span class="tl-text">B.F. Trappey Sr. founds Trappey &amp; Sons on the banks of the Vermilion &mdash; hot sauce, peppers, canning operations</span></div>
+<div class="tl-row"><span class="tl-year">1920s</span><span class="tl-text">Texaco leases to Baldwin Lumber &amp; Star Salt. Industrial site established.</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#ff9800">1927</span><span class="tl-text">Great Flood of 1927 &mdash; 10 feet of water. Buildings damaged but survive. Built to last.</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#ffd54f">1930</span><span class="tl-text">Trappey's Cannery opens full scale. <strong>Builds its own electric powerhouse.</strong> 350-600 workers at peak. One of Acadiana's largest employers.</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#ff5252">1941-45</span><span class="tl-text"><strong>World War II &mdash; 12 million pounds of candied yams shipped to US troops overseas.</strong> One of the largest food production contracts in Louisiana history. Peak production: 10 million+ cans per year.</span></div>
+<div class="tl-row"><span class="tl-year">1950-80s</span><span class="tl-text">Decades of continuous food processing. National distribution. Trappey's becomes a household name across the South.</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#ff5252">1991</span><span class="tl-text">Plant closes after 62 years of continuous operation. Sits empty for 30+ years.</span></div>
+<div class="tl-row"><span class="tl-year" style="color:#76b900">2026</span><span class="tl-text"><strong>ADC restores it as mission critical AI infrastructure for all of Lafayette. Same building. Same power independence. New mission.</strong></span></div>
 </div>
-<ul class="simple">
-<li>100% American-made &mdash; steel from Ohio, assembled in Louisiana</li>
-<li>Best panels in the world for humid climates &mdash; built for Lafayette weather</li>
-<li>30-year warranty &mdash; still producing 91% power after three decades</li>
-<li>Panels go from production line to our roof in a U-Haul. 30 miles.</li>
-<li>Their name on the water tower. Their showcase installation.</li>
-</ul>
 </div>
 </div>
 
-<!-- S18: WATER TOWER -->
+<!-- ═══════════════════════════════════════════
+     S8 — VINTAGE ADS + HERITAGE
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-bg" style="background-image:url('trappeys-photos/WT3.jpg')"></div>
-<div class="slide-content">
-<h2>The Water Tower</h2>
-<p>The landmark. Visible from Evangeline Thruway and US 90.<br>NVIDIA. ADC. First Solar. UL Lafayette. City of Lafayette.</p>
-<p style="margin-top:14px;color:#999">It's not just a sign &mdash; it's part of the cooling system.<br>15,000 gallons of water helping cool the computers. Form meets function.</p>
+<div class="bg heavy" style="background:#0a0808"></div>
+<div class="cnt center">
+<div class="tag">Lafayette Icon</div>
+<div class="big">The Government <span class="gold">Pays Us</span> to Bring It Back</div>
+<div class="photos g3 short" style="max-width:850px;margin:14px auto">
+<img src="trappeys-photos/trappeysyams.webp" alt="Trappey's Yams" style="border-radius:6px">
+<img src="trappeys-photos/1946TrappeysDehydratedSweetPotatoesAdvertisement.webp" alt="1946 WWII ad" style="border-radius:6px">
+<img src="trappeys-photos/trappeysbeans.webp" alt="Trappey's Beans" style="border-radius:6px">
+</div>
+<div class="nums center">
+<div class="num"><div class="num-val gold">45%</div><div class="num-label">Historic Tax Credits</div></div>
+<div class="num"><div class="num-val gold">30%</div><div class="num-label">Solar ITC</div></div>
+<div class="num"><div class="num-val gold">80%</div><div class="num-label">Property Tax Abatement</div></div>
+</div>
+<div class="sub" style="margin:4px auto 0">National Register eligible. 9 contributing structures. <strong>Not torn down &mdash; restored.</strong></div>
 </div>
 </div>
 
-<!-- S19: ALL AMERICAN -->
+<!-- ═══════════════════════════════════════════
+     S9 — THE VATS
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>100% American-Made Infrastructure</h2>
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">World War II Production</div>
+<div class="huge">The Vats. <span class="gold">12 Million Pounds.</span></div>
+<div class="photos g3 short" style="max-width:950px;margin:14px auto">
+<img src="trappeys-photos/Riverfront_4.jpg" alt="Vat holes in floor" style="border-radius:6px">
+<img src="trappeys-photos/605237fad94e7.image.webp" alt="Vat machinery" style="border-radius:6px">
+<img src="trappeys-photos/605236d342122.image.jpg" alt="Vat holes from above" style="border-radius:6px">
+</div>
+<div class="sub" style="margin:8px auto 0"><strong>World War II</strong> &mdash; 12 million pounds of candied yams processed right here and shipped to American troops overseas. One of the largest wartime food contracts in Louisiana. The vat holes are still in the floor.<br><strong>Glass floors over the vats. LED lighting below. A living museum.</strong> School field trips. Investor tours. The story of Lafayette under your feet.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S10 — SCOTT'S QUOTE
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('trappeys-photos/Middle_high_7.jpg');background-position:center top"></div>
+<div class="cnt center" style="max-width:850px">
+<div class="quote">"This place had its own power generation from day one. We're just bringing it back online &mdash; with NVIDIA computers instead of canning machines."</div>
+<div class="quote-name">Scott Tomsu &mdash; Founder, ADC</div>
+<div style="margin-top:20px;font-size:0.85rem;color:rgba(255,255,255,0.4)">25 years deepwater ROV operations &bull; Commercial Diver &bull; FAA Private Pilot &bull; IMCA Supervisor</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S10 — THE VISION (RENDER)
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('trappeys-photos/Rear_warehouse3.jpg');background-position:center"></div>
+<div class="cnt left">
+<div class="tag">The Vision &mdash; NVIDIA DSX Reference Design</div>
+<div class="mega"><span class="green">THIS</span> IS WHERE<br>THE GPUs GO.</div>
+<div class="sub"><strong>NVIDIA Vera Rubin NVL72 racks.</strong> 72 GPUs per rack. Liquid cooled at 45&deg;C. 800 volt DC power via <strong>Eaton Beam Rubin DSX</strong> switchgear. The same standard running in the world's most advanced AI facilities &mdash; installed in this building.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     THE HARDWARE — NVIDIA NVL72
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('renders/nvl72-rack.png');background-size:contain;background-repeat:no-repeat;background-position:right center;background-color:#000"></div>
+<div class="cnt left" style="max-width:500px">
+<div class="tag">The Hardware</div>
+<div class="huge">NVIDIA<br><span class="accent">NVL72 Rack.</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;margin:10px 0">
+<div style="padding:8px 12px;background:rgba(0,0,0,0.7);border-radius:5px;border-left:3px solid #76b900;backdrop-filter:blur(10px)">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.6)"><strong style="color:#fff">72 GPUs + 36 CPUs</strong> per rack</div></div>
+<div style="padding:8px 12px;background:rgba(0,0,0,0.7);border-radius:5px;border-left:3px solid #4fc3f7;backdrop-filter:blur(10px)">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.6)"><strong style="color:#fff">Liquid cooled</strong> &mdash; 45&deg;C sealed loops. No fans. No hot air.</div></div>
+<div style="padding:8px 12px;background:rgba(0,0,0,0.7);border-radius:5px;border-left:3px solid #ffd54f;backdrop-filter:blur(10px)">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.6)"><strong style="color:#fff">130+ kW per rack</strong> &mdash; more power than a house</div></div>
+<div style="padding:8px 12px;background:rgba(0,0,0,0.7);border-radius:5px;border-left:3px solid #ff9800;backdrop-filter:blur(10px)">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.6)"><strong style="color:#fff">Ships complete</strong> &mdash; plug in, connect cooling, turn on. 2 hours.</div></div>
+<div style="padding:8px 12px;background:rgba(0,0,0,0.7);border-radius:5px;border-left:3px solid #ff5252;backdrop-filter:blur(10px)">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.6)"><strong style="color:#fff">NVLink backbone</strong> &mdash; 1.8 TB/s GPU-to-GPU. The cables you see are the nervous system.</div></div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S11 — COMPUTE HALL INTERIOR
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('trappeys-photos/Middle_high_8.jpg');background-position:center"></div>
+<div class="cnt left">
+<div class="tag">NVIDIA Token Factory</div>
+<div class="huge">36 to 84 NVL72 Racks.</div>
+<div class="nums">
+<div class="num"><div class="num-val">5,184</div><div class="num-label">NVIDIA GPUs at Scale</div></div>
+<div class="num"><div class="num-val gold">95%+</div><div class="num-label">Gross Margins</div></div>
+<div class="num"><div class="num-val">$169M</div><div class="num-label">Phase 2 Revenue</div></div>
+</div>
+<div class="sub">Not renting servers. <strong>Selling optimized AI tokens via NVIDIA Dynamo 1.0.</strong> Raw cost $0.004 per million tokens. ADC price: $0.20 to $150. <strong>Groq LPU decode = 35x tokens per watt.</strong> That's the business.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S12 — POWER INDEPENDENCE
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Power + Cooling Architecture</div>
+<div class="big">We Make Our Own Power. <span class="accent">We Cool It Ourselves.</span></div>
+<!-- ENGINEERING DIAGRAM -->
+<div style="display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr;gap:0;max-width:950px;margin:12px auto;align-items:center">
+<!-- GENERATION -->
+<div style="padding:14px;background:rgba(255,213,79,0.05);border:1px solid rgba(255,213,79,0.15);border-radius:8px;text-align:center">
+<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:#ffd54f;font-weight:700;margin-bottom:8px">Generation</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.5;text-align:left">
+<div style="margin-bottom:6px"><strong style="color:#ffd54f">First Solar</strong><br>3,731 panels &bull; 2.05 MW<br>DC-direct to 800V bus</div>
+<div style="margin-bottom:6px"><strong style="color:#76b900">ATMOS Energy Gas</strong><br>Henry Hub &bull; 40 mi<br>Backbone 24/7</div>
+<div><strong style="color:#ff9800">Caterpillar Diesel</strong><br>Emergency only<br>On-site fuel</div>
+</div>
+</div>
+<!-- ARROW -->
+<div style="text-align:center;font-size:1.5rem;color:rgba(118,185,0,0.4)">&#9654;</div>
+<!-- DISTRIBUTION -->
+<div style="padding:14px;background:rgba(118,185,0,0.05);border:1px solid rgba(118,185,0,0.15);border-radius:8px;text-align:center">
+<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:#76b900;font-weight:700;margin-bottom:8px">Distribution</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.5;text-align:left">
+<div style="margin-bottom:6px"><strong style="color:#fff">Eaton Beam Rubin DSX</strong><br>800V DC switchgear<br>Co-designed with NVIDIA</div>
+<div style="margin-bottom:6px"><strong style="color:#fff">Eaton 9395XC UPS</strong><br>1.1-2.25 MW backup<br>Supercapacitor bridge</div>
+<div><strong style="color:#4fc3f7">LUS Grid Sell-Back</strong><br>Excess power &rarr; LUS<br>Revenue, not dependency</div>
+</div>
+</div>
+<!-- ARROW -->
+<div style="text-align:center;font-size:1.5rem;color:rgba(118,185,0,0.4)">&#9654;</div>
+<!-- COMPUTE + COOLING -->
+<div style="padding:14px;background:rgba(79,195,247,0.05);border:1px solid rgba(79,195,247,0.15);border-radius:8px;text-align:center">
+<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:#4fc3f7;font-weight:700;margin-bottom:8px">Compute + Cooling</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.5;text-align:left">
+<div style="margin-bottom:6px"><strong style="color:#fff">NVIDIA NVL72 Racks</strong><br>Liquid cooled at 45&deg;C<br>72 GPUs per rack</div>
+<div style="margin-bottom:6px"><strong style="color:#ffd54f">Water Tower</strong><br>15,000 gal thermal buffer<br>Heat absorption &amp; radiation</div>
+<div><strong style="color:#4fc3f7">Vermilion River</strong><br>Natural free-cooling<br>PUE 1.03 target</div>
+</div>
+</div>
+</div>
+<!-- FLOW SUMMARY -->
+<div style="display:flex;gap:6px;justify-content:center;margin:10px auto;max-width:950px">
+<div style="flex:1;padding:8px 12px;background:rgba(255,213,79,0.06);border-radius:4px;text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.4)"><strong style="color:#ffd54f">Sun + Gas</strong> generate power</div>
+<div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)">&rarr;</div>
+<div style="flex:1;padding:8px 12px;background:rgba(118,185,0,0.06);border-radius:4px;text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.4)"><strong style="color:#76b900">800V DC bus</strong> distributes it</div>
+<div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)">&rarr;</div>
+<div style="flex:1;padding:8px 12px;background:rgba(79,195,247,0.06);border-radius:4px;text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.4)"><strong style="color:#4fc3f7">GPUs compute</strong>, liquid cools</div>
+<div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)">&rarr;</div>
+<div style="flex:1;padding:8px 12px;background:rgba(255,152,0,0.06);border-radius:4px;text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.4)"><strong style="color:#ff9800">Heat</strong> &rarr; water tower &rarr; river</div>
+<div style="flex:0 0 20px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)">&rarr;</div>
+<div style="flex:1;padding:8px 12px;background:rgba(79,195,247,0.06);border-radius:4px;text-align:center;font-size:0.7rem;color:rgba(255,255,255,0.4)"><strong style="color:#4fc3f7">Excess power</strong> sold to LUS</div>
+</div>
+<div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:6px"><strong style="color:#fff">We don't need the grid. We don't scare anybody.</strong> LUS Pin Hook Substation is right next door. We ADD to their grid.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S13 — FIRST SOLAR
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Solar Partner &mdash; Locked In</div>
+<div class="huge">First Solar.<br><span class="gold">Made 30 Miles Away.</span></div>
+<div class="nums center" style="margin-top:16px">
+<div class="num"><div class="num-val gold">3,731</div><div class="num-label">Panels</div></div>
+<div class="num"><div class="num-val gold">2.05 MW</div><div class="num-label">Rooftop Solar</div></div>
+<div class="num"><div class="num-val">30 mi</div><div class="num-label">Factory to Roof</div></div>
+<div class="num"><div class="num-val">$1.1B</div><div class="num-label">Their LA Factory</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:750px;margin:20px auto 0;text-align:left">
+<div>
+<div style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.5">
+<strong style="color:#fff">Series 7 TR1</strong> &mdash; 550W per panel. CdTe thin-film. 4% better in humidity than silicon. 0.3%/year degradation &mdash; best in the industry. 30-year warranty. 91% output at year 30.</div>
+</div>
+<div>
+<div style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.5">
+<strong style="color:#fff">100% American-made.</strong> Zero Chinese supply chain. Only US-headquartered top-10 solar manufacturer. Panels go from their production line to our roof in a U-Haul. Their name on the water tower.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S14 — MISSION CRITICAL
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:linear-gradient(135deg,#100000 0%,#080808 50%,#080808 100%)"></div>
+<div class="cnt center">
+<div class="tag" style="color:#ff5252;border-color:rgba(255,82,82,0.4)">Mission Critical Infrastructure</div>
+<div class="huge">This Is <span class="red">Infrastructure.</span><br>Every Department. Every Citizen.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:1050px;margin:14px auto;text-align:left">
+<div style="padding:12px 14px;background:rgba(255,82,82,0.06);border-radius:6px;border-left:3px solid #ff5252">
+<div style="font-weight:800;font-size:0.9rem;color:#ff5252;margin-bottom:4px">Fire Department</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">AI-powered Skydio X10 drones with thermal imaging. Real-time structural analysis of burning buildings. Wildfire prediction models. Automated dispatch optimization.</div></div>
+<div style="padding:12px 14px;background:rgba(255,82,82,0.06);border-radius:6px;border-left:3px solid #ff5252">
+<div style="font-weight:800;font-size:0.9rem;color:#ff5252;margin-bottom:4px">Police &amp; Sheriff</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">Drone-as-first-responder to 911 calls &mdash; on scene in 90 seconds. AI facial recognition for missing persons. License plate readers. Evidence processing at machine speed.</div></div>
+<div style="padding:12px 14px;background:rgba(255,82,82,0.06);border-radius:6px;border-left:3px solid #ff5252">
+<div style="font-weight:800;font-size:0.9rem;color:#ff5252;margin-bottom:4px">Hospitals &amp; Medical</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">AI reads CT scans and MRIs in seconds &mdash; catches what doctors miss. Genomic sequencing for cancer treatment. Drug discovery acceleration. Telemedicine for rural parishes.</div></div>
+<div style="padding:12px 14px;background:rgba(255,152,0,0.06);border-radius:6px;border-left:3px solid #ff9800">
+<div style="font-weight:800;font-size:0.9rem;color:#ff9800;margin-bottom:4px">Hurricane Response</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">AI weather modeling 5 days out. Drone swarms assess damage over flooded areas. Emergency communications when cell towers fail. On-site backup power for the city.</div></div>
+<div style="padding:12px 14px;background:rgba(255,152,0,0.06);border-radius:6px;border-left:3px solid #ff9800">
+<div style="font-weight:800;font-size:0.9rem;color:#ff9800;margin-bottom:4px">KLFT Emergency Drones</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">Half mile away at Lafayette Regional Airport. Gulf Coast Emergency Drone Hub. Skydio X10 &mdash; American-made, NVIDIA Jetson AI onboard. Launch in minutes, not hours.</div></div>
+<div style="padding:12px 14px;background:rgba(255,152,0,0.06);border-radius:6px;border-left:3px solid #ff9800">
+<div style="font-weight:800;font-size:0.9rem;color:#ff9800;margin-bottom:4px">Water &amp; Sewer</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">AI detects pipe leaks before they become breaks &mdash; saves millions. Pressure monitoring across the entire system. Water quality analysis in real time. Flood prediction modeling.</div></div>
+<div style="padding:12px 14px;background:rgba(79,195,247,0.06);border-radius:6px;border-left:3px solid #4fc3f7">
+<div style="font-weight:800;font-size:0.9rem;color:#4fc3f7;margin-bottom:4px">Schools &amp; UL Lafayette</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">41,000 students need AI training NOW &mdash; not in 10 years. CUDA programming. Robotics labs. Research compute for every department. Students graduate into jobs at the facility.</div></div>
+<div style="padding:12px 14px;background:rgba(79,195,247,0.06);border-radius:6px;border-left:3px solid #4fc3f7">
+<div style="font-weight:800;font-size:0.9rem;color:#4fc3f7;margin-bottom:4px">Public Works &amp; Roads</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">AI road condition monitoring &mdash; potholes, cracks, drainage. Equipment maintenance prediction. Work order optimization. Public Works is literally next door to the facility.</div></div>
+<div style="padding:12px 14px;background:rgba(79,195,247,0.06);border-radius:6px;border-left:3px solid #4fc3f7">
+<div style="font-weight:800;font-size:0.9rem;color:#4fc3f7;margin-bottom:4px">City Planning &amp; LUS</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.35">Digital twin of Lafayette &mdash; flood zones, traffic, zoning, infrastructure. LUS grid management and optimization. Buried fiber. Modernized electrical corridor for the whole zone.</div></div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S15 — UL LAFAYETTE
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag" style="color:#ffd54f;border-color:rgba(255,213,79,0.4)">Grants &amp; Incentives &mdash; Time Sensitive</div>
+<div class="big">$36M &ndash; $71M+ Available.<br><span class="gold">Windows Are Closing.</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:820px;margin:10px auto;text-align:left">
+<div style="padding:8px 12px;background:rgba(255,213,79,0.05);border-radius:5px;border-left:3px solid #ffd54f"><div style="font-weight:700;font-size:0.8rem"><span class="gold">ITEP</span> &mdash; 80% Property Tax Abatement</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">$8-16M savings. <strong style="color:#ff5252">MUST file BEFORE groundbreaking.</strong></div></div>
+<div style="padding:8px 12px;background:rgba(255,213,79,0.05);border-radius:5px;border-left:3px solid #ffd54f"><div style="font-weight:700;font-size:0.8rem"><span class="gold">Historic Tax Credits</span> &mdash; 45%</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">20% federal + 25% Louisiana on rehabilitation costs.</div></div>
+<div style="padding:8px 12px;background:rgba(118,185,0,0.05);border-radius:5px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.8rem"><span class="accent">NSF MRI</span> &mdash; $4M GPU Cluster</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">UL Lafayette as lead. Shared research infrastructure.</div></div>
+<div style="padding:8px 12px;background:rgba(118,185,0,0.05);border-radius:5px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.8rem"><span class="accent">NSF EPSCoR</span> &mdash; $10M / 5 Years</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Louisiana qualifies. Statewide AI research capacity.</div></div>
+<div style="padding:8px 12px;background:rgba(79,195,247,0.05);border-radius:5px;border-left:3px solid #4fc3f7"><div style="font-weight:700;font-size:0.8rem"><span class="blue">Act 730</span> &mdash; 20-Year Sales Tax Exempt</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">$200M+ investment, 50+ jobs. <strong style="color:#ff5252">Early mover advantage.</strong></div></div>
+<div style="padding:8px 12px;background:rgba(79,195,247,0.05);border-radius:5px;border-left:3px solid #4fc3f7"><div style="font-weight:700;font-size:0.8rem"><span class="blue">Solar ITC</span> &mdash; 30% Federal</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Investment Tax Credit on all First Solar panels.</div></div>
+<div style="padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:5px;border-left:3px solid rgba(255,255,255,0.2)"><div style="font-weight:700;font-size:0.8rem">LED FastStart &mdash; FREE Training</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">#1 ranked workforce program in US. 100% state-funded.</div></div>
+<div style="padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:5px;border-left:3px solid rgba(255,255,255,0.2)"><div style="font-weight:700;font-size:0.8rem">DOE / EDA / Growth Fund</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Federal clean energy + econ development. $10M+.</div></div>
+</div>
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.5);max-width:750px;margin:8px auto 0;line-height:1.4;text-align:center"><strong style="color:#fff">UL Lafayette</strong> is half a mile away. $225M R&D budget. Zero GPU infrastructure. They become anchor tenant. <strong style="color:#fff">NVIDIA's 50-State Plan:</strong> Florida got $180M. Louisiana isn't on the list yet. <strong style="color:#ffd54f">We fix that.</strong></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S16 — THE MONEY
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Token Economics</div>
+<div class="big">Raw Cost: <span class="dim">$0.004/M tokens</span> &rarr; ADC Price: <span class="green">$0.20 &mdash; $150</span></div>
+<div class="divider center"></div>
+<div class="nums center" style="margin-top:12px">
+<div class="num"><div class="num-val gold" style="font-size:clamp(1.6rem,4vw,2.8rem)">95%+</div><div class="num-label">Gross Margin</div></div>
+<div class="num"><div class="num-val" style="font-size:clamp(1.6rem,4vw,2.8rem)">$3.8M</div><div class="num-label">Phase 1 EBITDA</div></div>
+<div class="num"><div class="num-val" style="font-size:clamp(1.6rem,4vw,2.8rem)">$169M</div><div class="num-label">Phase 2 Revenue</div></div>
+<div class="num"><div class="num-val" style="font-size:clamp(1.6rem,4vw,2.8rem)">$600M</div><div class="num-label">Phase 3 Revenue</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:750px;margin:14px auto 0;text-align:center">
+<div style="padding:10px;background:rgba(118,185,0,0.05);border-radius:6px;border:1px solid rgba(118,185,0,0.1)">
+<div style="font-weight:800;color:#76b900;font-size:0.95rem">Phase 1</div>
+<div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">36 racks &bull; 2,592 GPUs &bull; ~$0.058/kWh</div>
+</div>
+<div style="padding:10px;background:rgba(255,213,79,0.05);border-radius:6px;border:1px solid rgba(255,213,79,0.1)">
+<div style="font-weight:800;color:#ffd54f;font-size:0.95rem">Phase 2</div>
+<div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">84 racks &bull; 6,048 GPUs &bull; Full campus</div>
+</div>
+<div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:6px;border:1px solid rgba(255,255,255,0.06)">
+<div style="font-weight:800;color:#fff;font-size:0.95rem">Phase 3</div>
+<div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">100+ MW &bull; Multi-site &bull; Willow Glen</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S17 — COMPETITION
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Competitive Landscape</div>
+<div class="huge">They're Already Here.<br><span class="accent">The Race Is On.</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:800px;margin:16px auto;text-align:center">
+<div style="padding:18px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06)">
+<div style="font-weight:900;font-size:1.5rem;color:#ff5252">$2B</div>
+<div style="font-weight:700;font-size:0.95rem;margin:4px 0">Crusoe Energy</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.4)">Gas-powered AI. NVIDIA Preferred Partner. $152M&rarr;$2B revenue in 2 years. Energy-first model.</div>
+</div>
+<div style="padding:18px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06)">
+<div style="font-weight:900;font-size:1.5rem;color:#4fc3f7">$23B</div>
+<div style="font-weight:700;font-size:0.95rem;margin:4px 0">CoreWeave</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.4)">GPU cloud. IPO. NVIDIA-backed. Printing money on inference workloads.</div>
+</div>
+<div style="padding:18px;background:rgba(255,82,82,0.06);border-radius:8px;border:1px solid rgba(255,82,82,0.15)">
+<div style="font-weight:900;font-size:1.5rem;color:#ffd54f">NASDAQ</div>
+<div style="font-weight:700;font-size:0.95rem;margin:4px 0">Hut 8 Mining</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.4)">Just moved into Baton Rouge. Industrial buildings &rarr; AI compute. Public company. <strong style="color:#ff5252">Already in Louisiana.</strong></div>
+</div>
+</div>
+<div class="sub" style="margin:12px auto 0"><strong>Why ADC wins:</strong> <strong style="color:#ffd54f">Henry Hub</strong> is 40 miles away &mdash; the pricing benchmark for all North American natural gas. That's why energy is cheaper here than anywhere else. $1M site vs $100M greenfield. 45% historic tax credits. First Solar 30 miles away. UL Lafayette half a mile. American-made supply chain locked in.</div>
+<div style="margin:10px auto 0;padding:12px 18px;background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.15);border-radius:6px;max-width:800px;text-align:left">
+<div style="font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.4"><strong style="color:#ff5252">Why this is hard:</strong> An AI factory requires power generation, liquid cooling, 800V DC electrical, fiber networking, NVIDIA certification, site permits, environmental clearance, and a workforce pipeline &mdash; all at the same time. That's why you need <strong style="color:#fff">ATMOS Energy + First Solar + Eaton + Caterpillar + Siemens + LUS + UL Lafayette + the city</strong> all pulling in the same direction. Nobody does this alone.</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     NOT YOUR GRANDFATHER'S DATA CENTER
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag" style="color:#4fc3f7;border-color:rgba(79,195,247,0.4)">This Is Not What You Think It Is</div>
+<div class="huge">"Aren't Data Centers Bad?"<br><span class="accent">Not This One.</span></div>
+<div style="display:grid;grid-template-columns:1fr 40px 1fr;gap:0;max-width:850px;margin:14px auto;align-items:start">
+<div style="padding:16px;background:rgba(255,82,82,0.05);border-radius:8px;border:1px solid rgba(255,82,82,0.12)">
+<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#ff5252;font-weight:700;margin-bottom:8px">Old Internet "Data Centers"</div>
+<div style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5">
+CPU-based servers for websites and email. Massive air conditioning systems blowing cold air. Power Usage Effectiveness (PUE) of 1.5-2.0 &mdash; wasting 50-100% of energy on cooling alone. Loud fans. Hot exhaust. Grid-dependent. Built in the 2000s-2010s.</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;color:rgba(255,255,255,0.15);height:100%">&rarr;</div>
+<div style="padding:16px;background:rgba(118,185,0,0.05);border-radius:8px;border:1px solid rgba(118,185,0,0.12)">
+<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#76b900;font-weight:700;margin-bottom:8px">Trappeys AI Factory (2026)</div>
+<div style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5">
+<strong style="color:#fff">GPU-accelerated</strong> &mdash; software-defined, not brute-force hardware. <strong style="color:#fff">Liquid cooled</strong> at 45&deg;C &mdash; no massive AC systems, no loud fans. PUE target: <strong style="color:#76b900">1.03</strong> &mdash; 97% of energy goes to compute. <strong style="color:#fff">100% self-powered</strong> &mdash; First Solar + natural gas. <strong style="color:#fff">Grid sell-back</strong> &mdash; we help LUS, not drain them.</div>
+</div>
+</div>
+<div class="sub" style="margin:10px auto 0">This is purpose-built, energy-efficient infrastructure designed from the ground up. We generate our own power, cool with liquid instead of air, and sell excess energy back to the grid. <strong>This facility makes the neighborhood better, not worse.</strong></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     HOW THE COOLING WORKS
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('trappeys-photos/WT1.jpg')"></div>
+<div class="cnt left" style="max-width:650px">
+<div class="tag" style="color:#4fc3f7;border-color:rgba(79,195,247,0.4)">How It Works</div>
+<div class="huge">Liquid Cooled.<br><span class="blue">Not Air Conditioned.</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;margin:12px 0">
+<div style="padding:10px 14px;background:rgba(0,0,0,0.6);border-radius:6px;border-left:3px solid #4fc3f7;backdrop-filter:blur(10px)">
+<div style="font-weight:700;font-size:0.85rem;color:#4fc3f7">NVIDIA NVL72 Racks</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">72 GPUs + 36 CPUs per rack. Factory-sealed liquid cooling loops at 45&deg;C. No server fans. No hot aisles. Installed in 2 hours &mdash; plug in, turn on.</div>
+</div>
+<div style="padding:10px 14px;background:rgba(0,0,0,0.6);border-radius:6px;border-left:3px solid #ffd54f;backdrop-filter:blur(10px)">
+<div style="font-weight:700;font-size:0.85rem;color:#ffd54f">Water Tower</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">15,000 gallons of thermal buffer. Absorbs heat spikes. The hot water from the racks cycles through the tower and radiates heat naturally. No massive chillers.</div>
+</div>
+<div style="padding:10px 14px;background:rgba(0,0,0,0.6);border-radius:6px;border-left:3px solid #76b900;backdrop-filter:blur(10px)">
+<div style="font-weight:700;font-size:0.85rem;color:#76b900">Vermilion River</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">Natural free-cooling resource running alongside the site. Combined with liquid cooling, achieves PUE 1.03 &mdash; meaning 97% of every watt goes directly to computing.</div>
+</div>
+<div style="padding:10px 14px;background:rgba(0,0,0,0.6);border-radius:6px;border-left:3px solid #ff9800;backdrop-filter:blur(10px)">
+<div style="font-weight:700;font-size:0.85rem;color:#ff9800">100% Green Design</div>
+<div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">First Solar on every rooftop. Natural gas backbone (cleanest fossil fuel). No coal. No nuclear. Excess power sold back to LUS. Net positive for Lafayette's grid.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S18 — INFRASTRUCTURE ALREADY THERE
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">Ready to Go</div>
+<div class="huge">The Infrastructure Is <span class="accent">Already There.</span></div>
+<div class="photos g2 short" style="max-width:800px;margin:14px auto">
+<img src="trappeys-photos/E_Grid1.jpg" alt="LUS substation" style="border-radius:6px">
+<img src="trappeys-photos/Power2.jpg" alt="Power infrastructure" style="border-radius:6px">
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:750px;margin:12px auto 0;text-align:left">
+<div style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.5"><strong style="color:#ffd54f">Gas:</strong> ATMOS Energy hub at Pinhook. Trunk lines through the buildings. Gas heaters still in place. Henry Hub &mdash; cheapest energy in the country.</div>
+<div style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.5"><strong style="color:#4fc3f7">Electric:</strong> LUS Pin Hook Substation (Curtis Rodemacher) right next door. New poles running. We sell excess back. Zero grid burden.</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S19 — AMERICAN MADE
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg dark" style="background-image:url('trappeys-photos/Rear_warehouse1.jpg')"></div>
+<div class="cnt center">
+<div class="tag">American-Made Supply Chain</div>
+<div class="huge">100% <span class="accent">American-Made.</span></div>
 <div class="partners">
-<div class="partner"><div class="partner-name" style="color:#76b900">NVIDIA</div><div class="partner-role">AI Computers</div></div>
-<div class="partner"><div class="partner-name" style="color:#ffd54f">First Solar</div><div class="partner-role">Solar Panels</div></div>
-<div class="partner"><div class="partner-name" style="color:#4fc3f7">Eaton</div><div class="partner-role">Power Systems</div></div>
-<div class="partner"><div class="partner-name" style="color:#ff9800">Caterpillar</div><div class="partner-role">Generators</div></div>
-<div class="partner"><div class="partner-name">Powell</div><div class="partner-role">Switchgear</div></div>
-<div class="partner"><div class="partner-name">Siemens USA</div><div class="partner-role">Controls</div></div>
-<div class="partner"><div class="partner-name">Big Ass Fans</div><div class="partner-role">Cooling</div></div>
-<div class="partner"><div class="partner-name">BAC</div><div class="partner-role">Heat Rejection</div></div>
+<div class="partner"><b style="color:#76b900">NVIDIA</b><span>AI Computers &bull; Santa Clara CA</span></div>
+<div class="partner"><b style="color:#ffd54f">First Solar</b><span>Solar Panels &bull; New Iberia LA</span></div>
+<div class="partner"><b style="color:#4fc3f7">Eaton</b><span>800V Power &bull; Cleveland OH</span></div>
+<div class="partner"><b style="color:#ff9800">Caterpillar</b><span>Gas Gensets &bull; Irving TX</span></div>
+<div class="partner"><b>Powell</b><span>Switchgear &bull; Houston TX</span></div>
+<div class="partner"><b>Siemens USA</b><span>Grid Control &bull; Atlanta GA</span></div>
+<div class="partner"><b>Big Ass Fans</b><span>HVLS Cooling &bull; Lexington KY</span></div>
+<div class="partner"><b>BAC</b><span>Heat Rejection &bull; Jessup MD</span></div>
 </div>
-<p>"Louisiana AI factory. American parts. American energy. American <span class="accent">infrastructure</span>."</p>
+<div class="sub" style="margin:0 auto">"Louisiana AI factory. <strong>American parts. American energy. American infrastructure.</strong>"</div>
 </div>
 </div>
 
-<!-- S20: VIDEO — NVIDIA DSX / CUDA -->
+<!-- ═══════════════════════════════════════════
+     S20 — WATER TOWER
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>The Technology &mdash; Built on NVIDIA's Standard</h2>
-<p style="margin-bottom:10px">Same system running in hospitals, universities, and research labs worldwide. Plug in, turn on, go. <span class="accent">Mission critical</span> &mdash; built to never go down.</p>
-<div class="video-container">
-<div class="video-placeholder">[ NVIDIA AI Factory / Robotics / CUDA ]</div>
-</div>
-<p style="margin-top:8px;color:#999">Robotics. Medical AI. Self-driving vehicles. Weather prediction. Drug discovery.<br>All of it runs on this infrastructure. All of it starts here.</p>
+<div class="bg dark" style="background-image:url('trappeys-photos/WT1.jpg');background-position:center"></div>
+<div class="cnt center" style="margin-top:auto;padding-bottom:60px">
+<div class="big" style="text-shadow:0 2px 20px rgba(0,0,0,0.8)">The Trappeys Water Tower.</div>
+<div class="sub" style="margin:0 auto;text-shadow:0 2px 10px rgba(0,0,0,0.8)">Visible from Evangeline Thruway and US 90. <strong>NVIDIA. ADC. First Solar. UL Lafayette.</strong> All on the tower.<br>15,000 gallons of cooling water. Branding AND thermal buffer. <strong>Form meets function.</strong></div>
 </div>
 </div>
 
-<!-- S21: WHAT LAFAYETTE GETS -->
+<!-- ═══════════════════════════════════════════
+     S21 — THE RIVERFRONT
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>What Lafayette Gets &mdash; Zero Taxpayer Cost</h2>
-<div class="benefit-grid">
-<div class="benefit"><div class="benefit-title">Historic Restoration</div><div class="benefit-desc">100-year-old landmark brought back to life. Not torn down &mdash; restored.</div></div>
-<div class="benefit"><div class="benefit-title">Modernized Infrastructure</div><div class="benefit-desc">Buried fiber and utilities. Upgraded electrical corridor. Better for everyone.</div></div>
-<div class="benefit"><div class="benefit-title">High-Paying Jobs</div><div class="benefit-desc">Tech careers in Lafayette. Students don't have to leave to find work.</div></div>
-<div class="benefit"><div class="benefit-title">National Attention</div><div class="benefit-desc">NVIDIA, First Solar, and UL Lafayette all in one place. Press coverage guaranteed.</div></div>
-<div class="benefit"><div class="benefit-title">Riverwalk &amp; Park Access</div><div class="benefit-desc">Public riverwalk, bridge to Beaver Park, outdoor spaces. Open to everyone.</div></div>
-<div class="benefit"><div class="benefit-title">Grid Revenue</div><div class="benefit-desc">We sell excess power back to LUS. Zero grid burden &mdash; we ADD to the grid.</div></div>
-<div class="benefit"><div class="benefit-title">Emergency Readiness</div><div class="benefit-desc">Drone hub at KLFT. AI-powered hurricane response. First responder technology.</div></div>
-<div class="benefit"><div class="benefit-title">Education Pipeline</div><div class="benefit-desc">AI training from K-12 through UL Lafayette. Robotics. Programming. The future.</div></div>
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">The Vermilion River</div>
+<div class="huge">Direct Waterfront. <span class="accent">Open to the Public.</span></div>
+<div class="photos g3 short" style="max-width:950px;margin:14px auto">
+<img src="trappeys-photos/Riverfront_8.jpg" alt="River view" style="border-radius:6px">
+<img src="trappeys-photos/605236d084a7d.image.jpg" alt="Wooden structure over river" style="border-radius:6px">
+<img src="trappeys-photos/605236d5519e0.image.jpg" alt="View through windows to river" style="border-radius:6px">
 </div>
+<div class="sub" style="margin:8px auto 0">Beaver Park across the river. The most beautiful spot in Lafayette &mdash; hidden for 30 years.<br><strong>Riverwalk. Pedestrian bridge. Outdoor event space. Technology museum. Open to everyone.</strong></div>
 </div>
 </div>
 
-<!-- S22: THE ASK -->
+<!-- ═══════════════════════════════════════════
+     S22 — WHAT LAFAYETTE GETS
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-content">
-<h2>We're Not Asking for Anything</h2>
-<div class="quote">
-"Water is infrastructure. Gas is infrastructure. Electricity is infrastructure. AI computing is the next one. It's mission critical &mdash; and Lafayette doesn't have it yet. We're building it. We just need the key."
-<span class="quote-attr">&mdash; Scott Tomsu</span>
-</div>
-<div class="stat-row" style="margin-top:24px">
-<div class="stat"><div class="stat-num">3 months</div><div class="stat-label">To First Power</div></div>
-<div class="stat"><div class="stat-num">$0</div><div class="stat-label">Taxpayer Cost</div></div>
-<div class="stat"><div class="stat-num">100+</div><div class="stat-label">Jobs Created</div></div>
+<div class="bg heavy" style="background:#080808"></div>
+<div class="cnt center">
+<div class="tag">The Return</div>
+<div class="huge">What Lafayette Gets.<br><span class="gold">$0 Taxpayer Cost.</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:800px;margin:16px auto;text-align:left">
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Historic Restoration</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">100-year landmark brought back to life. Not demolished.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">100+ High-Paying Jobs</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">AI ops $55-70K. Network eng $70-90K. Security, R&D, management.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Grid Revenue</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">Excess power sold back to LUS. We add to the grid, not drain it.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">National Attention</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">NVIDIA + First Solar + UL Lafayette + historic site. Press writes itself.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Riverwalk &amp; Public Space</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">Bridge to Beaver Park. Technology museum. Event space. Open to all.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Emergency Readiness</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">Drone hub. AI hurricane response. First responder technology. Saves lives.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Education Pipeline</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">K-12 through UL Lafayette. Robotics. AI. Students don't have to leave.</div></div>
+<div style="padding:14px 16px;background:rgba(118,185,0,0.04);border-radius:6px;border-left:3px solid #76b900"><div style="font-weight:700;font-size:0.95rem">Infrastructure Modernization</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:2px">Buried fiber, upgraded electrical, new roads. Better for everyone in the zone.</div></div>
 </div>
 </div>
 </div>
 
-<!-- S23: CLOSING -->
+<!-- ═══════════════════════════════════════════
+     S23 — THE ASK
+═══════════════════════════════════════════ -->
 <div class="slide">
-<div class="slide-bg" style="background-image:url('trappeys-photos/Riverfront_8.jpg')"></div>
-<div class="slide-content">
-<h1>Trappeys AI Factory</h1>
-<p style="color:#76b900;font-size:1.1rem;margin-bottom:14px">Mission Critical Infrastructure &mdash; Built in Lafayette, for Lafayette.</p>
-<p style="color:#ccc;margin-bottom:24px">From the Ishak people to the AI revolution.<br>4,000 years. One site. Everyone benefits.</p>
-<div style="color:#999">
-<p><strong>Scott Tomsu</strong> &mdash; Founder</p>
-<p>ADC &mdash; Advantage Design &amp; Construction</p>
-<p>scott@adc3k.com &bull; adc3k.com</p>
+<div class="bg dark" style="background-image:url('trappeys-photos/Middle_high_5.jpg');background-position:center top"></div>
+<div class="cnt center" style="max-width:850px">
+<div class="tag">The Ask</div>
+<div class="huge" style="margin-bottom:16px">We Just Need <span class="accent">the Key.</span></div>
+<div class="quote">"Water is infrastructure. Gas is infrastructure. Electricity is infrastructure.<br>AI computing is the next one. And Lafayette doesn't have it yet."</div>
+<div class="quote-name">Scott Tomsu</div>
+<div class="nums center" style="margin-top:28px">
+<div class="num"><div class="num-val">3 months</div><div class="num-label">To First Power</div></div>
+<div class="num"><div class="num-val gold">$0</div><div class="num-label">Taxpayer Cost</div></div>
+<div class="num"><div class="num-val">100+</div><div class="num-label">Jobs Year One</div></div>
 </div>
 </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     S24 — CLOSING
+═══════════════════════════════════════════ -->
+<div class="slide">
+<div class="bg vignette" style="background-image:url('trappeys-photos/WT1.jpg')"></div>
+<div class="cnt center">
+<div class="mega">TRAPPEYS<br><span class="green">AI FACTORY</span></div>
+<div class="divider center"></div>
+<div class="sub" style="margin:10px auto 24px">From the Ishak people to the AI revolution.<br>4,000 years. One site. <strong>Everyone benefits.</strong></div>
+<div style="color:rgba(255,255,255,0.5);font-size:0.85rem;line-height:1.8">
+<strong style="color:#fff">Scott Tomsu</strong> &mdash; Founder<br>
+Advantage Design &amp; Construction<br>
+<span style="color:#76b900">scott@adc3k.com</span> &bull; <span style="color:#76b900">adc3k.com/trappeys</span><br>
+<span style="color:rgba(255,255,255,0.3)">Lafayette, Louisiana</span>
+</div>
+</div>
+</div>
+
+<!-- NAV -->
 <div class="nav">
-<button onclick="prev()">&larr;</button>
-<button onclick="next()">&rarr;</button>
+<button onclick="prev()" aria-label="Previous">&#8592;</button>
+<button onclick="next()" aria-label="Next">&#8594;</button>
 </div>
 
 <script>
-const slides=document.querySelectorAll('.slide');
-let current=0;
-const total=slides.length;
-function show(n){
-slides[current].classList.remove('active');
-current=Math.max(0,Math.min(n,total-1));
-slides[current].classList.add('active');
-document.getElementById('progress').style.width=((current+1)/total*100)+'%';
-document.getElementById('slideNum').textContent=(current+1)+'/'+total;
-}
-function next(){if(current<total-1)show(current+1)}
-function prev(){if(current>0)show(current-1)}
-document.addEventListener('keydown',e=>{
-if(e.key==='ArrowRight'||e.key===' ')next();
-if(e.key==='ArrowLeft')prev();
-});
+const S=document.querySelectorAll('.slide');
+let c=0,T=S.length;
+function go(n){S[c].classList.remove('active');c=Math.max(0,Math.min(n,T-1));S[c].classList.add('active');document.getElementById('prog').style.width=((c+1)/T*100)+'%';document.getElementById('snum').textContent=(c+1)+' / '+T;}
+function next(){if(c<T-1)go(c+1)}
+function prev(){if(c>0)go(c-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft'){e.preventDefault();prev()}});
 let tx=0;
-document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX});
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
 document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){d<0?next():prev()}});
-show(0);
+go(0);
 </script>
 </body>
 </html>
