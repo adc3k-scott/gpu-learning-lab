@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trappeys AI Factory — Lafayette, Louisiana</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#fff;overflow:hidden;height:100vh}
+.slide{display:none;width:100vw;height:100vh;position:relative;flex-direction:column;justify-content:center;align-items:center}
+.slide.active{display:flex}
+.slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.slide-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.5),rgba(0,0,0,0.7))}
+.slide-content{position:relative;z-index:1;max-width:1100px;width:90%;text-align:center;padding:40px}
+h1{font-size:clamp(2rem,5vw,4rem);font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-1px}
+h2{font-size:clamp(1.5rem,3.5vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:16px}
+h3{font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:600;margin-bottom:12px}
+p,.desc{font-size:clamp(1rem,1.8vw,1.4rem);line-height:1.6;color:#ccc;max-width:800px;margin:0 auto}
+.accent{color:#76b900}
+.accent-blue{color:#4fc3f7}
+.accent-gold{color:#ffd54f}
+.quote{font-style:italic;font-size:clamp(1.3rem,2.5vw,2rem);color:#fff;border-left:4px solid #76b900;padding-left:24px;text-align:left;max-width:800px;margin:30px auto;line-height:1.5}
+.quote-attr{font-style:normal;font-size:0.7em;color:#999;display:block;margin-top:12px}
+.stat-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin:30px 0}
+.stat{text-align:center}
+.stat-num{font-size:clamp(2rem,4vw,3.5rem);font-weight:800;color:#76b900}
+.stat-label{font-size:0.9rem;color:#999;margin-top:4px}
+.photo-grid{display:grid;gap:8px;margin:20px auto;max-width:1000px}
+.photo-grid.g2{grid-template-columns:1fr 1fr}
+.photo-grid.g3{grid-template-columns:1fr 1fr 1fr}
+.photo-grid.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+.photo-grid img{width:100%;height:100%;object-fit:cover;border-radius:4px}
+.photo-grid.tall img{max-height:50vh}
+.photo-grid.short img{max-height:35vh}
+.single-photo{max-width:800px;max-height:55vh;border-radius:8px;margin:20px auto;display:block;object-fit:contain}
+.timeline{text-align:left;max-width:700px;margin:20px auto}
+.timeline-item{display:flex;gap:16px;margin-bottom:14px;align-items:baseline}
+.timeline-year{font-weight:800;color:#76b900;min-width:90px;text-align:right;font-size:1.1rem}
+.timeline-text{color:#ccc;font-size:1rem;line-height:1.4}
+.power-stack{text-align:left;max-width:600px;margin:20px auto}
+.power-layer{display:flex;align-items:center;gap:16px;padding:14px 20px;margin-bottom:8px;border-radius:8px;border-left:4px solid}
+.power-layer.solar{background:rgba(255,213,79,0.1);border-color:#ffd54f}
+.power-layer.gas{background:rgba(118,185,0,0.1);border-color:#76b900}
+.power-layer.diesel{background:rgba(255,152,0,0.1);border-color:#ff9800}
+.power-layer.grid{background:rgba(79,195,247,0.1);border-color:#4fc3f7}
+.power-label{font-weight:700;font-size:1.1rem;min-width:140px}
+.power-desc{color:#999;font-size:0.95rem}
+.video-container{width:80%;max-width:900px;aspect-ratio:16/9;margin:20px auto;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #333}
+.video-container iframe{width:100%;height:100%;border:none;border-radius:8px}
+.video-placeholder{color:#666;font-size:1.2rem}
+.nav{position:fixed;bottom:30px;right:30px;z-index:100;display:flex;gap:10px}
+.nav button{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:1rem;backdrop-filter:blur(10px);transition:all 0.2s}
+.nav button:hover{background:rgba(118,185,0,0.3);border-color:#76b900}
+.progress{position:fixed;top:0;left:0;height:3px;background:#76b900;z-index:100;transition:width 0.3s}
+.slide-num{position:fixed;bottom:34px;left:30px;z-index:100;color:#555;font-size:0.9rem}
+.partners{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.partner{text-align:center;padding:20px;background:rgba(255,255,255,0.05);border-radius:12px;min-width:150px}
+.partner-name{font-weight:700;font-size:1.1rem;color:#fff}
+.partner-role{font-size:0.85rem;color:#999;margin-top:4px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;text-align:left;max-width:1000px;margin:20px auto;align-items:center}
+.two-col img{width:100%;border-radius:8px;max-height:50vh;object-fit:cover}
+.bullet-list{list-style:none;text-align:left;max-width:700px;margin:16px auto}
+.bullet-list li{padding:8px 0;color:#ccc;font-size:1.05rem;display:flex;align-items:baseline;gap:10px}
+.bullet-list li::before{content:'';width:8px;height:8px;background:#76b900;border-radius:50%;flex-shrink:0;margin-top:6px}
+@media(max-width:768px){
+.two-col{grid-template-columns:1fr}
+.photo-grid.g3,.photo-grid.g4{grid-template-columns:1fr 1fr}
+.stat-row{gap:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-num" id="slideNum"></div>
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="s1">
+<div class="slide-bg" style="background-image:url('trappeys-photos/605236deb14e4.image.webp')"></div>
+<div class="slide-content">
+<h1>Trappeys AI Factory</h1>
+<h3 style="color:#ccc;font-weight:400">Lafayette, Louisiana</h3>
+<p style="margin-top:30px;color:#999">4,000 Years of History. 100 Years of Industry.<br>The Next 100 Years of American Innovation.</p>
+<div style="margin-top:50px;color:#555;font-size:0.9rem">Presented by ADC &mdash; Advantage Design &amp; Construction<br>scott@adc3k.com &bull; adc3k.com</div>
+</div>
+</div>
+
+<!-- SLIDE 2: The Revolution Begins (Jensen 1995) -->
+<div class="slide" id="s2">
+<div class="slide-content">
+<h2>The American Electronics Revolution</h2>
+<p style="margin-bottom:20px">1993 &mdash; Jensen Huang founds NVIDIA in a Denny's booth with $40,000.</p>
+<div class="video-container">
+<div class="video-placeholder">[ NVIDIA Origin Story Video ]<br><span style="font-size:0.8rem;color:#444">Insert Jensen 1993-1995 founding clip from NVIDIA YouTube</span></div>
+</div>
+<p style="color:#666;margin-top:10px">From a graphics chip company to the engine of the AI revolution.</p>
+</div>
+</div>
+
+<!-- SLIDE 3: GTC 2026 — The Token Economy -->
+<div class="slide" id="s3">
+<div class="slide-content">
+<h2>2026 &mdash; The Token Economy</h2>
+<p style="margin-bottom:20px">GTC 2026 &mdash; Jensen announces AI factories will produce tokens, the new commodity of the digital economy.</p>
+<div class="video-container">
+<div class="video-placeholder">[ GTC 2026 Keynote — AI Factory / Dynamo / Token Economy ]<br><span style="font-size:0.8rem;color:#444">Insert GTC 2026 keynote segment from NVIDIA YouTube</span></div>
+</div>
+<p style="color:#666;margin-top:10px">Every industry needs tokens. Every state needs an AI factory. Louisiana doesn't have one yet.</p>
+</div>
+</div>
+
+<!-- SLIDE 4: Scott's Opening -->
+<div class="slide" id="s4">
+<div class="slide-bg" style="background-image:url('trappeys-photos/Middle_high_7.jpg');background-position:center top"></div>
+<div class="slide-content">
+<div class="quote">
+"This place had its own power generation from day one. We're just bringing it back online."
+<span class="quote-attr">&mdash; Scott Tomsu, Founder, ADC</span>
+</div>
+<p style="margin-top:40px">25 years in deepwater robotics and remote operations.<br>FAA Private Pilot. Commercial Diver. Electronic Technician.<br>Now building Louisiana's first AI factory.</p>
+</div>
+</div>
+
+<!-- SLIDE 5: 4,000 Years -->
+<div class="slide" id="s5">
+<div class="slide-content">
+<h2>4,000 Years on One Piece of Land</h2>
+<div class="timeline">
+<div class="timeline-item"><span class="timeline-year" style="color:#4fc3f7">~2000 BC</span><span class="timeline-text">Atakapa-Ishak people &mdash; the Ciwat (Alligator Band) &mdash; inhabit the Vermilion River. Continuous occupation for 4,000 years.</span></div>
+<div class="timeline-item"><span class="timeline-year">1920s</span><span class="timeline-text">Texaco leases the property to Baldwin Lumber &amp; Star Salt Company.</span></div>
+<div class="timeline-item"><span class="timeline-year" style="color:#ff9800">1927</span><span class="timeline-text">The Great Flood. 10 feet of water. Buildings damaged but survive.</span></div>
+<div class="timeline-item"><span class="timeline-year">1930</span><span class="timeline-text">B.F. Trappey's Sons opens the cannery. Builds its own electric powerhouse.</span></div>
+<div class="timeline-item"><span class="timeline-year" style="color:#ffd54f">1941-45</span><span class="timeline-text">WWII &mdash; 12 million lbs of candied yams for Allied forces. 350-600 workers.</span></div>
+<div class="timeline-item"><span class="timeline-year">1991</span><span class="timeline-text">Plant closes. Sits empty for 30+ years.</span></div>
+<div class="timeline-item"><span class="timeline-year" style="color:#76b900">2026</span><span class="timeline-text"><strong>ADC brings it back as Louisiana's first AI factory.</strong></span></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 6: What It Was — Vintage -->
+<div class="slide" id="s6">
+<div class="slide-content">
+<h2>What It Was</h2>
+<p style="margin-bottom:20px">B.F. Trappey's Sons &mdash; Lafayette's largest employer for 60 years.</p>
+<div class="photo-grid g3 short">
+<img src="trappeys-photos/trappeysyams.webp" alt="Trappey's Yams advertisement">
+<img src="trappeys-photos/1946TrappeysDehydratedSweetPotatoesAdvertisement.webp" alt="1946 Dehydrated Sweet Potatoes">
+<img src="trappeys-photos/trappeysbeans.webp" alt="Trappey's Jalapeno Black Eye Peas">
+</div>
+<p style="margin-top:16px;color:#999">National Register of Historic Places &mdash; 9 contributing buildings, 1930-1972.<br>Qualifies for 45-55% historic tax credits on rehabilitation.</p>
+</div>
+</div>
+
+<!-- SLIDE 7: The Vats — WWII Heritage -->
+<div class="slide" id="s7">
+<div class="slide-content">
+<h2>The Scalding Vats</h2>
+<p style="margin-bottom:16px">12 million pounds of candied yams &mdash; processed right here for American soldiers overseas.</p>
+<div class="photo-grid g2 tall">
+<img src="trappeys-photos/605236d342122.image.jpg" alt="Vat holes from above">
+<img src="trappeys-photos/605236d25ce8a.image.webp" alt="Vats from below through arch">
+</div>
+<p style="margin-top:16px;color:#999">Glass floor panels over the vats. LED lighting below. Walk over 96 years of Louisiana history.</p>
+</div>
+</div>
+
+<!-- SLIDE 8: The Buildings Today — Exteriors -->
+<div class="slide" id="s8">
+<div class="slide-content">
+<h2>What It Looks Like Today</h2>
+<p style="margin-bottom:16px">112,500 square feet. Four main structures. All structurally sound.</p>
+<div class="photo-grid g4 short">
+<img src="trappeys-photos/Middle1.jpg" alt="Exterior with loading docks">
+<img src="trappeys-photos/Middle2.jpg" alt="Water tower visible">
+<img src="trappeys-photos/6052359b92e88.image.webp" alt="Brick facade">
+<img src="trappeys-photos/Middle3.jpg" alt="Front approach">
+</div>
+<div class="stat-row" style="margin-top:20px">
+<div class="stat"><div class="stat-num">4</div><div class="stat-label">Buildings</div></div>
+<div class="stat"><div class="stat-num">112,500</div><div class="stat-label">Square Feet</div></div>
+<div class="stat"><div class="stat-num">9</div><div class="stat-label">Historic Structures</div></div>
+<div class="stat"><div class="stat-num">8</div><div class="stat-label">Acres</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 9: Building #3 — The Compute Hall -->
+<div class="slide" id="s9">
+<div class="slide-bg" style="background-image:url('trappeys-photos/Middle_high_7.jpg');background-position:center top"></div>
+<div class="slide-content">
+<h2>Building #3 &mdash; The Compute Hall</h2>
+<p>75 &times; 300 feet. Original wood timber trusses. Brick walls. Concrete floor.<br>Ready for NVIDIA liquid-cooled racks.</p>
+<div class="photo-grid g2 short" style="margin-top:20px">
+<img src="trappeys-photos/Middle_high_6.jpg" alt="Wood trusses interior">
+<img src="trappeys-photos/Middle_high_5.jpg" alt="Loading dock entrance">
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: Building #3 Interior Scale -->
+<div class="slide" id="s10">
+<div class="slide-content">
+<h2>96-Year-Old Architecture Meets AI</h2>
+<div class="two-col">
+<div>
+<img src="trappeys-photos/Middle_high_8.jpg" alt="Full interior length">
+</div>
+<div>
+<h3 style="color:#76b900">Clear-Span Warehouse</h3>
+<ul class="bullet-list">
+<li>22,500 sq ft open floor</li>
+<li>25-30 ft ceilings</li>
+<li>Heavy timber X-bracing &mdash; structural art</li>
+<li>Concrete floor rated for industrial loads</li>
+<li>Loading dock for equipment delivery</li>
+<li>Phase 1: 4 NVIDIA NVL72 racks</li>
+<li>Full buildout: 45+ racks</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 11: The Riverfront -->
+<div class="slide" id="s11">
+<div class="slide-bg" style="background-image:url('trappeys-photos/Riverfront_8.jpg')"></div>
+<div class="slide-content">
+<h2>The Vermilion River</h2>
+<p>Direct river frontage. Beaver Park across the water.<br>The most beautiful spot in Lafayette &mdash; hidden for 30 years.</p>
+<div class="photo-grid g2 short" style="margin-top:20px">
+<img src="trappeys-photos/605236d5519e0.image.jpg" alt="River view from inside">
+<img src="trappeys-photos/605236d084a7d.image.jpg" alt="River structure">
+</div>
+<p style="margin-top:16px;color:#ccc">Riverwalk. Pedestrian bridge to the park. Outdoor event space.<br>Technology museum in the front building. History under glass floors.</p>
+</div>
+</div>
+
+<!-- SLIDE 12: The Riverfront Interior -->
+<div class="slide" id="s12">
+<div class="slide-content">
+<h2>The Heritage Hall</h2>
+<p style="margin-bottom:16px">Front building on the water &mdash; the crown jewel. Not compute space. A showcase.</p>
+<div class="photo-grid g3 short">
+<img src="trappeys-photos/Riverfront_1.jpg" alt="Interior steel columns">
+<img src="trappeys-photos/Riverfront_4.jpg" alt="Vat holes with windows">
+<img src="trappeys-photos/Riverfront_6.jpg" alt="Trusses and sunlight">
+</div>
+<ul class="bullet-list" style="margin-top:16px">
+<li>Glass panels over WWII-era processing vats</li>
+<li>Interpretive displays &mdash; indigenous history, cannery operations, AI technology</li>
+<li>Panoramic river views through original factory windows</li>
+<li>Investor tours, city council presentations, school field trips</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 13: Infrastructure — Already There -->
+<div class="slide" id="s13">
+<div class="slide-content">
+<h2>Infrastructure &mdash; Already There</h2>
+<p style="margin-bottom:16px">Everything we need is within 1,000 feet of the site.</p>
+<div class="photo-grid g2 short">
+<img src="trappeys-photos/ATMOS_Gas_by_Pinhook.jpg" alt="ATMOS gas pipeline hub">
+<img src="trappeys-photos/E_Grid1.jpg" alt="LUS Pinhook substation">
+</div>
+<div class="two-col" style="margin-top:20px">
+<div>
+<h3 style="color:#ffd54f">Gas</h3>
+<p style="font-size:0.95rem">ATMOS Energy pipeline hub at Pinhook. Gas trunk lines running through the buildings. Heaters still in place. Henry Hub pricing &mdash; cheapest energy in the country.</p>
+</div>
+<div>
+<h3 style="color:#4fc3f7">Electrical</h3>
+<p style="font-size:0.95rem">LUS Pin Hook Substation (Curtis A. Rodemacher building) right next door. New poles to Public Works. Short interconnection path for grid sell-back.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 14: Power Architecture -->
+<div class="slide" id="s14">
+<div class="slide-content">
+<h2>Power Independence</h2>
+<p style="margin-bottom:20px">We don't need the grid. We don't scare anybody. We <span class="accent">sell back</span> to the grid.</p>
+<div class="power-stack">
+<div class="power-layer solar"><span class="power-label" style="color:#ffd54f">Solar</span><span class="power-desc">2.05 MW rooftop &mdash; First Solar Series 7 TR1 panels, made 30 miles away</span></div>
+<div class="power-layer gas"><span class="power-label" style="color:#76b900">Natural Gas</span><span class="power-desc">PRIMARY BACKBONE &mdash; runs 24/7, Henry Hub pricing, cheapest in the country</span></div>
+<div class="power-layer diesel"><span class="power-label" style="color:#ff9800">Diesel</span><span class="power-desc">Emergency backup &mdash; on-site fuel, pipeline independent</span></div>
+<div class="power-layer grid"><span class="power-label" style="color:#4fc3f7">Grid (LUS)</span><span class="power-desc">SELL-BACK ONLY &mdash; excess power goes back to the grid for revenue</span></div>
+</div>
+<p style="margin-top:20px;color:#999">800V DC solar-direct architecture &mdash; 97% efficiency, no inverters.<br>Panels to racks, pure DC. Nobody else is doing this.</p>
+</div>
+</div>
+
+<!-- SLIDE 15: First Solar Partnership -->
+<div class="slide" id="s15">
+<div class="slide-content">
+<h2>First Solar &mdash; 30 Miles Away</h2>
+<div class="stat-row">
+<div class="stat"><div class="stat-num">3,731</div><div class="stat-label">Panels</div></div>
+<div class="stat"><div class="stat-num">2.05 MW</div><div class="stat-label">Rooftop Solar</div></div>
+<div class="stat"><div class="stat-num">30 mi</div><div class="stat-label">Factory to Roof</div></div>
+<div class="stat"><div class="stat-num">$1.1B</div><div class="stat-label">New Iberia Factory</div></div>
+</div>
+<ul class="bullet-list">
+<li>Series 7 TR1 &mdash; 550W thin-film CdTe, 19.7% efficiency, 30-year warranty</li>
+<li>Best degradation in the industry: 0.3%/year &mdash; 91% output at year 30</li>
+<li>+4% energy in high humidity vs crystalline silicon &mdash; built for Lafayette</li>
+<li>100% American-made &mdash; steel from Ohio, assembled in Louisiana</li>
+<li>Panels go from production line to our roof in a U-Haul</li>
+<li>Their name on the water tower. Our showcase installation.</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 16: The Water Tower -->
+<div class="slide" id="s16">
+<div class="slide-bg" style="background-image:url('trappeys-photos/WT3.jpg')"></div>
+<div class="slide-content">
+<h2>The Water Tower</h2>
+<p>The landmark. First thing to paint. Project symbol.<br>Visible from Evangeline Thruway and US 90.</p>
+<ul class="bullet-list" style="margin-top:20px">
+<li>NVIDIA, ADC, First Solar, UL Lafayette, City of Lafayette logos</li>
+<li>Thermal buffer tank for liquid cooling loop</li>
+<li>15,000+ gallon elevated steel tank &mdash; gravity-fed return to racks</li>
+<li>"100-year-old water tower repurposed as AI factory cooling" &mdash; magazine cover material</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 17: NVIDIA DSX -->
+<div class="slide" id="s17">
+<div class="slide-content">
+<h2>NVIDIA DSX Reference Design</h2>
+<p style="margin-bottom:20px">We build to NVIDIA's spec. Not custom. Not experimental. The standard.</p>
+<div class="video-container">
+<div class="video-placeholder">[ GTC 2026 — DSX / AI Factory Architecture ]<br><span style="font-size:0.8rem;color:#444">Insert NVIDIA DSX overview from GTC 2026 keynote</span></div>
+</div>
+<div class="stat-row" style="margin-top:20px">
+<div class="stat"><div class="stat-num">800V DC</div><div class="stat-label">Power Distribution</div></div>
+<div class="stat"><div class="stat-num">45&deg;C</div><div class="stat-label">Liquid Cooling</div></div>
+<div class="stat"><div class="stat-num">130+ kW</div><div class="stat-label">Per Rack</div></div>
+<div class="stat"><div class="stat-num">2 hrs</div><div class="stat-label">Rack Install Time</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 18: UL Lafayette -->
+<div class="slide" id="s18">
+<div class="slide-content">
+<h2>UL Lafayette Partnership</h2>
+<p style="margin-bottom:20px">5 minutes from campus. No GPU infrastructure at UL today.<br>We provide the facility. They provide the grants and students.</p>
+<div class="two-col">
+<div>
+<h3 style="color:#76b900">What ADC Brings</h3>
+<ul class="bullet-list">
+<li>112,500 sq ft facility</li>
+<li>NVIDIA GPU compute access</li>
+<li>Industry partnership for grants</li>
+<li>Real-world AI workloads</li>
+<li>Jobs pipeline for graduates</li>
+<li>Archaeological research (BVAP)</li>
+</ul>
+</div>
+<div>
+<h3 style="color:#4fc3f7">What UL Brings</h3>
+<ul class="bullet-list">
+<li>Grant eligibility (NSF, DOE, EPSCoR)</li>
+<li>Anchor tenancy from day one</li>
+<li>R1 university credibility</li>
+<li>Student workforce</li>
+<li>CUDA/AI curriculum development</li>
+<li>$28-55M+ grant potential</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 19: All American -->
+<div class="slide" id="s19">
+<div class="slide-content">
+<h2>100% American-Made</h2>
+<p style="margin-bottom:20px">Every component. Every vendor. No exceptions.</p>
+<div class="partners">
+<div class="partner"><div class="partner-name" style="color:#76b900">NVIDIA</div><div class="partner-role">Compute Stack</div></div>
+<div class="partner"><div class="partner-name" style="color:#ffd54f">First Solar</div><div class="partner-role">Solar Panels</div></div>
+<div class="partner"><div class="partner-name" style="color:#4fc3f7">Eaton</div><div class="partner-role">Power Distribution</div></div>
+<div class="partner"><div class="partner-name" style="color:#ff9800">Caterpillar</div><div class="partner-role">Gas Gensets</div></div>
+<div class="partner"><div class="partner-name">Powell Industries</div><div class="partner-role">Switchgear</div></div>
+<div class="partner"><div class="partner-name">Siemens USA</div><div class="partner-role">Grid Control</div></div>
+<div class="partner"><div class="partner-name">Big Ass Fans</div><div class="partner-role">HVLS Cooling</div></div>
+<div class="partner"><div class="partner-name">BAC</div><div class="partner-role">Dry Coolers</div></div>
+</div>
+<p style="color:#999">"Louisiana AI factory. American parts. American energy."</p>
+</div>
+</div>
+
+<!-- SLIDE 20: The City Gets Everything -->
+<div class="slide" id="s20">
+<div class="slide-content">
+<h2>What Lafayette Gets</h2>
+<div class="two-col">
+<div>
+<ul class="bullet-list">
+<li>100-year-old landmark restored</li>
+<li>Historic tax credits captured</li>
+<li>High-paying technology jobs</li>
+<li>UL Lafayette research facility</li>
+<li>NVIDIA presence in Louisiana</li>
+<li>First responder drone operations</li>
+<li>Buried fiber &amp; modernized utilities</li>
+<li>Riverwalk &amp; pedestrian bridge to park</li>
+</ul>
+</div>
+<div>
+<ul class="bullet-list">
+<li>Technology museum &amp; education center</li>
+<li>CUDA training programs for students</li>
+<li>Solar showcase (First Solar, 30 mi away)</li>
+<li>Grid revenue from power sell-back</li>
+<li>Zero grid burden &mdash; we make our own power</li>
+<li>No demolition &mdash; restoration only</li>
+<li>No taxpayer money needed</li>
+<li>National &amp; international press coverage</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 21: The Ask -->
+<div class="slide" id="s21">
+<div class="slide-content">
+<h2>We're Not Asking for Anything</h2>
+<p style="margin-bottom:30px">We bring everything. We're restoring a piece of Lafayette's history<br>and building the future on top of it.</p>
+<div class="quote">
+"We don't need the grid. We don't need investors to start. We don't need to tear anything down. We just need the key."
+<span class="quote-attr">&mdash; Scott Tomsu</span>
+</div>
+<div class="stat-row" style="margin-top:40px">
+<div class="stat"><div class="stat-num">3 months</div><div class="stat-label">To First Power</div></div>
+<div class="stat"><div class="stat-num">$0</div><div class="stat-label">Taxpayer Cost</div></div>
+<div class="stat"><div class="stat-num">100+</div><div class="stat-label">Jobs Created</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 22: Closing -->
+<div class="slide" id="s22">
+<div class="slide-bg" style="background-image:url('trappeys-photos/Riverfront_8.jpg')"></div>
+<div class="slide-content">
+<h1 style="margin-bottom:30px">Trappeys AI Factory</h1>
+<p style="font-size:1.3rem;color:#ccc;margin-bottom:40px">From the Ishak people to the AI revolution.<br>4,000 years. One site. Louisiana's future.</p>
+<div style="color:#999">
+<p style="font-size:1.1rem"><strong>Scott Tomsu</strong> &mdash; Founder</p>
+<p>ADC &mdash; Advantage Design &amp; Construction</p>
+<p>scott@adc3k.com &bull; adc3k.com</p>
+<p style="margin-top:20px;color:#555">Lafayette, Louisiana</p>
+</div>
+</div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+<button onclick="prev()" id="prevBtn">&larr; Back</button>
+<button onclick="next()" id="nextBtn">Next &rarr;</button>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+let current=0;
+const total=slides.length;
+
+function show(n){
+  slides[current].classList.remove('active');
+  current=Math.max(0,Math.min(n,total-1));
+  slides[current].classList.add('active');
+  document.getElementById('progress').style.width=((current+1)/total*100)+'%';
+  document.getElementById('slideNum').textContent=(current+1)+' / '+total;
+  document.getElementById('prevBtn').style.opacity=current===0?'0.3':'1';
+  document.getElementById('nextBtn').style.opacity=current===total-1?'0.3':'1';
+}
+
+function next(){if(current<total-1)show(current+1)}
+function prev(){if(current>0)show(current-1)}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')next();
+  if(e.key==='ArrowLeft')prev();
+  if(e.key==='Home')show(0);
+  if(e.key==='End')show(total-1);
+});
+
+let touchStartX=0;
+document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX});
+document.addEventListener('touchend',e=>{
+  const diff=e.changedTouches[0].clientX-touchStartX;
+  if(Math.abs(diff)>50){diff<0?next():prev()}
+});
+
+show(0);
+</script>
+</body>
+</html>
