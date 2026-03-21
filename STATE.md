@@ -1,96 +1,68 @@
 # Mission Control — Project State
-Last updated: 2026-03-21 (Security hardening + RunPod exec bridge + Omniverse learnings)
+Last updated: 2026-03-21 (Render agent, GPU pipeline, Trappeys site survey, First Solar specs, 800V DC)
 
 ---
 
 ## What Was Done This Session (2026-03-21)
 
-### Security Hardening
-- Removed hardcoded JUPYTER_TOKEN default from runpod_exec.py (now fails if unset)
-- Removed Stripe webhook secret from memory/projects/missioncontrolhd.md
-- Added SSH keys, .pem, secret files to .gitignore
-- Updated pod specs (50GB container + 200GB volume)
-- Verified .env and Skydio.key NOT tracked at HEAD (cleaned in prior commit 4e97deb)
-- NOTE: .env and Skydio.key still in git HISTORY — rotate all API keys in dashboards
+### DSX Blueprint Headless Rendering — COMPLETE
+- 4 render batches (v1-v4), ~40 renders total on RunPod L40S pod ml4cl3icn37ys1
+- Fixed Vulkan loader (LunarG SDK), GLFW, Kit extension architecture, camera targeting
+- Camera bbox fixed: /World/Building (301x251x32) instead of terrain (250K units)
+- Best renders in `renders/v4/` — panoramic_site, diagonal_high are investor-usable
+- v5 camera fix documented (Y offset needs building HEIGHT not WIDTH for flat buildings)
 
-### RunPod Remote Execution Bridge (NEW)
-- Built `scripts/runpod_exec.py` — stdlib-only Jupyter WebSocket command execution
-- Bypasses ISP TCP blocking via Cloudflare HTTPS proxy
-- Zero pip dependencies — works on any machine with Python 3.10+
-- Permanent solution for autonomous pod operation
+### Render Agent — MVP DEPLOYED
+- `scripts/render_agent.py` — FastAPI service running on RunPod pod (port 8501)
+- Submit render jobs via HTTP, Kit runs autonomously, check results via API
+- 12 camera presets, 5 lighting presets, auto-select by prompt keywords
+- Tested: 12-camera job completes in ~2 minutes, zero errors
 
-### Omniverse DSX Blueprint — Lessons Learned
-- Pod to53z2zsxrtgp5 (L40S SECURE, $0.86/hr) — stopped, volume preserved with 74GB Content Pack
-- Build failed due to disk constraints: 20GB container + 100GB volume too small
-- **Correct specs: 50GB container + 200GB volume** (updated in runpod_create_omniverse_pod.py)
-- Packman cache needs ~15GB on container disk; CUDA package alone needs 10GB extraction space
-- Content Pack is 74GB extracted — leaves only 26GB on 100GB volume, not enough for build artifacts
-- RunPod was fully sold out when we tried to create properly-sized pod (Friday night demand)
+### GPU Job Pipeline Skill — NEW
+- `skills/builtin/gpu_job.py` — end-to-end GPU job pipeline skill
+- Actions: render, submit, status, results, full_pipeline
+- full_pipeline: start pod → wait ready → submit render → poll status → stop pod
+- Integrates render agent with orchestrator — agents can submit GPU jobs
 
-### Trappeys Power Hierarchy (LOCKED)
-- Fixed 4-layer hierarchy: Solar (offset) > Natural Gas (backbone 24/7) > Diesel (emergency) > Grid (sell-back ONLY)
-- Grid is NOT a power source — excess goes back to grid for revenue
-- Updated memory/projects/trappeys.md and MEMORY.md
+### Trappeys Site Survey (Scott walked site 2026-03-21)
+- 4 main buildings measured: Rear High (37,500 sqft), Middle High (22,500), Middle Low (30,000), Front Lower (22,500)
+- **Total rooftop: 112,500 sq ft** (up from old 46K estimate)
+- All buildings structurally sound — metal intact, brick intact, roofs salvageable
+- Gas confirmed on-site: trunk lines, city hub up the road, heaters in buildings
+- Fire suppression piping already run through Middle Low
+- Vat holes in Front Lower = ready-made cable/cooling penetrations
+- LUS Pin Hook Substation (Curtis Rodemacher) right next door
+- Public Works next door — city uses area for vehicle parking (NOT residential zone)
 
----
+### 19 New Site Photos Downloaded from Notion
+- Middle_high 5-8: Building #3 (wood trusses, loading dock, best compute candidate)
+- Middle_low 1-4: Building #2 (behind riverfront, gas/fire piping)
+- Riverfront 1-6, 8: Front building (vats, river views, park visible)
+- ATMOS_Gas_by_Pinhook: Gas infrastructure hub
+- E_Grid 1-4: LUS Pin Hook Electrical Substation
+- All saved to `adc3k-deploy/trappeys-photos/`
 
-## What Was Done Previous Session (2026-03-20 Evening)
+### First Solar Series 7 TR1 — Specs Locked
+- 4 PDFs saved to `vendors/first-solar/spec-sheets/`
+- TR1 (US market): 550W, 19.7% eff, 2300x1216mm (30.14 sqft), 38.47 kg
+- 0.3%/year degradation (industry best), 30-year warranty
+- Superior in humidity (+4% vs c-Si) — perfect for Lafayette
+- **Iberia Parish, Louisiana factory** — panels made 30 miles away
+- Trappeys: ~3,731 panels = **2.05 MW rooftop solar**
 
-### Omniverse DSX Blueprint — RunPod Deployment (IN PROGRESS)
-- Created NGC Cloud Account (org name: "ADC", scott@adc3k.com)
-- Generated NGC API key (artifact-catalog + secrets-manager)
-- Built automated deployment pipeline:
-  - `scripts/runpod_create_omniverse_pod.py` — creates pod via RunPod GraphQL API
-  - `scripts/runpod_omniverse_setup.sh` — 10-step setup: NGC CLI, Content Pack, Blueprint, networking
-- Pod LIVE: `hwfd30wm43rwyj`, RTX PRO 6000 MaxQ (96GB Blackwell), $1.64/hr
-- 32GB DSX Content Pack downloading from NGC (~15-30 min)
-- Bugs fixed during deployment:
-  - volumeMountPath missing (container crash)
-  - GitHub username wrong in curl URL (404)
-  - NGC CLI version/filename wrong (stuck download)
-  - All fixes committed and pushed
+### 800 VDC Solar-Direct Architecture — CONCEPT
+- 5 panels in series = 952V MPP → buck converter → 800V DSX bus
+- Skips inverter + transformer + rectifier = 97% efficiency vs 92% AC path
+- Saves ~100 kW continuously during sun hours (180 MWh/year)
+- 10 open engineering questions documented for deep dive
+- See `memory/projects/800vdc_solar_direct.md`
 
-### Crusoe Competitive Intelligence
-- Deep analysis of Crusoe Energy Systems (GTC 2026)
-- Updated `adc3k-deploy/investor.html` with Crusoe comparison section
-- Updated `memory/projects/neocloud_strategy.md` with Crusoe deep intel
+### Power Hierarchy Messaging Locked
+- Gas is PRIMARY (cheap, backbone, 24/7). Solar is offset. Grid is sell-back only.
+- "We don't need the grid. We don't scare anybody."
 
-### Trappeys Pages (NEW)
-- `adc3k-deploy/trappeys-plan.html` — Trappeys plan page
-- `adc3k-deploy/trappeys-dsx-prep.html` — DSX prep kit with RunPod cloud deployment guide
-- `adc3k-deploy/trappeys-photos/` — 20 site photos
-- Lafayette page expanded with first responder drone ops
-
-### American-Made Supply Chain
-- Core value documented: ALL infrastructure must use US-manufactured parts
-- 10+ locked American vendors cataloged
-- Saved to `memory/feedback_american_made.md`
-
-### Git Commits
-- `78b9853` — feat: Trappeys prep kit, DSX prep page, Crusoe intel, Lafayette expansion
-- `d0f3ab3` — feat: RunPod Omniverse scripts — NGC CLI, 100GB volume, auto Content Pack
-- `822ac01` — fix: add volumeMountPath to RunPod pod creation
-- `b702b7e` — fix: correct GitHub username in setup script URL
-- `e8e4897` — fix: correct NGC CLI download URL and filename
-
-### Deployed
-- All pages live at adc3k.com (Vercel)
-- All commits pushed to GitHub
-
----
-
-## What Was Done Earlier (2026-03-20 Day)
-
-### DSX Architecture Deep-Dive
-- Created `memory/projects/dsx_architecture.md` — three pillars (Flex/Boost/Exchange), 800 VDC power, 5-phase deployment
-- Updated Willow Glen and NVIDIA strategy memory files
-- Key: DSX Boost = 30% more throughput in same power, 800 VDC is Day 1 decision
-
-### Financial Scenarios (Bear / Base / Bull)
-- `business-model/scenarios.md` — complete 3-scenario model
-- Phase 1A (3 MW): Base +$3.8M EBITDA
-- Phase 2 (50 MW): Base $169.5M EBITDA
-- Phase 3 (100+ MW): Base $600M revenue
+### Tests
+- 303 passed, zero failures
 
 ---
 
@@ -98,61 +70,44 @@ Last updated: 2026-03-21 (Security hardening + RunPod exec bridge + Omniverse le
 
 | Project | Status | Next Action |
 |---------|--------|-------------|
+| **Trappeys** | CORE PROJECT. Site walked. 112,500 sqft rooftop. 40+ photos. 2.05 MW solar. Gas confirmed. 8-page mini-site LIVE. | Site LOI. First Solar outreach. City council pitch deck. Riverwalk rendering. |
 | **Willow Glen** | Deck live. DSX reference. Investor page live. | CBRE/Bryce French. NPN registration. WGT partnership. ITEP. |
 | **MARLIE I** | Engineering complete. Part of Lafayette pitch. | City alignment via Lafayette AI Initiative. |
 | **ADC 3K** | DSX-compliant facility modules. Neocloud nodes. | Customer LOI. Financial model done. |
-| **Trappeys** | 8-page mini-site LIVE (overview, campus, technology, university, responders, investors, plan, dsx-prep). 40+ photos. | Omniverse DSX sim. Site LOI. ITEP filing. |
 | **KLFT 1.1** | Smart city convergence documented. Drone stations spec'd. | Airport Authority meeting. First responder pilot. |
 | **Lafayette AI Initiative** | City pitch LIVE at adc3k.com/lafayette. | Schedule City Council meeting. UL introduction. |
-| **ADC3K.com** | LIVE. Trappeys pages added. Crusoe intel on investor page. | Deep-dive education images (cosmetic). |
-| **Omniverse DSX** | Pod stopped (volume preserved, 74GB Content Pack). Need 50GB+200GB pod. | Resume when RunPod has stock. Launch streaming + web. Run sims. |
-| **Mission Control** | Auth middleware. 303 tests. Full observability. | Set MC_API_KEY for production. |
-| **NCA-AIIO Cert** | PASSED 2026-03-13. | Done. |
-| **NCP-AII Cert** | Did not pass. NVIDIA updating exam. | Retake when new version available. |
-| **Neocloud Strategy** | Complete. Crusoe intel added. | NPN registration. Target DGX-Ready certification. |
+| **ADC3K.com** | LIVE. Trappeys pages. Crusoe intel. DSX renders page. | Update with new site photos + solar numbers. |
+| **Omniverse DSX** | Render agent deployed. 4 render batches. v5 camera fix ready. Pod stopped. | Resume pod, run v5 with height-aware cameras. |
+| **Mission Control** | 303 tests. GPU job skill added. Render agent integration. | Deploy Redis for persistent EventBus. |
+| **800V DC Solar** | Concept documented. String math done. | Deep-dive engineering session. |
+| **Pitch Deck** | Structure defined (Jensen 1995 → GTC 2026 → Scott's plan). | Build slides. Pull video clips. |
 
 ---
 
 ## Open Blockers (Require Scott Action)
 
 ### Immediate — Time Sensitive
-- **ITEP filing** — must file BEFORE groundbreaking. NAICS code risk. Call LED (Kristin Johnson, 225-342-2083).
-- **NVIDIA Partner Network (NPN)** — 5-minute web form. See `business-model/npn-registration.md`.
+- **ITEP filing** — must file BEFORE groundbreaking. Call LED (Kristin Johnson, 225-342-2083).
+- **NVIDIA Partner Network (NPN)** — 5-minute web form.
 - **UL Lafayette contact** — target Dr. Ramesh Kolluru via LEDA warm intro.
+- **First Solar outreach** — modulesales@firstsolar.com or 419-662-6899. Request Trappeys site survey.
+- **Trappeys site LOI** — secure the property.
 
-### Omniverse (Pod Stopped — Resume When Stock Available)
-- Pod to53z2zsxrtgp5 stopped. 74GB Content Pack on volume.
-- Need new pod: 50GB container + 200GB volume (script updated)
-- Use `scripts/runpod_exec.py` for all remote commands (no SSH needed)
-- Build steps: kit-cae (done) → kit-usd-agents → precache → DSX build → launch streaming
-- Run Trappeys thermal + electrical simulations
-- STOP POD when done
-
-### Willow Glen
-- **CBRE contact** — Bryce French, Senior VP
-- **WGT partnership proposal** — neocloud angle
-
-### Lafayette
-- **City Council** — schedule presentation (page ready at adc3k.com/lafayette)
-- **KLFT Airport Authority** — drone operations agreement
-- **First responder pilot** — pick one department for DFR proof of concept
-
-### ADC 3K Investor-Critical
-1. Customer LOI — zero signed anchor tenants
-2. NVIDIA Vera Rubin NVL72 TDP — unpublished
-3. Deck: add management team slide
+### RunPod
+- Pod ml4cl3icn37ys1 STOPPED (L40S, $0.79/hr when running)
+- Network volume aido-workspace (250GB) has Kit SDK, DSX Blueprint, render agent, all tools installed
+- Resume with `podResume`, start render agent with `python /workspace/render_agent.py &`
 
 ---
 
 ## Key Files
-- `adc3k-deploy/index.html` — adc3k.com SPA
-- `adc3k-deploy/investor.html` — Investor overview (Crusoe comp added)
-- `adc3k-deploy/trappeys-plan.html` — Trappeys plan page
-- `adc3k-deploy/trappeys-dsx-prep.html` — Trappeys DSX prep kit
-- `adc3k-deploy/lafayette.html` — Lafayette AI Initiative
-- `scripts/runpod_exec.py` — Remote command execution via Jupyter WebSocket (stdlib-only)
-- `scripts/runpod_create_omniverse_pod.py` — RunPod pod creation (50GB container + 200GB volume)
-- `scripts/runpod_omniverse_setup.sh` — Omniverse setup automation
+- `main.py` — FastAPI app, 10 agents, SSE, auth middleware
+- `skills/builtin/gpu_job.py` — GPU job pipeline (NEW)
+- `scripts/render_agent.py` — RunPod render service (port 8501)
+- `scripts/runpod_exec.py` — Remote command execution via Jupyter WebSocket
+- `adc3k-deploy/trappeys-photos/` — 40+ site photos (19 new from today)
+- `vendors/first-solar/spec-sheets/` — 4 First Solar PDFs
+- `renders/v4/` — 12 DSX facility renders
 
 ## Deployment
 - Deploy site: `cd adc3k-deploy && npx vercel --prod --yes`
@@ -160,11 +115,9 @@ Last updated: 2026-03-21 (Security hardening + RunPod exec bridge + Omniverse le
 - Cloudflare: gofast@stfumotorcycles.com
 
 ## Next Session — Starting Points
-1. **ROTATE ALL API KEYS** — .env history exposed Anthropic, Notion, RunPod, NGC, ElevenLabs, Pexels, MC_API_KEY. Rotate in each dashboard, update .env.
-2. **Omniverse results** — resume pod (50GB+200GB), complete build, run thermal + electrical sims
-2. **Solar partner debrief** — update power-economics.md with EPC pricing
-3. **NPN registration** — do it
-4. **SMB dispatch dashboard** — installer management UI
-5. **Manufacturing re-scope** — factory station layout for DSX facility modules
-6. **Update investor page** — add power partner names + solar partner + DSX architecture
-7. **Raise structure** — define amount, structure, use of proceeds
+1. **Trappeys pitch deck** — build slides, pull GTC video clips, integrate new site photos
+2. **Update Trappeys pages** — new photos + revised solar numbers (2.05 MW)
+3. **v5 renders** — fix camera Y offsets (use building height, not width)
+4. **800V DC deep dive** — verify DSX rack PDU accepts DC input
+5. **NPN registration** — do it
+6. **First Solar contact** — send email with Trappeys specs

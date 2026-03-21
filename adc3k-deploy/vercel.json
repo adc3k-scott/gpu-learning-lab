@@ -38,6 +38,7 @@
     { "source": "/trappeys-investors", "destination": "/trappeys-investors.html" },
     { "source": "/trappeys-plan", "destination": "/trappeys-plan.html" },
     { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
+    { "source": "/dsx-renders", "destination": "/dsx-renders.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
