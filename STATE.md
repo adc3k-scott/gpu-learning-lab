@@ -101,7 +101,7 @@ Last updated: 2026-03-21 (Security hardening + RunPod exec bridge + Omniverse le
 | **Willow Glen** | Deck live. DSX reference. Investor page live. | CBRE/Bryce French. NPN registration. WGT partnership. ITEP. |
 | **MARLIE I** | Engineering complete. Part of Lafayette pitch. | City alignment via Lafayette AI Initiative. |
 | **ADC 3K** | DSX-compliant facility modules. Neocloud nodes. | Customer LOI. Financial model done. |
-| **Trappeys** | Plan + DSX prep pages LIVE. RunPod deployment IN PROGRESS. | Complete Omniverse setup. Customize to Trappeys campus. |
+| **Trappeys** | 8-page mini-site LIVE (overview, campus, technology, university, responders, investors, plan, dsx-prep). 40+ photos. | Omniverse DSX sim. Site LOI. ITEP filing. |
 | **KLFT 1.1** | Smart city convergence documented. Drone stations spec'd. | Airport Authority meeting. First responder pilot. |
 | **Lafayette AI Initiative** | City pitch LIVE at adc3k.com/lafayette. | Schedule City Council meeting. UL introduction. |
 | **ADC3K.com** | LIVE. Trappeys pages added. Crusoe intel on investor page. | Deep-dive education images (cosmetic). |

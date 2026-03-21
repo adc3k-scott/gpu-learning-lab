@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Trappeys Cannery — Louisiana's first solar-powered AI factory. NVIDIA DSX reference design. 46,000 sq ft compute space. Vermilion River campus.">
+<title>Trappeys Cannery — Solar AI Factory | ADC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#06b6d4;--solar:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('trappeys-v3-slides/slide_01.jpg') center/cover no-repeat;filter:brightness(0.35)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,11,15,0.3) 0%,rgba(10,11,15,0.6) 60%,rgba(10,11,15,0.95) 100%)}
+.hero-content{position:relative;z-index:1;text-align:center;padding:40px 24px;max-width:800px}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--solar);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:900;color:var(--bright);line-height:1.05;margin-bottom:16px}
+.hero h1 span{color:var(--solar)}
+.hero .sub{font-size:clamp(15px,2vw,18px);color:var(--dim);max-width:600px;margin:0 auto 32px;line-height:1.6}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.hero-stat{text-align:center}
+.hero-stat .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--solar)}
+.hero-stat .lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.hero-cta{display:inline-block;padding:14px 36px;background:var(--solar);color:#0a0b0f;font-weight:700;font-size:14px;border-radius:8px;text-decoration:none;letter-spacing:0.5px;transition:transform 0.2s,box-shadow 0.2s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.3);text-decoration:none}
+
+/* NAV BAR */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--solar)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+/* SECTIONS */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--solar);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--bright);margin-bottom:8px;line-height:1.2}
+.section .sub{font-size:15px;color:var(--dim);margin-bottom:40px;max-width:700px;line-height:1.7}
+
+/* CAMPUS OVERVIEW */
+.campus-img{width:100%;border-radius:12px;margin-bottom:32px;border:1px solid var(--border)}
+.campus-numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:40px}
+.cn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.cn .v{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:800;color:var(--solar)}
+.cn .l{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* AUDIENCE CARDS */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-top:32px}
+.audience-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform 0.2s,border-color 0.2s;cursor:pointer;text-decoration:none;display:block}
+.audience-card:hover{transform:translateY(-4px);border-color:var(--solar);text-decoration:none}
+.audience-card img{width:100%;height:200px;object-fit:cover}
+.audience-card-body{padding:24px}
+.audience-card-body .card-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.tag-green{color:var(--green)}
+.tag-purple{color:var(--purple)}
+.tag-solar{color:var(--solar)}
+.tag-blue{color:var(--blue)}
+.tag-red{color:var(--red)}
+.tag-cyan{color:var(--cyan)}
+.audience-card-body h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.audience-card-body p{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:12px}
+.card-arrow{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--solar)}
+
+/* VISION SECTION */
+.vision{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:48px;margin:0 auto;max-width:900px}
+.vision h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:20px;text-align:center}
+.vision p{font-size:15px;color:var(--text);line-height:1.8;margin-bottom:16px}
+.vision p:last-child{margin-bottom:0}
+.vision strong{color:var(--bright)}
+
+/* PHOTO STRIP */
+.photo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:60px 0;border-radius:12px;overflow:hidden}
+.photo-strip img{width:100%;height:200px;object-fit:cover;transition:transform 0.3s}
+.photo-strip img:hover{transform:scale(1.05)}
+
+/* PROOF POINT */
+.proof{background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(10,11,15,0.95));border:1px solid rgba(245,158,11,0.2);border-radius:16px;padding:48px;margin:60px auto;max-width:900px;text-align:center}
+.proof h3{font-size:24px;font-weight:800;color:var(--solar);margin-bottom:16px}
+.proof p{font-size:15px;color:var(--text);line-height:1.7;max-width:700px;margin:0 auto}
+.proof .date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);margin-top:16px}
+
+/* QUICK LINKS */
+.quick-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:40px}
+.quick-links a{padding:10px 20px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--dim);transition:all 0.2s;text-decoration:none}
+.quick-links a:hover{border-color:var(--solar);color:var(--solar)}
+
+/* FOOTER */
+.footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border)}
+.footer .f-name{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.footer .f-title{font-size:12px;color:var(--dim);margin-bottom:12px}
+.footer a{color:var(--solar);font-weight:600}
+.footer .f-addr{font-size:11px;color:var(--dim);margin-top:12px}
+.footer .f-links{margin-top:16px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.footer .f-links a{font-size:12px;color:var(--dim)}
+.footer .f-links a:hover{color:var(--bright)}
+
+/* POWER HIERARCHY */
+.power-stack{display:grid;gap:8px;margin:32px 0}
+.power-layer{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:10px;font-size:14px}
+.power-layer .layer-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;min-width:70px}
+.power-layer .layer-name{font-weight:700;color:var(--bright);min-width:140px}
+.power-layer .layer-role{color:var(--dim);font-size:13px}
+.pl-solar{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25)}
+.pl-solar .layer-num{color:var(--solar)}
+.pl-gas{background:rgba(59,158,255,0.08);border:1px solid rgba(59,158,255,0.2)}
+.pl-gas .layer-num{color:var(--blue)}
+.pl-diesel{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2)}
+.pl-diesel .layer-num{color:var(--red)}
+.pl-grid{background:rgba(107,114,128,0.08);border:1px solid rgba(107,114,128,0.2)}
+/* HISTORY */
+.history{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:60px 0}
+.history-img{width:100%;height:300px;object-fit:cover}
+.history-body{padding:40px}
+.history-body h3{font-size:24px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.history-body .era{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--solar);letter-spacing:2px;margin-bottom:16px}
+.history-body p{font-size:14px;color:var(--text);line-height:1.8;margin-bottom:14px}
+.history-body p:last-child{margin-bottom:0}
+.history-body strong{color:var(--bright)}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
+.tl-item{padding:16px;background:var(--surface);border-radius:8px;border-left:3px solid var(--solar)}
+.tl-item .tl-year{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--solar)}
+.tl-item .tl-event{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.5}
+
+.pl-grid .layer-num{color:var(--dim)}
+
+@media(max-width:768px){
+  .hero-stats{gap:20px}
+  .photo-strip{grid-template-columns:repeat(2,1fr)}
+  .audience-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .vision{padding:28px 20px}
+  .proof{padding:28px 20px}
+  .power-layer{flex-direction:column;gap:4px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">SE Evangeline Thruway &bull; Lafayette, Louisiana</div>
+    <h1>Trappeys Cannery<br><span>Solar AI Factory</span></h1>
+    <p>A historic Louisiana cannery reborn as the state's first NVIDIA DSX-compliant AI compute facility. Solar-powered. Water tower-cooled. On the Vermilion River.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">46K</div><div class="lbl">Sq Ft Compute</div></div>
+      <div class="hero-stat"><div class="val">84</div><div class="lbl">NVL72 Racks Max</div></div>
+      <div class="hero-stat"><div class="val">~1 MW</div><div class="lbl">Rooftop Solar</div></div>
+      <div class="hero-stat"><div class="val">45%</div><div class="lbl">Historic Tax Credits</div></div>
+    </div>
+    <a href="#explore" class="hero-cta">Explore the Campus</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="explore">
+  <div class="nav-inner">
+    <div class="nav-brand">Trappeys <span>AI Factory</span></div>
+    <div class="nav-links">
+      <a href="/trappeys" class="active">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-university">University</a>
+      <a href="/trappeys-responders">First Responders</a>
+      <a href="/trappeys-investors">Investors</a>
+      <a href="/">ADC3K.com</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HISTORY -->
+<div class="section">
+  <div class="history">
+    <img src="trappeys-v3-slides/slide_13.jpg" alt="Historic Trappeys Cannery brick building" class="history-img">
+    <div class="history-body">
+      <div class="era">Est. 1898 &bull; Lafayette, Louisiana</div>
+      <h3>From Hot Sauce to AI Factory</h3>
+      <p>Bernard Francis Trappey started bottling pepper sauce at his blacksmith shop on Avery Island in 1898. By 1918, B.F. Trappey's Sons, Inc. was running a bottling plant in New Iberia. In 1929, the family purchased an 8-acre tract on the Vermilion River in Lafayette &mdash; the former Baldwin Lumber Company and Star Salt Company &mdash; and opened canning operations in 1930.</p>
+      <p><strong>During World War II, this facility produced over 12 million pounds of canned candied yams for U.S. and Allied military forces.</strong> What started as a family pepper sauce operation became a global food company with more than 100 international brokerage representatives.</p>
+      <p>At peak operations in the 1960s, Trappeys employed 350-600 workers seasonally and produced over 10 million cans of sweet potatoes annually, distributed worldwide. The plant also canned okra (Randolph Trappey Sr. patented an okra-trimming machine) and continued the original pepper sauce line.</p>
+      <p>The cannery closed in 1992 after nearly a century of continuous family operation. The nine contributing structures &mdash; including the iconic water tower &mdash; have been determined <strong>eligible for the National Register of Historic Places</strong> (period of significance: 1930-1972). The site sat vacant for over 30 years. Now it gets a second life.</p>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-year">1898</div><div class="tl-event">Bernard Trappey begins bottling pepper sauce on Avery Island</div></div>
+        <div class="tl-item"><div class="tl-year">1929</div><div class="tl-event">Purchases 8-acre Vermilion River site in Lafayette</div></div>
+        <div class="tl-item"><div class="tl-year">1930</div><div class="tl-event">Canning operations begin &mdash; yams, okra, pepper sauce</div></div>
+        <div class="tl-item"><div class="tl-year">1941-45</div><div class="tl-event">WWII &mdash; 12M lbs of candied yams for Allied forces</div></div>
+        <div class="tl-item"><div class="tl-year">1968</div><div class="tl-event">Peak: 350-600 workers, 10M+ cans/year, global distribution</div></div>
+        <div class="tl-item"><div class="tl-year">1992</div><div class="tl-event">Cannery closes after 62 years of operation</div></div>
+        <div class="tl-item"><div class="tl-year">2026</div><div class="tl-event">Reborn as Louisiana's first NVIDIA DSX solar AI factory</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAMPUS OVERVIEW -->
+<div class="section">
+  <div class="section-label">The Campus</div>
+  <h2>Seven Buildings. One Mission.</h2>
+  <p class="sub">The Trappeys Cannery campus sits on the Vermilion River in Lafayette, Louisiana. 46,000 square feet of industrial warehouse space built for heavy manufacturing &mdash; now being transformed into NVIDIA DSX-compliant AI compute space. Half a mile from UL Lafayette. 30 miles from First Solar's $1.1B panel factory in New Iberia.</p>
+
+  <img src="trappeys-v3-slides/slide_02.jpg" alt="Trappeys Cannery campus overview" class="campus-img">
+
+  <div class="campus-numbers">
+    <div class="cn"><div class="v">7</div><div class="l">Buildings</div></div>
+    <div class="cn"><div class="v">46K</div><div class="l">Sq Ft Compute</div></div>
+    <div class="cn"><div class="v">36-84</div><div class="l">NVL72 Racks</div></div>
+    <div class="cn"><div class="v">~1 MW</div><div class="l">Solar Offset</div></div>
+    <div class="cn"><div class="v">1,830</div><div class="l">First Solar Panels</div></div>
+    <div class="cn"><div class="v">45%</div><div class="l">Tax Credits</div></div>
+  </div>
+
+  <!-- POWER HIERARCHY -->
+  <div class="section-label" style="margin-top:48px">Power Architecture</div>
+  <h2 style="font-size:22px;margin-bottom:20px">4-Layer Power Hierarchy</h2>
+  <div class="power-stack">
+    <div class="power-layer pl-solar">
+      <div class="layer-num">LAYER 1</div>
+      <div class="layer-name">Solar</div>
+      <div class="layer-role">Primary offset &mdash; 1,830 First Solar Series 7 panels across all rooftops (~1 MW)</div>
+    </div>
+    <div class="power-layer pl-gas">
+      <div class="layer-num">LAYER 2</div>
+      <div class="layer-name">Natural Gas</div>
+      <div class="layer-role">Backbone &mdash; carries main load 24/7. Henry Hub pricing advantage. Always running.</div>
+    </div>
+    <div class="power-layer pl-diesel">
+      <div class="layer-num">LAYER 3</div>
+      <div class="layer-name">Diesel Gensets</div>
+      <div class="layer-role">Emergency only &mdash; on-site fuel, pipeline-independent. Cummins American-made.</div>
+    </div>
+    <div class="power-layer pl-grid">
+      <div class="layer-num">LAYER 4</div>
+      <div class="layer-name">Grid (LUS)</div>
+      <div class="layer-role">Sell-back ONLY &mdash; excess power goes back to grid for revenue. NOT a power source.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO STRIP -->
+<div style="padding:0 24px;max-width:1200px;margin:0 auto">
+  <div class="photo-strip">
+    <img src="trappeys-v3-slides/slide_05.jpg" alt="Warehouse interior — open compute floor">
+    <img src="trappeys-v3-slides/slide_10.jpg" alt="Brick loading dock building">
+    <img src="trappeys-v3-slides/slide_11.jpg" alt="Campus with water tower">
+    <img src="trappeys-v3-slides/slide_17.jpg" alt="Vermilion River frontage">
+  </div>
+</div>
+
+<!-- VISION -->
+<div class="section">
+  <div class="vision">
+    <h2>Why Trappeys</h2>
+    <p>On March 20, 2026, we tried to rent a single GPU on RunPod &mdash; the largest cloud GPU marketplace on the planet. <strong>Every GPU type, every region, every cloud tier: sold out.</strong> Not just the high-end H100s. RTX 3080s. V100s from 2017. Six-gigabyte cards. All of it. Gone.</p>
+    <p>That's not a supply blip. That's structural demand exceeding global infrastructure. Every researcher, every startup, every student competing for the same scarce hardware &mdash; and losing.</p>
+    <p><strong>Trappeys changes that for Louisiana.</strong> Local compute. Local power. Local sovereignty. No queue, no stockout, no depending on the rest of the world to leave something on the shelf. A historic cannery reborn as the state's first NVIDIA-certified AI factory &mdash; half a mile from UL Lafayette, powered by the cheapest natural gas in the country, offset by solar panels made 30 miles away.</p>
+    <p>This isn't speculation. The demand is here. The site is here. The technology is ready. We just need Lafayette to say yes.</p>
+  </div>
+</div>
+
+<!-- AUDIENCE PAGES -->
+<div class="section">
+  <div class="section-label">For Your Meeting</div>
+  <h2>Built for Every Conversation</h2>
+  <p class="sub">Each page is tailored to the stakeholder sitting across from you. Hand them a URL. Let the site do the talking.</p>
+
+  <div class="audience-grid">
+    <a href="/trappeys-campus" class="audience-card">
+      <img src="trappeys-v3-slides/slide_07.jpg" alt="Warehouse interior">
+      <div class="audience-card-body">
+        <div class="card-tag tag-solar">Campus Tour</div>
+        <h3>Walk the Site</h3>
+        <p>Building-by-building walkthrough with site photos. 46K sq ft warehouse interiors, water tower, loading docks, river frontage, concrete infrastructure yard, power grid connection.</p>
+        <div class="card-arrow">Explore &gt;</div>
+      </div>
+    </a>
+
+    <a href="/trappeys-technology" class="audience-card">
+      <img src="trappeys-photos/WT1.jpg" alt="Water tower cooling system">
+      <div class="audience-card-body">
+        <div class="card-tag tag-green">NVIDIA DSX</div>
+        <h3>Technology Stack</h3>
+        <p>NVIDIA DSX reference design. Vera Rubin NVL72 racks. Dynamo inference OS. 4-layer power hierarchy. Water tower cooling. Full software and hardware architecture.</p>
+        <div class="card-arrow">View stack &gt;</div>
+      </div>
+    </a>
+
+    <a href="/trappeys-university" class="audience-card">
+      <img src="trappeys-v3-slides/slide_12.jpg" alt="Campus buildings">
+      <div class="audience-card-body">
+        <div class="card-tag tag-purple">UL Lafayette</div>
+        <h3>University Partnership</h3>
+        <p>Research compute half a mile from campus. $28-55M in grants. K-12 AI pipeline. NVIDIA 50-State Plan. LED FastStart workforce training. The Florida model, adapted for Louisiana.</p>
+        <div class="card-arrow">See the plan &gt;</div>
+      </div>
+    </a>
+
+    <a href="/trappeys-responders" class="audience-card">
+      <img src="skydio-images/p6_img1.jpeg" alt="Skydio drone operations">
+      <div class="audience-card-body">
+        <div class="card-tag tag-red">First Responders</div>
+        <h3>Drone Operations</h3>
+        <p>Hurricane response. Pipeline inspection. Search and rescue. Drone-as-first-responder. NVIDIA AI-RAN. Connected to KLFT autonomous drone hub at Lafayette Regional Airport.</p>
+        <div class="card-arrow">Learn more &gt;</div>
+      </div>
+    </a>
+
+    <a href="/trappeys-investors" class="audience-card">
+      <img src="trappeys-v3-slides/slide_03.jpg" alt="Campus wide view">
+      <div class="audience-card-body">
+        <div class="card-tag tag-cyan">Investors</div>
+        <h3>The Investment Case</h3>
+        <p>45% historic tax credits. ITEP 80% property tax abatement. Phase 1-3 deployment. Token economics. Power economics. Competitive landscape. ~$1M acquisition cost.</p>
+        <div class="card-arrow">See financials &gt;</div>
+      </div>
+    </a>
+
+    <a href="/trappeys-plan" class="audience-card">
+      <img src="trappeys-v3-slides/slide_20.jpg" alt="River view of campus">
+      <div class="audience-card-body">
+        <div class="card-tag tag-blue">Master Plan</div>
+        <h3>Full Site Plan</h3>
+        <p>Original master plan with all seven buildings mapped, solar calculations, deployment phases, partner ecosystem, and community impact. The complete blueprint.</p>
+        <div class="card-arrow">View plan &gt;</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- RIVER PHOTOS -->
+<div style="padding:0 24px;max-width:1200px;margin:0 auto">
+  <div class="photo-strip">
+    <img src="trappeys-v3-slides/slide_17.jpg" alt="River view — buildings from waterside">
+    <img src="trappeys-v3-slides/slide_18.jpg" alt="River view — looking across campus">
+    <img src="trappeys-v3-slides/slide_19.jpg" alt="River view — brick building">
+    <img src="trappeys-v3-slides/slide_20.jpg" alt="River view — full frontage">
+  </div>
+</div>
+
+<!-- GPU SCARCITY PROOF -->
+<div class="section">
+  <div class="proof">
+    <h3>"We tried to rent one GPU. Sold out. Everywhere."</h3>
+    <p>On March 20, 2026, we attempted to provision a single GPU pod on RunPod &mdash; the world's largest cloud GPU marketplace. We tested every GPU type available (from B300 to RTX A2000), every cloud tier (Secure, Community), every region globally. <strong>Zero availability.</strong> The entire platform was sold out. That's not a blip &mdash; that's why Trappeys needs to exist.</p>
+    <div class="date">Real API data &mdash; March 20, 2026</div>
+  </div>
+</div>
+
+<!-- QUICK LINKS -->
+<div class="section" style="text-align:center;padding-top:0">
+  <div class="section-label">Also on ADC3K.com</div>
+  <div class="quick-links">
+    <a href="/lafayette">Lafayette AI Initiative</a>
+    <a href="/investor">Investor Overview</a>
+    <a href="/trappeys-dsx-prep">DSX Prep Kit</a>
+    <a href="/hub">Mission Control Hub</a>
+    <a href="/">ADC3K.com</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-name">Scott Tomsu</div>
+  <div class="f-title">Founder &mdash; Advantage Design & Construction</div>
+  <a href="mailto:scott@adc3k.com">scott@adc3k.com</a>
+  <div class="f-addr">1201 SE Evangeline Thruway, Lafayette, Louisiana</div>
+  <div class="f-links">
+    <a href="/trappeys-campus">Campus</a>
+    <a href="/trappeys-technology">Technology</a>
+    <a href="/trappeys-university">University</a>
+    <a href="/trappeys-responders">First Responders</a>
+    <a href="/trappeys-investors">Investors</a>
+    <a href="/trappeys-plan">Master Plan</a>
+  </div>
+</div>
+
+</body>
+</html>
