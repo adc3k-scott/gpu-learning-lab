@@ -27,7 +27,7 @@ API_KEY = os.environ.get("RUNPOD_API_KEY", "")
 # Pod configuration
 POD_CONFIG = {
     "name": "adc-omniverse-dsx",
-    "imageName": "runpod/base:0.6.2-cuda12.2.0",  # Lightweight CUDA base — no PyTorch bloat
+    "imageName": "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404",  # Has Jupyter built-in (base image does NOT)
     "gpuCount": 1,
     "volumeInGb": 200,  # 74GB Content Pack + 50GB build artifacts + headroom
     "containerDiskInGb": 50,  # Packman cache (~15GB) + system + build tools
@@ -144,12 +144,15 @@ def create_pod(gpu_type_id: str):
         "input": {
             "name": POD_CONFIG["name"],
             "imageName": POD_CONFIG["imageName"],
+            "templateId": "runpod-torch-v280",  # PyTorch 2.8 template — includes Jupyter + SSH startup
             "gpuTypeId": gpu_type_id,
             "gpuCount": POD_CONFIG["gpuCount"],
             "volumeInGb": POD_CONFIG["volumeInGb"],
             "containerDiskInGb": POD_CONFIG["containerDiskInGb"],
             "volumeMountPath": "/workspace",
             "ports": POD_CONFIG["ports"],
+            "startSsh": True,  # CRITICAL: without this, SSH/web-terminal never start
+            "supportPublicIp": True,
             "env": env_vars,
             "cloudType": "COMMUNITY",  # Cheaper than SECURE
         }
