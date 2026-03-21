@@ -30,6 +30,12 @@
     { "source": "/boot", "destination": "/boot.html" },
     { "source": "/investor", "destination": "/investor.html" },
     { "source": "/lafayette", "destination": "/lafayette.html" },
+    { "source": "/trappeys", "destination": "/trappeys.html" },
+    { "source": "/trappeys-campus", "destination": "/trappeys-campus.html" },
+    { "source": "/trappeys-technology", "destination": "/trappeys-technology.html" },
+    { "source": "/trappeys-university", "destination": "/trappeys-university.html" },
+    { "source": "/trappeys-responders", "destination": "/trappeys-responders.html" },
+    { "source": "/trappeys-investors", "destination": "/trappeys-investors.html" },
     { "source": "/trappeys-plan", "destination": "/trappeys-plan.html" },
     { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
     { "source": "/(.*)", "destination": "/index.html" }
