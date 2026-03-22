@@ -684,29 +684,84 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
 <hr class="section-divider">
 
-<!-- INVESTOR ACCESS (GATED) -->
+<!-- CAPEX BREAKDOWN -->
 <div class="section" data-tab="investors">
-  <div class="section-label">Investor Information</div>
-  <h2>Financial Details Available on Request</h2>
-  <p class="sub">Detailed financial projections, capital expenditure breakdown, 5-year ROI model, and deployment phasing are available to qualified investors and partners. Submit your information below to request access.</p>
-
+  <div class="section-label">Capital Expenditure</div>
+  <h2>Initial Investment Breakdown</h2>
+  <p class="sub">Initial investment covers 20K SF warehouse buildout, power infrastructure, and 800V DC system. Existing electrical grid and river cooling reduce CapEx vs greenfield. Each subsequent phase funded by token revenue.</p>
   <div class="econ-grid">
     <div class="econ-card">
+      <h3>Initial CapEx (Year 0&ndash;1)</h3>
+      <div class="econ-row"><span class="econ-label">Site lease / access</span><span class="econ-value">TBD (CBRE negotiation)</span></div>
+      <div class="econ-row"><span class="econ-label">Warehouse buildout (20K SF)</span><span class="econ-value">$3,000,000</span></div>
+      <div class="econ-row"><span class="econ-label">2x Cat CG260 gensets (H2 ready)</span><span class="econ-value">$1,200,000</span></div>
+      <div class="econ-row"><span class="econ-label">Eaton 800V DC system</span><span class="econ-value">$500,000</span></div>
+      <div class="econ-row"><span class="econ-label">10-acre solar + 1 MWh battery</span><span class="econ-value">$2,000,000</span></div>
+      <div class="econ-row"><span class="econ-label">Engineering + permits</span><span class="econ-value">$300,000</span></div>
+      <div class="econ-row"><span class="econ-label">Fire suppression + security</span><span class="econ-value">$200,000</span></div>
+      <div class="econ-row" style="border-top:2px solid var(--border);margin-top:8px;padding-top:12px"><span class="econ-label" style="color:var(--bright);font-weight:700">Total Phase 1 CapEx</span><span class="econ-value highlight">~$8,000,000</span></div>
+      <div class="econ-row"><span class="econ-label">Solar ITC (30%)</span><span class="econ-value" style="color:var(--green)">-$600,000</span></div>
+      <div class="econ-row" style="border-top:2px solid var(--border);margin-top:8px;padding-top:12px"><span class="econ-label" style="color:var(--bright);font-weight:700">Net Phase 1</span><span class="econ-value highlight">~$7,400,000</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Phase 1 Includes</h3>
+      <div class="econ-row"><span class="econ-label">2x Cat CG260 gensets</span><span class="econ-value">2.8 MW each (N+1, H2 ready)</span></div>
+      <div class="econ-row"><span class="econ-label">First Solar TR1 panels</span><span class="econ-value">10-acre ground mount (~5.5 MW)</span></div>
+      <div class="econ-row"><span class="econ-label">Eaton Beam Rubin DSX</span><span class="econ-value">Rectifier + bus + PDUs</span></div>
+      <div class="econ-row"><span class="econ-label">Eaton xStorage BESS</span><span class="econ-value">1 MWh LFP</span></div>
+      <div class="econ-row"><span class="econ-label">Mississippi River cooling</span><span class="econ-value">Heat exchanger + dry coolers</span></div>
+      <div class="econ-row"><span class="econ-label">Fire suppression</span><span class="econ-value">Novec 1230 + VESDA</span></div>
+      <div class="econ-row"><span class="econ-label">All vendors</span><span class="econ-value highlight">Louisiana-based</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- 5-YEAR ROI -->
+<div class="section" data-tab="investors">
+  <div class="section-label">Return on Investment</div>
+  <h2>5-Year Financial Projection</h2>
+  <p class="sub">Conservative estimates using 60% gross margin, blended $2.00/M token pricing, 70% GPU utilization. 75% Vera Rubin / 25% Groq LPX. CCGT online Year 3 at $0.04&ndash;0.05/kWh.</p>
+  <table class="incentive-table" style="margin-top:24px;font-size:13px">
+    <thead><tr><th>Year</th><th>Racks</th><th>Revenue</th><th>CapEx</th><th>Net Cash</th><th>Cumulative</th></tr></thead>
+    <tbody>
+      <tr><td class="program">Year 1</td><td>10 (8 VR + 2 Groq)</td><td>$4M</td><td>$8M</td><td style="color:var(--red)">-$5.6M</td><td style="color:var(--red)">-$5.6M</td></tr>
+      <tr><td class="program">Year 2</td><td>33 (25 VR + 8 Groq)</td><td>$15M</td><td>$5M</td><td style="color:var(--green)">+$4M</td><td style="color:var(--red)">-$1.6M</td></tr>
+      <tr><td class="program">Year 3</td><td>160 (120 VR + 40 Groq)</td><td>$57M</td><td>$35M</td><td style="color:var(--red)">-$800K</td><td style="color:var(--red)">-$2.4M</td></tr>
+      <tr><td class="program">Year 4</td><td>530 (400 VR + 130 Groq)</td><td>$190M</td><td>$80M</td><td style="color:var(--green)">+$34M</td><td style="color:var(--green);font-weight:700">+$31.6M</td></tr>
+      <tr><td class="program">Year 5</td><td>1,000 (750 VR + 250 Groq)</td><td style="font-weight:700;color:var(--bright)">$360M</td><td>$120M</td><td style="color:var(--green);font-weight:700">+$96M</td><td style="color:var(--green);font-weight:700">+$127.6M</td></tr>
+    </tbody>
+  </table>
+  <div class="stat-row" style="margin-top:24px">
+    <div class="stat-box"><div class="val" style="color:var(--green)">$626M</div><div class="lbl">5-Year Total Revenue</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$127.6M</div><div class="lbl">5-Year Net Profit</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$248M</div><div class="lbl">Total CapEx Deployed</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$93&ndash;190M</div><div class="lbl">Incentive Stack Value</div></div>
+  </div>
+  <div class="gap-callout" style="margin-top:24px;background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.2)">
+    <div class="gap-text" style="color:var(--green)">With incentives: $220&ndash;320M net positive in 5 years</div>
+    <p>ITEP, Act 730, Solar ITC, Quality Jobs, and university grants could return $93&ndash;190M on $248M total CapEx. Combined with $127.6M operating profit.</p>
+  </div>
+  <div class="econ-grid" style="margin-top:24px">
+    <div class="econ-card">
       <h3>Combined Network (Both Sites)</h3>
+      <div class="econ-row"><span class="econ-label">Starting investment</span><span class="econ-value highlight">$12.5M</span></div>
+      <div class="econ-row"><span class="econ-label">Year 5 combined revenue</span><span class="econ-value highlight">$442M</span></div>
       <div class="econ-row"><span class="econ-label">Total racks (Year 5)</span><span class="econ-value">1,225</span></div>
       <div class="econ-row"><span class="econ-label">Total IT power</span><span class="econ-value">159 MW</span></div>
-      <div class="econ-row"><span class="econ-label">Compute model</span><span class="econ-value">Managed inference tokens</span></div>
+      <div class="econ-row"><span class="econ-label">Combined 5-year net</span><span class="econ-value highlight">$175M</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Token Economics</h3>
+      <div class="econ-row"><span class="econ-label">Blended token price</span><span class="econ-value">$2.00/M tokens</span></div>
+      <div class="econ-row"><span class="econ-label">Gross margin (mature)</span><span class="econ-value highlight">60%</span></div>
+      <div class="econ-row"><span class="econ-label">Power cost (CCGT)</span><span class="econ-value highlight">$0.04&ndash;0.05/kWh</span></div>
       <div class="econ-row"><span class="econ-label">NVIDIA Dynamo</span><span class="econ-value">7x performance boost</span></div>
       <div class="econ-row"><span class="econ-label">Groq decode</span><span class="econ-value">5&ndash;10x output per MW</span></div>
     </div>
-    <div class="econ-card">
-      <h3>Request Investor Package</h3>
-      <div class="econ-row"><span class="econ-label">CapEx model</span><span class="econ-value">Available on request</span></div>
-      <div class="econ-row"><span class="econ-label">Revenue projections</span><span class="econ-value">Available on request</span></div>
-      <div class="econ-row"><span class="econ-label">Incentive analysis</span><span class="econ-value">Available on request</span></div>
-      <div class="econ-row"><span class="econ-label">Contact</span><span class="econ-value highlight">scott@adc3k.com</span></div>
-    </div>
   </div>
+  <p style="font-size:11px;color:var(--dim);margin-top:16px;line-height:1.5;font-style:italic">All financial projections are forward-looking estimates based on assumptions about market pricing, GPU utilization rates, power costs, and incentive program availability. Actual results may vary.</p>
 </div>
 
 <hr class="section-divider">
@@ -913,6 +968,70 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
         <span class="econ-label">Incident response</span>
         <span class="econ-value">Remote + on-call</span>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- RISK FACTORS -->
+<hr class="section-divider">
+<div class="section" data-tab="investors">
+  <div class="section-label">Risk Factors</div>
+  <h2>What Could Go Wrong &mdash; And How We Mitigate</h2>
+  <p class="sub">Every investment carries risk. Here are the real ones, honestly stated, with the mitigation strategy for each.</p>
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Hardware Allocation</h3>
+      <div class="econ-row"><span class="econ-label">Risk</span><span class="econ-value" style="color:var(--red)">NVIDIA allocation delays</span></div>
+      <div class="econ-row"><span class="econ-label">Impact</span><span class="econ-value">Revenue ramp slower than projected</span></div>
+      <div class="econ-row"><span class="econ-label">Mitigation</span><span class="econ-value highlight">NPN registration + DSX compliance = priority queue</span></div>
+      <div class="econ-row"><span class="econ-label">Likelihood</span><span class="econ-value">Medium &mdash; global GPU demand exceeds supply</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Energy Costs</h3>
+      <div class="econ-row"><span class="econ-label">Risk</span><span class="econ-value" style="color:var(--red)">Natural gas price spike</span></div>
+      <div class="econ-row"><span class="econ-label">Impact</span><span class="econ-value">Operating costs increase</span></div>
+      <div class="econ-row"><span class="econ-label">Mitigation</span><span class="econ-value highlight">Henry Hub pricing historically stable. Solar + renewable diesel offset. CCGT efficiency at scale. Fixed-price contracts available.</span></div>
+      <div class="econ-row"><span class="econ-label">Likelihood</span><span class="econ-value">Low &mdash; 35-year benchmark stability</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Token Price Deflation</h3>
+      <div class="econ-row"><span class="econ-label">Risk</span><span class="econ-value" style="color:var(--red)">AI inference prices drop 3&ndash;5x/year</span></div>
+      <div class="econ-row"><span class="econ-label">Impact</span><span class="econ-value">Revenue per token decreases</span></div>
+      <div class="econ-row"><span class="econ-label">Mitigation</span><span class="econ-value highlight">Energy-first model. Cheapest power in neocloud space. Volume growth outpaces price decline. Groq decode premium pricing.</span></div>
+      <div class="econ-row"><span class="econ-label">Likelihood</span><span class="econ-value">High &mdash; but demand growing faster than deflation</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Site Access</h3>
+      <div class="econ-row"><span class="econ-label">Risk</span><span class="econ-value" style="color:var(--red)">Willow Glen lease terms unfavorable</span></div>
+      <div class="econ-row"><span class="econ-label">Impact</span><span class="econ-value">Phase 1 timeline extends</span></div>
+      <div class="econ-row"><span class="econ-label">Mitigation</span><span class="econ-value highlight">CBRE listing active. LSU partnership + NVIDIA certification create leverage. Multiple pipeline sites scored as backup.</span></div>
+      <div class="econ-row"><span class="econ-label">Likelihood</span><span class="econ-value">Low &mdash; property actively listed</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT STRATEGY -->
+<hr class="section-divider">
+<div class="section" data-tab="investors">
+  <div class="section-label">Exit Strategy</div>
+  <h2>How Investors Get Liquidity</h2>
+  <p class="sub">Multiple exit paths available. The energy-first AI factory model is attracting $10B+ valuations from comparable operators.</p>
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Exit Options</h3>
+      <div class="econ-row"><span class="econ-label">Strategic acquisition</span><span class="econ-value highlight">Most likely</span></div>
+      <div class="econ-row"><span class="econ-label">Comparable: Crusoe Energy</span><span class="econ-value">$10B+ valuation</span></div>
+      <div class="econ-row"><span class="econ-label">Comparable: CoreWeave</span><span class="econ-value">$71B valuation</span></div>
+      <div class="econ-row"><span class="econ-label">Comparable: Hut 8</span><span class="econ-value">$10B (River Bend)</span></div>
+      <div class="econ-row"><span class="econ-label">Cash-flow dividend</span><span class="econ-value">Available after breakeven</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why Acquirers Want This</h3>
+      <div class="econ-row"><span class="econ-label">Self-powered facility</span><span class="econ-value">No grid dependency</span></div>
+      <div class="econ-row"><span class="econ-label">NVIDIA certified</span><span class="econ-value">DSX reference design</span></div>
+      <div class="econ-row"><span class="econ-label">University partnerships</span><span class="econ-value">Anchor tenants locked</span></div>
+      <div class="econ-row"><span class="econ-label">Louisiana incentives</span><span class="econ-value">20-year tax advantages transfer</span></div>
+      <div class="econ-row"><span class="econ-label">Multi-site network</span><span class="econ-value">Trappeys + Willow Glen + expansion</span></div>
     </div>
   </div>
 </div>
