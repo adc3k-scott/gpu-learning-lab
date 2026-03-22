@@ -42,6 +42,8 @@
     { "source": "/trappeys-presentation", "destination": "/trappeys-presentation.html" },
     { "source": "/renders-compare", "destination": "/renders-compare.html" },
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
+    { "source": "/power", "destination": "/power-architecture.html" },
+    { "source": "/reference", "destination": "/reference.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
