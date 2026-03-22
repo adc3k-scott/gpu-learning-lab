@@ -525,7 +525,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 <hr class="section-divider">
 
 <!-- NVIDIA TECHNOLOGY -->
-<div class="section" data-tab="technology">
+<div class="section" data-tab="technology investors">
   <div class="section-label">The Technology</div>
   <h2>NVIDIA Vera Rubin &mdash; The Most Powerful AI Platform Ever Built</h2>
   <p class="sub">This is not a traditional server room. This is purpose-built AI infrastructure running the latest NVIDIA platform &mdash; the same technology powering the world's largest AI labs, national defense systems, and Fortune 10 research.</p>
@@ -576,32 +576,6 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   <div class="gap-callout" style="margin-top:24px;background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.2)">
     <div class="gap-text" style="color:var(--green)">Energy Innovation &mdash; Not Just Efficient, Regenerative</div>
     <p>Traditional facilities waste 60% of fuel energy as heat. ADC recovers it. Absorption chillers convert waste heat INTO cooling &mdash; eliminating the electric chillers that consume 30-40% of facility power in Louisiana's climate. Organic Rankine Cycle turbines convert exhaust heat into 8-11 MW of additional electricity. Mississippi River provides unlimited cooling capacity. Renewable diesel from Diamond Green Diesel (60 river miles away) provides 65-90% carbon reduction with zero generator modifications. Hydrokinetic river turbines generate supplemental power from the Mississippi's current. <strong style="color:var(--gold)">Every BTU does double duty. Every layer recovers what the last one spent.</strong></p>
-  </div>
-</div>
-
-<hr class="section-divider">
-
-<!-- WHAT ADC GETS -->
-<div class="section" data-tab="investors">
-  <div class="section-label">What ADC Gets</div>
-  <h2>The Anchor Tenant That Makes Everything Else Work</h2>
-  <p class="sub">A university partnership isn't charity. It's the strategic unlock that drives NVIDIA certification, grant funding, workforce, and political buy-in.</p>
-
-  <div class="econ-grid">
-    <div class="econ-card">
-      <h3>Business Value</h3>
-      <div class="econ-row"><span class="econ-label">Anchor tenant</span><span class="econ-value highlight">Guaranteed utilization</span></div>
-      <div class="econ-row"><span class="econ-label">Grant co-applicant</span><span class="econ-value">$28-55M+ pipeline</span></div>
-      <div class="econ-row"><span class="econ-label">NVIDIA credibility</span><span class="econ-value">University = reference site</span></div>
-      <div class="econ-row"><span class="econ-label">Workforce pipeline</span><span class="econ-value">CS/EE grads on tap</span></div>
-    </div>
-    <div class="econ-card">
-      <h3>Political Value</h3>
-      <div class="econ-row"><span class="econ-label">Governor's university</span><span class="econ-value highlight">State-level support</span></div>
-      <div class="econ-row"><span class="econ-label">Legislative alignment</span><span class="econ-value">Jobs + education + tech</span></div>
-      <div class="econ-row"><span class="econ-label">ITEP / Act 730</span><span class="econ-value">Political cover for incentives</span></div>
-      <div class="econ-row"><span class="econ-label">Media story</span><span class="econ-value">"LSU Tigers power Louisiana AI"</span></div>
-    </div>
   </div>
 </div>
 
@@ -884,7 +858,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
 <!-- COMPETITIVE LANDSCAPE -->
 <hr class="section-divider">
-<div class="section" data-tab="overview">
+<div class="section" data-tab="overview investors">
   <div class="section-label">Competitive Landscape</div>
   <h2>Validated by the Largest Players in AI Infrastructure</h2>
   <p class="sub">The biggest names in AI compute are building in the Gulf South &mdash; for the same reasons ADC chose Louisiana. The difference: ADC is the only one serving universities.</p>
@@ -915,7 +889,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
 <!-- MARKET DEMAND (GPU SCARCITY) -->
 <hr class="section-divider">
-<div class="section" data-tab="overview">
+<div class="section" data-tab="overview investors">
   <div class="section-label">Market Demand</div>
   <h2>Structural Supply Shortage</h2>
   <p class="sub">Demand for GPU compute is not theoretical. It is measurable, persistent, and accelerating.</p>
@@ -1160,7 +1134,8 @@ function showTab(tab) {
 
   // Now hide sections that DON'T match the tab
   for (i = 0; i < allSections.length; i++) {
-    if (allSections[i].getAttribute('data-tab') !== tab) {
+    var sectionTabs = (allSections[i].getAttribute('data-tab') || '').split(' ');
+    if (sectionTabs.indexOf(tab) === -1) {
       allSections[i].style.display = 'none';
     }
   }

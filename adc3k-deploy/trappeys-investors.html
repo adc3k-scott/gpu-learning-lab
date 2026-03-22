@@ -644,7 +644,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 <hr class="section-divider">
 
 <!-- NVIDIA TECHNOLOGY -->
-<div class="section" data-tab="technology">
+<div class="section" data-tab="technology investors">
   <div class="section-label">The Technology</div>
   <h2>NVIDIA Vera Rubin &mdash; The Most Powerful AI Platform Ever Built</h2>
   <p class="sub">This is not a traditional server room. This is purpose-built AI infrastructure running the latest NVIDIA platform &mdash; the same technology powering the world's largest AI labs, national defense systems, and Fortune 10 research.</p>
@@ -909,7 +909,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 <hr class="section-divider">
 
 <!-- COMPETITIVE LANDSCAPE -->
-<div class="section" data-tab="overview">
+<div class="section" data-tab="overview investors">
   <div class="section-label">Competitive Landscape</div>
   <h2>Validated by the Largest Players in AI Infrastructure</h2>
   <p class="sub">The biggest names in AI compute are building in the Gulf South &mdash; for the same reasons ADC chose Louisiana. The difference: ADC is restoring a historic campus while competitors build from scratch on greenfield sites.</p>
@@ -941,7 +941,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 <hr class="section-divider">
 
 <!-- GPU SCARCITY -->
-<div class="section" data-tab="overview">
+<div class="section" data-tab="overview investors">
   <div class="section-label">Market Demand</div>
   <h2>Structural Supply Shortage</h2>
   <p class="sub">Demand for GPU compute is not theoretical. It is measurable, persistent, and accelerating.</p>
@@ -1008,7 +1008,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 <hr class="section-divider">
 
 <!-- WHAT ADC BRINGS -->
-<div class="section" data-tab="overview">
+<div class="section" data-tab="overview investors">
   <div class="section-label">Operator Qualifications</div>
   <h2>What ADC Brings</h2>
   <p class="sub">ADC is not a startup entering infrastructure. It is an infrastructure company entering AI compute &mdash; backed by 25+ years of remote operations experience in the most demanding environments on Earth.</p>
@@ -1231,7 +1231,8 @@ function showTab(tab) {
   for (i = 0; i < allDividers.length; i++) allDividers[i].style.display = 'none';
 
   for (i = 0; i < allSections.length; i++) {
-    if (allSections[i].getAttribute('data-tab') !== tab) {
+    var sectionTabs = (allSections[i].getAttribute('data-tab') || '').split(' ');
+    if (sectionTabs.indexOf(tab) === -1) {
       allSections[i].style.display = 'none';
     }
   }

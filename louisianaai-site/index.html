@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Louisiana's AI Infrastructure Initiative — connecting every Louisiana university, K-12 school, and community to AI compute. Two anchor sites. American-made. Louisiana-powered.">
+<title>Louisiana's AI Infrastructure Initiative | LouisianaAI.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--green:#00e87a;--red:#CE181E;--gold:#fbbf24;--purple:#7c3aed;--blue:#3b82f6;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HERO */
+.hero{text-align:center;padding:100px 24px 80px;background:linear-gradient(180deg,rgba(59,130,246,0.06) 0%,transparent 60%);border-bottom:1px solid var(--border)}
+.hero .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.hero h1{font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--bright);line-height:1.05;margin-bottom:20px;letter-spacing:-2px}
+.hero h1 span{color:var(--blue)}
+.hero .sub{font-size:clamp(15px,1.8vw,18px);color:var(--dim);max-width:800px;margin:0 auto;line-height:1.7}
+.hero .sub strong{color:var(--bright)}
+
+/* STATS */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:900px;margin:40px auto 0}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.stat-box .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--blue)}
+.stat-box .lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--bright);margin-bottom:10px;line-height:1.2}
+.section .sub{font-size:15px;color:var(--dim);margin-bottom:36px;max-width:700px;line-height:1.7}
+.divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* CAMPUS CARDS */
+.campus-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+.campus-card{border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:transform 0.2s,border-color 0.2s}
+.campus-card:hover{transform:translateY(-4px);border-color:var(--blue)}
+.campus-card .campus-img{width:100%;height:200px;object-fit:cover;display:block}
+.campus-card .campus-body{padding:24px}
+.campus-card .campus-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.campus-card .campus-name{font-size:22px;font-weight:900;color:var(--bright);margin-bottom:6px}
+.campus-card .campus-loc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);margin-bottom:12px}
+.campus-card .campus-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.campus-card .campus-stat{font-family:'IBM Plex Mono',monospace;font-size:11px}
+.campus-card .campus-stat span{font-weight:700}
+.campus-card .campus-btn{display:inline-block;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity 0.2s}
+.campus-card .campus-btn:hover{opacity:0.85;text-decoration:none}
+
+/* RAGIN CAJUN */
+.campus-card.cajun{background:#1a0e0e}
+.campus-card.cajun .campus-tag{color:var(--red)}
+.campus-card.cajun .campus-stat span{color:var(--red)}
+.campus-card.cajun .campus-btn{background:var(--red);color:var(--white)}
+
+/* TIGER */
+.campus-card.tiger{background:#1a0a2e}
+.campus-card.tiger .campus-tag{color:var(--gold)}
+.campus-card.tiger .campus-stat span{color:var(--gold)}
+.campus-card.tiger .campus-btn{background:var(--gold);color:#1a0a2e}
+
+/* GAP CALLOUT */
+.gap-callout{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:28px;margin-top:24px;text-align:center}
+.gap-callout .gap-text{font-size:18px;font-weight:800;color:var(--blue);margin-bottom:8px}
+.gap-callout p{font-size:14px;color:var(--dim);line-height:1.7}
+
+/* GRID */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.feature-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.feature-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* CTA */
+.cta{background:linear-gradient(180deg,var(--surface) 0%,rgba(59,130,246,0.08) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)}
+
+/* FOOTER */
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border)}
+footer .brand{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:8px}
+footer .brand span{color:var(--blue)}
+footer .links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+footer .links a{font-size:13px;color:var(--dim)}
+footer .links a:hover{color:var(--blue)}
+footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
+
+@media(max-width:768px){
+  .campus-grid{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tag">Mission Critical Infrastructure</div>
+  <h1>Louisiana's <span>AI Infrastructure</span> Initiative</h1>
+  <p class="sub">Connecting every Louisiana university, K-12 school, and community to AI compute infrastructure. Two anchor sites. <strong>800V DC native. NVIDIA DSX reference design. Self-powered. American-made. Louisiana first.</strong></p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="val">2</div><div class="lbl">Anchor Sites</div></div>
+    <div class="stat-box"><div class="val">289 MW</div><div class="lbl">Combined Capacity</div></div>
+    <div class="stat-box"><div class="val">45+</div><div class="lbl">Universities Eligible</div></div>
+    <div class="stat-box"><div class="val">69</div><div class="lbl">School Districts</div></div>
+    <div class="stat-box"><div class="val">800V</div><div class="lbl">DC Native Power</div></div>
+    <div class="stat-box"><div class="val">$0</div><div class="lbl">GPU Infra in LA Today</div></div>
+  </div>
+</div>
+
+<!-- THE GAP -->
+<div class="section">
+  <div class="section-label">The Problem</div>
+  <h2>Florida Invested $180M. Louisiana Invested $0.</h2>
+  <p class="sub">The University of Florida built HiPerGator &mdash; the #3 supercomputer in the world. 504 Blackwell GPUs serving all 12 Florida state universities. Louisiana has zero dedicated GPU infrastructure at any state university. $37B+ in AI compute is being built in Louisiana (Meta, Amazon, Hut 8) &mdash; none of it serving universities.</p>
+
+  <div class="gap-callout">
+    <div class="gap-text">Louisiana's AI Infrastructure Initiative fixes this.</div>
+    <p>ADC builds the infrastructure. Universities get compute access. K-12 schools get workforce pipeline. Investors get returns. The state gets ahead. No donation required &mdash; the energy-first business model funds itself.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- TWO CAMPUSES -->
+<div class="section">
+  <div class="section-label">Two Anchor Sites</div>
+  <h2>One Initiative. Two Campuses. Every Louisiana School Benefits.</h2>
+  <p class="sub">Each site is paired with a major university partnership. Same NVIDIA technology. Same 800V DC architecture. Same Louisiana-first supply chain. Different cities, different scale, same mission.</p>
+
+  <div class="campus-grid">
+    <!-- RAGIN CAJUN -->
+    <div class="campus-card cajun">
+      <img src="https://adc3k.com/trappeys-photos/Front5.jpg" alt="Trappeys Cannery" class="campus-img">
+      <div class="campus-body">
+        <div class="campus-tag">Ragin' Cajun Compute Campus</div>
+        <div class="campus-name">Trappeys Cannery</div>
+        <div class="campus-loc">// Lafayette, Louisiana &mdash; UL Lafayette</div>
+        <div class="campus-stats">
+          <div class="campus-stat"><span>112.5K</span> sq ft</div>
+          <div class="campus-stat"><span>225</span> racks</div>
+          <div class="campus-stat"><span>29 MW</span></div>
+          <div class="campus-stat"><span>0.5 mi</span> to campus</div>
+        </div>
+        <p style="font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5">Historic 1929 cannery on the Vermilion River. 4 buildings, water tower, 2.05 MW First Solar rooftop. National Register approved. The proof of concept.</p>
+        <a href="https://adc3k.com/trappeys" class="campus-btn">Explore Ragin' Cajun Campus &rarr;</a>
+      </div>
+    </div>
+
+    <!-- TIGER -->
+    <div class="campus-card tiger">
+      <img src="https://adc3k.com/henry-hub-6.jpg" alt="Willow Glen Terminal" class="campus-img">
+      <div class="campus-body">
+        <div class="campus-tag">Tiger Compute Campus</div>
+        <div class="campus-name">Willow Glen Terminal</div>
+        <div class="campus-loc">// St. Gabriel, Louisiana &mdash; LSU</div>
+        <div class="campus-stats">
+          <div class="campus-stat"><span>700</span> acres</div>
+          <div class="campus-stat"><span>2,000+</span> racks</div>
+          <div class="campus-stat"><span>260 MW</span></div>
+          <div class="campus-stat"><span>20 min</span> to LSU</div>
+        </div>
+        <p style="font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5">Former 2,200 MW Entergy power station on the Mississippi River. 700 acres, existing grid, deepwater dock. The flagship.</p>
+        <a href="https://adc3k.com/lsu" class="campus-btn">Explore Tiger Campus &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- WHY LOUISIANA -->
+<div class="section">
+  <div class="section-label">Why Louisiana</div>
+  <h2>Every Advantage. One State.</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>Cheapest Power in the Country</h3>
+      <p>40 miles from Henry Hub &mdash; the national benchmark. $0.04&ndash;0.058/kWh behind the meter. Virginia pays $0.12. California pays $0.27. No grid dependency. No rate hikes.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Solar Panels Made Next Door</h3>
+      <p>First Solar's $1.1 billion factory in New Iberia. American-made Series 7 TR1 panels. 30 miles from Lafayette, 90 miles from Willow Glen. Louisiana supply chain.</p>
+    </div>
+    <div class="feature-card">
+      <h3>800V DC Native Architecture</h3>
+      <p>96% power delivery efficiency vs 83% traditional. 45% less copper. Zero rack PSUs. Built to NVIDIA's DSX reference design. The most efficient AI factory architecture on the planet.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Strongest Incentive Stack in the Nation</h3>
+      <p>45&ndash;55% historic tax credits. 80% property tax abatement. 20-year sales tax exemption. 30% solar ITC. FREE workforce training. 19+ programs that stack.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Federal Government Backing</h3>
+      <p>100% bonus depreciation permanent. Opportunity Zones. CHIPS Act. $1.355B broadband funding to Louisiana. The Big Beautiful Bill put America first &mdash; Louisiana is leading.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Every Vendor Within Driving Distance</h3>
+      <p>Louisiana Cat (generators), First Solar (panels), Eaton (800V DC), ATMOS Energy (gas). All American-made. All in Louisiana. One team, two projects.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- GET YOUR SCHOOL IN -->
+<div class="cta">
+  <div style="max-width:700px;margin:0 auto">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Your School In</div>
+    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--blue)">Eligible?</span></h2>
+
+    <div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college or university can participate.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training &mdash; we can help. Louisiana's AI Infrastructure Initiative connects schools to compute resources, grant funding, workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education and research.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What you're eligible for:</strong> NSF MRI grants (up to $4M), NSF EPSCoR ($10M), DOE grid modernization ($5&ndash;20M), LED FastStart (FREE workforce training), state R&amp;D tax credits, and more. We help you identify which programs fit your institution.</p>
+      <p style="font-size:13px;color:var(--blue);font-weight:700">Technology is changing fast. This is mission critical. Don't be last in line.</p>
+    </div>
+
+    <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
+      <input type="hidden" name="_subject" value="Louisiana AI Infrastructure Initiative Inquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="text" name="organization" placeholder="Organization (university, school, company, etc.)" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <select name="interest" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-size:15px;font-family:'Inter',sans-serif;appearance:auto">
+        <option value="" disabled selected>I'm interested in...</option>
+        <option value="research">Research Partnership (University)</option>
+        <option value="investor">Investment Opportunity</option>
+        <option value="vendor">Vendor / Supplier Partnership</option>
+        <option value="employment">Employment / Careers</option>
+        <option value="student">Student / Internship</option>
+        <option value="k12">K-12 Education Partnership</option>
+        <option value="media">Media / Press Inquiry</option>
+        <option value="government">Government / Economic Development</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Tell us how you want to be involved (optional)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
+      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--blue);color:var(--white);font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s">Join Louisiana's AI Infrastructure Initiative</button>
+    </form>
+
+    <div style="margin-top:24px;font-size:13px;color:var(--dim)">
+      <p><strong style="color:var(--bright)">scott@adc3k.com</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">louisianaai.net</strong></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="brand">Louisiana's <span>AI Infrastructure Initiative</span></div>
+  <div class="links">
+    <a href="https://adc3k.com/trappeys">Ragin' Cajun Campus</a>
+    <a href="https://adc3k.com/lsu">Tiger Campus</a>
+    <a href="https://adc3k.com/power">800V DC Architecture</a>
+    <a href="https://adc3k.com/reference">Reference Library</a>
+    <a href="https://adc3k.com">ADC Home</a>
+  </div>
+  <div class="legal">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana<br>American-made. Louisiana-powered. Mission critical.</div>
+</footer>
+
+</body>
+</html>
