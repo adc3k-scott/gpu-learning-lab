@@ -2,6 +2,10 @@
   "version": 2,
   "buildCommand": null,
   "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/documents", "destination": "/documents.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
