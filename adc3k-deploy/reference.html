@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADC Reference Library — Articles & Technical Docs</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#fff;padding:20px;max-width:900px;margin:0 auto}
+h1{font-size:1.5rem;text-align:center;margin:10px 0 4px}
+.sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:25px}
+h2{font-size:1.1rem;color:#76b900;margin:25px 0 10px;border-bottom:1px solid rgba(118,185,0,0.2);padding-bottom:6px}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:14px;margin:8px 0}
+.card .tag{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:3px;margin-bottom:6px}
+.card .tag.nvidia{color:#76b900;background:rgba(118,185,0,0.1);border:1px solid rgba(118,185,0,0.2)}
+.card .tag.eaton{color:#4fc3f7;background:rgba(79,195,247,0.1);border:1px solid rgba(79,195,247,0.2)}
+.card .tag.cat{color:#ffd54f;background:rgba(255,213,79,0.1);border:1px solid rgba(255,213,79,0.2)}
+.card .tag.industry{color:#fff;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15)}
+.card .tag.adc{color:#ff5252;background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.15)}
+.card .title{font-weight:800;font-size:0.95rem;margin-bottom:4px}
+.card .title a{color:#fff;text-decoration:none}
+.card .title a:hover{color:#76b900;text-decoration:underline}
+.card .meta{font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:6px}
+.card .desc{font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.5}
+.card .why{font-size:0.75rem;color:#76b900;margin-top:6px;font-weight:600}
+</style>
+</head>
+<body>
+
+<h1>ADC Reference Library</h1>
+<div class="sub">Key articles, specs, and technical docs — organized for quick access</div>
+
+<h2>800V DC Power Architecture</h2>
+
+<div class="card">
+<span class="tag nvidia">NVIDIA</span>
+<div class="title"><a href="https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/" target="_blank">NVIDIA 800 VDC Architecture Will Power the Next Generation of AI Factories</a></div>
+<div class="meta">May 2025 | NVIDIA Technical Blog | Mathias Blake, Martin Hsu, Ivan Goldwasser et al.</div>
+<div class="desc">The foundational article. Explains why 800V DC replaces 415V AC: 85% more power through same wire, 45% less copper, 5% better efficiency. Details the 64:1 LLC converter, Kyber rack architecture, and the full ecosystem of silicon/power/facility partners.</div>
+<div class="why">THE article to show anyone asking "why 800V DC?"</div>
+</div>
+
+<div class="card">
+<span class="tag nvidia">NVIDIA</span>
+<div class="title"><a href="https://developer.nvidia.com/blog/building-the-800-vdc-ecosystem-for-efficient-scalable-ai-factories/" target="_blank">Building the 800 VDC Ecosystem for Efficient, Scalable AI Factories</a></div>
+<div class="meta">Oct 2025 | NVIDIA Technical Blog | Neeraj Srivastava, Harry Petty</div>
+<div class="desc">The deeper dive. Covers multi-timescale energy storage (supercapacitors for millisecond spikes, BESS for grid buffering), workload volatility from synchronized GPU training, and the full phase-by-phase transition plan. Includes the OCP collaboration call.</div>
+<div class="why">Show this when explaining energy storage + grid independence</div>
+</div>
+
+<div class="card">
+<span class="tag eaton">EATON + NVIDIA</span>
+<div class="title"><a href="https://www.eaton.com/us/en-us/company/news-insights/news-releases/2026/eaton-collaborates-with-nvidia-to-unveil-its-beam-rubin-dsx-platform.html" target="_blank">Eaton Beam Rubin DSX Platform — Grid to Chip</a></div>
+<div class="meta">March 16, 2026 | Eaton Press Release (GTC 2026 Keynote)</div>
+<div class="desc">The official announcement. Beam Rubin DSX = end-to-end 800V DC platform for Vera Rubin NVL72 racks. Eaton handles: 13.8kV AC rectification, 800V DC distribution, busway, rack PDUs, microgrid controller. Designed to cut construction timelines from years to months.</div>
+<div class="why">ADC's power distribution standard. This is what we're buying.</div>
+</div>
+
+<div class="card">
+<span class="tag eaton">EATON + NVIDIA</span>
+<div class="title"><a href="https://markets.financialcontent.com/stocks/article/marketminute-2026-3-17-powering-the-vera-rubin-era-eaton-and-nvidia-unveil-beam-rubin-dsx-to-accelerate-ai-factory-deployment" target="_blank">Powering the Vera Rubin Era: Eaton and NVIDIA Unveil Beam Rubin DSX</a></div>
+<div class="meta">March 17, 2026 | Financial Content</div>
+<div class="desc">Market analysis of the Eaton-NVIDIA partnership. $7 trillion data center buildout market. Beam Rubin DSX supports 130 kW+ per rack, scaling from megawatts to hundreds of megawatts.</div>
+<div class="why">Investor-friendly version of the Beam Rubin story</div>
+</div>
+
+<div class="card">
+<span class="tag industry">INDUSTRY</span>
+<div class="title"><a href="https://www.datacenterfrontier.com/energy/article/55323139/preparing-for-800-vdc-data-centers-abb-eaton-support-nvidias-ai-infrastructure-evolution" target="_blank">Preparing for 800 VDC Data Centers: ABB, Eaton Support NVIDIA's AI Infrastructure Evolution</a></div>
+<div class="meta">2026 | Data Center Frontier</div>
+<div class="desc">Industry perspective on the 800V DC transition. Both ABB and Eaton positioning for NVIDIA's architecture. Covers the competitive landscape of power infrastructure vendors.</div>
+<div class="why">Shows the industry is moving — ADC is riding the wave, not inventing it</div>
+</div>
+
+<h2>Gas Generation for AI Compute</h2>
+
+<div class="card">
+<span class="tag industry">INDUSTRY</span>
+<div class="title"><a href="https://www.powermag.com/data-centers-are-turning-to-gas-generators-for-prime-power-to-eliminate-long-lead-times-for-grid-connections/" target="_blank">Data Centers Are Turning to Gas Generators for Prime Power</a></div>
+<div class="meta">2025 | POWER Magazine</div>
+<div class="desc">The industry trend article. Data centers can't wait 3-5 years for grid connections. Natural gas generators provide prime power immediately. This is exactly ADC's model — gas is the backbone, grid is sell-back only.</div>
+<div class="why">Validates ADC's gas-first approach. Show to anyone who questions off-grid.</div>
+</div>
+
+<div class="card">
+<span class="tag industry">INDUSTRY</span>
+<div class="title"><a href="https://www.woodwayenergy.com/off-grid-btm-gas-power-generation-data-centers/" target="_blank">Bridging the 5-Year Gap: Off-Grid and Behind-the-Meter Gas Power for Data Centers</a></div>
+<div class="meta">2025 | Woodway Energy</div>
+<div class="desc">Deep analysis of behind-the-meter (BTM) gas power for AI compute. Why gas generators are the bridge while grid catches up. Economics of gas vs grid for prime power applications.</div>
+<div class="why">Economic argument for gas-first model</div>
+</div>
+
+<div class="card">
+<span class="tag cat">CATERPILLAR</span>
+<div class="title"><a href="https://www.cat.com/en_US/products/new/power-systems/electric-power/gas-generator-sets/15969659.html" target="_blank">Cat G3520 — 1400-2000 kW Natural Gas Generator Specs</a></div>
+<div class="meta">Caterpillar Product Page</div>
+<div class="desc">Official specs for the G3520 platform — ADC's primary genset. 1.5-2 MW prime rated on natural gas. The workhorse.</div>
+<div class="why">Pull up when talking to Louisiana Cat</div>
+</div>
+
+<div class="card">
+<span class="tag cat">CATERPILLAR</span>
+<div class="title"><a href="https://www.cat.com/en_US/products/new/power-systems/electric-power/gas-generator-sets/15969826.html" target="_blank">Cat CG260-16 — 2800-4000 kW Gas Generator</a></div>
+<div class="meta">Caterpillar Product Page</div>
+<div class="desc">The bigger platform for Phase 5+. 2.8-4 MW per unit. One CG260 replaces two G3520Cs.</div>
+<div class="why">Growth path — when 2x G3520C isn't enough</div>
+</div>
+
+<div class="card">
+<span class="tag cat">CATERPILLAR</span>
+<div class="title"><a href="https://www.louisianacat.com/new-equipment/power-systems/switchgear-and-paralleling-controls/" target="_blank">Louisiana Cat — Switchgear & Paralleling Controls</a></div>
+<div class="meta">Louisiana Cat Product Page</div>
+<div class="desc">Cat's paralleling switchgear and ATS systems. Same vendor handles gensets + switching + paralleling. One relationship, one service contract.</div>
+<div class="why">Monday visit reference — they do the whole front end</div>
+</div>
+
+<h2>Solar + First Solar</h2>
+
+<div class="card">
+<span class="tag industry">FIRST SOLAR</span>
+<div class="title"><a href="https://www.firstsolar.com/Products/Series-7" target="_blank">First Solar Series 7 — Product Page</a></div>
+<div class="meta">First Solar</div>
+<div class="desc">Series 7 TR1 thin-film CdTe panels. 550W, 19.7% efficiency, 0.3%/year degradation (industry best), 30-year warranty. Superior in humidity. Made in New Iberia, LA — 30 miles from Trappeys.</div>
+<div class="why">Monday visit reference</div>
+</div>
+
+<h2>NVIDIA DSX + AI Factory Architecture</h2>
+
+<div class="card">
+<span class="tag nvidia">NVIDIA</span>
+<div class="title"><a href="https://www.nvidia.com/en-us/data-center/dsx/" target="_blank">NVIDIA DSX Reference Design</a></div>
+<div class="meta">NVIDIA</div>
+<div class="desc">The complete AI factory blueprint. ADC builds to this spec. Three pillars: DSX Flex, DSX Boost, DSX Exchange. 800V DC power, liquid cooling, InfiniBand fabric, Base Command Manager.</div>
+<div class="why">The standard we're building to</div>
+</div>
+
+<div class="card">
+<span class="tag nvidia">NVIDIA</span>
+<div class="title"><a href="https://developer.nvidia.com/blog/how-new-gb300-nvl72-features-provide-steady-power-for-ai/" target="_blank">How New GB300 NVL72 Features Provide Steady Power for AI</a></div>
+<div class="meta">NVIDIA Technical Blog</div>
+<div class="desc">NVL72 power management features — how the rack handles power spikes, GPU power capping, and integration with facility-level energy storage.</div>
+<div class="why">Technical depth on the racks we're installing</div>
+</div>
+
+<h2>ADC Internal Pages</h2>
+
+<div class="card">
+<span class="tag adc">ADC</span>
+<div class="title"><a href="/power">ADC Power Architecture — Full Block Diagrams</a></div>
+<div class="meta">adc3k.com/power</div>
+<div class="desc">Our 800V DC power chain from gas to GPU. Block diagrams, solar-direct path, vendor stack, Phase 3 power budget, generator comparison. The page you just built.</div>
+<div class="why">Show this to explain our power architecture to anyone</div>
+</div>
+
+<div class="card">
+<span class="tag adc">ADC</span>
+<div class="title"><a href="/trappeys-plan">Trappeys Master Plan</a></div>
+<div class="meta">adc3k.com/trappeys-plan</div>
+<div class="desc">Complete facility plan — buildings, solar, NVIDIA tools, phasing, partners.</div>
+</div>
+
+<div class="card">
+<span class="tag adc">ADC</span>
+<div class="title"><a href="/trappeys-technology">Trappeys Technology Stack</a></div>
+<div class="meta">adc3k.com/trappeys-technology</div>
+<div class="desc">DSX architecture, NVIDIA stack, liquid cooling, InfiniBand.</div>
+</div>
+
+<div class="card">
+<span class="tag adc">ADC</span>
+<div class="title"><a href="/trappeys-investors">Trappeys Investment Case</a></div>
+<div class="meta">adc3k.com/trappeys-investors</div>
+<div class="desc">Investment thesis, incentive stack, financial model summary.</div>
+</div>
+
+<div class="card">
+<span class="tag adc">ADC</span>
+<div class="title"><a href="/trappeys-gallery">Trappeys Photo Gallery (56 numbered)</a></div>
+<div class="meta">adc3k.com/trappeys-gallery</div>
+<div class="desc">All 56 site photos numbered for quick reference.</div>
+</div>
+
+<div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);font-size:0.7rem">
+ADC Reference Library — updated 2026-03-21<br>
+New articles added as they're found. Ask for any topic and it gets added here.
+</div>
+
+</body>
+</html>
