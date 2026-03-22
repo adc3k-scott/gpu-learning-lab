@@ -117,6 +117,9 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 .tab-btn:hover{color:var(--bright)}
 .tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
 
+/* GAP COMPARISON responsive */
+.gap-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+
 @media(max-width:768px){
   .nav-links{gap:4px}
   .nav-links a{font-size:11px;padding:5px 8px}
@@ -128,6 +131,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
   .incentive-table{font-size:12px}
   .incentive-table th,.incentive-table td{padding:10px 10px}
   .tab-btn{font-size:10px;padding:12px 10px}
+  .gap-compare{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -223,6 +227,90 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
       <div class="econ-row"><span class="econ-label">Distance to Louisiana Cat</span><span class="econ-value">30 mi (New Iberia)</span></div>
       <div class="econ-row"><span class="econ-label">LUS substation</span><span class="econ-value">Next door</span></div>
       <div class="econ-row"><span class="econ-label">Greenfield equivalent</span><span class="econ-value">10&ndash;50x cost</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- THE GAP -->
+<div class="section">
+  <div class="section-label">The Gap</div>
+  <h2>Florida Invested $180M. Louisiana Invested $0.</h2>
+  <p class="sub">One state built the #3 supercomputer in the world. The other built nothing.</p>
+
+  <div class="gap-compare">
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:4px">University of Florida</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--cyan);line-height:1;margin-bottom:4px">504</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Blackwell GPUs (DGX B200 SuperPOD)</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">Total investment</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">$180M+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">World ranking</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">#3 speed</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">Active users</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">7,000</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">AI courses</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">230</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">AI faculty hired</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">100+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0"><span style="font-size:13px;color:var(--dim)">Universities served</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">12</span></div>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:4px">UL Lafayette (today)</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--red);line-height:1;margin-bottom:4px">0</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Modern GPUs on campus</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">Total investment</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Sub-$1M (LONI shared)</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">World ranking</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Not ranked</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">Computing faculty</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">30 — zero compute</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">First AI degree</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Launching, no infra</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0"><span style="font-size:13px;color:var(--dim)">STEM grads stay in LA</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">71% (better than LSU)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">ADC fills this gap &mdash; half a mile from campus</div>
+    <p>No donation needed. Energy-first business model funds itself. UL Lafayette gets compute access. Every Louisiana university benefits.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SITE HISTORY -->
+<div class="section">
+  <div class="section-label">Site History</div>
+  <h2>Trappeys Cannery &mdash; Since 1929</h2>
+  <p class="sub">A cannery that fed soldiers in World War II becomes the AI factory that powers Louisiana's future.</p>
+
+  <div class="comp-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+    <div class="comp-card">
+      <div class="comp-name">1920s</div>
+      <div class="comp-val">Origins</div>
+      <p>Texas Company leased the 8-acre tract to Baldwin Lumber and Star Salt. Industrial use from the beginning &mdash; heavy structures, rail access, river frontage.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1929</div>
+      <div class="comp-val">B.F. Trappey's Sons Purchased the Tract</div>
+      <p>The Trappey family acquired the property and began building the cannery complex that still stands today. Four industrial buildings, water tower, infrastructure yard.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1930&ndash;1981</div>
+      <div class="comp-val">Cannery Operations &middot; WWII Production</div>
+      <p>Operated as a full-scale cannery for over 50 years. During World War II, the facility produced 12 million pounds of candied yams for Allied forces. Peak employment in the hundreds.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1950</div>
+      <div class="comp-val">Water Tower Constructed</div>
+      <p>The iconic water tower was built for industrial cooling and fire suppression. 75 years later, it becomes the cooling backbone for an AI factory &mdash; same tower, new mission.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1991</div>
+      <div class="comp-val">Plant Closed</div>
+      <p>The cannery shut down after six decades of operation. The buildings sat empty for 30+ years. The structures endured &mdash; steel frame, concrete, industrial-grade construction.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">2026</div>
+      <div class="comp-val">ADC Proposes AI Factory</div>
+      <p>Same buildings. Same water tower. New mission. ADC proposes converting the historic cannery into Louisiana's first solar-powered AI factory. National Register of Historic Places approved &mdash; 9 contributing buildings, 45&ndash;55% historic tax credits.</p>
     </div>
   </div>
 </div>
@@ -602,6 +690,43 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 
 <hr class="section-divider">
 
+<!-- SUPPLY CHAIN -->
+<div class="section">
+  <div class="section-label">Supply Chain</div>
+  <h2>Every Vendor Within 30 Miles. All American-Made.</h2>
+  <p class="sub">No overseas supply chain risk. No 6-month lead times from distant manufacturers. Every critical vendor is local, licensed, and ready to deliver. This is a Louisiana-built AI factory powered by American-made infrastructure.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Louisiana Cat Power Systems</div>
+      <div class="comp-val">New Iberia &middot; 30 mi</div>
+      <p>Cat G3520C reciprocating gensets, switchgear, ATS, Cat Financial leasing. The same team that services offshore rigs and pipeline compressor stations. N+1 configuration from day one.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">First Solar</div>
+      <div class="comp-val">New Iberia Airport &middot; 30 mi</div>
+      <p>$1.1 billion factory. Series 7 TR1 panels &mdash; American-made thin-film CdTe. 3,827 panels across 4 rooftops = 2.05 MW. The largest solar panel manufacturer in the Western Hemisphere, 30 minutes away.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Eaton</div>
+      <div class="comp-val">TX + LA Manufacturing</div>
+      <p>Beam Rubin DSX 800V DC power distribution. Rectifier, busway, PDUs, supercapacitors, LFP batteries, microgrid controller. The only vendor building native 800V DC for NVIDIA DSX reference design.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">ATMOS Energy</div>
+      <div class="comp-val">On-Site &middot; Trunk Line Confirmed</div>
+      <p>Natural gas trunk line runs directly to the property. Henry Hub pricing &mdash; 40 miles from the national benchmark. Clean-burning natural gas as the 24/7 backbone. No pipeline construction needed.</p>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">Local vendors. American-made. Zero import risk.</div>
+    <p>Every critical infrastructure component &mdash; power generation, solar panels, electrical distribution, and fuel &mdash; comes from within 30 miles. No tariff exposure. No shipping delays. No foreign dependency. This supply chain is a competitive moat that cannot be replicated in most U.S. markets.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
 <!-- EDUCATION — UL LAFAYETTE + K-12 -->
 <div class="section">
   <div class="section-label">Research &amp; Education Impact</div>
@@ -636,6 +761,60 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
     <div class="stat-box"><div class="val" style="color:var(--cyan)">15,665</div><div class="lbl">Students</div></div>
     <div class="stat-box"><div class="val" style="color:var(--cyan)">71%</div><div class="lbl">STEM Grads Stay in LA</div></div>
     <div class="stat-box"><div class="val" style="color:var(--cyan)">0</div><div class="lbl">Modern GPUs on Campus</div></div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- WHAT UL LAFAYETTE GETS -->
+<div class="section">
+  <div class="section-label">What UL Lafayette Gets</div>
+  <h2>Six Reasons This Partnership Works</h2>
+  <p class="sub">UL Lafayette is half a mile from the AI factory. No donation required. The energy-first business model funds itself. The university gets world-class compute access — and every Louisiana university benefits.</p>
+
+  <div class="comp-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">1</div>
+      <div>
+        <div class="comp-name">Dedicated GPU Compute</div>
+        <p>Reserved allocation on NVIDIA Vera Rubin NVL72 racks. No more cloud retail rates. No more waiting on LONI queue times at LSU. Direct access, half a mile from campus.</p>
+      </div>
+    </div>
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">2</div>
+      <div>
+        <div class="comp-name">Student Workforce Pipeline</div>
+        <p>CS and EE students train on real production infrastructure 0.5 miles from campus. Internships, capstone projects, and full-time hiring — all within walking distance.</p>
+      </div>
+    </div>
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">3</div>
+      <div>
+        <div class="comp-name">Grant Co-Applicant</div>
+        <p>NSF MRI (up to $4M), NSF EPSCoR (up to $10M), DOE Grid Modernization ($5&ndash;20M). ADC provides the infrastructure. UL Lafayette provides the research institution. Combined: $28&ndash;55M+ in grant eligibility.</p>
+      </div>
+    </div>
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">4</div>
+      <div>
+        <div class="comp-name">Office at the AI Factory</div>
+        <p>Physical presence in the partner hub (front building, 22,500 sq ft). Faculty offices, student lab space, and collaboration rooms — embedded in the facility they compute on.</p>
+      </div>
+    </div>
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">5</div>
+      <div>
+        <div class="comp-name">NVIDIA Reference Site</div>
+        <p>UL Lafayette's name goes on the NVIDIA certification. DGX-Ready, then NCP, then Reference Platform. National visibility for the university's AI research program.</p>
+      </div>
+    </div>
+    <div class="comp-card" style="display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--cyan);line-height:1;min-width:36px">6</div>
+      <div>
+        <div class="comp-name">Every Louisiana University Benefits</div>
+        <p>UL Lafayette is the anchor tenant, but compute serves the state. Any Louisiana university can access the infrastructure. One investment, statewide impact &mdash; the same model Florida built with UF and HiPerGator.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -961,10 +1140,10 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 
 <script>
 const tabMap = {
-  'overview': ['Site Acquisition', 'Competitive Landscape', 'Market Demand', 'Operator Qualifications'],
-  'site': ['Site Acquisition'],
-  'technology': ['Token Economics', 'Energy Architecture', 'The Technology'],
-  'education': ['Research & Education Impact', 'K-12 Education Pipeline'],
+  'overview': ['Site Acquisition', 'The Gap', 'Site History', 'Competitive Landscape', 'Market Demand', 'Operator Qualifications'],
+  'site': ['Site Acquisition', 'Site History'],
+  'technology': ['Token Economics', 'Energy Architecture', 'The Technology', 'What UL Lafayette Gets', 'Supply Chain'],
+  'education': ['Research & Education Impact', 'What UL Lafayette Gets', 'K-12 Education Pipeline'],
   'energy': ['Energy Architecture', 'Mission Critical Infrastructure'],
   'investors': ['Capital Expenditure', 'Return on Investment', 'Tax Incentive Stack', 'Deployment Phases', 'Activation Requirements', 'Expansion Path'],
   'schools': []
