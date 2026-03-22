@@ -77,6 +77,16 @@ footer .footer-contact{font-family:'IBM Plex Mono',monospace;font-size:12px;colo
 footer .footer-contact a{color:var(--gold)}
 footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
+/* INCENTIVE TABLE */
+.incentive-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:13px}
+.incentive-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);padding:12px 16px;border-bottom:2px solid var(--border);font-weight:600}
+.incentive-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.incentive-table tr:last-child td{border-bottom:none}
+.incentive-table .program{font-weight:700;color:var(--bright);white-space:nowrap}
+.incentive-table .benefit{font-family:'IBM Plex Mono',monospace;color:var(--gold);font-weight:600}
+.incentive-table .note{color:var(--dim);font-size:12px}
+.incentive-table .critical{color:var(--red);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+
 /* TABS */
 .tab-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:52px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tab-bar::-webkit-scrollbar{display:none}
@@ -814,24 +824,34 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
   <p class="sub">Below: the specific federal and state programs that make this possible.</p>
 
-  <div class="econ-grid">
-    <div class="econ-card">
-      <h3>Tax Programs</h3>
-      <div class="econ-row"><span class="econ-label">ITEP (property tax)</span><span class="econ-value">80% abatement, 10 years</span></div>
-      <div class="econ-row"><span class="econ-label">Act 730 (sales tax)</span><span class="econ-value">20-year exemption</span></div>
-      <div class="econ-row"><span class="econ-label">Historic credits</span><span class="econ-value">45&ndash;55% (if applicable)</span></div>
-      <div class="econ-row"><span class="econ-label">Solar ITC</span><span class="econ-value">30% federal</span></div>
-      <div class="econ-row"><span class="econ-label">Quality Jobs</span><span class="econ-value">Cash rebate on payroll</span></div>
-      <div class="econ-row"><span class="econ-label">LED FastStart</span><span class="econ-value highlight">FREE workforce training</span></div>
-    </div>
-    <div class="econ-card">
-      <h3>University Grant Pipeline</h3>
-      <div class="econ-row"><span class="econ-label">NSF MRI</span><span class="econ-value">Up to $4M</span></div>
-      <div class="econ-row"><span class="econ-label">NSF EPSCoR</span><span class="econ-value">Up to $10M</span></div>
-      <div class="econ-row"><span class="econ-label">DOE Grid Modernization</span><span class="econ-value">$5&ndash;20M</span></div>
-      <div class="econ-row"><span class="econ-label">LEQSF</span><span class="econ-value">State research funding</span></div>
-      <div class="econ-row"><span class="econ-label">Total pipeline</span><span class="econ-value highlight">$28&ndash;55M+</span></div>
-    </div>
+  <table class="incentive-table">
+    <thead><tr><th>Program</th><th>Benefit</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td class="program">ITEP</td><td class="benefit">80% property tax abatement, 10 years</td><td class="note">Must file BEFORE groundbreaking. Pre-qualify with LED as "emerging industry." Estimated savings: $20&ndash;40M+ at Willow Glen scale.</td></tr>
+      <tr><td class="program">Act 730</td><td class="benefit">20-year sales tax exemption</td><td class="note">AI factory equipment &mdash; servers, cooling, cabling, construction materials. 20-year initial term + 10-year renewal. Requires $200M+ capital and 50+ jobs.</td></tr>
+      <tr><td class="program">100% Bonus Depreciation</td><td class="benefit">Full immediate expensing &mdash; permanent</td><td class="note">OBBBA (signed July 4, 2025). All GPU servers, networking, cooling. No application required. Retroactive to Jan 19, 2025.</td></tr>
+      <tr><td class="program">Opportunity Zones 2.0</td><td class="benefit">Tax-free capital gains (10+ years)</td><td class="note">Qualified Opportunity Fund investments. Tax-deferred, then tax-free at 10+ years. OBBBA made permanent with 30% rural step-up.</td></tr>
+      <tr><td class="program">New Markets Tax Credits</td><td class="benefit">39% credit over 7 years</td><td class="note">Equity investments in low-income census tracts. OBBBA permanently extended. OZ overlap = double-stack eligible.</td></tr>
+      <tr><td class="program">30% Federal Solar ITC</td><td class="benefit">30% of solar installation cost</td><td class="note">Applies to ground-mount solar arrays at Willow Glen. 400+ acres available. <span class="critical">Must begin construction before July 4, 2026.</span></td></tr>
+      <tr><td class="program">Quality Jobs Program</td><td class="benefit">6% payroll rebate &mdash; 10 years</td><td class="note">Plus 1.5% project facility expense rebate on total capital investment. Only 5 new jobs required for &lt;50 employee companies.</td></tr>
+      <tr><td class="program">Enterprise Zone</td><td class="benefit">$3,500/job + sales tax rebate</td><td class="note">One-time credit per net new job plus equipment sales tax rebate. Minimum 5 jobs within 24 months.</td></tr>
+      <tr><td class="program">Angel Investor Tax Credit</td><td class="benefit">25&ndash;35% credit on investment</td><td class="note">LED-certified Louisiana businesses. Up to $720K/business/year. <span class="critical">Expires June 30, 2026 &mdash; first-come, first-served.</span></td></tr>
+      <tr><td class="program">R&amp;D Tax Credit (State)</td><td class="benefit">Up to 30% on R&amp;D spend</td><td class="note">30% for &lt;50 employees. Also 30% on SBIR/STTR grants. $12M annual cap. Next allocation July 1, 2026.</td></tr>
+      <tr><td class="program">CHIPS Act</td><td class="benefit">$50B domestic AI infrastructure</td><td class="note">100% US hardware supply chain. FEOC-clean federal procurement. EDA Tech Hub designation eligible.</td></tr>
+      <tr><td class="program">BEAD Broadband</td><td class="benefit">$1.355B to Louisiana</td><td class="note">8th largest allocation nationally. First state approved (Nov 2025). ADC as anchor fiber customer.</td></tr>
+      <tr><td class="program">LED FastStart</td><td class="benefit">FREE customized workforce training</td><td class="note">#1 ranked workforce program 13 years running. Custom AI compute technician training. Zero cost.</td></tr>
+      <tr><td class="program">PILOT Agreements</td><td class="benefit">10&ndash;40 year property tax reduction</td><td class="note">Through Iberville Parish IDB. Precedent: Hut 8 / West Feliciana &mdash; 30-year PILOT, $2.5B facility, $90M/year revenue.</td></tr>
+      <tr><td class="program">IDB Revenue Bonds</td><td class="benefit">Tax-exempt financing</td><td class="note">Through Iberville Parish IDB. Louisiana has issued $12.65B+ in private activity bonds. 90&ndash;120 day process.</td></tr>
+      <tr><td class="program">NSF MRI Grant</td><td class="benefit">Up to $4M</td><td class="note">Through LSU partnership. Major Research Instrumentation for GPU compute infrastructure.</td></tr>
+      <tr><td class="program">NSF EPSCoR</td><td class="benefit">Up to $10M</td><td class="note">Louisiana qualifies. Multi-year research infrastructure funding through LSU.</td></tr>
+      <tr><td class="program">DOE Grid Modernization</td><td class="benefit">$5&ndash;20M</td><td class="note">800V DC microgrid + solar-direct architecture qualifies. Renewable fuel integration.</td></tr>
+      <tr><td class="program">LSU Partnership</td><td class="benefit">$28&ndash;55M+ grant pipeline</td><td class="note">10+ federal and state programs accessible through SEC flagship university research partnership.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text" style="color:var(--gold)">These programs stack.</div>
+    <p>An AI factory in a Louisiana Opportunity Zone can simultaneously access 100% bonus depreciation, OZ tax-free gains, New Markets Tax Credits, Quality Jobs rebates, PILOT property tax reduction, and IDB tax-exempt financing &mdash; all on the same project. No other state offers this combination at this cost of power.</p>
   </div>
 </div>
 
