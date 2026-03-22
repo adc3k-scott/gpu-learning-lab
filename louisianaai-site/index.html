@@ -13,19 +13,42 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-
 a{color:var(--blue);text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* HERO */
-.hero{text-align:center;padding:100px 24px 80px;background:linear-gradient(180deg,rgba(59,130,246,0.06) 0%,transparent 60%);border-bottom:1px solid var(--border)}
-.hero .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;font-weight:600}
-.hero h1{font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--bright);line-height:1.05;margin-bottom:20px;letter-spacing:-2px}
-.hero h1 span{color:var(--blue)}
-.hero .sub{font-size:clamp(15px,1.8vw,18px);color:var(--dim);max-width:800px;margin:0 auto;line-height:1.7}
-.hero .sub strong{color:var(--bright)}
+/* SPLIT HERO */
+.split-hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative}
+.split-side{position:relative;display:flex;align-items:center;justify-content:center;padding:40px;overflow:hidden;cursor:pointer;transition:all 0.3s}
+.split-side:hover{filter:brightness(1.1)}
+.split-side .bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.split-side .bg::after{content:'';position:absolute;inset:0}
+.split-side.cajun .bg{background-image:url('https://adc3k.com/trappeys-photos/Front5.jpg')}
+.split-side.cajun .bg::after{background:linear-gradient(135deg,rgba(206,24,30,0.85) 0%,rgba(10,5,5,0.9) 100%)}
+.split-side.tiger .bg{background-image:url('https://adc3k.com/henry-hub-6.jpg')}
+.split-side.tiger .bg::after{background:linear-gradient(225deg,rgba(124,58,237,0.85) 0%,rgba(10,5,30,0.9) 100%)}
+.split-content{position:relative;z-index:1;text-align:center;max-width:400px}
+.split-content .campus-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:10px}
+.split-content .campus-name{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:6px}
+.split-content .campus-loc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.split-content .campus-uni{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:16px}
+.split-content .campus-specs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.split-content .spec{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.1);padding:4px 10px;border-radius:4px}
+.split-content .campus-btn{display:inline-block;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:800;text-decoration:none;transition:all 0.2s;letter-spacing:0.5px}
+.split-content .campus-btn:hover{transform:scale(1.05);text-decoration:none}
+.cajun .campus-tag{color:var(--red)}
+.cajun .campus-btn{background:var(--red);color:var(--white)}
+.tiger .campus-tag{color:var(--gold)}
+.tiger .campus-btn{background:var(--gold);color:#1a0a2e}
+
+/* CENTER BADGE */
+.center-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;pointer-events:none}
+.center-badge .badge-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:6px;font-weight:700}
+.center-badge .badge-main{font-size:clamp(14px,2vw,18px);font-weight:900;color:var(--white);line-height:1.2;text-shadow:0 2px 20px rgba(0,0,0,0.8)}
+.center-badge .badge-la{font-family:'IBM Plex Mono',monospace;font-size:48px;font-weight:900;color:var(--blue);text-shadow:0 2px 20px rgba(0,0,0,0.8);margin-bottom:4px}
 
 /* STATS */
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:900px;margin:40px auto 0}
-.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
-.stat-box .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--blue)}
-.stat-box .lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+.stat-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 24px}
+.stat-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:1100px;margin:0 auto}
+.stat-box{text-align:center;padding:10px}
+.stat-box .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,2.5vw,26px);font-weight:800;color:var(--blue)}
+.stat-box .lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
 
 /* SECTIONS */
 .section{padding:72px 24px;max-width:1100px;margin:0 auto}
@@ -34,39 +57,16 @@ a:hover{text-decoration:underline}
 .section .sub{font-size:15px;color:var(--dim);margin-bottom:36px;max-width:700px;line-height:1.7}
 .divider{border:none;border-top:1px solid var(--border);margin:0}
 
-/* CAMPUS CARDS */
-.campus-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
-.campus-card{border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:transform 0.2s,border-color 0.2s}
-.campus-card:hover{transform:translateY(-4px);border-color:var(--blue)}
-.campus-card .campus-img{width:100%;height:200px;object-fit:cover;display:block}
-.campus-card .campus-body{padding:24px}
-.campus-card .campus-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
-.campus-card .campus-name{font-size:22px;font-weight:900;color:var(--bright);margin-bottom:6px}
-.campus-card .campus-loc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);margin-bottom:12px}
-.campus-card .campus-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-.campus-card .campus-stat{font-family:'IBM Plex Mono',monospace;font-size:11px}
-.campus-card .campus-stat span{font-weight:700}
-.campus-card .campus-btn{display:inline-block;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity 0.2s}
-.campus-card .campus-btn:hover{opacity:0.85;text-decoration:none}
-
-/* RAGIN CAJUN */
-.campus-card.cajun{background:#1a0e0e}
-.campus-card.cajun .campus-tag{color:var(--red)}
-.campus-card.cajun .campus-stat span{color:var(--red)}
-.campus-card.cajun .campus-btn{background:var(--red);color:var(--white)}
-
-/* TIGER */
-.campus-card.tiger{background:#1a0a2e}
-.campus-card.tiger .campus-tag{color:var(--gold)}
-.campus-card.tiger .campus-stat span{color:var(--gold)}
-.campus-card.tiger .campus-btn{background:var(--gold);color:#1a0a2e}
+/* MAP */
+.la-map{max-width:500px;margin:32px auto;text-align:center}
+.la-map svg{width:100%;max-width:400px}
 
 /* GAP CALLOUT */
 .gap-callout{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:28px;margin-top:24px;text-align:center}
 .gap-callout .gap-text{font-size:18px;font-weight:800;color:var(--blue);margin-bottom:8px}
 .gap-callout p{font-size:14px;color:var(--dim);line-height:1.7}
 
-/* GRID */
+/* FEATURE GRID */
 .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px}
 .feature-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
 .feature-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:8px}
@@ -74,6 +74,11 @@ a:hover{text-decoration:underline}
 
 /* CTA */
 .cta{background:linear-gradient(180deg,var(--surface) 0%,rgba(59,130,246,0.08) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--blue);color:var(--white);border:none;cursor:pointer;font-size:20px;display:none;align-items:center;justify-content:center;z-index:200;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:opacity 0.2s}
+.back-top:hover{opacity:0.85}
+.back-top.show{display:flex}
 
 /* FOOTER */
 footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border)}
@@ -85,85 +90,112 @@ footer .links a:hover{color:var(--blue)}
 footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 
 @media(max-width:768px){
-  .campus-grid{grid-template-columns:1fr}
-  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .split-hero{grid-template-columns:1fr;min-height:auto}
+  .split-side{min-height:50vh;padding:60px 24px}
+  .center-badge{display:none}
+  .stat-row{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="tag">Mission Critical Infrastructure</div>
-  <h1>Louisiana's <span>AI Infrastructure</span> Initiative</h1>
-  <p class="sub">Connecting every Louisiana university, K-12 school, and community to AI compute infrastructure. Two anchor sites. <strong>800V DC native. NVIDIA DSX reference design. Self-powered. American-made. Louisiana first.</strong></p>
+<!-- SPLIT HERO -->
+<div class="split-hero">
+  <a href="https://adc3k.com/trappeys" class="split-side cajun" style="text-decoration:none">
+    <div class="bg"></div>
+    <div class="split-content">
+      <div class="campus-tag">Ragin' Cajun Compute Campus</div>
+      <div class="campus-name">Trappeys Cannery</div>
+      <div class="campus-loc">Lafayette, Louisiana</div>
+      <div class="campus-uni">UL Lafayette Partnership</div>
+      <div class="campus-specs">
+        <span class="spec">112.5K sq ft</span>
+        <span class="spec">225 racks</span>
+        <span class="spec">29 MW</span>
+      </div>
+      <div class="campus-btn">Explore Campus &rarr;</div>
+    </div>
+  </a>
 
+  <a href="https://adc3k.com/lsu" class="split-side tiger" style="text-decoration:none">
+    <div class="bg"></div>
+    <div class="split-content">
+      <div class="campus-tag">Tiger Compute Campus</div>
+      <div class="campus-name">Willow Glen Terminal</div>
+      <div class="campus-loc">St. Gabriel, Louisiana</div>
+      <div class="campus-uni">LSU Partnership</div>
+      <div class="campus-specs">
+        <span class="spec">700 acres</span>
+        <span class="spec">2,000+ racks</span>
+        <span class="spec">260 MW</span>
+      </div>
+      <div class="campus-btn">Explore Campus &rarr;</div>
+    </div>
+  </a>
+
+  <div class="center-badge">
+    <div class="badge-la">LA</div>
+    <div class="badge-title">Louisiana's AI Infrastructure Initiative</div>
+    <div class="badge-main">Mission Critical</div>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
   <div class="stat-row">
     <div class="stat-box"><div class="val">2</div><div class="lbl">Anchor Sites</div></div>
     <div class="stat-box"><div class="val">289 MW</div><div class="lbl">Combined Capacity</div></div>
-    <div class="stat-box"><div class="val">45+</div><div class="lbl">Universities Eligible</div></div>
+    <div class="stat-box"><div class="val">45+</div><div class="lbl">Universities</div></div>
     <div class="stat-box"><div class="val">69</div><div class="lbl">School Districts</div></div>
-    <div class="stat-box"><div class="val">800V</div><div class="lbl">DC Native Power</div></div>
-    <div class="stat-box"><div class="val">$0</div><div class="lbl">GPU Infra in LA Today</div></div>
+    <div class="stat-box"><div class="val">800V DC</div><div class="lbl">Native Power</div></div>
+    <div class="stat-box"><div class="val">$0</div><div class="lbl">GPU Infra Today</div></div>
   </div>
 </div>
+
+<!-- LOUISIANA MAP -->
+<div class="section" style="text-align:center">
+  <div class="section-label">Connecting Louisiana</div>
+  <h2>Two Sites. One Network. Every School Benefits.</h2>
+  <div class="la-map">
+    <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Louisiana state outline (simplified) -->
+      <path d="M50,50 L200,30 L350,40 L400,60 L430,100 L450,150 L460,200 L440,250 L400,260 L380,300 L350,320 L320,310 L300,330 L280,350 L260,340 L240,360 L220,350 L200,370 L180,350 L160,340 L140,350 L120,330 L100,310 L80,280 L60,240 L50,200 L40,150 L45,100 Z" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.3)" stroke-width="2"/>
+      <!-- Lafayette marker -->
+      <circle cx="200" cy="280" r="10" fill="var(--red)" stroke="var(--white)" stroke-width="2"/>
+      <text x="200" y="310" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="var(--red)" font-weight="700">LAFAYETTE</text>
+      <text x="200" y="323" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--dim)">Ragin' Cajun Campus</text>
+      <!-- Baton Rouge / St Gabriel marker -->
+      <circle cx="310" cy="230" r="10" fill="var(--gold)" stroke="var(--white)" stroke-width="2"/>
+      <text x="310" y="218" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="var(--gold)" font-weight="700">ST. GABRIEL</text>
+      <text x="310" y="205" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--dim)">Tiger Compute Campus</text>
+      <!-- Connection line -->
+      <line x1="210" y1="280" x2="300" y2="230" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+      <!-- LONI fiber label -->
+      <text x="255" y="248" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="var(--blue)" opacity="0.7">LONI FIBER</text>
+      <!-- Henry Hub marker -->
+      <circle cx="170" cy="310" r="5" fill="var(--green)" stroke="var(--white)" stroke-width="1"/>
+      <text x="170" y="335" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="var(--green)">HENRY HUB</text>
+      <!-- New Iberia / First Solar -->
+      <circle cx="210" cy="320" r="4" fill="var(--blue)" stroke="var(--white)" stroke-width="1" opacity="0.7"/>
+      <text x="240" y="340" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="var(--blue)" opacity="0.7">FIRST SOLAR</text>
+      <!-- State label -->
+      <text x="250" y="160" text-anchor="middle" font-family="Inter,sans-serif" font-size="28" fill="rgba(59,130,246,0.15)" font-weight="900" letter-spacing="8">LOUISIANA</text>
+    </svg>
+  </div>
+  <p style="font-size:13px;color:var(--dim);max-width:600px;margin:0 auto;line-height:1.6">Connected by LONI's 1,600-mile fiber backbone. Henry Hub natural gas 40 miles from Lafayette. First Solar manufacturing 30 miles from Trappeys. Mississippi River cooling at Willow Glen. Everything Louisiana needs for AI infrastructure is already here.</p>
+</div>
+
+<hr class="divider">
 
 <!-- THE GAP -->
 <div class="section">
   <div class="section-label">The Problem</div>
   <h2>Florida Invested $180M. Louisiana Invested $0.</h2>
-  <p class="sub">The University of Florida built HiPerGator &mdash; the #3 supercomputer in the world. 504 Blackwell GPUs serving all 12 Florida state universities. Louisiana has zero dedicated GPU infrastructure at any state university. $37B+ in AI compute is being built in Louisiana (Meta, Amazon, Hut 8) &mdash; none of it serving universities.</p>
+  <p class="sub">The University of Florida built HiPerGator &mdash; the #3 supercomputer in the world. 504 Blackwell GPUs serving all 12 Florida state universities. Louisiana has zero dedicated GPU infrastructure at any state university. $37B+ in AI compute is being built in Louisiana (Meta $27B, Amazon $12B, Hut 8 $10B) &mdash; none of it serving universities or schools.</p>
 
   <div class="gap-callout">
     <div class="gap-text">Louisiana's AI Infrastructure Initiative fixes this.</div>
-    <p>ADC builds the infrastructure. Universities get compute access. K-12 schools get workforce pipeline. Investors get returns. The state gets ahead. No donation required &mdash; the energy-first business model funds itself.</p>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- TWO CAMPUSES -->
-<div class="section">
-  <div class="section-label">Two Anchor Sites</div>
-  <h2>One Initiative. Two Campuses. Every Louisiana School Benefits.</h2>
-  <p class="sub">Each site is paired with a major university partnership. Same NVIDIA technology. Same 800V DC architecture. Same Louisiana-first supply chain. Different cities, different scale, same mission.</p>
-
-  <div class="campus-grid">
-    <!-- RAGIN CAJUN -->
-    <div class="campus-card cajun">
-      <img src="https://adc3k.com/trappeys-photos/Front5.jpg" alt="Trappeys Cannery" class="campus-img">
-      <div class="campus-body">
-        <div class="campus-tag">Ragin' Cajun Compute Campus</div>
-        <div class="campus-name">Trappeys Cannery</div>
-        <div class="campus-loc">// Lafayette, Louisiana &mdash; UL Lafayette</div>
-        <div class="campus-stats">
-          <div class="campus-stat"><span>112.5K</span> sq ft</div>
-          <div class="campus-stat"><span>225</span> racks</div>
-          <div class="campus-stat"><span>29 MW</span></div>
-          <div class="campus-stat"><span>0.5 mi</span> to campus</div>
-        </div>
-        <p style="font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5">Historic 1929 cannery on the Vermilion River. 4 buildings, water tower, 2.05 MW First Solar rooftop. National Register approved. The proof of concept.</p>
-        <a href="https://adc3k.com/trappeys" class="campus-btn">Explore Ragin' Cajun Campus &rarr;</a>
-      </div>
-    </div>
-
-    <!-- TIGER -->
-    <div class="campus-card tiger">
-      <img src="https://adc3k.com/henry-hub-6.jpg" alt="Willow Glen Terminal" class="campus-img">
-      <div class="campus-body">
-        <div class="campus-tag">Tiger Compute Campus</div>
-        <div class="campus-name">Willow Glen Terminal</div>
-        <div class="campus-loc">// St. Gabriel, Louisiana &mdash; LSU</div>
-        <div class="campus-stats">
-          <div class="campus-stat"><span>700</span> acres</div>
-          <div class="campus-stat"><span>2,000+</span> racks</div>
-          <div class="campus-stat"><span>260 MW</span></div>
-          <div class="campus-stat"><span>20 min</span> to LSU</div>
-        </div>
-        <p style="font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5">Former 2,200 MW Entergy power station on the Mississippi River. 700 acres, existing grid, deepwater dock. The flagship.</p>
-        <a href="https://adc3k.com/lsu" class="campus-btn">Explore Tiger Campus &rarr;</a>
-      </div>
-    </div>
+    <p>We build the infrastructure. Universities get compute access. K-12 schools get workforce pipeline. Investors get returns. The state gets ahead. No donation required &mdash; the energy-first business model funds itself. American-made. Louisiana-powered. Mission critical.</p>
   </div>
 </div>
 
@@ -172,32 +204,32 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 <!-- WHY LOUISIANA -->
 <div class="section">
   <div class="section-label">Why Louisiana</div>
-  <h2>Every Advantage. One State.</h2>
+  <h2>Every Advantage. One State. No Other State Comes Close.</h2>
 
   <div class="feature-grid">
     <div class="feature-card">
       <h3>Cheapest Power in the Country</h3>
-      <p>40 miles from Henry Hub &mdash; the national benchmark. $0.04&ndash;0.058/kWh behind the meter. Virginia pays $0.12. California pays $0.27. No grid dependency. No rate hikes.</p>
+      <p>40 miles from Henry Hub &mdash; the national benchmark for natural gas. $0.04&ndash;0.058/kWh behind the meter. Virginia pays $0.12. California pays $0.27. We don't need the grid. We generate our own power.</p>
     </div>
     <div class="feature-card">
-      <h3>Solar Panels Made Next Door</h3>
-      <p>First Solar's $1.1 billion factory in New Iberia. American-made Series 7 TR1 panels. 30 miles from Lafayette, 90 miles from Willow Glen. Louisiana supply chain.</p>
+      <h3>Solar Panels Made in Louisiana</h3>
+      <p>First Solar's $1.1 billion factory in New Iberia. American-made Series 7 TR1 panels. 30 miles from Lafayette, 90 miles from Willow Glen. Louisiana supply chain. Louisiana jobs.</p>
     </div>
     <div class="feature-card">
-      <h3>800V DC Native Architecture</h3>
-      <p>96% power delivery efficiency vs 83% traditional. 45% less copper. Zero rack PSUs. Built to NVIDIA's DSX reference design. The most efficient AI factory architecture on the planet.</p>
+      <h3>800V DC &mdash; Most Efficient Architecture</h3>
+      <p>96% power delivery efficiency vs 83% traditional. 45% less copper. Built to NVIDIA's DSX reference design. The same architecture powering the world's largest AI factories.</p>
     </div>
     <div class="feature-card">
-      <h3>Strongest Incentive Stack in the Nation</h3>
-      <p>45&ndash;55% historic tax credits. 80% property tax abatement. 20-year sales tax exemption. 30% solar ITC. FREE workforce training. 19+ programs that stack.</p>
+      <h3>19+ Incentive Programs That Stack</h3>
+      <p>45&ndash;55% historic tax credits. 80% property tax abatement. 20-year sales tax exemption. 30% solar ITC. FREE workforce training. Federal + state + local &mdash; all on the same project.</p>
     </div>
     <div class="feature-card">
-      <h3>Federal Government Backing</h3>
-      <p>100% bonus depreciation permanent. Opportunity Zones. CHIPS Act. $1.355B broadband funding to Louisiana. The Big Beautiful Bill put America first &mdash; Louisiana is leading.</p>
+      <h3>Federal &amp; State Government Backing</h3>
+      <p>100% bonus depreciation permanent. Opportunity Zones. CHIPS Act. $1.355B broadband funding. LED FastStart #1 for 13 years. The Big Beautiful Bill put America first. Louisiana is leading.</p>
     </div>
     <div class="feature-card">
-      <h3>Every Vendor Within Driving Distance</h3>
-      <p>Louisiana Cat (generators), First Solar (panels), Eaton (800V DC), ATMOS Energy (gas). All American-made. All in Louisiana. One team, two projects.</p>
+      <h3>Every Vendor in Louisiana</h3>
+      <p>Louisiana Cat (generators). First Solar (panels). Eaton (800V DC). ATMOS Energy (gas). Diamond Green Diesel (renewable fuel). All American-made. All within driving distance.</p>
     </div>
   </div>
 </div>
@@ -211,9 +243,8 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--blue)">Eligible?</span></h2>
 
     <div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
-      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college or university can participate.</p>
-      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training &mdash; we can help. Louisiana's AI Infrastructure Initiative connects schools to compute resources, grant funding, workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education and research.</p>
-      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What you're eligible for:</strong> NSF MRI grants (up to $4M), NSF EPSCoR ($10M), DOE grid modernization ($5&ndash;20M), LED FastStart (FREE workforce training), state R&amp;D tax credits, and more. We help you identify which programs fit your institution.</p>
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college, university, or K-12 school can participate.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training &mdash; we can help. We connect schools to compute resources, grant funding ($28&ndash;55M+ eligible), workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education.</p>
       <p style="font-size:13px;color:var(--blue);font-weight:700">Technology is changing fast. This is mission critical. Don't be last in line.</p>
     </div>
 
@@ -224,6 +255,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
       <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
       <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
       <input type="text" name="organization" placeholder="Organization (university, school, company, etc.)" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="tel" name="phone" placeholder="Phone Number" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
       <select name="interest" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-size:15px;font-family:'Inter',sans-serif;appearance:auto">
         <option value="" disabled selected>I'm interested in...</option>
         <option value="research">Research Partnership (University)</option>
@@ -242,6 +274,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 
     <div style="margin-top:24px;font-size:13px;color:var(--dim)">
       <p><strong style="color:var(--bright)">info@louisianaai.net</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">louisianaai.net</strong></p>
+      <p style="margin-top:4px">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana</p>
     </div>
   </div>
 </div>
@@ -255,8 +288,23 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     <a href="https://adc3k.com/reference">Reference Library</a>
     <a href="https://adc3k.com">ADC Home</a>
   </div>
-  <div class="legal">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana<br>American-made. Louisiana-powered. Mission critical.</div>
+  <div class="legal">American-made. Louisiana-powered. Mission critical.</div>
 </footer>
+
+<!-- BACK TO TOP BUTTON -->
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&uarr;</button>
+
+<script>
+// Show back-to-top button on scroll
+window.addEventListener('scroll', function() {
+  var btn = document.querySelector('.back-top');
+  if (window.scrollY > 400) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
+});
+</script>
 
 </body>
 </html>
