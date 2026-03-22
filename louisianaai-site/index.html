@@ -202,7 +202,11 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
       <h3 style="font-size:20px;font-weight:800;color:var(--bright);margin-bottom:10px">New to AI Infrastructure?</h3>
       <p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px">Get a complete breakdown of what an AI factory is, how 800V DC power works, why Louisiana has the best incentives, and how tokens are the new commodity. No jargon. Plain English.</p>
     </div>
-    <a href="https://adc3k.com/learn" style="display:inline-block;padding:14px 24px;border-radius:8px;background:var(--blue);color:var(--white);font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Learn About AI Infrastructure &rarr;</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a href="https://adc3k.com/learn" style="display:inline-block;padding:14px 24px;border-radius:8px;background:var(--blue);color:var(--white);font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Learn About AI &rarr;</a>
+      <a href="https://adc3k.com/reference" style="display:inline-block;padding:14px 24px;border-radius:8px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue);font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Reference Library &rarr;</a>
+      <a href="https://louisianaai.net/documents" style="display:inline-block;padding:14px 24px;border-radius:8px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue);font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Filing Documents &rarr;</a>
+    </div>
   </div>
 
   <!-- RIGHT: GET YOUR SCHOOL IN -->
@@ -501,16 +505,28 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     <p style="font-size:15px;color:var(--dim);margin-bottom:24px;line-height:1.7">Federal and state funding for AI infrastructure is allocated and waiting to be claimed. Multiple programs have expiration dates. Nobody is filing the paperwork. That's what this initiative fixes.</p>
 
     <!-- COUNTDOWN TIMERS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div style="background:rgba(255,82,82,0.12);border:1px solid rgba(255,82,82,0.3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:700">NVIDIA Academic Grant</div>
+        <div id="cd-nvidia2" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--red)">...</div>
+        <div style="font-size:10px;color:var(--dim);margin-top:4px">Deadline: March 31, 2026</div>
+      </div>
+      <div style="background:rgba(255,82,82,0.12);border:1px solid rgba(255,82,82,0.3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:700">DOE SPARK Concept Paper</div>
+        <div id="cd-doe2" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--red)">...</div>
+        <div style="font-size:10px;color:var(--dim);margin-top:4px">Deadline: April 2, 2026</div>
+      </div>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
-      <div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.2);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:700">Angel Investor Tax Credit</div>
-        <div id="countdown-angel" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--red)">Loading...</div>
+      <div style="background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.2);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:700">Angel Investor Tax Credit</div>
+        <div id="countdown-angel" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--gold)">...</div>
         <div style="font-size:10px;color:var(--dim);margin-top:4px">Expires June 30, 2026 &mdash; first come, first served</div>
       </div>
       <div style="background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.2);border-radius:10px;padding:16px;text-align:center">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:700">Solar + Battery ITC (30%)</div>
-        <div id="countdown-solar" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--gold)">Loading...</div>
-        <div style="font-size:10px;color:var(--dim);margin-top:4px">Construction must begin before July 4, 2026</div>
+        <div id="countdown-solar" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--gold)">...</div>
+        <div style="font-size:10px;color:var(--dim);margin-top:4px">Must spend 5% by July 3, 2026</div>
       </div>
     </div>
 
@@ -620,7 +636,9 @@ function updateCountdowns() {
     'cd-angel-top': new Date('2026-06-30T23:59:59').getTime(),
     'cd-solar-top': new Date('2026-07-03T23:59:59').getTime(),
     'countdown-angel': new Date('2026-06-30T23:59:59').getTime(),
-    'countdown-solar': new Date('2026-07-04T23:59:59').getTime()
+    'countdown-solar': new Date('2026-07-03T23:59:59').getTime(),
+    'cd-nvidia2': new Date('2026-03-31T23:59:59').getTime(),
+    'cd-doe2': new Date('2026-04-02T23:59:59').getTime()
   };
   function fmt(diff) {
     if (diff <= 0) return 'EXPIRED';
