@@ -44,6 +44,7 @@
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
     { "source": "/power", "destination": "/power-architecture.html" },
     { "source": "/reference", "destination": "/reference.html" },
+    { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
