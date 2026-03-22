@@ -87,11 +87,24 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
+.scarcity-box{background:var(--card);border:1px solid var(--red);border-radius:10px;padding:32px;margin-top:28px}
+.scarcity-box .scarcity-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+.scarcity-box h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.scarcity-box p{font-size:14px;color:var(--dim);line-height:1.7}
+.scarcity-box .mono{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red);font-weight:600}
+
+.qual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.qual-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.qual-card h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:10px}
+.qual-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.qual-card .qual-highlight{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);font-weight:600;margin-top:8px}
+
 @media(max-width:768px){
   .stat-row{grid-template-columns:repeat(2,1fr)}
   .econ-grid{grid-template-columns:1fr}
   .comp-grid{grid-template-columns:1fr}
   .phases{grid-template-columns:1fr}
+  .qual-grid{grid-template-columns:1fr}
   .tab-btn{font-size:10px;padding:12px 10px}
 }
 </style>
@@ -827,6 +840,131 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   </div>
 </div>
 
+<!-- COMPETITIVE LANDSCAPE -->
+<hr class="section-divider">
+<div class="section">
+  <div class="section-label">Competitive Landscape</div>
+  <h2>Validated by the Largest Players in AI Infrastructure</h2>
+  <p class="sub">The biggest names in AI compute are building in the Gulf South &mdash; for the same reasons ADC chose Louisiana. The difference: ADC is the only one serving universities.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Hut 8 / River Bend</div>
+      <div class="comp-val">$10B &middot; 611 acres &middot; 245 MW</div>
+      <p>Google backstop. 45 minutes north of Trappeys. They chose Louisiana for the same reasons &mdash; power, land, river cooling, and incentives.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">CoreWeave</div>
+      <div class="comp-val">$71B valuation</div>
+      <p>NVIDIA's largest neocloud partner. Proves GPU-as-a-service works at massive scale. The market is real and growing.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Crusoe Energy</div>
+      <div class="comp-val">$10B+ valuation</div>
+      <p>Energy-first model &mdash; same approach as ADC. Revenue from $152M to $2B in two years. Proof that energy-first AI infrastructure prints money.</p>
+    </div>
+  </div>
+
+  <div class="gap-callout">
+    <div class="gap-text">Zero NVIDIA Neoclouds Between Houston and Atlanta</div>
+    <p>The entire Gulf Coast corridor has no NVIDIA-certified neocloud provider. ADC fills that gap. $37B+ in AI compute is being built in Louisiana &mdash; none of it serving universities.</p>
+  </div>
+</div>
+
+<!-- MARKET DEMAND (GPU SCARCITY) -->
+<hr class="section-divider">
+<div class="section">
+  <div class="section-label">Market Demand</div>
+  <h2>Structural Supply Shortage</h2>
+  <p class="sub">Demand for GPU compute is not theoretical. It is measurable, persistent, and accelerating.</p>
+
+  <div class="scarcity-box">
+    <div class="scarcity-tag">Real-Time Market Data &mdash; March 20, 2026</div>
+    <h3>Every GPU on RunPod: Sold Out</h3>
+    <p>RunPod is the world's largest cloud GPU marketplace. On March 20, 2026, ADC attempted to rent a single GPU &mdash; any type, any region, any tier. Every configuration returned: <span class="mono">SOLD OUT</span>. This is structural evidence that global GPU demand exceeds supply.</p>
+  </div>
+</div>
+
+<!-- OPERATOR QUALIFICATIONS -->
+<hr class="section-divider">
+<div class="section">
+  <div class="section-label">Operator Qualifications</div>
+  <h2>What ADC Brings</h2>
+  <p class="sub">ADC is not a startup entering infrastructure. It is an infrastructure company entering AI compute &mdash; backed by 25+ years of remote operations experience.</p>
+
+  <div class="qual-grid">
+    <div class="qual-card">
+      <h3>Licensed Louisiana GC</h3>
+      <p>Full general contractor license. Self-perform construction. No third-party markup.</p>
+      <div class="qual-highlight">Advantage Design &amp; Construction</div>
+    </div>
+    <div class="qual-card">
+      <h3>25+ Year Remote Ops</h3>
+      <p>Scott Tomsu &mdash; ROV Superintendent, deepwater, West Africa, worldwide. The skill set that runs unmanned subsea systems runs AI factories.</p>
+      <div class="qual-highlight">ROV / Robotics / Remote Systems</div>
+    </div>
+    <div class="qual-card">
+      <h3>Engineering Complete</h3>
+      <p>Full engineering packages for power, cooling, networking, structural. Ready to permit and build.</p>
+      <div class="qual-highlight">Permit-Ready Packages</div>
+    </div>
+    <div class="qual-card">
+      <h3>NVIDIA Registered</h3>
+      <p>NPN registered. NCA-AIIO certified. Path: NPN > DGX-Ready > NCP > Reference Platform.</p>
+      <div class="qual-highlight">NPN + NCA-AIIO Certified</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVATION REQUIREMENTS -->
+<hr class="section-divider">
+<div class="section">
+  <div class="section-label">Activation Requirements</div>
+  <h2>Clear Go / No-Go Triggers</h2>
+  <p class="sub">No speculative spend. No permitting risk without committed capital.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Pre-Activation Checklist</h3>
+      <div class="econ-row">
+        <span class="econ-label">Gate 1</span>
+        <span class="econ-value">Investor round closes</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">Gate 2</span>
+        <span class="econ-value">Site LOI signed</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">Gate 3</span>
+        <span class="econ-value">Electrical permit</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">Gate 4</span>
+        <span class="econ-value">ITEP filing with LED</span>
+      </div>
+    </div>
+    <div class="econ-card">
+      <h3>Operations Model</h3>
+      <div class="econ-row">
+        <span class="econ-label">On-site staff</span>
+        <span class="econ-value">Near zero</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">NOC management</span>
+        <span class="econ-value">Remote NOC</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">Workload routing</span>
+        <span class="econ-value">Mission Control AI</span>
+      </div>
+      <div class="econ-row">
+        <span class="econ-label">Incident response</span>
+        <span class="econ-value">Remote + on-call</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CALL TO ACTION / GET YOUR SCHOOL IN -->
 <div class="cta-block" style="background:linear-gradient(180deg,var(--surface) 0%,rgba(124,58,237,0.15) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
   <div style="max-width:700px;margin:0 auto">
@@ -890,12 +1028,12 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 <script>
 // Tab mapping: which section-labels belong to which tab
 const tabMap = {
-  'overview': ['The Opportunity', 'The Gap'],
+  'overview': ['The Opportunity', 'The Gap', 'Competitive Landscape', 'Market Demand'],
   'site': ['The Site', 'Power Architecture', 'Site History'],
   'technology': ['The Technology', 'Supply Chain', 'What LSU Gets'],
   'education': ['Research & Education Impact', 'K-12 Education Pipeline'],
   'energy': ['Mission Critical Infrastructure', 'ADC Network'],
-  'investors': ['Phased Buildout', 'Financial Model', 'Incentive Stack', 'What ADC Gets'],
+  'investors': ['Phased Buildout', 'Financial Model', 'Incentive Stack', 'What ADC Gets', 'Operator Qualifications', 'Activation Requirements'],
   'schools': []
 };
 
