@@ -1,3 +1,5 @@
+> **Voice Pronunciation Note:** When deploying to Bland.ai, replace all "AI" with "A eye" for correct pronunciation.
+
 # Investor Relations & Infrastructure Bot — Louisiana's AI Infrastructure Initiative
 
 ## Voice Settings
