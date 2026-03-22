@@ -46,6 +46,7 @@
     { "source": "/reference", "destination": "/reference.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
+    { "source": "/leadership", "destination": "/leadership.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
