@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Document Library — Louisiana's AI Infrastructure Initiative. Every federal, state, and local program guide for AI infrastructure funding.">
+<title>Document Library | Louisiana's AI Infrastructure Initiative</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--green:#00e87a;--red:#CE181E;--gold:#fbbf24;--blue:#3b82f6;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.nav .brand{font-weight:800;font-size:14px;color:var(--bright);text-decoration:none}
+.nav .brand span{color:var(--blue)}
+.nav .links{display:flex;gap:8px}
+.nav .links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;text-decoration:none}
+.nav .links a:hover{color:var(--bright);background:rgba(255,255,255,0.05)}
+
+.header{text-align:center;padding:60px 24px 40px;border-bottom:1px solid var(--border)}
+.header h1{font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--bright);margin-bottom:8px}
+.header h1 span{color:var(--blue)}
+.header p{font-size:15px;color:var(--dim);max-width:700px;margin:0 auto}
+
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto}
+.tab{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--dim);padding:14px 20px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
+.tab:hover{color:var(--bright)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+.docs{max-width:900px;margin:0 auto;padding:24px}
+
+.doc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.doc-card .doc-info h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.doc-card .doc-info .doc-agency{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.doc-card .doc-info p{font-size:12px;color:var(--dim);line-height:1.5}
+.doc-card .doc-info .doc-deadline{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;margin-top:6px}
+.doc-card .doc-info .doc-deadline.urgent{color:var(--red)}
+.doc-card .doc-info .doc-deadline.upcoming{color:var(--gold)}
+.doc-card .doc-info .doc-deadline.open{color:var(--green)}
+.doc-card .doc-btn{display:inline-block;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue)}
+.doc-card .doc-btn:hover{background:rgba(59,130,246,0.2);text-decoration:none}
+
+.section-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:24px 0 12px;border-bottom:1px solid var(--border);margin-bottom:16px}
+
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:12px;color:var(--dim)}
+
+@media(max-width:768px){.doc-card{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="https://louisianaai.net" class="brand">Louisiana's <span>AI Infrastructure Initiative</span></a>
+  <div class="links">
+    <a href="https://louisianaai.net">Home</a>
+    <a href="https://adc3k.com/trappeys">UL Campus</a>
+    <a href="https://adc3k.com/lsu">LSU Campus</a>
+    <a href="https://adc3k.com/learn">Learn</a>
+  </div>
+</div>
+
+<div class="header">
+  <h1>Document <span>Library</span></h1>
+  <p>Every federal, state, and local filing guide for AI infrastructure funding in Louisiana. One place. Always current. Register to download.</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="filterDocs('all')">All Programs (25)</button>
+  <button class="tab" onclick="filterDocs('federal')">Federal (9)</button>
+  <button class="tab" onclick="filterDocs('state')">State (9)</button>
+  <button class="tab" onclick="filterDocs('local')">Local (3)</button>
+  <button class="tab" onclick="filterDocs('nvidia')">NVIDIA (4)</button>
+</div>
+
+<div class="docs">
+
+<!-- URGENT -->
+<div class="section-title" style="color:var(--red)">&#9888; URGENT — DEADLINES WITHIN 30 DAYS</div>
+
+<div class="doc-card" data-cat="nvidia">
+  <div class="doc-info">
+    <div class="doc-agency">NVIDIA</div>
+    <h3>NVIDIA Academic Grant Program</h3>
+    <p>GPU hardware grants for university research. Free GPUs for qualifying institutions.</p>
+    <div class="doc-deadline urgent">&#9200; DEADLINE: MARCH 31, 2026 — <span id="cd-doc-nvidia"></span></div>
+  </div>
+  <a href="https://mynvidia.force.com/HardwareGrant/s/Application" target="_blank" class="doc-btn">Apply Now &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">DOE</div>
+    <h3>DOE GRIP Round 3 (SPARK) — Concept Paper</h3>
+    <p>Grid modernization grants for 800V DC microgrid and renewable integration.</p>
+    <div class="doc-deadline urgent">&#9200; DEADLINE: APRIL 2, 2026 — <span id="cd-doc-doe"></span></div>
+  </div>
+  <a href="https://infrastructure-exchange.energy.gov" target="_blank" class="doc-btn">Filing Portal &rarr;</a>
+</div>
+
+<!-- FEDERAL -->
+<div class="section-title">Federal Programs</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">NSF</div>
+    <h3>NSF MRI — Major Research Instrumentation ($100K–$4M)</h3>
+    <p>GPU compute infrastructure grants for universities. 30% cost-share required for doctoral institutions. Track 1: up to $1.4M. Track 2: up to $4M.</p>
+    <div class="doc-deadline upcoming">Next window: Oct 15 – Nov 16, 2026 (FY 2026 is dark)</div>
+  </div>
+  <a href="https://www.research.gov" target="_blank" class="doc-btn">Research.gov &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">NSF</div>
+    <h3>NSF E-CORE (replaces EPSCoR RII Track-1) — Up to $10M</h3>
+    <p>Multi-institutional research infrastructure. Louisiana is EPSCoR-eligible. Must align with state S&T plan. Replaces old RII Track-1.</p>
+    <div class="doc-deadline upcoming">Multiple windows through 2026. Contact LA EPSCoR office.</div>
+  </div>
+  <a href="https://www.research.gov" target="_blank" class="doc-btn">Research.gov &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">IRS</div>
+    <h3>30% Federal Solar ITC — Investment Tax Credit</h3>
+    <p>30% tax credit on solar and battery installations. Must begin construction (spend 5% of costs) before deadline.</p>
+    <div class="doc-deadline urgent">&#9200; Safe harbor: spend 5% by July 3, 2026</div>
+  </div>
+  <a href="https://www.irs.gov/credits-deductions/businesses/investment-credit" target="_blank" class="doc-btn">IRS Guide &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">IRS / OBBBA</div>
+    <h3>100% Bonus Depreciation — Permanent</h3>
+    <p>Full immediate expensing of all GPU servers, networking, cooling. No application — claim on tax return. Retroactive to Jan 19, 2025.</p>
+    <div class="doc-deadline open">No deadline — permanent under OBBBA</div>
+  </div>
+  <a href="#" class="doc-btn">Guide (PDF) &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">TREASURY</div>
+    <h3>Opportunity Zones — Tax-Free Capital Gains</h3>
+    <p>Set up a Qualified Opportunity Fund. Invest capital gains. 10+ years = tax-free. 30% rural step-up bonus under OBBBA.</p>
+    <div class="doc-deadline open">No expiration — permanent under OBBBA</div>
+  </div>
+  <a href="https://www.irs.gov/credits-deductions/businesses/opportunity-zones" target="_blank" class="doc-btn">IRS Portal &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">TREASURY / CDFI</div>
+    <h3>New Markets Tax Credits — 39% Over 7 Years</h3>
+    <p>Equity investments in low-income census tracts through CDEs. 20% increase for rural allocations.</p>
+    <div class="doc-deadline open">Rolling — through CDEs</div>
+  </div>
+  <a href="https://www.cdfifund.gov/programs-training/programs/new-markets-tax-credit" target="_blank" class="doc-btn">CDFI Fund &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="federal">
+  <div class="doc-info">
+    <div class="doc-agency">NTIA</div>
+    <h3>BEAD Broadband — $1.355B to Louisiana</h3>
+    <p>Broadband infrastructure funding. Louisiana first state approved. Anchor institution participation available.</p>
+    <div class="doc-deadline open">Awards being distributed. ~$500M non-deployment funds may be available.</div>
+  </div>
+  <a href="https://www.connectla.org" target="_blank" class="doc-btn">ConnectLA &rarr;</a>
+</div>
+
+<!-- STATE -->
+<div class="section-title">State of Louisiana Programs</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>ITEP — 80% Property Tax Abatement, 10 Years</h3>
+    <p>Must file BEFORE groundbreaking. Pre-qualify with LED as "emerging industry" under NAICS code.</p>
+    <div class="doc-deadline urgent">Must file before construction begins — no exceptions</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov/incentive/industrial-tax-exemption" target="_blank" class="doc-btn">LED Portal &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>Act 730 — 20-Year Sales Tax Exemption</h3>
+    <p>AI factory equipment exempt from state and local sales tax. Requires $200M+ capital and 50+ jobs.</p>
+    <div class="doc-deadline open">Rolling application through LED</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov" target="_blank" class="doc-btn">LED Portal &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>Quality Jobs Program — 6% Payroll Rebate, 10 Years</h3>
+    <p>Plus 1.5% project facility expense rebate. Only 5 new jobs required for small companies.</p>
+    <div class="doc-deadline open">Rolling — apply through LED</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov/incentive/quality-jobs" target="_blank" class="doc-btn">Apply &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>Enterprise Zone — $3,500/Job + Sales Tax Rebate</h3>
+    <p>One-time credit per net new job. Minimum 5 jobs within 24 months. 50% from targeted groups.</p>
+    <div class="doc-deadline open">Rolling — apply through LED</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov/incentive/enterprise-zone" target="_blank" class="doc-btn">Apply &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>Angel Investor Tax Credit — 25–35%</h3>
+    <p>25% credit on investments in LED-certified businesses. 35% in qualifying parishes. Up to $720K/business/year.</p>
+    <div class="doc-deadline urgent">&#9200; EXPIRES JUNE 30, 2026 — first come, first served</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov/incentive/angel-investor-tax-credit" target="_blank" class="doc-btn">Apply &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED / LDR</div>
+    <h3>R&D Tax Credit — Up to 30%</h3>
+    <p>30% for companies with fewer than 50 employees. $12M annual statewide cap.</p>
+    <div class="doc-deadline upcoming">FY 2025-2026 cap EXHAUSTED. Next allocation: July 1, 2026</div>
+  </div>
+  <a href="https://revenue.louisiana.gov" target="_blank" class="doc-btn">LDR Portal &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LED</div>
+    <h3>LED FastStart — FREE Workforce Training</h3>
+    <p>#1 ranked state workforce program 13 years running. Custom AI compute technician training. Zero cost.</p>
+    <div class="doc-deadline open">Rolling — contact LED FastStart directly</div>
+  </div>
+  <a href="https://www.opportunitylouisiana.gov/incentive/led-faststart" target="_blank" class="doc-btn">Apply &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">LOCAL GOVERNMENT</div>
+    <h3>Restoration Tax Abatement — 10-Year Property Tax</h3>
+    <p>Up to 10-year abatement on renovations to existing commercial structures in development districts or OZs.</p>
+    <div class="doc-deadline open">File before construction starts</div>
+  </div>
+  <a href="#" class="doc-btn">Guide (PDF) &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="state">
+  <div class="doc-info">
+    <div class="doc-agency">BOARD OF REGENTS</div>
+    <h3>LEQSF / Board of Regents Support Fund</h3>
+    <p>State research funding for Louisiana universities. Traditional, Enhancement, and Industrial Ties subprograms.</p>
+    <div class="doc-deadline upcoming">Annual cycle — typically fall submissions</div>
+  </div>
+  <a href="https://regents.la.gov/divisions/research-and-academics/" target="_blank" class="doc-btn">BoR Portal &rarr;</a>
+</div>
+
+<!-- LOCAL -->
+<div class="section-title">Local / Parish Programs</div>
+
+<div class="doc-card" data-cat="local">
+  <div class="doc-info">
+    <div class="doc-agency">PARISH IDB</div>
+    <h3>PILOT Agreements — 10–40 Year Property Tax Reduction</h3>
+    <p>Payment-in-lieu-of-taxes through parish Industrial Development Boards. Precedent: Hut 8 / West Feliciana — 30-year PILOT.</p>
+    <div class="doc-deadline open">Negotiated — contact parish IDB. New rule: requires LDR + LED approval after July 1, 2025.</div>
+  </div>
+  <a href="#" class="doc-btn">Contact Parish &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="local">
+  <div class="doc-info">
+    <div class="doc-agency">PARISH IDB</div>
+    <h3>IDB Revenue Bonds — Tax-Exempt Financing</h3>
+    <p>Tax-exempt revenue bonds through parish IDB. Louisiana has issued $12.65B+ in private activity bonds. 90–120 day process.</p>
+    <div class="doc-deadline open">Rolling — 90-120 day process</div>
+  </div>
+  <a href="#" class="doc-btn">Contact Parish &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="local">
+  <div class="doc-info">
+    <div class="doc-agency">LEDA</div>
+    <h3>LEDA — Lafayette Economic Development Authority</h3>
+    <p>Site selection, incentive counseling, workforce development advisory. Local conduit for state programs.</p>
+    <div class="doc-deadline open">Open — contact LEDA directly</div>
+  </div>
+  <a href="https://www.lafayette.org" target="_blank" class="doc-btn">LEDA Website &rarr;</a>
+</div>
+
+<!-- NVIDIA -->
+<div class="section-title">NVIDIA Programs</div>
+
+<div class="doc-card" data-cat="nvidia">
+  <div class="doc-info">
+    <div class="doc-agency">NVIDIA</div>
+    <h3>NVIDIA Partner Network (NPN) — Registration</h3>
+    <p>5-minute web form. First step toward DGX-Ready and NCP certification. No cost.</p>
+    <div class="doc-deadline open">Open — 5 minutes to complete</div>
+  </div>
+  <a href="https://www.nvidia.com/en-us/about-nvidia/partners/" target="_blank" class="doc-btn">Register &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="nvidia">
+  <div class="doc-info">
+    <div class="doc-agency">NVIDIA</div>
+    <h3>DGX-Ready Certification</h3>
+    <p>Facility certification for hosting NVIDIA DGX systems. Requirements: power, cooling, networking, physical security.</p>
+    <div class="doc-deadline open">After NPN registration — contact NVIDIA partner team</div>
+  </div>
+  <a href="#" class="doc-btn">Guide &rarr;</a>
+</div>
+
+<div class="doc-card" data-cat="nvidia">
+  <div class="doc-info">
+    <div class="doc-agency">NVIDIA</div>
+    <h3>NVIDIA Cloud Partner (NCP)</h3>
+    <p>Full cloud partner certification. Requires operational facility + DGX-Ready status.</p>
+    <div class="doc-deadline open">After DGX-Ready — contact NVIDIA</div>
+  </div>
+  <a href="#" class="doc-btn">Guide &rarr;</a>
+</div>
+
+</div>
+
+<footer>
+  <p><strong style="color:var(--bright)">Louisiana's AI Infrastructure Initiative</strong></p>
+  <p style="margin-top:8px">(337) 448-4242 &nbsp;|&nbsp; info@louisianaai.net &nbsp;|&nbsp; <a href="https://louisianaai.net">louisianaai.net</a></p>
+  <p style="margin-top:8px">American-made. Louisiana-powered. Mission critical.</p>
+</footer>
+
+<script>
+function filterDocs(cat) {
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  event.target.classList.add('active');
+
+  var cards = document.querySelectorAll('.doc-card');
+  var titles = document.querySelectorAll('.section-title');
+
+  if (cat === 'all') {
+    for (var i = 0; i < cards.length; i++) cards[i].style.display = '';
+    for (var i = 0; i < titles.length; i++) titles[i].style.display = '';
+    return;
+  }
+
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].style.display = cards[i].getAttribute('data-cat') === cat ? '' : 'none';
+  }
+  // Show relevant section titles
+  var catTitles = {federal:'Federal',state:'State',local:'Local',nvidia:'NVIDIA'};
+  for (var i = 0; i < titles.length; i++) {
+    var text = titles[i].textContent;
+    if (text.indexOf('URGENT') >= 0) {
+      titles[i].style.display = '';
+    } else if (text.indexOf(catTitles[cat] || '---') >= 0) {
+      titles[i].style.display = '';
+    } else {
+      titles[i].style.display = 'none';
+    }
+  }
+}
+
+// Countdown timers for urgent docs
+function updateDocCountdowns() {
+  var now = new Date().getTime();
+  var deadlines = {
+    'cd-doc-nvidia': new Date('2026-03-31T23:59:59').getTime(),
+    'cd-doc-doe': new Date('2026-04-02T23:59:59').getTime()
+  };
+  for (var id in deadlines) {
+    var el = document.getElementById(id);
+    if (el) {
+      var diff = deadlines[id] - now;
+      if (diff <= 0) { el.textContent = 'EXPIRED'; continue; }
+      var d = Math.floor(diff / (1000*60*60*24));
+      var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      var m = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var s = Math.floor((diff % (1000*60)) / 1000);
+      el.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
+    }
+  }
+}
+updateDocCountdowns();
+setInterval(updateDocCountdowns, 1000);
+</script>
+
+</body>
+</html>

@@ -118,8 +118,30 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 </div>
 
 <!-- MISSION CRITICAL BAR -->
-<div class="mc-bar">
-  <div class="mc-text">Mission Critical Infrastructure &mdash; Time Is Now</div>
+<div class="mc-bar" style="padding:16px 24px">
+  <div class="mc-text" style="margin-bottom:6px">Mission Critical Infrastructure &mdash; Register Now Before Time Runs Out</div>
+  <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:8px">
+    <div style="text-align:center;background:rgba(0,0,0,0.3);border-radius:8px;padding:8px 16px;min-width:180px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase">NVIDIA Academic Grant</div>
+      <div id="cd-nvidia" style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:900;color:var(--white)">...</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.5)">Deadline: March 31, 2026</div>
+    </div>
+    <div style="text-align:center;background:rgba(0,0,0,0.3);border-radius:8px;padding:8px 16px;min-width:180px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase">DOE SPARK Concept Paper</div>
+      <div id="cd-doe" style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:900;color:var(--white)">...</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.5)">Deadline: April 2, 2026</div>
+    </div>
+    <div style="text-align:center;background:rgba(0,0,0,0.3);border-radius:8px;padding:8px 16px;min-width:180px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase">Angel Investor Tax Credit</div>
+      <div id="cd-angel-top" style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:900;color:var(--white)">...</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.5)">Expires: June 30, 2026</div>
+    </div>
+    <div style="text-align:center;background:rgba(0,0,0,0.3);border-radius:8px;padding:8px 16px;min-width:180px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase">Solar ITC Safe Harbor</div>
+      <div id="cd-solar-top" style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:900;color:var(--white)">...</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.5)">Must spend 5% by July 3, 2026</div>
+    </div>
+  </div>
 </div>
 
 <!-- SPLIT HERO -->
@@ -591,23 +613,35 @@ window.addEventListener('scroll', function() {
 
 // Countdown timers
 function updateCountdowns() {
-  var angel = new Date('2026-06-30T23:59:59').getTime();
-  var solar = new Date('2026-07-04T23:59:59').getTime();
   var now = new Date().getTime();
+  var deadlines = {
+    'cd-nvidia': new Date('2026-03-31T23:59:59').getTime(),
+    'cd-doe': new Date('2026-04-02T23:59:59').getTime(),
+    'cd-angel-top': new Date('2026-06-30T23:59:59').getTime(),
+    'cd-solar-top': new Date('2026-07-03T23:59:59').getTime(),
+    'countdown-angel': new Date('2026-06-30T23:59:59').getTime(),
+    'countdown-solar': new Date('2026-07-04T23:59:59').getTime()
+  };
   function fmt(diff) {
     if (diff <= 0) return 'EXPIRED';
     var d = Math.floor(diff / (1000*60*60*24));
     var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
     var m = Math.floor((diff % (1000*60*60)) / (1000*60));
-    return d + 'd ' + h + 'h ' + m + 'm';
+    var s = Math.floor((diff % (1000*60)) / 1000);
+    if (d < 14) return d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
+    return d + 'd ' + h + 'h';
   }
-  var ae = document.getElementById('countdown-angel');
-  var se = document.getElementById('countdown-solar');
-  if (ae) ae.textContent = fmt(angel - now);
-  if (se) se.textContent = fmt(solar - now);
+  for (var id in deadlines) {
+    var el = document.getElementById(id);
+    if (el) {
+      var diff = deadlines[id] - now;
+      el.textContent = fmt(diff);
+      if (diff < 14*24*60*60*1000 && diff > 0) el.style.color = '#ff6b6b';
+    }
+  }
 }
 updateCountdowns();
-setInterval(updateCountdowns, 60000);
+setInterval(updateCountdowns, 1000);
 </script>
 
 </body>
