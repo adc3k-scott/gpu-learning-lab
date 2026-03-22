@@ -30,7 +30,7 @@
     { "source": "/boot", "destination": "/boot.html" },
     { "source": "/investor", "destination": "/investor.html" },
     { "source": "/lafayette", "destination": "/lafayette.html" },
-    { "source": "/trappeys", "destination": "/trappeys.html" },
+    { "source": "/trappeys", "destination": "/trappeys-investors.html" },
     { "source": "/trappeys-campus", "destination": "/trappeys-campus.html" },
     { "source": "/trappeys-technology", "destination": "/trappeys-technology.html" },
     { "source": "/trappeys-university", "destination": "/trappeys-university.html" },
