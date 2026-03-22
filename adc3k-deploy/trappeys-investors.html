@@ -109,6 +109,14 @@ footer .footer-contact{font-family:'IBM Plex Mono',monospace;font-size:12px;colo
 footer .footer-contact a{color:var(--cyan)}
 footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
 
+/* TABS */
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:52px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-inner{max-width:1200px;margin:0 auto;display:flex;gap:0;min-width:max-content}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--dim);padding:14px 16px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px}
+.tab-btn:hover{color:var(--bright)}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
 @media(max-width:768px){
   .nav-links{gap:4px}
   .nav-links a{font-size:11px;padding:5px 8px}
@@ -119,6 +127,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
   .qual-grid{grid-template-columns:1fr}
   .incentive-table{font-size:12px}
   .incentive-table th,.incentive-table td{padding:10px 10px}
+  .tab-btn{font-size:10px;padding:12px 10px}
 }
 </style>
 </head>
@@ -144,6 +153,20 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
   <div class="tag">Investment Case // Trappeys Cannery Solar AI Factory</div>
   <h1>The <span>Investment Case</span></h1>
   <p class="sub">$4.5M initial investment. Breakeven in 28 months. $47M net profit in 5 years before incentives. 225 racks across 90,000 sq ft of compute space. $82M annual revenue at full buildout. 800V DC native power architecture.</p>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-inner">
+    <button class="tab-btn active" data-tab="all">All</button>
+    <button class="tab-btn" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="site">The Site</button>
+    <button class="tab-btn" data-tab="technology">Technology</button>
+    <button class="tab-btn" data-tab="education">Education</button>
+    <button class="tab-btn" data-tab="energy">Energy</button>
+    <button class="tab-btn" data-tab="investors">Investors</button>
+    <button class="tab-btn" data-tab="schools">Get Your School In</button>
+  </div>
 </div>
 
 <!-- SITE ACQUISITION -->
@@ -737,6 +760,48 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
   </div>
 </div>
 
+<!-- GET YOUR SCHOOL IN -->
+<div class="cta-block" style="background:linear-gradient(180deg,var(--surface) 0%,rgba(6,182,212,0.08) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
+  <div style="max-width:700px;margin:0 auto">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Your School In</div>
+    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--cyan)">Eligible?</span></h2>
+
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college or university can participate.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training — we can help. Louisiana's AI Infrastructure Initiative connects schools to compute resources, grant funding, workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education and research.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What you're eligible for:</strong> NSF MRI grants (up to $4M), NSF EPSCoR ($10M), DOE grid modernization ($5-20M), LED FastStart (FREE workforce training), state R&amp;D tax credits, LEQSF research funding, and more.</p>
+      <p style="font-size:13px;color:var(--cyan);font-weight:700">Technology is changing fast. This is mission critical. Don't be last in line.</p>
+    </div>
+
+    <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
+      <input type="hidden" name="_subject" value="Trappeys AI Factory Inquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="text" name="organization" placeholder="Organization (university, company, school, etc.)" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <select name="interest" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-size:15px;font-family:'Inter',sans-serif;appearance:auto">
+        <option value="" disabled selected>I'm interested in...</option>
+        <option value="research">Research Partnership (University)</option>
+        <option value="investor">Investment Opportunity</option>
+        <option value="vendor">Vendor / Supplier Partnership</option>
+        <option value="employment">Employment / Careers</option>
+        <option value="student">Student / Internship</option>
+        <option value="k12">K-12 Education Partnership</option>
+        <option value="media">Media / Press Inquiry</option>
+        <option value="government">Government / Economic Development</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Tell us how you want to be involved (optional)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
+      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--cyan);color:#0a0b0f;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px">Join Louisiana's AI Infrastructure Initiative</button>
+    </form>
+
+    <div style="margin-top:24px;font-size:13px;color:var(--dim)">
+      <p><strong style="color:var(--bright)">scott@adc3k.com</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">adc3k.com</strong></p>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">Trappeys <span>AI Factory</span></div>
@@ -752,6 +817,60 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
   </div>
   <div class="footer-legal">Advantage Design & Construction, LLC &mdash; Lafayette, Louisiana</div>
 </footer>
+
+<script>
+const tabMap = {
+  'overview': ['Site Acquisition', 'Competitive Landscape', 'Market Demand', 'Operator Qualifications'],
+  'site': ['Site Acquisition'],
+  'technology': ['Token Economics', 'Energy Architecture'],
+  'education': [],
+  'energy': ['Energy Architecture', 'Mission Critical Infrastructure'],
+  'investors': ['Capital Expenditure', 'Return on Investment', 'Tax Incentive Stack', 'Deployment Phases', 'Activation Requirements', 'Expansion Path'],
+  'schools': []
+};
+
+function getSectionLabel(el) {
+  const label = el.querySelector('.section-label');
+  return label ? label.textContent.trim() : '';
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+
+  if (tab === 'all') {
+    document.querySelectorAll('.section, hr.section-divider').forEach(el => el.style.display = '');
+    const ctaBlock = document.querySelector('.cta-block');
+    if (ctaBlock) ctaBlock.style.display = '';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+
+  const allowedLabels = tabMap[tab] || [];
+
+  document.querySelectorAll('.section').forEach(el => {
+    const label = getSectionLabel(el);
+    if (label && allowedLabels.includes(label)) {
+      el.style.display = '';
+    } else if (label) {
+      el.style.display = 'none';
+    }
+  });
+
+  document.querySelectorAll('hr.section-divider').forEach(el => el.style.display = 'none');
+
+  const ctaBlock = document.querySelector('.cta-block');
+  if (ctaBlock) {
+    ctaBlock.style.display = (tab === 'schools' || tab === 'all') ? '' : 'none';
+  }
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => showTab(btn.dataset.tab));
+});
+</script>
 
 </body>
 </html>

@@ -126,8 +126,8 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
     <button class="tab-btn" data-tab="technology">Technology</button>
     <button class="tab-btn" data-tab="education">Education</button>
     <button class="tab-btn" data-tab="energy">Energy</button>
-    <button class="tab-btn" data-tab="financials">Financials</button>
-    <button class="tab-btn" data-tab="contact">Get Involved</button>
+    <button class="tab-btn" data-tab="investors">Investors</button>
+    <button class="tab-btn" data-tab="schools">Get Your School In</button>
   </div>
 </div>
 
@@ -781,17 +781,20 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   </div>
 </div>
 
-<!-- CALL TO ACTION -->
-<div style="background:linear-gradient(180deg,var(--surface) 0%,rgba(124,58,237,0.15) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
+<!-- CALL TO ACTION / GET YOUR SCHOOL IN -->
+<div class="cta-block" style="background:linear-gradient(180deg,var(--surface) 0%,rgba(124,58,237,0.15) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
   <div style="max-width:700px;margin:0 auto">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Involved</div>
-    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Be Part of Louisiana's <span style="color:var(--gold)">AI Future</span></h2>
-    <p style="font-size:15px;color:var(--dim);margin-bottom:16px;line-height:1.7">Whether you're a researcher, investor, educator, student, vendor, or just someone who believes Louisiana deserves world-class AI infrastructure &mdash; we want to hear from you.</p>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Your School In</div>
+    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--gold)">Eligible?</span></h2>
 
-    <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:20px;margin-bottom:32px;text-align:left">
-      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:8px">Is your Louisiana college or university eligible?</p>
-      <p style="font-size:13px;color:var(--dim);line-height:1.6">If you're at a Louisiana institution and need GPU compute for research, AI curriculum, or student training &mdash; contact us. We can help you locate a site, connect to the infrastructure initiative, and access grant funding. Technology is changing fast. This is mission critical. The institutions that move now will lead. The ones that wait will be left behind. <strong style="color:var(--gold)">Don't be last in line.</strong></p>
+    <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college or university can participate.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training &mdash; we can help. Louisiana's AI Infrastructure Initiative connects schools to compute resources, grant funding, workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education and research.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What you're eligible for:</strong> NSF MRI grants (up to $4M), NSF EPSCoR ($10M), DOE grid modernization ($5-20M), LED FastStart (FREE workforce training), state R&amp;D tax credits, LEQSF research funding, and more. We help you identify which programs fit your institution and connect you to the application process.</p>
+      <p style="font-size:13px;color:var(--gold);font-weight:700">Technology is changing fast. This is mission critical. The institutions that move now will lead. The ones that wait will be left behind. Don't be last in line.</p>
     </div>
+
+    <p style="font-size:15px;color:var(--dim);margin-bottom:24px;line-height:1.7">Fill out the form below &mdash; whether you're a university, K-12 school, investor, vendor, or community partner. We'll be in touch.</p>
 
     <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
       <input type="hidden" name="_subject" value="Tiger Compute Campus Inquiry">
@@ -845,9 +848,9 @@ const tabMap = {
   'site': ['The Site', 'Power Architecture'],
   'technology': ['The Technology', 'Supply Chain', 'What LSU Gets'],
   'education': ['Research & Education Impact', 'K-12 Education Pipeline'],
-  'energy': ['Mission Critical Infrastructure'],
-  'financials': ['Phased Buildout', 'Financial Model', 'Incentive Stack', 'What ADC Gets'],
-  'contact': ['ADC Network']
+  'energy': ['Mission Critical Infrastructure', 'ADC Network'],
+  'investors': ['Phased Buildout', 'Financial Model', 'Incentive Stack', 'What ADC Gets'],
+  'schools': []
 };
 
 // Get all sections, dividers, and the CTA
@@ -887,9 +890,10 @@ function showTab(tab) {
   // Hide all dividers
   document.querySelectorAll('hr.section-divider').forEach(el => el.style.display = 'none');
 
-  // Show CTA only on contact tab
-  if (ctaParent) {
-    ctaParent.style.display = tab === 'contact' ? '' : 'none';
+  // Show CTA on schools tab and all
+  const ctaBlock = document.querySelector('.cta-block');
+  if (ctaBlock) {
+    ctaBlock.style.display = (tab === 'schools' || tab === 'all') ? '' : 'none';
   }
 
   window.scrollTo({top: 0, behavior: 'smooth'});
