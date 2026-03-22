@@ -3,6 +3,14 @@
 ## Phone Number
 **(337) 448-4242** — Lafayette area code, Bland.ai
 
+## Bland.ai Details
+- Organization: louisianaaiinfrastructureinitiative
+- Pathway ID: dbee8def-0c8e-451a-bbd7-d56b66af151c
+- Webhook: https://louisianaai.net/api/webhook
+- Transfer/Fallback: (337) 780-1535
+- Voice Pronunciation: use "A eye" not "A.I." in all prompts
+- **CREDITS: CHECK BEFORE BROADCAST**
+
 ## Architecture
 
 ```
