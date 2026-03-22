@@ -94,9 +94,18 @@ Last updated: 2026-03-21 (Image gen skill, Notion audit, FLUX renders, Kontext a
 - Vercel: mission-control1 (adhscott@yahoo.com)
 - Cloudflare: gofast@stfumotorcycles.com
 
+## LSU + Willow Glen — Tiger AI Factory (NEW 2026-03-21)
+- **Memory file**: `memory/projects/lsu_willow_glen.md` — master reference (CREATED)
+- **Live page**: adc3k.com/lsu — purple and gold, full partnership pitch (DEPLOYED)
+- **Research agent**: running background scan on LSU departments, faculty, HPC resources, leadership
+- **Parallel project** to Trappeys/UL Lafayette — same model, bigger scale, different university
+- **Willow Glen Terminal**: former 2,200 MW Entergy station, 20 min from LSU, Score 94 Tier A
+- Next: complete research, build Notion page, identify key contacts at LSU
+
 ## Next Session — Starting Points
-1. **Kontext photo edits** — feed real Trappeys photos with specific edit instructions
-2. **Trappeys pitch deck** — build slides with best renders + real photos
-3. **v5 Omniverse renders** — fix camera Y offsets
-4. **NPN registration** — do it
-5. **First Solar contact** — send email with Trappeys specs
+1. **LSU research results** — review agent findings, update memory file, build department-specific content
+2. **Monday visits** — Louisiana Cat (337-374-1901) + First Solar (New Iberia)
+3. **Kontext photo edits** — feed real Trappeys photos with specific edit instructions
+4. **LSU Notion page** — build structured page same format as Trappeys AI Center
+5. **NPN registration** — do it
+6. **Trappeys pitch deck** — build slides with best renders + real photos
