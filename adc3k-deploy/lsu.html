@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="ADC x LSU — Louisiana's AI Factory Partnership. Willow Glen Terminal, 800V DC, NVIDIA DSX, Vera Rubin. Geaux Tigers.">
-<title>ADC x LSU — Louisiana's AI Factory | Geaux Tigers</title>
+<meta name="description" content="Louisiana's AI Infrastructure Initiative — Tiger Compute Campus at Willow Glen. 700 acres, 260 MW, NVIDIA DSX, 800V DC, Mississippi River.">
+<title>Louisiana's AI Infrastructure Initiative — Tiger Compute Campus | Mission Critical</title>
+<meta name="description" content="Louisiana's AI Infrastructure Initiative — Tiger Compute Campus at Willow Glen. 700 acres, 260 MW, NVIDIA DSX, 800V DC, Mississippi River.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#1a0a2e;--surface:#1e1035;--card:#251442;--border:#3a2060;--text:#d4c5e8;--dim:#8b7aaa;--bright:#f5f0ff;--purple:#7c3aed;--gold:#fbbf24;--green:#00e87a;--red:#ef4444;--white:#ffffff}
@@ -76,11 +77,22 @@ footer .footer-contact{font-family:'IBM Plex Mono',monospace;font-size:12px;colo
 footer .footer-contact a{color:var(--gold)}
 footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
+/* TABS */
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:52px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-inner{max-width:1200px;margin:0 auto;display:flex;gap:0;min-width:max-content}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--dim);padding:14px 16px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px}
+.tab-btn:hover{color:var(--bright)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
 @media(max-width:768px){
   .stat-row{grid-template-columns:repeat(2,1fr)}
   .econ-grid{grid-template-columns:1fr}
   .comp-grid{grid-template-columns:1fr}
   .phases{grid-template-columns:1fr}
+  .tab-btn{font-size:10px;padding:12px 10px}
 }
 </style>
 </head>
@@ -88,7 +100,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-brand">ADC x <span>LSU Tigers</span></div>
+    <div class="nav-brand">Louisiana's <span>AI Infrastructure Initiative</span></div>
     <div class="nav-links">
       <a href="/">ADC Home</a>
       <a href="/trappeys">Trappeys (Lafayette)</a>
@@ -99,9 +111,24 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 </nav>
 
 <div class="header">
-  <div class="tag">Geaux Tigers // Louisiana's AI Factory Partnership</div>
-  <h1>ADC x <span>LSU</span></h1>
-  <p class="sub">The same energy-first AI factory model proven at Trappeys in Lafayette &mdash; deployed 20 minutes from LSU's campus at the Willow Glen Terminal. 800V DC native. NVIDIA DSX reference design. Self-powered. American-made. <strong style="color:var(--gold)">Geaux Tigers.</strong></p>
+  <div class="tag">Louisiana's AI Factory Infrastructure Initiative</div>
+  <h1>Tiger <span>Compute Campus</span></h1>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--dim);margin-top:8px;letter-spacing:1px">// Willow Glen Terminal &mdash; St. Gabriel, Louisiana</p>
+  <p class="sub">20 minutes from LSU's campus at the Willow Glen Terminal. 700 acres on the Mississippi River. Former 2,200 MW power station. 800V DC native. NVIDIA DSX reference design. Self-powered. American-made.</p>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-inner">
+    <button class="tab-btn active" data-tab="all">All</button>
+    <button class="tab-btn" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="site">The Site</button>
+    <button class="tab-btn" data-tab="technology">Technology</button>
+    <button class="tab-btn" data-tab="education">Education</button>
+    <button class="tab-btn" data-tab="energy">Energy</button>
+    <button class="tab-btn" data-tab="financials">Financials</button>
+    <button class="tab-btn" data-tab="contact">Get Involved</button>
+  </div>
 </div>
 
 <!-- THE OPPORTUNITY -->
@@ -143,8 +170,6 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   </div>
 </div>
 
-<hr class="section-divider">
-
 <!-- HIPERGATOR COMPARISON -->
 <div class="section">
   <div class="section-label">The Gap</div>
@@ -185,13 +210,12 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
   <div class="gap-callout" style="background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.25)">
     <div class="gap-text" style="color:var(--gold)">ADC Fills This Gap &mdash; Without Asking for a Donation</div>
-    <p>UF needed a $50M gift from an NVIDIA co-founder and $110M from the State of Florida. ADC funds Louisiana's AI compute through its own energy-first business model &mdash; self-generated power at Henry Hub pricing, sold as AI tokens. The facility pays for itself. LSU gets compute access. Every Louisiana university benefits. No donation required. No taxpayer funding. Just smart energy economics. <strong style="color:var(--gold)">Geaux Tigers.</strong></p>
+    <p>UF needed a $50M gift from an NVIDIA co-founder and $110M from the State of Florida. ADC funds Louisiana's AI compute through its own energy-first business model &mdash; self-generated power at Henry Hub pricing, sold as AI tokens. The facility pays for itself. LSU gets compute access. Every Louisiana university benefits. No donation required. No taxpayer funding. Just smart energy economics.</p>
   </div>
 </div>
 
 <hr class="section-divider">
 
-<!-- WILLOW GLEN -->
 <div class="section">
   <div class="section-label">The Site</div>
   <h2>Willow Glen Terminal &mdash; Former 2,200 MW Entergy Station</h2>
@@ -255,7 +279,10 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   </div>
 </div>
 
-<hr class="section-divider">
+</div><!-- end tab-site -->
+
+<!-- TAB: TECHNOLOGY -->
+<div class="tab-panel" id="tab-technology">
 
 <!-- WHAT LSU GETS -->
 <div class="section">
@@ -291,8 +318,6 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
     <p>Just like UF's HiPerGator serves all 12 Florida state universities, ADC's Willow Glen facility can serve LSU, UL Lafayette, Southern University, Louisiana Tech, UNO, and every other Louisiana institution. LSU is the anchor &mdash; the SEC flagship that makes the whole thing credible. But the compute serves the entire state.</p>
   </div>
 </div>
-
-<hr class="section-divider">
 
 <!-- RESEARCH DEPARTMENTS -->
 <div class="section">
@@ -391,7 +416,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
       <div class="econ-row"><span class="econ-label">High school</span><span class="econ-value">LSU Pathways + AP CS + FIRST</span></div>
       <div class="econ-row"><span class="econ-label">University</span><span class="econ-value">LSU AI degree + research</span></div>
       <div class="econ-row"><span class="econ-label">Workforce training</span><span class="econ-value">LED FastStart (FREE, custom)</span></div>
-      <div class="econ-row"><span class="econ-label">Employment</span><span class="econ-value highlight">ADC Tiger AI Factory</span></div>
+      <div class="econ-row"><span class="econ-label">Employment</span><span class="econ-value highlight">ADC Tiger Compute Campus</span></div>
     </div>
   </div>
 
@@ -476,7 +501,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
     <div class="econ-card">
       <h3>Why This Is Not a &ldquo;Data Center&rdquo;</h3>
       <div class="econ-row"><span class="econ-label">Old data centers</span><span class="econ-value" style="color:var(--red)">CPU servers, air cooled, grid power</span></div>
-      <div class="econ-row"><span class="econ-label">Tiger AI Factory</span><span class="econ-value highlight">GPU compute, liquid cooled, self-powered</span></div>
+      <div class="econ-row"><span class="econ-label">Tiger Compute Campus</span><span class="econ-value highlight">GPU compute, liquid cooled, self-powered</span></div>
       <div class="econ-row"><span class="econ-label">Power delivery</span><span class="econ-value highlight">800V DC native (96% efficient)</span></div>
       <div class="econ-row"><span class="econ-label">Energy wasted (old way)</span><span class="econ-value" style="color:var(--red)">12-17% lost before GPU</span></div>
       <div class="econ-row"><span class="econ-label">Energy wasted (ADC way)</span><span class="econ-value highlight">4% lost before GPU</span></div>
@@ -518,26 +543,155 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 
 <hr class="section-divider">
 
+<!-- PHASED BUILDOUT -->
+<div class="section">
+  <div class="section-label">Phased Buildout</div>
+  <h2>5 Phases. $8M to Start. $360M Annual Revenue at Scale.</h2>
+  <p class="sub">Phase 1 uses the existing 20,000 SF warehouse &mdash; no construction needed. Each phase self-funds the next. NVIDIA ships rack batches annually as ADC proves absorption capacity.</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num">Year 1</div>
+      <h3>Proof of Concept</h3>
+      <div class="phase-ebitda">$4M Revenue</div>
+      <ul>
+        <li>20K SF existing warehouse (no build)</li>
+        <li>10 racks (8 Vera Rubin + 2 Groq)</li>
+        <li>1.3 MW IT load</li>
+        <li>2x Cat CG260 (hydrogen-ready)</li>
+        <li>10-acre solar + 1 MWh battery</li>
+        <li>LSU research access live</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Year 2</div>
+      <h3>Fill the Warehouse</h3>
+      <div class="phase-ebitda">$15M Revenue</div>
+      <ul>
+        <li>33 racks | 4.3 MW IT</li>
+        <li>Warehouse at capacity</li>
+        <li>Revenue self-funds Phase 3</li>
+        <li>NCP certification</li>
+        <li>Solar expanded to 25 acres</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Year 3</div>
+      <h3>First New Building</h3>
+      <div class="phase-ebitda">$57M Revenue</div>
+      <ul>
+        <li>160 racks | 20.8 MW IT</li>
+        <li>100K SF purpose-built compute hall</li>
+        <li>CCGT online ($0.04/kWh)</li>
+        <li>ORC: 4-5 MW free electricity</li>
+        <li>50-acre solar farm</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phases" style="margin-top:16px">
+    <div class="phase">
+      <div class="phase-num">Year 4</div>
+      <h3>Campus Expansion</h3>
+      <div class="phase-ebitda">$190M Revenue</div>
+      <ul>
+        <li>530 racks | 69 MW IT</li>
+        <li>3 compute halls (300K SF)</li>
+        <li>2nd CCGT + hydrogen blending</li>
+        <li>Full waste heat recovery</li>
+        <li>Reference Platform NCP</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Year 5</div>
+      <h3>Full Campus</h3>
+      <div class="phase-ebitda">$360M Revenue</div>
+      <ul>
+        <li>1,000 racks | 130 MW IT</li>
+        <li>5+ compute halls (500K+ SF)</li>
+        <li>3 CCGT + 200-acre solar</li>
+        <li>Renewable fuel portfolio</li>
+        <li>Largest university-accessible AI factory in the US</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Scale Ceiling</div>
+      <h3>400 Acres</h3>
+      <div class="phase-ebitda">$480M+ Revenue</div>
+      <ul>
+        <li>2,000+ racks</li>
+        <li>260 MW IT capacity</li>
+        <li>Power-limited, not space-limited</li>
+        <li>Room for 300 more acres</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
 <!-- FINANCIAL MODEL -->
 <div class="section">
   <div class="section-label">Financial Model</div>
-  <h2>Same Economics. Bigger Infrastructure. Faster Scale.</h2>
-  <p class="sub">Willow Glen's existing electrical infrastructure means lower buildout costs and faster time to first rack than a greenfield site. The token factory model is identical to Trappeys.</p>
+  <h2>$8M In. $128M Net in 5 Years. Before Incentives.</h2>
+  <p class="sub">Conservative estimates: 60% gross margin, blended $2.00/M tokens, 70% utilization. Existing infrastructure reduces Phase 1 CapEx vs greenfield. CCGT at scale delivers the cheapest power in the neocloud space.</p>
 
-  <div class="econ-grid">
+  <table class="incentive-table" style="margin-top:24px;font-size:13px">
+    <thead>
+      <tr><th>Year</th><th>Racks</th><th>Revenue</th><th>CapEx</th><th>Net Cash</th><th>Cumulative</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="program">Year 1</td><td>10</td><td>$4M</td><td>$8M</td>
+        <td style="color:var(--red)">-$5.6M</td><td style="color:var(--red)">-$5.6M</td>
+      </tr>
+      <tr>
+        <td class="program">Year 2</td><td>33</td><td>$15M</td><td>$5M</td>
+        <td style="color:var(--green)">+$4M</td><td style="color:var(--red)">-$1.6M</td>
+      </tr>
+      <tr>
+        <td class="program">Year 3</td><td>160</td><td>$57M</td><td>$35M</td>
+        <td style="color:var(--red)">-$800K</td><td style="color:var(--red)">-$2.4M</td>
+      </tr>
+      <tr>
+        <td class="program">Year 4</td><td>530</td><td>$190M</td><td>$80M</td>
+        <td style="color:var(--green)">+$34M</td><td style="color:var(--green);font-weight:700">+$31.6M</td>
+      </tr>
+      <tr>
+        <td class="program">Year 5</td><td style="font-weight:700">1,000</td>
+        <td style="font-weight:700;color:var(--bright)">$360M</td><td>$120M</td>
+        <td style="color:var(--green);font-weight:700">+$96M</td>
+        <td style="color:var(--green);font-weight:700">+$127.6M</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="stat-row" style="margin-top:24px">
+    <div class="stat-box"><div class="val" style="color:var(--green)">$626M</div><div class="lbl">5-Year Total Revenue</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$127.6M</div><div class="lbl">5-Year Net Profit</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$248M</div><div class="lbl">Total CapEx Deployed</div></div>
+    <div class="stat-box"><div class="val" style="color:var(--green)">$93&ndash;190M</div><div class="lbl">Incentive Stack Value</div></div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px;background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.2)">
+    <div class="gap-text" style="color:var(--green)">With incentives: $220&ndash;320M net positive in 5 years</div>
+    <p>ITEP, Act 730, Solar ITC, Quality Jobs, and university grants could return $93&ndash;190M on $248M total CapEx. Combined with $127.6M operating profit, total 5-year return is $220&ndash;320M on an $8M starting investment.</p>
+  </div>
+
+  <div class="econ-grid" style="margin-top:24px">
     <div class="econ-card">
-      <h3>Willow Glen vs Trappeys</h3>
-      <div class="econ-row"><span class="econ-label">Electrical grid</span><span class="econ-value highlight">Already built (2,200 MW)</span></div>
-      <div class="econ-row"><span class="econ-label">Clean-burning natural gas pipeline</span><span class="econ-value">On-site</span></div>
-      <div class="econ-row"><span class="econ-label">River cooling</span><span class="econ-value highlight">Mississippi River (unlimited)</span></div>
-      <div class="econ-row"><span class="econ-label">Scale ceiling</span><span class="econ-value highlight">100+ MW (vs 29 MW Trappeys)</span></div>
-      <div class="econ-row"><span class="econ-label">University</span><span class="econ-value">LSU (SEC flagship)</span></div>
+      <h3>Combined Network (Both Sites)</h3>
+      <div class="econ-row"><span class="econ-label">Starting investment</span><span class="econ-value highlight">$12.5M</span></div>
+      <div class="econ-row"><span class="econ-label">Year 5 combined revenue</span><span class="econ-value highlight">$442M</span></div>
+      <div class="econ-row"><span class="econ-label">Total racks (Year 5)</span><span class="econ-value">1,225</span></div>
+      <div class="econ-row"><span class="econ-label">Total IT power</span><span class="econ-value">159 MW</span></div>
+      <div class="econ-row"><span class="econ-label">Combined 5-year net</span><span class="econ-value highlight">$175M</span></div>
     </div>
     <div class="econ-card">
       <h3>Token Economics</h3>
       <div class="econ-row"><span class="econ-label">Blended token price</span><span class="econ-value">$2.00/M tokens</span></div>
       <div class="econ-row"><span class="econ-label">Gross margin (mature)</span><span class="econ-value highlight">60%</span></div>
-      <div class="econ-row"><span class="econ-label">Power cost</span><span class="econ-value">$0.04&ndash;0.05/kWh (CCGT)</span></div>
+      <div class="econ-row"><span class="econ-label">Power cost (CCGT)</span><span class="econ-value highlight">$0.04&ndash;0.05/kWh</span></div>
       <div class="econ-row"><span class="econ-label">NVIDIA Dynamo</span><span class="econ-value">7x performance boost</span></div>
       <div class="econ-row"><span class="econ-label">Groq decode</span><span class="econ-value">5&ndash;10x revenue per MW</span></div>
     </div>
@@ -622,8 +776,8 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   </div>
 
   <div class="gap-callout" style="margin-top:24px">
-    <div class="gap-text">Louisiana's first AI compute network</div>
-    <p>No other state has this model &mdash; a privately funded, energy-first AI factory network with dedicated university partnerships at each site. ADC builds it. LSU and UL Lafayette use it. The entire state benefits. <strong style="color:var(--gold)">Geaux Tigers.</strong></p>
+    <div class="gap-text">Louisiana's AI Infrastructure Initiative &mdash; the network</div>
+    <p>No other state has this model &mdash; a privately funded, energy-first AI factory network with dedicated university partnerships at each site. Tiger Compute Campus (LSU) and Trappeys AI Factory (UL Lafayette) are the first two nodes. The entire state benefits.</p>
   </div>
 </div>
 
@@ -632,10 +786,15 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
   <div style="max-width:700px;margin:0 auto">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Involved</div>
     <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Be Part of Louisiana's <span style="color:var(--gold)">AI Future</span></h2>
-    <p style="font-size:15px;color:var(--dim);margin-bottom:32px;line-height:1.7">Whether you're a researcher, investor, educator, student, vendor, or just someone who believes Louisiana deserves world-class AI infrastructure &mdash; we want to hear from you.</p>
+    <p style="font-size:15px;color:var(--dim);margin-bottom:16px;line-height:1.7">Whether you're a researcher, investor, educator, student, vendor, or just someone who believes Louisiana deserves world-class AI infrastructure &mdash; we want to hear from you.</p>
+
+    <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:20px;margin-bottom:32px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:8px">Is your Louisiana college or university eligible?</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.6">If you're at a Louisiana institution and need GPU compute for research, AI curriculum, or student training &mdash; contact us. We can help you locate a site, connect to the infrastructure initiative, and access grant funding. Technology is changing fast. This is mission critical. The institutions that move now will lead. The ones that wait will be left behind. <strong style="color:var(--gold)">Don't be last in line.</strong></p>
+    </div>
 
     <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
-      <input type="hidden" name="_subject" value="Tiger AI Factory Inquiry">
+      <input type="hidden" name="_subject" value="Tiger Compute Campus Inquiry">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
@@ -654,7 +813,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
         <option value="other">Other</option>
       </select>
       <textarea name="message" placeholder="Tell us how you want to be involved (optional)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
-      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--gold);color:#1a0a2e;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s">Join the Tiger AI Factory</button>
+      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--gold);color:#1a0a2e;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:all 0.2s">Join the Louisiana's AI Infrastructure Initiative</button>
     </form>
 
     <div style="margin-top:24px;font-size:13px;color:var(--dim)">
@@ -665,7 +824,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
 </div>
 
 <footer>
-  <div class="footer-brand">ADC x <span>LSU</span></div>
+  <div class="footer-brand">Louisiana's <span>AI Infrastructure Initiative</span></div>
   <div class="footer-links">
     <a href="/trappeys">Trappeys (Lafayette)</a>
     <a href="/trappeys-investors">Investor Page</a>
@@ -676,8 +835,71 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px}
     <a href="mailto:scott@adc3k.com">scott@adc3k.com</a><br>
     <a href="https://adc3k.com">adc3k.com</a>
   </div>
-  <div class="footer-legal">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana<br>Geaux Tigers. American-made. Louisiana-powered.</div>
+  <div class="footer-legal">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana<br>American-made. Louisiana-powered.</div>
 </footer>
+
+<script>
+// Tab mapping: which section-labels belong to which tab
+const tabMap = {
+  'overview': ['The Opportunity', 'The Gap'],
+  'site': ['The Site', 'Power Architecture'],
+  'technology': ['The Technology', 'Supply Chain', 'What LSU Gets'],
+  'education': ['Research & Education Impact', 'K-12 Education Pipeline'],
+  'energy': ['Mission Critical Infrastructure'],
+  'financials': ['Phased Buildout', 'Financial Model', 'Incentive Stack', 'What ADC Gets'],
+  'contact': ['ADC Network']
+};
+
+// Get all sections, dividers, and the CTA
+const allSections = document.querySelectorAll('.section, .section-divider, hr.section-divider');
+const cta = document.querySelector('[style*="Get Involved"]');
+const ctaParent = cta ? cta.closest('div[style]') : null;
+
+function getSectionLabel(el) {
+  const label = el.querySelector('.section-label');
+  return label ? label.textContent.trim() : '';
+}
+
+function showTab(tab) {
+  // Update buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+
+  if (tab === 'all') {
+    // Show everything
+    document.querySelectorAll('.section, hr.section-divider').forEach(el => el.style.display = '');
+    if (ctaParent) ctaParent.style.display = '';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+
+  const allowedLabels = tabMap[tab] || [];
+
+  document.querySelectorAll('.section').forEach(el => {
+    const label = getSectionLabel(el);
+    if (label && allowedLabels.includes(label)) {
+      el.style.display = '';
+    } else if (label) {
+      el.style.display = 'none';
+    }
+  });
+
+  // Hide all dividers
+  document.querySelectorAll('hr.section-divider').forEach(el => el.style.display = 'none');
+
+  // Show CTA only on contact tab
+  if (ctaParent) {
+    ctaParent.style.display = tab === 'contact' ? '' : 'none';
+  }
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Wire up tab buttons
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => showTab(btn.dataset.tab));
+});
+</script>
 
 </body>
 </html>
