@@ -550,6 +550,58 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 
 <hr class="section-divider">
 
+<!-- NVIDIA TECHNOLOGY -->
+<div class="section">
+  <div class="section-label">The Technology</div>
+  <h2>NVIDIA Vera Rubin &mdash; The Most Powerful AI Platform Ever Built</h2>
+  <p class="sub">This is not a traditional server room. This is purpose-built AI infrastructure running the latest NVIDIA platform &mdash; the same technology powering the world's largest AI labs, national defense systems, and Fortune 10 research.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="nv-vera-rubin.jpg" alt="NVIDIA Vera Rubin GPU" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Vera Rubin GPU &mdash; next-generation AI accelerator</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="nv-gb200-nvl72.jpg" alt="NVIDIA NVL72 Rack" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA NVL72 Rack &mdash; 72 GPUs per rack, liquid cooled, 130 kW</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 24px">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="nv-rubin-platform.jpg" alt="NVIDIA Rubin Platform" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Rubin Platform &mdash; complete AI factory architecture</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="nv-blackwell.jpg" alt="NVIDIA Blackwell" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Blackwell Architecture &mdash; the foundation for Vera Rubin</div>
+    </div>
+  </div>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>NVIDIA DSX Reference Design</h3>
+      <div class="econ-row"><span class="econ-label">GPU platform</span><span class="econ-value highlight">Vera Rubin NVL72</span></div>
+      <div class="econ-row"><span class="econ-label">GPUs per rack</span><span class="econ-value">72</span></div>
+      <div class="econ-row"><span class="econ-label">Power per rack</span><span class="econ-value">130 kW (liquid cooled)</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling</span><span class="econ-value">Direct-to-chip liquid (45&deg;C)</span></div>
+      <div class="econ-row"><span class="econ-label">Networking</span><span class="econ-value">NVIDIA Quantum InfiniBand</span></div>
+      <div class="econ-row"><span class="econ-label">Software</span><span class="econ-value">NVIDIA Dynamo 1.0 (7x boost)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why This Is Not a &ldquo;Data Center&rdquo;</h3>
+      <div class="econ-row"><span class="econ-label">Old facilities</span><span class="econ-value" style="color:var(--red)">CPU servers, air cooled, grid power</span></div>
+      <div class="econ-row"><span class="econ-label">Trappeys AI Factory</span><span class="econ-value highlight">GPU compute, liquid cooled, self-powered</span></div>
+      <div class="econ-row"><span class="econ-label">Power delivery</span><span class="econ-value highlight">800V DC native (96% efficient)</span></div>
+      <div class="econ-row"><span class="econ-label">Energy wasted (old way)</span><span class="econ-value" style="color:var(--red)">12&ndash;17% lost before GPU</span></div>
+      <div class="econ-row"><span class="econ-label">Energy wasted (ADC way)</span><span class="econ-value highlight">4% lost before GPU</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling system</span><span class="econ-value highlight">Water tower + waste heat recovery</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
 <!-- EDUCATION — UL LAFAYETTE + K-12 -->
 <div class="section">
   <div class="section-label">Research &amp; Education Impact</div>
@@ -911,7 +963,7 @@ footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:6
 const tabMap = {
   'overview': ['Site Acquisition', 'Competitive Landscape', 'Market Demand', 'Operator Qualifications'],
   'site': ['Site Acquisition'],
-  'technology': ['Token Economics', 'Energy Architecture'],
+  'technology': ['Token Economics', 'Energy Architecture', 'The Technology'],
   'education': ['Research & Education Impact', 'K-12 Education Pipeline'],
   'energy': ['Energy Architecture', 'Mission Critical Infrastructure'],
   'investors': ['Capital Expenditure', 'Return on Investment', 'Tax Incentive Stack', 'Deployment Phases', 'Activation Requirements', 'Expansion Path'],
