@@ -13,6 +13,16 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-
 a{color:var(--blue);text-decoration:none}
 a:hover{text-decoration:underline}
 
+/* TOP BANNER */
+.top-banner{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:20px;position:relative}
+.top-banner .flag-img{height:40px;width:auto;border-radius:3px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.top-banner .banner-text{font-family:'Inter',sans-serif;font-size:clamp(18px,3.2vw,32px);font-weight:900;color:var(--bright);letter-spacing:clamp(2px,0.6vw,8px);text-transform:uppercase;text-align:center}
+
+/* MISSION CRITICAL PULSE */
+.mc-bar{background:linear-gradient(90deg,var(--red),var(--gold),var(--blue),var(--red));background-size:300% 100%;animation:mcPulse 4s ease infinite;padding:10px 24px;text-align:center}
+.mc-bar .mc-text{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--white);letter-spacing:3px;text-transform:uppercase}
+@keyframes mcPulse{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
 /* SPLIT HERO */
 .split-hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative}
 .split-side{position:relative;display:flex;align-items:center;justify-content:center;padding:40px;overflow:hidden;cursor:pointer;transition:all 0.3s}
@@ -24,8 +34,8 @@ a:hover{text-decoration:underline}
 .split-side.tiger .bg{background-image:url('https://adc3k.com/henry-hub-6.jpg')}
 .split-side.tiger .bg::after{background:linear-gradient(225deg,rgba(124,58,237,0.85) 0%,rgba(10,5,30,0.9) 100%)}
 .split-content{position:relative;z-index:1;text-align:center;max-width:400px}
-.split-content .campus-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:10px}
-.split-content .campus-name{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:6px}
+.split-content .campus-tag{font-family:'Inter',sans-serif;font-size:clamp(22px,5vw,52px);letter-spacing:-1px;text-transform:uppercase;font-weight:900;margin-bottom:10px;line-height:1.05}
+.split-content .campus-name{font-size:clamp(28px,4.5vw,48px);font-weight:900;color:var(--white);line-height:1.05;margin-bottom:8px;letter-spacing:-1px}
 .split-content .campus-loc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px}
 .split-content .campus-uni{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:16px}
 .split-content .campus-specs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
@@ -99,6 +109,18 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 </head>
 <body>
 
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <img src="https://flagcdn.com/w160/us.png" alt="United States" class="flag-img">
+  <div class="banner-text">Louisiana's AI Infrastructure Initiative</div>
+  <img src="https://flagcdn.com/w160/us-la.png" alt="Louisiana" class="flag-img">
+</div>
+
+<!-- MISSION CRITICAL BAR -->
+<div class="mc-bar">
+  <div class="mc-text">Mission Critical Infrastructure &mdash; Time Is Now</div>
+</div>
+
 <!-- SPLIT HERO -->
 <div class="split-hero">
   <a href="https://adc3k.com/trappeys" class="split-side cajun" style="text-decoration:none">
@@ -113,7 +135,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
         <span class="spec">225 racks</span>
         <span class="spec">29 MW</span>
       </div>
-      <div class="campus-btn">Explore Campus &rarr;</div>
+      <div class="campus-btn">Explore UL Campus &rarr;</div>
     </div>
   </a>
 
@@ -129,15 +151,10 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
         <span class="spec">2,000+ racks</span>
         <span class="spec">260 MW</span>
       </div>
-      <div class="campus-btn">Explore Campus &rarr;</div>
+      <div class="campus-btn">Explore LSU Campus &rarr;</div>
     </div>
   </a>
 
-  <div class="center-badge">
-    <div class="badge-la">LA</div>
-    <div class="badge-title">Louisiana's AI Infrastructure Initiative</div>
-    <div class="badge-main">Mission Critical</div>
-  </div>
 </div>
 
 <!-- STAT BAR -->
@@ -273,7 +290,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     </form>
 
     <div style="margin-top:24px;font-size:13px;color:var(--dim)">
-      <p><strong style="color:var(--bright)">info@louisianaai.net</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">louisianaai.net</strong></p>
+      <p><strong style="color:var(--bright)">(337) 448-4242</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">info@louisianaai.net</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">louisianaai.net</strong></p>
       <p style="margin-top:4px">Advantage Design &amp; Construction, LLC &mdash; Lafayette, Louisiana</p>
     </div>
   </div>

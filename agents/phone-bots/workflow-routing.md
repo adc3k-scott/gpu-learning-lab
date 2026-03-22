@@ -1,7 +1,7 @@
 # Phone System Workflow — Louisiana's AI Infrastructure Initiative
 
 ## Phone Number
-TBD — Get from Bland.ai
+**(337) 448-4242** — Lafayette area code, Bland.ai
 
 ## Architecture
 
