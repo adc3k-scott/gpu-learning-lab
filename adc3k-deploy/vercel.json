@@ -40,6 +40,8 @@
     { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
     { "source": "/dsx-renders", "destination": "/dsx-renders.html" },
     { "source": "/trappeys-presentation", "destination": "/trappeys-presentation.html" },
+    { "source": "/renders-compare", "destination": "/renders-compare.html" },
+    { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

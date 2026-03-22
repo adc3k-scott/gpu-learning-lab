@@ -627,12 +627,18 @@ _ALLOWED_CONFIG_KEYS = {
     "notion_work_db_id",
     "notion_api_key",
     "runpod_api_key",
+    "runpod_flux_schnell_id",
+    "runpod_flux_dev_id",
+    "runpod_flux_kontext_id",
 }
 
 _ENV_KEY_MAP = {
     "notion_api_key":    "NOTION_API_KEY",
     "notion_work_db_id": "NOTION_WORK_DB_ID",
     "runpod_api_key":    "RUNPOD_API_KEY",
+    "runpod_flux_schnell_id": "RUNPOD_FLUX_SCHNELL_ID",
+    "runpod_flux_dev_id":     "RUNPOD_FLUX_DEV_ID",
+    "runpod_flux_kontext_id": "RUNPOD_FLUX_KONTEXT_ID",
 }
 
 
