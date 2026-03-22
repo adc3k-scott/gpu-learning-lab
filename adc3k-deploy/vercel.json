@@ -45,6 +45,7 @@
     { "source": "/power", "destination": "/power-architecture.html" },
     { "source": "/reference", "destination": "/reference.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
+    { "source": "/learn", "destination": "/learn.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

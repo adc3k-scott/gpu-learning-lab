@@ -19,8 +19,8 @@ a:hover{text-decoration:underline}
 .top-banner .banner-text{font-family:'Inter',sans-serif;font-size:clamp(18px,3.2vw,32px);font-weight:900;color:var(--bright);letter-spacing:clamp(2px,0.6vw,8px);text-transform:uppercase;text-align:center}
 
 /* MISSION CRITICAL PULSE */
-.mc-bar{background:linear-gradient(90deg,var(--red),var(--gold),var(--blue),var(--red));background-size:300% 100%;animation:mcPulse 4s ease infinite;padding:10px 24px;text-align:center}
-.mc-bar .mc-text{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--white);letter-spacing:3px;text-transform:uppercase}
+.mc-bar{background:linear-gradient(90deg,var(--red),var(--gold),var(--blue),var(--red));background-size:300% 100%;animation:mcPulse 4s ease infinite;padding:20px 24px;text-align:center}
+.mc-bar .mc-text{font-family:'Inter',sans-serif;font-size:clamp(16px,2.5vw,24px);font-weight:900;color:var(--white);letter-spacing:4px;text-transform:uppercase}
 @keyframes mcPulse{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
 /* SPLIT HERO */
@@ -104,6 +104,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
   .split-side{min-height:50vh;padding:60px 24px}
   .center-badge{display:none}
   .stat-row{grid-template-columns:repeat(3,1fr)}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
 }
 </style>
 </head>
@@ -167,6 +168,31 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     <div class="stat-box"><div class="val">800V DC</div><div class="lbl">Native Power</div></div>
     <div class="stat-box"><div class="val">$0</div><div class="lbl">GPU Infra Today</div></div>
   </div>
+</div>
+
+<!-- ACTION PANEL — SIDE BY SIDE -->
+<div style="max-width:1100px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+  <!-- LEFT: LEARN -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;font-weight:600">Learn</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--bright);margin-bottom:10px">New to AI Infrastructure?</h3>
+      <p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px">Get a complete breakdown of what an AI factory is, how 800V DC power works, why Louisiana has the best incentives, and how tokens are the new commodity. No jargon. Plain English.</p>
+    </div>
+    <a href="https://adc3k.com/learn" style="display:inline-block;padding:14px 24px;border-radius:8px;background:var(--blue);color:var(--white);font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Learn About AI Infrastructure &rarr;</a>
+  </div>
+
+  <!-- RIGHT: GET YOUR SCHOOL IN -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;font-weight:600">Get Involved</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--bright);margin-bottom:10px">Is Your School Eligible?</h3>
+      <p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px">Any Louisiana college, university, or K-12 school can participate. Register your institution, find out what grants you qualify for, and get connected to AI compute resources.</p>
+    </div>
+    <a href="#school-form" style="display:inline-block;padding:14px 24px;border-radius:8px;background:var(--green);color:#0a0b0f;font-size:14px;font-weight:700;text-decoration:none;text-align:center;transition:opacity 0.2s">Register Your School &rarr;</a>
+  </div>
+
 </div>
 
 <!-- LOUISIANA MAP -->
@@ -254,7 +280,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
 <hr class="divider">
 
 <!-- GET YOUR SCHOOL IN -->
-<div class="cta">
+<div class="cta" id="school-form">
   <div style="max-width:700px;margin:0 auto">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Your School In</div>
     <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--blue)">Eligible?</span></h2>
@@ -303,9 +329,10 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
     <a href="https://adc3k.com/lsu">Tiger Campus</a>
     <a href="https://adc3k.com/power">800V DC Architecture</a>
     <a href="https://adc3k.com/reference">Reference Library</a>
-    <a href="https://adc3k.com">ADC Home</a>
+    <a href="https://adc3k.com">Home</a>
+    <a href="https://adc3k.com/learn" style="color:var(--blue);font-weight:700">Learn About AI Infrastructure</a>
   </div>
-  <div class="legal">American-made. Louisiana-powered. Mission critical.</div>
+  <div class="legal">American-made. Louisiana-powered. Mission critical.<br>(337) 448-4242 &nbsp;|&nbsp; info@louisianaai.net</div>
 </footer>
 
 <!-- BACK TO TOP BUTTON -->
