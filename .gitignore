@@ -239,3 +239,4 @@ id_ed25519*
 .env.*
 !.env.example
 .vercel
+investor-packages/
