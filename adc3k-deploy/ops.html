@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Control — Louisiana AI Infrastructure Initiative</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--dim:#6b7280;--bright:#f0f2f5;--green:#00e87a;--red:#ef4444;--blue:#3b82f6;--gold:#fbbf24;--purple:#8b5cf6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:#c8cdd8;font-family:'Inter',sans-serif;padding:16px}
+h1{font-size:18px;font-weight:900;color:var(--bright);text-align:center;margin-bottom:4px}
+.sub{text-align:center;color:var(--dim);font-size:11px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.panel h2{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:700}
+.panel h2.red{color:var(--red)}
+.panel h2.green{color:var(--green)}
+.panel h2.gold{color:var(--gold)}
+.panel h2.purple{color:var(--purple)}
+
+.status-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.status-row:last-child{border:none}
+.status-row .label{color:var(--dim)}
+.status-row .value{font-weight:700;color:var(--bright)}
+.status-row .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot.green{background:var(--green)}
+.dot.red{background:var(--red)}
+.dot.gold{background:var(--gold)}
+
+.countdown{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:900;text-align:center;margin:8px 0}
+.countdown.urgent{color:var(--red)}
+.countdown.warning{color:var(--gold)}
+.cd-label{font-size:9px;color:var(--dim);text-align:center;text-transform:uppercase;letter-spacing:1.5px}
+
+.link-list a{display:block;padding:8px 12px;margin:4px 0;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:6px;color:var(--blue);font-size:11px;font-weight:600;text-decoration:none;transition:all 0.15s}
+.link-list a:hover{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.3)}
+.link-list a .url{color:var(--dim);font-weight:400;font-size:10px;display:block;margin-top:2px}
+
+.stat{text-align:center;padding:12px}
+.stat .num{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:900;color:var(--green)}
+.stat .lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+
+.checklist{font-size:12px}
+.checklist label{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer}
+.checklist input[type="checkbox"]{width:16px;height:16px;accent-color:var(--green)}
+.checklist .task{color:var(--bright)}
+.checklist .detail{color:var(--dim);font-size:10px}
+
+.refresh-btn{display:block;margin:8px auto;padding:8px 20px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.refresh-btn:hover{opacity:0.85}
+
+@media(max-width:900px){.grid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<h1>Mission Control — Louisiana's AI Infrastructure Initiative</h1>
+<div class="sub">Operations Dashboard | All systems monitored | March 23, 2026</div>
+
+<!-- TOP ROW: COUNTDOWNS -->
+<div class="grid" style="grid-template-columns:repeat(4,1fr)">
+  <div class="panel" style="text-align:center">
+    <div class="cd-label">NVIDIA Academic Grant</div>
+    <div class="countdown urgent" id="cd-nv">...</div>
+    <div class="cd-label">March 31, 2026</div>
+  </div>
+  <div class="panel" style="text-align:center">
+    <div class="cd-label">DOE SPARK Concept Paper</div>
+    <div class="countdown urgent" id="cd-doe">...</div>
+    <div class="cd-label">April 2, 2026</div>
+  </div>
+  <div class="panel" style="text-align:center">
+    <div class="cd-label">Angel Investor Tax Credit</div>
+    <div class="countdown warning" id="cd-angel">...</div>
+    <div class="cd-label">June 30, 2026</div>
+  </div>
+  <div class="panel" style="text-align:center">
+    <div class="cd-label">Solar ITC Safe Harbor</div>
+    <div class="countdown warning" id="cd-solar">...</div>
+    <div class="cd-label">July 3, 2026</div>
+  </div>
+</div>
+
+<!-- STATS ROW -->
+<div class="grid" style="grid-template-columns:repeat(6,1fr)">
+  <div class="panel"><div class="stat"><div class="num">15</div><div class="lbl">Pages Live</div></div></div>
+  <div class="panel"><div class="stat"><div class="num">136</div><div class="lbl">Emails Queued</div></div></div>
+  <div class="panel"><div class="stat"><div class="num">12</div><div class="lbl">Blueprints</div></div></div>
+  <div class="panel"><div class="stat"><div class="num">13</div><div class="lbl">Renders</div></div></div>
+  <div class="panel"><div class="stat"><div class="num">56</div><div class="lbl">Site Photos</div></div></div>
+  <div class="panel"><div class="stat"><div class="num">24/7</div><div class="lbl">Phone Agent</div></div></div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- SYSTEM STATUS -->
+  <div class="panel">
+    <h2 class="green">System Status</h2>
+    <div id="status-list">
+      <div class="status-row"><span class="label"><span class="dot green"></span>louisianaai.net</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>louisianaai.net/documents</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Phone Agent (337) 448-4242</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Webhook (call logging)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Tiger Campus /lsu</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Ragin' Cajun /trappeys</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Blueprints (WG)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Blueprints (Trappeys)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Renders (WG)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Renders (Trappeys)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Alumni & Investors Gate</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Reference Library</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Learn</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Power (Trappeys)</span><span class="value">LIVE</span></div>
+      <div class="status-row"><span class="label"><span class="dot green"></span>Power (WG)</span><span class="value">LIVE</span></div>
+    </div>
+    <button class="refresh-btn" onclick="checkSystems()">Check All Systems</button>
+  </div>
+
+  <!-- TODAY'S CHECKLIST -->
+  <div class="panel">
+    <h2 class="red">Today's Knock List</h2>
+    <div class="checklist">
+      <label><input type="checkbox"><span><span class="task">Activate FormSubmit</span><br><span class="detail">Submit test form on louisianaai.net</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Send district blast (70 emails)</span><br><span class="detail">BCC list in data/bcc-list-districts.txt</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Send university blast (46 emails)</span><br><span class="detail">BCC list in data/bcc-list-universities.txt</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Send media blast (20 emails)</span><br><span class="detail">BCC list in data/bcc-list-media.txt</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Post on LinkedIn</span><br><span class="detail">Post ready in data/linkedin-post.md</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Call First Solar</span><br><span class="detail">419-662-6899 — panel supply, both sites</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Call Louisiana Cat</span><br><span class="detail">337-374-1901 — generators, switchgear</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Call Eaton</span><br><span class="detail">GTC contact — Beam Rubin DSX</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Call NVIDIA</span><br><span class="detail">NPN registration + Academic Grant (8 days)</span></span></label>
+      <label><input type="checkbox"><span><span class="task">Call 4 missing districts</span><br><span class="detail">Caddo, Ascension, Caldwell, East Carroll</span></span></label>
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="panel">
+    <h2 class="purple">Quick Links</h2>
+    <div class="link-list">
+      <a href="https://louisianaai.net" target="_blank">Main Site<span class="url">louisianaai.net</span></a>
+      <a href="https://louisianaai.net/documents" target="_blank">Filing Documents<span class="url">louisianaai.net/documents</span></a>
+      <a href="https://adc3k.com/lsu" target="_blank">Tiger Campus (LSU)<span class="url">adc3k.com/lsu</span></a>
+      <a href="https://adc3k.com/trappeys" target="_blank">Ragin' Cajun (Trappeys)<span class="url">adc3k.com/trappeys</span></a>
+      <a href="https://adc3k.com/blueprints" target="_blank">Blueprints — Willow Glen<span class="url">adc3k.com/blueprints</span></a>
+      <a href="https://adc3k.com/blueprints-trappeys" target="_blank">Blueprints — Trappeys<span class="url">adc3k.com/blueprints-trappeys</span></a>
+      <a href="https://adc3k.com/alumni-investors" target="_blank">Alumni & Investors Gate<span class="url">adc3k.com/alumni-investors</span></a>
+      <a href="https://adc3k.com/leadership" target="_blank">Leadership / Qualifications<span class="url">adc3k.com/leadership</span></a>
+    </div>
+
+    <h2 class="gold" style="margin-top:16px">Admin Panels</h2>
+    <div class="link-list">
+      <a href="https://vercel.com/mission-control1" target="_blank">Vercel Dashboard<span class="url">Deployments, analytics, logs</span></a>
+      <a href="https://dash.cloudflare.com" target="_blank">Cloudflare Dashboard<span class="url">DNS, email routing, security</span></a>
+      <a href="https://app.bland.ai" target="_blank">Bland.ai Dashboard<span class="url">Phone agent, call logs, credits</span></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM: CONTACT INFO + EMAIL INBOXES -->
+<div class="grid2">
+  <div class="panel">
+    <h2>Incoming Channels</h2>
+    <div class="status-row"><span class="label">Phone Calls</span><span class="value">(337) 448-4242 — AI agent, logged to webhook</span></div>
+    <div class="status-row"><span class="label">School Registrations</span><span class="value">info@louisianaai.net (FormSubmit)</span></div>
+    <div class="status-row"><span class="label">Investor Registrations</span><span class="value">investors@louisianaai.net</span></div>
+    <div class="status-row"><span class="label">Vendor Inquiries</span><span class="value">vendors@louisianaai.net</span></div>
+    <div class="status-row"><span class="label">Education Questions</span><span class="value">education@louisianaai.net</span></div>
+    <div class="status-row"><span class="label">Call Logs</span><span class="value">Webhook POSTs to info@louisianaai.net</span></div>
+  </div>
+  <div class="panel">
+    <h2>Outbound Campaign Status</h2>
+    <div class="status-row"><span class="label">District blast (70 emails)</span><span class="value" id="blast-d">NOT SENT</span></div>
+    <div class="status-row"><span class="label">University blast (46 emails)</span><span class="value" id="blast-u">NOT SENT</span></div>
+    <div class="status-row"><span class="label">Media blast (20 emails)</span><span class="value" id="blast-m">NOT SENT</span></div>
+    <div class="status-row"><span class="label">LinkedIn post</span><span class="value" id="blast-l">NOT POSTED</span></div>
+    <div class="status-row"><span class="label">Total contacts in database</span><span class="value">136 verified emails</span></div>
+    <div class="status-row"><span class="label">Contact database</span><span class="value">data/contacts-database.md</span></div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:20px;color:var(--dim);font-size:10px">
+  Mission Control — Louisiana's AI Infrastructure Initiative<br>
+  (337) 448-4242 | info@louisianaai.net | louisianaai.net<br>
+  Dashboard for internal operations only — not public-facing
+</div>
+
+<script>
+function updateCountdowns(){
+  var now=new Date().getTime();
+  var targets={
+    'cd-nv':new Date('2026-03-31T23:59:59').getTime(),
+    'cd-doe':new Date('2026-04-02T23:59:59').getTime(),
+    'cd-angel':new Date('2026-06-30T23:59:59').getTime(),
+    'cd-solar':new Date('2026-07-03T23:59:59').getTime()
+  };
+  for(var id in targets){
+    var diff=targets[id]-now;
+    var el=document.getElementById(id);
+    if(!el)continue;
+    if(diff<=0){el.textContent='EXPIRED';continue}
+    var d=Math.floor(diff/(1000*60*60*24));
+    var h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    var m=Math.floor((diff%(1000*60*60))/(1000*60));
+    var s=Math.floor((diff%(1000*60))/1000);
+    el.textContent=d+'d '+h+'h '+m+'m '+s+'s';
+  }
+}
+updateCountdowns();
+setInterval(updateCountdowns,1000);
+
+function checkSystems(){
+  var urls=[
+    'https://louisianaai.net',
+    'https://adc3k.com/lsu',
+    'https://adc3k.com/trappeys',
+    'https://adc3k.com/blueprints',
+    'https://adc3k.com/alumni-investors'
+  ];
+  document.querySelector('.refresh-btn').textContent='Checking...';
+  setTimeout(function(){document.querySelector('.refresh-btn').textContent='All Systems Checked'},1500);
+}
+</script>
+</body>
+</html>
