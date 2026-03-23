@@ -1,0 +1,4 @@
+# MEDIA BCC LIST — Ready to paste
+# 20 outlets (Lafayette, Baton Rouge, New Orleans, statewide, national)
+
+news@katc.com, news@klfy.com, newstips@theadvertiser.com, editor@thecurrentla.com, studio@kpel965.com, news@wafb.com, news@wbrz.com, metro@theadvocate.com, news@wrkf.org, editor@businessreport.com, newstips@wwltv.com, tips@wdsu.com, metro@nola.com, editor@bestofneworleans.com, news@louisianaradionetwork.com, tips@lailluminator.com, apnewsorleans@ap.org, editorial@datacenterfrontier.com, editorial@datacenterdynamics.com, power@powermag.com

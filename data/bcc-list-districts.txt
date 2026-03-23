@@ -1,0 +1,12 @@
+# K-12 SUPERINTENDENT BCC LIST — Ready to paste
+# 65 districts + 4 state contacts
+# Copy everything below the line into your BCC field
+
+# STATE LEVEL
+publicrecords@la.gov, STEM@la.gov, DigitalLearning@la.gov, kim.reed@laregents.edu, richard.nelson@lctcs.edu,
+
+# TOP 20 PRIORITY DISTRICTS
+lcole@ebrschools.org, superintendent@jpschools.org, ffulmore@nolapublicschools.com, frank.jabbia@stpsb.org, jason.vanmetre@cpsb.org, ftouchet@lpssonline.com, jody.purvis@lpsb.org, jeff.powell@rpsb.us, jason.rowland@bossierschools.org, melissa.stilley@tangischools.org, guice@opsb.net, hhulin@iberia.k12.la.us, bubbaorgeron@stpsd.org, jwmartin@mylpsd.com, mbatiste@slp.k12.la.us, tommy.byler@vpsb.net, Ctall@acadia.k12.la.us, louisvoiron@ipsb.education,
+
+# ALL REMAINING DISTRICTS (A-Z)
+michael.doucet@allen.k12.la.us, jbarthelemy@assumptionschools.com, Blaine.Dauzat@avoyellespsb.com, tcooley@beau.k12.la.us, leroy.hamilton@bpsb.us, bhurst@bogschools.org, charley_lemons@camsch.org, johnnieadams@catahoulaschools.com, JFOUNTAIN@centralcss.org, jstroder@bakerschools.org, cbrooks@cpsb.us, twatson@cpsbla.us, clay.corley@desotopsb.com, knetterville@efschools.net, darwan.lazard@epsb.com, jgullatt@fpsb.us, erin.stokes@gbsp.org, william.carter@jpsbschools.us, john.hall@jdpsbk12.org, jgarrett@lasallepsb.com, rdurrett@lincolnschools.com, charlie.butler@madisonpsb.org, sam.moore@mcschools.net, jwinston@mpsb.us, geloi@nat.k12.la.us, sritz@ppsb.org, kim.canezaro@pcpsb.net, astrong@rrbulldogs.com, srjones@richland.k12.la.us, swright@sabine.k12.la.us, doris.voitier@sbpsb.org, ken.oertling@wearescpps.org, kjoseph@sthpk-12.net, ckimball@stjames.k12.la.us, Cleo.perry@sus.edu, Frederick_wiltz@saintmartinschools.org, superintendent@stmaryk12.net, jruss@tensaspsb.org, stocktonc@unionpsd.org, jwilliam@vpsb.k12.la.us, Jennifer.thomas@wpsb.info, jrowland@websterpsb.org, csmith@wbrschools.net, emilybradley@wcpsb.com, miltonh@wfpsb.org, asimmons@winnpsb.org, bnecaise@zacharyschools.org
