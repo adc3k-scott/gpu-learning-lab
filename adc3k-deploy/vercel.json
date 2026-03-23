@@ -51,6 +51,7 @@
     { "source": "/alumni-investors", "destination": "/investor-gate.html" },
     { "source": "/ops", "destination": "/ops.html" },
     { "source": "/join", "destination": "/join-team.html" },
+    { "source": "/blueprints-marlie", "destination": "/blueprints-marlie.html" },
     { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
