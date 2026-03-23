@@ -48,6 +48,7 @@
     { "source": "/renders-wg", "destination": "/renders-wg.html" },
     { "source": "/renders-trappeys", "destination": "/renders-trappeys.html" },
     { "source": "/blueprints-trappeys", "destination": "/blueprints-trappeys.html" },
+    { "source": "/alumni-investors", "destination": "/investor-gate.html" },
     { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
