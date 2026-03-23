@@ -49,6 +49,8 @@
     { "source": "/renders-trappeys", "destination": "/renders-trappeys.html" },
     { "source": "/blueprints-trappeys", "destination": "/blueprints-trappeys.html" },
     { "source": "/alumni-investors", "destination": "/investor-gate.html" },
+    { "source": "/ops", "destination": "/ops.html" },
+    { "source": "/join", "destination": "/join-team.html" },
     { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },

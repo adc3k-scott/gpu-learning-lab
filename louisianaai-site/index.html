@@ -613,6 +613,31 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
       <input type="hidden" name="_subject" value="Louisiana AI Infrastructure Initiative — School Registration">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://louisianaai.net/registered">
+      <input type="hidden" name="_autoresponse" value="Thank you for registering with Louisiana's AI Infrastructure Initiative. We received your information and our system is already working on your eligibility assessment.
+
+HERE'S WHAT HAPPENS NEXT:
+
+1. WITHIN 24 HOURS — You will receive a custom eligibility report identifying which federal and state programs your institution qualifies for. This includes NVIDIA Academic Grant, NSF MRI, NSF EPSCoR, DOE SPARK, LED FastStart, and 15+ additional programs.
+
+2. APPLICATION ASSISTANCE — For programs you qualify for, we will provide pre-filled application templates with your institution's information already populated. You review and approve before anything is submitted.
+
+3. DEADLINE TRACKING — We monitor every deadline and send you alerts. Some programs expire within days. We make sure nothing slips through the cracks.
+
+4. COMPUTE ACCESS — Once applications are filed, we connect your institution to GPU compute resources at the nearest campus site (Ragin' Cajun Compute Campus in Lafayette or Tiger Compute Campus in St. Gabriel).
+
+IMPORTANT DEADLINES:
+- NVIDIA Academic Grant: March 31, 2026 (DAYS AWAY)
+- DOE SPARK Concept Paper: April 2, 2026
+- Angel Investor Tax Credit: June 30, 2026
+- Solar ITC Safe Harbor: July 3, 2026
+
+QUESTIONS? Call (337) 448-4242 — our AI-assisted team is available 24/7. Or reply to this email.
+
+This service is 100% free. We will never charge you. We will never share your information.
+
+Louisiana's AI Infrastructure Initiative
+(337) 448-4242 | info@louisianaai.net | louisianaai.net">
       <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
       <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
       <input type="text" name="organization" placeholder="School / University / Organization" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
@@ -634,7 +659,7 @@ footer .legal{font-size:10px;color:var(--dim);margin-top:12px}
         <option value="other">Other</option>
       </select>
       <textarea name="needs" placeholder="What does your institution need? (GPU compute, curriculum support, workforce training, research access, etc.)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
-      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--blue);color:var(--white);font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s">Register Your Institution</button>
+      <button type="submit" id="reg-btn" style="padding:16px 24px;border-radius:8px;border:none;background:var(--blue);color:var(--white);font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s">Register Your Institution</button>
       <p style="font-size:10px;color:var(--dim);text-align:center;margin-top:4px;line-height:1.4">By submitting, you agree that your information will be used solely for the purpose of assessing your institution's eligibility for AI infrastructure programs. We do not sell, share, or distribute your data. No payment information is collected.</p>
     </form>
 
@@ -774,6 +799,23 @@ function updateCountdowns() {
 }
 updateCountdowns();
 setInterval(updateCountdowns, 1000);
+
+// Eligibility processor — fires when form is submitted
+document.querySelector('form').addEventListener('submit', function(e) {
+  var form = e.target;
+  var data = {};
+  var fields = new FormData(form);
+  fields.forEach(function(value, key) {
+    if (!key.startsWith('_')) data[key] = value;
+  });
+  // Fire eligibility processor in background (don't block FormSubmit)
+  fetch('/api/process-registration', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(function() {});
+  // FormSubmit handles the actual submission and redirect
+});
 </script>
 
 </body>
