@@ -52,7 +52,8 @@ This is a living document. Update it every time we verify a contact, get a regis
 
 | Company | Contact | Title | Email | Phone | Status | Notes |
 |---|---|---|---|---|---|---|
-| Louisiana Cat Power Systems | | | | 337-374-1901 | MANUAL | Generators + switchgear |
+| Louisiana Cat Power Systems | Spencer Landry | Sales Rep | | 985-498-9336 | MANUAL | Contact from main office 337-374-1901 |
+| Louisiana Cat Power Systems | Ken Johnson | Sales Rep | | 504-544-2074 | MANUAL | Contact from main office 337-374-1901 |
 | First Solar | | Sales | modulesales@firstsolar.com | 419-662-6899 | MANUAL | Series 7 TR1 panels |
 | Eaton | | | | | MANUAL | Beam Rubin DSX — contact from GTC 2026 |
 | ATMOS Energy | | | | | MANUAL | Gas supply |
