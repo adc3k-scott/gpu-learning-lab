@@ -48,12 +48,19 @@ Hut 8 is spending $10 billion in Louisiana — zero of it serves schools. Meta's
 
 ## WEBSITE & RESOURCES
 - **Main site:** louisianaai.net
-- **School registration:** louisianaai.net (form at bottom of page)
+- **School registration:** louisianaai.net (form at bottom — automatic eligibility report sent after registration)
 - **Filing documents:** louisianaai.net/documents (25+ grant and incentive programs)
-- **Engineering blueprints:** adc3k.com/blueprints (6 sheets: electrical, cooling, site plan, floor plan, power, solar)
-- **Site renderings:** adc3k.com/renders-wg (before/after helicopter photo edits)
+- **Tiger Campus (LSU):** adc3k.com/lsu
+- **Ragin' Cajun Campus (Trappeys):** adc3k.com/trappeys
+- **Blueprints — Willow Glen:** adc3k.com/blueprints (6-sheet engineering package)
+- **Blueprints — Trappeys:** adc3k.com/blueprints-trappeys (6-sheet engineering package)
+- **Renderings — Willow Glen:** adc3k.com/renders-wg (before/after helicopter photos)
+- **Renderings — Trappeys:** adc3k.com/renders-trappeys (before/after restoration renders)
+- **Photo gallery — Trappeys:** adc3k.com/trappeys-gallery (56 numbered photos)
 - **Learn about AI infrastructure:** adc3k.com/learn
 - **Reference library:** adc3k.com/reference
+- **Alumni & Investors:** adc3k.com/alumni-investors (registration required for financial info)
+- **Join the Team:** adc3k.com/join (we're hiring — installers, electricians, grant writers, engineers)
 - **Email:** info@louisianaai.net
 - **Education email:** education@louisianaai.net
 - **Investor email:** investors@louisianaai.net
