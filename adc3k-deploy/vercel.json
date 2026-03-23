@@ -11,7 +11,7 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src 'self' https://www.youtube.com https://youtube.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co;" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src 'self' https://www.youtube.com https://youtube.com; object-src 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co;" }
       ]
     }
   ],
@@ -43,7 +43,10 @@
     { "source": "/renders-compare", "destination": "/renders-compare.html" },
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
     { "source": "/power", "destination": "/power-architecture.html" },
+    { "source": "/power-lsu", "destination": "/power-lsu.html" },
     { "source": "/reference", "destination": "/reference.html" },
+    { "source": "/renders-wg", "destination": "/renders-wg.html" },
+    { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
     { "source": "/leadership", "destination": "/leadership.html" },

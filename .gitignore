@@ -238,3 +238,4 @@ id_ed25519*
 *secret*.json
 .env.*
 !.env.example
+.vercel
