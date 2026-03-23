@@ -1,0 +1,18 @@
+# UNIVERSITY BCC LIST — Ready to paste
+# 45 verified emails across 28 institutions
+# Copy everything below into your BCC field
+
+# LSU SYSTEM
+rtwilley@lsu.edu, vcolvin@lsu.edu, ibaggili@lsu.edu, jconst@lsuhsc.edu, ramey.benfield@lsuhs.edu, helen.taylor@lsus.edu, ebeard@lsua.edu, chancellor@lsue.edu,
+
+# UL SYSTEM
+ramesh@louisiana.edu, kumer.das@louisiana.edu, khattab@louisiana.edu, martin.margala@louisiana.edu, provost@southeastern.edu, bonnie.achee@southeastern.edu, ramu@latech.edu, cwick@latech.edu, clunn1@uno.edu, sgjohnso@uno.edu, vassil@cs.uno.edu, vpaa@nsula.edu, cis@nsula.edu, nikosk@mcneese.edu, sambatipati@mcneese.edu, waltoncr@gram.edu, rawalb@gram.edu, mceacharn@ulm.edu, sreekumari@ulm.edu, todd.keller@nicholls.edu,
+
+# SOUTHERN SYSTEM
+patrick_carriere@subr.edu, bjackson@suno.edu, bcook@suno.edu, ereynolds@susla.edu,
+
+# PRIVATE
+hrajan@tulane.edu, dshantz@tulane.edu, cwenk@tulane.edu, provost@loyno.edu, provost@xula.edu, ebuckles@dillard.edu,
+
+# COMMUNITY/TECHNICAL COLLEGES
+barlows@mybrcc.edu, chancellor@solacc.edu, charles.miller@solacc.edu, dtaylor@rpcc.edu, tstamm@dcc.edu, dccchan@dcc.edu, ttinney@nunez.edu, heatherpoole@cltcc.edu
