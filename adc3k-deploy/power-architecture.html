@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADC Trappeys — 800V DC Power Architecture</title>
+<title>Ragin' Cajun Compute Campus — 800V DC Power Architecture</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#fff;padding:20px;max-width:1100px;margin:0 auto}
@@ -66,6 +66,8 @@ strong{color:#fff}
 </style>
 </head>
 <body>
+
+<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a></div>
 
 <h1>Trappeys AI Factory — 800V DC Power Architecture</h1>
 <div class="sub">From gas molecule to GPU chip — every step, every component, every vendor</div>
@@ -167,7 +169,7 @@ NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You 
 </div>
 
 <div class="diagram" style="margin:0">
-<p style="font-size:0.75rem;color:#76b900;font-weight:700;margin-bottom:10px;text-align:center">ADC WAY (800V DC)</p>
+<p style="font-size:0.75rem;color:#76b900;font-weight:700;margin-bottom:10px;text-align:center">800V DC NATIVE</p>
 <div style="display:flex;flex-direction:column;gap:0;align-items:stretch">
 <div class="block green" style="min-width:auto;width:100%"><div class="label">Cat G3520C</div><div class="value" style="font-size:0.85rem">480V AC</div><div class="detail">1.5 MW prime rated<br>Clean-burning natural gas<br>(Henry Hub pricing)</div></div>
 <div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; one conversion</div>
@@ -190,7 +192,7 @@ NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You 
 </div>
 
 <div class="callout" style="margin-top:14px;text-align:center">
-<strong>Bottom line:</strong> Old way loses 12-17% of your energy before it reaches the GPU. ADC way loses 4%. On a 3 MW facility that's the difference between wasting 510 kW and wasting 120 kW — <strong>390 kW saved, 24/7, 365 days.</strong>
+<strong>Bottom line:</strong> Old way loses 12-17% of your energy before it reaches the GPU. Our way loses 4%. On a 3 MW facility that's the difference between wasting 510 kW and wasting 120 kW — <strong>390 kW saved, 24/7, 365 days.</strong>
 </div>
 
 <!-- ═══════════════════════════════════════ -->
@@ -225,7 +227,7 @@ NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You 
 </div>
 
 <div class="callout">
-<strong>This is the innovation nobody else is doing.</strong> Traditional solar goes: Panel (DC) &rarr; Inverter (DC&rarr;AC) &rarr; Grid (AC) &rarr; Rectifier (AC&rarr;DC) &rarr; Rack. Three conversions, 92% efficient. ADC goes: Panel (DC) &rarr; Buck (DC&rarr;DC) &rarr; 800V Bus &rarr; Rack. One conversion, 97% efficient. We skip the inverter entirely because the racks want DC anyway.
+<strong>This is the innovation nobody else is doing.</strong> Traditional solar goes: Panel (DC) &rarr; Inverter (DC&rarr;AC) &rarr; Grid (AC) &rarr; Rectifier (AC&rarr;DC) &rarr; Rack. Three conversions, 92% efficient. We go: Panel (DC) &rarr; Buck (DC&rarr;DC) &rarr; 800V Bus &rarr; Rack. One conversion, 97% efficient. We skip the inverter entirely because the racks want DC anyway.
 </div>
 
 <!-- ═══════════════════════════════════════ -->
@@ -325,7 +327,7 @@ LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
 <strong>Location:</strong> Mounted directly adjacent to the GPU — shortest possible power path<br>
 <strong>Output:</strong> 12V DC to GPU voltage regulators, then core voltage (~0.7-1.0V) to the GPU die<br><br>
 <strong style="color:#4fc3f7">Why LLC?</strong> Zero-voltage switching (ZVS) = minimal switching losses. At 64:1 ratio, it acts as a DC transformer — fixed ratio, no regulation needed. The upstream 800V bus handles voltage regulation. This lets the converter be tiny, efficient, and dead reliable.<br><br>
-<strong style="color:#ffd54f">Why this matters for ADC:</strong> Traditional racks have 8+ power supply units (PSUs) with fans taking up rack space. 800V DC eliminates all of them. More space for compute. Fewer fans = less noise, less heat, fewer failures. NVIDIA says 70% lower maintenance costs.
+<strong style="color:#ffd54f">Why this matters:</strong> Traditional racks have 8+ power supply units (PSUs) with fans taking up rack space. 800V DC eliminates all of them. More space for compute. Fewer fans = less noise, less heat, fewer failures. NVIDIA says 70% lower maintenance costs.
 </p>
 </div>
 </div>
@@ -355,7 +357,7 @@ LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
 </div>
 
 <div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);font-size:0.7rem">
-ADC — Advantage Design & Construction | adc3k.com | scott@adc3k.com<br>
+Louisiana's AI Infrastructure Initiative | louisianaai.net | info@louisianaai.net<br>
 Source: NVIDIA 800 VDC Architecture Blog (May 2025), Eaton Beam Rubin DSX (GTC March 2026)<br>
 American-made. American energy. Louisiana AI factory.
 </div>
