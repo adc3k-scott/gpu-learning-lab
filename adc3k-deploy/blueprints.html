@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tiger Compute Campus — Engineering Blueprints</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;padding:20px}
+h1{text-align:center;font-size:1.4rem;margin:10px 0 4px}
+.sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.75rem;margin-bottom:30px}
+.sheet{max-width:1400px;margin:0 auto 40px;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden}
+.sheet-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center}
+.sheet-header h2{font-size:1rem;font-weight:800}
+.sheet-header .tag{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;padding:3px 10px;border-radius:3px;color:#76b900;background:rgba(118,185,0,0.1);border:1px solid rgba(118,185,0,0.2)}
+.sheet img,.sheet object{width:100%;display:block}
+.sheet .desc{padding:12px 20px;font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.5}
+.section-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:#3b82f6;font-weight:700;margin:40px 0 16px;text-align:center}
+footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.65rem}
+</style>
+</head>
+<body>
+
+<h1>Tiger Compute Campus — Engineering Blueprints</h1>
+<div class="sub">Willow Glen Terminal, St. Gabriel, LA | MVP Design Intent Package | NOT FOR CONSTRUCTION</div>
+
+<div class="section-label">Electrical</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>E-001: Electrical Single-Line Diagram</h2>
+<span class="tag">800V DC Native</span>
+</div>
+<img src="blueprints/electrical-sld.svg" alt="Electrical Single-Line Diagram" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Complete power path from Entergy 500kV/230kV substations through Cat CG260 generators, Eaton Beam Rubin DSX rectification, 800V DC distribution bus, to NVIDIA NVL72 GPU racks. First Solar DC-direct bypass at 97% efficiency. 4-layer power hierarchy: Solar → Gas → Diesel → Grid (sell-back only).</div>
+</div>
+
+<div class="section-label">Cooling</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>C-001: Cooling Flow Schematic</h2>
+<span class="tag">Mississippi River Once-Through</span>
+</div>
+<img src="blueprints/cooling-schematic.svg" alt="Cooling Flow Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Complete cooling path from Mississippi River intake through plate heat exchangers, facility cooling loop, CDUs, to liquid-cooled NVL72 rack manifolds. 45C hot water supply — no chillers needed. Future waste heat recovery: ORC (8-11 MW electricity) + absorption chillers (11,000+ tons). LPDES permit LA0005851 already on-site.</div>
+</div>
+
+<div class="section-label">Site</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>S-001: Site Plan</h2>
+<span class="tag">700 Acres</span>
+</div>
+<img src="blueprints/site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Full 700-acre property layout. Compute hall, generator yard, power building, two solar array zones (5+ MW), existing 500kV and 230kV substations, tank farm (WGT operations), deepwater dock, water intake structure, CN Railroad, gas pipeline corridor, access road from LA-75. Mississippi River on west edge with 3,500 ft frontage.</div>
+</div>
+
+<div class="section-label">Architectural</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>A-001: Compute Hall Floor Plan</h2>
+<span class="tag">36 NVL72 Racks</span>
+</div>
+<img src="blueprints/floor-plan.svg" alt="Compute Hall Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Phase 1 compute hall: 200' x 100' (20,000 sq ft). 36 NVIDIA NVL72 racks in 6 rows, hot aisle containment, cold aisle supply. Mechanical room with CDUs (N+1). NOC, loading dock, electrical room with 800V DC busway. 2,592 GPUs total. 4.68 MW IT load. Designed for expansion to 72 racks.</div>
+</div>
+
+<div class="section-label">Power</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>P-001: Power Distribution Schematic</h2>
+<span class="tag">4-Layer Hierarchy</span>
+</div>
+<img src="blueprints/power-distribution.svg" alt="Power Distribution Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Fuel-to-chip power distribution with complete 4-layer hierarchy. ATMOS gas pipeline to Cat CG260 generators, through paralleling switchgear, Eaton Beam Rubin DSX rectification, 800V DC bus, busway to rack PDUs, 64:1 LLC converters to GPU. First Solar DC-Direct bypass. BESS ride-through. Grid sell-back only. Full Layer 1-4 breakdown with specs.</div>
+</div>
+
+<div class="section-label">Solar</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>L-001: Solar Array Layout</h2>
+<span class="tag">First Solar DC-Direct</span>
+</div>
+<img src="blueprints/solar-layout.svg" alt="Solar Array Layout" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">First Solar Series 7 TR1 ground-mount array. 18 rows, ~4,500 panels, ~2.5 MW Zone A. 5-panel strings at 952V, buck-converted to 800V for direct feed to DSX bus — 97% path efficiency vs 88-92% traditional AC. Combiner boxes, DC-DC converters, string math, panel specs. Made in New Iberia, LA.</div>
+</div>
+
+<footer>
+Tiger Compute Campus — Willow Glen Terminal, St. Gabriel, Louisiana<br>
+Louisiana's AI Infrastructure Initiative — (337) 448-4242 — louisianaai.net<br>
+MVP Design Intent — All drawings require PE-stamped engineering review before construction
+</footer>
+
+</body>
+</html>
