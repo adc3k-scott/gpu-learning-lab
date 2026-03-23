@@ -285,7 +285,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:24px 40px
 .ec,.g2,.g3,.g4,.srow,.igrid,.vs,.rgrid,.use-grid,.dual-cta{grid-template-columns:1fr}
 .rgrid{grid-template-columns:repeat(3,1fr)}
 .pad,.pad-sm{padding:80px 16px 60px}
-nav{padding:0 16px}.nav-center{display:none!important}.nav-right{display:none}.hamburger{display:block}
+nav{padding:0 16px}.nav-center a{font-size:9px;padding:14px 6px}.nav-right{display:none}.hamburger{display:none}
 .stitle{font-size:32px}
 .layer{grid-template-columns:1fr;gap:4px}.lbadge{width:fit-content}
 .pspecs{grid-template-columns:1fr 1fr}
@@ -327,6 +327,7 @@ footer{flex-direction:column;gap:10px;text-align:center}
     <a id="nav-louisiana" onclick="showPage('louisiana')">Louisiana</a>
     <a id="nav-projects" onclick="showPage('projects')">Projects</a>
     <a id="nav-learn" onclick="showPage('learn')">Learn</a>
+    <a id="nav-trust" onclick="showPage('trust')">Trust</a>
     <a id="nav-connect" onclick="showPage('connect')">Connect</a>
   </div>
   <div class="nav-right">
@@ -1383,18 +1384,22 @@ footer{flex-direction:column;gap:10px;text-align:center}
   <h2 class="stitle">Where ADC3K is building.</h2>
   <p class="ssub">Seven active projects — Lafayette to the Mississippi River corridor.</p>
 
-  <div class="pcard reveal" style="margin-top:40px;border-top:3px solid #3b9eff">
-    <div class="sbadge" style="background:rgba(59,154,255,0.08);color:#3b9eff;border:1px solid rgba(59,154,255,0.25)">AI FACTORY + MINI GRID — ENGINEERING BLUEPRINT</div>
-    <h3>Willow Glen Terminal — Mississippi River</h3>
-    <div class="ploc">St. Gabriel, LA (Iberville Parish) &nbsp;&middot;&nbsp; Mississippi River Corridor</div>
-    <p class="bd">Former 2,200 MW Entergy power station reborn as a DSX-compliant AI factory campus and renewable mini grid. 700 acres on the Mississippi with a live 230kV substation, deepwater dock, pipeline corridor, and 20,000 SF warehouse ready for immediate deployment. NVIDIA liquid-cooled racks. Dynamo inference OS. Solar + renewable fuel generation. Grid export revenue. Louisiana's neocloud hub.</p>
+  <div class="pcard reveal" style="margin-top:40px;border-top:3px solid #7c3aed">
+    <div class="sbadge" style="background:rgba(124,58,237,0.08);color:#7c3aed;border:1px solid rgba(124,58,237,0.25)">TIGER COMPUTE CAMPUS — LSU PARTNERSHIP</div>
+    <h3>Willow Glen Terminal — St. Gabriel</h3>
+    <div class="ploc">St. Gabriel, LA (Iberville Parish) &nbsp;&middot;&nbsp; Mississippi River &nbsp;&middot;&nbsp; 20 min from LSU</div>
+    <p class="bd">Former 2,200 MW Entergy power station, decommissioned 2016, reborn as an AI factory campus. 700 acres on the Mississippi River. 500kV + 230kV substations live on-site. 43-ft deepwater dock. Cat CG260 generators (hydrogen-ready). 800V DC native. Mississippi River cooling. Partnered with LSU. 6-sheet engineering blueprint package complete. Phase 1 deploys in existing 20,000 SF warehouse.</p>
     <div class="pspecs">
-      <div class="spec"><div class="slbl">Power</div><div class="sval">12 MW Phase 1</div></div>
+      <div class="spec"><div class="slbl">Racks</div><div class="sval">36 NVL72 (Phase 1)</div></div>
       <div class="spec"><div class="slbl">Cooling</div><div class="sval">Mississippi River</div></div>
       <div class="spec"><div class="slbl">Site</div><div class="sval">700 Acres</div></div>
-      <div class="spec"><div class="slbl">Score</div><div class="sval" style="color:#00e87a">94 — Tier A</div></div>
+      <div class="spec"><div class="slbl">Grid</div><div class="sval" style="color:#00e87a">500kV + 230kV LIVE</div></div>
     </div>
-    <a class="deck-link" href="/investor" style="border-color:rgba(59,154,255,0.3);color:#3b9eff;text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="deck-link" href="/lsu" style="border-color:rgba(124,58,237,0.3);color:#7c3aed;text-decoration:none;display:inline-block;text-align:center">TIGER CAMPUS &rarr;</a>
+      <a class="deck-link" href="/blueprints" style="border-color:rgba(118,185,0,0.3);color:#76b900;text-decoration:none;display:inline-block;text-align:center">BLUEPRINTS &rarr;</a>
+      <a class="deck-link" href="/renders-wg" style="border-color:rgba(59,130,246,0.3);color:#3b82f6;text-decoration:none;display:inline-block;text-align:center">RENDERS &rarr;</a>
+    </div>
   </div>
 
   <div class="pcard reveal" style="margin-top:20px;border-top:3px solid var(--accent)">
@@ -1412,18 +1417,22 @@ footer{flex-direction:column;gap:10px;text-align:center}
   </div>
 
 
-  <div class="pcard reveal d2" style="border-top:3px solid var(--green)">
-    <div class="sbadge" style="background:var(--green-soft);color:var(--green);border:1px solid rgba(0,214,143,0.2)">FIRST ADC 3K DEPLOYMENT SITE</div>
-    <h3>Trappey's Cannery — Vermilion River</h3>
-    <div class="ploc">Lafayette, LA &nbsp;&middot;&nbsp; Vermilion River</div>
-    <p class="bd">The historic Trappey's cannery — a Lafayette landmark on the Vermilion River — is the first site for ADC 3K pod deployment. Metal warehouse, no construction required, 0.3 miles from MARLIE I NOC. UL Lafayette is the target anchor tenant.</p>
+  <div class="pcard reveal d2" style="border-top:3px solid #CE181E">
+    <div class="sbadge" style="background:rgba(206,24,30,0.08);color:#CE181E;border:1px solid rgba(206,24,30,0.25)">RAGIN' CAJUN COMPUTE CAMPUS — UL LAFAYETTE PARTNERSHIP</div>
+    <h3>Trappeys Cannery — Lafayette</h3>
+    <div class="ploc">Lafayette, LA &nbsp;&middot;&nbsp; Bayou Vermilion &nbsp;&middot;&nbsp; 0.5 mi from UL Lafayette</div>
+    <p class="bd">Historic cannery closed 30+ years, reborn as a solar-powered AI factory. 112,500 sq ft across 4 buildings. 2.05 MW First Solar rooftop (3,731 panels). 100-ft water tower for thermal cooling. Cat G3520C generators. 800V DC native. Partnered with UL Lafayette. 6-sheet engineering blueprint package complete. 56 site photos. 5 restoration renders. Deploy first in Middle High building (22,500 sf).</p>
     <div class="pspecs">
-      <div class="spec"><div class="slbl">Type</div><div class="sval">ADC 3K Pods</div></div>
-      <div class="spec"><div class="slbl">Cooling</div><div class="sval">NVIDIA Integrated Liquid</div></div>
-      <div class="spec"><div class="slbl">NOC</div><div class="sval">MARLIE I Remote</div></div>
-      <div class="spec"><div class="slbl">Status</div><div class="sval" style="color:var(--accent)">Site Identified</div></div>
+      <div class="spec"><div class="slbl">Buildings</div><div class="sval">4 (112,500 sf)</div></div>
+      <div class="spec"><div class="slbl">Solar</div><div class="sval">2.05 MW Rooftop</div></div>
+      <div class="spec"><div class="slbl">Cooling</div><div class="sval">Water Tower + Dry</div></div>
+      <div class="spec"><div class="slbl">University</div><div class="sval" style="color:#CE181E">UL Lafayette</div></div>
     </div>
-    <a class="deck-link" href="/investor" style="text-decoration:none;display:inline-block;text-align:center">INVESTOR OVERVIEW &rarr;</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="deck-link" href="/trappeys" style="border-color:rgba(206,24,30,0.3);color:#CE181E;text-decoration:none;display:inline-block;text-align:center">RAGIN' CAJUN CAMPUS &rarr;</a>
+      <a class="deck-link" href="/blueprints-trappeys" style="border-color:rgba(118,185,0,0.3);color:#76b900;text-decoration:none;display:inline-block;text-align:center">BLUEPRINTS &rarr;</a>
+      <a class="deck-link" href="/renders-trappeys" style="border-color:rgba(59,130,246,0.3);color:#3b82f6;text-decoration:none;display:inline-block;text-align:center">RENDERS &rarr;</a>
+    </div>
   </div>
 
   <div class="pcard reveal" style="border-top:3px solid var(--purple)">
