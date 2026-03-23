@@ -46,6 +46,7 @@
     { "source": "/power-lsu", "destination": "/power-lsu.html" },
     { "source": "/reference", "destination": "/reference.html" },
     { "source": "/renders-wg", "destination": "/renders-wg.html" },
+    { "source": "/renders-trappeys", "destination": "/renders-trappeys.html" },
     { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
