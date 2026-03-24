@@ -316,38 +316,46 @@ export default async function handler(req, res) {
     const org = data.organization || "Unknown";
     const type = data.institution_type || "unknown";
 
-    // Send eligibility report to the registrant
+    // Send eligibility report to registrant via Brevo SMTP API
+    const BREVO_API_KEY = process.env.BREVO_API_KEY;
+
     if (email) {
       try {
-        await fetch('https://formsubmit.co/ajax/' + email, {
+        await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          headers: {
+            'api-key': BREVO_API_KEY,
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({
-            name: "Louisiana's AI Infrastructure Initiative",
-            email: 'info@louisianaai.net',
-            _subject: `Your Eligibility Report — ${totalCount} Programs Identified${urgentCount > 0 ? ' (' + urgentCount + ' URGENT)' : ''}`,
-            message: report,
-            _template: 'box'
+            sender: { name: "Louisiana's AI Infrastructure Initiative", email: 'info@louisianaai.net' },
+            to: [{ email: email, name: name }],
+            subject: `Your Eligibility Report — ${totalCount} Programs Identified${urgentCount > 0 ? ' (' + urgentCount + ' URGENT)' : ''}`,
+            textContent: report,
           })
         });
+        console.log(`Eligibility report sent to ${email}`);
       } catch (e) {
         console.error('Failed to send eligibility report to registrant:', e.message);
       }
     }
 
-    // Send copy + notification to Mission Control
+    // Send copy + notification to Mission Control via Brevo
     try {
-      await fetch('https://formsubmit.co/ajax/info@louisianaai.net', {
+      await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: {
+          'api-key': BREVO_API_KEY,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          name: `New Registration: ${name} — ${org}`,
-          email: 'system@louisianaai.net',
-          _subject: `📋 Registration: ${name} — ${org} (${type}) — ${totalCount} programs, ${urgentCount} urgent`,
-          message: `NEW REGISTRATION\n\nName: ${name}\nEmail: ${email}\nOrg: ${org}\nType: ${type}\nParish: ${data.parish || 'N/A'}\nPhone: ${data.phone || 'N/A'}\nNeeds: ${data.needs || 'N/A'}\n\n${'='.repeat(50)}\n\nELIGIBILITY REPORT SENT TO REGISTRANT:\n\n${report}`,
-          _template: 'box'
+          sender: { name: 'Mission Control', email: 'info@louisianaai.net' },
+          to: [{ email: 'info@louisianaai.net', name: 'Mission Control' }],
+          subject: `Registration: ${name} — ${org} (${type}) — ${totalCount} programs, ${urgentCount} urgent`,
+          textContent: `NEW REGISTRATION\n\nName: ${name}\nEmail: ${email}\nOrg: ${org}\nType: ${type}\nParish: ${data.parish || 'N/A'}\nPhone: ${data.phone || 'N/A'}\nNeeds: ${data.needs || 'N/A'}\n\n${'='.repeat(50)}\n\nELIGIBILITY REPORT SENT TO REGISTRANT:\n\n${report}`,
         })
       });
+      console.log('Mission Control notification sent');
     } catch (e) {
       console.error('Failed to send to Mission Control:', e.message);
     }
