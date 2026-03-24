@@ -360,6 +360,16 @@ export default async function handler(req, res) {
       console.error('Failed to send to Mission Control:', e.message);
     }
 
+    // Log registration to tracking endpoint
+    try {
+      const baseUrl = req.headers.host ? `https://${req.headers.host}` : 'https://louisianaai.net';
+      fetch(`${baseUrl}/api/registrations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, organization: org, institution_type: type, parish: data.parish, programs_identified: totalCount })
+      }).catch(() => {});
+    } catch (e) {}
+
     // Auto-trigger filing assistant in background (don't wait for it)
     try {
       const baseUrl = req.headers.host ? `https://${req.headers.host}` : 'https://louisianaai.net';
