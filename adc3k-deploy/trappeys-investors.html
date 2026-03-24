@@ -1255,5 +1255,24 @@ for (var i = 0; i < tabBtns.length; i++) {
 }
 </script>
 
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    var data = {};
+    var fields = new FormData(form);
+    fields.forEach(function(value, key) {
+      if (!key.startsWith('_')) data[key] = value;
+    });
+    data.pipeline = 'schools';
+    data.source = 'adc3k.com/trappeys';
+    fetch('https://louisianaai.net/api/brevo-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function() {});
+  });
+});
+</script>
+
 </body>
 </html>

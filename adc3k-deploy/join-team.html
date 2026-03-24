@@ -166,5 +166,24 @@ footer .legal{font-size:9px;color:var(--dim);margin-top:6px}
 <div class="legal">(337) 448-4242 | info@louisianaai.net | louisianaai.net<br>American-made. Louisiana-powered.</div>
 </footer>
 
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    var data = {};
+    var fields = new FormData(form);
+    fields.forEach(function(value, key) {
+      if (!key.startsWith('_')) data[key] = value;
+    });
+    data.pipeline = 'careers';
+    data.source = 'adc3k.com/join';
+    fetch('https://louisianaai.net/api/brevo-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function() {});
+  });
+});
+</script>
+
 </body>
 </html>

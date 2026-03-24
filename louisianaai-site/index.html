@@ -800,21 +800,24 @@ function updateCountdowns() {
 updateCountdowns();
 setInterval(updateCountdowns, 1000);
 
-// Eligibility processor — fires when form is submitted
-document.querySelector('form').addEventListener('submit', function(e) {
-  var form = e.target;
-  var data = {};
-  var fields = new FormData(form);
-  fields.forEach(function(value, key) {
-    if (!key.startsWith('_')) data[key] = value;
+// Brevo CRM Sync — fires when ANY form is submitted
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    var data = {};
+    var fields = new FormData(form);
+    fields.forEach(function(value, key) {
+      if (!key.startsWith('_')) data[key] = value;
+    });
+    data.pipeline = 'schools';
+    data.source = 'louisianaai.net';
+    // Fire Brevo CRM sync in background (handles eligibility + filing + CRM)
+    fetch('/api/brevo-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function() {});
+    // FormSubmit handles the actual submission and redirect
   });
-  // Fire eligibility processor in background (don't block FormSubmit)
-  fetch('/api/process-registration', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(function() {});
-  // FormSubmit handles the actual submission and redirect
 });
 </script>
 
