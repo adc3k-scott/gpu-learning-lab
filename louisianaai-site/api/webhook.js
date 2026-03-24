@@ -107,6 +107,24 @@ Call ID: ${callId}
       console.error('Email forward failed:', emailErr.message);
     }
 
+    // Sync to Brevo CRM
+    try {
+      const baseUrl = req.headers.host ? `https://${req.headers.host}` : 'https://louisianaai.net';
+      fetch(`${baseUrl}/api/brevo-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pipeline: 'phone',
+          name: callerName || phoneNumber,
+          email: callerEmail || '',
+          organization: callerOrg || '',
+          phone: phoneNumber,
+          message: summary || transcript.substring(0, 200),
+          source: 'phone-call',
+        })
+      }).catch(function() {});
+    } catch (e) {}
+
     // Return success to Bland
     return res.status(200).json({
       status: 'received',
