@@ -1,0 +1,6 @@
+file 'v3-open-composited.mp4'
+file 'v3-story1-composited.mp4'
+file 'v3-story2-composited.mp4'
+file 'v3-story3-composited.mp4'
+file 'v3-story4-composited.mp4'
+file 'v3-close-composited.mp4'
