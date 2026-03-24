@@ -1,0 +1,13 @@
+Good morning. This is AI Daily Omniverse for Tuesday, March 24, 2026. I'm your host, and here are the top 5 stories in AI infrastructure today. 
+
+Our top story: LaGuardia Airport Ground Collision Kills 2 Pilots. Air Canada Flight 8646 (from Montreal, 72 passengers + 4 crew) collided with a Port Authority fire-rescue truck on the runway at ~11:45 PM Sunday. Both pilots killed. Plane was traveling 93-105 mph at time of impact. The firetruck had ATC clearance to cross the runway responding to a separate United Airlines incident. 
+
+Next: Jensen Huang Declares AGI Achieved; $1T Revenue Projection Through 2027. At GTC 2026, Huang projected $1 trillion in combined system sales (Blackwell + Vera Rubin) through 2027 -double last year's $500B projection. In a Lex Fridman interview (March 22), Huang said "I think we've achieved AGI," though he qualified the statement. He also predicted AI tokens will become standard employee compensation: "every engineer will need an annual token budget... half their base pay on top as tokens so they could be amplified 10x." NVIDIA also announced resumption of H200 sales to China. 
+
+Next: Hut 8 Breaks Ground on $10B River Bend AI Facility in Southeast Louisiana. Hut 8's River Bend campus in West Feliciana Parish is now under construction. Phase I: 330 MW from Entergy Louisiana, 245 MW critical IT load for Fluidstack (AI cloud platform). ~1,000 construction workers at peak. Operations expected Q2 2027. 
+
+Next: Louisiana AI Factory Boom: Amazon $12B + Meta $27B + Hut 8 $10B. Louisiana has secured nearly $50B in AI infrastructure commitments: Amazon ($12B, Caddo/Bossier Parishes, 540 jobs + 1,700 support roles, partnering with STACK Infrastructure), Meta Hyperion ($27B, Richland Parish, largest Meta facility worldwide), and Hut 8 ($10B, West Feliciana). Drivers: cheap land, cheap power, favorable regulatory climate, Governor Landry's aggressive recruitment.  Update Louisiana AI Initiative pitch deck with $50B total committed investment figure Position ADC as the NVIDIA neocloud complement to hyperscaler buildouts Track STACK Infrastructure as potential partnership/infrastructure partner ---. 
+
+And finally: Crusoe Spark Factory: $200M Modular AI Factory Manufacturing in Brighton, CO. Crusoe's 352,000 sq ft Spark Factory in Brighton, CO is a $200M+ investment to manufacture modular AI factories (Crusoe Spark units). First units Q3 2026. 200+ local jobs. Units are transportable, deployable individually or clustered. 
+
+That's your AI Daily Omniverse briefing for Tuesday, March 24, 2026. Follow us for daily updates on AI infrastructure, energy, and technology. Visit louisiana ai dot net for more information. This has been Ground Zero. See you tomorrow.
