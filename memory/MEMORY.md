@@ -11,6 +11,7 @@ Owner: **Scott Tomsu** — ADC3K, MARLIE I project lead, 1201 SE Evangeline Thru
 - `memory/projects/ground_zero.md` — Ground Zero YouTube: pipeline status, episode format, blockers
 - `memory/projects/klft.md` — KLFT 1.1: Gulf Coast Emergency Drone Deployment Hub, SkyCommand, AIKCC
 - `memory/projects/missioncontrolhd.md` — Mission Control HD: vehicle diagnostics SaaS, missioncontrolhd.com
+- `memory/projects/nsf_fuel_louisiana.md` — **NSF FUEL (Future Use of Energy in Louisiana)**: $160M NSF Engines grant (largest ever), $45M renewal March 2026, LSU-led, 53+ partners, POC fund, energy innovation. Key contacts: Girard Melancon (partnerships, girardmelancon@lsu.edu), Stephen Loy (commercialization), Michael Mazzola (exec director). ADC fit: 800V DC solar-direct, waste heat, digital twins, workforce.
 
 ## ADC Infrastructure — Core Architecture
 - **MARLIE I** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
