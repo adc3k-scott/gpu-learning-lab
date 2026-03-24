@@ -360,11 +360,25 @@ export default async function handler(req, res) {
       console.error('Failed to send to Mission Control:', e.message);
     }
 
+    // Auto-trigger filing assistant in background (don't wait for it)
+    try {
+      const baseUrl = req.headers.host ? `https://${req.headers.host}` : 'https://louisianaai.net';
+      fetch(`${baseUrl}/api/filing-assistant`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(() => {});
+      console.log('Filing assistant triggered');
+    } catch (e) {
+      console.error('Failed to trigger filing assistant:', e.message);
+    }
+
     return res.status(200).json({
       status: 'processed',
       programs_identified: totalCount,
       urgent_programs: urgentCount,
-      report_sent: !!email
+      report_sent: !!email,
+      filing_assistant: 'triggered'
     });
 
   } catch (err) {
