@@ -1,0 +1,46 @@
+[
+  {
+    "id": "open",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "Good morning. This is AI Daily Omniverse for Tuesday, March 24th, 2026. I am your host, and we have four major stories shaping AI infrastructure today. Let us get right to it."
+  },
+  {
+    "id": "story1",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "Our top story. NVIDIA CEO Jensen Huang has declared that artificial general intelligence has been achieved, and is projecting one trillion dollars in GPU system sales through 2027. That is double last year estimate. Huang also predicted that AI tokens will become standard employee compensation, saying every engineer will need an annual token budget equal to half their base pay. This validates what many in the infrastructure space have been building toward. Tokens are the new commodity. The demand curve is not slowing down.",
+    "title": "Jensen Huang: T GPU Sales Through 2027",
+    "thumbnail_prompt": "NVIDIA CEO Jensen Huang on stage at technology conference with green lighting, keynote presentation, professional news photography"
+  },
+  {
+    "id": "story2",
+    "avatar": "Adriana_Business_Front_public",
+    "role": "field",
+    "text": "This is a developing story out of Southeast Louisiana. Hut 8 has officially broken ground on a ten billion dollar AI facility at River Bend in West Feliciana Parish. Phase one pulls 330 megawatts from Entergy Louisiana with 245 megawatts of critical IT load. About a thousand construction workers are expected at peak. This puts Hut 8 roughly 30 miles from the Willow Glen Terminal site, which tells you everything about where the AI corridor is forming in this state.",
+    "title": "Hut 8 Breaks Ground: 0B Louisiana AI Facility",
+    "thumbnail_prompt": "Large industrial construction site in rural Louisiana, aerial view, massive AI data center facility being built, cranes and earthmoving equipment, professional news photography"
+  },
+  {
+    "id": "story3",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "And the bigger picture. Louisiana has now secured nearly fifty billion dollars in AI infrastructure commitments. Amazon is putting twelve billion into Caddo and Bossier Parishes. Meta Hyperion is building a twenty seven billion dollar facility in Richland Parish, their largest worldwide. Add Hut 8 ten billion and you are looking at the single largest concentration of AI investment in the Gulf South. The drivers are cheap land, cheap power, and a governor who is actively recruiting. None of this investment serves a single university student. That is the gap we are working to fill.",
+    "title": "Louisiana: 0B AI Investment Boom",
+    "thumbnail_prompt": "Louisiana state map with glowing technology nodes showing data center locations across the state, modern digital infographic style, blue and gold colors"
+  },
+  {
+    "id": "story4",
+    "avatar": "Adriana_Business_Front_public",
+    "role": "field",
+    "text": "In defense and drone news, Skydio just landed a fifty two million dollar contract from the US Army. That is roughly three thousand X10D drones at seventeen thousand dollars each, making it the largest single vendor drone purchase in American military history. The X10D is a hunter drone. It finds targets so that other armed drones can strike. This was routed through a fast track procurement vehicle. The Pentagon skipped the normal multi year process and got it done in 72 hours. American made, blue U A S approved, and DJI is officially locked out.",
+    "title": "Skydio: 2M Army Contract \u2014 3,000 Drones",
+    "thumbnail_prompt": "Small military tactical drone flying over green field, Skydio X10D quadcopter, US Army, professional defense photography"
+  },
+  {
+    "id": "close",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "That is your AI Daily Omniverse briefing for Tuesday, March 24th. Tokens are the new commodity. Infrastructure is the new oil. And Louisiana is where it is all happening. Follow us for daily updates. Visit louisiana ai dot net to get your school registered before the NVIDIA deadline on March 31st. This has been Ground Zero. See you tomorrow."
+  }
+]

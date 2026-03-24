@@ -1,0 +1,6 @@
+file 'v2-open-video.mp4'
+file 'v2-story1-video.mp4'
+file 'v2-story2-video.mp4'
+file 'v2-story3-video.mp4'
+file 'v2-story4-video.mp4'
+file 'v2-close-video.mp4'
