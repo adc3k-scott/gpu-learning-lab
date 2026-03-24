@@ -30,10 +30,56 @@ if not JUPYTER_TOKEN:
     sys.exit(1)
 
 
+_XSRF_COOKIE = ""
+_SESSION_COOKIES = ""
+
+def _fetch_xsrf(host: str):
+    """Login to Jupyter with password to get XSRF token and session cookies."""
+    global _XSRF_COOKIE, _SESSION_COOKIES
+    if _XSRF_COOKIE:
+        return
+    import urllib.parse
+    ctx = ssl.create_default_context()
+
+    # Step 1: GET /login to get _xsrf cookie
+    conn = http.client.HTTPSConnection(host, context=ctx, timeout=15)
+    conn.request("GET", "/login")
+    resp = conn.getresponse()
+    cookies = {}
+    for h in resp.getheaders():
+        if h[0].lower() == "set-cookie":
+            parts = h[1].split(";")[0].split("=", 1)
+            cookies[parts[0]] = parts[1]
+    resp.read()
+    conn.close()
+    _XSRF_COOKIE = cookies.get("_xsrf", "")
+
+    # Step 2: POST /login with password + xsrf
+    if _XSRF_COOKIE:
+        body = urllib.parse.urlencode({"_xsrf": _XSRF_COOKIE, "password": JUPYTER_TOKEN}).encode()
+        cookie_str = "; ".join(f"{k}={v}" for k, v in cookies.items())
+        conn = http.client.HTTPSConnection(host, context=ctx, timeout=15)
+        conn.request("POST", "/login", body=body, headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cookie": cookie_str
+        })
+        resp = conn.getresponse()
+        for h in resp.getheaders():
+            if h[0].lower() == "set-cookie":
+                parts = h[1].split(";")[0].split("=", 1)
+                cookies[parts[0]] = parts[1]
+        resp.read()
+        conn.close()
+        _SESSION_COOKIES = "; ".join(f"{k}={v}" for k, v in cookies.items())
+
 def _https(host: str, method: str, path: str, body: bytes | None = None) -> tuple[int, str]:
     ctx = ssl.create_default_context()
     conn = http.client.HTTPSConnection(host, context=ctx, timeout=15)
     headers = {"Content-Type": "application/json"}
+    if _XSRF_COOKIE:
+        headers["X-XSRFToken"] = _XSRF_COOKIE
+    if _SESSION_COOKIES:
+        headers["Cookie"] = _SESSION_COOKIES
     conn.request(method, path, body=body, headers=headers)
     resp = conn.getresponse()
     data = resp.read().decode()
@@ -53,6 +99,7 @@ def _ws_connect(host: str, path: str) -> ssl.SSLSocket:
     import base64
     ws_key = base64.b64encode(key[:16]).decode()
 
+    cookie_header = f"Cookie: {_SESSION_COOKIES}\r\n" if _SESSION_COOKIES else ""
     handshake = (
         f"GET {path} HTTP/1.1\r\n"
         f"Host: {host}\r\n"
@@ -60,6 +107,7 @@ def _ws_connect(host: str, path: str) -> ssl.SSLSocket:
         f"Connection: Upgrade\r\n"
         f"Sec-WebSocket-Key: {ws_key}\r\n"
         f"Sec-WebSocket-Version: 13\r\n"
+        f"{cookie_header}"
         f"\r\n"
     )
     sock.sendall(handshake.encode())
@@ -155,8 +203,11 @@ def exec_on_pod(pod_id: str, command: str, timeout: int = 120) -> str:
     """Execute a shell command on a RunPod pod via Jupyter kernel WebSocket."""
     host = f"{pod_id}-8888.proxy.runpod.net"
 
+    # Step 0: Fetch XSRF token
+    _fetch_xsrf(host)
+
     # Step 1: Create kernel
-    status, body = _https(host, "POST", f"/api/kernels?token={JUPYTER_TOKEN}", b'{"name":"python3"}')
+    status, body = _https(host, "POST", "/api/kernels", b'{"name":"python3"}')
     if status >= 400:
         raise RuntimeError(f"Failed to create kernel: HTTP {status}: {body[:200]}")
     kernel = json.loads(body)
@@ -167,7 +218,7 @@ def exec_on_pod(pod_id: str, command: str, timeout: int = 120) -> str:
     time.sleep(2)
 
     # Step 2: Connect WebSocket
-    ws_path = f"/api/kernels/{kernel_id}/channels?token={JUPYTER_TOKEN}"
+    ws_path = f"/api/kernels/{kernel_id}/channels"
     print(f"  Connecting WebSocket...", file=sys.stderr)
     sock = _ws_connect(host, ws_path)
     print(f"  Connected.", file=sys.stderr)

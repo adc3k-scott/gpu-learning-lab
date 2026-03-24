@@ -1,0 +1,386 @@
+{
+  "scene_name": "KLFT_Digital_Twin",
+  "airport": {
+    "icao": "KLFT",
+    "faa": "LFT",
+    "name": "Lafayette Regional Airport",
+    "elevation_ft": 40.9,
+    "lat": 30.2050267,
+    "lon": -91.9877539,
+    "airspace_class": "C",
+    "reference_point": "30.2050267N, 91.9877539W"
+  },
+  "runways": {
+    "04R/22L": {
+      "length_ft": 8000,
+      "width_ft": 150,
+      "heading_deg": 39,
+      "surface": "asphalt",
+      "lighting": "HIRL",
+      "ils": "22L",
+      "approach_lights": "MALSR",
+      "center_offset_m": [
+        187.08017449035836,
+        -59.15428844494859
+      ]
+    },
+    "11/29": {
+      "length_ft": 5403,
+      "width_ft": 150,
+      "heading_deg": 110,
+      "surface": "asphalt",
+      "lighting": "MIRL",
+      "center_offset_m": [
+        -223.9914812956877,
+        8.763865844795163
+      ]
+    },
+    "04L/22R": {
+      "length_ft": 4098,
+      "width_ft": 75,
+      "heading_deg": 39,
+      "surface": "asphalt",
+      "lighting": "MIRL",
+      "restrictions": "closed 2230-0530",
+      "center_offset_m": [
+        -67.73635629391674,
+        108.48055511970895
+      ]
+    }
+  },
+  "runway_thresholds": {
+    "04R/22L": {
+      "04R": [
+        30.19593611,
+        -91.99373333
+      ],
+      "22L": [
+        30.21305278,
+        -91.97788333
+      ]
+    },
+    "11/29": {
+      "11": [
+        30.20764722,
+        -91.99810278
+      ],
+      "29": [
+        30.20256389,
+        -91.98206389
+      ]
+    },
+    "04L/22R": {
+      "04L": [
+        30.20160278,
+        -91.99251667
+      ],
+      "22R": [
+        30.21040278,
+        -91.9844
+      ]
+    }
+  },
+  "emas_zones": 6,
+  "buildings": {
+    "terminal": {
+      "width_m": 100,
+      "depth_m": 110,
+      "height_m": 14,
+      "position_m": [
+        350,
+        0,
+        -59
+      ],
+      "color": [
+        0.88,
+        0.88,
+        0.9
+      ],
+      "shape": "L",
+      "notes": "$150M, 5 gates, opened Jan 2022"
+    },
+    "terminal_canopy": {
+      "width_m": 80,
+      "depth_m": 12,
+      "height_m": 6,
+      "position_m": [
+        410,
+        0,
+        -59
+      ],
+      "color": [
+        0.75,
+        0.75,
+        0.78
+      ]
+    },
+    "control_tower": {
+      "width_m": 10,
+      "depth_m": 10,
+      "height_m": 40,
+      "position_m": [
+        310,
+        0,
+        -30
+      ],
+      "color": [
+        0.82,
+        0.82,
+        0.85
+      ]
+    },
+    "fbo_signature": {
+      "width_m": 45,
+      "depth_m": 35,
+      "height_m": 10,
+      "position_m": [
+        200,
+        0,
+        -350
+      ],
+      "color": [
+        0.6,
+        0.6,
+        0.65
+      ],
+      "notes": "Signature Aviation, 123 Grissom Dr"
+    },
+    "fbo_hangar": {
+      "width_m": 40,
+      "depth_m": 30,
+      "height_m": 12,
+      "position_m": [
+        250,
+        0,
+        -320
+      ],
+      "color": [
+        0.55,
+        0.55,
+        0.6
+      ]
+    },
+    "fire_station": {
+      "width_m": 25,
+      "depth_m": 18,
+      "height_m": 8,
+      "position_m": [
+        -50,
+        0,
+        -20
+      ],
+      "color": [
+        0.8,
+        0.2,
+        0.2
+      ]
+    },
+    "skycommand_ops": {
+      "width_m": 15,
+      "depth_m": 12,
+      "height_m": 5,
+      "position_m": [
+        -110,
+        0,
+        -100
+      ],
+      "color": [
+        0.2,
+        0.4,
+        0.8
+      ]
+    }
+  },
+  "drone_docks": [
+    {
+      "id": "DOCK-1",
+      "position_m": [
+        -100,
+        0,
+        -110
+      ],
+      "heading_deg": 39
+    },
+    {
+      "id": "DOCK-2",
+      "position_m": [
+        -90,
+        0,
+        -120
+      ],
+      "heading_deg": 39
+    },
+    {
+      "id": "DOCK-3",
+      "position_m": [
+        -80,
+        0,
+        -130
+      ],
+      "heading_deg": 39
+    }
+  ],
+  "drone_paths": {
+    "patrol_north": [
+      [
+        -100,
+        30,
+        -110
+      ],
+      [
+        -100,
+        60,
+        -110
+      ],
+      [
+        200,
+        60,
+        500
+      ],
+      [
+        -500,
+        60,
+        800
+      ],
+      [
+        -500,
+        60,
+        200
+      ],
+      [
+        0,
+        60,
+        -110
+      ],
+      [
+        -100,
+        30,
+        -110
+      ]
+    ],
+    "runway_inspection": [
+      [
+        -90,
+        30,
+        -120
+      ],
+      [
+        -90,
+        45,
+        -120
+      ],
+      [
+        -800,
+        45,
+        9
+      ],
+      [
+        350,
+        45,
+        9
+      ],
+      [
+        187,
+        45,
+        -59
+      ],
+      [
+        -68,
+        45,
+        108
+      ],
+      [
+        -90,
+        30,
+        -120
+      ]
+    ],
+    "emergency_response": [
+      [
+        -80,
+        30,
+        -130
+      ],
+      [
+        -80,
+        100,
+        -130
+      ],
+      [
+        0,
+        100,
+        1000
+      ],
+      [
+        0,
+        60,
+        1000
+      ],
+      [
+        0,
+        60,
+        500
+      ],
+      [
+        -80,
+        30,
+        -130
+      ]
+    ]
+  },
+  "conflict_zones": [
+    {
+      "center_m": [
+        -50,
+        0,
+        0
+      ],
+      "radius_m": 60,
+      "label": "Runway 11/29 x 04R/22L Intersection"
+    },
+    {
+      "center_m": [
+        -150,
+        0,
+        50
+      ],
+      "radius_m": 40,
+      "label": "Runway 11/29 x 04L/22R Intersection"
+    },
+    {
+      "center_m": [
+        300,
+        0,
+        -50
+      ],
+      "radius_m": 30,
+      "label": "Taxiway Alpha Hold \u2014 Terminal"
+    },
+    {
+      "center_m": [
+        -200,
+        0,
+        -80
+      ],
+      "radius_m": 30,
+      "label": "Taxiway Bravo Hold \u2014 GA"
+    }
+  ],
+  "skycommand_integration": {
+    "marlie_i_distance_mi": 0.8,
+    "marlie_i_gps": "30.21975N, 92.00645W",
+    "trappeys_distance_mi": 0.5,
+    "trappeys_gps": "30.21356N, 92.00163W",
+    "noc_primary": "Willow Glen Terminal (60 mi, fiber)",
+    "noc_backup": "MARLIE I (0.8 mi, direct)"
+  },
+  "cameras": {
+    "tower_view": "Control tower perspective \u2014 full airport surface",
+    "overhead": "Satellite view \u2014 all 3 runways, buildings, drone paths",
+    "approach_22L": "Aircraft approach to Runway 22L (ILS) \u2014 pilot perspective",
+    "approach_11": "Aircraft approach to Runway 11 \u2014 pilot perspective",
+    "new_terminal": "New $150M terminal building \u2014 curbside view",
+    "skycommand_ops": "SkyCommand operations building close-up",
+    "drone_launch": "Drone dock area \u2014 launch sequence view"
+  }
+}
