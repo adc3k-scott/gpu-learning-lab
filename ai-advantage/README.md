@@ -271,11 +271,11 @@ Features:
 
 ## What's NOT in These Playbooks (Yet)
 
-- [ ] Commission structure for installers
-- [ ] Referral program details
-- [ ] Multi-location / franchise playbook variant
-- [ ] E-commerce / online-only business playbook
-- [ ] Non-profit / church / school playbook
-- [ ] Government / municipal office playbook
-- [ ] Trucking / logistics playbook
-- [ ] Veterinary clinic (similar to medical but with pet-specific workflows)
+- [x] Commission structure → `commission-structure.md`
+- [x] Referral program → `referral-program.md`
+- [x] Multi-location / franchise → `franchise-playbook.md`
+- [x] E-commerce → `playbooks/ecommerce.md`
+- [x] Non-profit / church / school → `playbooks/nonprofit-church.md`
+- [x] Government / municipal → `playbooks/government-municipal.md`
+- [x] Trucking / logistics → `playbooks/trucking-logistics.md`
+- [x] Veterinary → `playbooks/veterinary.md`
