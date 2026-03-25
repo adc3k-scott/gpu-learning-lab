@@ -26,7 +26,7 @@ CYAN = "#00e5ff"
 
 OUT = Path(__file__).resolve().parent.parent / "adc3k-deploy" / "blueprints" / "adc3k-pod-layout.svg"
 
-W, H = 1800, 2400
+W, H = 1800, 2800
 
 def draw_title_block(dwg, g):
     """Title block at bottom of drawing."""
