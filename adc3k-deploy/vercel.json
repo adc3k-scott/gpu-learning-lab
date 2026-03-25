@@ -63,6 +63,7 @@
     { "source": "/ops", "destination": "/ops.html" },
     { "source": "/join", "destination": "/join-team.html" },
     { "source": "/adc3k-pod", "destination": "/adc3k-pod.html" },
+    { "source": "/adc3k-pod-spec", "destination": "/adc3k-pod-spec.html" },
     { "source": "/blueprints-marlie", "destination": "/blueprints-marlie.html" },
     { "source": "/blueprints", "destination": "/blueprints.html" },
     { "source": "/lsu", "destination": "/lsu.html" },

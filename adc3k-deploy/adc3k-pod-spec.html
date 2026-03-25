@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADC 3K Pod Specification Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--surface:#12121a;--border:#1e1e2e;--text:#e0e0e8;--dim:#8888a0;--accent:#76b900;--accent2:#00bcd4;--warn:#ff9800}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* Header */
+.hero{background:linear-gradient(135deg,#0d0d14 0%,#141428 50%,#0d1a0d 100%);border-bottom:1px solid var(--border);padding:56px 0 48px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(118,185,0,.12);border:1px solid rgba(118,185,0,.3);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:2px;padding:6px 16px;border-radius:3px;margin-bottom:20px;font-family:'IBM Plex Mono',monospace}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
+.hero h1 span{color:var(--accent)}
+.hero .tagline{font-size:18px;color:var(--dim);font-weight:300;letter-spacing:0.5px}
+.hero-stats{display:flex;justify-content:center;gap:40px;margin-top:32px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .val{font-size:28px;font-weight:700;color:var(--accent);font-family:'IBM Plex Mono',monospace}
+.hero-stat .lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* Sections */
+section{padding:48px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:20px;font-weight:600;margin-bottom:24px;color:var(--text);letter-spacing:-0.3px}
+h2 .num{color:var(--accent);font-family:'IBM Plex Mono',monospace;margin-right:8px;font-size:14px}
+h3{font-size:15px;font-weight:600;margin:24px 0 12px;color:var(--accent2)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:24px}
+th{background:#16162a;color:var(--dim);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
+td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:hover td{background:rgba(118,185,0,.03)}
+.spec-val{color:#fff;font-weight:500}
+.spec-key{color:var(--dim)}
+
+/* Equipment grid */
+.equip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.equip-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;display:flex;gap:12px;align-items:flex-start}
+.equip-card img{width:72px;height:72px;object-fit:contain;border-radius:4px;background:#1a1a2e;flex-shrink:0}
+.equip-info{min-width:0}
+.equip-info .name{font-size:13px;font-weight:600;color:#fff;line-height:1.3}
+.equip-info .mfr{font-size:11px;color:var(--accent);margin:2px 0}
+.equip-info .spec{font-size:11px;color:var(--dim);line-height:1.4}
+
+/* Config table */
+.config-tbl td:first-child{font-weight:600;color:var(--accent);font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.config-tbl td:nth-child(2){font-weight:600;color:#fff}
+
+/* Markets */
+.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.market-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;align-items:center;gap:12px}
+.market-icon{font-size:24px;flex-shrink:0;width:36px;text-align:center}
+.market-info .title{font-size:14px;font-weight:600;color:#fff}
+.market-info .desc{font-size:11px;color:var(--dim)}
+
+/* Contact */
+.contact{background:linear-gradient(135deg,#0d1a0d,#141428);border:1px solid rgba(118,185,0,.2);border-radius:8px;padding:40px;text-align:center;margin:24px 0}
+.contact h2{margin-bottom:8px}
+.contact .sub{color:var(--dim);margin-bottom:24px;font-size:15px}
+.contact-details{font-size:14px;line-height:2}
+.contact-details a{color:var(--accent);text-decoration:none}
+.contact-details a:hover{text-decoration:underline}
+
+/* Footer */
+footer{padding:24px 0;text-align:center;font-size:11px;color:var(--dim);border-top:1px solid var(--border)}
+footer a{color:var(--accent);text-decoration:none}
+
+/* Sensor table compact */
+.sensor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.sensor-grid{grid-template-columns:1fr}.hero-stats{gap:24px}.equip-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">PRODUCT SPECIFICATION SHEET &mdash; REV A &mdash; 2026-03-24</div>
+    <h1>ADC 3K <span>POD</span></h1>
+    <div style="font-size:15px;font-weight:500;letter-spacing:1px;color:#fff;margin-bottom:4px">40-FT AI COMPUTE MODULE</div>
+    <div class="tagline">Deploy AI Anywhere. Any Chip. Any Mission.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">720</div><div class="lbl">GPUs Max</div></div>
+      <div class="hero-stat"><div class="val">2.3 MW</div><div class="lbl">Peak Power</div></div>
+      <div class="hero-stat"><div class="val">10</div><div class="lbl">Rack Positions</div></div>
+      <div class="hero-stat"><div class="val">0</div><div class="lbl">Staff On-Site</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 1. QUICK SPECS -->
+<section>
+  <h2><span class="num">01</span>Quick Specifications</h2>
+  <table>
+    <thead><tr><th style="width:38%">Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td class="spec-key">Container</td><td class="spec-val">40-ft High Cube ISO (39'5" x 7'8.6" x 8'10" internal)</td></tr>
+      <tr><td class="spec-key">Rack Capacity</td><td class="spec-val">10 x OCP Open Rack V3 positions</td></tr>
+      <tr><td class="spec-key">Default Config</td><td class="spec-val">8 compute + 1 network + 1 storage (SuperPOD)</td></tr>
+      <tr><td class="spec-key">GPUs (default)</td><td class="spec-val">576 (SuperPOD 8-rack) / 720 (full 10-rack)</td></tr>
+      <tr><td class="spec-key">CPUs</td><td class="spec-val">360 Grace (36 per rack x 10)</td></tr>
+      <tr><td class="spec-key">Power</td><td class="spec-val">1.3 MW IT load (GB200) / up to 2.3 MW (Vera Rubin Max P)</td></tr>
+      <tr><td class="spec-key">Power Architecture</td><td class="spec-val">800V DC native (Eaton Beam Rubin DSX)</td></tr>
+      <tr><td class="spec-key">Cooling</td><td class="spec-val">Direct-to-chip liquid, 45&deg;C supply / 55-60&deg;C return</td></tr>
+      <tr><td class="spec-key">Heat Rejection</td><td class="spec-val">External dry cooler (adiabatic assist for >95&deg;F)</td></tr>
+      <tr><td class="spec-key">Weight (loaded)</td><td class="spec-val">38,864 lbs (33% under container limit)</td></tr>
+      <tr><td class="spec-key">Design Ambient</td><td class="spec-val">45&deg;C (113&deg;F) max interior &mdash; no air conditioning</td></tr>
+      <tr><td class="spec-key">Humidity Control</td><td class="spec-val">Desiccant dehumidifier + positive pressure</td></tr>
+      <tr><td class="spec-key">Fire Suppression</td><td class="spec-val">Clean agent (FK-5-1-12) + VESDA aspirating detection</td></tr>
+      <tr><td class="spec-key">Monitoring</td><td class="spec-val">65 AI-managed sensors, 2 IR cameras</td></tr>
+      <tr><td class="spec-key">Network</td><td class="spec-val">InfiniBand (Quantum-X800) + Ethernet (Spectrum-X)</td></tr>
+      <tr><td class="spec-key">Solar Roof</td><td class="spec-val">~6 kW First Solar panels (shade + auxiliary power)</td></tr>
+      <tr><td class="spec-key">Access</td><td class="spec-val">8 top-hinged panels (4/side), service from exterior</td></tr>
+      <tr><td class="spec-key">Cable Routing</td><td class="spec-val">Floor-level, metal conduit, no overhead</td></tr>
+      <tr><td class="spec-key">Staffing</td><td class="spec-val">Zero on-site. AI-managed. Remote NOC.</td></tr>
+      <tr><td class="spec-key">Deployment Time</td><td class="spec-val">Ship &rarr; Set &rarr; Connect in hours, not months</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 2. CONFIGURATIONS -->
+<section>
+  <h2><span class="num">02</span>Standard Configurations</h2>
+  <table class="config-tbl">
+    <thead><tr><th>Config</th><th>Name</th><th>Rack Layout</th><th>GPUs</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td>C1</td><td>Full SuperPOD</td><td>8 compute / 1 network / 1 storage</td><td>576</td><td>Training + inference (default)</td></tr>
+      <tr><td>C2</td><td>Inference Heavy</td><td>10 compute (network external)</td><td>720</td><td>Token factory, managed inference</td></tr>
+      <tr><td>C3</td><td>Storage Heavy</td><td>6 compute / 1 network / 3 storage</td><td>432</td><td>Medical imaging, video, data lakes</td></tr>
+      <tr><td>C4</td><td>CPU Heavy</td><td>4 GPU + 4 CPU / 1 network / 1 storage</td><td>288 GPU + HPC</td><td>Oil &amp; gas, weather, molecular dynamics</td></tr>
+      <tr><td>C5</td><td>Edge Inference</td><td>2 GPU + 7 Groq LPU / 1 network</td><td>144 GPU + 7 LPU</td><td>Autonomous vehicles, robotics, real-time</td></tr>
+      <tr><td>C6</td><td>Hybrid Vendor</td><td>5 NVIDIA + 3 custom / 1 net / 1 store</td><td>Mixed</td><td>Multi-vendor, future-proof</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--dim)">All configurations share the same container, 800V DC power, liquid cooling, solar roof, AI monitoring, fire suppression, and floor-level cable routing. Rack positions are fully configurable to customer workload requirements.</p>
+</section>
+
+<!-- 3. EQUIPMENT LIST -->
+<section>
+  <h2><span class="num">03</span>Equipment &amp; Components</h2>
+
+  <h3>Compute &amp; Networking</h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <img src="equipment-photos/nvidia-nvl72-rack.jpg" alt="NVL72">
+      <div class="equip-info">
+        <div class="name">NVL72 Rack</div>
+        <div class="mfr">NVIDIA (HPE / Supermicro)</div>
+        <div class="spec">72 GPUs + 36 CPUs per rack. 130 kW TDP. OCP Open Rack V3. Direct-to-chip liquid cooled.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/nvidia-quantum-x800-switch.jpg" alt="Quantum-X800">
+      <div class="equip-info">
+        <div class="name">Quantum-X800 Switch</div>
+        <div class="mfr">NVIDIA</div>
+        <div class="spec">144-port XDR InfiniBand. 800 Gb/s per port. Inter-rack compute fabric spine.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/nvidia-bluefield-4-dpu.jpg" alt="BlueField-4">
+      <div class="equip-info">
+        <div class="name">BlueField-4 DPU</div>
+        <div class="mfr">NVIDIA</div>
+        <div class="spec">Grace CPU + ConnectX-9. 800 Gb/s. Infrastructure offload, security, zero-trust.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/nvidia-jetson-agx-orin.jpg" alt="Jetson Orin">
+      <div class="equip-info">
+        <div class="name">Jetson AGX Orin</div>
+        <div class="mfr">NVIDIA</div>
+        <div class="spec">275 TOPS edge AI. Local sensor controller. Autonomous pod management.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Power Distribution</h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <img src="equipment-photos/eaton-beam-rubin-dsx.webp" alt="Beam Rubin DSX">
+      <div class="equip-info">
+        <div class="name">Beam Rubin DSX</div>
+        <div class="mfr">Eaton</div>
+        <div class="spec">800V DC native power platform. 97% efficiency. Co-designed with NVIDIA for DSX architecture.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/eaton-hdx-pdu-g4.jpg" alt="HDX G4 PDU">
+      <div class="equip-info">
+        <div class="name">HDX Rack PDU G4</div>
+        <div class="mfr">Eaton</div>
+        <div class="spec">3-phase managed PDU. 46 kW, 48 outlets. Per-outlet metering.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/eaton-powerwave2-busway.jpg" alt="Busway">
+      <div class="equip-info">
+        <div class="name">PowerWave 2 Busway</div>
+        <div class="mfr">Eaton</div>
+        <div class="spec">800V DC overhead bus. 250A-1000A. Tap-off to each rack position.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/cat-g3520c-generator.jpg" alt="G3520C">
+      <div class="equip-info">
+        <div class="name">G3520C Generator</div>
+        <div class="mfr">Caterpillar</div>
+        <div class="spec">2.5 MW natural gas. Backbone power. Henry Hub pricing. American-made.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/firstsolar-series7-tr1.jpg" alt="First Solar">
+      <div class="equip-info">
+        <div class="name">Series 7 TR1 Panel</div>
+        <div class="mfr">First Solar</div>
+        <div class="spec">~550W CdTe thin-film. Roof-mounted for shade + aux power. Made in USA (New Iberia, LA).</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Cooling</h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <img src="equipment-photos/vertiv-coolchip-cdu.jpg" alt="CoolChip CDU">
+      <div class="equip-info">
+        <div class="name">CoolChip CDU 2300</div>
+        <div class="mfr">Vertiv</div>
+        <div class="spec">250 kW liquid-to-liquid. Primary + redundant (N+1). 45&deg;C supply loop.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/bac-trillium-dry-cooler.png" alt="Dry Cooler">
+      <div class="equip-info">
+        <div class="name">TrilliumSeries Dry Cooler</div>
+        <div class="mfr">Baltimore Aircoil</div>
+        <div class="spec">External heat rejection. Adiabatic assist for >95&deg;F. Zero water consumption (dry mode).</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/staubli-uqd-coupling.jpg" alt="Staubli QD">
+      <div class="equip-info">
+        <div class="name">UQD Quick-Disconnect</div>
+        <div class="mfr">St&auml;ubli</div>
+        <div class="spec">OCP-standard coupling. Drip-free disconnect. Bulkhead through container wall.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/munters-hcd-dehumidifier.jpg" alt="Dehumidifier">
+      <div class="equip-info">
+        <div class="name">HCD Desiccant Dehumidifier</div>
+        <div class="mfr">Munters</div>
+        <div class="spec">No compressor. ~500W. Positive pressure. Humidity control for Gulf Coast climate.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Safety &amp; Security</h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <img src="equipment-photos/vesda-smoke-detection.jpg" alt="VESDA">
+      <div class="equip-info">
+        <div class="name">VESDA-E Aspirating Detection</div>
+        <div class="mfr">Xtralis / Honeywell</div>
+        <div class="spec">Very early smoke detection. 4 sampling points. Laser-based particle analysis.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/ansul-sapphire-novec1230.jpg" alt="Fire Suppression">
+      <div class="equip-info">
+        <div class="name">Clean Agent Suppression</div>
+        <div class="mfr">Fike / Ansul</div>
+        <div class="spec">FK-5-1-12 clean agent. Ceiling nozzles. Safe for electronics. Zero residue.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="equipment-photos/skydio-x10-drone.jpg" alt="Skydio X10">
+      <div class="equip-info">
+        <div class="name">X10 Security Drone</div>
+        <div class="mfr">Skydio (optional)</div>
+        <div class="spec">Autonomous perimeter patrol. NightSense IR. IP55. AI obstacle avoidance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. POWER BUDGET -->
+<section>
+  <h2><span class="num">04</span>Power Budget</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div>
+      <h3 style="margin-top:0">GB200 Baseline</h3>
+      <table>
+        <thead><tr><th>Component</th><th style="text-align:right">Power</th></tr></thead>
+        <tbody>
+          <tr><td>10x NVL72 @ 130 kW</td><td style="text-align:right" class="spec-val">1,300 kW</td></tr>
+          <tr><td>CDU pumps (N+1)</td><td style="text-align:right">15 kW</td></tr>
+          <tr><td>Ambient mgmt</td><td style="text-align:right">10 kW</td></tr>
+          <tr><td>Monitoring + network</td><td style="text-align:right">5 kW</td></tr>
+          <tr style="background:rgba(118,185,0,.08)"><td class="spec-val">Total</td><td style="text-align:right" class="spec-val">1,330 kW</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Vera Rubin Max Q</h3>
+      <table>
+        <thead><tr><th>Component</th><th style="text-align:right">Power</th></tr></thead>
+        <tbody>
+          <tr><td>10x NVL72 @ 190 kW</td><td style="text-align:right" class="spec-val">1,900 kW</td></tr>
+          <tr><td>CDU pumps (N+1)</td><td style="text-align:right">20 kW</td></tr>
+          <tr><td>Ambient + monitoring</td><td style="text-align:right">10 kW</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr style="background:rgba(118,185,0,.08)"><td class="spec-val">Total</td><td style="text-align:right" class="spec-val">1,930 kW</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Vera Rubin Max P</h3>
+      <table>
+        <thead><tr><th>Component</th><th style="text-align:right">Power</th></tr></thead>
+        <tbody>
+          <tr><td>10x NVL72 @ 230 kW</td><td style="text-align:right" class="spec-val">2,300 kW</td></tr>
+          <tr><td>CDU pumps (N+1)</td><td style="text-align:right">25 kW</td></tr>
+          <tr><td>Ambient + monitoring</td><td style="text-align:right">15 kW</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr style="background:rgba(118,185,0,.08)"><td class="spec-val">Total</td><td style="text-align:right" class="spec-val">2,340 kW</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--dim);margin-top:12px">800V DC native feed eliminates AC-DC conversion losses. 97% bus efficiency vs 92% through traditional AC path. Solar roof provides ~6 kW auxiliary for monitoring and support systems.</p>
+</section>
+
+<!-- 5. THERMAL SPECS -->
+<section>
+  <h2><span class="num">05</span>Thermal Engineering</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div>
+      <h3 style="margin-top:0">Design Philosophy</h3>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:16px">No air conditioning. No human occupancy. Control humidity, not temperature. Solar roof for shade. Desiccant for moisture. Exhaust fan for convection. 100% AI-monitored.</p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Max interior ambient</td><td class="spec-val">45&deg;C (113&deg;F)</td></tr>
+          <tr><td>Coolant supply</td><td class="spec-val">45&deg;C (113&deg;F)</td></tr>
+          <tr><td>Coolant return</td><td class="spec-val">55-65&deg;C (131-149&deg;F)</td></tr>
+          <tr><td>Flow rate per rack</td><td class="spec-val">80-130 LPM (21-34 GPM)</td></tr>
+          <tr><td>System flow (10 racks)</td><td class="spec-val">1,300 LPM (343 GPM)</td></tr>
+          <tr><td>Liquid-cooled portion</td><td class="spec-val">87% (~1,131 kW)</td></tr>
+          <tr><td>Air-cooled portion</td><td class="spec-val">13% (~169 kW)</td></tr>
+          <tr><td>Exhaust fans</td><td class="spec-val">2x 2,500 CFM roof-mount</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Louisiana Climate Performance</h3>
+      <table>
+        <thead><tr><th>Condition</th><th>Outside</th><th>Pod Interior</th></tr></thead>
+        <tbody>
+          <tr><td>Winter avg</td><td>55&deg;F</td><td class="spec-val">60&deg;F</td></tr>
+          <tr><td>Spring / Fall</td><td>80&deg;F</td><td class="spec-val">90&deg;F</td></tr>
+          <tr><td>Summer avg</td><td>92&deg;F</td><td class="spec-val">105&deg;F</td></tr>
+          <tr><td>Summer peak</td><td>100&deg;F</td><td class="spec-val">115&deg;F</td></tr>
+          <tr><td>Hurricane recovery</td><td>85&deg;F</td><td class="spec-val">95&deg;F</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--dim);margin-top:12px">Solar roof reduces interior temps 10-25&deg;F vs unshaded container. All temps within ASHRAE A4 envelope (45&deg;C max). No refrigerant, no compressor, no maintenance.</p>
+      <h3>What We Do NOT Need</h3>
+      <p style="font-size:12px;color:var(--dim)">No air conditioning. No raised floor. No chilled water. No human-comfort HVAC. No overhead cable trays. The liquid cooling loop handles 87% of heat directly. Ambient air management handles the remaining 13%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SENSOR PACKAGE -->
+<section>
+  <h2><span class="num">06</span>Sensor Package &mdash; 65 AI-Managed Sensors</h2>
+  <div class="sensor-grid">
+    <div>
+      <h3 style="margin-top:0">Environmental (8)</h3>
+      <table>
+        <thead><tr><th>Sensor</th><th>Qty</th></tr></thead>
+        <tbody>
+          <tr><td>Internal temperature</td><td class="spec-val">4</td></tr>
+          <tr><td>External temperature</td><td class="spec-val">1</td></tr>
+          <tr><td>Internal humidity</td><td class="spec-val">2</td></tr>
+          <tr><td>Solar irradiance</td><td class="spec-val">1</td></tr>
+        </tbody>
+      </table>
+      <h3>Per-Rack (40 total)</h3>
+      <table>
+        <thead><tr><th>Sensor</th><th>Per Rack</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Coolant inlet temp</td><td>1</td><td class="spec-val">10</td></tr>
+          <tr><td>Coolant outlet temp</td><td>1</td><td class="spec-val">10</td></tr>
+          <tr><td>Coolant flow rate</td><td>1</td><td class="spec-val">10</td></tr>
+          <tr><td>Power draw (Eaton PDU)</td><td>1</td><td class="spec-val">10</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:0">System (9)</h3>
+      <table>
+        <thead><tr><th>Sensor</th><th>Qty</th></tr></thead>
+        <tbody>
+          <tr><td>CDU supply/return temp</td><td class="spec-val">2</td></tr>
+          <tr><td>CDU flow rate</td><td class="spec-val">1</td></tr>
+          <tr><td>Dehumidifier status</td><td class="spec-val">1</td></tr>
+          <tr><td>Exhaust fan RPM</td><td class="spec-val">2</td></tr>
+          <tr><td>800V DC bus voltage</td><td class="spec-val">1</td></tr>
+          <tr><td>Solar panel output</td><td class="spec-val">1</td></tr>
+          <tr><td>Generator status</td><td class="spec-val">1</td></tr>
+        </tbody>
+      </table>
+      <h3>Security (8)</h3>
+      <table>
+        <thead><tr><th>Sensor</th><th>Qty</th></tr></thead>
+        <tbody>
+          <tr><td>IR cameras (wide-angle)</td><td class="spec-val">2</td></tr>
+          <tr><td>Access panel open sensors</td><td class="spec-val">8 (reed switches, 1 per panel)</td></tr>
+          <tr><td>Vibration / tamper</td><td class="spec-val">1</td></tr>
+          <tr><td>GPS (mobile deploy)</td><td class="spec-val">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h3>AI Autonomous Responses</h3>
+  <table>
+    <thead><tr><th>Condition</th><th>AI Action</th></tr></thead>
+    <tbody>
+      <tr><td>Temp approaching 45&deg;C</td><td>Increase cooling flow, ramp exhaust fans, alert NOC</td></tr>
+      <tr><td>Temp exceeding 45&deg;C</td><td>Throttle GPU power (last resort), emergency alert</td></tr>
+      <tr><td>Humidity spike >60% RH</td><td>Dehumidifier full power, increase positive pressure</td></tr>
+      <tr><td>Coolant leak detected</td><td>Isolate affected rack, alert immediately</td></tr>
+      <tr><td>Access panel opened</td><td>Camera alert, log event, notify NOC</td></tr>
+      <tr><td>Power loss</td><td>Battery bridge, graceful workload shutdown</td></tr>
+      <tr><td>Network loss to NOC</td><td>Continue autonomous operation, retry connection</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 7. DEPLOYMENT MARKETS -->
+<section>
+  <h2><span class="num">07</span>Deployment Markets</h2>
+  <div class="markets-grid">
+    <div class="market-card">
+      <div class="market-icon">&#9879;</div>
+      <div class="market-info"><div class="title">Oil &amp; Gas</div><div class="desc">Pipeline monitoring, seismic processing, wellsite AI, remote field ops</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9729;</div>
+      <div class="market-info"><div class="title">Sovereign AI</div><div class="desc">On-premises national compute, data sovereignty, classified workloads</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9878;</div>
+      <div class="market-info"><div class="title">Defense &amp; DOD</div><div class="desc">Forward-deployed inference, JADC2, tactical edge AI</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9883;</div>
+      <div class="market-info"><div class="title">Disaster Response</div><div class="desc">Hurricane recovery, SAR drone ops, field hospital compute</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9733;</div>
+      <div class="market-info"><div class="title">University &amp; Research</div><div class="desc">HPC burst, grant-funded compute, campus AI infrastructure</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9881;</div>
+      <div class="market-info"><div class="title">Manufacturing</div><div class="desc">Factory-floor AI, digital twin, quality inspection, Omniverse</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9832;</div>
+      <div class="market-info"><div class="title">Healthcare</div><div class="desc">Medical imaging AI, genomics, drug discovery, HIPAA-compliant on-prem</div></div>
+    </div>
+    <div class="market-card">
+      <div class="market-icon">&#9992;</div>
+      <div class="market-info"><div class="title">Telecom &amp; Edge</div><div class="desc">AI-RAN, 5G/6G edge compute, autonomous drone hubs, smart cities</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CONTACT -->
+<section style="border-bottom:none">
+  <div class="contact">
+    <h2>Configure Your Pod. Contact ADC.</h2>
+    <div class="sub">Custom rack configurations, site surveys, and deployment planning.</div>
+    <div class="contact-details">
+      <strong>Scott Tomsu</strong> &mdash; Founder, Advantage Design &amp; Construction<br>
+      <a href="mailto:scott@adc3k.com">scott@adc3k.com</a> &nbsp;|&nbsp; (337) 780-1535<br>
+      <a href="https://adc3k.com" target="_blank">adc3k.com</a> &nbsp;|&nbsp; <a href="https://louisianaai.net" target="_blank">louisianaai.net</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    &copy; 2026 Advantage Design &amp; Construction &nbsp;|&nbsp; Lafayette, Louisiana &nbsp;|&nbsp; <a href="https://adc3k.com">adc3k.com</a><br>
+    <span style="font-size:10px;margin-top:4px;display:inline-block">ADC3K-SPEC-001 Rev A &mdash; Preliminary Design &mdash; Specifications subject to change. NVIDIA, Blackwell, Vera Rubin, NVLink, InfiniBand are trademarks of NVIDIA Corporation.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -585,7 +585,7 @@ SOLUTION:
 
 | System | Specification |
 |--------|--------------|
-| Suppression | Clean agent (Novec 1230 or FM-200), ceiling-mounted nozzles |
+| Suppression | Clean agent (FK-5-1-12 via Fike SF 1230), ceiling-mounted nozzles |
 | Detection | VESDA (Very Early Smoke Detection Apparatus) — aspirating |
 | Leak detection | Sensor rope under every rack, along coolant manifolds |
 | Emergency disconnect | Big red button at door entry, kills all power |
@@ -712,7 +712,7 @@ measurement, vendor consultation, or physical prototyping.
 | Access panels (fabricated, 20x) | 20 | $500 | $10,000 |
 | Cable tray + Unistrut + cables | 1 lot | $8,000 | $8,000 |
 | Coolant piping + manifolds + fittings | 1 lot | $12,000 | $12,000 |
-| Fire suppression (clean agent) | 1 | $15,000 | $15,000 |
+| Fire suppression (FK-5-1-12 clean agent) | 1 | $15,000 | $15,000 |
 | VESDA + sensors + monitoring | 1 lot | $10,000 | $10,000 |
 | Exhaust fans + louvers + HVAC | 1 lot | $5,000 | $5,000 |
 | LED lighting + electrical | 1 lot | $3,000 | $3,000 |
@@ -1010,7 +1010,7 @@ The ADC 3K Pod is a configurable platform, not a fixed product. The container, p
 - 65 AI-monitored sensors
 - Mission Control autonomous management
 - Floor-level cable routing
-- Fire suppression (Novec 1230 + VESDA)
+- Fire suppression (FK-5-1-12 / Fike SF 1230 + VESDA)
 
 ### 11.4 What Changes Per Config
 - Rack type in each of 10 positions
@@ -1021,3 +1021,61 @@ The ADC 3K Pod is a configurable platform, not a fixed product. The container, p
 
 ### 11.5 Custom Configurations
 Any combination of rack types in the 10 positions is possible. Customer specifies workload requirements, ADC engineers the optimal rack mix. The platform supports it — the racks are the variable.
+
+---
+
+## 12. FIRE SUPPRESSION AGENT UPDATE — NOVEC 1230 DISCONTINUED
+
+**Date**: 2026-03-24
+**Reason**: 3M exited all PFAS manufacturing by end of 2025, discontinuing Novec 1230 (FK-5-1-12).
+
+### 12.1 Replacement Agent
+
+| Field | Detail |
+|-------|--------|
+| **Product** | **Fike SF 1230** (primary pick) |
+| **Manufacturer** | Fike Corporation (Blue Springs, MO) + Standard Fluids Corporation (chemical supplier) |
+| **Chemical** | FK-5-1-12 (dodecafluoro-2-methylpentan-3-one), CAS 756-13-8 — chemically identical to Novec 1230 |
+| **Alternative** | TMC-1230 (TMC Industries) — same FK-5-1-12 compound, also a drop-in replacement |
+| **Second alternative** | Kidde Fluoro-K (Carrier/Kidde) — same FK-5-1-12 compound |
+| **Boiling point** | 49.2C (120.6F) — stored as liquid, discharged as gas |
+| **ODP** | 0 (zero ozone depletion) |
+| **GWP** | 1 (negligible global warming potential) |
+| **Atmospheric lifetime** | <5 days |
+| **Discharge time** | <10 seconds total flood |
+| **Certifications** | UL Listed, FM Approved, NFPA 2001, ISO 14520 |
+| **Residue** | None — safe for electronics, no cleanup |
+| **Conductivity** | Non-conductive (liquid and gas state) |
+| **Human safety** | Safe at design concentrations — but ADC 3K pods are unmanned, so this is bonus margin |
+| **Shelf life** | 60 months (TMC-1230 spec; Fike SF 1230 expected similar) |
+
+### 12.2 Why Fike SF 1230 Over Alternatives
+
+1. **Drop-in replacement** — same FK-5-1-12 molecule, same nozzles, same piping, same design concentration as Novec 1230. No system redesign.
+2. **US manufacturer** (Fike, Blue Springs MO) — aligns with ADC's American-made mandate.
+3. **Independent lab tested** — every batch tested by ISO 9001-certified US lab.
+4. **Broad availability** — Fike has the largest clean agent install base in North America.
+5. **FM-200 (HFC-227ea) rejected** — higher GWP (~3,350 vs 1), facing regulatory pressure. FK-5-1-12 is the long-term winner.
+
+### 12.3 Inert Gas Alternative (Considered, Not Selected)
+
+INERGEN (52% N2 / 40% Ar / 8% CO2) was evaluated. Advantages: zero GWP, unlimited shelf life, no PFAS concerns. Disadvantages: requires 7x more cylinder storage space than FK-5-1-12, heavier, more complex piping. In a 40-ft container where every cubic foot matters, FK-5-1-12 wins on footprint alone.
+
+### 12.4 Cost Impact
+
+No significant cost change. FK-5-1-12 pricing from Fike/TMC is comparable to former 3M Novec 1230 pricing. The $15,000 budget line for fire suppression holds. Slight premium possible in 2026 due to transition-period demand, but multiple competing suppliers (Fike, TMC, Kidde) keep pricing competitive.
+
+### 12.5 NVIDIA DSX / ASHRAE Notes
+
+- NVIDIA DSX reference design specifies fire suppression as a required subsystem but does not mandate a specific agent. Clean agent total flood or dry-pipe pre-action sprinklers are both acceptable.
+- ASHRAE does not mandate a specific agent either. NFPA 75 (IT equipment) and NFPA 76 (telecom) are the governing standards — both accept FK-5-1-12.
+- For the ADC 3K pod (unmanned, sealed container), clean agent total flood is the correct choice. Pre-action sprinklers introduce water risk to $2M+ of GPU hardware.
+
+### 12.6 Action Items
+
+- [x] Update Section 8 suppression spec from "Novec 1230" to "FK-5-1-12 via Fike SF 1230"
+- [x] Update Section 11.3 constants list
+- [x] Update BOM line item
+- [ ] Contact Fike sales for ADC 3K pod-specific quote (40-ft HC ISO container, ~70 m3 volume)
+- [ ] Confirm design concentration for FK-5-1-12 in sealed container (typically 5.3-5.9% by volume)
+- [ ] Verify cylinder count and placement within CDU zone footprint
