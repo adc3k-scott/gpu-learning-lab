@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC 3K Pod — Deploy AI Anywhere</title>
+<meta name="description" content="ADC 3K Pod: 10 NVL72 racks, 720 GPUs, 1.3 MW, shipped in a standard 40-ft container. Deploy AI anywhere with power and cooling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060a10;--bg2:#0a1018;--surface:#0e1520;--surface2:#141e2c;--border:#1a2840;--text:#8fa4bc;--text-dim:#4a6078;--text-bright:#d0dce8;--text-white:#f0f4f8;--accent:#00e87a;--accent-soft:rgba(0,232,122,0.08);--blue:#3b9eff;--purple:#a855f7;--cyan:#00d4ff;--amber:#f5a623;--red:#ff6b7a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;color:var(--text-white);letter-spacing:1.5px;text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-bright);text-decoration:none;letter-spacing:0.5px;transition:color 0.2s}
+.nav-back:hover{color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(0,232,122,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;color:var(--text-white);line-height:1.1;margin-bottom:20px}
+.hero h1 span{color:var(--accent)}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);color:var(--text);max-width:700px;line-height:1.6;margin-bottom:40px}
+.hero-stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.hero-stat{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(0,232,122,0.2);padding:8px 16px;border-radius:4px;letter-spacing:0.5px}
+
+/* Sections */
+.section{max-width:1200px;margin:0 auto;padding:80px 40px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.section h2{font-size:32px;font-weight:700;color:var(--text-white);margin-bottom:12px}
+.section .sub{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:32px;max-width:700px}
+.divider{max-width:1200px;margin:0 auto;height:1px;background:var(--border)}
+
+/* Stat Cards */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:8px;padding:24px 20px;text-align:center;transition:all 0.3s}
+.stat-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 32px rgba(0,232,122,0.08)}
+.stat-card .val{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--text-white);margin-bottom:4px}
+.stat-card .label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px}
+.stat-card.blue{border-top-color:var(--blue)}
+.stat-card.purple{border-top-color:var(--purple)}
+.stat-card.amber{border-top-color:var(--amber)}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative;overflow:hidden;transition:all 0.3s}
+.step:hover{border-color:var(--accent);transform:translateY(-2px)}
+.step-num{font-family:'IBM Plex Mono',monospace;font-size:48px;font-weight:700;color:var(--accent);opacity:0.15;position:absolute;top:12px;right:20px}
+.step h3{font-size:20px;font-weight:700;color:var(--text-white);margin-bottom:8px}
+.step p{font-size:14px;color:var(--text);line-height:1.7}
+
+/* Blueprint embed */
+.blueprint-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:24px}
+.blueprint-wrap img,.blueprint-wrap object{width:100%;height:auto;display:block}
+
+/* Feature list */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;transition:all 0.3s}
+.feature-card:hover{border-color:var(--accent)}
+.feature-card h4{font-size:14px;font-weight:600;color:var(--text-white);margin-bottom:8px}
+.feature-card p{font-size:13px;color:var(--text-dim);line-height:1.6}
+.feature-card .tag{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+
+/* Access panel section */
+.panel-detail{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.panel-specs{display:flex;flex-direction:column;gap:12px}
+.panel-spec{display:flex;align-items:flex-start;gap:12px}
+.panel-spec .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+.panel-spec p{font-size:14px;color:var(--text);line-height:1.6}
+.panel-visual{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center}
+.panel-visual .big{font-family:'IBM Plex Mono',monospace;font-size:56px;font-weight:700;color:var(--accent)}
+.panel-visual .desc{font-size:13px;color:var(--text-dim);margin-top:8px}
+
+/* Inside list */
+.inside-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.inside-item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;transition:all 0.3s}
+.inside-item:hover{border-left-color:var(--text-white)}
+.inside-item.net{border-left-color:var(--blue)}
+.inside-item.stor{border-left-color:var(--purple)}
+.inside-item.power{border-left-color:var(--amber)}
+.inside-item.safety{border-left-color:var(--red)}
+.inside-item h4{font-size:13px;font-weight:600;color:var(--text-white);margin-bottom:4px}
+.inside-item p{font-size:12px;color:var(--text-dim);line-height:1.5}
+
+/* Power options */
+.power-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.power-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;text-align:center;transition:all 0.3s}
+.power-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.power-card .icon{font-size:32px;margin-bottom:12px}
+.power-card h4{font-size:14px;font-weight:600;color:var(--text-white);margin-bottom:6px}
+.power-card p{font-size:12px;color:var(--text-dim);line-height:1.5}
+
+/* Deployment targets */
+.deploy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.deploy-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;transition:all 0.3s;cursor:default}
+.deploy-card:hover{border-color:var(--accent);background:var(--surface2)}
+.deploy-card h4{font-size:14px;font-weight:600;color:var(--text-white);margin-bottom:6px}
+.deploy-card p{font-size:12px;color:var(--text-dim);line-height:1.5}
+
+/* Footer */
+.pod-footer{max-width:1200px;margin:0 auto;padding:60px 40px;text-align:center;border-top:1px solid var(--border)}
+.pod-footer .logo{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--text-white);letter-spacing:2px;margin-bottom:12px}
+.pod-footer .logo span{color:var(--accent)}
+.pod-footer p{font-size:13px;color:var(--text-dim);margin-bottom:4px}
+.pod-footer a{color:var(--accent);text-decoration:none}
+.pod-footer a:hover{text-decoration:underline}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero{padding:100px 24px 60px}
+  .section{padding:60px 24px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .panel-detail{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  nav{padding:0 16px}
+}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">ADC<span>3K</span></a>
+  <a href="/hub" class="nav-back">< ALL PAGES</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">ADC 3K Product</div>
+  <h1>ADC 3K Pod<br><span>Deploy AI Anywhere</span></h1>
+  <p class="hero-sub">10 NVL72 racks. 720 GPUs. 1.3 MW. Ships in a 40-ft container.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">720 BLACKWELL GPUs</div>
+    <div class="hero-stat">1 SUPERPOD</div>
+    <div class="hero-stat">1.3 MW</div>
+    <div class="hero-stat">800V DC NATIVE</div>
+    <div class="hero-stat">SHIPS ON FLATBED</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 1: KEY SPECS -->
+<section class="section">
+  <div class="section-label">Specifications</div>
+  <h2>Key Specs</h2>
+  <p class="sub">Everything inside a standard 40-ft high cube ISO container. Fork it off a truck, plug in power and cooling, compute.</p>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="val">10</div>
+      <div class="label">NVL72 Racks</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">720</div>
+      <div class="label">GPUs (72/rack x 10)</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="val">360</div>
+      <div class="label">CPUs (36/rack x 10)</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">1.3 MW</div>
+      <div class="label">IT Power</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="val">800V</div>
+      <div class="label">DC Native Power</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="val">33,000</div>
+      <div class="label">lbs Loaded (racks only)</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: HOW IT WORKS -->
+<section class="section">
+  <div class="section-label">Deployment</div>
+  <h2>How It Works</h2>
+  <p class="sub">Three steps from flatbed to first token. No building permits. No construction timeline. No raised floors.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Ship</h3>
+      <p>Sealed 40-ft high cube container on a standard flatbed trailer. 47,550 lbs gross -- well under the 80,000 lb highway limit. All access panels bolted and gasket-sealed for weathertight transport. Arrives as a single unit.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Set</h3>
+      <p>Forklift or crane onto a level concrete pad. Standard ISO corner castings. No foundation engineering. No building permits in most jurisdictions. Level, anchor, done.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Connect</h3>
+      <p>Open access panels on both sides. Connect 800V DC power (or 480V 3-phase). Quick-disconnect coolant lines to external dry cooler. Patch fiber to network. Power on. First token in hours, not months.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: LAYOUT DIAGRAM -->
+<section class="section">
+  <div class="section-label">Engineering</div>
+  <h2>Layout Blueprint</h2>
+  <p class="sub">Three-view engineering drawing: top, side, and end cross-section. All dimensions verified against NVIDIA NVL72 specifications and standard 40-ft HC container geometry.</p>
+  <div class="blueprint-wrap">
+    <object data="/blueprints/adc3k-pod-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
+      <img src="/blueprints/adc3k-pod-layout.svg" alt="ADC 3K Pod Blueprint - Three View Layout">
+    </object>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: ACCESS PANEL DESIGN -->
+<section class="section">
+  <div class="section-label">Service Access</div>
+  <h2>Access Panel Design</h2>
+  <p class="sub">Work from outside, not inside. Every rack is accessible through top-hinged steel panels on both long walls.</p>
+  <div class="panel-detail">
+    <div class="panel-specs">
+      <div class="panel-spec">
+        <div class="dot"></div>
+        <p><strong>8 panels total</strong> -- 4 per side, spanning the full rack zone. Each panel approximately 8 ft wide by 7.5 ft tall.</p>
+      </div>
+      <div class="panel-spec">
+        <div class="dot"></div>
+        <p><strong>Top-hinged</strong> with gas strut prop rods. Open upward for weather protection while working. Cam-lock fasteners for transport security.</p>
+      </div>
+      <div class="panel-spec">
+        <div class="dot"></div>
+        <p><strong>32 ft of panels</strong> covering all 10 rack positions. 8 ft of structural steel at each end (entry/CDU zones) maintains container integrity.</p>
+      </div>
+      <div class="panel-spec">
+        <div class="dot"></div>
+        <p><strong>25.3 inches of reach</strong> from panel opening to rack face. Technician stands outside on grade -- no confined space entry required for routine service.</p>
+      </div>
+      <div class="panel-spec">
+        <div class="dot"></div>
+        <p><strong>EPDM gasket sealed</strong> and bolted for weathertight transport. 14-gauge steel frame. Powder-coated exterior. Marine-grade hardware.</p>
+      </div>
+    </div>
+    <div class="panel-visual">
+      <div class="big">8</div>
+      <div class="desc">ACCESS PANELS<br>4 per side, top-hinged<br>~8' W x 7.5' H each</div>
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent)">TRANSPORT: SEALED</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Bolted, gasket-compressed, weathertight</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);margin-top:12px">ON-SITE: OPEN</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Full rack access from outside the container</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: WHAT'S INSIDE -->
+<section class="section">
+  <div class="section-label">Configuration</div>
+  <h2>What's Inside</h2>
+  <p class="sub">A complete DGX SuperPOD with networking, storage, power, cooling, and safety systems -- all in 40 feet.</p>
+  <div class="inside-grid">
+    <div class="inside-item">
+      <h4>8 Compute Racks (R1-R8)</h4>
+      <p>1 DGX SuperPOD = 576 GPUs. Each NVL72 rack: 72 Blackwell GPUs + 36 Grace CPUs. 130 kW per rack, direct-to-chip liquid cooled.</p>
+    </div>
+    <div class="inside-item net">
+      <h4>1 Networking Rack (R9)</h4>
+      <p>Quantum-X800 InfiniBand spine switches. Ethernet ToR (25/100 GbE). Patch panels. Out-of-band management. Firewall/router.</p>
+    </div>
+    <div class="inside-item stor">
+      <h4>1 Storage + Management Rack (R10)</h4>
+      <p>NVMe-oF high-speed shared storage. NVIDIA Base Command Manager. Prometheus/Grafana monitoring. Jetson Orin edge controller. Rack-mount UPS.</p>
+    </div>
+    <div class="inside-item power">
+      <h4>Eaton Beam Rubin DSX</h4>
+      <p>800V DC native power distribution. 97% efficiency (vs 92% AC path). Overhead busway from electrical panel to each rack position. N+N redundant power shelves.</p>
+    </div>
+    <div class="inside-item">
+      <h4>Dual CDU System</h4>
+      <p>Primary + redundant 250 kW CDUs. Quick-disconnect bulkhead fittings to external dry cooler. 45C supply / 55-65C return. Leak detection throughout.</p>
+    </div>
+    <div class="inside-item">
+      <h4>Overhead Cable Trays</h4>
+      <p>Unistrut-mounted perforated trays. Power on left, data on right (NEC 300.3). 18.2 inches clearance above racks. Drop-down to each rack position.</p>
+    </div>
+    <div class="inside-item">
+      <h4>LED Lighting</h4>
+      <p>Low-profile LED strips between cable tray runs. Adequate illumination for service access through panels. Minimal heat contribution.</p>
+    </div>
+    <div class="inside-item safety">
+      <h4>Fire Suppression</h4>
+      <p>Novec 1230 clean agent with ceiling-mounted nozzles. VESDA aspirating smoke detection (4 sampling points). Emergency disconnect at door entry.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: POWER OPTIONS -->
+<section class="section">
+  <div class="section-label">Power</div>
+  <h2>Power Options</h2>
+  <p class="sub">Self-powered, grid-independent. The pod takes whatever power source you have -- or bring your own.</p>
+  <div class="power-grid">
+    <div class="power-card">
+      <div class="icon" style="color:var(--amber)">&#x26A1;</div>
+      <h4>Natural Gas Generator</h4>
+      <p>External Cat generator on natural gas. Ideal for oil fields with on-site gas. Continuous run. Lowest fuel cost per kWh.</p>
+    </div>
+    <div class="power-card">
+      <div class="icon" style="color:var(--red)">&#x26FD;</div>
+      <h4>Diesel Generator</h4>
+      <p>Pipeline-independent. On-site fuel storage. Emergency backup or primary power for remote deployment where gas is unavailable.</p>
+    </div>
+    <div class="power-card">
+      <div class="icon" style="color:var(--blue)">&#x26A0;</div>
+      <h4>Grid Tie-In</h4>
+      <p>Standard utility connection. 480V 3-phase AC or 800V DC if available. Campus deployments, university sites, fixed installations.</p>
+    </div>
+    <div class="power-card">
+      <div class="icon" style="color:var(--accent)">&#x2600;</div>
+      <h4>Solar Supplement</h4>
+      <p>Ground-mount or carport solar array as offset. 800V DC solar-direct architecture for maximum efficiency. Reduces generator runtime.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 7: DEPLOYMENT TARGETS -->
+<section class="section">
+  <div class="section-label">Markets</div>
+  <h2>Deployment Targets</h2>
+  <p class="sub">Anywhere there's a concrete pad and a power source. No building. No permits. No 18-month construction timeline.</p>
+  <div class="deploy-grid">
+    <div class="deploy-card">
+      <h4>Oil Fields</h4>
+      <p>Natural gas on-site. Flare gas to tokens. Edge inference for drilling optimization, seismic processing, predictive maintenance.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>University Campuses</h4>
+      <p>Research compute on demand. No capital construction. Shared HPC for AI/ML research, student access, grant-funded projects.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Military / Defense</h4>
+      <p>Tactical AI compute. Rapidly deployable. Air-gapped capable. Secure inference at the edge. Relocatable on standard military transport.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Emergency Response</h4>
+      <p>Hurricane, wildfire, disaster zones. Drone AI processing. Real-time imagery analysis. Communications hub. Deploy in hours.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Remote / Offshore</h4>
+      <p>Starlink or VSAT backhaul. Barge-mounted for offshore platforms. Wetland pilings for pipeline corridors. Truly anywhere.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Edge Inference Nodes</h4>
+      <p>Distributed inference network. Low-latency serving. Connected back to Willow Glen primary hub via fiber or satellite. Token factory at the edge.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer class="pod-footer">
+  <div class="logo">ADC<span>3K</span></div>
+  <p>Advantage Design &amp; Construction</p>
+  <p><a href="https://adc3k.com">adc3k.com</a></p>
+  <p><a href="mailto:scott@adc3k.com">scott@adc3k.com</a></p>
+  <p style="margin-top:20px;font-size:11px;color:var(--text-dim)">Louisiana's AI Infrastructure Company</p>
+</footer>
+
+</body>
+</html>
