@@ -34,7 +34,8 @@
     { "source": "/ncp-study", "destination": "/ncp-study.html" },
     { "source": "/ncp-cheat", "destination": "/ncp-cheat.html" },
     { "source": "/hub", "destination": "/hub.html" },
-    { "source": "/gtc", "destination": "/gtc-plan.html" },
+    { "source": "/gtc", "destination": "/gtc-plan-26.html" },
+    { "source": "/gtc-plan-26", "destination": "/gtc-plan-26.html" },
     { "source": "/stack", "destination": "/stack.html" },
     { "source": "/boot", "destination": "/boot.html" },
     { "source": "/investor", "destination": "/investor.html" },
@@ -53,7 +54,8 @@
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
     { "source": "/power", "destination": "/power-architecture.html" },
     { "source": "/power-lsu", "destination": "/power-lsu.html" },
-    { "source": "/reference", "destination": "/reference.html" },
+    { "source": "/reference", "destination": "/reference-library.html" },
+    { "source": "/reference-library", "destination": "/reference-library.html" },
     { "source": "/renders-wg", "destination": "/renders-wg.html" },
     { "source": "/renders-trappeys", "destination": "/renders-trappeys.html" },
     { "source": "/blueprints-trappeys", "destination": "/blueprints-trappeys.html" },
@@ -65,6 +67,10 @@
     { "source": "/lsu", "destination": "/lsu.html" },
     { "source": "/learn", "destination": "/learn.html" },
     { "source": "/leadership", "destination": "/leadership.html" },
+    { "source": "/ai-ops", "destination": "/ai-ops.html" },
+    { "source": "/lafayette-ai-plan", "destination": "/lafayette-ai-plan.html" },
+    { "source": "/nvidia-full-stack", "destination": "/nvidia-full-stack.html" },
+    { "source": "/willow-glen-investors", "destination": "/willow-glen-investors.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
