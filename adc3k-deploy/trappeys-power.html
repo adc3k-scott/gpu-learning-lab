@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ragin' Cajun Compute Campus — 800V DC Power Architecture</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#fff;padding:20px;max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;text-align:center;margin:10px 0 4px;letter-spacing:-1px}
+.sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:25px}
+h2{font-size:1.2rem;color:#76b900;margin:30px 0 12px;border-bottom:1px solid rgba(118,185,0,0.2);padding-bottom:6px}
+h3{font-size:1rem;color:#4fc3f7;margin:20px 0 8px}
+p{font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:10px}
+strong{color:#fff}
+
+/* BLOCK DIAGRAMS */
+.diagram{background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:20px;margin:16px 0;overflow-x:auto}
+.flow{display:flex;align-items:center;gap:0;flex-wrap:nowrap;min-width:fit-content}
+.block{padding:12px 16px;border-radius:6px;text-align:center;min-width:120px;flex-shrink:0}
+.block .label{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px}
+.block .value{font-size:1rem;font-weight:800}
+.block .detail{font-size:0.65rem;color:rgba(255,255,255,0.5);margin-top:3px}
+.block.green{background:rgba(118,185,0,0.1);border:1px solid rgba(118,185,0,0.3);color:#76b900}
+.block.blue{background:rgba(79,195,247,0.1);border:1px solid rgba(79,195,247,0.3);color:#4fc3f7}
+.block.gold{background:rgba(255,213,79,0.1);border:1px solid rgba(255,213,79,0.3);color:#ffd54f}
+.block.red{background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.2);color:#ff5252}
+.block.white{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:#fff}
+.arrow{font-size:1.2rem;color:rgba(255,255,255,0.3);padding:0 6px;flex-shrink:0}
+.arrow.volt{font-size:0.65rem;color:#76b900;font-weight:700;display:flex;flex-direction:column;align-items:center}
+.arrow.volt span{font-size:1rem}
+
+/* COMPARISON TABLE */
+.cmp{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.8rem}
+.cmp th{text-align:left;padding:8px 10px;border-bottom:2px solid rgba(118,185,0,0.3);color:#76b900;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px}
+.cmp td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.7)}
+.cmp tr:hover td{background:rgba(255,255,255,0.02)}
+.cmp .highlight{color:#76b900;font-weight:700}
+
+/* SPEC CARDS */
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:12px 0}
+.spec{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:14px}
+.spec .num{font-size:1.6rem;font-weight:900;color:#76b900}
+.spec .what{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:2px}
+.spec .why{font-size:0.7rem;color:rgba(255,255,255,0.35);margin-top:4px;line-height:1.4}
+
+/* VENDOR CARDS */
+.vendor{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:14px;margin:8px 0}
+.vendor .name{font-weight:800;font-size:0.95rem;color:#fff}
+.vendor .role{font-size:0.7rem;color:#76b900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.vendor .info{font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.5}
+
+.callout{background:rgba(118,185,0,0.08);border:1px solid rgba(118,185,0,0.2);border-radius:6px;padding:14px;margin:12px 0;font-size:0.8rem;color:rgba(255,255,255,0.7);line-height:1.5}
+.callout strong{color:#76b900}
+
+.note{font-size:0.75rem;color:rgba(255,255,255,0.4);margin:6px 0;font-style:italic}
+
+@media(max-width:1000px){
+    .flow{flex-direction:column;align-items:stretch;gap:0}
+    .block{min-width:auto;width:100%}
+    .arrow{transform:rotate(90deg);text-align:center;padding:4px 0}
+    .arrow.volt{flex-direction:row;gap:6px;justify-content:center;transform:rotate(0deg)}
+    .arrow.volt span{transform:rotate(90deg)}
+    .diagram{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a></div>
+
+<h1>Trappeys AI Factory — 800V DC Power Architecture</h1>
+<div class="sub">From gas molecule to GPU chip — every step, every component, every vendor</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>The Full Power Chain</h2>
+<p>This is the complete path. Gas goes in one end, AI tokens come out the other.</p>
+
+<div class="diagram">
+<div class="flow">
+<div class="block gold">
+<div class="label">Fuel Source</div>
+<div class="value">Clean-Burning Natural Gas</div>
+<div class="detail">Henry Hub pricing<br>ATMOS Energy<br>On-site trunk line</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>gas</div>
+<div class="block green">
+<div class="label">Generation</div>
+<div class="value">Cat G3520C</div>
+<div class="detail">1.5 MW prime rated<br>2 units (N+1)<br>480V AC output</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>480V AC</div>
+<div class="block blue">
+<div class="label">Conversion</div>
+<div class="value">Eaton Rectifier</div>
+<div class="detail">Beam Rubin DSX<br>AC &rarr; 800V DC<br>Building perimeter</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block white">
+<div class="label">Distribution</div>
+<div class="value">800V DC Bus</div>
+<div class="detail">Eaton busway<br>45% less copper<br>85% more capacity</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block green">
+<div class="label">Rack Power</div>
+<div class="value">Rack PDU</div>
+<div class="detail">Eaton HDX G4<br>Per-rack distribution<br>Monitoring + switching</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block red">
+<div class="label">Final Conversion</div>
+<div class="value">64:1 LLC</div>
+<div class="detail">800V &rarr; 12V DC<br>Built into rack<br>Ships with NVIDIA</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>12V DC</div>
+<div class="block gold">
+<div class="label">Compute</div>
+<div class="value">GPU</div>
+<div class="detail">Vera Rubin<br>NVL72 rack<br>130 kW per rack</div>
+</div>
+</div>
+</div>
+
+<div class="callout">
+<strong>What YOU buy vs what NVIDIA ships:</strong><br>
+You buy: Gas gensets (Cat) + Rectifier/switchgear/bus/PDUs (Eaton) + Solar panels (First Solar)<br>
+NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You just plug 800V DC into the rack input.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Why 800V DC Beats Traditional AC</h2>
+
+<div class="specs">
+<div class="spec"><div class="num">85%</div><div class="what">More power through same wire</div><div class="why">Higher voltage = lower current = less resistive loss. Same copper carries nearly double the power.</div></div>
+<div class="spec"><div class="num">45%</div><div class="what">Less copper needed</div><div class="why">Lower current means thinner conductors handle the same load. Massive material savings.</div></div>
+<div class="spec"><div class="num">5%</div><div class="what">Better end-to-end efficiency</div><div class="why">Eliminates multiple AC/DC conversions. On 3 MW = 150 kW saved continuously, 24/7.</div></div>
+<div class="spec"><div class="num">70%</div><div class="what">Lower maintenance costs</div><div class="why">Fewer PSUs, fewer fans, fewer failure points. Centralized conversion = easier to service.</div></div>
+<div class="spec"><div class="num">30%</div><div class="what">Lower total cost of ownership</div><div class="why">Efficiency + copper + maintenance + reliability gains compound over facility lifetime.</div></div>
+<div class="spec"><div class="num">1 MW+</div><div class="what">Per rack scalability</div><div class="why">Same 800V DC infrastructure scales from 100 kW to 1 MW+ per rack. Install once.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Traditional vs 800V DC — Side by Side</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+
+<div class="diagram" style="margin:0">
+<p style="font-size:0.75rem;color:#ff5252;font-weight:700;margin-bottom:10px;text-align:center">OLD WAY (415V AC)</p>
+<div style="display:flex;flex-direction:column;gap:0;align-items:stretch">
+<div class="block white" style="min-width:auto;width:100%"><div class="label">Grid / Generator</div><div class="value" style="font-size:0.85rem">13.8kV AC</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660; step down</div>
+<div class="block white" style="min-width:auto;width:100%"><div class="label">Transformer</div><div class="value" style="font-size:0.85rem">415V AC</div><div class="detail">Loss #1: ~2%</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660; condition</div>
+<div class="block white" style="min-width:auto;width:100%"><div class="label">UPS System</div><div class="value" style="font-size:0.85rem">AC→DC→AC</div><div class="detail">Loss #2: ~4-6%</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660; distribute</div>
+<div class="block white" style="min-width:auto;width:100%"><div class="label">PDU + Busway</div><div class="value" style="font-size:0.85rem">415V AC</div><div class="detail">Loss #3: ~1-2%</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660; convert</div>
+<div class="block red" style="min-width:auto;width:100%"><div class="label">8x Rack PSUs</div><div class="value" style="font-size:0.85rem">AC → 54V DC</div><div class="detail">Loss #4: ~3-5%<br>Eats 64U rack space<br>8 PSUs with fans</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660; step down</div>
+<div class="block red" style="min-width:auto;width:100%"><div class="label">DC/DC Converter</div><div class="value" style="font-size:0.85rem">54V → 12V</div><div class="detail">Loss #5: ~2%<br>200 kg copper busbar</div></div>
+<div style="text-align:center;color:rgba(255,82,82,0.5);font-size:0.7rem;padding:2px 0">&#9660;</div>
+<div class="block white" style="min-width:auto;width:100%"><div class="label">GPU</div><div class="value" style="font-size:0.85rem">12V → Core</div></div>
+</div>
+<div style="margin-top:10px;padding:10px;background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.15);border-radius:6px">
+<div style="font-size:0.75rem;color:#ff5252;font-weight:700;text-align:center">6 Conversion Stages</div>
+<div style="font-size:0.7rem;color:rgba(255,255,255,0.4);text-align:center;margin-top:4px">~12-17% total energy lost<br>200 kg copper per MW rack<br>8 PSUs eating rack space<br>Multiple failure points</div>
+</div>
+</div>
+
+<div class="diagram" style="margin:0">
+<p style="font-size:0.75rem;color:#76b900;font-weight:700;margin-bottom:10px;text-align:center">800V DC NATIVE</p>
+<div style="display:flex;flex-direction:column;gap:0;align-items:stretch">
+<div class="block green" style="min-width:auto;width:100%"><div class="label">Cat G3520C</div><div class="value" style="font-size:0.85rem">480V AC</div><div class="detail">1.5 MW prime rated<br>Clean-burning natural gas<br>(Henry Hub pricing)</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; one conversion</div>
+<div class="block blue" style="min-width:auto;width:100%"><div class="label">Eaton Rectifier</div><div class="value" style="font-size:0.85rem">480V AC → 800V DC</div><div class="detail">Beam Rubin DSX<br>Loss: ~2% (only conversion)</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; straight DC</div>
+<div class="block green" style="min-width:auto;width:100%"><div class="label">800V DC Bus</div><div class="value" style="font-size:0.85rem">800V DC</div><div class="detail">Eaton busway<br>45% less copper<br>85% more capacity</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; direct to rack</div>
+<div class="block green" style="min-width:auto;width:100%;padding:16px"><div class="label" style="font-size:0.7rem">No Rack PSUs</div><div class="value" style="font-size:0.85rem">Zero conversion</div><div class="detail" style="color:rgba(118,185,0,0.7)">No PSUs. No fans.<br>No wasted rack space.<br>No copper busbars.</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; one step down</div>
+<div class="block green" style="min-width:auto;width:100%"><div class="label">64:1 LLC Converter</div><div class="value" style="font-size:0.85rem">800V → 12V</div><div class="detail">98% efficient<br>Built into rack by NVIDIA<br>Right next to GPU</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660;</div>
+<div class="block gold" style="min-width:auto;width:100%"><div class="label">GPU</div><div class="value" style="font-size:0.85rem">12V → Core</div></div>
+</div>
+<div style="margin-top:10px;padding:10px;background:rgba(118,185,0,0.06);border:1px solid rgba(118,185,0,0.15);border-radius:6px">
+<div style="font-size:0.75rem;color:#76b900;font-weight:700;text-align:center">2 Conversion Stages</div>
+<div style="font-size:0.7rem;color:rgba(255,255,255,0.4);text-align:center;margin-top:4px">~4% total energy lost<br>45% less copper<br>Zero rack PSUs<br>70% fewer failure points</div>
+</div>
+</div>
+
+</div>
+
+<div class="callout" style="margin-top:14px;text-align:center">
+<strong>Bottom line:</strong> Old way loses 12-17% of your energy before it reaches the GPU. Our way loses 4%. On a 3 MW facility that's the difference between wasting 510 kW and wasting 120 kW — <strong>390 kW saved, 24/7, 365 days.</strong>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Solar Path — 800V DC Direct (No Inverter)</h2>
+
+<div class="diagram">
+<div class="flow">
+<div class="block gold">
+<div class="label">First Solar</div>
+<div class="value">TR1 Panels</div>
+<div class="detail">550W each<br>5 panels per string<br>952V MPP output</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>952V DC</div>
+<div class="block blue">
+<div class="label">Buck Converter</div>
+<div class="value">DC-DC</div>
+<div class="detail">952V &rarr; 800V<br>Eaton integrated<br>or ABB PCS100</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block green">
+<div class="label">Same Bus</div>
+<div class="value">800V DC</div>
+<div class="detail">Merges with<br>gas genset path<br>Zero inverters</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block gold">
+<div class="label">To Racks</div>
+<div class="value">GPU</div>
+<div class="detail">Same path as gas<br>Solar or gas<br>GPU doesn't care</div>
+</div>
+</div>
+</div>
+
+<div class="callout">
+<strong>This is the innovation nobody else is doing.</strong> Traditional solar goes: Panel (DC) &rarr; Inverter (DC&rarr;AC) &rarr; Grid (AC) &rarr; Rectifier (AC&rarr;DC) &rarr; Rack. Three conversions, 92% efficient. We go: Panel (DC) &rarr; Buck (DC&rarr;DC) &rarr; 800V Bus &rarr; Rack. One conversion, 97% efficient. We skip the inverter entirely because the racks want DC anyway.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Trappeys Phase 3 — Power Budget</h2>
+
+<table class="cmp">
+<tr><th>Load</th><th>Power</th><th>Source</th><th>Notes</th></tr>
+<tr><td>4x NVL72 racks</td><td class="highlight">520 kW</td><td>Natural gas primary</td><td>130 kW per rack (Vera Rubin)</td></tr>
+<tr><td>Cooling (dry coolers + water tower)</td><td>65 kW</td><td>Gas</td><td>~12% of IT load</td></tr>
+<tr><td>Facility (lights, HVAC, dehumid)</td><td>50 kW</td><td>Solar</td><td>Big Ass Fans, desiccant dehumid</td></tr>
+<tr><td>Network + control</td><td>15 kW</td><td>Solar</td><td>Switches, NOC, monitoring</td></tr>
+<tr><td><strong>Total Phase 3</strong></td><td class="highlight"><strong>~650 kW</strong></td><td></td><td></td></tr>
+<tr><td>Genset capacity (2x G3520C)</td><td class="highlight">3,000 kW</td><td>N+1</td><td>Each at ~22% load. Room to grow.</td></tr>
+<tr><td>Solar capacity</td><td class="highlight">2,050 kW peak</td><td>Offset</td><td>Daytime: solar carries facility + some compute</td></tr>
+</table>
+
+<p class="note">At 80% max load rule: each G3520C handles 1,200 kW. Single unit covers through Phase 4 (1,300 kW) with margin. Phase 5 (3,000 kW) needs a third unit or CG260 upgrade.</p>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Generator Comparison</h2>
+
+<table class="cmp">
+<tr><th>Model</th><th>Output</th><th>Fuel</th><th>Best For</th><th>Lead Time</th><th>Est. Cost</th></tr>
+<tr><td class="highlight">Cat G3520C</td><td>1.5-2 MW</td><td>Natural gas</td><td>Phase 3-4 (N+1 pair)</td><td>12-20 wk (6-8 stock)</td><td>$300-500K ea</td></tr>
+<tr><td>Cat CG260-16</td><td>2.8-4 MW</td><td>Natural gas</td><td>Phase 5+ (single unit = big)</td><td>16-24 wk</td><td>$600K-1M+</td></tr>
+<tr><td>Cummins HSK78G</td><td>2.5 MW</td><td>Natural gas</td><td>Backup vendor</td><td>12-20 wk</td><td>$400-600K</td></tr>
+<tr><td>Cummins QSK60G</td><td>1.5 MW</td><td>Natural gas</td><td>Backup vendor (proven)</td><td>12-20 wk</td><td>$300-500K</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Power Vendor Stack</h2>
+
+<div class="vendor">
+<div class="role">Generation — Gas Gensets + Switchgear</div>
+<div class="name">Louisiana Cat Power Systems</div>
+<div class="info">
+Port of New Iberia, LA (30 mi from Trappeys)<br>
+<strong>337-374-1901</strong><br>
+G3520C gas gensets, paralleling switchgear, ATS, Cat Financial leasing<br>
+21 locations across Louisiana. Same team services offshore rigs.
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">800V DC Conversion — Rectifier + Bus + PDUs</div>
+<div class="name">Eaton (Beam Rubin DSX)</div>
+<div class="info">
+HQ: Cleveland, OH. Reps nationwide.<br>
+Contact made at GTC 2026.<br>
+Beam Rubin DSX = complete 800V DC platform. Rectifier + busway + rack PDUs + microgrid controller.<br>
+Co-designed with NVIDIA. THE reference standard.
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Solar Generation — Panels</div>
+<div class="name">First Solar</div>
+<div class="info">
+Factory: New Iberia, LA (at the airport, 30 mi from Trappeys)<br>
+<strong>modulesales@firstsolar.com / 419-662-6899</strong><br>
+Series 7 TR1: 550W, CdTe thin film, humidity advantage, 0.3%/yr degradation<br>
+3,827 panels = 2.05 MW across 4 Trappeys rooftops.
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Natural Gas Utility — Fuel Supply</div>
+<div class="name">ATMOS Energy</div>
+<div class="info">
+Trunk line confirmed on Trappeys property. City hub up the road on Pinhook.<br>
+Need: commercial gas service line from trunk to concrete pad (infrastructure yard).<br>
+Henry Hub pricing = cheapest gas in North America.
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Grid Interconnect — Sell-Back + Fiber</div>
+<div class="name">LUS (Lafayette Utilities System)</div>
+<div class="info">
+Pin Hook Substation (Curtis Rodemacher) right next door to Trappeys.<br>
+Grid = SELL-BACK ONLY. We sell excess power to LUS, not buy from them.<br>
+LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>The 64:1 LLC Converter — What Happens Inside the Rack</h2>
+
+<div class="diagram">
+<div style="padding:10px">
+<p style="font-size:0.8rem;color:rgba(255,255,255,0.7);line-height:1.6">
+<strong style="color:#76b900">You don't buy this.</strong> It ships inside the NVIDIA NVL72 rack. But here's what it does:<br><br>
+<strong>Input:</strong> 800V DC from the Eaton bus<br>
+<strong>Topology:</strong> LLC resonant converter (Direct Current Transformer)<br>
+<strong>Ratio:</strong> 64:1 step-down (800V &rarr; 12.5V)<br>
+<strong>Efficiency:</strong> Up to 98%<br>
+<strong>Location:</strong> Mounted directly adjacent to the GPU — shortest possible power path<br>
+<strong>Output:</strong> 12V DC to GPU voltage regulators, then core voltage (~0.7-1.0V) to the GPU die<br><br>
+<strong style="color:#4fc3f7">Why LLC?</strong> Zero-voltage switching (ZVS) = minimal switching losses. At 64:1 ratio, it acts as a DC transformer — fixed ratio, no regulation needed. The upstream 800V bus handles voltage regulation. This lets the converter be tiny, efficient, and dead reliable.<br><br>
+<strong style="color:#ffd54f">Why this matters:</strong> Traditional racks have 8+ power supply units (PSUs) with fans taking up rack space. 800V DC eliminates all of them. More space for compute. Fewer fans = less noise, less heat, fewer failures. NVIDIA says 70% lower maintenance costs.
+</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>NVIDIA 800V DC Ecosystem Partners</h2>
+
+<table class="cmp">
+<tr><th>Category</th><th>Partners</th><th>Role</th></tr>
+<tr><td class="highlight">Silicon (power ICs)</td><td>Analog Devices, Infineon, MPS, Navitas, OnSemi, Renesas, ROHM, STMicro, Texas Instruments</td><td>GaN/SiC switches for DC/DC converters</td></tr>
+<tr><td class="highlight">Power Components</td><td>Delta, Flex Power, LiteOn, Megmeet, Lead Wealth</td><td>Rectifiers, converters, PSU modules</td></tr>
+<tr><td class="highlight">Facility Power</td><td>Eaton, Schneider Electric, Vertiv, ABB, GE Vernova, Siemens, Hitachi</td><td>Switchgear, UPS, busway, PDUs, transformers</td></tr>
+</table>
+
+<p class="note">Eaton is NVIDIA's primary partner (Beam Rubin DSX co-developed). Schneider and Vertiv are alternatives. All American or with major US operations.</p>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Key Numbers to Know</h2>
+
+<div class="specs">
+<div class="spec"><div class="num">800V</div><div class="what">DC bus voltage</div><div class="why">NVIDIA standard for Vera Rubin and all future platforms. Starting production 2027.</div></div>
+<div class="spec"><div class="num">130 kW</div><div class="what">Per NVL72 rack</div><div class="why">Vera Rubin power density. Up from 120 kW on Blackwell.</div></div>
+<div class="spec"><div class="num">64:1</div><div class="what">LLC converter ratio</div><div class="why">800V to 12.5V in one step. 98% efficient. Built into the rack.</div></div>
+<div class="spec"><div class="num">$0.058</div><div class="what">Per kWh (Phase 1 gas)</div><div class="why">Reciprocating engines on Henry Hub gas. At scale: $0.04-0.05/kWh.</div></div>
+<div class="spec"><div class="num">97%</div><div class="what">Solar-direct efficiency</div><div class="why">DC-DC buck only. Skip inverter. vs 92% through AC path.</div></div>
+<div class="spec"><div class="num">3 MW</div><div class="what">N+1 genset capacity</div><div class="why">2x Cat G3520C at 1.5 MW each. Covers Phase 3-4. Add third for Phase 5.</div></div>
+</div>
+
+<div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);font-size:0.7rem">
+Louisiana's AI Infrastructure Initiative | louisianaai.net | info@louisianaai.net<br>
+Source: NVIDIA 800 VDC Architecture Blog (May 2025), Eaton Beam Rubin DSX (GTC March 2026)<br>
+American-made. American energy. Louisiana AI factory.
+</div>
+
+</body>
+</html>

@@ -16,6 +16,15 @@
     }
   ],
   "rewrites": [
+    { "source": "/trappeys-blueprints", "destination": "/trappeys-blueprints.html" },
+    { "source": "/trappeys-renders", "destination": "/trappeys-renders.html" },
+    { "source": "/trappeys-power", "destination": "/trappeys-power.html" },
+    { "source": "/willow-glen-blueprints", "destination": "/willow-glen-blueprints.html" },
+    { "source": "/willow-glen-renders", "destination": "/willow-glen-renders.html" },
+    { "source": "/willow-glen-power", "destination": "/willow-glen-power.html" },
+    { "source": "/willow-glen-renders-compare", "destination": "/willow-glen-renders-compare.html" },
+    { "source": "/marlie-blueprints", "destination": "/marlie-blueprints.html" },
+    { "source": "/willow-glen", "destination": "/lsu.html" },
     { "source": "/card", "destination": "/card.html" },
     { "source": "/qr", "destination": "/qr.html" },
     { "source": "/factory-sim", "destination": "/production-sim.html" },
