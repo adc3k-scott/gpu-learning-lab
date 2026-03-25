@@ -804,3 +804,77 @@ The 800V DC bus from Eaton Beam Rubin becomes essential at these power densities
 - [TrendForce — NVL72 TDP Data](https://x.com/trendforce/status/1900050272568926560)
 - [NEC 110.26 Working Space Requirements](https://up.codes/s/spaces-about-electrical-equipment)
 - [Introl — Vera Rubin 600kW Racks](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)
+
+---
+
+## 8. THERMAL ENGINEERING — LOUISIANA DEPLOYMENT
+
+### 8.1 Design Philosophy
+No air conditioning. No human occupancy. Control humidity, not temperature.
+Solar roof for shade. Desiccant for moisture. Exhaust fan for convection.
+100% AI-monitored — Mission Control manages thermals autonomously.
+
+### 8.2 ASHRAE Equipment Classes (Verified)
+
+| Class | Max Temp | Max Humidity | Application |
+|-------|----------|-------------|-------------|
+| A1 | 90°F (32°C) | 80% RH | Standard enterprise |
+| A2 | 95°F (35°C) | 80% RH | Hardened equipment |
+| A3 | 104°F (40°C) | 85% RH | Extreme environments |
+| A4 | 113°F (45°C) | 90% RH | Purpose-built ruggedized |
+
+### 8.3 Component Temperature Ratings
+
+| Component | Cooling Method | Max Ambient Rating | Notes |
+|-----------|---------------|-------------------|-------|
+| GPUs/CPUs | Direct-to-chip liquid (45°C) | N/A — liquid cooled | Ambient doesn't matter |
+| NVLink switches | Direct-to-chip liquid | N/A — liquid cooled | Same cooling loop |
+| PSUs | Air-cooled (internal fans) | 40-50°C (104-122°F) | Tightest air-cooled spec |
+| Network switches | Air-cooled | 40°C (104°F) | Tightest overall |
+| SSDs/NVMe | Passive/conduction | 70°C (158°F) | No issue |
+| Cables/connectors | Passive | 60-75°C (140-167°F) | No issue |
+| Eaton 800V DC bus | Air-cooled | 40-50°C (104-122°F) | Rated for industrial |
+
+### 8.4 Louisiana Thermal Analysis
+
+| Condition | Outside Temp | Inside Unshaded | Inside With Solar Roof |
+|-----------|-------------|-----------------|----------------------|
+| Winter avg | 55°F (13°C) | 65°F (18°C) | 60°F (16°C) |
+| Spring/Fall | 80°F (27°C) | 100°F (38°C) | 90°F (32°C) |
+| Summer avg | 92°F (33°C) | 120°F (49°C) | 105°F (40°C) |
+| Summer peak | 100°F (38°C) | 140°F (60°C) | 115°F (46°C) |
+| Hurricane recovery | 85°F (29°C) | 105°F (40°C) | 95°F (35°C) |
+
+Solar roof reduces internal temp by 10-15°F (15-25°F reduction from peak unshaded).
+
+### 8.5 Design Target
+
+**Container ambient: below 45°C (113°F) at all times.**
+
+This is achievable with:
+1. Solar roof (shade + power) — handles peak heat, generates power for support systems
+2. Desiccant dehumidifier — strips humidity, no compressor, low power (~500W)
+3. Exhaust fan at top — hot air rises, fan pulls it out (~200W)
+4. Positive pressure from dehumidifier — dry air in at bottom, hot humid air out at top
+5. Sealed container when panels closed — weathertight
+
+### 8.6 What We Do NOT Need
+- Air conditioning (no compressor, no refrigerant, no maintenance)
+- Human-comfort HVAC (no occupancy, AI-monitored only)
+- Raised floor plenum (top-drop cabling, not underfloor)
+- Chilled water (liquid cooling loop is separate from ambient control)
+
+### 8.7 AI Thermal Management
+Mission Control monitors all thermal sensors autonomously:
+- Container ambient temp (multiple sensors)
+- Coolant supply/return temps
+- Per-rack inlet/outlet temps
+- Humidity level
+- External ambient + solar irradiance
+- Exhaust fan speed
+
+AI adjusts: exhaust fan speed, dehumidifier power, cooling flow rate.
+AI alerts: if ambient approaches 45°C, if humidity exceeds 60% RH, if any component over spec.
+AI acts: can throttle GPU power to reduce heat generation as last resort.
+
+No human needed. Ever. Unless something physically breaks.
