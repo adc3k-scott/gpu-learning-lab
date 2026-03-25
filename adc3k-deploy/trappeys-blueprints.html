@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ragin' Cajun Compute Campus — Engineering Blueprints</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;padding:20px}
+h1{text-align:center;font-size:1.4rem;margin:10px 0 4px}
+.sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.75rem;margin-bottom:30px}
+.sheet{max-width:1400px;margin:0 auto 40px;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden}
+.sheet-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center}
+.sheet-header h2{font-size:1rem;font-weight:800}
+.sheet-header .tag{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;padding:3px 10px;border-radius:3px;color:#CE181E;background:rgba(206,24,30,0.1);border:1px solid rgba(206,24,30,0.2)}
+.sheet img{width:100%;display:block}
+.sheet .desc{padding:12px 20px;font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.5}
+.section-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:#CE181E;font-weight:700;margin:40px 0 16px;text-align:center}
+footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.65rem}
+</style>
+</head>
+<body>
+
+<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a></div>
+
+<h1>Ragin' Cajun Compute Campus — Engineering Blueprints</h1>
+<div class="sub">Trappeys Cannery, Lafayette, LA | 6-Sheet MVP Design Intent Package | NOT FOR CONSTRUCTION</div>
+
+<div class="section-label">Site</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>S-001: Site Plan</h2>
+<span class="tag">22 Acres | 112,500 SF</span>
+</div>
+<img src="blueprints/trappeys-site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">4 buildings with dimensions: Front (300x75, bayou view), Middle Low (300x100), Middle High (300x75, PHASE 1 DEPLOY), Rear High (250x150, staging). Water tower, concrete pad infrastructure yard, Bayou Vermilion frontage. Deploy sequence: Stage in Rear High, deploy compute in Middle High.</div>
+</div>
+
+<div class="section-label">Electrical</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>E-001: Electrical Single-Line Diagram</h2>
+<span class="tag">800V DC Native</span>
+</div>
+<img src="blueprints/trappeys-electrical-sld.svg" alt="Electrical SLD" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">ATMOS gas to Cat G3520C generators (480V AC), Eaton Beam Rubin DSX rectification to 800V DC bus, busway to rack PDUs, 64:1 LLC converters to GPU. Solar DC-Direct bypass at 97% efficiency. LUS sell-back. Diesel emergency. BESS ride-through.</div>
+</div>
+
+<div class="section-label">Architectural</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>A-001: Compute Hall Floor Plan — Middle High</h2>
+<span class="tag">300' x 75' | Phase 1</span>
+</div>
+<img src="blueprints/trappeys-floor-plan.svg" alt="Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Middle High building (22,500 sq ft) — Phase 1 compute hall. 4 NVL72 racks in hot/cold aisle containment. CDU area, electrical room, wooden truss structure preserved. Loading access from Rear High staging area. Cooling pipes from water tower.</div>
+</div>
+
+<div class="section-label">Cooling</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>C-001: Cooling Flow Schematic</h2>
+<span class="tag">Water Tower + Dry Coolers</span>
+</div>
+<img src="blueprints/trappeys-cooling-schematic.svg" alt="Cooling Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Water tower (100 ft, thermal buffer) to dry coolers on concrete pad, through plate heat exchangers, CDU distribution to NVL72 rack manifolds. 45C hot water supply, no mechanical chillers in mild weather. Flow temperatures labeled throughout.</div>
+</div>
+
+<div class="section-label">Power</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>P-001: Power Distribution Schematic</h2>
+<span class="tag">4-Layer Hierarchy</span>
+</div>
+<img src="blueprints/trappeys-power-distribution.svg" alt="Power Distribution" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Complete 4-layer hierarchy: Solar (rooftop 2.05 MW), Gas (Cat G3520C backbone), Diesel (emergency), Grid (LUS sell-back only). Fuel-to-chip path through Eaton 800V DC platform. Phase 1: 650 kW total, gensets at 22% load with massive headroom.</div>
+</div>
+
+<div class="section-label">Solar</div>
+
+<div class="sheet">
+<div class="sheet-header">
+<h2>L-001: Solar Rooftop Layout</h2>
+<span class="tag">2.05 MW | 3,731 Panels</span>
+</div>
+<img src="blueprints/trappeys-solar-layout.svg" alt="Solar Layout" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">First Solar Series 7 TR1 rooftop layout across all 4 buildings. Front: 658 panels, Middle Low: 1,105, Middle High: 658, Rear High: 1,310. Total: 3,731 panels = 2.05 MW. DC-Direct to 800V bus at 97% efficiency. Made in New Iberia, 30 miles away.</div>
+</div>
+
+<footer>
+Ragin' Cajun Compute Campus — Trappeys Cannery, Lafayette, Louisiana<br>
+Louisiana's AI Infrastructure Initiative — (337) 448-4242 — louisianaai.net<br>
+MVP Design Intent — All drawings require PE-stamped engineering review before construction
+</footer>
+
+</body>
+</html>

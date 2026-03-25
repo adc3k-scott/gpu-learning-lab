@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUX Render Comparison — v1 vs v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#fff;padding:20px}
+h1{text-align:center;font-size:1.8rem;margin:20px 0 5px;letter-spacing:-1px}
+.sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.85rem;margin-bottom:30px}
+.pair{margin-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:30px}
+.pair:last-child{border-bottom:none}
+.label{font-size:1.1rem;font-weight:700;margin-bottom:12px;color:#76b900}
+.row{display:flex;gap:16px}
+.col{flex:1;min-width:0}
+.col img{width:100%;border-radius:6px;display:block}
+.tag{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;padding:3px 8px;border-radius:3px;display:inline-block}
+.tag.v1{color:#ff5252;background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.2)}
+.tag.v2{color:#76b900;background:rgba(118,185,0,0.1);border:1px solid rgba(118,185,0,0.2)}
+.prompt{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:6px;line-height:1.4}
+@media(max-width:700px){.row{flex-direction:column}}
+</style>
+</head>
+<body>
+<h1>FLUX Render Comparison</h1>
+<div class="sub">v1 (concept art) vs v2 (grounded in reality) — same model, same cost, different prompts</div>
+
+<div class="pair">
+<div class="label">Water Tower</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-water-tower-cooling.jpg" alt="v1"><div class="prompt">Industrial water tower with green LED accent lights, dramatic twilight sky</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-water-tower.jpg" alt="v2"><div class="prompt">Old rusted 1940s industrial water tower, peeling paint, next to weathered brick factory, Louisiana</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Building 3 Interior</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-building3-interior.jpg" alt="v1"><div class="prompt">Large empty industrial warehouse being converted, workers installing cable trays</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-building3-interior.jpg" alt="v2"><div class="prompt">1940s warehouse being renovated, exposed wooden roof trusses, workers running conduit along brick walls</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Server Room / GPU Racks</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-nvl72-server-room.jpg" alt="v1"><div class="prompt">High-tech server room with NVIDIA GPU racks, liquid cooling pipes, dark ambient lighting</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-server-room.jpg" alt="v2"><div class="prompt">GPU racks with green LEDs inside converted old warehouse, exposed wooden trusses above, brick walls</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Campus Aerial</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-campus-aerial-sunset.jpg" alt="v1"><div class="prompt">Four connected industrial buildings, solar panels on every rooftop, warm sunset</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-campus-aerial.jpg" alt="v2"><div class="prompt">Four old brick industrial buildings along Bayou Vermilion, metal rooftops, residential neighborhood nearby</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Solar Panel Installation</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-first-solar-panels.jpg" alt="v1"><div class="prompt">Modern thin-film solar panels being installed on metal roof, American flag patch</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-first-solar.jpg" alt="v2"><div class="prompt">Two workers in hardhats installing thin film panels on standing seam metal roof of old warehouse</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Solar Rooftop Aerial</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-solar-rooftop.jpg" alt="v1"><div class="prompt">Large industrial warehouse with solar panels, Louisiana bayou, golden hour</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-solar-rooftop.jpg" alt="v2"><div class="prompt">1940s red brick warehouse with corrugated metal roof covered in solar panels, flat Louisiana landscape, overcast</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">800V Switchgear Room</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-800v-switchgear.jpg" alt="v1"><div class="prompt">Modern industrial switchgear room, Eaton branded, clean cables, LED lighting</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-switchgear.jpg" alt="v2"><div class="prompt">Eaton switchgear panels inside renovated warehouse, grey cabinets, conduit along old brick wall</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Dry Cooler</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-dry-cooler.jpg" alt="v1"><div class="prompt">Large dry cooler heat exchanger on concrete pad, copper piping, professional infrastructure</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-dry-cooler.jpg" alt="v2"><div class="prompt">Dry cooler unit with fans behind old brick warehouse, copper piping, chain link enclosure, overcast</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Fiber / Network Room</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-fiber-optic.jpg" alt="v1"><div class="prompt">Technician connecting fiber optic cables, green and blue LEDs, organized cable management</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-fiber-room.jpg" alt="v2"><div class="prompt">Network tech connecting fiber patch cables in small telecom room inside converted warehouse</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Operations / War Room</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/adc-team-war-room.jpg" alt="v1"><div class="prompt">Modern command center with multiple large screens, mission control style, cinematic</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-war-room.jpg" alt="v2"><div class="prompt">Small ops center with 3 monitors, inside renovated brick warehouse office, exposed brick, coffee cup</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Riverwalk</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-riverwalk.jpg" alt="v1"><div class="prompt">Riverwalk path, historic brick buildings converted to modern use, golden hour</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-riverwalk.jpg" alt="v2"><div class="prompt">Bayou Vermilion walking path next to old brick cannery, spanish moss on trees, southern charm</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">NVIDIA Partnership Meeting</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/adc-nvidia-partnership.jpg" alt="v1"><div class="prompt">Professional conference room, NVIDIA logo on screen, engineers reviewing blueprints, corporate</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-nvidia-meeting.jpg" alt="v2"><div class="prompt">Engineers in polos around folding table with blueprints inside warehouse under renovation, hardhats on table</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Infrastructure Yard</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-infrastructure-yard.jpg" alt="v1"><div class="prompt">Outdoor concrete pad with generators and switchgear, solar panels on building behind</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-infrastructure-yard.jpg" alt="v2"><div class="prompt">Caterpillar gas generator on concrete pad next to old brick building, switchgear cabinet, chain link fence</div></div>
+</div>
+</div>
+
+<div class="pair">
+<div class="label">Night Exterior</div>
+<div class="row">
+<div class="col"><span class="tag v1">v1 — Concept</span><img src="renders/trappeys-night-exterior.jpg" alt="v1"><div class="prompt">Modern AI facility at night, NVIDIA green accent lighting, warm interior glow</div></div>
+<div class="col"><span class="tag v2">v2 — Grounded</span><img src="renders/v2-trappeys-night.jpg" alt="v2"><div class="prompt">Old brick warehouse at night with warm light from windows, solar barely visible on roofline, street light, moody</div></div>
+</div>
+</div>
+
+<div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);font-size:0.75rem">
+FLUX.1 Schnell via RunPod Hub — $0.003/image — Generated 2026-03-21<br>
+ADC — Advantage Design & Construction — adc3k.com
+</div>
+</body>
+</html>
