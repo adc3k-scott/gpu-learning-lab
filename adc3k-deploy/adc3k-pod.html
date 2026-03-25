@@ -404,6 +404,82 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
   </div>
 </section>
 
+<!-- SECTION: EXTREME CO-DESIGN -->
+<section class="section">
+  <div class="section-label" style="color:#f59e0b"><span style="background:#f59e0b;width:24px;height:1px;display:inline-block"></span> Co-Design</div>
+  <h2>Extreme Co-Design — Configure for Any Mission</h2>
+  <p class="sub">Same container. Same power. Same cooling. What goes inside changes based on what you need.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:32px">
+
+    <!-- Config 1: Full SuperPOD -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s;position:relative">
+      <div style="position:absolute;top:12px;right:16px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:#f59e0b;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);padding:3px 8px;border-radius:3px;letter-spacing:1px">DEFAULT</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C1</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">Full SuperPOD</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">8 compute + 1 network + 1 storage</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">576 <span style="font-size:12px;color:var(--text-dim);font-weight:400">GPUs</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">Maximum AI training and inference. The complete NVIDIA DGX SuperPOD in a box.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Universities, AI labs, enterprise</p>
+    </div>
+
+    <!-- Config 2: Inference Heavy -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C2</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">Inference Heavy</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">10 compute racks, networking external</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">720 <span style="font-size:12px;color:var(--text-dim);font-weight:400">GPUs</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">Maximum tokens per second. Every rack position dedicated to compute.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Token factory, managed inference</p>
+    </div>
+
+    <!-- Config 3: Storage Heavy -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C3</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">Storage Heavy</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">6 compute + 1 network + 3 storage</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">432 <span style="font-size:12px;color:var(--text-dim);font-weight:400">GPUs + massive NVMe</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">When your data is as important as your compute. High-speed shared storage alongside GPU power.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Medical imaging, video processing, data lakes</p>
+    </div>
+
+    <!-- Config 4: CPU Heavy -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C4</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">CPU Heavy</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">4 GPU + 4 CPU + 1 network + 1 storage</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">Mixed <span style="font-size:12px;color:var(--text-dim);font-weight:400">GPU + HPC</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">Training plus traditional HPC in one container. GPU racks for AI, CPU racks for simulation.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Oil and gas simulation, weather modeling</p>
+    </div>
+
+    <!-- Config 5: Edge Inference -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C5</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">Edge Inference</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">2 compute + 1 network + 7 Groq LPU</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">Max TPS <span style="font-size:12px;color:var(--text-dim);font-weight:400">minimum power</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">Maximum inference throughput, minimum power draw. Groq LPUs for real-time token serving.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Autonomous vehicles, robotics, real-time AI</p>
+    </div>
+
+    <!-- Config 6: Hybrid Vendor -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:8px;padding:28px 24px;transition:all 0.3s">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#f59e0b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">C6</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:6px">Hybrid Vendor</h3>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:12px">5 NVIDIA + 3 Terafab + 1 network + 1 storage</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;color:var(--text-white);margin-bottom:8px">Mixed <span style="font-size:12px;color:var(--text-dim);font-weight:400">multi-vendor</span></div>
+      <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">No lock-in. Best-of-breed from multiple silicon vendors in the same container.</p>
+      <p style="font-size:11px;color:var(--text-dim)">Future-proof</p>
+    </div>
+
+  </div>
+
+  <!-- Co-Design Callout -->
+  <div style="background:var(--surface2);border:1px solid rgba(245,158,11,0.3);border-left:3px solid #f59e0b;border-radius:0 12px 12px 0;padding:24px 32px">
+    <p style="font-size:15px;color:var(--text-bright);line-height:1.8">Every configuration uses the same 40-ft container, same 800V DC power, same liquid cooling, same access panels, same solar roof, same AI monitoring. Just swap what goes in the rack positions. <strong style="color:var(--text-white)">Tell us what you need — we configure it.</strong></p>
+  </div>
+</section>
+
 <div class="divider"></div>
 
 <!-- SECTION: INFRASTRUCTURE FOR THE ROBOT AGE -->
