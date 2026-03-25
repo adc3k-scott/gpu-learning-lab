@@ -307,8 +307,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Rate limit — require valid registration fields
+  const data = req.body;
+  if (!data || !data.email || !data.name || !data.organization) {
+    return res.status(400).json({ error: 'Missing required fields: name, email, organization' });
+  }
+
+  // Basic email validation
+  if (!data.email.includes('@') || !data.email.includes('.')) {
+    return res.status(400).json({ error: 'Invalid email address' });
+  }
+
   try {
-    const data = req.body;
     const { report, totalCount, urgentCount } = buildEligibilityReport(data);
 
     const name = data.name || "Registrant";
