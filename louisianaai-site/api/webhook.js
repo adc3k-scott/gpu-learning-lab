@@ -14,8 +14,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Basic origin validation — check for Bland.ai user agent or call_id
+  const data = req.body;
+  if (!data || (!data.call_id && !data.c_id && !data.status)) {
+    return res.status(400).json({ error: 'Invalid payload' });
+  }
+
   try {
-    const data = req.body;
 
     // Extract key fields from Bland webhook payload
     const callId = data.call_id || data.id || 'unknown';

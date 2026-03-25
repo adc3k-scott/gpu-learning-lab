@@ -13,9 +13,16 @@
 let registrations = [];
 
 export default async function handler(req, res) {
+  // AUTH CHECK — require MC_API_KEY for all requests
+  const apiKey = req.headers['x-api-key'] || req.query.api_key;
+  const MC_KEY = process.env.MC_API_KEY;
+
+  if (MC_KEY && apiKey !== MC_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   if (req.method === 'GET') {
-    // Return registration stats
-    // Since in-memory resets, also check Brevo campaign stats
+    // Return registration stats (AUTH REQUIRED)
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
     let brevoStats = null;
@@ -35,7 +42,6 @@ export default async function handler(req, res) {
       registrations_in_memory: registrations.length,
       registrations: registrations,
       brevo_stats: brevoStats,
-      note: 'In-memory store resets on cold start. Check scott@adc3k.com inbox for complete FormSubmit history.',
     });
   }
 
