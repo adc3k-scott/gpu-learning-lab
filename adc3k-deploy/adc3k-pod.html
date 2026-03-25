@@ -121,6 +121,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
   .panel-detail{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
   nav{padding:0 16px}
+  .section [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
 }
 @media(max-width:480px){
   .stat-grid{grid-template-columns:1fr}
@@ -216,7 +217,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <section class="section">
   <div class="section-label">Engineering</div>
   <h2>Layout Blueprint</h2>
-  <p class="sub">Three-view engineering drawing: top, side, and end cross-section. All dimensions verified against NVIDIA NVL72 specifications and standard 40-ft HC container geometry.</p>
+  <p class="sub">Three-view engineering drawing: top, side, and end cross-section. All dimensions verified against NVIDIA NVL72 specifications and standard 40-ft HC container geometry. Solar roof panel array shown in top view -- 320 sq ft of First Solar panels provide shade and power for all internal support systems.</p>
   <div class="blueprint-wrap">
     <object data="/blueprints/adc3k-pod-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
       <img src="/blueprints/adc3k-pod-layout.svg" alt="ADC 3K Pod Blueprint - Three View Layout">
@@ -338,6 +339,114 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
       <h4>Solar Supplement</h4>
       <p>Ground-mount or carport solar array as offset. 800V DC solar-direct architecture for maximum efficiency. Reduces generator runtime.</p>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 100% AI-MANAGED CALLOUT -->
+<section class="section" style="text-align:center">
+  <div style="background:linear-gradient(135deg,rgba(0,232,122,0.08),rgba(59,158,255,0.06));border:1px solid var(--accent);border-radius:16px;padding:48px 40px;max-width:900px;margin:0 auto">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px">ZERO ON-SITE STAFF</div>
+    <h2 style="font-size:32px;font-weight:700;color:var(--text-white);margin-bottom:16px">100% AI-Managed</h2>
+    <p style="font-size:16px;color:var(--text);line-height:1.7;max-width:650px;margin:0 auto">Mission Control AI monitors and manages every pod remotely. Thermal, power, network, workload -- all autonomous. Add a pod -- it joins the cluster. Remove a pod -- workloads redistribute. No technician required for daily operations.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION: ENVIRONMENTAL ENGINEERING -->
+<section class="section">
+  <div class="section-label">Environmental Engineering</div>
+  <h2>Engineered for Louisiana -- Built for Anywhere</h2>
+  <p class="sub">Most companies design for a server room. We design for 95 F and 90% humidity.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="font-size:28px;opacity:0.25">&#x2744;</div>
+      <h3>Liquid Cooling Loop</h3>
+      <p>CDU inside connects to external dry cooler via quick-disconnect. 45 C supply, 55-60 C return. Adiabatic assist for peak Louisiana summer. Near water? Water-to-water heat exchanger option. All GPU heat exits the container -- zero heat buildup inside.</p>
+    </div>
+    <div class="step">
+      <div class="step-num" style="font-size:28px;opacity:0.25">&#x1F4A7;</div>
+      <h3>Humidity Control</h3>
+      <p>Desiccant dehumidifier strips moisture without cooling. Positive pressure blower keeps humid air out. Sealed container when panels closed. No air conditioning needed -- ASHRAE A1 rated. Control humidity, not temperature. This is the engineering nobody else does because they've never built in the Gulf.</p>
+    </div>
+    <div class="step">
+      <div class="step-num" style="font-size:28px;opacity:0.25">&#x2600;</div>
+      <h3>Solar Roof</h3>
+      <p>320 sq ft of First Solar panels on the container roof. Dual purpose: shade blocks direct sun (reduces internal temp 10-15 F), power runs all internal support systems (dehumidifier, lights, monitoring, blower). Peak solar coincides with peak heat. DC-direct into the 800V bus. The sun works for you, not against you.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION: EXPANDABLE NETWORK -->
+<section class="section">
+  <div class="section-label">Scale</div>
+  <h2>One Pod is a Start. The Network is the Product.</h2>
+  <p class="sub">Every pod is a node. Add more. The network grows.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Expand in Any Direction</h3>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Start with 1 pod (720 GPUs). Add pods as demand grows. North-south expansion adds pods in a row. East-west expansion adds rows. Scale from a single site to a campus without redesigning anything.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Shared cooling, shared power, shared monitoring. One dry cooler serves 2-3 pods. One generator powers 2-3 pods. Infrastructure scales with compute.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
+      <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Self-Organizing Fleet</h3>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Every pod auto-registers with Mission Control. AI manages the fleet. Workloads distribute automatically. Health monitoring, power balancing, thermal management -- all centralized, all autonomous.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">One pod is an AI factory. Ten pods is an AI campus. A hundred pods is a national inference network.</p>
+    </div>
+  </div>
+  <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 12px 12px 0;padding:24px 32px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Chip-Agnostic Architecture</div>
+    <p style="font-size:15px;color:var(--text-bright);line-height:1.7">800V DC + liquid cooling is chip-agnostic. NVIDIA today. Terafab tomorrow. AMD if needed. Same container. Same power. Same cooling. Swap the racks.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION: INFRASTRUCTURE FOR THE ROBOT AGE -->
+<section class="section">
+  <div class="section-label">The Future</div>
+  <h2>The Autonomous Future Needs Infrastructure</h2>
+  <p class="sub">Every hospital. Every university. Every city. They all need local AI compute.</p>
+  <div class="deploy-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+    <div class="deploy-card">
+      <h4>Hospitals</h4>
+      <p>AI diagnostics run locally. Patient data never leaves the facility. Real-time imaging analysis, drug interaction screening, predictive patient monitoring.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Universities</h4>
+      <p>GPU access for research and teaching. Zero to hero. Deploy a pod on campus, give every student and researcher access to real compute.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Oil Fields</h4>
+      <p>Autonomous operations. Natural gas power on-site. Zero grid dependency. Seismic processing, drilling optimization, predictive maintenance at the wellhead.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Military / Defense</h4>
+      <p>Classified edge compute. Air-gapped. Self-powered. Tactical AI where it's needed, when it's needed. Relocatable on standard transport.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Smart Cities</h4>
+      <p>Traffic AI, autonomous vehicle support, public safety. Real-time video analytics. City-scale digital twins. The infrastructure backbone for intelligent municipal operations.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Emergency Response</h4>
+      <p>Trailer-mounted, rapid deploy, hurricane-ready. Drone imagery processing, communications hub, disaster coordination AI. Hours from warehouse to operational.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Factories</h4>
+      <p>Robot control, digital twin, real-time quality inspection. Local inference for production lines. No cloud latency. No dependency on external connectivity.</p>
+    </div>
+    <div class="deploy-card">
+      <h4>Charging Hubs</h4>
+      <p>Solar-powered EV + drone charging alongside AI compute. Shared 800V DC power architecture. Energy storage integration. Multi-purpose infrastructure.</p>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:32px;margin-top:32px;text-align:center">
+    <p style="font-size:17px;color:var(--text-bright);line-height:1.8;max-width:800px;margin:0 auto">The robot age is coming. Autonomous cars, factory robots, AI diagnostics, drone networks -- they all need local inference. The cloud is too far away. The ADC 3K pod puts compute where it's needed. <strong style="color:var(--text-white)">Built in Louisiana. Deployed anywhere.</strong></p>
   </div>
 </section>
 
