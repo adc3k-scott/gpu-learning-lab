@@ -878,3 +878,106 @@ AI alerts: if ambient approaches 45°C, if humidity exceeds 60% RH, if any compo
 AI acts: can throttle GPU power to reduce heat generation as last resort.
 
 No human needed. Ever. Unless something physically breaks.
+
+---
+
+## 9. SENSOR PACKAGE — AI MONITORING
+
+### 9.1 Environmental Sensors
+| Sensor | Quantity | Location | Purpose |
+|--------|----------|----------|---------|
+| Temperature (internal) | 4 | Each end + each side, mid-height | Ambient monitoring |
+| Temperature (external) | 1 | Outside container, shaded | Ambient reference |
+| Humidity (internal) | 2 | Intake + exhaust | Moisture control |
+| Solar irradiance | 1 | Roof-mounted | Solar output tracking |
+
+### 9.2 Per-Rack Sensors (x10 racks)
+| Sensor | Per Rack | Total | Purpose |
+|--------|----------|-------|---------|
+| Coolant inlet temp | 1 | 10 | Cooling performance |
+| Coolant outlet temp | 1 | 10 | Heat rejection monitoring |
+| Coolant flow rate | 1 | 10 | Flow verification |
+| Power draw | 1 (via Eaton PDU) | 10 | Per-rack power monitoring |
+
+### 9.3 System Sensors
+| Sensor | Quantity | Purpose |
+|--------|----------|---------|
+| CDU supply/return temp | 2 | Cooling loop health |
+| CDU flow rate | 1 | System flow verification |
+| Dehumidifier status | 1 | Humidity control |
+| Exhaust fan RPM | 1-2 | Ventilation monitoring |
+| 800V DC bus voltage | 1 | Power quality |
+| Solar panel output (W) | 1 | Generation tracking |
+| Generator status | 1 | External power monitoring |
+| UPS/battery SOC | 1 | Backup power status |
+
+### 9.4 Security Sensors
+| Sensor | Quantity | Purpose |
+|--------|----------|---------|
+| Cameras (wide angle, IR) | 2 | Each end, interior monitoring |
+| Access panel open sensors | 8 | Tamper/access detection |
+| Door open sensor | 1 | Main entry |
+| Vibration/tamper | 1 | Physical security |
+| GPS | 1 | Location tracking (mobile deploy) |
+
+### 9.5 Network Monitoring
+| Metric | Method | Purpose |
+|--------|--------|---------|
+| Per-rack latency | Software | Performance monitoring |
+| Bandwidth utilization | Software | Capacity planning |
+| Mission Control heartbeat | Software | NOC connectivity |
+
+### 9.6 Total Sensor Count: ~65 sensors per pod
+
+### 9.7 AI Autonomous Responses
+| Condition | AI Action |
+|-----------|-----------|
+| Night / low ambient | Fans to low, solar to battery, cooling reduced |
+| Day / peak heat | Solar kicks in, fans ramp up, dehumidifier full |
+| Temp approaching 45°C | Increase cooling flow, alert NOC |
+| Temp exceeding 45°C | Throttle GPU power (last resort) |
+| Humidity spike | Dehumidifier full power, positive pressure increase |
+| Access panel opened | Camera alert, log event, notify NOC |
+| Coolant leak (flow drop) | Isolate affected rack, alert immediately |
+| Power loss | Battery bridge, graceful workload shutdown |
+| Network loss to NOC | Continue autonomous operation, retry connection |
+
+---
+
+## 10. CABLE ROUTING — FLOOR LEVEL
+
+### 10.1 Design Decision: Floor-Level, NOT Overhead
+- No cable trays above racks (rack height may be 90-98 in, ceiling is 106 in)
+- Nothing directly over racks — keep ceiling clear for rack removal
+- All cabling runs on container floor along both sides
+- Metal conduit or enclosed cable tray
+- Optional grating over cables for foot access
+- Everything visible and accessible through side access panels
+- No humans in there regularly — AI monitored
+
+### 10.2 Cable Routing Layout
+```
+[SIDE WALL — 4 access panels]
+[Floor cable tray: power + network + cooling pipes]
+[R1] [R2] [R3] [R4] [R5] [R6] [R7] [R8] [R9] [R10]
+[Floor cable tray: power + network + cooling pipes]
+[SIDE WALL — 4 access panels]
+```
+
+### 10.3 Cable Types on Floor
+| Run | Type | Path | Notes |
+|-----|------|------|-------|
+| 800V DC power | Heavy gauge, metal conduit | Electrical end → each rack | Eaton busway or armored cable |
+| InfiniBand | Copper, short runs | Rack to rack, rack to R9 (network) | Keep short for latency |
+| Ethernet management | Cat6A | Each rack to R9 (network) | Standard patch cables |
+| Cooling supply | Insulated pipe | CDU end → each rack manifold | 45°C supply |
+| Cooling return | Insulated pipe | Each rack manifold → CDU end | 55-60°C return |
+| Sensor wiring | Low voltage | Along floor to sensor controller | Can be wireless for some |
+
+### 10.4 Why Floor-Level Works
+- Nobody walks in there — AI managed, no human occupancy
+- All service done from OUTSIDE through access panels
+- Shorter cable runs than overhead (connections are at rack base/rear)
+- Everything in line of sight through panels
+- If someone needs to enter: grating provides walkway over cables
+- Rack removal: nothing overhead blocking crane/forklift access
