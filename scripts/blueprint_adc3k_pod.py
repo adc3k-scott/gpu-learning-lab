@@ -1,616 +1,1036 @@
+#!/usr/bin/env python3
+"""ADC 3K Pod — 40-ft AI Compute Module Blueprint (P-001 Rev B)
+4-view engineering drawing: Top, Side, End, Schematic.
+Output: adc3k-deploy/blueprints/adc3k-pod-layout.svg
 """
-ADC 3K Pod — 40-ft Compute Module Blueprint
-THREE views: Top, Side, End
-10x NVL72 racks in 40-ft HC ISO container
-Engineering data from data/adc3k-pod-engineering.md
-"""
+
 import svgwrite
-import os
+from pathlib import Path
 
-W, H = 1800, 1300
-OUT = "adc3k-deploy/blueprints/adc3k-pod-layout.svg"
-
-# Colors
+# --- Colors ---
 BG = "#0a0b0f"
-PANEL_BG = "#0d0d12"
-ZONE_BG = "#111318"
-BORDER = "#1e2230"
-ACCENT = "#00e87a"  # ADC 3K green
-BLUE = "#3b9eff"
-PURPLE = "#a855f7"
-CYAN = "#4fc3f7"
-RED = "#ff6b6b"
-DIM_COLOR = "#555"
-DIM_TEXT = "#888"
-NOTE_COLOR = "#4b5563"
-LABEL_COLOR = "#9ca3af"
-
-# Container internal dimensions (inches)
-CONT_L_IN = 473.7   # 39 ft 5.4 in
-CONT_W_IN = 92.6    # 7 ft 8.6 in
-CONT_H_IN = 106.2   # 8 ft 10 in
-
-# NVL72 rack dimensions (inches)
-RACK_W_IN = 23.6     # width (across container)
-RACK_D_IN = 42.0     # depth (along container length... but rack faces aisles)
-RACK_H_IN = 88.0     # height (Supermicro)
-
-# Layout zones (inches) - revised layout from engineering doc
-ENTRY_IN = 36        # 3 ft entry zone at door end
-ELEC_IN = 42         # 3.5 ft electrical panel
-RACK_ZONE_IN = 276   # 10 racks x 24in + 9 gaps x 4in
-PATCH_IN = 36        # 3 ft patch panel
-CDU_IN = 72          # 6 ft CDU zone
-
-# Side clearance
-SIDE_CLEAR_IN = 25.3  # each side
-
-# Overhead clearance
-OVERHEAD_IN = 18.2    # above racks to ceiling
-
-# Access panels (user spec: 8 panels, 4 per side)
-AP_COUNT_PER_SIDE = 4
-AP_WIDTH_IN = 96      # ~8 ft wide each
-AP_HEIGHT_IN = 90     # ~7.5 ft tall
-
-
-def dim_h(dwg, x1, x2, y, label, offset=16):
-    """Horizontal dimension line."""
-    dy = y + offset
-    dwg.add(dwg.line((x1, dy), (x2, dy), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.line((x1, dy - 4), (x1, dy + 4), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.line((x2, dy - 4), (x2, dy + 4), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.text(label, insert=((x1 + x2) / 2, dy - 3), text_anchor="middle",
-                     fill=DIM_TEXT, font_size=6.5, font_family="Arial"))
-
-
-def dim_v(dwg, x, y1, y2, label, offset=16):
-    """Vertical dimension line."""
-    dx = x + offset
-    dwg.add(dwg.line((dx, y1), (dx, y2), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.line((dx - 4, y1), (dx + 4, y1), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.line((dx - 4, y2), (dx + 4, y2), stroke=DIM_COLOR, stroke_width=0.5))
-    dwg.add(dwg.text(label, insert=(dx + 5, (y1 + y2) / 2 + 3), fill=DIM_TEXT,
-                     font_size=6.5, font_family="Arial"))
-
-
-def box(dwg, x, y, w, h, label="", color=ZONE_BG, border=ACCENT,
-        text_color="#e0e0e0", font=8):
-    """Draw a labeled rectangle."""
-    dwg.add(dwg.rect((x, y), (w, h), fill=color, stroke=border, stroke_width=1))
-    if label:
-        lines = label.split("\n")
-        for i, line in enumerate(lines):
-            ty = y + h / 2 - (len(lines) - 1) * 6 + i * 12
-            weight = "bold" if i == 0 else "normal"
-            dwg.add(dwg.text(line, insert=(x + w / 2, ty), text_anchor="middle",
-                             fill=text_color, font_size=font, font_family="Arial",
-                             font_weight=weight))
-
-
-def draw_top_view(dwg, ox, oy):
-    """VIEW 1: Top view looking down at the container."""
-    # Scale: 1 inch = 1.1 px for top view
-    S = 1.1
-
-    def si(v):
-        return v * S
-
-    view_w = si(CONT_L_IN)
-    view_h = si(CONT_W_IN)
-
-    # View panel background
-    pad = 30
-    dwg.add(dwg.rect((ox - pad, oy - 40), (view_w + pad * 2 + 80, view_h + pad + 70),
-                     rx=6, fill=ZONE_BG, stroke=BORDER))
-
-    # View title
-    dwg.add(dwg.text("VIEW 1 — TOP VIEW (LOOKING DOWN)", insert=(ox + view_w / 2, oy - 22),
-                     text_anchor="middle", fill=ACCENT, font_size=11,
-                     font_family="Arial", font_weight="bold"))
-
-    # Container outline
-    dwg.add(dwg.rect((ox, oy), (view_w, view_h), fill=PANEL_BG, stroke=ACCENT, stroke_width=2))
-
-    # Door opening at left (entry end)
-    door_w = si(8)
-    door_y = oy + view_h / 2 - si(4)
-    dwg.add(dwg.rect((ox - 3, door_y), (6, si(8)), fill=ACCENT, rx=2))
-    dwg.add(dwg.text("DOOR", insert=(ox - 10, door_y + si(4) + 3),
-                     fill=ACCENT, font_size=5, font_family="Arial",
-                     text_anchor="middle",
-                     transform=f"rotate(-90,{ox - 10},{door_y + si(4) + 3})"))
-
-    # Zone boundaries (vertical lines along container length)
-    zones = [
-        ("ENTRY\n3'-0\"", ENTRY_IN, "#2a3a2a", ACCENT),
-        ("ELEC PANEL\n3'-6\"", ELEC_IN, "#1a1a2e", PURPLE),
-    ]
-
-    cx = ox  # current x position
-
-    # Entry zone
-    ez_w = si(ENTRY_IN)
-    box(dwg, cx + 1, oy + 1, ez_w - 1, view_h - 2,
-        "ENTRY\n3'-0\"", color="#0a1a0a", border="#1a3a1a", text_color=ACCENT, font=6)
-    cx += ez_w
-
-    # Electrical panel zone
-    ep_w = si(ELEC_IN)
-    box(dwg, cx, oy + 1, ep_w, view_h - 2,
-        "ELEC PANEL\nEATON 800V DC\n3'-6\"", color="#1a0a2e", border=PURPLE, text_color="#c4b5fd", font=6)
-    cx += ep_w
-
-    # Rack zone
-    rz_w = si(RACK_ZONE_IN)
-    rack_zone_x = cx
-
-    # Draw racks: 10 racks centered in container width
-    # Rack depth faces the sides (across container width = RACK_D_IN)
-    # Rack width goes along container length = RACK_W_IN
-    rack_across = si(RACK_D_IN)  # across container (depth)
-    rack_along = si(RACK_W_IN)   # along container (width)
-    rack_cy = oy + view_h / 2    # center Y of container
-
-    rack_top_y = rack_cy - rack_across / 2
-    gap_px = si(4)  # 4-inch gaps
-
-    # Rack colors
-    COMPUTE_COLOR = "#0a2010"
-    COMPUTE_BORDER = ACCENT
-    NET_COLOR = "#0a1628"
-    NET_BORDER = BLUE
-    STOR_COLOR = "#1a0a2e"
-    STOR_BORDER = PURPLE
-
-    rack_types = [
-        ("R1", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R2", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R3", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R4", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R5", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R6", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R7", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R8", "COMPUTE", COMPUTE_COLOR, COMPUTE_BORDER),
-        ("R9", "NET", NET_COLOR, NET_BORDER),
-        ("R10", "STOR", STOR_COLOR, STOR_BORDER),
-    ]
-
-    rx = rack_zone_x
-    for i, (name, rtype, rcolor, rborder) in enumerate(rack_types):
-        # Draw rack rectangle
-        dwg.add(dwg.rect((rx, rack_top_y), (rack_along, rack_across),
-                         fill=rcolor, stroke=rborder, stroke_width=1.2, rx=2))
-        # Rack label
-        dwg.add(dwg.text(name, insert=(rx + rack_along / 2, rack_cy + 3),
-                         text_anchor="middle", fill=rborder, font_size=7,
-                         font_family="Arial", font_weight="bold"))
-        rx += rack_along + gap_px
-
-    cx = rack_zone_x + rz_w
-
-    # Patch panel zone
-    pp_w = si(PATCH_IN)
-    box(dwg, cx, oy + 1, pp_w, view_h - 2,
-        "PATCH\nPANEL\n3'-0\"", color="#0a1628", border=CYAN, text_color=CYAN, font=6)
-    cx += pp_w
-
-    # CDU zone
-    cdu_w = si(CDU_IN)
-    box(dwg, cx, oy + 1, cdu_w - 1, view_h - 2,
-        "CDU ZONE\n6'-0\"\nPrimary + Redundant\n250 kW each", color="#0a1628", border=CYAN, text_color=CYAN, font=6)
-
-    # Cooling pipe stubs at closed end
-    dwg.add(dwg.line((ox + view_w, oy + view_h * 0.3), (ox + view_w + 15, oy + view_h * 0.3),
-                     stroke=CYAN, stroke_width=2))
-    dwg.add(dwg.text("SUPPLY 45C", insert=(ox + view_w + 18, oy + view_h * 0.3 + 3),
-                     fill=CYAN, font_size=5, font_family="Arial"))
-    dwg.add(dwg.line((ox + view_w, oy + view_h * 0.7), (ox + view_w + 15, oy + view_h * 0.7),
-                     stroke=RED, stroke_width=2))
-    dwg.add(dwg.text("RETURN 55-65C", insert=(ox + view_w + 18, oy + view_h * 0.7 + 3),
-                     fill=RED, font_size=5, font_family="Arial"))
-
-    # Power entry at door end
-    dwg.add(dwg.line((ox, oy + view_h * 0.85), (ox - 15, oy + view_h * 0.85),
-                     stroke=PURPLE, stroke_width=2))
-    dwg.add(dwg.text("800V DC IN", insert=(ox - 18, oy + view_h * 0.85 + 3),
-                     fill=PURPLE, font_size=5, font_family="Arial", text_anchor="end"))
-
-    # Access panels (dashed lines on both long walls) - 4 per side
-    # Panels span the rack zone area: 32 ft of panels, 8 ft structural at ends
-    panel_zone_start = rack_zone_x  # panels start at rack zone
-    panel_zone_end = rack_zone_x + rz_w  # panels end at rack zone
-    panel_total_w = panel_zone_end - panel_zone_start
-    single_panel_w = panel_total_w / AP_COUNT_PER_SIDE
-
-    for i in range(AP_COUNT_PER_SIDE):
-        px1 = panel_zone_start + i * single_panel_w + 2
-        px2 = px1 + single_panel_w - 4
-        # Top wall panels
-        dwg.add(dwg.line((px1, oy), (px2, oy),
-                         stroke=ACCENT, stroke_width=2, stroke_dasharray="6,3"))
-        dwg.add(dwg.text(f"AP-{i+1}", insert=((px1 + px2) / 2, oy - 5),
-                         text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial"))
-        # Bottom wall panels
-        dwg.add(dwg.line((px1, oy + view_h), (px2, oy + view_h),
-                         stroke=ACCENT, stroke_width=2, stroke_dasharray="6,3"))
-        dwg.add(dwg.text(f"AP-{i+5}", insert=((px1 + px2) / 2, oy + view_h + 10),
-                         text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial"))
-
-    # Side clearance labels
-    clr_x = rack_zone_x + rz_w / 2
-    dwg.add(dwg.text("25.3\" CLR", insert=(clr_x, oy + 10),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=5.5, font_family="Arial"))
-    dwg.add(dwg.text("25.3\" CLR", insert=(clr_x, oy + view_h - 5),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=5.5, font_family="Arial"))
-
-    # Dimension lines
-    # Overall length
-    dim_h(dwg, ox, ox + view_w, oy + view_h, "39'-5\" (12,032 mm)", 22)
-    # Overall width (vertical)
-    dim_v(dwg, ox + view_w, oy, oy + view_h, "7'-8\" (2,352 mm)", 60)
-
-    # Zone dimensions along top
-    zx = ox
-    dim_h(dwg, zx, zx + si(ENTRY_IN), oy, "3'-0\"", -14)
-    zx += si(ENTRY_IN)
-    dim_h(dwg, zx, zx + si(ELEC_IN), oy, "3'-6\"", -14)
-    zx += si(ELEC_IN)
-    dim_h(dwg, zx, zx + si(RACK_ZONE_IN), oy, "23'-0\" RACK ZONE (10 racks + 9 gaps @ 4\")", -14)
-    zx += si(RACK_ZONE_IN)
-    dim_h(dwg, zx, zx + si(PATCH_IN), oy, "3'-0\"", -14)
-    zx += si(PATCH_IN)
-    dim_h(dwg, zx, zx + si(CDU_IN), oy, "6'-0\"", -14)
-
-
-def draw_side_view(dwg, ox, oy):
-    """VIEW 2: Side view (looking at long wall)."""
-    # Scale for side view: length is long, height is shorter
-    SL = 1.1   # length scale (same as top)
-    SH = 3.5   # height scale (amplified for visibility)
-
-    view_w = CONT_L_IN * SL
-    view_h = CONT_H_IN * SH
-
-    # View panel background
-    pad = 30
-    dwg.add(dwg.rect((ox - pad, oy - 40), (view_w + pad * 2 + 80, view_h + pad + 60),
-                     rx=6, fill=ZONE_BG, stroke=BORDER))
-
-    # View title
-    dwg.add(dwg.text("VIEW 2 — SIDE VIEW (LOOKING AT LONG WALL)", insert=(ox + view_w / 2, oy - 22),
-                     text_anchor="middle", fill=ACCENT, font_size=11,
-                     font_family="Arial", font_weight="bold"))
-
-    # Container outline
-    dwg.add(dwg.rect((ox, oy), (view_w, view_h), fill=PANEL_BG, stroke=ACCENT, stroke_width=2))
-
-    # Floor line
-    floor_y = oy + view_h
-    dwg.add(dwg.line((ox - 10, floor_y + 3), (ox + view_w + 10, floor_y + 3),
-                     stroke="#4b5563", stroke_width=2))
-    dwg.add(dwg.text("CONCRETE PAD", insert=(ox + view_w / 2, floor_y + 14),
-                     text_anchor="middle", fill="#4b5563", font_size=6, font_family="Arial"))
-
-    # Racks visible inside (starting after entry + elec zones)
-    rack_start_x = ox + (ENTRY_IN + ELEC_IN) * SL
-    rack_h = RACK_H_IN * SH
-    rack_bottom = floor_y
-    rack_top = rack_bottom - rack_h
-
-    # Cable tray above racks
-    cable_tray_h = 8
-    cable_tray_y = rack_top - 10
-    cable_tray_x1 = rack_start_x - 10
-    cable_tray_x2 = rack_start_x + RACK_ZONE_IN * SL + 10
-    dwg.add(dwg.rect((cable_tray_x1, cable_tray_y), (cable_tray_x2 - cable_tray_x1, cable_tray_h),
-                     fill="none", stroke=PURPLE, stroke_width=1, stroke_dasharray="4,2"))
-    dwg.add(dwg.text("CABLE TRAY (800V DC + FIBER)", insert=((cable_tray_x1 + cable_tray_x2) / 2, cable_tray_y - 3),
-                     text_anchor="middle", fill=PURPLE, font_size=5, font_family="Arial"))
-
-    # Overhead clearance dimension
-    dim_v(dwg, cable_tray_x2 + 5, oy, rack_top, "18.2\" CLR", 5)
-
-    # Draw racks as rectangles
-    rack_w_px = RACK_W_IN * SL
-    gap_px = 4 * SL
-    rx = rack_start_x
-    rack_types = [
-        ("R1", ACCENT), ("R2", ACCENT), ("R3", ACCENT), ("R4", ACCENT),
-        ("R5", ACCENT), ("R6", ACCENT), ("R7", ACCENT), ("R8", ACCENT),
-        ("R9", BLUE), ("R10", PURPLE),
-    ]
-    for name, color in rack_types:
-        dwg.add(dwg.rect((rx, rack_top), (rack_w_px, rack_h),
-                         fill="#0a1a0a" if color == ACCENT else "#0a1628" if color == BLUE else "#1a0a2e",
-                         stroke=color, stroke_width=1, rx=1))
-        dwg.add(dwg.text(name, insert=(rx + rack_w_px / 2, rack_top + rack_h / 2 + 3),
-                         text_anchor="middle", fill=color, font_size=6,
-                         font_family="Arial", font_weight="bold"))
-        rx += rack_w_px + gap_px
-
-    # Electrical panel at door end
-    ep_x = ox + ENTRY_IN * SL
-    ep_w = ELEC_IN * SL
-    ep_h = rack_h * 0.7
-    dwg.add(dwg.rect((ep_x, rack_bottom - ep_h), (ep_w, ep_h),
-                     fill="#1a0a2e", stroke=PURPLE, stroke_width=1))
-    dwg.add(dwg.text("ELEC", insert=(ep_x + ep_w / 2, rack_bottom - ep_h / 2 + 3),
-                     text_anchor="middle", fill=PURPLE, font_size=6, font_family="Arial", font_weight="bold"))
-
-    # CDU at closed end
-    cdu_x = ox + (ENTRY_IN + ELEC_IN + RACK_ZONE_IN + PATCH_IN) * SL
-    cdu_w = CDU_IN * SL
-    cdu_h = rack_h * 0.6
-    dwg.add(dwg.rect((cdu_x, rack_bottom - cdu_h), (cdu_w, cdu_h),
-                     fill="#0a1628", stroke=CYAN, stroke_width=1))
-    dwg.add(dwg.text("CDU", insert=(cdu_x + cdu_w / 2, rack_bottom - cdu_h / 2 + 3),
-                     text_anchor="middle", fill=CYAN, font_size=7, font_family="Arial", font_weight="bold"))
-
-    # External connections at CDU end
-    dwg.add(dwg.line((ox + view_w, rack_bottom - cdu_h * 0.3), (ox + view_w + 20, rack_bottom - cdu_h * 0.3 - 10),
-                     stroke=CYAN, stroke_width=1.5))
-    dwg.add(dwg.text("DRY COOLER", insert=(ox + view_w + 22, rack_bottom - cdu_h * 0.3 - 8),
-                     fill=CYAN, font_size=5, font_family="Arial"))
-
-    # Power connection at door end
-    dwg.add(dwg.line((ox, rack_bottom - ep_h * 0.5), (ox - 20, rack_bottom - ep_h * 0.5 - 10),
-                     stroke=PURPLE, stroke_width=1.5))
-    dwg.add(dwg.text("800V DC POWER", insert=(ox - 22, rack_bottom - ep_h * 0.5 - 8),
-                     fill=PURPLE, font_size=5, font_family="Arial", text_anchor="end"))
-
-    # Access panels (4 on this side, shown as dashed outlines)
-    panel_start_x = rack_start_x
-    panel_zone_w = RACK_ZONE_IN * SL
-    single_panel_w = panel_zone_w / AP_COUNT_PER_SIDE
-    panel_h = AP_HEIGHT_IN * SH
-    panel_bottom = floor_y
-    panel_top = panel_bottom - panel_h
-
-    for i in range(AP_COUNT_PER_SIDE):
-        px = panel_start_x + i * single_panel_w + 3
-        pw = single_panel_w - 6
-        # Panel outline (dashed)
-        dwg.add(dwg.rect((px, panel_top), (pw, panel_h),
-                         fill="none", stroke=ACCENT, stroke_width=1, stroke_dasharray="4,3", rx=2))
-        # Hinge at top
-        dwg.add(dwg.line((px + 5, panel_top), (px + pw - 5, panel_top),
-                         stroke=ACCENT, stroke_width=2))
-        dwg.add(dwg.text(f"AP-{i+1}", insert=(px + pw / 2, panel_top + panel_h / 2),
-                         text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial"))
-        dwg.add(dwg.text("TOP-HINGED", insert=(px + pw / 2, panel_top + panel_h / 2 + 8),
-                         text_anchor="middle", fill="#555", font_size=4, font_family="Arial"))
-
-    # LED lighting indicators
-    for lx in [rack_start_x + 50, rack_start_x + RACK_ZONE_IN * SL / 2, rack_start_x + RACK_ZONE_IN * SL - 50]:
-        dwg.add(dwg.circle((lx, oy + 8), r=3, fill="#fbbf24", stroke="none", opacity=0.6))
-        dwg.add(dwg.text("LED", insert=(lx, oy + 18), text_anchor="middle",
-                         fill="#fbbf24", font_size=4, font_family="Arial"))
-
-    # Dimensions
-    dim_h(dwg, ox, ox + view_w, floor_y, "39'-5\" (40-FT HC CONTAINER)", 20)
-    dim_v(dwg, ox + view_w, oy, floor_y, "8'-10\" INT HEIGHT", 60)
-    # Rack height
-    dim_v(dwg, rack_start_x - 15, rack_top, rack_bottom, "88\" RACK", -20)
-
-
-def draw_end_view(dwg, ox, oy):
-    """VIEW 3: End view (looking through door toward racks)."""
-    # Scale for end view: width and height both visible
-    SE = 3.5   # scale factor
-
-    view_w = CONT_W_IN * SE
-    view_h = CONT_H_IN * SE
-
-    # View panel background
-    pad = 30
-    dwg.add(dwg.rect((ox - pad, oy - 40), (view_w + pad * 2 + 60, view_h + pad + 60),
-                     rx=6, fill=ZONE_BG, stroke=BORDER))
-
-    # View title
-    dwg.add(dwg.text("VIEW 3 — END VIEW (THROUGH DOOR)", insert=(ox + view_w / 2, oy - 22),
-                     text_anchor="middle", fill=ACCENT, font_size=11,
-                     font_family="Arial", font_weight="bold"))
-
-    # Container cross-section outline
-    dwg.add(dwg.rect((ox, oy), (view_w, view_h), fill=PANEL_BG, stroke=ACCENT, stroke_width=2))
-
-    # Floor
-    floor_y = oy + view_h
-    dwg.add(dwg.line((ox - 10, floor_y + 3), (ox + view_w + 10, floor_y + 3),
-                     stroke="#4b5563", stroke_width=2))
-    dwg.add(dwg.text("STEEL CORRUGATED FLOOR + SPREADER PLATES", insert=(ox + view_w / 2, floor_y + 14),
-                     text_anchor="middle", fill="#4b5563", font_size=5, font_family="Arial"))
-
-    # Rack centered in cross-section
-    rack_w_px = RACK_D_IN * SE   # depth faces us in end view
-    rack_h_px = RACK_H_IN * SE
-    rack_narrow_px = RACK_W_IN * SE  # width (into the screen)
-
-    rack_cx = ox + view_w / 2
-    rack_left = rack_cx - rack_w_px / 2
-    rack_bottom = floor_y
-    rack_top = rack_bottom - rack_h_px
-
-    # Rack body
-    dwg.add(dwg.rect((rack_left, rack_top), (rack_w_px, rack_h_px),
-                     fill="#0a2010", stroke=ACCENT, stroke_width=1.5, rx=3))
-
-    # Rack internal detail lines (compute trays)
-    tray_count = 9
-    for i in range(tray_count):
-        ty = rack_top + (i + 1) * rack_h_px / (tray_count + 1)
-        dwg.add(dwg.line((rack_left + 5, ty), (rack_left + rack_w_px - 5, ty),
-                         stroke=ACCENT, stroke_width=0.3, opacity=0.4))
-
-    # Rack label
-    dwg.add(dwg.text("NVL72 RACK", insert=(rack_cx, rack_top + rack_h_px / 2 - 8),
-                     text_anchor="middle", fill=ACCENT, font_size=8,
-                     font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text("42\" DEEP x 23.6\" WIDE", insert=(rack_cx, rack_top + rack_h_px / 2 + 4),
-                     text_anchor="middle", fill=LABEL_COLOR, font_size=6, font_family="Arial"))
-    dwg.add(dwg.text("88\" TALL / 48U", insert=(rack_cx, rack_top + rack_h_px / 2 + 14),
-                     text_anchor="middle", fill=LABEL_COLOR, font_size=6, font_family="Arial"))
-
-    # Side clearances
-    left_clear = rack_left - ox
-    right_clear = (ox + view_w) - (rack_left + rack_w_px)
-
-    # Left clearance shading
-    dwg.add(dwg.rect((ox + 2, rack_top), (left_clear - 4, rack_h_px),
-                     fill="none", stroke=DIM_COLOR, stroke_width=0.5, stroke_dasharray="3,3"))
-    dwg.add(dwg.text("25.3\"", insert=(ox + left_clear / 2, rack_top + rack_h_px / 2),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=7, font_family="Arial"))
-    dwg.add(dwg.text("CLR", insert=(ox + left_clear / 2, rack_top + rack_h_px / 2 + 10),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=6, font_family="Arial"))
-
-    # Right clearance
-    dwg.add(dwg.rect((rack_left + rack_w_px + 2, rack_top), (right_clear - 4, rack_h_px),
-                     fill="none", stroke=DIM_COLOR, stroke_width=0.5, stroke_dasharray="3,3"))
-    rc_cx = rack_left + rack_w_px + right_clear / 2
-    dwg.add(dwg.text("25.3\"", insert=(rc_cx, rack_top + rack_h_px / 2),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=7, font_family="Arial"))
-    dwg.add(dwg.text("CLR", insert=(rc_cx, rack_top + rack_h_px / 2 + 10),
-                     text_anchor="middle", fill=DIM_TEXT, font_size=6, font_family="Arial"))
-
-    # Cable tray overhead
-    ct_y = oy + 10
-    ct_h = 12
-    ct_w = rack_w_px + 30
-    ct_left = rack_cx - ct_w / 2
-    dwg.add(dwg.rect((ct_left, ct_y), (ct_w, ct_h),
-                     fill="none", stroke=PURPLE, stroke_width=1, stroke_dasharray="4,2"))
-    dwg.add(dwg.text("CABLE TRAY", insert=(rack_cx, ct_y + ct_h / 2 + 3),
-                     text_anchor="middle", fill=PURPLE, font_size=5, font_family="Arial"))
-
-    # Overhead clearance
-    dim_v(dwg, rack_left + rack_w_px + 5, rack_top, ct_y + ct_h, "18.2\" OVERHEAD", -25)
-
-    # Access panels on both walls
-    ap_h = AP_HEIGHT_IN * SE
-    ap_bottom = floor_y
-    ap_top = ap_bottom - ap_h
-
-    # Left wall access panel
-    dwg.add(dwg.rect((ox, ap_top), (4, ap_h),
-                     fill="none", stroke=ACCENT, stroke_width=1.5, stroke_dasharray="5,3"))
-    dwg.add(dwg.text("ACCESS", insert=(ox - 8, ap_top + ap_h / 2 - 5),
-                     text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial",
-                     transform=f"rotate(-90,{ox - 8},{ap_top + ap_h / 2 - 5})"))
-    dwg.add(dwg.text("PANEL", insert=(ox - 16, ap_top + ap_h / 2 - 5),
-                     text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial",
-                     transform=f"rotate(-90,{ox - 16},{ap_top + ap_h / 2 - 5})"))
-
-    # Right wall access panel
-    dwg.add(dwg.rect((ox + view_w - 4, ap_top), (4, ap_h),
-                     fill="none", stroke=ACCENT, stroke_width=1.5, stroke_dasharray="5,3"))
-    dwg.add(dwg.text("ACCESS", insert=(ox + view_w + 10, ap_top + ap_h / 2 - 5),
-                     text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial",
-                     transform=f"rotate(90,{ox + view_w + 10},{ap_top + ap_h / 2 - 5})"))
-    dwg.add(dwg.text("PANEL", insert=(ox + view_w + 18, ap_top + ap_h / 2 - 5),
-                     text_anchor="middle", fill=ACCENT, font_size=5, font_family="Arial",
-                     transform=f"rotate(90,{ox + view_w + 18},{ap_top + ap_h / 2 - 5})"))
-
-    # Dimension lines
-    dim_h(dwg, ox, ox + view_w, floor_y, "7'-8\" (2,352 mm)", 22)
-    dim_v(dwg, ox + view_w, oy, floor_y, "8'-10\" (2,698 mm)", 30)
-    dim_h(dwg, rack_left, rack_left + rack_w_px, rack_top, "42.0\" RACK DEPTH", -14)
-    dim_v(dwg, rack_left - 5, rack_top, rack_bottom, "88\" (7'-4\")", -25)
-
-
-def build():
-    dwg = svgwrite.Drawing(OUT, size=(f"{W}px", f"{H}px"), viewBox=f"0 0 {W} {H}")
-    dwg.add(dwg.rect((0, 0), (W, H), fill=BG))
-
-    # Title block
-    dwg.add(dwg.text("ADC 3K POD — 40-FT COMPUTE MODULE",
-                     insert=(W / 2, 28), text_anchor="middle", fill="#f0f2f5",
-                     font_size=18, font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text("10x NVL72 Racks | 1 SuperPOD + Network + Storage | 1.3 MW",
-                     insert=(W / 2, 46), text_anchor="middle", fill=ACCENT,
-                     font_size=11, font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text(
-        "Sheet P-001 | Design Intent | Scale: Conceptual | 2026-03-24 | NOT FOR CONSTRUCTION \u2014 PRELIMINARY DESIGN",
-        insert=(W / 2, 60), text_anchor="middle", fill="#6b7280",
-        font_size=9, font_family="Arial"))
-
-    # VIEW 1: Top view (upper portion)
-    draw_top_view(dwg, 40, 95)
-
-    # VIEW 2: Side view (middle portion)
-    draw_side_view(dwg, 40, 310)
-
-    # VIEW 3: End view (lower right)
-    draw_end_view(dwg, 620, 720)
-
-    # Legend (lower left)
-    leg_x = 40
-    leg_y = 720
-    dwg.add(dwg.rect((leg_x - 10, leg_y - 10), (540, 170), rx=6, fill=ZONE_BG, stroke=BORDER))
-    dwg.add(dwg.text("LEGEND", insert=(leg_x, leg_y + 6), fill=ACCENT, font_size=10,
-                     font_family="Arial", font_weight="bold"))
-
-    items = [
-        (ACCENT, "#0a2010", "Compute Rack (NVL72 R1-R8) \u2014 130 kW ea, liquid cooled, 72 GPUs + 36 CPUs"),
-        (BLUE, "#0a1628", "Networking Rack (R9) \u2014 Quantum InfiniBand spine, Ethernet ToR, patch"),
-        (PURPLE, "#1a0a2e", "Storage + Mgmt Rack (R10) \u2014 NVMe-oF, Base Command, monitoring"),
-        (CYAN, None, "CDU / Cooling connections (45C supply, 55-65C return)"),
-        (PURPLE, None, "800V DC power bus (Eaton Beam Rubin DSX)"),
-        (ACCENT, None, "Access panels (dashed) \u2014 8 total, 4 per side, top-hinged, ~8' x 7.5'"),
-        ("#fbbf24", None, "LED lighting"),
-    ]
-    for i, (color, fill_c, text) in enumerate(items):
-        iy = leg_y + 22 + i * 14
-        if fill_c:
-            dwg.add(dwg.rect((leg_x + 5, iy - 6), (14, 8), fill=fill_c, stroke=color,
-                             stroke_width=1, rx=2))
-        else:
-            dwg.add(dwg.line((leg_x + 5, iy - 2), (leg_x + 19, iy - 2), stroke=color, stroke_width=2))
-        dwg.add(dwg.text(text, insert=(leg_x + 26, iy + 1), fill=LABEL_COLOR,
-                         font_size=7, font_family="Arial"))
-
-    # Key specs summary
-    spec_y = leg_y + 128
-    specs = [
-        "CONTAINER: 40-ft HC ISO (39'5\" x 7'8\" x 8'10\" internal) | TARE: 8,686 lbs | PAYLOAD: 38,864 lbs | GROSS: 47,550 lbs",
-        "COMPUTE: 8 NVL72 (576 GPUs, 1 SuperPOD) + 1 NET + 1 STOR = 10 racks | IT LOAD: 1.3 MW | POWER: 800V DC native",
-        "COOLING: Direct-to-chip liquid, 45C supply, dual CDU (250 kW ea), external dry cooler | FIRE: Novec 1230 + VESDA",
-    ]
-    for i, spec in enumerate(specs):
-        dwg.add(dwg.text(spec, insert=(leg_x, spec_y + i * 11), fill=NOTE_COLOR,
-                         font_size=6.5, font_family="Arial"))
-
-    # Notes
-    notes_x = 40
-    notes_y = 920
-    dwg.add(dwg.rect((notes_x - 10, notes_y - 10), (W - 60, 100), rx=6, fill=ZONE_BG, stroke=BORDER))
-    dwg.add(dwg.text("ENGINEERING NOTES", insert=(notes_x, notes_y + 6), fill=ACCENT, font_size=9,
-                     font_family="Arial", font_weight="bold"))
+GREEN = "#00e87a"
+GREEN_DIM = "#00a855"
+BLUE = "#00b4d8"
+BLUE_DIM = "#0077b6"
+RED = "#ff4444"
+RED_DIM = "#cc3333"
+PURPLE = "#b44aff"
+PURPLE_DIM = "#8833cc"
+WHITE = "#e0e0e0"
+GRAY = "#555555"
+GRAY_DIM = "#333333"
+YELLOW = "#ffd60a"
+ORANGE = "#ff8c00"
+CYAN = "#00e5ff"
+
+OUT = Path(__file__).resolve().parent.parent / "adc3k-deploy" / "blueprints" / "adc3k-pod-layout.svg"
+
+W, H = 1800, 2400
+
+def draw_title_block(dwg, g):
+    """Title block at bottom of drawing."""
+    y0 = H - 130
+    g.add(dwg.line((30, y0), (W - 30, y0), stroke=GREEN, stroke_width=2))
+    g.add(dwg.line((30, y0 + 2), (W - 30, y0 + 2), stroke=GREEN_DIM, stroke_width=0.5))
+
+    col1 = 50
+    col2 = 900
+    col3 = 1400
+
+    g.add(dwg.text("ADC 3K POD — 40-FT AI COMPUTE MODULE", insert=(col1, y0 + 24),
+                    fill=GREEN, font_size="18px", font_family="monospace", font_weight="bold"))
+    g.add(dwg.text("10x NVL72 Racks | 720 GPUs | 1 SuperPOD + Network + Storage",
+                    insert=(col1, y0 + 44), fill=WHITE, font_size="12px", font_family="monospace"))
+    g.add(dwg.text("800V DC Native | Liquid Cooled | Solar Roof | AI Managed",
+                    insert=(col1, y0 + 60), fill=WHITE, font_size="12px", font_family="monospace"))
+    g.add(dwg.text("PRELIMINARY DESIGN — NOT FOR CONSTRUCTION",
+                    insert=(col1, y0 + 80), fill=RED, font_size="11px", font_family="monospace", font_weight="bold"))
+    g.add(dwg.text("Advantage Design & Construction | adc3k.com | Lafayette, Louisiana",
+                    insert=(col1, y0 + 96), fill=GRAY, font_size="10px", font_family="monospace"))
+
+    g.add(dwg.text("Sheet: P-001 Rev B", insert=(col2, y0 + 24), fill=WHITE, font_size="12px", font_family="monospace"))
+    g.add(dwg.text("Date: 2026-03-24", insert=(col2, y0 + 44), fill=WHITE, font_size="12px", font_family="monospace"))
+    g.add(dwg.text("Scale: NOT TO SCALE", insert=(col2, y0 + 60), fill=GRAY, font_size="10px", font_family="monospace"))
+    g.add(dwg.text("Drawn: Mission Control", insert=(col2, y0 + 80), fill=GRAY, font_size="10px", font_family="monospace"))
+
+    g.add(dwg.text("ADC", insert=(col3, y0 + 40), fill=GREEN, font_size="36px",
+                    font_family="monospace", font_weight="bold"))
+    g.add(dwg.text("3K", insert=(col3 + 120, y0 + 40), fill=WHITE, font_size="36px",
+                    font_family="monospace", font_weight="bold"))
+
+
+def draw_notes(dwg, g):
+    """Engineering notes above title block."""
+    y0 = H - 260
+    g.add(dwg.text("ENGINEERING NOTES", insert=(50, y0), fill=GREEN, font_size="11px",
+                    font_family="monospace", font_weight="bold"))
     notes = [
-        "1. NVL72 is OCP Open Rack V3 (600mm/23.6\" wide), NOT standard 19\" EIA-310. Rack depth 1,068mm (42\").",
-        "2. Side clearance 25.3\" does NOT meet NEC 110.26 (30\" min). Access panels solve this \u2014 work from outside.",
-        "3. 8 access panels (4/side), top-hinged, ~8' wide x 7.5' tall. 32' of panels span rack zone. 8' structural at ends.",
-        "4. CDU zone at closed end: dual 250 kW CDUs, quick-disconnect bulkhead to external dry cooler / facility loop.",
-        "5. Floor: 1/4\" steel plate overlay + 1/2\" A36 spreader plates (24\"x44\") under each rack. Point load: 450 PSF.",
-        "6. Weight: 10 racks @ 3,300 lbs = 33,000 lbs. Total payload 38,864 lbs. Highway gross 62,550 lbs (under 80K limit).",
-        "7. Vera Rubin (H2 2026) may increase to 190-230 kW/rack and ~4,000 lbs/rack. Power/cooling redesign required.",
+        "1. Rack height shown at 88\" (Supermicro). HPE spec is 98.2\" — VERIFY before build.",
+        "2. Side clearance 25.3\" — access panels satisfy NEC 110.26 (work from exterior).",
+        "3. Floor loading: 38,864 lbs total (33% under 58,000 lb container limit).",
+        "4. Cooling: 1.3 MW heat rejection via external dry cooler. Adiabatic assist for >95F ambient.",
+        "5. Design ambient target: 45C (113F) max interior. No air conditioning.",
+        "6. All cable routing FLOOR-LEVEL. Nothing above racks. Ceiling clear for rack removal.",
+        "7. 65 AI-monitored sensors. Zero on-site staff. Remote NOC at MARLIE I.",
+        "8. Container access panels: 4 per side (8 total), top-hinged, removable. All service from exterior.",
     ]
     for i, note in enumerate(notes):
-        dwg.add(dwg.text(note, insert=(notes_x, notes_y + 20 + i * 11), fill=NOTE_COLOR,
-                         font_size=6.5, font_family="Arial"))
+        g.add(dwg.text(note, insert=(50, y0 + 16 + i * 14), fill=GRAY, font_size="9px", font_family="monospace"))
 
-    # Footer
-    dwg.add(dwg.text("ADC 3K \u2014 Advantage Design & Construction | adc3k.com | scott@adc3k.com",
-                     insert=(W / 2, H - 20), text_anchor="middle", fill="#4b5563",
-                     font_size=8, font_family="Arial"))
-    dwg.add(dwg.text("CONFIDENTIAL \u2014 NOT FOR CONSTRUCTION \u2014 PRELIMINARY DESIGN",
-                     insert=(W / 2, H - 8), text_anchor="middle", fill="#333",
-                     font_size=7, font_family="Arial"))
+
+# =====================================================================
+# VIEW 1: TOP VIEW
+# =====================================================================
+def draw_top_view(dwg, g):
+    """Top view — bird's eye of container layout."""
+    ox, oy = 80, 60
+    label_y = oy - 8
+
+    g.add(dwg.text("VIEW 1 — TOP VIEW (BIRD'S EYE)", insert=(ox, label_y),
+                    fill=GREEN, font_size="13px", font_family="monospace", font_weight="bold"))
+
+    # Container outline — proportional
+    # Real: 39'5" x 7'8.6" -> use scale ~38px per foot
+    # Length 39.45ft -> 1500px, Width 7.72ft -> 200px
+    cw = 1500
+    ch = 200
+    cx, cy = ox + 60, oy + 20
+
+    # Solar hatching (roof) — draw first so container outline is on top
+    for sx in range(0, cw, 20):
+        g.add(dwg.line((cx + sx, cy), (cx + sx + 10, cy + ch),
+                        stroke=YELLOW, stroke_width=0.3, opacity=0.2))
+
+    # Container outline
+    g.add(dwg.rect((cx, cy), (cw, ch), fill="none", stroke=GREEN, stroke_width=2))
+
+    # Door end indicator (left side)
+    g.add(dwg.line((cx, cy), (cx, cy + ch), stroke=WHITE, stroke_width=3))
+    g.add(dwg.text("DOOR", insert=(cx - 5, cy + ch + 14), fill=WHITE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("END", insert=(cx - 5, cy + ch + 24), fill=WHITE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Closed end
+    g.add(dwg.line((cx + cw, cy), (cx + cw, cy + ch), stroke=WHITE, stroke_width=3))
+    g.add(dwg.text("CLOSED", insert=(cx + cw + 5, cy + ch + 14), fill=WHITE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("END", insert=(cx + cw + 5, cy + ch + 24), fill=WHITE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Zone proportions (in inches, total ~462 in used of 473.7)
+    # Entry: 36in, Elec: 42in, Racks: 276in, Patch: 36in, CDU: 72in -> 462in
+    total_in = 462.0
+    def ix(inches):
+        return cx + (inches / total_in) * cw
+
+    # Zone boundaries
+    entry_end = 36
+    elec_end = 36 + 42
+    racks_start = elec_end
+    racks_end = elec_end + 276
+    patch_end = racks_end + 36
+    cdu_start = patch_end
+
+    # Zone dividers
+    for boundary in [entry_end, elec_end, racks_end, patch_end]:
+        x = ix(boundary)
+        g.add(dwg.line((x, cy), (x, cy + ch), stroke=GRAY, stroke_width=1, stroke_dasharray="4,4"))
+
+    # Zone labels (above container)
+    zones = [
+        (0, entry_end, "ENTRY\nZONE", "36\""),
+        (entry_end, elec_end, "ELEC\nPANEL", "42\""),
+        (racks_start, racks_end, "RACK ZONE (10 RACKS)", "276\""),
+        (racks_end, patch_end, "PATCH\nPANEL", "36\""),
+        (patch_end, total_in, "CDU\nZONE", "72\""),
+    ]
+    for z_start, z_end, label, dim in zones:
+        mid = ix((z_start + z_end) / 2)
+        lines = label.split("\n")
+        for li, line in enumerate(lines):
+            g.add(dwg.text(line, insert=(mid, cy - 14 + li * 10), fill=WHITE, font_size="8px",
+                            font_family="monospace", text_anchor="middle"))
+
+    # Dimension lines below container
+    dim_y = cy + ch + 40
+    # Overall dimension
+    g.add(dwg.line((cx, dim_y), (cx + cw, dim_y), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((cx, dim_y - 5), (cx, dim_y + 5), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((cx + cw, dim_y - 5), (cx + cw, dim_y + 5), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("39'-5\" (12,032 mm)", insert=(cx + cw / 2, dim_y - 4),
+                    fill=WHITE, font_size="9px", font_family="monospace", text_anchor="middle"))
+
+    # Width dimension (right side)
+    wd_x = cx + cw + 30
+    g.add(dwg.line((wd_x, cy), (wd_x, cy + ch), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((wd_x - 5, cy), (wd_x + 5, cy), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((wd_x - 5, cy + ch), (wd_x + 5, cy + ch), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("7'-8.6\"", insert=(wd_x + 8, cy + ch / 2 + 3), fill=WHITE, font_size="8px",
+                    font_family="monospace"))
+
+    # --- RACKS (center row) ---
+    rack_w_in = 23.6
+    rack_d_in = 42.0
+    gap_in = 4.0
+    container_w_in = 92.6
+    side_clearance = (container_w_in - rack_d_in) / 2  # 25.3"
+
+    # Scale within container
+    def iy(inches_from_top_wall):
+        return cy + (inches_from_top_wall / container_w_in) * ch
+
+    rack_top_y = iy(side_clearance)
+    rack_bot_y = iy(side_clearance + rack_d_in)
+    rack_h_px = rack_bot_y - rack_top_y
+
+    rack_names = ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"]
+    rack_colors = [GREEN] * 8 + [BLUE, PURPLE]
+    rack_fill = [GREEN_DIM] * 8 + [BLUE_DIM, PURPLE_DIM]
+
+    for i in range(10):
+        rack_start_in = racks_start + i * (rack_w_in + gap_in)
+        rx = ix(rack_start_in)
+        rw = (rack_w_in / total_in) * cw
+
+        g.add(dwg.rect((rx, rack_top_y), (rw, rack_h_px),
+                        fill=rack_fill[i], fill_opacity=0.25, stroke=rack_colors[i], stroke_width=1.5))
+        g.add(dwg.text(rack_names[i], insert=(rx + rw / 2, rack_top_y + rack_h_px / 2 + 3),
+                        fill=rack_colors[i], font_size="9px", font_family="monospace",
+                        text_anchor="middle", font_weight="bold"))
+
+    # --- FLOOR CABLE TRAYS (dashed lines along both walls) ---
+    tray_offset = 8  # px from wall
+    tray_start_x = ix(entry_end)
+    tray_end_x = ix(racks_end + 20)
+    # Top wall tray
+    g.add(dwg.line((tray_start_x, cy + tray_offset), (tray_end_x, cy + tray_offset),
+                    stroke=ORANGE, stroke_width=2, stroke_dasharray="8,4"))
+    # Bottom wall tray
+    g.add(dwg.line((tray_start_x, cy + ch - tray_offset), (tray_end_x, cy + ch - tray_offset),
+                    stroke=ORANGE, stroke_width=2, stroke_dasharray="8,4"))
+
+    # Cable tray labels
+    g.add(dwg.text("FLOOR CABLE TRAY", insert=(tray_start_x - 2, cy + tray_offset - 3),
+                    fill=ORANGE, font_size="6px", font_family="monospace"))
+    g.add(dwg.text("FLOOR CABLE TRAY", insert=(tray_start_x - 2, cy + ch - tray_offset + 9),
+                    fill=ORANGE, font_size="6px", font_family="monospace"))
+
+    # --- COOLING PIPES (blue dashed on floor, from CDU to racks) ---
+    pipe_y_top = cy + tray_offset + 6
+    pipe_y_bot = cy + ch - tray_offset - 6
+    pipe_start = ix(racks_start - 5)
+    pipe_end = ix(total_in - 10)
+    # Supply (blue)
+    g.add(dwg.line((pipe_start, pipe_y_top), (pipe_end, pipe_y_top),
+                    stroke=BLUE, stroke_width=1.5, stroke_dasharray="6,3"))
+    # Return (red)
+    g.add(dwg.line((pipe_start, pipe_y_bot), (pipe_end, pipe_y_bot),
+                    stroke=RED, stroke_width=1.5, stroke_dasharray="6,3"))
+    g.add(dwg.text("SUPPLY 45C", insert=(pipe_end + 4, pipe_y_top + 3),
+                    fill=BLUE, font_size="5px", font_family="monospace"))
+    g.add(dwg.text("RETURN 55C", insert=(pipe_end + 4, pipe_y_bot + 3),
+                    fill=RED, font_size="5px", font_family="monospace"))
+
+    # --- POWER BUS (red line from elec panel along floor) ---
+    pwr_y = cy + ch / 2 - 15
+    g.add(dwg.line((ix(entry_end + 5), pwr_y), (ix(racks_end), pwr_y),
+                    stroke=RED, stroke_width=2))
+    g.add(dwg.text("800V DC BUS (FLOOR)", insert=(ix(entry_end + 60), pwr_y - 4),
+                    fill=RED, font_size="6px", font_family="monospace"))
+
+    # --- ACCESS PANELS (4 per side, 8 total) ---
+    ap_width_in = (racks_end - racks_start) / 4  # ~69" each
+    for side in range(2):
+        for ap in range(4):
+            ap_start = racks_start + ap * ap_width_in
+            ap_x = ix(ap_start)
+            ap_w = (ap_width_in / total_in) * cw
+            if side == 0:
+                ap_y = cy - 2
+                ap_h = 6
+            else:
+                ap_y = cy + ch - 4
+                ap_h = 6
+            g.add(dwg.rect((ap_x, ap_y), (ap_w, ap_h),
+                            fill="none", stroke=YELLOW, stroke_width=1, stroke_dasharray="3,2"))
+            label_num = ap + 1 + side * 4
+            lx = ap_x + ap_w / 2
+            ly = ap_y - 3 if side == 0 else ap_y + ap_h + 8
+            g.add(dwg.text(f"AP-{label_num}", insert=(lx, ly), fill=YELLOW, font_size="6px",
+                            font_family="monospace", text_anchor="middle"))
+
+    # --- ELECTRICAL PANEL icon ---
+    ep_x = ix(entry_end + 10)
+    ep_y = cy + ch / 2 - 8
+    g.add(dwg.rect((ep_x, ep_y), (20, 16), fill=RED_DIM, fill_opacity=0.4, stroke=RED, stroke_width=1))
+    g.add(dwg.text("EP", insert=(ep_x + 10, ep_y + 11), fill=RED, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- CDU icon ---
+    cdu_x = ix(cdu_start + 10)
+    cdu_y = cy + ch / 2 - 12
+    g.add(dwg.rect((cdu_x, cdu_y), (35, 24), fill=BLUE_DIM, fill_opacity=0.3, stroke=BLUE, stroke_width=1))
+    g.add(dwg.text("CDU", insert=(cdu_x + 17, cdu_y + 15), fill=BLUE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- DEHUMIDIFIER icon ---
+    dh_x = ix(entry_end + 30)
+    dh_y = cy + ch - 25
+    g.add(dwg.rect((dh_x, dh_y), (14, 10), fill="none", stroke=CYAN, stroke_width=1))
+    g.add(dwg.text("DH", insert=(dh_x + 7, dh_y + 8), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- EXHAUST FAN (circle at closed end) ---
+    fan_x = ix(total_in - 20)
+    fan_y = cy + 18
+    g.add(dwg.circle((fan_x, fan_y), 8, fill="none", stroke=CYAN, stroke_width=1))
+    g.add(dwg.text("FAN", insert=(fan_x, fan_y + 3), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- SENSORS ---
+    sensor_positions = [
+        (racks_start + 30, "T1"), (racks_start + 100, "T2"),
+        (racks_start + 180, "T3"), (racks_start + 250, "T4"),
+    ]
+    for s_in, label in sensor_positions:
+        sx = ix(s_in)
+        g.add(dwg.circle((sx, cy + ch / 2 + 15), 3, fill="none", stroke=YELLOW, stroke_width=0.8))
+        g.add(dwg.text(label, insert=(sx, cy + ch / 2 + 18), fill=YELLOW, font_size="4px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Humidity sensors
+    for h_in, label in [(entry_end + 20, "H1"), (cdu_start + 20, "H2")]:
+        hx = ix(h_in)
+        g.add(dwg.circle((hx, cy + 20), 3, fill="none", stroke=CYAN, stroke_width=0.8))
+        g.add(dwg.text(label, insert=(hx, cy + 17), fill=CYAN, font_size="4px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Cameras
+    for c_in, label in [(10, "CAM-1"), (total_in - 10, "CAM-2")]:
+        camx = ix(c_in)
+        g.add(dwg.polygon([(camx - 4, cy + ch / 2 - 3), (camx + 4, cy + ch / 2 - 3),
+                            (camx + 6, cy + ch / 2), (camx + 4, cy + ch / 2 + 3),
+                            (camx - 4, cy + ch / 2 + 3), (camx - 6, cy + ch / 2)],
+                           fill="none", stroke=WHITE, stroke_width=0.8))
+        g.add(dwg.text(label, insert=(camx, cy + ch / 2 + 12), fill=WHITE, font_size="5px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Solar panel label
+    g.add(dwg.text("SOLAR PANELS ON ROOF (hatched)", insert=(cx + 10, cy + ch + 58),
+                    fill=YELLOW, font_size="7px", font_family="monospace"))
+
+    # Side clearance dimensions
+    # Top side
+    g.add(dwg.line((cx + 2, cy + 4), (cx + 2, rack_top_y), stroke=GRAY_DIM, stroke_width=0.5))
+    g.add(dwg.text("25.3\"", insert=(cx + 5, (cy + rack_top_y) / 2 + 3), fill=GRAY, font_size="6px",
+                    font_family="monospace"))
+    # Bottom side
+    g.add(dwg.line((cx + 2, rack_bot_y), (cx + 2, cy + ch - 4), stroke=GRAY_DIM, stroke_width=0.5))
+    g.add(dwg.text("25.3\"", insert=(cx + 5, (rack_bot_y + cy + ch) / 2 + 3), fill=GRAY, font_size="6px",
+                    font_family="monospace"))
+
+    # Legend
+    leg_x = cx + cw + 60
+    leg_y = cy + 10
+    g.add(dwg.text("LEGEND", insert=(leg_x, leg_y), fill=GREEN, font_size="9px",
+                    font_family="monospace", font_weight="bold"))
+    legend_items = [
+        (GREEN, "R1-R8 Compute (NVL72)"),
+        (BLUE, "R9 Network (InfiniBand)"),
+        (PURPLE, "R10 Storage + Mgmt"),
+        (ORANGE, "Floor Cable Tray"),
+        (RED, "800V DC Power Bus"),
+        (BLUE, "Cooling Supply (45C)"),
+        (RED_DIM, "Cooling Return (55C)"),
+        (YELLOW, "Access Panels (AP)"),
+        (CYAN, "Dehumidifier / Fan"),
+    ]
+    for i, (color, text) in enumerate(legend_items):
+        ly = leg_y + 14 + i * 13
+        g.add(dwg.rect((leg_x, ly - 6), (8, 8), fill=color, fill_opacity=0.5))
+        g.add(dwg.text(text, insert=(leg_x + 12, ly + 1), fill=WHITE, font_size="7px",
+                        font_family="monospace"))
+
+    # Rack type labels
+    g.add(dwg.text("R1-R8: COMPUTE (72 GPUs each) | R9: NETWORK (InfiniBand) | R10: STORAGE + MGMT",
+                    insert=(cx, dim_y + 14), fill=GRAY, font_size="7px", font_family="monospace"))
+
+
+# =====================================================================
+# VIEW 2: LONG SIDE VIEW (Elevation)
+# =====================================================================
+def draw_side_view(dwg, g):
+    """Side elevation — looking through open access panels."""
+    ox, oy = 80, 370
+    g.add(dwg.text("VIEW 2 — LONG SIDE ELEVATION (LOOKING THROUGH OPEN ACCESS PANELS)",
+                    insert=(ox, oy - 8), fill=GREEN, font_size="13px", font_family="monospace", font_weight="bold"))
+
+    # Container profile: 39'5" long x 8'10" tall
+    cw = 1500
+    ch = 260
+    cx, cy = ox + 60, oy + 15
+
+    # Container walls
+    g.add(dwg.rect((cx, cy), (cw, ch), fill="none", stroke=GREEN, stroke_width=2))
+
+    # Corrugated wall texture (vertical lines)
+    for wx in range(0, cw, 12):
+        g.add(dwg.line((cx + wx, cy), (cx + wx, cy + ch), stroke=GRAY_DIM, stroke_width=0.3))
+
+    # Solar panels on roof (angled slightly)
+    solar_h = 10
+    for sx in range(0, cw, 40):
+        sw = min(38, cw - sx)
+        pts = [(cx + sx + 1, cy - 2), (cx + sx + sw, cy - 4),
+               (cx + sx + sw, cy - 4 - solar_h), (cx + sx + 1, cy - 2 - solar_h)]
+        g.add(dwg.polygon(pts, fill=YELLOW, fill_opacity=0.15, stroke=YELLOW, stroke_width=0.5))
+    g.add(dwg.text("SOLAR PANELS (6 kW, shade + power)", insert=(cx + 10, cy - solar_h - 6),
+                    fill=YELLOW, font_size="7px", font_family="monospace"))
+
+    # Zone proportions (same as top view)
+    total_in = 462.0
+    def ix(inches):
+        return cx + (inches / total_in) * cw
+    def iy_h(inches, total_h=106.2):
+        """Convert inches from floor to pixel y (bottom = floor)."""
+        return cy + ch - (inches / total_h) * ch
+
+    entry_end = 36
+    elec_end = 78
+    racks_start = elec_end
+    racks_end = elec_end + 276
+    patch_end = racks_end + 36
+    cdu_start = patch_end
+
+    # Floor line
+    floor_y = cy + ch
+    g.add(dwg.line((cx, floor_y), (cx + cw, floor_y), stroke=WHITE, stroke_width=2))
+
+    # --- FLOOR CABLE TRAYS ---
+    tray_h = 8
+    tray_y = floor_y - tray_h
+    g.add(dwg.rect((ix(elec_end), tray_y), (ix(racks_end + 10) - ix(elec_end), tray_h),
+                    fill=ORANGE, fill_opacity=0.2, stroke=ORANGE, stroke_width=1, stroke_dasharray="4,2"))
+    g.add(dwg.text("FLOOR CABLE TRAY", insert=(ix(racks_start + 20), tray_y + 6),
+                    fill=ORANGE, font_size="6px", font_family="monospace"))
+
+    # Optional grating
+    for gx in range(int(ix(elec_end)), int(ix(racks_end + 10)), 8):
+        g.add(dwg.line((gx, tray_y), (gx + 4, tray_y - 3), stroke=ORANGE, stroke_width=0.3))
+    g.add(dwg.text("(optional grating)", insert=(ix(racks_start + 100), tray_y - 4),
+                    fill=ORANGE, font_size="5px", font_family="monospace"))
+
+    # --- COOLING PIPES ON FLOOR ---
+    pipe_y = tray_y - 5
+    g.add(dwg.line((ix(racks_start), pipe_y), (ix(total_in - 10), pipe_y),
+                    stroke=BLUE, stroke_width=1.5, stroke_dasharray="5,3"))
+    g.add(dwg.line((ix(racks_start), pipe_y - 4), (ix(total_in - 10), pipe_y - 4),
+                    stroke=RED, stroke_width=1.5, stroke_dasharray="5,3"))
+    g.add(dwg.text("SUPPLY 45C", insert=(ix(total_in - 50), pipe_y + 3),
+                    fill=BLUE, font_size="5px", font_family="monospace"))
+    g.add(dwg.text("RETURN 55C", insert=(ix(total_in - 50), pipe_y - 5),
+                    fill=RED, font_size="5px", font_family="monospace"))
+
+    # --- RACKS ---
+    rack_w_in = 23.6
+    gap_in = 4.0
+    rack_height_in = 88.0
+    rack_top = iy_h(rack_height_in)
+    rack_bottom = floor_y - tray_h
+
+    for i in range(10):
+        r_start = racks_start + i * (rack_w_in + gap_in)
+        rx = ix(r_start)
+        rw = (rack_w_in / total_in) * cw
+        color = GREEN if i < 8 else (BLUE if i == 8 else PURPLE)
+        dim_color = GREEN_DIM if i < 8 else (BLUE_DIM if i == 8 else PURPLE_DIM)
+
+        g.add(dwg.rect((rx, rack_top), (rw, rack_bottom - rack_top),
+                        fill=dim_color, fill_opacity=0.2, stroke=color, stroke_width=1.2))
+
+        # 98" dashed option line
+        rack_98_top = iy_h(98.2)
+        g.add(dwg.line((rx, rack_98_top), (rx + rw, rack_98_top),
+                        stroke=color, stroke_width=0.5, stroke_dasharray="2,2"))
+
+        # Label
+        g.add(dwg.text(f"R{i+1}", insert=(rx + rw / 2, rack_top + 12), fill=color, font_size="7px",
+                        font_family="monospace", text_anchor="middle", font_weight="bold"))
+
+    # 88" and 98" dimension labels
+    dim_x = ix(racks_start) - 8
+    g.add(dwg.line((dim_x, rack_top), (dim_x, rack_bottom), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("88\"", insert=(dim_x - 18, (rack_top + rack_bottom) / 2 + 3), fill=WHITE,
+                    font_size="7px", font_family="monospace"))
+    g.add(dwg.text("98\"", insert=(dim_x - 18, (iy_h(98.2) + rack_bottom) / 2 + 3), fill=GRAY,
+                    font_size="6px", font_family="monospace"))
+    g.add(dwg.text("(HPE)", insert=(dim_x - 22, (iy_h(98.2) + rack_bottom) / 2 + 12), fill=GRAY,
+                    font_size="5px", font_family="monospace"))
+
+    # --- ACCESS PANELS (4, shown open -- hinged at top, propped out) ---
+    ap_width_in = (racks_end - racks_start) / 4
+    for ap in range(4):
+        ap_start = racks_start + ap * ap_width_in
+        ap_x = ix(ap_start)
+        ap_w = (ap_width_in / total_in) * cw
+        # Panel shown swung out from top hinge
+        hinge_y = cy + 8
+        panel_end_y = cy + ch * 0.55
+        panel_out = 40
+        # Panel body (hinged at top, swung out)
+        pts = [
+            (ap_x + 4, hinge_y),
+            (ap_x + ap_w - 4, hinge_y),
+            (ap_x + ap_w - 4 + panel_out, panel_end_y),
+            (ap_x + 4 + panel_out, panel_end_y),
+        ]
+        g.add(dwg.polygon(pts, fill=YELLOW, fill_opacity=0.08, stroke=YELLOW, stroke_width=0.8))
+        # Hinge indicator
+        g.add(dwg.line((ap_x + 4, hinge_y), (ap_x + ap_w - 4, hinge_y),
+                        stroke=YELLOW, stroke_width=1.5))
+        # Prop leg
+        g.add(dwg.line((ap_x + ap_w / 2 + panel_out, panel_end_y),
+                        (ap_x + ap_w / 2 + panel_out * 0.7, floor_y),
+                        stroke=YELLOW, stroke_width=0.5, stroke_dasharray="3,2"))
+        # Label
+        g.add(dwg.text(f"AP-{ap+1}", insert=(ap_x + ap_w / 2 + panel_out / 2, panel_end_y + 10),
+                        fill=YELLOW, font_size="6px", font_family="monospace", text_anchor="middle"))
+
+    # --- TECHNICIAN SILHOUETTE ---
+    tech_x = ix(racks_start + ap_width_in * 1.5) + 45
+    head_y = cy + ch * 0.35
+    g.add(dwg.circle((tech_x, head_y), 6, fill="none", stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.line((tech_x, head_y + 6), (tech_x, head_y + 35), stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.line((tech_x, head_y + 35), (tech_x - 8, floor_y + 15), stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.line((tech_x, head_y + 35), (tech_x + 8, floor_y + 15), stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.line((tech_x, head_y + 14), (tech_x - 20, head_y + 8), stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.line((tech_x, head_y + 14), (tech_x - 22, head_y + 20), stroke=WHITE, stroke_width=0.8))
+    g.add(dwg.text("TECH", insert=(tech_x + 10, head_y + 20), fill=GRAY, font_size="5px",
+                    font_family="monospace"))
+
+    # --- ELECTRICAL PANEL ---
+    ep_x = ix(entry_end + 10)
+    ep_w = 25
+    ep_h = ch * 0.5
+    ep_y = cy + ch * 0.2
+    g.add(dwg.rect((ep_x, ep_y), (ep_w, ep_h), fill=RED_DIM, fill_opacity=0.2, stroke=RED, stroke_width=1))
+    g.add(dwg.text("ELEC", insert=(ep_x + ep_w / 2, ep_y + ep_h / 2 - 4), fill=RED, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("PANEL", insert=(ep_x + ep_w / 2, ep_y + ep_h / 2 + 6), fill=RED, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- CDU ---
+    cdu_x = ix(cdu_start + 8)
+    cdu_w = 40
+    cdu_h = ch * 0.55
+    cdu_y = cy + ch * 0.2
+    g.add(dwg.rect((cdu_x, cdu_y), (cdu_w, cdu_h), fill=BLUE_DIM, fill_opacity=0.2, stroke=BLUE, stroke_width=1))
+    g.add(dwg.text("CDU", insert=(cdu_x + cdu_w / 2, cdu_y + cdu_h / 2 + 3), fill=BLUE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # External connection through wall
+    wall_x = cx + cw
+    g.add(dwg.line((cdu_x + cdu_w, cdu_y + cdu_h / 2), (wall_x + 30, cdu_y + cdu_h / 2),
+                    stroke=BLUE, stroke_width=1.5))
+    g.add(dwg.circle((wall_x, cdu_y + cdu_h / 2), 4, fill=BLUE_DIM, stroke=BLUE, stroke_width=1))
+    g.add(dwg.text("WALL", insert=(wall_x - 2, cdu_y + cdu_h / 2 - 8), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("PENETRATION", insert=(wall_x - 2, cdu_y + cdu_h / 2 + 14), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # External dry cooler
+    dc_x = wall_x + 35
+    dc_y = cdu_y + cdu_h / 2 - 20
+    g.add(dwg.rect((dc_x, dc_y), (55, 40), fill="none", stroke=CYAN, stroke_width=1))
+    g.add(dwg.text("EXTERNAL", insert=(dc_x + 27, dc_y + 14), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("DRY COOLER", insert=(dc_x + 27, dc_y + 24), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("1.3 MW", insert=(dc_x + 27, dc_y + 34), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- DEHUMIDIFIER ---
+    dh_x = ix(entry_end + 30)
+    dh_y = floor_y - 18
+    g.add(dwg.rect((dh_x, dh_y), (16, 12), fill="none", stroke=CYAN, stroke_width=0.8))
+    g.add(dwg.text("DH", insert=(dh_x + 8, dh_y + 9), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- EXHAUST FAN (near ceiling at closed end) ---
+    fan_x = ix(total_in - 20)
+    fan_y = cy + 15
+    g.add(dwg.circle((fan_x, fan_y), 8, fill="none", stroke=CYAN, stroke_width=1))
+    g.add(dwg.line((fan_x - 5, fan_y), (fan_x + 5, fan_y), stroke=CYAN, stroke_width=0.5))
+    g.add(dwg.line((fan_x, fan_y - 5), (fan_x, fan_y + 5), stroke=CYAN, stroke_width=0.5))
+    g.add(dwg.text("EXHAUST", insert=(fan_x, fan_y - 12), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("FAN", insert=(fan_x, fan_y - 5), fill=CYAN, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # --- CAMERAS ---
+    for c_in, label in [(8, "CAM-1"), (total_in - 15, "CAM-2")]:
+        camx = ix(c_in)
+        camy = cy + 20
+        g.add(dwg.rect((camx - 5, camy), (10, 7), fill="none", stroke=WHITE, stroke_width=0.8))
+        g.add(dwg.text(label, insert=(camx, camy + 15), fill=WHITE, font_size="5px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Dimension: container height
+    ht_x = cx - 15
+    g.add(dwg.line((ht_x, cy), (ht_x, cy + ch), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((ht_x - 4, cy), (ht_x + 4, cy), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((ht_x - 4, cy + ch), (ht_x + 4, cy + ch), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("8'-10\"", insert=(ht_x - 28, cy + ch / 2 + 3), fill=WHITE, font_size="7px",
+                    font_family="monospace"))
+
+    # Door opening
+    door_x = cx
+    door_h = ch * 0.92
+    door_y = cy + ch - door_h
+    g.add(dwg.rect((door_x - 3, door_y), (6, door_h), fill="none", stroke=WHITE, stroke_width=1.5))
+    g.add(dwg.text("DOOR", insert=(door_x - 25, door_y + door_h / 2), fill=WHITE, font_size="6px",
+                    font_family="monospace"))
+
+
+# =====================================================================
+# VIEW 3: END VIEW (Cross-section)
+# =====================================================================
+def draw_end_view(dwg, g):
+    """End view cross-section through rack zone."""
+    ox, oy = 80, 710
+    g.add(dwg.text("VIEW 3 — END VIEW (CROSS-SECTION THROUGH RACK ZONE)",
+                    insert=(ox, oy - 8), fill=GREEN, font_size="13px", font_family="monospace", font_weight="bold"))
+
+    # Container cross-section: 7'8.6" wide x 8'10" tall
+    cw = 350
+    ch = 400
+    cx = ox + 200
+    cy = oy + 15
+
+    # Container outline
+    g.add(dwg.rect((cx, cy), (cw, ch), fill="none", stroke=GREEN, stroke_width=2))
+
+    # Corrugated wall texture
+    for wy in range(0, ch, 10):
+        g.add(dwg.line((cx, cy + wy), (cx + 6, cy + wy), stroke=GRAY_DIM, stroke_width=0.3))
+        g.add(dwg.line((cx + cw - 6, cy + wy), (cx + cw, cy + wy), stroke=GRAY_DIM, stroke_width=0.3))
+
+    # Solar panel on roof
+    g.add(dwg.rect((cx - 5, cy - 12), (cw + 10, 10), fill=YELLOW, fill_opacity=0.15,
+                    stroke=YELLOW, stroke_width=0.8))
+    g.add(dwg.text("SOLAR PANEL", insert=(cx + cw / 2, cy - 16), fill=YELLOW, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Floor
+    floor_y = cy + ch
+    g.add(dwg.line((cx, floor_y), (cx + cw, floor_y), stroke=WHITE, stroke_width=2))
+
+    # Scaling
+    def sx(inches):
+        return cx + (inches / 92.6) * cw
+    def sy(inches_from_floor):
+        return floor_y - (inches_from_floor / 106.2) * ch
+
+    # Rack centered
+    rack_left = sx(25.3)
+    rack_right = sx(25.3 + 42.0)
+    rack_top = sy(88.0)
+
+    g.add(dwg.rect((rack_left, rack_top), (rack_right - rack_left, floor_y - rack_top),
+                    fill=GREEN_DIM, fill_opacity=0.2, stroke=GREEN, stroke_width=1.5))
+    g.add(dwg.text("NVL72 RACK", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 - 6),
+                    fill=GREEN, font_size="10px", font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("42\" deep x 23.6\" wide", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 8),
+                    fill=GREEN, font_size="7px", font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("88\" tall", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 20),
+                    fill=GREEN, font_size="7px", font_family="monospace", text_anchor="middle"))
+
+    # Cooling manifold connections on rack
+    manifold_y = sy(30)
+    g.add(dwg.circle((rack_left + 10, manifold_y), 4, fill=BLUE, fill_opacity=0.5, stroke=BLUE, stroke_width=1))
+    g.add(dwg.circle((rack_right - 10, manifold_y), 4, fill=RED, fill_opacity=0.5, stroke=RED, stroke_width=1))
+    g.add(dwg.text("S", insert=(rack_left + 10, manifold_y + 3), fill=WHITE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("R", insert=(rack_right - 10, manifold_y + 3), fill=WHITE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("MANIFOLD", insert=((rack_left + rack_right) / 2, manifold_y + 14),
+                    fill=GRAY, font_size="5px", font_family="monospace", text_anchor="middle"))
+
+    # Floor cable trays on both sides
+    tray_h_px = 14
+    tray_w_px = 30
+    lt_x = sx(6)
+    lt_y = floor_y - tray_h_px
+    g.add(dwg.rect((lt_x, lt_y), (tray_w_px, tray_h_px), fill=ORANGE, fill_opacity=0.2,
+                    stroke=ORANGE, stroke_width=1))
+    g.add(dwg.text("CABLE", insert=(lt_x + tray_w_px / 2, lt_y + 6), fill=ORANGE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("TRAY", insert=(lt_x + tray_w_px / 2, lt_y + 12), fill=ORANGE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    rt_x = sx(92.6 - 6) - tray_w_px
+    g.add(dwg.rect((rt_x, lt_y), (tray_w_px, tray_h_px), fill=ORANGE, fill_opacity=0.2,
+                    stroke=ORANGE, stroke_width=1))
+    g.add(dwg.text("CABLE", insert=(rt_x + tray_w_px / 2, lt_y + 6), fill=ORANGE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("TRAY", insert=(rt_x + tray_w_px / 2, lt_y + 12), fill=ORANGE, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Cooling pipes on floor
+    pipe_r = 4
+    g.add(dwg.circle((lt_x + tray_w_px + 10, floor_y - pipe_r - 2), pipe_r,
+                      fill=BLUE, fill_opacity=0.3, stroke=BLUE, stroke_width=0.8))
+    g.add(dwg.circle((lt_x + tray_w_px + 22, floor_y - pipe_r - 2), pipe_r,
+                      fill=RED, fill_opacity=0.3, stroke=RED, stroke_width=0.8))
+    g.add(dwg.text("S  R", insert=(lt_x + tray_w_px + 10, floor_y - pipe_r - 8),
+                    fill=GRAY, font_size="5px", font_family="monospace"))
+
+    # Access panels on both walls (shown open)
+    panel_h_px = ch * 0.75
+    panel_top = cy + 20
+    # Left panel
+    g.add(dwg.rect((cx - 2, panel_top), (6, panel_h_px), fill="none", stroke=YELLOW, stroke_width=1.5))
+    panel_out = 60
+    pts = [(cx - 2, panel_top), (cx + 4, panel_top),
+           (cx + 4 - panel_out, panel_top + panel_h_px * 0.6),
+           (cx - 2 - panel_out, panel_top + panel_h_px * 0.6)]
+    g.add(dwg.polygon(pts, fill=YELLOW, fill_opacity=0.06, stroke=YELLOW, stroke_width=0.6))
+    g.add(dwg.text("ACCESS", insert=(cx - panel_out - 5, panel_top + panel_h_px * 0.3), fill=YELLOW,
+                    font_size="7px", font_family="monospace"))
+    g.add(dwg.text("PANEL", insert=(cx - panel_out - 5, panel_top + panel_h_px * 0.3 + 10), fill=YELLOW,
+                    font_size="7px", font_family="monospace"))
+    g.add(dwg.text("(OPEN)", insert=(cx - panel_out - 5, panel_top + panel_h_px * 0.3 + 20), fill=YELLOW,
+                    font_size="6px", font_family="monospace"))
+
+    # Right panel
+    g.add(dwg.rect((cx + cw - 4, panel_top), (6, panel_h_px), fill="none", stroke=YELLOW, stroke_width=1.5))
+    pts_r = [(cx + cw - 4, panel_top), (cx + cw + 2, panel_top),
+             (cx + cw + 2 + panel_out, panel_top + panel_h_px * 0.6),
+             (cx + cw - 4 + panel_out, panel_top + panel_h_px * 0.6)]
+    g.add(dwg.polygon(pts_r, fill=YELLOW, fill_opacity=0.06, stroke=YELLOW, stroke_width=0.6))
+    g.add(dwg.text("ACCESS", insert=(cx + cw + panel_out + 8, panel_top + panel_h_px * 0.3), fill=YELLOW,
+                    font_size="7px", font_family="monospace"))
+    g.add(dwg.text("PANEL", insert=(cx + cw + panel_out + 8, panel_top + panel_h_px * 0.3 + 10), fill=YELLOW,
+                    font_size="7px", font_family="monospace"))
+    g.add(dwg.text("(OPEN)", insert=(cx + cw + panel_out + 8, panel_top + panel_h_px * 0.3 + 20), fill=YELLOW,
+                    font_size="6px", font_family="monospace"))
+
+    # Dimensions
+    dim_y = floor_y + 30
+    g.add(dwg.line((cx, dim_y), (cx + cw, dim_y), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((cx, dim_y - 5), (cx, dim_y + 5), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((cx + cw, dim_y - 5), (cx + cw, dim_y + 5), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("7'-8.6\" (2,352 mm)", insert=(cx + cw / 2, dim_y - 4), fill=WHITE, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Side clearances
+    dim_y2 = dim_y + 18
+    g.add(dwg.line((cx, dim_y2), (rack_left, dim_y2), stroke=GRAY, stroke_width=0.4))
+    g.add(dwg.text("25.3\"", insert=((cx + rack_left) / 2, dim_y2 - 3), fill=WHITE, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.line((rack_left, dim_y2), (rack_right, dim_y2), stroke=GRAY, stroke_width=0.4))
+    g.add(dwg.text("42.0\"", insert=((rack_left + rack_right) / 2, dim_y2 - 3), fill=WHITE, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.line((rack_right, dim_y2), (cx + cw, dim_y2), stroke=GRAY, stroke_width=0.4))
+    g.add(dwg.text("25.3\"", insert=((rack_right + cx + cw) / 2, dim_y2 - 3), fill=WHITE, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Height
+    ht_x = cx - 25
+    g.add(dwg.line((ht_x, cy), (ht_x, floor_y), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((ht_x - 4, cy), (ht_x + 4, cy), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.line((ht_x - 4, floor_y), (ht_x + 4, floor_y), stroke=GRAY, stroke_width=0.5))
+    g.add(dwg.text("8'-10\"", insert=(ht_x - 30, cy + ch / 2 + 3), fill=WHITE, font_size="8px",
+                    font_family="monospace"))
+
+    # Overhead clearance
+    g.add(dwg.line((rack_right + 15, cy), (rack_right + 15, rack_top), stroke=GRAY_DIM, stroke_width=0.4))
+    g.add(dwg.text("18.2\"", insert=(rack_right + 20, (cy + rack_top) / 2 + 3), fill=GRAY, font_size="6px",
+                    font_family="monospace"))
+    g.add(dwg.text("CLEAR", insert=(rack_right + 20, (cy + rack_top) / 2 + 12), fill=GRAY, font_size="6px",
+                    font_family="monospace"))
+
+    # Interior label
+    g.add(dwg.text("CEILING CLEAR — NO OVERHEAD CABLES", insert=(cx + cw / 2, cy + 14),
+                    fill=ORANGE, font_size="7px", font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("ALL ROUTING ON FLOOR", insert=(cx + cw / 2, cy + 25),
+                    fill=ORANGE, font_size="7px", font_family="monospace", text_anchor="middle"))
+
+
+# =====================================================================
+# VIEW 4: ELECTRICAL / COOLING SCHEMATIC
+# =====================================================================
+def draw_schematic(dwg, g):
+    """Simplified electrical and cooling flow diagram."""
+    ox, oy = 80, 1210
+    g.add(dwg.text("VIEW 4 — ELECTRICAL + COOLING SCHEMATIC (SYSTEM FLOW)",
+                    insert=(ox, oy - 8), fill=GREEN, font_size="13px", font_family="monospace", font_weight="bold"))
+
+    # ===== POWER SECTION (top half) =====
+    psy = oy + 20
+    g.add(dwg.text("POWER DISTRIBUTION", insert=(ox, psy), fill=RED, font_size="10px",
+                    font_family="monospace", font_weight="bold"))
+
+    # External generator / grid
+    bx, by = ox + 30, psy + 25
+    box_w, box_h = 120, 45
+    g.add(dwg.rect((bx, by), (box_w, box_h), fill="none", stroke=RED, stroke_width=1.5))
+    g.add(dwg.text("EXTERNAL", insert=(bx + box_w / 2, by + 16), fill=RED, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("GENERATOR", insert=(bx + box_w / 2, by + 28), fill=RED, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("OR GRID", insert=(bx + box_w / 2, by + 40), fill=RED, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Arrow to rectifier
+    ax1 = bx + box_w
+    ay = by + box_h / 2
+    ax2 = ax1 + 60
+    g.add(dwg.line((ax1, ay), (ax2, ay), stroke=RED, stroke_width=1.5))
+    g.add(dwg.polygon([(ax2, ay), (ax2 - 6, ay - 4), (ax2 - 6, ay + 4)], fill=RED))
+
+    # Eaton rectifier
+    rx, ry = ax2, by
+    rw, rh = 130, 45
+    g.add(dwg.rect((rx, ry), (rw, rh), fill="none", stroke=RED, stroke_width=1.5))
+    g.add(dwg.text("EATON 800V DC", insert=(rx + rw / 2, ry + 16), fill=RED, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("RECTIFIER", insert=(rx + rw / 2, ry + 28), fill=RED, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("(Beam Rubin DSX)", insert=(rx + rw / 2, ry + 40), fill=GRAY, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Arrow to bus
+    bx2 = rx + rw
+    ax3 = bx2 + 60
+    g.add(dwg.line((bx2, ay), (ax3, ay), stroke=RED, stroke_width=1.5))
+    g.add(dwg.polygon([(ax3, ay), (ax3 - 6, ay - 4), (ax3 - 6, ay + 4)], fill=RED))
+
+    # 800V DC Bus
+    bus_x = ax3
+    bus_y = ay - 6
+    bus_w = 600
+    bus_h = 12
+    g.add(dwg.rect((bus_x, bus_y), (bus_w, bus_h), fill=RED, fill_opacity=0.2, stroke=RED, stroke_width=2))
+    g.add(dwg.text("800V DC BUS (FLOOR-LEVEL)", insert=(bus_x + bus_w / 2, bus_y - 5),
+                    fill=RED, font_size="8px", font_family="monospace", text_anchor="middle"))
+
+    # Solar input to bus
+    solar_x = bus_x + bus_w / 2
+    solar_y = bus_y - 60
+    sw, sh = 100, 35
+    g.add(dwg.rect((solar_x - sw / 2, solar_y), (sw, sh), fill="none", stroke=YELLOW, stroke_width=1.2))
+    g.add(dwg.text("SOLAR PANELS", insert=(solar_x, solar_y + 14), fill=YELLOW, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("(6 kW roof)", insert=(solar_x, solar_y + 26), fill=YELLOW, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # DC-DC buck
+    buck_y = solar_y + sh + 5
+    g.add(dwg.line((solar_x, buck_y), (solar_x, bus_y), stroke=YELLOW, stroke_width=1))
+    g.add(dwg.polygon([(solar_x, bus_y), (solar_x - 4, bus_y - 6), (solar_x + 4, bus_y - 6)], fill=YELLOW))
+    bk_w, bk_h = 60, 16
+    g.add(dwg.rect((solar_x - bk_w / 2, buck_y), (bk_w, bk_h), fill="none", stroke=YELLOW, stroke_width=0.8))
+    g.add(dwg.text("DC-DC BUCK", insert=(solar_x, buck_y + 11), fill=YELLOW, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Rack PDU drops from bus
+    rack_drop_y = bus_y + bus_h
+    rack_pdu_y = rack_drop_y + 50
+    for i in range(10):
+        drop_x = bus_x + 20 + i * (bus_w - 40) / 9
+        g.add(dwg.line((drop_x, rack_drop_y), (drop_x, rack_pdu_y), stroke=RED, stroke_width=0.8))
+        g.add(dwg.polygon([(drop_x, rack_pdu_y), (drop_x - 3, rack_pdu_y - 5),
+                            (drop_x + 3, rack_pdu_y - 5)], fill=RED))
+        color = GREEN if i < 8 else (BLUE if i == 8 else PURPLE)
+        g.add(dwg.rect((drop_x - 14, rack_pdu_y), (28, 20), fill=color, fill_opacity=0.15,
+                        stroke=color, stroke_width=0.8))
+        g.add(dwg.text(f"R{i+1}", insert=(drop_x, rack_pdu_y + 9), fill=color, font_size="6px",
+                        font_family="monospace", text_anchor="middle"))
+        g.add(dwg.text("PDU", insert=(drop_x, rack_pdu_y + 17), fill=color, font_size="5px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Solar-powered aux
+    aux_x = bus_x + bus_w + 30
+    g.add(dwg.line((bus_x + bus_w, ay), (aux_x, ay), stroke=YELLOW, stroke_width=0.8))
+    g.add(dwg.text("SOLAR AUX", insert=(aux_x + 4, ay - 8), fill=YELLOW, font_size="6px",
+                    font_family="monospace"))
+    for idx, (label, yoff) in enumerate([("DEHUMIDIFIER", -15), ("EXHAUST FAN", 5), ("LED LIGHTS", 25)]):
+        ly = ay + yoff
+        g.add(dwg.line((aux_x, ay), (aux_x + 30, ly), stroke=YELLOW, stroke_width=0.5))
+        g.add(dwg.text(label, insert=(aux_x + 34, ly + 3), fill=CYAN, font_size="6px",
+                        font_family="monospace"))
+
+    # ===== COOLING SECTION (bottom half) =====
+    csy = psy + 200
+    g.add(dwg.text("COOLING LOOP", insert=(ox, csy), fill=BLUE, font_size="10px",
+                    font_family="monospace", font_weight="bold"))
+
+    # CDU box
+    cdu_x, cdu_y = ox + 80, csy + 25
+    cdu_w, cdu_h = 100, 55
+    g.add(dwg.rect((cdu_x, cdu_y), (cdu_w, cdu_h), fill="none", stroke=BLUE, stroke_width=1.5))
+    g.add(dwg.text("CDU", insert=(cdu_x + cdu_w / 2, cdu_y + 20), fill=BLUE, font_size="10px",
+                    font_family="monospace", text_anchor="middle", font_weight="bold"))
+    g.add(dwg.text("(250 kW x2)", insert=(cdu_x + cdu_w / 2, cdu_y + 35), fill=BLUE, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("N+1 redundant", insert=(cdu_x + cdu_w / 2, cdu_y + 46), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Supply pipe
+    supply_y = cdu_y + 15
+    return_y = cdu_y + 40
+    pipe_end_x = cdu_x + cdu_w + 500
+
+    g.add(dwg.line((cdu_x + cdu_w, supply_y), (pipe_end_x, supply_y), stroke=BLUE, stroke_width=2))
+    g.add(dwg.polygon([(pipe_end_x, supply_y), (pipe_end_x - 8, supply_y - 4),
+                        (pipe_end_x - 8, supply_y + 4)], fill=BLUE))
+    g.add(dwg.text("SUPPLY 45C (113F)", insert=(cdu_x + cdu_w + 40, supply_y - 5),
+                    fill=BLUE, font_size="7px", font_family="monospace"))
+
+    # Rack manifold connections
+    for i in range(10):
+        rmx = cdu_x + cdu_w + 50 + i * 44
+        color = GREEN if i < 8 else (BLUE if i == 8 else PURPLE)
+        g.add(dwg.line((rmx, supply_y), (rmx, supply_y + 12), stroke=color, stroke_width=0.8))
+        g.add(dwg.line((rmx, return_y - 12), (rmx, return_y), stroke=color, stroke_width=0.8))
+        g.add(dwg.rect((rmx - 10, supply_y + 12), (20, return_y - 12 - supply_y - 12),
+                        fill=color, fill_opacity=0.1, stroke=color, stroke_width=0.6))
+        g.add(dwg.text(f"R{i+1}", insert=(rmx, (supply_y + return_y) / 2 + 3), fill=color, font_size="5px",
+                        font_family="monospace", text_anchor="middle"))
+
+    # Return pipe
+    g.add(dwg.line((pipe_end_x, return_y), (cdu_x + cdu_w, return_y), stroke=RED, stroke_width=2))
+    g.add(dwg.polygon([(cdu_x + cdu_w, return_y), (cdu_x + cdu_w + 8, return_y - 4),
+                        (cdu_x + cdu_w + 8, return_y + 4)], fill=RED))
+    g.add(dwg.text("RETURN 55C (131F)", insert=(cdu_x + cdu_w + 40, return_y + 12),
+                    fill=RED, font_size="7px", font_family="monospace"))
+
+    # CDU to External dry cooler
+    ext_y = cdu_y + cdu_h + 30
+    g.add(dwg.line((cdu_x + cdu_w / 2 - 15, cdu_y + cdu_h), (cdu_x + cdu_w / 2 - 15, ext_y),
+                    stroke=RED, stroke_width=1.5))
+    g.add(dwg.polygon([(cdu_x + cdu_w / 2 - 15, ext_y),
+                        (cdu_x + cdu_w / 2 - 19, ext_y - 6),
+                        (cdu_x + cdu_w / 2 - 11, ext_y - 6)], fill=RED))
+    g.add(dwg.line((cdu_x + cdu_w / 2 + 15, ext_y), (cdu_x + cdu_w / 2 + 15, cdu_y + cdu_h),
+                    stroke=BLUE, stroke_width=1.5))
+    g.add(dwg.polygon([(cdu_x + cdu_w / 2 + 15, cdu_y + cdu_h),
+                        (cdu_x + cdu_w / 2 + 11, cdu_y + cdu_h + 6),
+                        (cdu_x + cdu_w / 2 + 19, cdu_y + cdu_h + 6)], fill=BLUE))
+
+    # External dry cooler box
+    dc_w, dc_h = 160, 50
+    dc_x = cdu_x + cdu_w / 2 - dc_w / 2
+    dc_y = ext_y + 5
+    g.add(dwg.rect((dc_x, dc_y), (dc_w, dc_h), fill="none", stroke=CYAN, stroke_width=1.5))
+    g.add(dwg.text("EXTERNAL DRY COOLER", insert=(dc_x + dc_w / 2, dc_y + 18), fill=CYAN, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("1.3 MW rejection capacity", insert=(dc_x + dc_w / 2, dc_y + 32), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("Adiabatic assist >95F", insert=(dc_x + dc_w / 2, dc_y + 44), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Heat to atmosphere
+    atm_y = dc_y + dc_h + 25
+    g.add(dwg.line((dc_x + dc_w / 2, dc_y + dc_h), (dc_x + dc_w / 2, atm_y), stroke=GRAY, stroke_width=1))
+    g.add(dwg.text("HEAT TO ATMOSPHERE", insert=(dc_x + dc_w / 2, atm_y + 12), fill=GRAY, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # ===== MONITORING SECTION =====
+    msx = ox + 900
+    msy = csy
+    g.add(dwg.text("MONITORING + CONTROL", insert=(msx, msy), fill=YELLOW, font_size="10px",
+                    font_family="monospace", font_weight="bold"))
+
+    # Sensor controller
+    sc_x, sc_y = msx + 30, msy + 25
+    sc_w, sc_h = 130, 45
+    g.add(dwg.rect((sc_x, sc_y), (sc_w, sc_h), fill="none", stroke=YELLOW, stroke_width=1.2))
+    g.add(dwg.text("SENSOR", insert=(sc_x + sc_w / 2, sc_y + 16), fill=YELLOW, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("CONTROLLER", insert=(sc_x + sc_w / 2, sc_y + 28), fill=YELLOW, font_size="8px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("(Jetson Orin Nano)", insert=(sc_x + sc_w / 2, sc_y + 40), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Sensors feeding in
+    sensors = [
+        "40x TEMP SENSORS",
+        "4x HUMIDITY SENSORS",
+        "10x FLOW METERS",
+        "LEAK DETECTION ROPE",
+        "2x IR CAMERAS",
+        "4x VESDA SAMPLING",
+        "8x DOOR/PANEL REED SW",
+        "VIBRATION ACCEL",
+    ]
+    for i, s in enumerate(sensors):
+        ssy = sc_y - 10 + i * 14
+        ssx = sc_x - 10
+        g.add(dwg.line((ssx - 80, ssy), (ssx, ssy), stroke=YELLOW, stroke_width=0.4))
+        g.add(dwg.text(s, insert=(ssx - 84, ssy + 3), fill=YELLOW, font_size="5px",
+                        font_family="monospace", text_anchor="end"))
+
+    # Arrow to network
+    net_x = sc_x + sc_w + 50
+    net_y = sc_y + sc_h / 2
+    g.add(dwg.line((sc_x + sc_w, net_y), (net_x, net_y), stroke=YELLOW, stroke_width=1))
+    g.add(dwg.polygon([(net_x, net_y), (net_x - 6, net_y - 4), (net_x - 6, net_y + 4)], fill=YELLOW))
+
+    # Network box
+    nw, nh = 100, 35
+    g.add(dwg.rect((net_x, net_y - nh / 2), (nw, nh), fill="none", stroke=WHITE, stroke_width=1))
+    g.add(dwg.text("NETWORK", insert=(net_x + nw / 2, net_y - 2), fill=WHITE, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("4G/5G/STARLINK", insert=(net_x + nw / 2, net_y + 10), fill=WHITE, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Arrow to Mission Control
+    mc_x = net_x + nw + 50
+    g.add(dwg.line((net_x + nw, net_y), (mc_x, net_y), stroke=WHITE, stroke_width=1))
+    g.add(dwg.polygon([(mc_x, net_y), (mc_x - 6, net_y - 4), (mc_x - 6, net_y + 4)], fill=WHITE))
+
+    mw, mh = 130, 45
+    g.add(dwg.rect((mc_x, net_y - mh / 2), (mw, mh), fill=GREEN, fill_opacity=0.1,
+                    stroke=GREEN, stroke_width=1.5))
+    g.add(dwg.text("MISSION", insert=(mc_x + mw / 2, net_y - 5), fill=GREEN, font_size="9px",
+                    font_family="monospace", text_anchor="middle", font_weight="bold"))
+    g.add(dwg.text("CONTROL", insert=(mc_x + mw / 2, net_y + 8), fill=GREEN, font_size="9px",
+                    font_family="monospace", text_anchor="middle", font_weight="bold"))
+    g.add(dwg.text("(MARLIE I NOC)", insert=(mc_x + mw / 2, net_y + 20), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Total sensor count
+    g.add(dwg.text("65 SENSORS TOTAL — ZERO ON-SITE STAFF — AI MANAGED",
+                    insert=(msx, msy + 140), fill=GREEN, font_size="7px", font_family="monospace"))
+
+
+def main():
+    dwg = svgwrite.Drawing(str(OUT), size=(f"{W}px", f"{H}px"), profile="full")
+
+    # Background
+    dwg.add(dwg.rect((0, 0), (W, H), fill=BG))
+
+    # Border
+    dwg.add(dwg.rect((10, 10), (W - 20, H - 20), fill="none", stroke=GREEN_DIM, stroke_width=1))
+    dwg.add(dwg.rect((15, 15), (W - 30, H - 30), fill="none", stroke=GRAY_DIM, stroke_width=0.5))
+
+    g = dwg.g()
+    dwg.add(g)
+
+    draw_top_view(dwg, g)
+    draw_side_view(dwg, g)
+    draw_end_view(dwg, g)
+    draw_schematic(dwg, g)
+    draw_notes(dwg, g)
+    draw_title_block(dwg, g)
 
     dwg.save()
-    print(f"Saved: {OUT}")
+    print(f"Created: {OUT}")
+    print(f"Size: {OUT.stat().st_size:,} bytes")
 
 
 if __name__ == "__main__":
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
-    build()
+    main()
