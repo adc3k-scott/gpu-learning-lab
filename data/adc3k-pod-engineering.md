@@ -981,3 +981,43 @@ No human needed. Ever. Unless something physically breaks.
 - Everything in line of sight through panels
 - If someone needs to enter: grating provides walkway over cables
 - Rack removal: nothing overhead blocking crane/forklift access
+
+---
+
+## 11. EXTREME CO-DESIGN — CONFIGURABLE RACK POSITIONS
+
+### 11.1 Design Philosophy
+The ADC 3K Pod is a configurable platform, not a fixed product. The container, power system (800V DC), cooling loop, access panels, solar roof, and AI monitoring are constant. The 10 rack positions are variable — configured per customer mission.
+
+### 11.2 Standard Configurations
+
+| Config | Name | Racks (Compute/Network/Storage/Other) | GPUs | Best For |
+|--------|------|---------------------------------------|------|----------|
+| C1 | Full SuperPOD | 8/1/1/0 | 576 | Training + inference (default) |
+| C2 | Inference Heavy | 10/0/0/0 (network external) | 720 | Token factory, managed inference |
+| C3 | Storage Heavy | 6/1/3/0 | 432 | Medical imaging, video, data lakes |
+| C4 | CPU Heavy | 4 GPU + 4 CPU/1/1/0 | 288 GPU + HPC | Oil & gas, weather, molecular dynamics |
+| C5 | Edge Inference | 2 GPU + 7 Groq/1/0/0 | 144 GPU + 7 LPU | Autonomous vehicles, robotics, real-time |
+| C6 | Hybrid Vendor | 5 NVIDIA + 3 Terafab/1/1/0 | Mixed | Multi-vendor, future-proof |
+
+### 11.3 What Stays Constant (All Configs)
+- 40-ft HC ISO container
+- 800V DC native power (Eaton Beam Rubin DSX)
+- Liquid cooling loop (CDU + external dry cooler)
+- 8 access panels (4 per side, top-hinged)
+- Solar roof (shade + auxiliary power)
+- Desiccant dehumidifier + exhaust fan
+- 65 AI-monitored sensors
+- Mission Control autonomous management
+- Floor-level cable routing
+- Fire suppression (Novec 1230 + VESDA)
+
+### 11.4 What Changes Per Config
+- Rack type in each of 10 positions
+- Power budget (GPU racks: 130 kW each, CPU racks: ~30 kW, Groq LPU: ~TBD)
+- Cooling load (proportional to power)
+- Network topology (InfiniBand for GPU, Ethernet for CPU/storage)
+- Software stack (Dynamo for inference, Base Command for training, Run:AI for orchestration)
+
+### 11.5 Custom Configurations
+Any combination of rack types in the 10 positions is possible. Customer specifies workload requirements, ADC engineers the optimal rack mix. The platform supports it — the racks are the variable.
