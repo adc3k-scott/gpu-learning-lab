@@ -1,0 +1,49 @@
+[
+  {
+    "id": "open",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "text": "Good morning. This is AI Daily Omniverse for Thursday, March 26th, 2026. I'm Armando, and today we've got five massive stories. AWS just committed to buying one million NVIDIA GPUs. The nation's largest power grid just failed its reliability test for the first time ever. Dell is sitting on a forty-three billion dollar AI server backlog. The drone market is about to explode to fifty-one billion dollars. And a community in New Jersey is revolting against a three hundred and fifty megawatt AI facility. Let's get into it."
+  },
+  {
+    "id": "story1",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "title": "NVIDIA-AWS Mega Deal: 1 Million GPUs, $50B+ Through 2027",
+    "text": "AWS just made the largest single GPU purchase in history. One million NVIDIA chips plus the full networking stack, Spectrum X switches, ConnectX NICs, and Groq inference accelerators, all through 2027. The total deal is projected north of fifty billion dollars. Jensen Huang confirmed manufacturing has restarted to fill these orders, calling it part of a one trillion dollar pipeline through 2027. For context, this is one customer buying one million GPUs. The structural demand we keep talking about? This is what it looks like. Every hyperscaler order like this extends the scarcity window for everyone else. If you don't own GPUs right now, you're renting them from someone who does."
+  },
+  {
+    "id": "story2",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "title": "PJM Grid Fails Reliability Target: 6.6 GW Shortfall",
+    "text": "For the first time in its history, PJM Interconnection, the nation's largest grid operator serving sixty-five million people across thirteen states, failed to procure enough capacity to meet reliability targets. The December 2025 auction came up six thousand six hundred megawatts short. Data centers account for ninety-four percent of projected load growth in PJM territory. Capacity prices spiked to a record three hundred thirty-three dollars per megawatt-day, up from twenty-nine dollars just two years ago. Gartner now predicts power shortages will constrain forty percent of AI facilities by 2027. This is the single strongest validation of the behind-the-meter energy model. If your AI factory depends on the grid, you have a problem. If you generate your own power, you don't."
+  },
+  {
+    "id": "story3",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "title": "Dell Posts Record $113.5B Revenue, $43B AI Server Backlog",
+    "text": "Dell Technologies just posted record revenue of one hundred thirteen point five billion dollars, driven by a three hundred forty-two percent year-over-year explosion in AI server shipments. AI server revenue hit twenty-four point six billion for the full year. But here's the number that matters: Dell is sitting on a forty-three billion dollar AI server backlog. That means even if you order today, you're looking at twelve to eighteen month lead times into 2027. Dell's seventeenth-generation PowerEdge with NVIDIA Blackwell architecture is the growth engine. They issued guidance of one hundred thirty-eight to one hundred forty-two billion for next year. The AI factory buildout is real, it's accelerating, and hardware is the bottleneck."
+  },
+  {
+    "id": "story4",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "title": "AI Drone Market Projected to Hit $51 Billion by 2033",
+    "text": "A new industry report projects the global AI-in-drone market growing from twelve point three billion dollars in 2024 to fifty-one point three billion by 2033. Autonomous drones specifically are jumping to thirty billion this year alone. The fastest-growing segments are infrastructure inspection, emergency response, and precision agriculture. Skydio, AeroVironment, and DroneShield are the key US players. Separately, the Army just awarded AeroVironment seventeen point six million for the Red Dragon autonomous strike drone, GPS-denied and communications-degraded operations. The commercial and defense markets are converging on the same technology stack: AI-powered autonomous flight."
+  },
+  {
+    "id": "story5",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "title": "Vineland NJ: Community Revolt Against 350 MW AI Facility",
+    "text": "A Nebius Group and Microsoft-backed three hundred fifty megawatt AI facility in Vineland, New Jersey is facing organized community backlash. Over one hundred residents protested on March 25th, citing a constant low-frequency hum from construction, threats to the Kirkwood-Cohansey aquifer, South Jersey's primary drinking water source, and zero community notification before approval. The project sits in an Urban Enterprise Zone that bypassed normal notification requirements. This is how not to build an AI factory. Gas-only power, no community engagement, aquifer risk, noise complaints. Compare that to what we're doing in Louisiana: solar-first, historic preservation, university partnership, first responder integration, and every community leader informed from day one. There's a right way to build AI infrastructure. Vineland isn't it."
+  },
+  {
+    "id": "close",
+    "avatar": "Armando_Casual_Front_public",
+    "role": "anchor",
+    "text": "That's your five for today. One million GPUs to AWS. The grid failing for the first time. Dell's forty-three billion dollar backlog. A fifty-one billion dollar drone market. And a community showing the world what happens when you build AI factories wrong. The infrastructure race isn't slowing down. Make sure you're on the right side of it. I'm Armando. This has been AI Daily Omniverse. See you tomorrow."
+  }
+]
