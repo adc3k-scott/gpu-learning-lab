@@ -1,5 +1,5 @@
 # Mission Control — Project State
-Last updated: 2026-03-26
+Last updated: 2026-03-26 (end of session)
 
 ---
 
@@ -93,19 +93,26 @@ ai-advantage/site/
 
 ---
 
+## ROXY STATUS — LIVE
+- **Pod:** g5t4hxa9rjm7cm (RTX A6000, 48GB VRAM, 58GB RAM)
+- **Model:** Qwen 3 8B fine-tuned v1 (118 examples), baked into weights
+- **VRAM:** 90% used — DO NOT train on this pod
+- **Cost:** $0.33/hr
+- **27 tools**, smart tool selector, session persistence, job manager
+- **DO NOT TOUCH THIS POD**
+
 ## Action Items — Priority Order
 
-1. **Stripe account** — Set up Stripe, add STRIPE_SECRET_KEY to Vercel. Unlocks in-chat payments.
-2. **SMS credits** — Buy Brevo SMS credits. Unlocks text message follow-ups.
-3. **Cal.com/Calendly** — Set up booking tool, update BOOKING_URL on Vercel.
-4. **Fine-tune ROXY** — Upload roxy-training-data.jsonl to RunPod, fine-tune Qwen 3 8B.
-5. **Brevo drip campaigns** — Build industry-specific email automations using the 12 lists.
-6. **LinkedIn outreach** — CERAWeek contacts + Delta
-7. **NPN** — Follow up with Jim Hennessy (NVIDIA). Invitation only.
-8. **Episode 3 production** — briefing ready
-9. **Answering service on (337) 780-1535**
-10. **Louisiana Cat** (337-837-2476) — G3516J quote + lead times
-11. **MARLIE I expansion** — pick layout, begin site prep
+1. **Twilio 10DLC approval** — Submitted, waiting on carrier. Once approved SMS works from +13372423607.
+2. **Stripe live mode** — Swap sk_test_ to sk_live_ when ready for real payments. Products already created.
+3. **Brevo drip campaigns** — Build industry-specific email automations using the 12 lists.
+4. **ROXY v2 training** — Use a SEPARATE pod for training. 334 examples ready (data/roxy-training-v3.jsonl). Use vllm/vllm-openai:latest image per RunPod guide.
+5. **Agent orchestration harness** — Job lifecycle states, resource caps, stop conditions. Job manager v1 built, needs completion.
+6. **Mission Control archive scan** — MC-Files and MCHD folders have SaaS tools (JSX components, marketing kit, Supabase schema). Scan when ready.
+7. **Tax docs** — Peachtree exports needed from Scott. Structure is ready.
+8. **LinkedIn outreach** — CERAWeek contacts + Delta
+9. **NPN** — Follow up with Jim Hennessy (NVIDIA). Invitation only.
+10. **Episode 3 production** — briefing ready
 
 ---
 
