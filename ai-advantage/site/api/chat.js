@@ -72,6 +72,36 @@ module.exports = async function handler(req, res) {
       sessionContext,
     });
 
+    // Fire analytics events (non-blocking — don't await)
+    const analyticsBase = `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}/api/analytics`;
+    const fireAnalytics = (evt) => {
+      fetch(analyticsBase, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(evt),
+      }).catch(() => {});
+    };
+
+    fireAnalytics({ type: "conversation", channel: "chat" });
+    if (result.analytics) {
+      fireAnalytics({
+        type: "response_time",
+        durationMs: result.analytics.durationMs,
+        toolsAvailable: result.analytics.toolsAvailable,
+        totalTools: result.analytics.totalToolsInRegistry,
+      });
+    }
+    for (const tool of result.toolsUsed) {
+      fireAnalytics({ type: "tool_used", tool });
+    }
+    if (result.sessionContext.leadCaptured && result.toolsUsed.includes("capture_lead")) {
+      fireAnalytics({
+        type: "lead_captured",
+        industry: result.sessionContext.businessType,
+        interest_level: "warm",
+      });
+    }
+
     return res.status(200).json({
       reply: result.reply,
       source: result.source,

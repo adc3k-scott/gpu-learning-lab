@@ -7,6 +7,14 @@
       "memory": 512,
       "maxDuration": 30,
       "includeFiles": "lib/**"
+    },
+    "api/phone.js": {
+      "memory": 512,
+      "maxDuration": 30,
+      "includeFiles": "lib/**"
+    },
+    "api/analytics.js": {
+      "maxDuration": 10
     }
   },
   "headers": [

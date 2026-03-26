@@ -746,10 +746,32 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
   let opened = false;
   let sending = false;
 
-  // Conversation state — persists for the tab lifetime
-  const history = []; // { role: "user"|"assistant", content: string }
-  const sessionId = 'roxy_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-  let sessionContext = {};
+  // Conversation state — persists across sessions via localStorage
+  const STORAGE_KEY = 'roxy_session';
+  let stored = {};
+  try { stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+  // Reuse session ID if returning within 7 days
+  const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const sessionId = (stored.sessionId && stored.timestamp && (now - stored.timestamp < SESSION_TTL))
+    ? stored.sessionId
+    : 'roxy_' + now + '_' + Math.random().toString(36).slice(2, 8);
+
+  // Restore conversation history (last 10 messages) and context
+  const history = (stored.sessionId === sessionId && stored.history) ? stored.history.slice(-10) : [];
+  let sessionContext = (stored.sessionId === sessionId && stored.sessionContext) ? stored.sessionContext : {};
+
+  function saveSession() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        sessionId,
+        timestamp: Date.now(),
+        history: history.slice(-20),
+        sessionContext,
+      }));
+    } catch(e) {}
+  }
 
   function addMsg(text, cls) {
     const div = document.createElement('div');
@@ -812,7 +834,23 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
     panel.classList.toggle('open');
     if (!opened) {
       opened = true;
-      addMsg("Hey! I'm ROXY, your AI Advantage assistant. I can answer questions, look up industry-specific details, build you a quote, or book a discovery call \u2014 right here. What's on your mind?", 'bot');
+      // Restore previous conversation if returning visitor
+      if (history.length > 0 && sessionContext.visitorName) {
+        // Show last few messages from previous session
+        const recent = history.slice(-6);
+        for (const msg of recent) {
+          addMsg(msg.content, msg.role === 'user' ? 'usr' : 'bot');
+        }
+        addMsg("Welcome back" + (sessionContext.visitorName ? ", " + sessionContext.visitorName.split(' ')[0] : "") + "! I remember our conversation. What else can I help you with?", 'bot');
+      } else if (history.length > 0) {
+        const recent = history.slice(-4);
+        for (const msg of recent) {
+          addMsg(msg.content, msg.role === 'user' ? 'usr' : 'bot');
+        }
+        addMsg("Welcome back! Picking up where we left off. What can I help you with?", 'bot');
+      } else {
+        addMsg("Hey! I'm ROXY, your AI Advantage assistant. I can answer questions, look up industry-specific details, build you a quote, or book a discovery call \u2014 right here. What's on your mind?", 'bot');
+      }
     }
     if (panel.classList.contains('open')) {
       input.focus();
@@ -860,6 +898,8 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
         addMsg(data.reply, 'bot');
         // Add to history for multi-turn
         history.push({ role: 'assistant', content: data.reply });
+        // Persist session to localStorage
+        saveSession();
       } else if (data.error) {
         addMsg(data.error, 'bot');
       } else {
