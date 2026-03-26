@@ -61,7 +61,7 @@
     { "source": "/ai-ops", "destination": "/ai-ops.html" },
     { "source": "/operations-center", "destination": "/operations-center.html" },
     { "source": "/ops-center", "destination": "/operations-center.html" },
-    { "source": "/ops", "destination": "/ops.html" },
+    { "source": "/ops", "destination": "/operations-center.html" },
 
     { "source": "/card", "destination": "/card.html" },
     { "source": "/qr", "destination": "/qr.html" },
@@ -84,7 +84,7 @@
     { "source": "/renders-compare", "destination": "/willow-glen-renders-compare.html" },
     { "source": "/reference-library", "destination": "/reference-library.html" },
     { "source": "/gtc-plan-26", "destination": "/gtc-plan-26.html" },
-    { "source": "/stack", "destination": "/stack.html" },
+    { "source": "/stack", "destination": "/nvidia-full-stack.html" },
 
     { "source": "/(.*)", "destination": "/index.html" }
   ]
