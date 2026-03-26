@@ -6,7 +6,7 @@ GPS: 30.21975N, 92.00645W
 import svgwrite
 
 W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/marlie-site-plan.svg"
+OUT = "adc3k-deploy/marlie/blueprints/site-plan.svg"
 
 ACCENT = "#3b82f6"  # Blue accent for MARLIE I
 
@@ -139,14 +139,14 @@ def build():
     gen_y = pad_y + 18
     ft_rect(dwg, pad_x + 3, gen_y, 20, 10,
             fill="#0a1a0a", stroke="#22c55e", stroke_width=1, rx=2)
-    ft_text(dwg, pad_x + 13, gen_y + 6, "G3520C #1",
+    ft_text(dwg, pad_x + 13, gen_y + 6, "Cat G3512H #1",
             text_anchor="middle", fill="#22c55e", font_size=6, font_family="Arial", font_weight="bold")
-    ft_text(dwg, pad_x + 13, gen_y + 9, "1.5 MW",
+    ft_text(dwg, pad_x + 13, gen_y + 9, "1.03 MW",
             text_anchor="middle", fill="#22c55e", font_size=5, font_family="Arial")
 
     ft_rect(dwg, pad_x + 27, gen_y, 20, 10,
             fill="#0a1a0a", stroke="#22c55e", stroke_width=1, rx=2)
-    ft_text(dwg, pad_x + 37, gen_y + 6, "G3520C #2",
+    ft_text(dwg, pad_x + 37, gen_y + 6, "Cat G3512H #2",
             text_anchor="middle", fill="#22c55e", font_size=6, font_family="Arial", font_weight="bold")
     ft_text(dwg, pad_x + 37, gen_y + 9, "N+1",
             text_anchor="middle", fill="#4ade80", font_size=5, font_family="Arial")
@@ -155,16 +155,16 @@ def build():
     dc_y = gen_y + 14
     ft_rect(dwg, pad_x + 3, dc_y, 44, 12,
             fill="#0a1628", stroke="#4fc3f7", stroke_width=1, rx=2)
-    ft_text(dwg, pad_x + 25, dc_y + 5, "DRY COOLERS",
+    ft_text(dwg, pad_x + 25, dc_y + 5, "BAC TrilliumSeries",
             text_anchor="middle", fill="#4fc3f7", font_size=7, font_family="Arial", font_weight="bold")
-    ft_text(dwg, pad_x + 25, dc_y + 9, "Heat rejection | Fan-assisted",
+    ft_text(dwg, pad_x + 25, dc_y + 9, "Adiabatic Cooler | Heat Rejection",
             text_anchor="middle", fill="#4fc3f7", font_size=5, font_family="Arial")
 
     # Eaton switchgear
     sw_y = dc_y + 15
     ft_rect(dwg, pad_x + 3, sw_y, 44, 8,
             fill="#111318", stroke="#8b5cf6", stroke_width=1, rx=2)
-    ft_text(dwg, pad_x + 25, sw_y + 5, "EATON 800V DC | ATS | SWITCHGEAR",
+    ft_text(dwg, pad_x + 25, sw_y + 5, "EATON BEAM RUBIN DSX | ORV3 SIDECAR",
             text_anchor="middle", fill="#c4b5fd", font_size=5, font_family="Arial", font_weight="bold")
 
     # Diesel genset
@@ -177,7 +177,7 @@ def build():
     # Battery
     ft_rect(dwg, pad_x + 27, diesel_y, 20, 8,
             fill="#0a0a1a", stroke=ACCENT, stroke_width=1, rx=2)
-    ft_text(dwg, pad_x + 37, diesel_y + 5, "BESS 600 kWh",
+    ft_text(dwg, pad_x + 37, diesel_y + 5, "Eaton xStorage 600kWh",
             text_anchor="middle", fill="#93c5fd", font_size=5, font_family="Arial", font_weight="bold")
 
     dim_h(dwg, pad_x, pad_y + pad_h, pad_w, "~50'-0\"", "#6b7280")
@@ -282,12 +282,12 @@ def build():
 
     legend = [
         (ACCENT, "MARLIE I — 24x40 building, 2 floors, 1,920 sq ft"),
-        ("#6b7280", "Concrete Pad (generators, dry coolers, switchgear)"),
-        ("#22c55e", "Natural Gas Generators (2x Cat G3520C, 3 MW)"),
-        ("#4fc3f7", "Dry Coolers (air-cooled heat rejection)"),
-        ("#8b5cf6", "Eaton 800V DC distribution"),
-        ("#ef4444", "Diesel Emergency + Grid Backup"),
-        ("#fbbf24", "Solar (300 kW rooftop)"),
+        ("#6b7280", "Concrete Pad (generators, adiabatic coolers, switchgear)"),
+        ("#22c55e", "Caterpillar G3512H (1.03 MW) x2 N+1"),
+        ("#4fc3f7", "BAC TrilliumSeries Adiabatic Cooler"),
+        ("#8b5cf6", "Eaton Beam Rubin DSX + ORV3 Sidecar"),
+        ("#ef4444", "Diesel Emergency + LUS Backup"),
+        ("#fbbf24", "First Solar Series 7 TR1 (300 kW rooftop)"),
         ("#555555", "Blighted Structures (Phase 1 demolition)"),
         ("#CE181E", "Nearby: Trappeys + UL Lafayette"),
     ]
@@ -310,7 +310,7 @@ def build():
         ("LAND DEBT", "$15,000"),
         ("GPU RACKS", "8 NVL72 (576 GPUs)"),
         ("IT LOAD", "1,040 kW"),
-        ("GENERATION", "3.0 MW (N+1)"),
+        ("GENERATION", "2.06 MW (N+1)"),
     ]
     sx = 65
     for label, value in stats:
@@ -353,7 +353,7 @@ def build():
         "2. Land debt $15,000 — effectively debt-free. 0.60 acres total across 3 parcels.",
         "3. 3 blighted structures require Phase 1 demolition before concrete pad construction",
         "4. Building footprint matches 40-ft shipping container (24' x 40'). 2 floors = 1,920 sq ft total.",
-        "5. Concrete pad houses generators, dry coolers, Eaton switchgear, diesel genset, and battery storage",
+        "5. Concrete pad houses Cat G3512H generators, BAC TrilliumSeries coolers, Eaton Beam Rubin DSX, diesel genset, Eaton xStorage BESS",
         "6. 0.5 miles from Trappeys Cannery, 0.5 miles from UL Lafayette, 60 miles from Willow Glen (fiber)",
     ]
     for i, note in enumerate(notes):
@@ -366,5 +366,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/marlie/blueprints", exist_ok=True)
     build()

@@ -21,7 +21,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 </head>
 <body>
 
-<div style="padding:12px 24px"><a href="/willow-glen" style="font-size:13px;color:#3b82f6;text-decoration:none;font-weight:600">&larr; Back to Tiger Campus</a></div>
+<div style="padding:12px 24px"><a href="/willow-glen" style="font-size:13px;color:#3b82f6;text-decoration:none;font-weight:600">&larr; Back to Tiger Campus</a> <a href="/operations-center" style="font-size:13px;color:#3b82f6;text-decoration:none;font-weight:600;margin-left:20px">Operations</a></div>
 
 <h1>Tiger Compute Campus — Engineering Blueprints</h1>
 <div class="sub">Willow Glen Terminal, St. Gabriel, LA | MVP Design Intent Package | NOT FOR CONSTRUCTION</div>
@@ -33,8 +33,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>E-001: Electrical Single-Line Diagram</h2>
 <span class="tag">800V DC Native</span>
 </div>
-<img src="blueprints/electrical-sld.svg" alt="Electrical Single-Line Diagram" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Complete power path from Entergy 500kV/230kV substations through Cat CG260 generators, Eaton Beam Rubin DSX rectification, 800V DC distribution bus, to NVIDIA NVL72 GPU racks. First Solar DC-direct bypass at 97% efficiency. 4-layer power hierarchy: Solar → Gas → Diesel → Grid (sell-back only).</div>
+<img src="willow-glen/blueprints/electrical-sld.svg" alt="Electrical Single-Line Diagram" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Complete power path from Entergy 500kV/230kV substations through Cat generators, Eaton Beam Rubin DSX rectification (facility level) with ORV3 sidecar distribution (+/-400V, 800 kW/row), 800V DC bus, to NVIDIA NVL72 GPU racks. ABB SACE Infinitus solid-state DC breakers for arc-free protection. Delta 660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU) with e-Fuse SiC switch (&lt;3 &mu;s fault cutoff) and 90 kW DC/DC shelf (800V to 50V, 98.5%, NVIDIA MGX) at rack level. Delta 140 kW In-Rack CDU (4RU, NVL72 certified). TI 800V-to-6V GaN + Infineon CoolGaN IBC for final power conversion at chip level. First Solar DC-direct bypass at 97% efficiency. 4-layer power hierarchy: Solar &rarr; Gas &rarr; Diesel &rarr; Grid (sell-back only). Eaton powers the facility. Delta powers the rack.</div>
 </div>
 
 <div class="section-label">Cooling</div>
@@ -44,8 +44,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>C-001: Cooling Flow Schematic</h2>
 <span class="tag">Mississippi River Once-Through</span>
 </div>
-<img src="blueprints/cooling-schematic.svg" alt="Cooling Flow Schematic" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Complete cooling path from Mississippi River intake through plate heat exchangers, facility cooling loop, CDUs, to liquid-cooled NVL72 rack manifolds. 45C hot water supply — no chillers needed. Future waste heat recovery: ORC (8-11 MW electricity) + absorption chillers (11,000+ tons). LPDES permit LA0005851 already on-site.</div>
+<img src="willow-glen/blueprints/cooling-schematic.svg" alt="Cooling Flow Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Mississippi River intake through plate heat exchangers, facility cooling loop, CoolIT CHx2000 CDUs (2,000 kW capacity, six 9s availability), to liquid-cooled NVL72 rack manifolds. Staubli UQD quick-disconnect couplings (NVIDIA-approved) at every rack connection. 45C hot water supply — no chillers needed. Munters HCD desiccant humidity control for compute hall air quality. Future waste heat recovery: ORC (8-11 MW electricity) + absorption chillers (11,000+ tons). LPDES permit LA0005851 already on-site.</div>
 </div>
 
 <div class="section-label">Site</div>
@@ -55,7 +55,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>S-001: Site Plan</h2>
 <span class="tag">700 Acres</span>
 </div>
-<img src="blueprints/site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="willow-glen/blueprints/site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">Full 700-acre property layout. Compute hall, generator yard, power building, two solar array zones (5+ MW), existing 500kV and 230kV substations, tank farm (WGT operations), deepwater dock, water intake structure, CN Railroad, gas pipeline corridor, access road from LA-75. Mississippi River on west edge with 3,500 ft frontage.</div>
 </div>
 
@@ -66,7 +66,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>A-001: Compute Hall Floor Plan</h2>
 <span class="tag">36 NVL72 Racks</span>
 </div>
-<img src="blueprints/floor-plan.svg" alt="Compute Hall Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="willow-glen/blueprints/floor-plan.svg" alt="Compute Hall Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">Phase 1 compute hall: 200' x 100' (20,000 sq ft). 36 NVIDIA NVL72 racks in 6 rows, hot aisle containment, cold aisle supply. Mechanical room with CDUs (N+1). NOC, loading dock, electrical room with 800V DC busway. 2,592 GPUs total. 4.68 MW IT load. Designed for expansion to 72 racks.</div>
 </div>
 
@@ -77,8 +77,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>P-001: Power Distribution Schematic</h2>
 <span class="tag">4-Layer Hierarchy</span>
 </div>
-<img src="blueprints/power-distribution.svg" alt="Power Distribution Schematic" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Fuel-to-chip power distribution with complete 4-layer hierarchy. ATMOS gas pipeline to Cat CG260 generators, through paralleling switchgear, Eaton Beam Rubin DSX rectification, 800V DC bus, busway to rack PDUs, 64:1 LLC converters to GPU. First Solar DC-Direct bypass. BESS ride-through. Grid sell-back only. Full Layer 1-4 breakdown with specs.</div>
+<img src="willow-glen/blueprints/power-distribution.svg" alt="Power Distribution Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Fuel-to-chip power distribution with complete 4-layer hierarchy. ATMOS gas pipeline to Caterpillar G3616A4 generators (8.7 MW each, scale phases) and G3516J (1.6 MW, Phase 1), through paralleling switchgear. Facility power: Eaton Beam Rubin DSX 800V DC rectification with ORV3 sidecar distribution (+/-400V, 800 kW/row), ABB SACE Infinitus solid-state DC protection, busway to racks. Rack power: Delta 660 kW Power Rack (480 kW embedded BBU), e-Fuse (&lt;3 &mu;s), 90 kW DC/DC (800V to 50V, 98.5%), 140 kW In-Rack CDU (NVL72 certified), then 64:1 LLC converters to GPU. First Solar DC-Direct bypass. Eaton xStorage BESS (761-1200 VDC) for microgrid buffer and ride-through. Grid sell-back only. Full Layer 1-4 breakdown with specs.</div>
 </div>
 
 <div class="section-label">Solar</div>
@@ -88,13 +88,13 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>L-001: Solar Array Layout</h2>
 <span class="tag">First Solar DC-Direct</span>
 </div>
-<img src="blueprints/solar-layout.svg" alt="Solar Array Layout" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">First Solar Series 7 TR1 ground-mount array. 18 rows, ~4,500 panels, ~2.5 MW Zone A. 5-panel strings at 952V, buck-converted to 800V for direct feed to DSX bus — 97% path efficiency vs 88-92% traditional AC. Combiner boxes, DC-DC converters, string math, panel specs. Made in New Iberia, LA.</div>
+<img src="willow-glen/blueprints/solar-layout.svg" alt="Solar Array Layout" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">First Solar Series 7 TR1 panels (550W, American-made Ohio/New Iberia LA) ground-mount array. 18 rows, ~4,500 panels, ~2.5 MW Zone A. 5-panel strings at 952V, buck-converted to 800V DSX bus via TI GaN DC-DC converters — 97% path efficiency vs 88-92% traditional AC. Combiner boxes, string math, panel specs. Solar-direct to 800V DC bus eliminates AC conversion losses entirely.</div>
 </div>
 
 <footer>
 Tiger Compute Campus — Willow Glen Terminal, St. Gabriel, Louisiana<br>
-Louisiana's AI Infrastructure Initiative — (337) 448-4242 — louisianaai.net<br>
+Louisiana's AI Infrastructure Initiative — (337) 780-1535 — louisianaai.net<br>
 MVP Design Intent — All drawings require PE-stamped engineering review before construction
 </footer>
 

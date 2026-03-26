@@ -1,157 +1,132 @@
 # Mission Control — Project State
-Last updated: 2026-03-22
+Last updated: 2026-03-26
 
 ---
 
-## What Was Done (2026-03-21 Evening + 2026-03-22 Early AM)
+## SESSION SUMMARY — March 26, 2026
 
-### Louisiana's AI Infrastructure Initiative — CREATED
-- **The program**: statewide AI infrastructure connecting every Louisiana university, K-12 school, vendor, and investor
-- **Naming locked**: "Louisiana's AI Factory Infrastructure Initiative" (official) / "The AI Infrastructure Initiative" (short form). Mission critical.
-- **Two anchor sites**: Trappeys AI Factory (Lafayette/UL Lafayette) + Tiger Compute Campus (Willow Glen/LSU)
-- **Memory file**: `memory/projects/louisiana_initiative.md` — full program design, automation needs, broadcast plan
+### ROXY: AI Advantage Agent Platform (23 tools)
 
-### Tiger Compute Campus (/lsu) — BUILT FROM SCRATCH
-- Full page at adc3k.com/lsu — purple/gold, 900+ lines
-- 7 matching tabs: Overview, The Site, Technology, Education, Energy, Investors, Get Your School In
-- LSU research complete: 6 key contacts, all departments mapped, HPC gap documented
-- HiPerGator comparison visual (504 GPUs vs 62 — the chart that sells it)
-- NVIDIA hardware photos + DSX specs
-- 5-phase buildout: $8M start → $360M Y5 revenue → 1,000 racks → 130 MW
-- 5-year financial model: $626M revenue, $128M net, $93-190M incentives
-- 300-year site history (plantation → power station → AI factory)
-- K-12 pipeline (Iberville Parish zero STEM, BR Magnet, private schools)
-- Renewable fuel section (HVO, RNG, hydrogen — Hidrogenii next door)
-- Energy recovery (ORC 8-11 MW, absorption chillers, hydrokinetic)
-- Vendor stack (Cat CG260 hydrogen-ready, First Solar, Eaton, Diamond Green Diesel)
-- "Get Your School In" CTA with email capture form
-- Notion page created (161 blocks, matching Trappeys structure)
+Built ROXY from scratch — a tool-calling AI agent that runs on ADC's own GPU hardware. Started as a simple chatbot, ended as a 23-tool SaaS platform.
 
-### Trappeys Investor Page — MAJOR OVERHAUL
-- Updated with real CapEx ($4.5M), 5-year ROI ($47M net), 15 incentive programs
-- Added: Energy Architecture (800V DC comparison), Mission Critical, Education tab
-- Education: UL Lafayette (30 faculty, CS PhD president, zero GPUs, LITE center)
-- K-12: David Thibodaux STEM Magnet, Team Phenomena (5x world champ), I-Tech Center
-- NVIDIA Technology section with hardware photos
-- "Get Your School In" CTA form added
-- 7 matching tabs added (same as LSU)
+**Architecture:**
+- ReAct-style agent loop (max 3 tool iterations per request)
+- Vercel serverless functions (ai-advantage.info)
+- Primary: vLLM + Qwen 3 8B on RunPod (pod 38df7s7h46h8u4, $0.20/hr)
+- Fallback: Anthropic Claude (native tool calling)
+- vLLM restarted with `--enable-auto-tool-choice --tool-call-parser hermes` — full tool calling LIVE
+- Multi-turn conversation with client-side history (20 messages)
+- RAG index: 480 chunks from 21 files, TF-IDF keyword search
 
-### Research Completed
-- LSU departments, faculty, leadership, HPC gap (agent)
-- Baton Rouge K-12 schools, STEM programs, robotics teams (agent)
-- Lafayette K-12 schools, UL Lafayette deep dive (agent)
-- Baton Rouge supplement: BRCC, RPCC, LONI fiber, domain suggestions (agent)
-- Louisiana statewide: 45 universities, 69 school districts, supply chain (agent)
-- Renewable fuels: RNG, HVO, hydrogen, biodiesel, on-site production (agent)
-- Waste heat recovery: ORC, absorption chillers, thermal storage (agent)
-- Mississippi River hydrokinetic energy (agent)
-- HiPerGator specs and UF comparison (manual)
-- Gas generator sizing, N+1 redundancy, Cat/Cummins specs (manual)
-- 800V DC power architecture, Eaton Beam Rubin DSX (manual)
-- Battery storage: LFP manufacturers, Form Energy iron-air (manual)
-- DC-native facility concept (fans, lights, network all DC) (manual)
+**Sales & Closing Tools (7):**
+1. `search_playbooks` — RAG over 17 industry playbooks
+2. `build_quote` — Pricing calculator with industry recommendations
+3. `calculate_roi` — Dollar ROI math ("pays for itself in 3 days, $6,680/mo net")
+4. `generate_payment_link` — Stripe checkout in-chat (needs STRIPE_SECRET_KEY)
+5. `franchise_qualifier` — 8x revenue multi-location quotes with volume discounts
+6. `create_urgency_offer` — Time-limited offers with unique promo codes
+7. `generate_live_demo` — "Day in the life" before/after scenarios by industry
 
-### Image Generation
-- Built `skills/builtin/image_gen.py` — FLUX Schnell + Kontext
-- 49 T2I renders + 3 Kontext edits of real photos
-- Kontext activated on RunPod Hub
-- Gallery page (/trappeys-gallery) + comparison page (/renders-compare)
+**CRM & Outreach Tools (6):**
+8. `capture_lead` — Brevo CRM with auto-segmentation to 12 industry lists + 7 custom attributes
+9. `crm_lookup` — Returning visitor detection
+10. `send_followup_email` — Personalized HTML email with industry playbook highlights
+11. `send_sms` — Text messages via Brevo (needs SMS credits)
+12. `book_appointment` — Booking link generation
+13. `log_conversation` — Saves summaries for training data flywheel
 
-### Notion
-- Full workspace audit (161 objects)
-- Trappeys AI Center restructured (115 blocks)
-- LSU + Willow Glen page created (225 blocks)
-- Tier 2 vendor page created
-- 6 stale pages fixed
-- Site Assets reorganized (Willow Glen + Trappeys folders created, empty folders deleted)
+**Intelligence Tools (4):**
+14. `get_contact_info` — Prevents hallucinated details
+15. `business_lookup` — Web research on prospect's business
+16. `competitor_intel` — Positions against 11 competitors (ServiceTitan, Toast, Dentrix, etc.)
+17. `local_market_intel` — "Only 2 of 47 plumbers in Lafayette use AI" FOMO data
 
-### Other Pages Built/Updated
-- /power — 800V DC architecture with side-by-side comparison
-- /reference — article library (NVIDIA, Eaton, Cat, industry)
-- /trappeys-gallery — 56 numbered photos
-- /renders-compare — v1 vs v2 side-by-side
+**SaaS Marketing Suite (6):**
+18. `generate_ad_copy` — Facebook, Instagram, Google ads with multiple angles
+19. `generate_social_posts` — Week of social media content (tips, humor, behind-scenes)
+20. `respond_to_review` — Professional responses to positive/negative reviews
+21. `request_review` — Review request templates via email/SMS
+22. `generate_lead_magnet` — Downloadable guides and checklists by industry
+23. `build_email_campaign` — Drip campaign sequences (welcome, reactivation, referral)
 
----
+**Brevo CRM Setup:**
+- 7 custom contact attributes: INDUSTRY, INTEREST_LEVEL, RECOMMENDED_PLAN, SOURCE, ROXY_QUOTE, ROI_MONTHLY, LAST_ROXY_CHAT
+- 12 industry-specific lists (IDs 13-24) + master "AI Advantage Leads" (ID 9)
+- Auto-segmentation: every lead tagged by industry, interest level, source
+- 141 total contacts, 3 campaigns sent
+- BREVO_API_KEY + BREVO_LIST_ID set on Vercel
 
-## Project Status Board
+**Investor Pitch Updated:**
+- Slide 8 (Inside the Factory): "PROOF OF CONCEPT — TOKENS FLOWING TODAY" section with pulsing LIVE indicator
+- Operations Center page: "Tokens Flowing Today" section with production path timeline
+- Both deployed at adc3k.com
 
-| Project | Status | Next Action |
-|---------|--------|-------------|
-| **Initiative** | Program designed. Memory file created. Both site pages live with matching tabs. Statewide database built. | Domain, website, phone bot, press release, broadcast Monday |
-| **Tiger Compute Campus** | Page LIVE. Research complete. Notion page built. Financial model done. | Fix small errors on page. Site visit/drone footage. Contact Ram Ramanujam. |
-| **Trappeys** | Page LIVE. Education + Technology tabs added. Financial model done. | Fix alignment with LSU page. Monday vendor visits (Cat + First Solar). |
-| **ADC3K.com** | Main site LIVE. Why Louisiana content = Initiative foundation. | Pull incentive content into Initiative landing page. |
-| **Image Gen** | Skill built. Schnell + Kontext working. | Kontext edits of real Trappeys photos (when Scott provides direction). |
+**File Structure — ROXY Agent:**
+```
+ai-advantage/site/
+  api/chat.js                    — Agent entry point
+  lib/agent/loop.js              — ReAct agent loop (max 3 iterations)
+  lib/agent/providers.js         — vLLM + Anthropic abstraction
+  lib/agent/system-prompt.js     — Dynamic prompt builder
+  lib/tools/index.js             — Tool registry (23 tools)
+  lib/tools/*.js                 — Individual tool files
+  lib/rag/build-index.js         — Playbook index builder
+  lib/rag/playbook-index.json    — Pre-built search index (603 KB)
+  lib/util/rate-limiter.js       — 20 req/min per IP
+  index.html                     — Frontend with multi-turn chat + tool indicators
+  vercel.json                    — Function config (512MB, 30s, includeFiles)
+  package.json                   — Dependencies + build:index script
+```
 
----
+**Other:**
+- Renamed Ally → ROXY across all files
+- Fine-tuning dataset generated: 93 examples in data/roxy-training-data.jsonl
+- RunPod pod: 38df7s7h46h8u4, A4500, vLLM with tool calling enabled
+- Vercel env vars: ADC_INFERENCE_URL, ADC_MODEL, ANTHROPIC_API_KEY, BREVO_API_KEY, BREVO_LIST_ID, BOOKING_URL
 
-## File Structure — Key Assets
-
-### Live Pages (adc3k.com)
-| Page | URL | Lines | Purpose |
-|---|---|---|---|
-| LSU / Tiger Compute | /lsu | 900+ | Willow Glen partnership pitch |
-| Trappeys Investors | /trappeys-investors | 850+ | Trappeys investment case |
-| Power Architecture | /power | 400+ | 800V DC technical reference |
-| Reference Library | /reference | 200+ | Article collection |
-| Trappeys Gallery | /trappeys-gallery | 300+ | 56 numbered photos |
-| Render Comparison | /renders-compare | 200+ | v1 vs v2 side-by-side |
-| + 9 Trappeys mini-site pages | /trappeys, /trappeys-campus, etc. | — | Campus tour |
-
-### Memory Files
-| File | Lines | Content |
-|---|---|---|
-| projects/lsu_willow_glen.md | 420+ | LSU + Willow Glen master reference |
-| projects/trappeys.md | 350 | Trappeys master reference |
-| projects/louisiana_initiative.md | 160 | Initiative program design |
-| projects/willow_glen.md | 170 | Willow Glen infrastructure (original) |
-| projects/heat-reuse.md | — | Waste heat recovery research |
-| projects/mississippi_hydrokinetic.md | — | River turbine research |
-| feedback_image_gen.md | — | Image gen workflow rules |
-
-### Data Files
-| File | Lines | Content |
-|---|---|---|
-| data/louisiana-education-database.md | 388 | 45 universities, 69 districts, supply chain |
-| data/pipeline_sites.json | — | 16 pipeline corridor sites |
-| data/river_sites.json | — | 15 river corridor sites |
-
-### Business Model
-| File | Content |
-|---|---|
-| business-model/vendor-procurement-matrix.md | Full US vendor matrix, Phase 1 budget |
-| business-model/token-economics.md | Pricing, margins, competitive landscape |
-| business-model/power-economics.md | Henry Hub, cost per kWh, CCGT at scale |
-| business-model/trappeys-electrical-architecture.md | 800V DC design |
-| business-model/capex-model.md | Capital expenditure model |
-| + 8 more files | Scenarios, permits, ITEP, NPN, UL approach |
+### Prior Session (March 25, 2026)
+- EP002 published, $5M pitch deck, Operations Center, KLFT page
+- 22 vendors spec'd, 24 blueprints, 8 NVIDIA playbooks
+- 5 competitive intel reports, 4 Louisiana infrastructure reports
+- File structure reorganized into job folders
+- AI Advantage migrated to self-hosted model
 
 ---
 
-## RunPod
-- Pod ml4cl3icn37ys1: EXITED (not running)
-- Balance: $185.48
-- Hub endpoints: Schnell (active), Kontext (active), Dev (needs activation)
-- No custom endpoints (all deleted)
+## Action Items — Priority Order
+
+1. **Stripe account** — Set up Stripe, add STRIPE_SECRET_KEY to Vercel. Unlocks in-chat payments.
+2. **SMS credits** — Buy Brevo SMS credits. Unlocks text message follow-ups.
+3. **Cal.com/Calendly** — Set up booking tool, update BOOKING_URL on Vercel.
+4. **Fine-tune ROXY** — Upload roxy-training-data.jsonl to RunPod, fine-tune Qwen 3 8B.
+5. **Brevo drip campaigns** — Build industry-specific email automations using the 12 lists.
+6. **LinkedIn outreach** — CERAWeek contacts + Delta
+7. **NPN** — Follow up with Jim Hennessy (NVIDIA). Invitation only.
+8. **Episode 3 production** — briefing ready
+9. **Answering service on (337) 780-1535**
+10. **Louisiana Cat** (337-837-2476) — G3516J quote + lead times
+11. **MARLIE I expansion** — pick layout, begin site prep
 
 ---
 
-## Monday Action Items
-1. Visit Louisiana Cat Power Systems (337-374-1901) — New Iberia
-2. Visit First Solar factory — New Iberia airport
-3. Register domain for Initiative
-4. Set up Bland.ai phone bot
-5. Draft press release
-6. Final review of /lsu and /trappeys-investors pages
-7. NPN registration (5-minute form)
-8. Broadcast to news, universities, officials
+## Phone Numbers (LOCKED)
+- ADC business: (337) 780-1535 (AT&T, Scott's line)
+- Louisiana AI Initiative: (337) 448-4242 (Bland.ai bot)
+- AI Advantage: (337) 486-3149 (Bland.ai bot)
+- NEVER cross these numbers between sites
 
 ---
 
-## Next Session Starting Points
-1. Side-by-side page comparison — align LSU and Trappeys to match perfectly
-2. Initiative landing page — new domain
-3. Phone bot — Bland.ai trained on all content
-4. Press release draft
-5. Kontext photo edits (when Scott directs specific photos)
-6. Fix small errors Scott spotted on pages
+## Dual Power Stack (LOCKED)
+- Eaton Beam Rubin DSX = FACILITY power (800V bus, ORV3 sidecar)
+- Delta Electronics = RACK power (660 kW rack, e-Fuse, 90 kW DC/DC, 140 kW CDU)
+- Both on EVERY drawing, EVERY page, EVERY spec
+
+---
+
+## Raise
+- $5M seed round
+- MARLIE I owned (collateral)
+- Trappeys ~$1M acquisition
+- Pitch deck LIVE at /investor-pitch (14 slides, self-hosted proof of concept)
+- Master doc: business-model/MASTER-INVESTOR-PACKAGE.md

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KLFT 1.1 — Gulf Coast Emergency Drone Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#06b6d4;--solar:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,11,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-size:18px;font-weight:800;color:var(--bright)}
+.nav-brand span{color:var(--green);font-weight:600}
+.nav-links{display:flex;gap:20px;flex-wrap:wrap}
+.nav-links a{font-size:13px;font-weight:600;color:var(--dim);transition:color 0.2s}
+.nav-links a:hover{color:var(--bright);text-decoration:none}
+.nav-links a.active{color:var(--cyan)}
+
+/* HERO */
+.hero{text-align:center;padding:100px 24px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.hero .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-size:clamp(28px,4.5vw,52px);font-weight:900;color:var(--bright);line-height:1.1;max-width:850px;margin:0 auto}
+.hero h1 span{color:var(--cyan)}
+.hero .sub{font-size:17px;color:var(--dim);max-width:720px;margin:20px auto 0;line-height:1.7}
+.hero-stats{display:flex;justify-content:center;gap:24px;margin-top:32px;flex-wrap:wrap}
+.hero-stat{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--green);padding:8px 16px;background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.2);border-radius:6px}
+
+/* SECTIONS */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-border{border-top:1px solid var(--border)}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:32px;max-width:700px}
+
+/* RENDER GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:24px}
+.gallery img{width:100%;border-radius:10px;border:1px solid var(--border);display:block}
+.gallery .caption{font-size:11px;color:var(--dim);margin-top:6px;text-align:center;font-family:'IBM Plex Mono',monospace}
+
+/* MISSION CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:32px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card-cyan::before{background:linear-gradient(90deg,var(--cyan),var(--blue))}
+.card-green::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.card-amber::before{background:linear-gradient(90deg,var(--amber),var(--solar))}
+.card-red::before{background:linear-gradient(90deg,var(--red),var(--amber))}
+.card-purple::before{background:linear-gradient(90deg,var(--purple),var(--blue))}
+.card-blue::before{background:linear-gradient(90deg,var(--blue),var(--green))}
+.card .c-title{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.card .c-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.card p{font-size:13px;color:var(--dim);line-height:1.7}
+.card .c-stat{margin-top:14px;padding:10px 12px;background:var(--surface);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);line-height:1.7}
+
+/* HIGHLIGHT BOX */
+.highlight{padding:24px 28px;border-radius:10px;margin-top:32px}
+.hl-cyan{background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2)}
+.hl-green{background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.2)}
+.hl-amber{background:rgba(255,165,0,0.06);border:1px solid rgba(255,165,0,0.2)}
+.highlight h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.highlight p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:8px}
+.highlight p:last-child{margin-bottom:0}
+.highlight strong{color:var(--bright)}
+
+/* PHASE TABLE */
+.phase-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:32px}
+.phase{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
+.phase-num{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:800;color:var(--cyan);line-height:1}
+.phase-num small{display:block;font-size:11px;font-weight:600;color:var(--dim);margin-top:2px;letter-spacing:1px;text-transform:uppercase}
+.phase h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.phase p{font-size:13px;color:var(--dim);line-height:1.6}
+.phase .budget{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);margin-top:8px}
+
+/* INFRA GRID */
+.infra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:32px}
+.infra-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px}
+.infra-item .i-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.infra-item .i-value{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.infra-item .i-note{font-size:12px;color:var(--dim);line-height:1.5}
+
+/* NETWORK */
+.network{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px}
+.node{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.node .n-name{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.node .n-dist{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);margin-bottom:8px}
+.node .n-desc{font-size:12px;color:var(--dim);line-height:1.5}
+
+/* TWO-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:32px}
+.two-col img{width:100%;border-radius:10px;border:1px solid var(--border)}
+
+/* CTA / FOOTER */
+.cta{text-align:center;padding:80px 24px;border-top:1px solid var(--border)}
+.cta h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.cta p{font-size:14px;color:var(--dim);margin-bottom:8px}
+.cta a{color:var(--cyan);font-weight:700}
+.footer{text-align:center;padding:24px;font-size:11px;color:var(--dim);border-top:1px solid var(--border)}
+.footer a{color:var(--dim)}
+
+@media(max-width:768px){
+  .two-col,.phase{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;align-items:center}
+  .section{padding:48px 16px}
+  .hero{padding:60px 16px 48px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">ADC <span>3K</span></div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/trappeys">Trappeys</a>
+      <a href="/lsu">Willow Glen</a>
+      <a href="/adc3k-pod">ADC 3K Pod</a>
+      <a href="/hub">Hub</a>
+      <a href="/operations-center">Operations</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tag">Autonomous Airspace Operations</div>
+  <h1>KLFT 1.1 &mdash; <span>Gulf Coast Emergency Drone Hub</span></h1>
+  <p class="sub">Lafayette Regional Airport &mdash; the first NVIDIA Smart City airport in Louisiana. Autonomous drones for first responders, pipeline operators, and hurricane recovery.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">&lt;1 Mile from Trappeys</div>
+    <div class="hero-stat">Skydio X10 Fleet</div>
+    <div class="hero-stat">NVIDIA Jetson Edge</div>
+    <div class="hero-stat">FAA Part 108 Ready</div>
+  </div>
+</section>
+
+<!-- RENDER GALLERY -->
+<section class="section section-border">
+  <div class="section-label">Concept Renders</div>
+  <h2>KLFT Autonomous Operations</h2>
+  <p class="sub">Concept renders of the KLFT drone hub &mdash; terminal, SkyCommand center, active operations, and overhead view.</p>
+  <div class="gallery">
+    <div>
+      <img src="../renders/klft-terminal-realistic.jpg" alt="KLFT Terminal">
+      <div class="caption">Terminal Operations Center</div>
+    </div>
+    <div>
+      <img src="../renders/klft-skycommand-center.jpg" alt="SkyCommand Center">
+      <div class="caption">SkyCommand Center</div>
+    </div>
+    <div>
+      <img src="../renders/klft-drones-active.jpg" alt="Active Drone Operations">
+      <div class="caption">Active Drone Operations</div>
+    </div>
+    <div>
+      <img src="../renders/klft-overhead-realistic.jpg" alt="Overhead View">
+      <div class="caption">Overhead — Dock Grid Layout</div>
+    </div>
+    <div>
+      <img src="../renders/klft-tower-view-realistic.jpg" alt="Tower View">
+      <div class="caption">Control Tower View</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MISSION -->
+<section class="section section-border">
+  <div class="section-label">01 / The Mission</div>
+  <h2>Autonomous Drone Operations for the Gulf Coast</h2>
+  <p class="sub">KLFT is purpose-built for the missions that matter most &mdash; getting eyes in the sky when minutes count.</p>
+  <div class="two-col">
+    <div>
+      <p style="font-size:14px;color:var(--text);line-height:1.8;margin-bottom:16px">
+        Louisiana faces hurricanes, industrial corridor risks, and vast territory that ground-based response cannot cover fast enough. KLFT deploys autonomous drone operations from Lafayette Regional Airport &mdash; serving first responders, pipeline operators, search and rescue teams, and medical delivery networks.
+      </p>
+      <p style="font-size:14px;color:var(--text);line-height:1.8;margin-bottom:16px">
+        The hub operates Skydio X10 drones from permanent docks, managed by FlytBase AI-R fleet software, with NVIDIA Jetson edge compute at every dock for real-time AI inference. No pilot required. No waiver needed once Part 108 publishes.
+      </p>
+      <p style="font-size:14px;color:var(--text);line-height:1.8">
+        Every component is <strong style="color:var(--bright)">American-made</strong>. Every system is <strong style="color:var(--bright)">NVIDIA-accelerated</strong>. Every mission serves <strong style="color:var(--bright)">Louisiana first</strong>.
+      </p>
+    </div>
+    <img src="../renders/drone.jpg" alt="Skydio X10 Drone">
+  </div>
+</section>
+
+<!-- THE UNLOCK — FAA PART 108 -->
+<section class="section section-border">
+  <div class="section-label">02 / The Unlock</div>
+  <h2>FAA Part 108 &mdash; BVLOS Without Waivers</h2>
+  <p class="sub">The regulatory wall that has blocked commercial drone operations in the US is about to come down.</p>
+
+  <div class="highlight hl-cyan">
+    <h3>What Part 108 Changes</h3>
+    <p>The FAA Part 108 rule for Beyond Visual Line of Sight (BVLOS) operations is approaching <strong>final publication in spring 2026</strong>. The comment period closed October 2025 with over 3,000 responses. This replaces the current waiver-by-waiver system that has throttled the industry for years.</p>
+    <p>Two tiers: <strong>Operating Permits</strong> for lower-risk missions (pipeline inspection, agriculture) and <strong>Operating Certificates</strong> for complex operations (urban DFR, medical delivery, multi-vehicle). Covers drones up to <strong>1,320 lbs</strong>.</p>
+    <p>For KLFT, this is the unlock. Every mission type we are building for &mdash; hurricane response, pipeline inspection, DFR, SAR &mdash; becomes <strong>legally operational without individual waivers</strong> once Part 108 publishes.</p>
+  </div>
+
+  <div class="cards" style="margin-top:24px">
+    <div class="card card-cyan">
+      <div class="c-title">Skydio $52M Army Contract</div>
+      <div class="c-tag">Blue UAS Validated</div>
+      <p>3,000 X10D drones &mdash; the largest single-vendor military drone purchase in US history. Blue UAS approved. DJI locked out by the Countering CCP Drones Act. Skydio is the American standard.</p>
+    </div>
+    <div class="card card-green">
+      <div class="c-title">NVIDIA + Nokia AI-RAN</div>
+      <div class="c-tag">$1B Investment</div>
+      <p>ISAC (Integrated Sensing and Communications) turns cell towers into radar for drone tracking. C2 data links, threat detection, and UTM integration from existing tower infrastructure.</p>
+    </div>
+    <div class="card card-purple">
+      <div class="c-title">NVIDIA Smart Cities "Ports"</div>
+      <div class="c-tag">CERAWeek 2026</div>
+      <p>NVIDIA groups airports under "Ports" in their Smart Cities program. KLFT is positioned as a reference deployment site &mdash; Jetson + Metropolis + Omniverse at one airport.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HARDWARE STACK -->
+<section class="section section-border">
+  <div class="section-label">03 / Hardware Stack</div>
+  <h2>American-Made. NVIDIA-Accelerated.</h2>
+  <p class="sub">Every component in the KLFT stack is US-manufactured, Blue UAS compliant, and built on NVIDIA silicon.</p>
+
+  <div class="cards">
+    <div class="card card-cyan">
+      <div class="c-title">Skydio X10 + Dock</div>
+      <div class="c-tag">Drone Platform</div>
+      <p>Autonomous flight, 6 cameras, thermal imaging, GPS-denied navigation. The Dock is 2x2 ft, ~70 lbs &mdash; bolts to a concrete pad. No container, no hangar.</p>
+      <div class="c-stat">Blue UAS List | Made in USA | $52M Army contract</div>
+    </div>
+    <div class="card card-green">
+      <div class="c-title">NVIDIA Jetson Orin NX</div>
+      <div class="c-tag">Edge Compute</div>
+      <p>16GB, dock-side deployment. Runs real-time AI inference on thermal, visual, and LiDAR data. Object detection, anomaly flagging, and autonomous decision-making at the edge.</p>
+      <div class="c-stat">100 TOPS | 15W-25W | Jetson ecosystem</div>
+    </div>
+    <div class="card card-amber">
+      <div class="c-title">FlytBase AI-R</div>
+      <div class="c-tag">Fleet Management</div>
+      <p>Cloud-native fleet orchestration. Multi-vehicle scheduling, mission planning, live telemetry, autonomous dock management. Integrates with Skydio SDK and NVIDIA Metropolis.</p>
+      <div class="c-stat">Multi-dock | Multi-vehicle | API-first</div>
+    </div>
+    <div class="card card-red">
+      <div class="c-title">Dell PowerEdge R660xs</div>
+      <div class="c-tag">Mission Services</div>
+      <p>Xeon 4416+, 128GB DDR5. Two servers for Phase 1 mission services &mdash; telemetry ingestion, flight planning, safety supervisor, ADS-B integration. No GPU needed until Phase 3.</p>
+      <div class="c-stat">Phase 1 | Redundant pair | On-prem</div>
+    </div>
+  </div>
+</section>
+
+<!-- NVIDIA CONVERGENCE -->
+<section class="section section-border">
+  <div class="section-label">04 / NVIDIA Smart City Convergence</div>
+  <h2>Three Ecosystems. One Airport.</h2>
+  <p class="sub">KLFT sits at the intersection of three NVIDIA ecosystems that no other small airport in the country has deployed together.</p>
+
+  <div class="cards">
+    <div class="card card-green">
+      <div class="c-title">Jetson</div>
+      <div class="c-tag">Edge AI at Every Dock</div>
+      <p>Skydio X10 runs on Jetson Orin. Every dock gets a Jetson Orin NX for local inference. Real-time object detection, thermal analysis, and autonomous decision-making without cloud round-trips.</p>
+    </div>
+    <div class="card card-purple">
+      <div class="c-title">Metropolis</div>
+      <div class="c-tag">Video AI &mdash; VSS Blueprint</div>
+      <p>NVIDIA Metropolis Video Storage Service (VSS) Blueprint for airport camera AI. Open source. Runway incursion detection, perimeter security, wildlife hazard identification &mdash; all running on existing camera infrastructure.</p>
+    </div>
+    <div class="card card-blue">
+      <div class="c-title">Omniverse</div>
+      <div class="c-tag">Airfield Digital Twin</div>
+      <p>Smart City AI Blueprint for a live 3D digital twin of the airfield. Drone positions, weather overlays, flight corridors, dock status &mdash; all visualized in real time. Mission planning in simulation before live deployment.</p>
+    </div>
+  </div>
+
+  <div class="highlight hl-green" style="margin-top:24px">
+    <h3>Why This Matters to NVIDIA</h3>
+    <p>NVIDIA needs <strong>reference deployments</strong> to prove their platform works at real sites. Major airports (Bengaluru, Toronto Pearson, Heathrow) run Metropolis. No small US airport runs all three. KLFT can be the first &mdash; and it is less than a mile from Trappeys, where the GPU compute lives.</p>
+  </div>
+</section>
+
+<!-- PHASE ROADMAP -->
+<section class="section section-border">
+  <div class="section-label">05 / Phase Roadmap</div>
+  <h2>From Single Dock to 50+ Concurrent Ops</h2>
+  <p class="sub">Four phases over 36 months. Each phase has clear exit criteria before the next begins.</p>
+
+  <div class="phase-grid">
+    <div class="phase">
+      <div class="phase-num">01<small>Months 1-6</small></div>
+      <div>
+        <h3>Foundation</h3>
+        <p>Single-operator, single Skydio vehicle, VLOS/EVLOS operations. Mission services on two Dell servers. 10 operational missions as exit criteria. Prove the platform works.</p>
+        <div class="budget">$800K &mdash; $1.2M</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">02<small>Months 6-12</small></div>
+      <div>
+        <h3>Multi-Vehicle</h3>
+        <p>Multiple drones, Safety Supervisor on dedicated hardware, ADS-B integration, airspace deconfliction. FlytBase fleet management online. Concurrent missions.</p>
+        <div class="budget">$600K &mdash; $1M</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">03<small>Months 12-24</small></div>
+      <div>
+        <h3>AI + BVLOS</h3>
+        <p>NVIDIA L40S inference node online. 3-5 docks deployed. Full BVLOS readiness with DAA sensors. Metropolis video AI on airport cameras. Digital twin in Omniverse.</p>
+        <div class="budget">$1.5M &mdash; $2.5M</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">04<small>Months 24-36</small></div>
+      <div>
+        <h3>Full Scale</h3>
+        <p>50+ concurrent operations. 10+ dock sites across Acadiana. AI-RAN integration for beyond-line-of-sight C2 links. SkyCommand platform licensed to other airports.</p>
+        <div class="budget">$600K &mdash; $1.2M</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIRST RESPONDER USE CASES -->
+<section class="section section-border">
+  <div class="section-label">06 / First Responder Use Cases</div>
+  <h2>Missions That Save Lives</h2>
+  <p class="sub">Every mission type KLFT supports is driven by real operational need in the Gulf Coast region.</p>
+
+  <div class="cards">
+    <div class="card card-red">
+      <div class="c-title">Hurricane Damage Assessment</div>
+      <div class="c-tag">Disaster Response</div>
+      <p>Autonomous survey flights over impact zones within hours of landfall. Thermal + visual AI identifies structural damage, downed power lines, flooding extent, and survivors. GTC 2026 T-Mobile demo showed 5x faster assessment.</p>
+      <div class="c-stat">5x faster than ground survey | Autonomous grid patterns</div>
+    </div>
+    <div class="card card-amber">
+      <div class="c-title">Pipeline &amp; Refinery Inspection</div>
+      <div class="c-tag">Industrial Corridor</div>
+      <p>Thermal imaging detects methane leaks, corrosion, and equipment anomalies along the I-10 industrial corridor. Scheduled autonomous flights replace manned helicopter inspection at a fraction of the cost.</p>
+      <div class="c-stat">Thermal + AI vision | Scheduled autonomous flights</div>
+    </div>
+    <div class="card card-purple">
+      <div class="c-title">Search &amp; Rescue</div>
+      <div class="c-tag">SAR Operations</div>
+      <p>Thermal signatures in disaster zones, flood waters, and dense vegetation. AI-powered person detection works day or night. Covers more ground in 30 minutes than a search team covers in 8 hours.</p>
+      <div class="c-stat">Thermal person detection | Day/night operations</div>
+    </div>
+    <div class="card card-cyan">
+      <div class="c-title">Drone as First Responder</div>
+      <div class="c-tag">DFR &mdash; Law Enforcement</div>
+      <p>Less than 2 minutes on scene vs 8+ for a patrol car. Live video to dispatch. 30+ US police and fire departments already using DFR. KLFT brings it to Lafayette and Acadiana.</p>
+      <div class="c-stat">&lt;2 min response | 30+ US departments active</div>
+    </div>
+    <div class="card card-green">
+      <div class="c-title">Medical Delivery</div>
+      <div class="c-tag">Critical Supply Chain</div>
+      <p>AED, blood products, antivenom, and medication delivery to rural Acadiana locations where ground transport takes 30+ minutes. Dock-to-destination autonomous flights.</p>
+      <div class="c-stat">Rural reach | Time-critical payloads</div>
+    </div>
+    <div class="card card-blue">
+      <div class="c-title">AI-RAN Integration</div>
+      <div class="c-tag">NVIDIA + Nokia</div>
+      <p>ISAC sensing from cell towers provides radar tracking, C2 data links, and threat detection for BVLOS operations. Extends operational range far beyond visual line of sight using existing tower infrastructure.</p>
+      <div class="c-stat">$1B NVIDIA-Nokia investment | Cell tower radar</div>
+    </div>
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE -->
+<section class="section section-border">
+  <div class="section-label">07 / Infrastructure</div>
+  <h2>Modern Utilities. Zero Flood Risk.</h2>
+  <p class="sub">The airport corridor has some of the newest infrastructure in Lafayette &mdash; buried utilities, LED lighting, and municipal power.</p>
+
+  <div class="infra-grid">
+    <div class="infra-item">
+      <div class="i-label">Power</div>
+      <div class="i-value">LUS Municipal</div>
+      <div class="i-note">Not ERCOT, not Entergy. Same substation as Trappeys. Municipal rates, local control.</div>
+    </div>
+    <div class="infra-item">
+      <div class="i-label">Fiber</div>
+      <div class="i-value">LFT Fiber &mdash; 1 Gbps</div>
+      <div class="i-note">Already has partnership at airport. LONI accessible via UL Lafayette for research bandwidth.</div>
+    </div>
+    <div class="infra-item">
+      <div class="i-label">Natural Gas</div>
+      <div class="i-value">ATMOS Energy</div>
+      <div class="i-note">Same Evangeline Thruway corridor. Backup generation fuel if needed.</div>
+    </div>
+    <div class="infra-item">
+      <div class="i-label">Flood Zone</div>
+      <div class="i-value">Zone X &mdash; No Flood</div>
+      <div class="i-note">Better flood status than Trappeys. No FEMA flood insurance requirement.</div>
+    </div>
+    <div class="infra-item">
+      <div class="i-label">Utilities</div>
+      <div class="i-value">Buried &amp; Modern</div>
+      <div class="i-note">Hwy 90 / north Evangeline corridor. LED lighting. Already modernized. No overhead line risk.</div>
+    </div>
+    <div class="infra-item">
+      <div class="i-label">Location</div>
+      <div class="i-value">&lt;1 Mile from Trappeys</div>
+      <div class="i-note">Same infrastructure corridor. GPU compute at Trappeys serves KLFT AI workloads.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART OF THE NETWORK -->
+<section class="section section-border">
+  <div class="section-label">08 / Part of the Network</div>
+  <h2>Connected to Every ADC Facility</h2>
+  <p class="sub">KLFT is not a standalone project. It plugs into the full ADC infrastructure network across Louisiana.</p>
+
+  <div class="network">
+    <div class="node">
+      <div class="n-name">Trappeys Cannery</div>
+      <div class="n-dist">0.5 miles</div>
+      <div class="n-desc">Solar AI factory. GPU compute for KLFT inference workloads. 36-84 NVL72 racks at scale.</div>
+    </div>
+    <div class="node">
+      <div class="n-name">MARLIE I</div>
+      <div class="n-dist">1 mile</div>
+      <div class="n-desc">Command center + edge AI. Backup NOC, R&D, staging. 8 NVL72 racks, 576 GPUs.</div>
+    </div>
+    <div class="node">
+      <div class="n-name">UL Lafayette</div>
+      <div class="n-dist">3 miles</div>
+      <div class="n-desc">Research university. LONI network access. Workforce pipeline. Grant partnerships.</div>
+    </div>
+    <div class="node">
+      <div class="n-name">Willow Glen</div>
+      <div class="n-dist">60 miles via fiber</div>
+      <div class="n-desc">Primary hub. InfiniBand spine. Base Command Manager. SuperPOD home. 100+ MW at scale.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Ready to Build</h2>
+  <p>Engineering package complete. FAA Part 108 approaching. Hardware stack locked.</p>
+  <p>KLFT is the first NVIDIA Smart City airport in Louisiana.</p>
+  <p style="margin-top:16px"><a href="mailto:scott@adc3k.com">scott@adc3k.com</a> &nbsp;|&nbsp; <a href="https://adc3k.com">adc3k.com</a> &nbsp;|&nbsp; (337) 780-1535</p>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Advantage Design &amp; Construction &mdash; Lafayette, Louisiana</p>
+  <p style="margin-top:4px">&copy; 2026 ADC. All rights reserved.</p>
+</div>
+
+</body>
+</html>

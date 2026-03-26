@@ -5,8 +5,8 @@ SVG output
 """
 import svgwrite
 
-W, H = 1400, 900
-OUT = "adc3k-deploy/blueprints/cooling-schematic.svg"
+W, H = 1400, 960
+OUT = "adc3k-deploy/willow-glen/blueprints/cooling-schematic.svg"
 
 
 def box(dwg, x, y, w, h, label, sublabel="", color="#1a1a2e", border="#3b82f6", text_color="#e0e0e0", font=11):
@@ -134,7 +134,7 @@ def build():
     arrow_right(dwg, hx_x - 2, 200, "#4fc3f7")
 
     box(dwg, hx_x, hx_y, 180, 200,
-        "PLATE HEAT\nEXCHANGERS\n(PHX)\n\nRiver Water (Primary)\nvs\nFacility Loop (Secondary)\n\nIsolates river from\nIT cooling loop",
+        "PLATE HEAT\nEXCHANGERS\n(PHX)\n\nMississippi River +\nPlate Heat Exchangers\n\nIsolates river from\nIT cooling loop",
         "Titanium plates | Corrosion-resistant",
         border="#22c55e", text_color="#86efac")
 
@@ -160,22 +160,37 @@ def build():
     # CDU Bank
     cdu_y = 100
     box(dwg, cdu_x, cdu_y, 160, 180,
-        "COOLANT\nDISTRIBUTION\nUNITS (CDUs)\n\nFacility Loop In\nvs\nRack Loop Out\n\nPumps + Controls\nFlow Regulation",
+        "CoolIT CHx2000\nCDUs (2,000 kW)\n\nFacility Loop In\nvs\nRack Loop Out\n\nStaubli UQD\nQuick-Disconnect",
         "Per-row CDU pairs | N+1",
         border="#76b900", text_color="#76b900")
 
     # ════════════════════════════════════════════
+    # STAGE 4B: DELTA 140 kW IN-RACK CDU
+    # ════════════════════════════════════════════
+    delta_cdu_x = 990
+    delta_cdu_y = 120
+
+    pipe(dwg, [(960, 160), (delta_cdu_x, 160)], "#76b900", 3)
+    arrow_right(dwg, delta_cdu_x - 2, 160, "#76b900")
+    temp_label(dwg, 965, 150, "TO IN-RACK CDU", "#76b900")
+
+    box(dwg, delta_cdu_x, delta_cdu_y, 130, 80,
+        "DELTA 140 kW\nIN-RACK CDU\n4RU | NVL72 Cert\n\nPer-Rack Precision\nCooling Control",
+        "Between row CDU & manifold",
+        border="#00bcd4", text_color="#00e5ff")
+
+    # ════════════════════════════════════════════
     # STAGE 5: RACK COOLING MANIFOLDS
     # ════════════════════════════════════════════
-    rack_x = 1020
+    rack_x = 1160
     manifold_y = 110
 
-    pipe(dwg, [(960, 160), (rack_x, 160)], "#76b900", 3)
+    pipe(dwg, [(delta_cdu_x + 130, 160), (rack_x, 160)], "#76b900", 3)
     arrow_right(dwg, rack_x - 2, 160, "#76b900")
-    temp_label(dwg, 965, 150, "TO RACKS 45C (113F)", "#76b900")
+    temp_label(dwg, delta_cdu_x + 135, 150, "TO RACKS 45C (113F)", "#76b900")
 
     # Rack manifold header
-    box(dwg, rack_x, manifold_y, 140, 60,
+    box(dwg, rack_x, manifold_y, 120, 60,
         "SUPPLY\nMANIFOLD\nHEADER",
         "",
         border="#76b900", text_color="#76b900", font=10)
@@ -186,32 +201,32 @@ def build():
 
     for i, (ry, label) in enumerate(zip(rack_positions, rack_labels)):
         # Supply down
-        pipe(dwg, [(rack_x + 70, manifold_y + 60), (rack_x + 70, ry)], "#76b900", 2)
+        pipe(dwg, [(rack_x + 60, manifold_y + 60), (rack_x + 60, ry)], "#76b900", 2)
 
         # Rack box
-        box(dwg, rack_x, ry, 140, 55,
+        box(dwg, rack_x, ry, 120, 55,
             f"{label}\n130 kW each\nLiquid Cooled",
             "Cold plates on GPU/HBM",
             color="#111a00", border="#76b900", text_color="#76b900", font=9)
 
         # Return right side
-        pipe(dwg, [(rack_x + 140, ry + 28), (rack_x + 180, ry + 28)], "#ff6b6b", 2)
+        pipe(dwg, [(rack_x + 120, ry + 28), (rack_x + 155, ry + 28)], "#ff6b6b", 2)
 
     # Return manifold
-    ret_x = rack_x + 180
-    box(dwg, ret_x, manifold_y, 140, 60,
+    ret_x = rack_x + 155
+    box(dwg, ret_x, manifold_y, 110, 60,
         "RETURN\nMANIFOLD\nHEADER",
         "",
         border="#ff6b6b", text_color="#ff6b6b", font=10)
 
     # Return lines to return manifold
     for ry in rack_positions:
-        pipe(dwg, [(ret_x + 70, ry + 28), (ret_x + 70, manifold_y + 60)], "#ff6b6b", 2)
+        pipe(dwg, [(ret_x + 55, ry + 28), (ret_x + 55, manifold_y + 60)], "#ff6b6b", 2)
 
-    # Return from manifold back to CDU
-    pipe(dwg, [(ret_x + 70, manifold_y + 60), (ret_x + 70, 620), (cdu_x + 80, 620),
+    # Return from manifold back to CDU (via Delta in-rack CDU)
+    pipe(dwg, [(ret_x + 55, manifold_y + 60), (ret_x + 55, 620), (cdu_x + 80, 620),
                (cdu_x + 80, 280)], "#ff6b6b", 3)
-    temp_label(dwg, ret_x + 80, 615, "RETURN FROM RACKS 55-60C (131-140F)", "#ff6b6b")
+    temp_label(dwg, ret_x + 65, 615, "RETURN FROM RACKS 55-60C (131-140F)", "#ff6b6b")
 
     # CDU return to HX
     pipe(dwg, [(cdu_x, 250), (hx_x + 180, 250), (hx_x + 180, loop_y + 60),
@@ -224,7 +239,7 @@ def build():
     whr_y = 650
     box(dwg, 550, whr_y, 200, 70,
         "ORC WASTE HEAT\nRECOVERY (FUTURE)\n8-11 MW from exhaust",
-        "Ormat Technologies | $10-18M/yr value",
+        "Ormat Technologies",
         border="#fbbf24", text_color="#fbbf24")
 
     box(dwg, 800, whr_y, 200, 70,
@@ -241,11 +256,12 @@ def build():
     # TEMPERATURE LEGEND
     # ════════════════════════════════════════════
     ly = 760
-    dwg.add(dwg.rect((170, ly - 5), (500, 55), rx=6, fill="#111318", stroke="#1e2230"))
+    dwg.add(dwg.rect((170, ly - 5), (500, 70), rx=6, fill="#111318", stroke="#1e2230"))
 
     legend_items = [
         ("#4fc3f7", "Cold Supply (River Water 68-82F)"),
         ("#22c55e", "Facility Loop (Treated 75-85F)"),
+        ("#00e5ff", "Delta 140 kW In-Rack CDU (4RU, NVL72 Cert)"),
         ("#76b900", "Rack Supply (45C / 113F)"),
         ("#ff6b6b", "Warm Return (55-60C / 131-140F)"),
         ("#fbbf24", "Future Waste Heat Recovery"),
@@ -287,7 +303,7 @@ def build():
         "2. Once-through cooling was the original system for the 2,200 MW Entergy plant — intake infrastructure may still exist (verify on site visit)",
         "3. Plate heat exchangers isolate river water from the facility cooling loop — prevents contamination of IT systems",
         "4. NVIDIA NVL72 racks use direct liquid cooling with 45C (113F) hot water supply — no chillers needed in most conditions",
-        "5. CDUs regulate flow and temperature per rack row — N+1 redundancy ensures no single point of failure",
+        "5. CoolIT CHx2000 row-level CDUs (2,000 kW) + Delta 140 kW In-Rack CDUs (4RU, NVL72 certified) for per-rack precision cooling — Staubli UQD — N+1",
         "6. LPDES permit LA0005851 already transferred to Willow Glen Ventures (Aug 2019) — thermal discharge pre-permitted",
         "7. ORC waste heat recovery (future) can generate 8-11 MW of electricity from generator exhaust — Ormat Technologies",
         "8. Absorption chillers (future) can produce 11,000+ tons of cooling from waste heat — eliminates mechanical cooling entirely",
@@ -302,5 +318,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/willow-glen/blueprints", exist_ok=True)
     build()

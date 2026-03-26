@@ -9,7 +9,7 @@ Usable per floor: 24 ft wide x 37 ft long
 import svgwrite
 
 W, H = 1600, 1100
-OUT = "adc3k-deploy/blueprints/marlie-floor-plan.svg"
+OUT = "adc3k-deploy/marlie/blueprints/floor-plan.svg"
 
 ACCENT = "#3b82f6"
 BG = "#0a0b0f"
@@ -134,7 +134,7 @@ def draw_floor(dwg, ox, oy, floor_name, system_num):
     # ── CDU AREA — north end (top), 24 ft wide x 3 ft deep ──
     cdu_h = ft(CDU_ZONE_FT)
     box(dwg, ox + 1, oy + 1, bw - 2, cdu_h - 2,
-        f"CDU / COOLING CONNECTIONS\n{BLDG_W_FT}' x {CDU_ZONE_FT}'",
+        f"CoolIT CHx200 CDU (200 kW)\n{BLDG_W_FT}' x {CDU_ZONE_FT}'",
         color="#0a1628", border="#4fc3f7", text_color="#4fc3f7", font=7)
 
     # Cooling pipe stubs
@@ -149,7 +149,7 @@ def draw_floor(dwg, ox, oy, floor_name, system_num):
     elec_y = oy + ft(USABLE_L_FT) - ft(ELEC_ZONE_FT)
     elec_h = ft(ELEC_ZONE_FT)
     box(dwg, ox + 1, elec_y + 1, bw - 2, elec_h - 2,
-        f"ELEC PANEL (EATON 800V DC)\n{BLDG_W_FT}' x {ELEC_ZONE_FT}'",
+        f"EATON BEAM RUBIN DSX + ABB SACE Infinitus\n{BLDG_W_FT}' x {ELEC_ZONE_FT}'",
         color="#111318", border="#8b5cf6", text_color="#c4b5fd", font=7)
 
     # ── RACK ZONE — center row, 31 ft long ──
@@ -299,7 +299,7 @@ def draw_cross_section(dwg, ox, oy, section_w, section_h):
     # Roof
     roof_y = f2_y - 4
     dwg.add(dwg.line((ox, roof_y), (ox + section_w, roof_y), stroke="#fbbf24", stroke_width=2))
-    dwg.add(dwg.text("300 kW SOLAR ROOF", insert=(ox + section_w / 2, roof_y - 5),
+    dwg.add(dwg.text("300 kW SOLAR — First Solar Series 7 TR1 (550W)", insert=(ox + section_w / 2, roof_y - 5),
                      text_anchor="middle", fill="#fbbf24", font_size=7,
                      font_family="Arial", font_weight="bold"))
 
@@ -408,8 +408,8 @@ def build():
         f"6. 2 complete SuperPODs: System 1 (Floor 1) + System 2 (Floor 2). Each independently cooled and powered.",
         f"7. NVL72 rack: ~2' wide x 4' deep x 6.5' tall, 130 kW, 45C hot water, ~2,500 lbs loaded.",
         f"8. Floor loading: NVL72 ~250 lb/sq ft concentrated — structural reinforcement at all rack positions required.",
-        f"9. 800V DC power distribution via overhead busway from Eaton panel to each rack position.",
-        f"10. CDU connections at north wall for shortest pipe run to exterior dry coolers / cooling tower.",
+        f"9. 800V DC power via Eaton Beam Rubin DSX + ORV3 Sidecar, ABB SACE Infinitus DC protection, overhead busway to each rack.",
+        f"10. CoolIT CHx200 (200 kW) CDU connections at north wall, Staubli UQD quick-disconnects, BAC TrilliumSeries outside.",
         f"11. Total: {total_racks} racks, {total_gpus} GPUs, {total_kw/1000:.1f} MW IT, est. {total_kw * 1.2 / 1000:.1f} MW total with cooling.",
     ]
     for i, note in enumerate(notes):
@@ -432,5 +432,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/marlie/blueprints", exist_ok=True)
     build()

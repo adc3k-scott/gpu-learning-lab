@@ -29,43 +29,43 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <div class="section-label">Site</div>
 <div class="sheet">
 <div class="sheet-header"><h2>S-001: Site Plan</h2><span class="tag">0.60 Acres</span></div>
-<img src="blueprints/marlie-site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="marlie/blueprints/site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">24x40 ft building on 3 parcels (0.60 acres). Concrete pad for generators and dry coolers. 3 blighted structures for Phase 1 demolition. 0.5 miles from Trappeys. 0.5 miles from UL Lafayette. 60 miles from Willow Glen via dedicated fiber.</div>
 </div>
 
 <div class="section-label">Electrical</div>
 <div class="sheet">
 <div class="sheet-header"><h2>E-001: Electrical Single-Line Diagram</h2><span class="tag">800V DC Native</span></div>
-<img src="blueprints/marlie-electrical-sld.svg" alt="Electrical SLD" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Cat G3520C generators (1.5 MW, N+1) through Eaton Beam Rubin DSX to 800V DC bus. Solar DC-Direct + 600 kWh battery. LUS grid backup. Diesel emergency. 8 NVL72 racks across 2 floors.</div>
+<img src="marlie/blueprints/electrical-sld.svg" alt="Electrical SLD" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Caterpillar G3512H generators (1.03 MW each, N+1 = 2 units) through Eaton Beam Rubin DSX rectification (facility level) with ORV3 sidecar distribution to 800V DC bus. ABB SACE Infinitus solid-state DC breakers. Delta 660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU) with e-Fuse SiC switch (&lt;3 &mu;s fault cutoff) and 90 kW DC/DC shelf (800V to 50V, 98.5%, NVIDIA MGX) at rack level. Delta 140 kW In-Rack CDU (4RU, NVL72 certified). TI 800V-to-6V GaN + Infineon CoolGaN IBC for final conversion. First Solar DC-Direct + Eaton xStorage BESS (600 kWh LFP, 761-1200 VDC). LUS grid backup. Diesel emergency. 8 NVL72 racks across 2 floors. Eaton powers the facility. Delta powers the rack.</div>
 </div>
 
 <div class="section-label">Architectural</div>
 <div class="sheet">
 <div class="sheet-header"><h2>A-001: Floor Plans — System 1 & System 2</h2><span class="tag">2 Floors | 4 Racks Each</span></div>
-<img src="blueprints/marlie-floor-plan.svg" alt="Floor Plans" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="marlie/blueprints/floor-plan.svg" alt="Floor Plans" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">Side-by-side floor plans. Downstairs (System 1): 4 NVL72 racks, hot/cold aisle, CDU pair, electrical panel. Upstairs (System 2): identical layout. Staircase shown. Building cross-section. Same footprint as a 40-ft shipping container.</div>
 </div>
 
 <div class="section-label">Cooling</div>
 <div class="sheet">
-<div class="sheet-header"><h2>C-001: Cooling Flow Schematic</h2><span class="tag">Dry Coolers</span></div>
-<img src="blueprints/marlie-cooling-schematic.svg" alt="Cooling Schematic" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Dry coolers on concrete pad (no water tower, no river). Facility loop to 2 CDU pairs (1 per floor). Rack manifolds for all 8 NVL72 racks. 45C hot water supply. Temperature labels throughout.</div>
+<div class="sheet-header"><h2>C-001: Cooling Flow Schematic</h2><span class="tag">BAC Adiabatic + CoolIT CDU</span></div>
+<img src="marlie/blueprints/cooling-schematic.svg" alt="Cooling Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">BAC TrilliumSeries Adiabatic Coolers on concrete pad (44% energy reduction vs dry cooling, adiabatic assist for 95F+ Lafayette summers). Facility loop to 2 CoolIT CHx200 CDU pairs (200 kW each, 1 pair per floor). Staubli UQD quick-disconnect couplings (NVIDIA-approved, drip-free). Delta 140 kW In-Rack CDU (4RU, NVL72 certified) at each rack converts row-level coolant to chip-level cooling. Rack manifolds for all 8 NVL72 racks. 45C hot water supply, 55-65C return. Munters HCD desiccant dehumidifier for humidity control. Cooling chain: BAC Adiabatic (external) -> CoolIT CHx200 (row-level) -> Delta 140 kW (in-rack) -> NVIDIA manifolds (chip-level).</div>
 </div>
 
 <div class="section-label">Power</div>
 <div class="sheet">
 <div class="sheet-header"><h2>P-001: Power Distribution Schematic</h2><span class="tag">4-Layer Hierarchy</span></div>
-<img src="blueprints/marlie-power-distribution.svg" alt="Power Distribution" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">4-layer hierarchy — DIFFERENT from other sites: Solar (offset) + Gas (backbone) + Grid (LUS backup) + Diesel (emergency). Grid is backup here, not sell-back. Full fuel-to-chip path through Eaton 800V DC.</div>
+<img src="marlie/blueprints/power-distribution.svg" alt="Power Distribution" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">4-layer hierarchy — DIFFERENT from other sites: Solar (offset) + Gas (backbone, Cat G3512H) + Grid (LUS backup) + Diesel (emergency). Grid is backup here, not sell-back. Facility power: Eaton Beam Rubin DSX 800V DC rectification with ORV3 sidecar distribution (+/-400V, 800 kW/row). ABB SACE Infinitus DC protection. Eaton xStorage BESS (761-1200 VDC) for microgrid islanding. Rack power: Delta 660 kW Power Rack (480 kW embedded BBU), e-Fuse (&lt;3 &mu;s), 90 kW DC/DC (800V to 50V, 98.5%), 140 kW In-Rack CDU (NVL72 certified).</div>
 </div>
 
 <div class="section-label">Solar</div>
 <div class="sheet">
 <div class="sheet-header"><h2>L-001: Solar & Battery Layout</h2><span class="tag">300 kW + 600 kWh BESS</span></div>
-<img src="blueprints/marlie-solar-layout.svg" alt="Solar Layout" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">960 sq ft roof layout with First Solar panels. Ground-mount supplement on adjacent parcels. 600 kWh LFP battery for ATS bridge and peak shaving. DC-Direct to 800V bus.</div>
+<img src="marlie/blueprints/solar-layout.svg" alt="Solar Layout" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">960 sq ft roof layout with First Solar Series 7 TR1 panels (550W, American-made Ohio/New Iberia LA). 5-panel strings at 952V, buck to 800V DSX bus — 97% path efficiency. Ground-mount supplement on adjacent parcels. Eaton xStorage BESS (600 kWh LFP, 761-1200 VDC) for ATS bridge and peak shaving. DC-Direct to 800V bus via TI GaN converters.</div>
 </div>
 
 <footer>

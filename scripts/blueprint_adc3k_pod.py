@@ -24,7 +24,7 @@ YELLOW = "#ffd60a"
 ORANGE = "#ff8c00"
 CYAN = "#00e5ff"
 
-OUT = Path(__file__).resolve().parent.parent / "adc3k-deploy" / "blueprints" / "adc3k-pod-layout.svg"
+OUT = Path(__file__).resolve().parent.parent / "adc3k-deploy" / "adc3k-pod" / "blueprints" / "adc3k-pod-layout.svg"
 
 W, H = 1800, 2800
 
@@ -40,9 +40,9 @@ def draw_title_block(dwg, g):
 
     g.add(dwg.text("ADC 3K POD — 40-FT AI COMPUTE MODULE", insert=(col1, y0 + 24),
                     fill=GREEN, font_size="18px", font_family="monospace", font_weight="bold"))
-    g.add(dwg.text("10x NVL72 Racks | 720 GPUs | 1 SuperPOD + Network + Storage",
+    g.add(dwg.text("10x NVIDIA NVL72 (GB200/Vera Rubin) | 720 GPUs | 1 SuperPOD + Network + Storage",
                     insert=(col1, y0 + 44), fill=WHITE, font_size="12px", font_family="monospace"))
-    g.add(dwg.text("800V DC Native | Liquid Cooled | Solar Roof | AI Managed",
+    g.add(dwg.text("Eaton Beam Rubin 800V DC | Delta 660 kW Rack | CoolIT CHx2000 + Delta 140 kW CDU | First Solar | Jetson AGX Orin",
                     insert=(col1, y0 + 60), fill=WHITE, font_size="12px", font_family="monospace"))
     g.add(dwg.text("PRELIMINARY DESIGN — NOT FOR CONSTRUCTION",
                     insert=(col1, y0 + 80), fill=RED, font_size="11px", font_family="monospace", font_weight="bold"))
@@ -66,14 +66,14 @@ def draw_notes(dwg, g):
     g.add(dwg.text("ENGINEERING NOTES", insert=(50, y0), fill=GREEN, font_size="11px",
                     font_family="monospace", font_weight="bold"))
     notes = [
-        "1. Rack height shown at 88\" (Supermicro). HPE spec is 98.2\" — VERIFY before build.",
-        "2. Side clearance 25.3\" — access panels satisfy NEC 110.26 (work from exterior).",
-        "3. Floor loading: 38,864 lbs total (33% under 58,000 lb container limit).",
-        "4. Cooling: 1.3 MW heat rejection via external dry cooler. Adiabatic assist for >95F ambient.",
-        "5. Design ambient target: 45C (113F) max interior. No air conditioning.",
-        "6. All cable routing FLOOR-LEVEL. Nothing above racks. Ceiling clear for rack removal.",
-        "7. 65 AI-monitored sensors. Zero on-site staff. Remote NOC at MARLIE I.",
-        "8. Container access panels: 4 per side (8 total), top-hinged, removable. All service from exterior.",
+        "1. Racks: NVIDIA NVL72 (GB200/Vera Rubin). Height 88\" (Supermicro). HPE spec 98.2\" — VERIFY.",
+        "2. Power: Eaton Beam Rubin DSX 800V DC + Delta 660 kW Power Rack (480 kW BBU, e-Fuse SiC <3us, 90 kW DC/DC 800V->50V MGX).",
+        "3. Cooling: CoolIT CHx2000 (2,000 kW) row CDU + Delta 140 kW In-Rack CDU (4RU, NVL72 cert). Staubli UQD. N+1.",
+        "4. Heat rejection: BAC TrilliumSeries Adiabatic (external). 1.3 MW capacity. Adiabatic assist >95F.",
+        "5. Solar roof: First Solar Series 7 TR1 (6 kW). Dehumidifier: Munters HCD. Exhaust: Greenheck SBE-300.",
+        "6. Fire suppression: Ansul Novec 1230. Smoke detection: VESDA-E VEU aspirating.",
+        "7. Networking: NVIDIA Quantum-X800 InfiniBand. Controller: NVIDIA Jetson AGX Orin. 65 AI sensors.",
+        "8. Zero on-site staff. Remote NOC at MARLIE I. All service from exterior access panels.",
     ]
     for i, note in enumerate(notes):
         g.add(dwg.text(note, insert=(50, y0 + 16 + i * 14), fill=GRAY, font_size="9px", font_family="monospace"))
@@ -318,7 +318,7 @@ def draw_top_view(dwg, g):
                         font_family="monospace", text_anchor="middle"))
 
     # Solar panel label
-    g.add(dwg.text("SOLAR PANELS ON ROOF (hatched)", insert=(cx + 10, cy + ch + 58),
+    g.add(dwg.text("FIRST SOLAR SERIES 7 TR1 ON ROOF (hatched)", insert=(cx + 10, cy + ch + 58),
                     fill=YELLOW, font_size="7px", font_family="monospace"))
 
     # Side clearance dimensions
@@ -337,15 +337,15 @@ def draw_top_view(dwg, g):
     g.add(dwg.text("LEGEND", insert=(leg_x, leg_y), fill=GREEN, font_size="9px",
                     font_family="monospace", font_weight="bold"))
     legend_items = [
-        (GREEN, "R1-R8 Compute (NVL72)"),
-        (BLUE, "R9 Network (InfiniBand)"),
+        (GREEN, "R1-R8 NVIDIA NVL72 Compute"),
+        (BLUE, "R9 Quantum-X800 InfiniBand"),
         (PURPLE, "R10 Storage + Mgmt"),
         (ORANGE, "Floor Cable Tray"),
-        (RED, "800V DC Power Bus"),
-        (BLUE, "Cooling Supply (45C)"),
-        (RED_DIM, "Cooling Return (55C)"),
+        (RED, "Eaton Beam Rubin 800V DC"),
+        (BLUE, "CoolIT CHx2000 Supply (45C)"),
+        (RED_DIM, "CoolIT CHx2000 Return (55C)"),
         (YELLOW, "Access Panels (AP)"),
-        (CYAN, "Dehumidifier / Fan"),
+        (CYAN, "Munters HCD / Greenheck SBE"),
     ]
     for i, (color, text) in enumerate(legend_items):
         ly = leg_y + 14 + i * 13
@@ -354,7 +354,7 @@ def draw_top_view(dwg, g):
                         font_family="monospace"))
 
     # Rack type labels
-    g.add(dwg.text("R1-R8: COMPUTE (72 GPUs each) | R9: NETWORK (InfiniBand) | R10: STORAGE + MGMT",
+    g.add(dwg.text("R1-R8: NVIDIA NVL72 (72 GPUs each) | R9: Quantum-X800 InfiniBand | R10: STORAGE + MGMT",
                     insert=(cx, dim_y + 14), fill=GRAY, font_size="7px", font_family="monospace"))
 
 
@@ -386,7 +386,7 @@ def draw_side_view(dwg, g):
         pts = [(cx + sx + 1, cy - 2), (cx + sx + sw, cy - 4),
                (cx + sx + sw, cy - 4 - solar_h), (cx + sx + 1, cy - 2 - solar_h)]
         g.add(dwg.polygon(pts, fill=YELLOW, fill_opacity=0.15, stroke=YELLOW, stroke_width=0.5))
-    g.add(dwg.text("SOLAR PANELS (6 kW, shade + power)", insert=(cx + 10, cy - solar_h - 6),
+    g.add(dwg.text("FIRST SOLAR SERIES 7 TR1 (6 kW, shade + power)", insert=(cx + 10, cy - solar_h - 6),
                     fill=YELLOW, font_size="7px", font_family="monospace"))
 
     # Zone proportions (same as top view)
@@ -544,9 +544,9 @@ def draw_side_view(dwg, g):
     dc_x = wall_x + 35
     dc_y = cdu_y + cdu_h / 2 - 20
     g.add(dwg.rect((dc_x, dc_y), (55, 40), fill="none", stroke=CYAN, stroke_width=1))
-    g.add(dwg.text("EXTERNAL", insert=(dc_x + 27, dc_y + 14), fill=CYAN, font_size="6px",
+    g.add(dwg.text("BAC TRILLIUM", insert=(dc_x + 27, dc_y + 14), fill=CYAN, font_size="6px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("DRY COOLER", insert=(dc_x + 27, dc_y + 24), fill=CYAN, font_size="6px",
+    g.add(dwg.text("ADIABATIC", insert=(dc_x + 27, dc_y + 24), fill=CYAN, font_size="6px",
                     font_family="monospace", text_anchor="middle"))
     g.add(dwg.text("1.3 MW", insert=(dc_x + 27, dc_y + 34), fill=CYAN, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
@@ -620,7 +620,7 @@ def draw_end_view(dwg, g):
     # Solar panel on roof
     g.add(dwg.rect((cx - 5, cy - 12), (cw + 10, 10), fill=YELLOW, fill_opacity=0.15,
                     stroke=YELLOW, stroke_width=0.8))
-    g.add(dwg.text("SOLAR PANEL", insert=(cx + cw / 2, cy - 16), fill=YELLOW, font_size="7px",
+    g.add(dwg.text("FIRST SOLAR SERIES 7 TR1", insert=(cx + cw / 2, cy - 16), fill=YELLOW, font_size="7px",
                     font_family="monospace", text_anchor="middle"))
 
     # Floor
@@ -640,11 +640,13 @@ def draw_end_view(dwg, g):
 
     g.add(dwg.rect((rack_left, rack_top), (rack_right - rack_left, floor_y - rack_top),
                     fill=GREEN_DIM, fill_opacity=0.2, stroke=GREEN, stroke_width=1.5))
-    g.add(dwg.text("NVL72 RACK", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 - 6),
+    g.add(dwg.text("NVIDIA NVL72", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 - 14),
                     fill=GREEN, font_size="10px", font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("42\" deep x 23.6\" wide", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 8),
+    g.add(dwg.text("(GB200/Vera Rubin)", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 - 2),
                     fill=GREEN, font_size="7px", font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("88\" tall", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 20),
+    g.add(dwg.text("42\" deep x 23.6\" wide", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 12),
+                    fill=GREEN, font_size="7px", font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("88\" tall", insert=((rack_left + rack_right) / 2, (rack_top + floor_y) / 2 + 24),
                     fill=GREEN, font_size="7px", font_family="monospace", text_anchor="middle"))
 
     # Cooling manifold connections on rack
@@ -794,21 +796,40 @@ def draw_schematic(dwg, g):
     rx, ry = ax2, by
     rw, rh = 130, 45
     g.add(dwg.rect((rx, ry), (rw, rh), fill="none", stroke=RED, stroke_width=1.5))
-    g.add(dwg.text("EATON 800V DC", insert=(rx + rw / 2, ry + 16), fill=RED, font_size="8px",
+    g.add(dwg.text("EATON BEAM RUBIN", insert=(rx + rw / 2, ry + 14), fill=RED, font_size="7px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("RECTIFIER", insert=(rx + rw / 2, ry + 28), fill=RED, font_size="8px",
+    g.add(dwg.text("DSX 800V DC", insert=(rx + rw / 2, ry + 26), fill=RED, font_size="8px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("(Beam Rubin DSX)", insert=(rx + rw / 2, ry + 40), fill=GRAY, font_size="6px",
+    g.add(dwg.text("ORV3 Sidecar", insert=(rx + rw / 2, ry + 37), fill=GRAY, font_size="6px",
                     font_family="monospace", text_anchor="middle"))
 
-    # Arrow to bus
+    # Arrow to Delta Power Rack
     bx2 = rx + rw
-    ax3 = bx2 + 60
+    ax3 = bx2 + 40
     g.add(dwg.line((bx2, ay), (ax3, ay), stroke=RED, stroke_width=1.5))
     g.add(dwg.polygon([(ax3, ay), (ax3 - 6, ay - 4), (ax3 - 6, ay + 4)], fill=RED))
 
+    # Delta 660 kW Power Rack
+    dx, dy = ax3, by
+    dw, dh = 110, 45
+    g.add(dwg.rect((dx, dy), (dw, dh), fill="none", stroke=CYAN, stroke_width=1.5))
+    g.add(dwg.text("DELTA 660 kW", insert=(dx + dw / 2, dy + 12), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("POWER RACK", insert=(dx + dw / 2, dy + 22), fill=CYAN, font_size="7px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("480 kW BBU | e-Fuse", insert=(dx + dw / 2, dy + 32), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("90kW DC/DC 800V->50V", insert=(dx + dw / 2, dy + 41), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    # Arrow to bus
+    dx2 = dx + dw
+    ax4 = dx2 + 40
+    g.add(dwg.line((dx2, ay), (ax4, ay), stroke=CYAN, stroke_width=1.5))
+    g.add(dwg.polygon([(ax4, ay), (ax4 - 6, ay - 4), (ax4 - 6, ay + 4)], fill=CYAN))
+
     # 800V DC Bus
-    bus_x = ax3
+    bus_x = ax4
     bus_y = ay - 6
     bus_w = 600
     bus_h = 12
@@ -821,9 +842,11 @@ def draw_schematic(dwg, g):
     solar_y = bus_y - 60
     sw, sh = 100, 35
     g.add(dwg.rect((solar_x - sw / 2, solar_y), (sw, sh), fill="none", stroke=YELLOW, stroke_width=1.2))
-    g.add(dwg.text("SOLAR PANELS", insert=(solar_x, solar_y + 14), fill=YELLOW, font_size="7px",
+    g.add(dwg.text("FIRST SOLAR", insert=(solar_x, solar_y + 12), fill=YELLOW, font_size="7px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("(6 kW roof)", insert=(solar_x, solar_y + 26), fill=YELLOW, font_size="6px",
+    g.add(dwg.text("SERIES 7 TR1", insert=(solar_x, solar_y + 23), fill=YELLOW, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("(6 kW roof)", insert=(solar_x, solar_y + 33), fill=YELLOW, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
 
     # DC-DC buck
@@ -856,7 +879,7 @@ def draw_schematic(dwg, g):
     g.add(dwg.line((bus_x + bus_w, ay), (aux_x, ay), stroke=YELLOW, stroke_width=0.8))
     g.add(dwg.text("SOLAR AUX", insert=(aux_x + 4, ay - 8), fill=YELLOW, font_size="6px",
                     font_family="monospace"))
-    for idx, (label, yoff) in enumerate([("DEHUMIDIFIER", -15), ("EXHAUST FAN", 5), ("LED LIGHTS", 25)]):
+    for idx, (label, yoff) in enumerate([("MUNTERS HCD DEHUM", -15), ("GREENHECK SBE-300", 5), ("LED LIGHTS", 25)]):
         ly = ay + yoff
         g.add(dwg.line((aux_x, ay), (aux_x + 30, ly), stroke=YELLOW, stroke_width=0.5))
         g.add(dwg.text(label, insert=(aux_x + 34, ly + 3), fill=CYAN, font_size="6px",
@@ -871,27 +894,44 @@ def draw_schematic(dwg, g):
     cdu_x, cdu_y = ox + 80, csy + 25
     cdu_w, cdu_h = 100, 55
     g.add(dwg.rect((cdu_x, cdu_y), (cdu_w, cdu_h), fill="none", stroke=BLUE, stroke_width=1.5))
-    g.add(dwg.text("CDU", insert=(cdu_x + cdu_w / 2, cdu_y + 20), fill=BLUE, font_size="10px",
+    g.add(dwg.text("CoolIT CHx2000", insert=(cdu_x + cdu_w / 2, cdu_y + 16), fill=BLUE, font_size="7px",
                     font_family="monospace", text_anchor="middle", font_weight="bold"))
-    g.add(dwg.text("(250 kW x2)", insert=(cdu_x + cdu_w / 2, cdu_y + 35), fill=BLUE, font_size="6px",
+    g.add(dwg.text("(2,000 kW)", insert=(cdu_x + cdu_w / 2, cdu_y + 28), fill=BLUE, font_size="6px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("N+1 redundant", insert=(cdu_x + cdu_w / 2, cdu_y + 46), fill=GRAY, font_size="5px",
+    g.add(dwg.text("N+1 redundant", insert=(cdu_x + cdu_w / 2, cdu_y + 39), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("Staubli UQD", insert=(cdu_x + cdu_w / 2, cdu_y + 49), fill=GRAY, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
 
-    # Supply pipe
+    # Supply pipe to Delta In-Rack CDU
     supply_y = cdu_y + 15
     return_y = cdu_y + 40
-    pipe_end_x = cdu_x + cdu_w + 500
 
-    g.add(dwg.line((cdu_x + cdu_w, supply_y), (pipe_end_x, supply_y), stroke=BLUE, stroke_width=2))
+    # Delta 140 kW In-Rack CDU
+    dcdu_x = cdu_x + cdu_w + 20
+    dcdu_w, dcdu_h = 90, 55
+    g.add(dwg.line((cdu_x + cdu_w, supply_y + 12), (dcdu_x, supply_y + 12), stroke=BLUE, stroke_width=1.5))
+    g.add(dwg.rect((dcdu_x, cdu_y), (dcdu_w, dcdu_h), fill="none", stroke=CYAN, stroke_width=1.2))
+    g.add(dwg.text("DELTA 140 kW", insert=(dcdu_x + dcdu_w / 2, cdu_y + 14), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle", font_weight="bold"))
+    g.add(dwg.text("IN-RACK CDU", insert=(dcdu_x + dcdu_w / 2, cdu_y + 25), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("4RU | NVL72 Cert", insert=(dcdu_x + dcdu_w / 2, cdu_y + 36), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("Per-Rack Precision", insert=(dcdu_x + dcdu_w / 2, cdu_y + 47), fill=GRAY, font_size="5px",
+                    font_family="monospace", text_anchor="middle"))
+
+    pipe_end_x = dcdu_x + dcdu_w + 440
+
+    g.add(dwg.line((dcdu_x + dcdu_w, supply_y), (pipe_end_x, supply_y), stroke=BLUE, stroke_width=2))
     g.add(dwg.polygon([(pipe_end_x, supply_y), (pipe_end_x - 8, supply_y - 4),
                         (pipe_end_x - 8, supply_y + 4)], fill=BLUE))
-    g.add(dwg.text("SUPPLY 45C (113F)", insert=(cdu_x + cdu_w + 40, supply_y - 5),
+    g.add(dwg.text("SUPPLY 45C (113F)", insert=(dcdu_x + dcdu_w + 20, supply_y - 5),
                     fill=BLUE, font_size="7px", font_family="monospace"))
 
     # Rack manifold connections
     for i in range(10):
-        rmx = cdu_x + cdu_w + 50 + i * 44
+        rmx = dcdu_x + dcdu_w + 20 + i * 42
         color = GREEN if i < 8 else (BLUE if i == 8 else PURPLE)
         g.add(dwg.line((rmx, supply_y), (rmx, supply_y + 12), stroke=color, stroke_width=0.8))
         g.add(dwg.line((rmx, return_y - 12), (rmx, return_y), stroke=color, stroke_width=0.8))
@@ -925,11 +965,13 @@ def draw_schematic(dwg, g):
     dc_x = cdu_x + cdu_w / 2 - dc_w / 2
     dc_y = ext_y + 5
     g.add(dwg.rect((dc_x, dc_y), (dc_w, dc_h), fill="none", stroke=CYAN, stroke_width=1.5))
-    g.add(dwg.text("EXTERNAL DRY COOLER", insert=(dc_x + dc_w / 2, dc_y + 18), fill=CYAN, font_size="8px",
+    g.add(dwg.text("BAC TrilliumSeries", insert=(dc_x + dc_w / 2, dc_y + 14), fill=CYAN, font_size="8px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("1.3 MW rejection capacity", insert=(dc_x + dc_w / 2, dc_y + 32), fill=CYAN, font_size="6px",
+    g.add(dwg.text("ADIABATIC COOLER", insert=(dc_x + dc_w / 2, dc_y + 26), fill=CYAN, font_size="7px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("Adiabatic assist >95F", insert=(dc_x + dc_w / 2, dc_y + 44), fill=GRAY, font_size="5px",
+    g.add(dwg.text("1.3 MW rejection capacity", insert=(dc_x + dc_w / 2, dc_y + 38), fill=CYAN, font_size="6px",
+                    font_family="monospace", text_anchor="middle"))
+    g.add(dwg.text("Adiabatic assist >95F", insert=(dc_x + dc_w / 2, dc_y + 48), fill=GRAY, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
 
     # Heat to atmosphere
@@ -948,11 +990,11 @@ def draw_schematic(dwg, g):
     sc_x, sc_y = msx + 30, msy + 25
     sc_w, sc_h = 130, 45
     g.add(dwg.rect((sc_x, sc_y), (sc_w, sc_h), fill="none", stroke=YELLOW, stroke_width=1.2))
-    g.add(dwg.text("SENSOR", insert=(sc_x + sc_w / 2, sc_y + 16), fill=YELLOW, font_size="8px",
+    g.add(dwg.text("NVIDIA JETSON", insert=(sc_x + sc_w / 2, sc_y + 16), fill=YELLOW, font_size="8px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("CONTROLLER", insert=(sc_x + sc_w / 2, sc_y + 28), fill=YELLOW, font_size="8px",
+    g.add(dwg.text("AGX ORIN", insert=(sc_x + sc_w / 2, sc_y + 28), fill=YELLOW, font_size="8px",
                     font_family="monospace", text_anchor="middle"))
-    g.add(dwg.text("(Jetson Orin Nano)", insert=(sc_x + sc_w / 2, sc_y + 40), fill=GRAY, font_size="5px",
+    g.add(dwg.text("(Controller)", insert=(sc_x + sc_w / 2, sc_y + 40), fill=GRAY, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
 
     # Sensors feeding in
@@ -962,9 +1004,9 @@ def draw_schematic(dwg, g):
         "10x FLOW METERS",
         "LEAK DETECTION ROPE",
         "2x IR CAMERAS",
-        "4x VESDA SAMPLING",
+        "VESDA-E VEU ASPIRATING",
+        "ANSUL NOVEC 1230 FIRE",
         "8x DOOR/PANEL REED SW",
-        "VIBRATION ACCEL",
     ]
     for i, s in enumerate(sensors):
         ssy = sc_y - 10 + i * 14
@@ -982,7 +1024,7 @@ def draw_schematic(dwg, g):
     # Network box
     nw, nh = 100, 35
     g.add(dwg.rect((net_x, net_y - nh / 2), (nw, nh), fill="none", stroke=WHITE, stroke_width=1))
-    g.add(dwg.text("NETWORK", insert=(net_x + nw / 2, net_y - 2), fill=WHITE, font_size="7px",
+    g.add(dwg.text("QUANTUM-X800", insert=(net_x + nw / 2, net_y - 2), fill=WHITE, font_size="7px",
                     font_family="monospace", text_anchor="middle"))
     g.add(dwg.text("4G/5G/STARLINK", insert=(net_x + nw / 2, net_y + 10), fill=WHITE, font_size="6px",
                     font_family="monospace", text_anchor="middle"))

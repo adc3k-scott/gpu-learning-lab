@@ -1,12 +1,12 @@
 """
 Ragin' Cajun Compute Campus — Trappeys Cannery, Lafayette, LA
 Cooling Flow Schematic
-Water Tower -> Dry Coolers -> Plate Heat Exchangers -> CDU -> Rack Manifolds -> Return
+Water Tower -> BAC TrilliumSeries Adiabatic Coolers -> PHX -> CoolIT CHx200 CDU -> Rack Manifolds -> Return
 """
 import svgwrite
 
 W, H = 1400, 950
-OUT = "adc3k-deploy/blueprints/trappeys-cooling-schematic.svg"
+OUT = "adc3k-deploy/trappeys/blueprints/cooling-schematic.svg"
 
 ACCENT = "#CE181E"
 
@@ -66,7 +66,7 @@ def build():
     dwg.add(dwg.text("RAGIN' CAJUN COMPUTE CAMPUS — TRAPPEYS CANNERY, LAFAYETTE, LA",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text("COOLING FLOW SCHEMATIC | WATER TOWER + DRY COOLERS | LIQUID-COOLED GPU RACKS",
+    dwg.add(dwg.text("COOLING FLOW SCHEMATIC | WATER TOWER + BAC TRILLIUMSERIES ADIABATIC | LIQUID-COOLED GPU RACKS",
                       insert=(W / 2, 40), text_anchor="middle", fill=ACCENT,
                       font_size=10, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("Sheet C-001 | Design Intent | 2026-03-23 | NOT FOR CONSTRUCTION",
@@ -109,7 +109,7 @@ def build():
     dc_y = tower_y + 320
 
     box(dwg, dc_x, dc_y, 130, 100,
-        "DRY COOLERS\n(Concrete Pad)\n\nFan-assisted\nAir-cooled\nHeat Rejection",
+        "BAC TRILLIUMSERIES\nADIABATIC COOLER\n(Concrete Pad)\n\nFan-assisted\nHeat Rejection",
         "Infrastructure Yard | Outdoor",
         border="#22c55e", text_color="#22c55e")
 
@@ -155,7 +155,7 @@ def build():
     flow_label(dwg, 410, 195, "Treated water / glycol mix")
 
     box(dwg, cdu_x, cdu_y, 160, 200,
-        "COOLANT\nDISTRIBUTION\nUNITS (CDUs)\n\nFacility Loop In\nvs\nRack Loop Out\n\nPumps + Controls\nFlow Regulation",
+        "CoolIT CHx200\nCDUs (200 kW ea)\n\nFacility Loop In\nvs\nRack Loop Out\n\nStaubli UQD\nQuick-Disconnect",
         "Per-row CDU pairs | N+1",
         border="#76b900", text_color="#76b900")
 
@@ -163,17 +163,32 @@ def build():
     flow_label(dwg, cdu_x, cdu_y - 12, "Inside Middle High Building (Compute Hall)")
 
     # ================================================================
+    # DELTA 140 kW IN-RACK CDU
+    # ================================================================
+    delta_cdu_x = 690
+    delta_cdu_y = 110
+
+    pipe(dwg, [(640, 160), (delta_cdu_x, 160)], "#76b900", 3)
+    arrow_right(dwg, delta_cdu_x - 2, 160, "#76b900")
+    temp_label(dwg, 645, 150, "TO IN-RACK CDU", "#76b900")
+
+    box(dwg, delta_cdu_x, delta_cdu_y, 120, 80,
+        "DELTA 140 kW\nIN-RACK CDU\n4RU | NVL72 Cert\n\nPer-Rack Precision\nCooling Control",
+        "Between row CDU & manifold",
+        border="#00bcd4", text_color="#00e5ff", font=9)
+
+    # ================================================================
     # RACK COOLING MANIFOLDS
     # ================================================================
-    rack_x = 710
+    rack_x = 850
     manifold_y = 110
 
-    pipe(dwg, [(640, 160), (rack_x, 160)], "#76b900", 3)
+    pipe(dwg, [(delta_cdu_x + 120, 160), (rack_x, 160)], "#76b900", 3)
     arrow_right(dwg, rack_x - 2, 160, "#76b900")
-    temp_label(dwg, 650, 150, "TO RACKS 45C (113F)", "#76b900")
+    temp_label(dwg, delta_cdu_x + 125, 150, "TO RACKS 45C", "#76b900")
 
     # Supply manifold header
-    box(dwg, rack_x, manifold_y, 140, 55,
+    box(dwg, rack_x, manifold_y, 120, 55,
         "SUPPLY\nMANIFOLD\nHEADER", "",
         border="#76b900", text_color="#76b900", font=10)
 
@@ -183,31 +198,31 @@ def build():
 
     for i, (ry, label) in enumerate(zip(rack_positions, rack_labels)):
         # Supply down
-        pipe(dwg, [(rack_x + 70, manifold_y + 55), (rack_x + 70, ry)], "#76b900", 2)
+        pipe(dwg, [(rack_x + 60, manifold_y + 55), (rack_x + 60, ry)], "#76b900", 2)
 
         # Rack box
-        box(dwg, rack_x, ry, 140, 55,
+        box(dwg, rack_x, ry, 120, 55,
             f"{label}\n130 kW\nLiquid Cooled",
             "Cold plates on GPU/HBM",
             color="#111a00", border="#76b900", text_color="#76b900", font=9)
 
         # Return right side
-        pipe(dwg, [(rack_x + 140, ry + 28), (rack_x + 180, ry + 28)], "#ff6b6b", 2)
+        pipe(dwg, [(rack_x + 120, ry + 28), (rack_x + 155, ry + 28)], "#ff6b6b", 2)
 
     # Return manifold
-    ret_x = rack_x + 180
-    box(dwg, ret_x, manifold_y, 140, 55,
+    ret_x = rack_x + 155
+    box(dwg, ret_x, manifold_y, 110, 55,
         "RETURN\nMANIFOLD\nHEADER", "",
         border="#ff6b6b", text_color="#ff6b6b", font=10)
 
     # Return lines to return manifold
     for ry in rack_positions:
-        pipe(dwg, [(ret_x + 70, ry + 28), (ret_x + 70, manifold_y + 55)], "#ff6b6b", 2)
+        pipe(dwg, [(ret_x + 55, ry + 28), (ret_x + 55, manifold_y + 55)], "#ff6b6b", 2)
 
-    # Return from manifold back to CDU
-    pipe(dwg, [(ret_x + 70, manifold_y + 55), (ret_x + 70, 540), (cdu_x + 80, 540),
+    # Return from manifold back to CDU (via Delta in-rack CDU)
+    pipe(dwg, [(ret_x + 55, manifold_y + 55), (ret_x + 55, 540), (cdu_x + 80, 540),
                (cdu_x + 80, 300)], "#ff6b6b", 3)
-    temp_label(dwg, ret_x + 80, 535, "RETURN FROM RACKS 55-60C (131-140F)", "#ff6b6b")
+    temp_label(dwg, ret_x + 65, 535, "RETURN FROM RACKS 55-60C (131-140F)", "#ff6b6b")
 
     # CDU return to PHX
     pipe(dwg, [(cdu_x, 260), (hx_x + 180, 260), (hx_x + 180, 210),
@@ -217,20 +232,20 @@ def build():
     # ================================================================
     # NO RIVER COOLING CALLOUT
     # ================================================================
-    nr_x = 1080
+    nr_x = 1130
     nr_y = 100
     dwg.add(dwg.rect((nr_x, nr_y), (280, 120), rx=6, fill="#111318", stroke="#555", stroke_width=1))
     dwg.add(dwg.text("TRAPPEYS vs WILLOW GLEN", insert=(nr_x + 140, nr_y + 18),
                       text_anchor="middle", fill=ACCENT, font_size=10, font_family="Arial", font_weight="bold"))
 
     comparisons = [
-        "Trappeys: Water tower + dry coolers",
+        "Trappeys: Water tower + BAC TrilliumSeries",
         "Willow Glen: Mississippi River once-through",
         "",
         "Water tower provides thermal buffer",
-        "Dry coolers reject heat to ambient air",
+        "BAC adiabatic coolers reject heat to air",
         "No river = no discharge permits needed",
-        "Simpler permitting, faster deployment",
+        "Munters HCD humidity control in compute",
         "Adequate for Phase 1 (4 racks, 650 kW)",
     ]
     for i, line in enumerate(comparisons):
@@ -240,7 +255,7 @@ def build():
     # ================================================================
     # THERMAL BUDGET
     # ================================================================
-    tb_x = 1080
+    tb_x = 1130
     tb_y = 250
     dwg.add(dwg.rect((tb_x, tb_y), (280, 140), rx=6, fill="#111318", stroke="#1e2230"))
     dwg.add(dwg.text("PHASE 1 THERMAL BUDGET", insert=(tb_x + 140, tb_y + 18),
@@ -285,7 +300,7 @@ def build():
     dwg.add(dwg.rect((600, ly - 5), (650, 60), rx=6, fill="#111318", stroke="#1e2230"))
     specs = [
         ("WATER TOWER", "100 ft tall"),
-        ("COOLING TYPE", "Dry Coolers"),
+        ("COOLING TYPE", "BAC TrilliumSeries"),
         ("RACK COOLING", "45C Hot Water"),
         ("TOTAL REJECTION", "~650 kW"),
         ("PUE TARGET", "< 1.25"),
@@ -304,8 +319,8 @@ def build():
     fd_y = 700
     dwg.add(dwg.text("COMPLETE COOLING PATH:", insert=(50, fd_y), fill=ACCENT,
                       font_size=10, font_family="Arial", font_weight="bold"))
-    path = ("Water Tower (70-85F) -> Plate HX -> Facility Loop (75-85F) -> CDU -> "
-            "Rack Manifold (45C) -> GPU Cold Plates -> Return (55-60C) -> CDU -> PHX -> Tower -> Dry Coolers")
+    path = ("Water Tower (70-85F) -> Plate HX -> Facility Loop (75-85F) -> CoolIT CHx200 CDU -> "
+            "Delta 140 kW In-Rack CDU -> Rack Manifold (45C) -> GPU Cold Plates -> Return (55-60C) -> CDU -> PHX -> Tower -> BAC TrilliumSeries")
     dwg.add(dwg.text(path, insert=(50, fd_y + 16), fill="#9ca3af",
                       font_size=8, font_family="Arial"))
 
@@ -315,14 +330,14 @@ def build():
     ny = 740
     notes = [
         "1. Water tower (100 ft tall, on-property) serves as thermal mass / cooling reservoir — massive thermal buffer for GPU load spikes",
-        "2. Dry coolers on concrete pad (infrastructure yard) reject heat to ambient air — no water consumption, no discharge permits",
+        "2. BAC TrilliumSeries adiabatic coolers on concrete pad — adiabatic pre-cooling uses less water than evaporative towers",
         "3. Plate heat exchangers isolate tower water from facility cooling loop — prevents contamination of IT systems",
         "4. NVIDIA NVL72 racks use direct liquid cooling with 45C (113F) hot water supply — no chillers needed in most conditions",
-        "5. CDUs regulate flow and temperature per rack row — N+1 redundancy, located inside Middle High building",
-        "6. No river cooling like Willow Glen — Trappeys uses closed-loop water tower + dry cooler system",
-        "7. Water tower thermal buffer absorbs GPU training spike loads — dry coolers handle steady-state rejection",
-        "8. Phase 1 thermal load ~650 kW with ~1,000 kW dry cooler capacity — 54% headroom for expansion or hot days",
-        "9. Summer ambient ~95F peak: dry coolers may need supplemental evaporative pre-cooling (future upgrade path)",
+        "5. CoolIT CHx200 row-level CDUs (200 kW) + Delta 140 kW In-Rack CDUs (4RU, NVL72 cert) per rack — Staubli UQD — N+1 redundancy",
+        "6. Munters HCD humidity control in compute hall — critical for Louisiana climate (high ambient humidity)",
+        "7. Water tower thermal buffer absorbs GPU training spike loads — BAC TrilliumSeries handles steady-state rejection",
+        "8. Phase 1 thermal load ~650 kW with ~1,000 kW adiabatic cooler capacity — 54% headroom for expansion or hot days",
+        "9. Ansul Novec 1230 fire suppression + VESDA-E VEU early smoke detection in all compute areas",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -334,5 +349,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/trappeys/blueprints", exist_ok=True)
     build()

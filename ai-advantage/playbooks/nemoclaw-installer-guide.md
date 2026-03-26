@@ -1,30 +1,32 @@
-# NemoClaw Installer Guide — Secure AI Agent Deployment
+# Secure Agent Deployment Guide — ADC Self-Hosted Infrastructure
 
-**For AI Advantage installers.** This is how we deploy AI agents to client businesses safely. Read this before your first install that uses an always-on agent.
+**For AI Advantage installers.** This is how we deploy AI agents to client businesses safely using ADC's own compute at MARLIE I. Read this before your first install that uses an always-on agent.
 
 ---
 
-## What Is NemoClaw (Plain English)
+## How It Works (Plain English)
 
-NemoClaw is a security wrapper around the AI agent we install for clients. Think of it like this:
+Every AI agent we deploy for a client runs on ADC's own NVL72 GPU hardware at MARLIE I in Lafayette. The client gets a sandboxed agent that connects back to our infrastructure for AI inference. No third-party cloud. No retail API fees.
 
 - The **AI agent** is the worker — it answers phones, drafts documents, tracks inventory, whatever the playbook says.
-- **NemoClaw** is the locked room the worker operates in — it can only see what we allow, talk to who we allow, and touch the files we allow.
+- The **sandbox** is the locked room the worker operates in — it can only see what we allow, talk to who we allow, and touch the files we allow.
+- The **NIM microservice** on MARLIE I is the brain — it processes AI requests on our GPUs, isolated per customer via MIG partitioning.
 
-Without NemoClaw, an AI agent could theoretically access anything on the network, call any website, read any file. That's a liability nightmare, especially for medical, legal, and financial clients. NemoClaw locks it down from the first boot.
+Without sandboxing, an AI agent could theoretically access anything on the network, call any website, read any file. That's a liability nightmare, especially for medical, legal, and financial clients. Our deployment locks it down from the first boot.
 
 ---
 
 ## Why This Matters for Our Installs
 
-| Problem Without NemoClaw | How NemoClaw Fixes It |
+| Problem Without Sandboxing | How ADC's Stack Fixes It |
 |--------------------------|----------------------|
 | Agent could access client files it shouldn't | Filesystem locked — only `/sandbox` and `/tmp` are writable |
 | Agent could call random websites | Network policy — only approved endpoints allowed |
-| Agent could use any AI model (cost risk) | Inference routing — all AI traffic goes through AI Advantage infrastructure |
-| No visibility into what the agent is doing | Monitoring TUI — we see every network request in real time |
-| Client worries about data leaving their building | DGX Spark/Mac Mini + NemoClaw = everything stays on-premises |
-| HIPAA/legal compliance concerns | Sandboxed execution with audit trail |
+| Agent could use any AI model (cost risk) | Inference routing — all AI traffic goes through ADC NIM endpoints at MARLIE I |
+| No visibility into what the agent is doing | Mission Control dashboard — we see every request, GPU utilization, and cost in real time |
+| Client worries about data leaving their building | DGX Spark/Mac Mini = on-prem. Cloud tier = ADC hardware in Louisiana, not a third-party cloud |
+| HIPAA/legal compliance concerns | Sandboxed execution with audit trail + MIG hardware isolation per customer |
+| Multi-tenant GPU security | Run:AI project quotas + MIG partitioning = hardware-level tenant isolation |
 
 ---
 
@@ -44,18 +46,20 @@ Every sandbox has a YAML policy file that lists exactly which websites/services 
 - The firm's document management system
 - Nothing else
 
-### Layer 3: Inference Routing
-When the agent needs to "think" (process a request through the AI model), that request doesn't go directly to the internet. It routes through our infrastructure:
+### Layer 3: Inference Routing (ADC NIM Endpoints)
+When the agent needs to "think" (process a request through the AI model), that request doesn't go to the internet. It routes through ADC's own compute at MARLIE I:
 
 ```
-Client's Agent → NemoClaw Sandbox → AI Advantage Infrastructure → AI Model → Response back
+Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE I NVL72) → Dynamo 1.0 → AI Model → Response back
 ```
 
 This means:
-- We control which AI model is used (cost management)
-- We can monitor usage (billing)
-- The client's data travels through our secure pipeline
+- We control which AI model is used (cost management — $0.004/M tokens, not retail pricing)
+- We monitor usage via DCGM + Mission Control dashboard (billing, GPU health, latency)
+- The client's data stays on American-owned hardware in Louisiana
 - We can upgrade models without touching the client's system
+- Run:AI schedules workloads across GPUs — each customer gets a guaranteed quota
+- MIG isolation ensures one customer's inference never touches another's memory
 
 ---
 
@@ -67,50 +71,76 @@ This means:
 - [ ] Have the client's NVIDIA API key or AI Advantage inference credentials
 - [ ] Know the client's approved endpoints (what services does their business use?)
 
-### The Install (NemoClaw-Specific Steps)
+### The Install (Deployment Steps)
 
 These steps happen AFTER the hardware and basic software setup from the vertical playbook.
 
-**Step 1: Install NemoClaw**
+**Step 1: Create Customer Project in Run:AI**
+From your laptop (connected to MARLIE I via VPN or on-network):
 ```bash
-curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash
+# Create a Run:AI project for the customer with GPU quota
+runai project create <clientname> --gpu-quota 0.25 --namespace ai-advantage
 ```
-This installs everything. Follow the prompts. It will ask for:
+This gives the customer a guaranteed GPU slice. Scott or a senior installer sets the quota based on the subscription tier.
+
+**Step 2: Deploy NIM Instance**
+Create a NIMService custom resource for the customer's inference endpoint:
+```bash
+kubectl apply -f - <<EOF
+apiVersion: nim.nvidia.com/v1
+kind: NIMService
+metadata:
+  name: <clientname>-nim
+  namespace: ai-advantage
+spec:
+  model: nemotron-nano-30b
+  replicas: 1
+  resources:
+    gpu: 1
+    migProfile: "1g.10gb"
+EOF
+```
+This deploys a dedicated NIM microservice on MARLIE I hardware with MIG isolation. The client's inference runs on a hardware-partitioned GPU slice.
+
+**Step 3: Install Client-Side Sandbox**
+On the client's device (Mac Mini, DGX Spark, or Starter Kit):
+```bash
+# Run the AI Advantage agent installer from USB drive
+./aia-install.sh --client <clientname> --endpoint https://nim.marlie1.adc3k.com/<clientname>
+```
+This installs the sandboxed agent and points inference to the customer's NIM endpoint on MARLIE I. Follow the prompts for:
 - A sandbox name (use: `clientname-agent`, lowercase, hyphens only)
-- The NVIDIA API key
+- The AI Advantage inference credentials (from your installer kit, NOT an NVIDIA API key)
 
-**Step 2: Verify It's Running**
-```bash
-nemoclaw <sandbox-name> status
-```
-You should see the sandbox state as "running" and the inference provider as configured.
-
-**Step 3: Apply the Vertical Policy**
+**Step 4: Apply the Vertical Policy**
 Each vertical has a pre-built network policy. Apply it:
 ```bash
-nemoclaw <sandbox-name> policy-add
+aia-sandbox <sandbox-name> policy-add
 ```
 Select the appropriate policy preset for the vertical (medical, legal, field-services, etc.).
 
-**Step 4: Test the Agent**
+**Step 5: Test the Agent**
 ```bash
-nemoclaw <sandbox-name> connect
-openclaw agent --agent main --local -m "Hello, this is a test" --session-id test
+aia-sandbox <sandbox-name> connect
+aia-agent test --message "Hello, this is a test" --session-id test
 ```
 Verify you get a response. If you don't, check the troubleshooting section below.
 
-**Step 5: Open Monitoring**
-```bash
-openshell term
-```
-This shows you live network activity. Watch for any blocked requests — these are endpoints the agent tried to reach that aren't in the policy. If they're legitimate (like the client's accounting software), approve them. If they look wrong, deny them.
+**Step 6: Verify in Mission Control**
+Open Mission Control dashboard (`http://marlie1.local:8000` or via VPN). Confirm:
+- Customer project appears in Run:AI with correct GPU quota
+- NIM service shows "Running" status
+- DCGM metrics show the MIG partition is active
+- Client sandbox is sending heartbeats
 
 ### Before You Leave
 - [ ] Agent is responding to test prompts
 - [ ] Monitoring shows no unexpected blocked requests
 - [ ] Client knows how to chat with their agent (TUI or Telegram)
 - [ ] You've noted any endpoints you approved (report back to AI Advantage)
-- [ ] Remote monitoring is configured (AI Advantage MARLIE I can see the sandbox)
+- [ ] Remote monitoring is configured (MARLIE I Mission Control shows the client's sandbox)
+- [ ] NIM service healthy in Run:AI dashboard
+- [ ] DCGM metrics flowing for the customer's MIG partition
 
 ---
 
@@ -146,24 +176,29 @@ This shows you live network activity. Watch for any blocked requests — these a
 
 | Problem | Fix |
 |---------|-----|
-| "nemoclaw not found" after install | Run `source ~/.bashrc` or open a new terminal |
-| Agent not responding | Check `nemoclaw <name> status` — is the sandbox running? |
-| Agent can't reach a service the client uses | Open `openshell term`, find the blocked request, approve it |
+| Agent not responding | Check `aia-sandbox <name> status` — is the sandbox running? Check NIM service status in Run:AI dashboard. |
+| Agent can't reach a service the client uses | Check sandbox network policy, find the blocked request, approve it |
+| NIM service not starting | `kubectl describe nimservice <clientname>-nim -n ai-advantage` — check events for GPU quota or image pull errors |
+| Run:AI project quota exceeded | Contact Scott — customer may need a tier upgrade or quota increase |
 | "OOM killer" during install on DGX Spark | Add 8 GB swap: `sudo fallocate -l 8G /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile` |
-| Sandbox shows "stopped" | Run `nemoclaw onboard` to recreate |
-| Port 18789 already in use | Find the process: `lsof -i :18789`, kill it, retry |
-| Client's internet is slow | Consider switching to local inference (Nemotron Nano 30B on Mac Mini or DGX Spark) |
-| Inference requests timing out | Check `openclaw nemoclaw status` for provider/endpoint, verify API key |
+| Sandbox shows "stopped" | Run `aia-sandbox <name> restart` to recreate |
+| Port conflict on client device | Find the process: `lsof -i :<port>`, kill it, retry |
+| Client's internet is slow | Consider switching to local inference (Nemotron Nano 30B on Mac Mini or DGX Spark) — sandbox still reports metrics to MARLIE I when connection recovers |
+| Inference requests timing out | Check NIM endpoint connectivity: `curl https://nim.marlie1.adc3k.com/<clientname>/health`. If MARLIE I is unreachable, check VPN/network. |
+| DCGM metrics not showing | Verify MIG partition is active: `kubectl exec -n ai-advantage <pod> -- nvidia-smi` |
+| Can't access Mission Control | Verify VPN connection. Dashboard is at `http://marlie1.local:8000`. Not accessible from public internet. |
 
 ---
 
 ## What You Should NOT Do
 
 1. **NEVER approve a network request you don't recognize.** If the agent is trying to reach a website you haven't heard of, deny it and report to AI Advantage.
-2. **NEVER give the client access to modify the sandbox policy.** That's AI Advantage's job. They chat with their agent — we manage security.
-3. **NEVER skip the monitoring check before leaving.** Watch `openshell term` for at least 5 minutes during testing.
+2. **NEVER give the client access to modify the sandbox policy or Run:AI project.** That's AI Advantage's job. They chat with their agent — we manage security and infrastructure.
+3. **NEVER skip the Mission Control verification before leaving.** Confirm the client's NIM service, sandbox heartbeat, and DCGM metrics are all green.
 4. **NEVER deploy without a vertical-specific policy.** The default policy is too open for production client use.
-5. **NEVER store client credentials on your laptop.** API keys go in the sandbox's `~/.nemoclaw/credentials.json` on the client's hardware, not yours.
+5. **NEVER store client credentials on your laptop.** Inference credentials go in the sandbox config on the client's hardware, not yours.
+6. **NEVER modify Run:AI GPU quotas without Scott's approval.** Quotas are tied to subscription tiers and billing.
+7. **NEVER point a client's agent at a third-party cloud endpoint.** All inference goes through ADC's MARLIE I NIM endpoints. That's the whole point.
 
 ---
 
@@ -171,8 +206,9 @@ This shows you live network activity. Watch for any blocked requests — these a
 
 | They Say | You Say |
 |----------|---------|
-| "Is my data safe?" | "Your AI agent runs in an isolated sandbox. It can only access the services we approved together. Nothing else gets through." |
+| "Is my data safe?" | "Your AI agent runs in an isolated sandbox. It can only access the services we approved together. Nothing else gets through. And all AI processing happens on our own hardware in Lafayette — not a third-party cloud." |
 | "Can the AI see my files?" | "Only the files in its workspace. It cannot see your personal files, emails, or anything outside the sandbox." |
-| "What if it tries to do something weird?" | "We monitor every network request. If it tries to reach something it shouldn't, it gets blocked automatically and we get notified." |
+| "What if it tries to do something weird?" | "We monitor every request from our Mission Control facility in Lafayette. If it tries to reach something it shouldn't, it gets blocked automatically and we get notified." |
 | "Can you see my data?" | "We monitor the agent's behavior — what it's connecting to, not what it's reading. Your business data stays on your hardware." |
-| "What about HIPAA?" | "The sandbox is designed for exactly this. Strict filesystem isolation, no data leaves the device, full audit logging." |
+| "Where does the AI run?" | "On our own NVIDIA GPU hardware at our facility in Lafayette, Louisiana. American-owned, American-operated. We don't use Amazon, Google, or Microsoft cloud. We generate our own power and run our own compute." |
+| "What about HIPAA?" | "The sandbox is designed for exactly this. Strict filesystem isolation, hardware-level GPU partitioning per customer, no data leaves the device, full audit logging." |

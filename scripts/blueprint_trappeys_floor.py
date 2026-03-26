@@ -6,7 +6,7 @@ Phase 1: 4 NVL72 racks, hot/cold aisle, CDU area, wooden trusses
 import svgwrite
 
 W, H = 1400, 950
-OUT = "adc3k-deploy/blueprints/trappeys-floor-plan.svg"
+OUT = "adc3k-deploy/trappeys/blueprints/floor-plan.svg"
 
 ACCENT = "#CE181E"
 
@@ -101,13 +101,13 @@ def build():
     # ================================================================
     cdu_w = int(25 * SCALE)
     box(dwg, bx, by, cdu_w, BLDG_H,
-        "CDU AREA\n\nCoolant Distribution\nUnits (N+1)\nPumps + Valves\nPipe Headers\n\n25' x 75'",
+        "CDU AREA\n\nCoolIT CHx200 (200 kW)\nN+1 Redundant\nStaubli UQD Quick-Disc\nPipe Headers\n\n25' x 75'",
         color="#111318", border="#4fc3f7", text_color="#4fc3f7")
 
     # CDU boxes inside
     for cy_offset in [25, 95, 165]:
         box(dwg, bx + 8, by + cy_offset, int(10 * SCALE), int(8 * SCALE),
-            "CDU", color="#0a1628", border="#4fc3f7", text_color="#4fc3f7", font=7)
+            "CHx200", color="#0a1628", border="#4fc3f7", text_color="#4fc3f7", font=7)
 
     # ================================================================
     # ELECTRICAL ROOM (RIGHT SIDE — 20 ft)
@@ -291,7 +291,7 @@ def build():
         ("#ef4444", "#1a0a0a", "Hot Aisle (Contained)"),
         ("#3b82f6", "#0a0a1e", "Cold Aisle"),
         ("#4fc3f7", None, "Supply Pipe (Cold — from water tower)"),
-        ("#ff6b6b", None, "Return Pipe (Hot — to dry coolers)"),
+        ("#ff6b6b", None, "Return Pipe (Hot — to BAC TrilliumSeries)"),
         ("#8b5cf6", None, "Cable Tray (overhead 800V DC busway)"),
         ("#5a3a1a", None, "Wooden Trusses (existing structure)"),
     ]
@@ -309,7 +309,7 @@ def build():
         ("BUILDING", f"{BLDG_W_FT}' x {BLDG_H_FT}'\n22,500 sq ft"),
         ("PHASE 1 RACKS", "4x NVL72\n520 kW IT"),
         ("GPUs", "288 total\n72 per rack"),
-        ("COOLING", "Water Tower\n+ Dry Coolers"),
+        ("COOLING", "Water Tower\n+ BAC TrilliumSeries"),
     ]
     for i, (label, value) in enumerate(stats):
         sx_pos = stat_x
@@ -327,13 +327,13 @@ def build():
     notes = [
         "1. Middle High building: 300' x 75' = 22,500 sq ft — existing wooden truss structure, highest ceiling clearance",
         "2. Phase 1 deploys 4x NVL72 racks in hot/cold aisle containment — 130 kW each, 520 kW total IT load",
-        "3. CDU area houses coolant distribution units with N+1 redundancy — pipes run to/from water tower via dry coolers",
+        "3. CDU area: CoolIT CHx200 (200 kW) units with N+1 redundancy, Staubli UQD quick-disconnects — pipes to BAC TrilliumSeries adiabatic coolers",
         "4. 800V DC busway runs overhead via cable tray from electrical room to each rack position",
         "5. Loading access from Rear High building (37,500 sf staging area) — forklifts, crates, rack delivery",
         "6. Wooden trusses are original Trappeys Cannery construction — structural assessment required before rack loading",
         "7. Reinforced slab required at rack positions: NVL72 ~2,500 lbs loaded, ~250 lb/sq ft concentrated",
         "8. Phase 2 expansion into Middle Low building (300' x 100' = 30,000 sf) adds up to 32 more racks",
-        "9. Fire suppression: clean agent (Novec 1230) in compute area, wet pipe in support spaces",
+        "9. Fire suppression: Ansul Novec 1230 + VESDA-E VEU early detection in compute area, wet pipe in support spaces",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -345,5 +345,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/trappeys/blueprints", exist_ok=True)
     build()

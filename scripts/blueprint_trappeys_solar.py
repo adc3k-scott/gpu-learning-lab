@@ -6,7 +6,7 @@ Solar Array Layout — Rooftop across all 4 buildings
 import svgwrite
 
 W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/trappeys-solar-layout.svg"
+OUT = "adc3k-deploy/trappeys/blueprints/solar-layout.svg"
 
 ACCENT = "#CE181E"
 
@@ -35,7 +35,7 @@ def build():
     dwg.add(dwg.text("RAGIN' CAJUN COMPUTE CAMPUS — TRAPPEYS CANNERY, LAFAYETTE, LA",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text("ROOFTOP SOLAR LAYOUT | FIRST SOLAR SERIES 7 TR1 | 3,731 PANELS | 2.05 MW | DC-DIRECT TO 800V BUS",
+    dwg.add(dwg.text("ROOFTOP SOLAR LAYOUT | FIRST SOLAR SERIES 7 TR1 (550W) | 3,731 PANELS = 2.05 MW | 5-PANEL STRINGS @ 952V",
                       insert=(W / 2, 40), text_anchor="middle", fill=ACCENT,
                       font_size=10, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("Sheet L-001 | Design Intent | 2026-03-23 | NOT FOR CONSTRUCTION",
@@ -161,7 +161,7 @@ def build():
     eq_x = 760
 
     # String combiner panel
-    box(dwg, eq_x, 100, 180, 60, "STRING COMBINER\nPANEL\n746 strings x 5 panels", "Fused inputs | Monitoring",
+    box(dwg, eq_x, 100, 180, 60, "STRING COMBINER\nPANEL\n746 strings x 5 panels @ 952V", "Fused inputs | Monitoring",
         border="#fbbf24", text_color="#fbbf24")
 
     # DC-DC Converter
@@ -224,7 +224,7 @@ def build():
                       text_anchor="middle", fill="#fbbf24", font_size=10, font_family="Arial", font_weight="bold"))
 
     specs = [
-        ("Panel Model", "First Solar Series 7 TR1"),
+        ("Panel Model", "First Solar Series 7 TR1 (550W)"),
         ("Rated Power", "550W per panel"),
         ("Efficiency", "19.7% (CdTe thin-film)"),
         ("Dimensions", "~2.5m x 1.2m (8.2' x 3.9')"),
@@ -327,5 +327,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/trappeys/blueprints", exist_ok=True)
     build()

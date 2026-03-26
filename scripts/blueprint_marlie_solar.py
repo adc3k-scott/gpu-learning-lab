@@ -6,7 +6,7 @@ Solar Rooftop Layout — 24x40 = 960 sq ft roof
 import svgwrite
 
 W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/marlie-solar-layout.svg"
+OUT = "adc3k-deploy/marlie/blueprints/solar-layout.svg"
 
 ACCENT = "#3b82f6"
 
@@ -35,7 +35,7 @@ def build():
     dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
-    dwg.add(dwg.text("ROOFTOP SOLAR LAYOUT | 300 kW | ~55 PANELS | 600 kWh BESS | DC-DIRECT TO 800V BUS",
+    dwg.add(dwg.text("ROOFTOP SOLAR | First Solar Series 7 TR1 (550W) | 5-PANEL STRINGS @ 952V | Eaton xStorage BESS 600 kWh",
                       insert=(W / 2, 40), text_anchor="middle", fill=ACCENT,
                       font_size=10, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("Sheet L-001 | Design Intent | 2026-03-23 | NOT FOR CONSTRUCTION",
@@ -187,7 +187,7 @@ def build():
     # ================================================================
     eq_x = 500
 
-    box(dwg, eq_x, 100, 200, 55, "STRING COMBINER\nPANEL\n~11 strings x 5 panels", "Fused inputs | Monitoring",
+    box(dwg, eq_x, 100, 200, 55, "STRING COMBINER\nPANEL\n~11 strings x 5 panels @ 952V", "Fused inputs | Monitoring",
         border="#fbbf24", text_color="#fbbf24")
 
     dwg.add(dwg.line((eq_x + 100, 155), (eq_x + 100, 190), stroke="#fbbf24", stroke_width=1.5))
@@ -200,7 +200,7 @@ def build():
 
     # Battery connection
     dwg.add(dwg.line((eq_x + 200, 312), (eq_x + 240, 312), stroke=ACCENT, stroke_width=1.5))
-    box(dwg, eq_x + 240, 285, 170, 55, "EATON xStorage\nBESS 600 kWh\n800V DC Native",
+    box(dwg, eq_x + 240, 285, 170, 55, "Eaton xStorage\nBESS (600 kWh)\n800V DC Native",
         "Ride-through + bridge + peak shave",
         border=ACCENT, text_color="#93c5fd")
 
@@ -295,7 +295,7 @@ def build():
     batt_x = 660
     batt_y = 750
     dwg.add(dwg.rect((batt_x, batt_y), (700, 60), rx=6, fill="#111318", stroke="#1e2230"))
-    dwg.add(dwg.text("EATON xSTORAGE BESS — 600 kWh", insert=(batt_x + 350, batt_y + 18),
+    dwg.add(dwg.text("Eaton xStorage BESS (600 kWh) — 800V DC NATIVE", insert=(batt_x + 350, batt_y + 18),
                       text_anchor="middle", fill=ACCENT, font_size=10, font_family="Arial", font_weight="bold"))
 
     batt_specs = [
@@ -337,5 +337,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/marlie/blueprints", exist_ok=True)
     build()

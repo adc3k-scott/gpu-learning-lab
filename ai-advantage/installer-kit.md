@@ -7,9 +7,10 @@
 ## The Laptop (Your Main Tool)
 
 - Secured AI Advantage company laptop — pre-configured, encrypted, no personal use
-- NemoClaw installer pre-downloaded (don't rely on client WiFi for the big download)
+- NIM deployment toolkit pre-downloaded (don't rely on client WiFi for the big download)
 - All vertical sandbox policy files loaded locally
 - SSH keys for MARLIE I remote monitoring already configured
+- Mission Control dashboard bookmarked and credentials tested (http://marlie1.local:8000)
 - Hotspot-capable phone paired (backup internet)
 
 ---
@@ -22,7 +23,7 @@
 |------|-----|-----------|
 | **Ethernet cables (2x — 6ft and 15ft)** | Client WiFi might be garbage. Hardwire the agent device to their router for install. Leave the short one if needed. | $15 |
 | **USB-C hub / dongle** | HDMI out, USB-A ports, Ethernet port. One adapter covers every laptop and device situation. | $35 |
-| **USB drive (128GB)** | Pre-loaded with NemoClaw installer, vertical configs, and offline model weights (Nemotron Nano for DGX Spark). Backup if internet is slow or down. | $15 |
+| **USB drive (128GB)** | Pre-loaded with NIM deployment configs, vertical policies, and offline model weights (Nemotron Nano for DGX Spark). Backup if internet is slow or down. | $15 |
 | **Phone hotspot** | Company phone or dedicated hotspot. If their internet is down or terrible, you still finish the install. | (company phone) |
 | **Power strip (3ft, 3-outlet + USB)** | You need power for your laptop + their device. Their outlets are always in the wrong place or full. Compact travel strip. | $15 |
 | **Velcro cable ties (10-pack)** | Clean up the cables you run. Looks professional. Takes 2 minutes. | $5 |
@@ -37,16 +38,18 @@
 
 | Item | Why | Est. Cost |
 |------|-----|-----------|
-| **Mac Mini M4 (pre-configured)** | Ship to client ahead of time OR bring it. 7.7" square, under 2 lbs. Pre-load NemoClaw, Nemotron Nano, and vertical configs before arrival. | $1,399-3,199 (client cost) |
+| **Mac Mini M4 (pre-configured)** | Ship to client ahead of time OR bring it. 7.7" square, under 2 lbs. Pre-load sandbox agent, Nemotron Nano, and vertical configs before arrival. | $1,399-3,199 (client cost) |
 | **USB-C to Ethernet adapter** | Mac Mini has one ethernet port. If you need a second connection or their port is USB-C only. | $15 |
 | **Extra ethernet cable (3ft)** | Mini to their router/switch. Short and clean. | $5 |
 | **HDMI cable (6ft)** | For initial setup — connect to their monitor to verify. After setup, runs headless. | $8 |
 
 **Pre-install prep (do this at the office, not on-site):**
-- Install NemoClaw + Nemotron Nano 30B model weights (~15 GB download, don't do this on client WiFi)
+- Install sandbox agent + Nemotron Nano 30B model weights (~15 GB download, don't do this on client WiFi)
 - Apply vertical-specific sandbox policy
 - Test inference locally — verify the model responds before you drive out
+- Configure NIM endpoint to route cloud inference through ADC's MARLIE I infrastructure
 - Set up SSH so MARLIE I can monitor remotely
+- Verify client appears in Mission Control dashboard
 - Total prep time: ~45 minutes
 
 ### DGX Spark Installs — Tier 4 (Add These)
@@ -78,7 +81,7 @@
 ## Scope of Work — What You Do and Don't Do
 
 ### You DO:
-- Set up the AI agent software (NemoClaw sandbox, inference routing, policies)
+- Set up the AI agent software (sandbox, NIM inference routing, policies)
 - Connect the agent device to their EXISTING network (plug in ethernet or connect to WiFi)
 - Configure vertical-specific AI workflows
 - Train the staff
@@ -104,12 +107,13 @@ That's it. Don't name anyone. Don't suggest anyone. Don't get in the middle. You
 ## Pre-Install Checklist (Before You Leave the Office)
 
 - [ ] Laptop charged, hotspot tested
-- [ ] USB drive has latest NemoClaw installer + vertical configs
+- [ ] USB drive has latest NIM deployment toolkit + vertical configs
 - [ ] Client's vertical playbook reviewed (know what you're installing)
 - [ ] Backpack packed (cables, hub, power strip, USB drive, labels, cards)
-- [ ] DGX Spark shipped/received if Tier 3 (confirm with client)
+- [ ] DGX Spark shipped/received if Tier 4 (confirm with client)
 - [ ] Client confirmed: working internet, a desk/shelf for the device, and 30 minutes for staff training
 - [ ] MARLIE I remote monitoring credentials tested (can you SSH in?)
+- [ ] Mission Control dashboard accessible — client workspace visible
 
 ---
 

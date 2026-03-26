@@ -1,12 +1,12 @@
 """
 MARLIE I — Lafayette AI Factory & Command Center
 Electrical Single-Line Diagram
-G3520C generators -> Eaton Beam Rubin DSX -> 800V DC bus -> rack PDUs -> 64:1 LLC -> GPU
+G3512H generators -> Eaton Beam Rubin DSX -> 800V DC bus -> rack PDUs -> TI GaN / Infineon CoolGaN -> GPU
 """
 import svgwrite
 
-W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/marlie-electrical-sld.svg"
+W, H = 1400, 1150
+OUT = "adc3k-deploy/marlie/blueprints/electrical-sld.svg"
 
 ACCENT = "#3b82f6"
 
@@ -68,9 +68,9 @@ def build():
         color="#0a1a0a", border="#22c55e", text_color="#22c55e")
 
     # Cat G3520C #1
-    box(dwg, 200, y1, 130, 50, "CAT G3520C #1\n1.5 MW | 480V AC", "Natural Gas | Layer 2",
+    box(dwg, 200, y1, 130, 50, "CAT G3512H #1\n1.03 MW | 480V AC", "Natural Gas | Layer 2",
         color="#0a1a0a", border="#22c55e", text_color="#22c55e")
-    box(dwg, 350, y1, 130, 50, "CAT G3520C #2\n1.5 MW | 480V AC", "N+1 Redundant",
+    box(dwg, 350, y1, 130, 50, "CAT G3512H #2\n1.03 MW | 480V AC", "N+1 Redundant",
         color="#0a1a0a", border="#22c55e", text_color="#22c55e")
 
     # Solar Rooftop
@@ -82,7 +82,7 @@ def build():
         color="#2e1a1a", border="#ef4444", text_color="#ef4444")
 
     # LUS Grid (backup)
-    box(dwg, 830, y1, 120, 50, "LUS GRID\nBACKUP ONLY", "Layer 4 | Dual Feed Available",
+    box(dwg, 830, y1, 120, 50, "LUS BACKUP\nGRID", "Layer 4 | Dual Feed Available",
         color="#1a0a0a", border="#ef4444", text_color="#ef4444")
 
     # Eaton BESS
@@ -134,11 +134,11 @@ def build():
     for rx in rect_positions:
         arrow_down(dwg, rx, y3 + 3, y4, "#ff6b35")
 
-    box(dwg, 60, y4, 190, 50, "EATON BEAM RUBIN DSX\n480V AC -> 800V DC\nRectifier #1",
+    box(dwg, 60, y4, 190, 50, "EATON BEAM RUBIN DSX\nORV3 Sidecar\n480V AC -> 800V DC #1",
         "96%+ Efficiency",
         border="#8b5cf6", text_color="#c4b5fd")
 
-    box(dwg, 310, y4, 190, 50, "EATON BEAM RUBIN DSX\n480V AC -> 800V DC\nRectifier #2",
+    box(dwg, 310, y4, 190, 50, "EATON BEAM RUBIN DSX\nORV3 Sidecar\n480V AC -> 800V DC #2",
         "N+1 Redundant",
         border="#8b5cf6", text_color="#c4b5fd")
 
@@ -181,22 +181,30 @@ def build():
                       text_anchor="middle", fill="#93c5fd", font_size=8, font_family="Arial"))
 
     y6 = y5 + 50
-    y7 = y6 + 40
-    y8 = y7 + 40
-    y9 = y8 + 40
+    y6b = y6 + 35
+    y6c = y6b + 35
+    y7 = y6c + 35
+    y8 = y7 + 35
+    y9 = y8 + 35
 
     f1_positions = [50, 155, 260, 365]
     for bx in f1_positions:
         arrow_down(dwg, bx + 40, y5 + 3, y6, "#8b5cf6")
-        box(dwg, bx, y6, 80, 30, "BUSWAY\n800V DC", "",
-            border="#8b5cf6", text_color="#c4b5fd", font=8)
-        arrow_down(dwg, bx + 40, y6 + 30, y7, "#8b5cf6")
-        box(dwg, bx, y7, 80, 30, "RACK PDU\n800V In", "",
-            border="#8b5cf6", text_color="#c4b5fd", font=8)
-        arrow_down(dwg, bx + 40, y7 + 30, y8, "#76b900")
-        box(dwg, bx, y8, 80, 30, "64:1 LLC\n800V->12.5V", "99%+ eff",
-            border="#76b900", text_color="#76b900", font=8)
-        arrow_down(dwg, bx + 40, y8 + 30, y9, "#76b900")
+        box(dwg, bx, y6, 80, 28, "BUSWAY\n800V DC", "",
+            border="#8b5cf6", text_color="#c4b5fd", font=7)
+        arrow_down(dwg, bx + 40, y6 + 28, y6b, "#8b5cf6")
+        box(dwg, bx, y6b, 80, 28, "DELTA 660 kW\n480 kW BBU", "",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+        arrow_down(dwg, bx + 40, y6b + 28, y6c, "#00bcd4")
+        box(dwg, bx, y6c, 80, 28, "e-FUSE <3us\n90kW 800V->50V", "",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+        arrow_down(dwg, bx + 40, y6c + 28, y7, "#00bcd4")
+        box(dwg, bx, y7, 80, 28, "RACK PDU\n800V In", "",
+            border="#8b5cf6", text_color="#c4b5fd", font=7)
+        arrow_down(dwg, bx + 40, y7 + 28, y8, "#8b5cf6")
+        box(dwg, bx, y8, 80, 28, "TI GaN / Infineon\nCoolGaN 800V->6V", "",
+            border="#76b900", text_color="#76b900", font=7)
+        arrow_down(dwg, bx + 40, y8 + 28, y9, "#76b900")
 
     f1_rack_labels = ["NVL72 R1\n130 kW", "NVL72 R2\n130 kW", "NVL72 R3\n130 kW", "NVL72 R4\n130 kW"]
     for bx, label in zip(f1_positions, f1_rack_labels):
@@ -214,15 +222,21 @@ def build():
     f2_positions = [f2_offset + 30, f2_offset + 135, f2_offset + 240, f2_offset + 345]
     for bx in f2_positions:
         arrow_down(dwg, bx + 40, y5 + 3, y6, "#8b5cf6")
-        box(dwg, bx, y6, 80, 30, "BUSWAY\n800V DC", "",
-            border="#8b5cf6", text_color="#c4b5fd", font=8)
-        arrow_down(dwg, bx + 40, y6 + 30, y7, "#8b5cf6")
-        box(dwg, bx, y7, 80, 30, "RACK PDU\n800V In", "",
-            border="#8b5cf6", text_color="#c4b5fd", font=8)
-        arrow_down(dwg, bx + 40, y7 + 30, y8, "#76b900")
-        box(dwg, bx, y8, 80, 30, "64:1 LLC\n800V->12.5V", "99%+ eff",
-            border="#76b900", text_color="#76b900", font=8)
-        arrow_down(dwg, bx + 40, y8 + 30, y9, "#76b900")
+        box(dwg, bx, y6, 80, 28, "BUSWAY\n800V DC", "",
+            border="#8b5cf6", text_color="#c4b5fd", font=7)
+        arrow_down(dwg, bx + 40, y6 + 28, y6b, "#8b5cf6")
+        box(dwg, bx, y6b, 80, 28, "DELTA 660 kW\n480 kW BBU", "",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+        arrow_down(dwg, bx + 40, y6b + 28, y6c, "#00bcd4")
+        box(dwg, bx, y6c, 80, 28, "e-FUSE <3us\n90kW 800V->50V", "",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+        arrow_down(dwg, bx + 40, y6c + 28, y7, "#00bcd4")
+        box(dwg, bx, y7, 80, 28, "RACK PDU\n800V In", "",
+            border="#8b5cf6", text_color="#c4b5fd", font=7)
+        arrow_down(dwg, bx + 40, y7 + 28, y8, "#8b5cf6")
+        box(dwg, bx, y8, 80, 28, "TI GaN / Infineon\nCoolGaN 800V->6V", "",
+            border="#76b900", text_color="#76b900", font=7)
+        arrow_down(dwg, bx + 40, y8 + 28, y9, "#76b900")
 
     f2_rack_labels = ["NVL72 R5\n130 kW", "NVL72 R6\n130 kW", "NVL72 R7\n130 kW", "NVL72 R8\n130 kW"]
     for bx, label in zip(f2_positions, f2_rack_labels):
@@ -237,7 +251,7 @@ def build():
     # ================================================================
     # SUMMARY BAR
     # ================================================================
-    sy = 780
+    sy = 850
     dwg.add(dwg.rect((30, sy), (1340, 45), rx=6, fill="#111318", stroke="#1e2230"))
     stats = [
         ("FLOOR 1 IT", "520 kW (4 racks)"),
@@ -245,7 +259,7 @@ def build():
         ("TOTAL IT", "1,040 kW (8 racks)"),
         ("OVERHEAD", "~200 kW"),
         ("TOTAL DRAW", "~1,240 kW"),
-        ("GEN CAPACITY", "3,000 kW (N+1)"),
+        ("GEN CAPACITY", "2,060 kW (N+1)"),
     ]
     sx = 55
     for label, value in stats:
@@ -258,17 +272,15 @@ def build():
     # ================================================================
     # NOTES
     # ================================================================
-    ny = 840
+    ny = 910
     notes = [
-        "1. 2x Cat G3520C natural gas generators: 1.5 MW each, 480V AC output — ATMOS gas on property, Henry Hub 40 mi",
-        "2. N+1 redundancy: each genset at ~41% load (1,240 kW on 3,000 kW capacity)",
-        "3. Eaton Beam Rubin DSX rectifiers convert 480V AC to 800V DC per NVIDIA DSX Reference Design",
-        "4. 300 kW rooftop solar DC-Direct to 800V bus via buck converter at 97% efficiency",
-        "5. 64:1 LLC resonant converters: 800V DC to 12.5V at GPU die — 99%+ efficiency",
-        "6. LUS grid is BACKUP ONLY (Layer 4) — dual feed (LUS + SLEMCO) available for redundancy",
-        "7. BESS 600 kWh on 800V DC bus — ride-through for transfer events + battery bridge",
-        "8. Diesel genset (Layer 3) provides pipeline-independent backup, auto-start on gas failure",
-        "9. 8 NVL72 racks across 2 floors: 576 GPUs total, 1,040 kW IT load, 1 CDU pair per floor",
+        "1. 2x Caterpillar G3512H natural gas generators: 1.03 MW each, 480V AC output — ATMOS gas on property, Henry Hub 40 mi",
+        "2. N+1 redundancy: each genset carries full IT load (1,240 kW on 2,060 kW capacity)",
+        "3. DUAL POWER STACK: Eaton Beam Rubin DSX (facility) + Delta (rack). Eaton ORV3 Sidecar rectifiers: 480V AC to 800V DC",
+        "4. Delta 660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU). Delta e-Fuse (SiC, <3 us). Delta 90 kW DC/DC (800V to 50V MGX)",
+        "5. 300 kW rooftop solar DC-Direct at 97% eff. TI GaN + Infineon CoolGaN IBC at die — 99%+ eff",
+        "6. LUS grid is BACKUP ONLY (Layer 4). BESS 600 kWh ride-through. Diesel genset (Layer 3) auto-start",
+        "7. 8 NVL72 racks across 2 floors: 576 GPUs total, 1,040 kW IT load, 1 CoolIT CHx200 CDU pair per floor",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -278,7 +290,7 @@ def build():
     ly = ny + len(notes) * 13 + 10
     layers = [
         ("LAYER 1: SOLAR", "#fbbf24", "Primary Offset — 300 kW rooftop"),
-        ("LAYER 2: NATURAL GAS", "#22c55e", "Backbone — 2x G3520C 24/7"),
+        ("LAYER 2: NATURAL GAS", "#22c55e", "Backbone — 2x Cat G3512H 24/7"),
         ("LAYER 3: DIESEL", "#ef4444", "Emergency Only"),
         ("LAYER 4: GRID (LUS)", "#ef4444", "Backup Only — dual feed"),
     ]
@@ -295,5 +307,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/marlie/blueprints", exist_ok=True)
     build()
