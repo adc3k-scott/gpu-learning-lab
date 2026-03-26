@@ -1,0 +1,1371 @@
+<scratchpad>
+Let me think through this systematically.
+Current System Analysis
+Strengths:
+
+The basic building blocks exist - chat agent, code execution, GPU compute, dashboard, task management
+FastAPI backend is a solid choice
+Next.js dashboard is modern and extensible
+RunPod integration already works for two workload types
+Notion integration exists (even if one-way)
+Scott is technical and understands the system
+
+Weaknesses:
+
+Monolithic agent - 800-line main_agent.py is a god object. It likely handles routing, execution, context management, error handling all in one place. This makes it fragile, hard to test, and hard to extend.
+No skill contract/interface - Skills have different parameter formats and error handling. This means every new skill requires custom integration code in the agent. This is the opposite of a plugin architecture.
+No job lifecycle management - RunPod jobs are fire-and-forget. No queue, no status tracking, no callbacks, no retry logic. This is a critical gap for any ML workflow system.
+Dashboard is disconnected - The dashboard shows hardcoded data and doesn't reflect system state. This means it's essentially decorative rather than functional. No WebSocket or SSE for real-time updates.
+No orchestration layer - There's no concept of a "workflow" that chains multiple skills together. The current system is imperative (do this, then do that) rather than declarative (here's what I want, figure out the steps).
+Secrets management is ad-hoc - Mix of .env and hardcoded values. Security risk and operational pain.
+No testing infrastructure - No tests means changes are risky. For a system Scott needs to maintain alone, this is dangerous.
+No event system - Components can't react to events from other components. Everything is request-response.
+Context management is basic - context_manager.py probably just manages conversation history, not system-wide state.
+No error recovery - If a RunPod job fails, there's no retry logic, no alerting, no automatic cleanup.
+
+Multi-Agent Design Thinking
+The key insight is that agents should map to domains of responsibility, not to individual tasks. Each agent should own a coherent set of concerns.
+Agent Division:
+
+Planner/Orchestrator Agent - The brain. Takes high-level requests, decomposes them into steps, assigns to worker agents, tracks progress, handles failures. This replaces the monolithic main_agent.py.
+Coder Agent - Writes, reviews, and modifies code. Handles code generation, PR reviews, code analysis. Interacts with GitHub.
+Repo Analyst Agent - Understands the repository structure, can analyze codebases, find patterns, suggest improvements, maintain documentation. This is about deep code understanding rather than code writing.
+Infrastructure Agent - Manages RunPod pods, monitors GPU jobs, handles deployment, manages secrets, monitors system health. Owns the compute layer.
+UI/Dashboard Agent - Manages dashboard state, generates UI components, handles real-time updates, manages the web layer.
+Data Agent - Handles data preparation, dataset management, syncing data between systems (Notion, GitHub, local). Owns the data pipeline.
+Skill Registry Agent - Manages the skill marketplace, handles skill registration, validation, versioning. This enables the plugin architecture Scott wants.
+
+Wait, let me reconsider. Too many agents creates coordination overhead. Let me think about what's actually needed vs. what's over-engineering.
+Core agents (must have):
+
+Orchestrator - Plans and coordinates
+Coder - Code generation and modification
+Repo Analyst - Code understanding and analysis
+Infrastructure Manager - RunPod, deployment, monitoring
+Integration Agent - GitHub, Notion, external APIs
+
+Additional agents (high value):
+6. Dashboard/UI Agent - Manages the web interface
+The skill registry should be a system component, not an agent. Skills are tools that agents use, not agents themselves.
+Communication Patterns:
+Option A: Message bus (Redis/RabbitMQ) - Good for async, but adds infrastructure complexity
+Option B: Direct function calls with a mediator pattern - Simpler, but tightly coupled
+Option C: Event-driven with an in-process event bus - Good balance for a system this size
+I think the right answer is a lightweight event bus backed by Redis (which also serves as the job queue). This gives us:
+
+Async communication between agents
+Job queue for RunPod tasks
+Pub/sub for real-time dashboard updates
+State persistence
+
+For a system maintained by one person, I want to keep the infrastructure minimal. Redis is a single dependency that solves multiple problems.
+Orchestration Design:
+The Orchestrator should implement a plan-execute-verify loop:
+
+Receive high-level request
+Decompose into a task graph (DAG)
+Execute tasks by dispatching to appropriate agents
+Monitor execution, handle failures
+Aggregate results
+Report back
+
+Task graph is important because some tasks are parallel (e.g., clone repo AND provision GPU can happen simultaneously) while others are sequential (must have data before training).
+Skill System Design:
+Skills need a consistent interface. I'm thinking:
+pythonCopyclass BaseSkill(ABC):
+    name: str
+    description: str
+    input_schema: dict  # JSON Schema
+    output_schema: dict
+    required_secrets: list[str]
+    
+    @abstractmethod
+    async def execute(self, params: dict, context: SkillContext) -> SkillResult:
+        pass
+    
+    @abstractmethod
+    def validate_params(self, params: dict) -> bool:
+        pass
+Skills register themselves via a decorator or manifest file. The skill registry discovers and loads them dynamically.
+Folder Structure Thinking:
+Copymission-control/
+├── agents/                    # All agent definitions
+│   ├── base_agent.py         # Abstract base class
+│   ├── orchestrator/
+│   │   ├── __init__.py
+│   │   ├── planner.py        # Task decomposition
+│   │   ├── executor.py       # Task dispatch
+│   │   └── monitor.py        # Progress tracking
+│   ├── coder/
+│   │   ├── __init__.py
+│   │   ├── generator.py
+│   │   ├── reviewer.py
+│   │   └── refactorer.py
+│   ├── repo_analyst/
+│   │   ├── __init__.py
+│   │   ├── analyzer.py
+│   │   ├── mapper.py
+│   │   └── documenter.py
+│   ├── infra_manager/
+│   │   ├── __init__.py
+│   │   ├── runpod_manager.py
+│   │   ├── job_queue.py
+│   │   └── health_monitor.py
+│   ├── integrations/
+│   │   ├── __init__.py
+│   │   ├── github_agent.py
+│   │   ├── notion_agent.py
+│   │   └── external_api.py
+│   └── ui_agent/
+│       ├── __init__.py
+│       ├── state_manager.py
+│       └── component_gen.py
+├── skills/                    # Plugin-based skill system
+│   ├── registry.py           # Skill discovery and loading
+│   ├── base_skill.py         # Abstract skill interface
+│   ├── builtin/
+│   │   ├── github_ops.py
+│   │   ├── runpod_launcher.py
+│   │   ├── notion_sync.py
+│   │   └── web_scraper.py
+│   └── custom/               # User-added skills
+│       └── README.md
+├── core/                      # Core infrastructure
+│   ├── event_bus.py          # Event/message system
+│   ├── state_store.py        # Shared state management
+│   ├── task_graph.py         # DAG-based task planning
+│   ├── context.py            # Context management
+│   ├── secrets.py            # Secrets management
+│   └── errors.py             # Centralized error handling
+├── api/                       # FastAPI backend
+│   ├── main.py
+│   ├── routes/
+│   │   ├── chat.py
+│   │   ├── jobs.py
+│   │   ├── skills.py
+│   │   ├── agents.py
+│   │   └── webhooks.py
+│   ├── middleware/
+│   │   ├── auth.py
+│   │   ├── rate_limiter.py
+│   │   └── error_handler.py
+│   └── websocket/
+│       └── realtime.py       # WebSocket for dashboard
+├── dashboard/                 # Next.js app
+│   └── ... (existing structure, enhanced)
+├── config/
+│   ├── settings.py           # Pydantic settings
+│   ├── agents.yaml           # Agent configurations
+│   ├── skills.yaml           # Skill registry config
+│   └── workflows/            # Predefined workflow templates
+│       ├── finetune_llm.yaml
+│       └── train_sd.yaml
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── fixtures/
+├── scripts/
+│   ├── setup.sh
+│   ├── migrate.sh
+│   └── deploy.sh
+├── docs/
+│   ├── architecture.md
+│   ├── agents.md
+│   ├── skills.md
+│   └── api.md
+└── docker-compose.yml
+State Management:
+Need a shared state store that all agents can read/write. Redis is good for this. State should include:
+
+Current task graph and execution status
+RunPod job statuses
+Agent health status
+Recent conversation context
+Skill execution results
+
+Implementation Priority:
+
+Core infrastructure first - Event bus, state store, base agent class, base skill class
+Skill system standardization - Migrate existing skills to new interface
+Orchestrator agent - Replace monolithic agent
+Infrastructure manager - Proper RunPod job management
+API layer improvements - Rate limiting, consistent errors, WebSocket
+Dashboard real-time - WebSocket integration
+Integration agent - Bi-directional Notion, enhanced GitHub
+Workflow builder - Visual workflow chaining
+Testing - Unit and integration tests
+Documentation - Architecture docs, skill authoring guide
+
+The Fine-Tune Workflow (Redesigned):
+
+Scott asks: "Fine-tune Llama on my customer support dataset"
+Chat API receives request, forwards to Orchestrator
+Orchestrator creates task graph:
+
+Task 1: Locate/prepare dataset (Integration Agent → GitHub)
+Task 2: Provision GPU pod (Infra Manager → RunPod)
+Task 3: Upload data to pod (Infra Manager)
+Task 4: Execute training (Infra Manager → RunPod)
+Task 5: Monitor training (Infra Manager, async)
+Task 6: On completion, pull artifacts (Integration Agent → GitHub)
+Task 7: Update Notion status (Integration Agent → Notion)
+Task 8: Notify dashboard (UI Agent → WebSocket)
+
+
+Tasks 1 and 2 execute in parallel
+Task 3 waits for both 1 and 2
+Task 5 is a long-running monitor that emits progress events
+Dashboard shows real-time progress via WebSocket
+On completion, Scott gets notification + Notion is updated
+
+This is dramatically better than the current manual workflow.
+Event Bus Design:
+Events should be typed and structured:
+pythonCopy@dataclass
+class Event:
+    event_id: str
+    event_type: str  # e.g., "job.started", "job.completed", "skill.executed"
+    source_agent: str
+    timestamp: datetime
+    payload: dict
+    correlation_id: str  # Links related events together
+Agents subscribe to event types they care about:
+
+Orchestrator subscribes to all completion/failure events
+UI Agent subscribes to all events (for dashboard updates)
+Infra Manager subscribes to job-related events
+Integration Agent subscribes to sync-trigger events
+
+Secrets Management:
+Use a layered approach:
+
+Local dev: .env files loaded via python-dotenv
+Production: Environment variables from deployment platform
+Runtime: Pydantic Settings model that validates all required secrets at startup
+Skills declare required secrets, system validates they're available before execution
+
+This avoids the need for a full secrets manager (like Vault) which is overkill for this scale, but gives structure.
+Error Handling Strategy:
+
+Skill-level: Each skill returns a SkillResult with success/failure + error details
+Agent-level: Agents catch skill failures and report to orchestrator
+Orchestrator-level: Orchestrator decides on retry, skip, or abort
+System-level: Unhandled errors logged, health check degrades, dashboard shows alert
+
+Retry policies should be configurable per skill:
+pythonCopyretry_policy:
+  max_retries: 3
+  backoff: exponential
+  retry_on: [TimeoutError, ConnectionError]
+I think I have enough to write a comprehensive design now.
+</scratchpad>
+<architecture_design>
+1. Architecture Evaluation
+Current System Strengths
+
+Solid technology choices: FastAPI + Next.js + RunPod is a pragmatic stack with good community support
+Functional primitives exist: Chat, code execution, GPU compute, and task management are all present, even if under-engineered
+Clear user workflow: Scott has a well-understood usage pattern, which means we're designing for known requirements, not speculation
+
+Critical Weaknesses and Gaps
+Weakness 1: Monolithic Agent (Structural Fragility)
+The 800-line main_agent.py is a classic god object. It almost certainly handles intent classification, skill routing, context management, error handling, and response formatting all in one file. This creates a cascading failure risk: a bug in Notion sync logic can break the chat interface. It's untestable in isolation and means every new capability requires modifying this single critical file. This is the single highest-risk component in the system.
+Weakness 2: No Skill Contract or Plugin Architecture
+Each skill has different parameter formats and error handling. This means the agent needs custom integration code per skill — the opposite of a plugin system. Adding a new skill requires touching the agent, the API layer, and potentially the dashboard. This violates the Open/Closed Principle and directly blocks Scott's goal of a "skill marketplace" where skills can be added without code changes.
+Weakness 3: No Job Lifecycle Management
+RunPod jobs are fire-and-forget. There's no queue (so jobs can pile up or get lost), no status tracking (so Scott manually checks RunPod's dashboard), no retry logic (so transient failures require manual intervention), and no completion callbacks (so downstream tasks can't be triggered automatically). For ML workloads that run for hours, this is operationally untenable.
+Weakness 4: Dashboard is Disconnected from System State
+The dashboard shows hardcoded data. There's no WebSocket or SSE connection for real-time updates, no backend state that the dashboard reads from. This means the dashboard is essentially a static mockup, not an operational tool. Scott gets no visibility into what the system is actually doing.
+Weakness 5: No Event-Driven Communication
+All interactions are synchronous request-response. There's no way for the RunPod layer to notify the system when a job completes, no way for Notion changes to trigger actions, and no way for the dashboard to receive push updates. The system can't react to events — it can only be polled. This makes workflows like "notify me when training finishes" impossible without manual checking.
+Weakness 6: No Orchestration or Workflow Concept
+There's no abstraction for a multi-step workflow. The fine-tuning example shows this: Scott manually sequences five steps that should be automated. There's no task graph, no dependency tracking, no parallel execution. Each step is manually triggered, and if one fails, there's no recovery path.
+Weakness 7: Security and Operational Gaps
+Secrets are managed ad-hoc (mix of .env and hardcoded), the API has no rate limiting, error responses are inconsistent, and there's no testing infrastructure. For a system that manages API keys, GitHub tokens, and cloud GPU spending, this is a meaningful risk vector.
+
+2. Multi-Agent System Design
+Design Philosophy
+The system follows a hierarchical agent architecture with an Orchestrator at the top, specialized worker agents in the middle, and a shared infrastructure layer at the bottom. This is not a peer-to-peer multi-agent system (which would be over-engineered for this use case) — it's a hub-and-spoke model where the Orchestrator is the single coordination point.
+Coordination Strategy
+Copy                    ┌─────────────────┐
+     User Request → │   Orchestrator   │ ← Completion Events
+                    │  (Plan-Execute-  │
+                    │    Verify Loop)  │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+         Task Assignment  Task Assignment  Task Assignment
+              │              │              │
+              ▼              ▼              ▼
+        ┌──────────┐  ┌──────────┐  ┌──────────┐
+        │ Worker   │  │ Worker   │  │ Worker   │
+        │ Agent A  │  │ Agent B  │  │ Agent C  │
+        └────┬─────┘  └────┬─────┘  └────┬─────┘
+             │              │              │
+             └──────────────┼──────────────┘
+                            │
+                    ┌───────▼───────┐
+                    │  Event Bus +   │
+                    │  State Store   │
+                    │   (Redis)      │
+                    └───────────────┘
+Communication Flow:
+
+Inbound: User requests arrive via chat API or dashboard → Orchestrator
+Planning: Orchestrator decomposes request into a task DAG (directed acyclic graph) with dependencies
+Dispatch: Tasks are assigned to worker agents via the event bus
+Execution: Worker agents execute tasks using skills from the registry, emitting progress events
+Monitoring: Orchestrator monitors the task DAG, handles failures (retry/skip/abort)
+Completion: Results aggregated, dashboard updated via WebSocket, Notion synced
+
+Key Design Decisions:
+
+Event bus (Redis Streams) for async communication — agents don't call each other directly
+Shared state store (Redis) for task graph state, job statuses, agent health
+Skill registry is a system component, not an agent — skills are tools agents use
+All agents share a base class that handles event subscription, state access, and lifecycle
+
+
+3. Agent Role Definitions
+Agent 1: Orchestrator (The Brain)
+Primary Responsibility: Decompose high-level requests into executable task graphs, coordinate agent execution, handle failures, and aggregate results.
+Key Capabilities:
+
+Natural language intent parsing and task decomposition
+Task DAG construction with dependency resolution
+Parallel task dispatch when dependencies allow
+Progress monitoring and failure recovery (retry, skip, abort policies)
+Workflow template matching (recognize "fine-tune a model" and load predefined workflow)
+Human-in-the-loop checkpoints for high-risk operations
+
+Inputs:
+
+User requests (natural language via chat or structured via dashboard)
+Workflow templates (YAML-defined task sequences)
+Agent completion/failure events
+System health status
+
+Outputs:
+
+Task assignments dispatched to worker agents
+Execution progress updates (to dashboard via WebSocket)
+Final results and summaries (to user)
+Audit log entries
+
+Interacts With: All other agents (dispatches tasks to each), Event Bus (monitors all events), Dashboard (pushes status updates)
+pythonCopy# Orchestrator's core loop (conceptual)
+class Orchestrator(BaseAgent):
+    async def handle_request(self, request: UserRequest) -> WorkflowResult:
+        # 1. Plan
+        task_graph = await self.planner.decompose(request)
+        
+        # 2. Execute
+        for task_batch in task_graph.get_ready_tasks():
+            await asyncio.gather(*[
+                self.dispatch(task) for task in task_batch
+            ])
+        
+        # 3. Verify
+        return await self.aggregate_results(task_graph)
+
+Agent 2: Coder Agent (The Builder)
+Primary Responsibility: Generate, modify, review, and refactor code. Handles all code-touching operations.
+Key Capabilities:
+
+Code generation from natural language specifications
+Code review and quality analysis (style, bugs, security)
+Automated refactoring with safe transformations
+Pull request creation and management
+Test generation for existing code
+Diff generation and explanation
+
+Inputs:
+
+Code generation requests (with context: language, framework, requirements)
+Code review requests (with file paths or PR references)
+Refactoring requests (with target patterns)
+
+Outputs:
+
+Generated code files (with explanations)
+Code review reports (issues, suggestions, severity)
+Pull requests (via GitHub integration)
+Test files
+
+Interacts With: Repo Analyst (gets codebase context before writing), Integration Agent (GitHub operations), Orchestrator (receives tasks, reports completion)
+
+Agent 3: Repo Analyst (The Librarian)
+Primary Responsibility: Understand, analyze, and document codebases. Maintains a semantic map of the repository.
+Key Capabilities:
+
+Repository structure analysis (dependency graphs, module relationships)
+Code pattern detection (anti-patterns, duplicated logic, dead code)
+Documentation generation and maintenance
+Codebase search and navigation (semantic, not just text)
+Architecture drift detection (does code match intended architecture?)
+Change impact analysis ("if I modify X, what breaks?")
+
+Inputs:
+
+Repository paths or GitHub URLs
+Analysis requests (structural, quality, documentation)
+Change impact queries
+
+Outputs:
+
+Repository maps (structured JSON describing modules, dependencies, relationships)
+Analysis reports (quality metrics, pattern findings)
+Generated documentation (README, API docs, architecture docs)
+Impact analysis results
+
+Interacts With: Coder Agent (provides context for code generation), Orchestrator (receives analysis tasks), Integration Agent (reads from GitHub)
+
+Agent 4: Infrastructure Manager (The Operator)
+Primary Responsibility: Manage compute resources (RunPod), monitor job execution, handle deployments, and maintain system health.
+Key Capabilities:
+
+RunPod pod lifecycle management (provision, monitor, terminate)
+Job queue management (priority queue with configurable concurrency)
+Job status tracking with real-time progress reporting
+Cost optimization (auto-shutdown idle pods, spot instance selection)
+Health monitoring (pod health, API health, resource utilization)
+Artifact management (model checkpoints, training logs, outputs)
+Deployment management (for API and dashboard)
+
+Inputs:
+
+GPU job requests (with resource requirements, scripts, data references)
+Health check queries
+Deployment requests
+Cost reports requests
+
+Outputs:
+
+Job status events (started, progress, completed, failed)
+Pod metrics (GPU utilization, memory, cost)
+Deployment status
+Health reports
+Alerts (job failure, budget threshold, pod unhealthy)
+
+Interacts With: Orchestrator (receives compute tasks, reports job lifecycle events), Integration Agent (pulls data/pushes artifacts to GitHub), Dashboard (real-time job metrics via events)
+pythonCopy# Job queue conceptual design
+class JobQueue:
+    async def enqueue(self, job: GPUJob) -> str:
+        """Add job to priority queue, return job_id"""
+        job.status = JobStatus.QUEUED
+        await self.state_store.set(f"job:{job.id}", job.to_dict())
+        await self.event_bus.publish("job.queued", job.to_dict())
+        return job.id
+    
+    async def process_next(self):
+        """Provision pod and execute highest-priority queued job"""
+        job = await self.get_highest_priority()
+        pod = await self.runpod.create_pod(job.resource_requirements)
+        await self.execute_on_pod(pod, job)
+        # Monitor loop emits progress events
+
+Agent 5: Integration Agent (The Connector)
+Primary Responsibility: Manage all external service integrations — GitHub, Notion, and future third-party APIs. Owns bi-directional sync.
+Key Capabilities:
+
+GitHub operations (clone, commit, push, PR management, issue management, webhook handling)
+Notion bi-directional sync (Mission Control ↔ Notion, with conflict resolution)
+Webhook receiver (GitHub events, Notion changes, RunPod callbacks)
+External API orchestration (any third-party service)
+Data format transformation between systems
+
+Inputs:
+
+Sync requests (push to Notion, pull from GitHub)
+Webhook payloads (external events)
+Data transformation requests
+
+Outputs:
+
+Sync status events
+Transformed data
+External operation results (PR URL, Notion page ID, etc.)
+
+Interacts With: Orchestrator (receives integration tasks), Infrastructure Manager (data transfer for jobs), All agents (any agent can request external operations through this agent)
+Notion Bi-directional Sync Design:
+CopyMission Control                    Notion
+     │                               │
+     │──── Push: task created ───────►│
+     │                               │
+     │◄─── Webhook: status changed ──│
+     │                               │
+     │  Conflict resolution:         │
+     │  - Last-write-wins with       │
+     │    timestamp comparison       │
+     │  - Human review for           │
+     │    conflicting edits          │
+     │                               │
+
+Agent 6: UI/Dashboard Agent (The Presenter)
+Primary Responsibility: Manage dashboard state, serve real-time system updates, and generate UI configurations for the workflow builder.
+Key Capabilities:
+
+Real-time state aggregation (collects events from all agents, maintains dashboard state)
+WebSocket management (pushes updates to connected dashboard clients)
+Workflow builder backend (validates workflow definitions, saves/loads workflows)
+Notification management (in-app notifications, email/Slack alerts)
+UI configuration generation (dynamic dashboard layouts based on active tasks)
+
+Inputs:
+
+All system events (subscribed to event bus)
+Dashboard API requests (from Next.js frontend)
+Workflow definitions (from workflow builder UI)
+
+Outputs:
+
+Real-time WebSocket messages (to dashboard)
+Aggregated system state (for dashboard API)
+Notifications (to user)
+Workflow validation results
+
+Interacts With: Orchestrator (receives workflow submissions from dashboard, sends status), Event Bus (subscribes to all events for aggregation), All agents (indirectly, via events)
+
+4. Folder Structure
+Copymission-control/
+│
+├── agents/                           # 🧠 All agent implementations
+│   ├── __init__.py
+│   ├── base.py                       # Abstract BaseAgent class (event sub, state access, lifecycle)
+│   ├── registry.py                   # Agent discovery and initialization
+│   │
+│   ├── orchestrator/                 # Orchestrator Agent
+│   │   ├── __init__.py
+│   │   ├── agent.py                  # Main orchestrator class
+│   │   ├── planner.py               # Request → Task DAG decomposition
+│   │   ├── task_graph.py            # DAG data structure and execution engine
+│   │   ├── workflow_loader.py       # Loads YAML workflow templates
+│   │   └── recovery.py             # Failure recovery strategies
+│   │
+│   ├── coder/                        # Coder Agent
+│   │   ├── __init__.py
+│   │   ├── agent.py                  # Main coder class
+│   │   ├── generator.py             # Code generation logic
+│   │   ├── reviewer.py              # Code review logic
+│   │   └── templates/               # Code generation templates
+│   │       ├── python_module.py.j2
+│   │       └── fastapi_route.py.j2
+│   │
+│   ├── repo_analyst/                 # Repo Analyst Agent
+│   │   ├── __init__.py
+│   │   ├── agent.py
+│   │   ├── mapper.py                # Build repository structure maps
+│   │   ├── analyzer.py              # Code quality and pattern analysis
+│   │   └── documenter.py            # Documentation generation
+│   │
+│   ├── infra_manager/               # Infrastructure Manager Agent
+│   │   ├── __init__.py
+│   │   ├── agent.py
+│   │   ├── runpod/
+│   │   │   ├── client.py            # RunPod API client (typed)
+│   │   │   ├── job_queue.py         # Priority job queue
+│   │   │   ├── pod_manager.py       # Pod lifecycle (provision/monitor/terminate)
+│   │   │   └── cost_tracker.py      # Budget monitoring and optimization
+│   │   ├── health_monitor.py        # System health checks
+│   │   └── deployer.py              # Deployment management
+│   │
+│   ├── integrations/                 # Integration Agent
+│   │   ├── __init__.py
+│   │   ├── agent.py
+│   │   ├── github/
+│   │   │   ├── client.py            # GitHub API client
+│   │   │   ├── pr_manager.py        # PR creation, review, merge
+│   │   │   └── webhook_handler.py   # Incoming GitHub webhooks
+│   │   ├── notion/
+│   │   │   ├── client.py            # Notion API client
+│   │   │   ├── sync_engine.py       # Bi-directional sync logic
+│   │   │   └── conflict_resolver.py # Conflict resolution strategies
+│   │   └── webhooks/
+│   │       └── router.py            # Routes incoming webhooks to handlers
+│   │
+│   └── ui_agent/                     # UI/Dashboard Agent
+│       ├── __init__.py
+│       ├── agent.py
+│       ├── state_aggregator.py      # Collects events → dashboard state
+│       ├── notification_manager.py  # Alert routing
+│       └── workflow_validator.py    # Validates workflow builder definitions
+│
+├── skills/                           # 🔧 Plugin-based skill system
+│   ├── __init__.py
+│   ├── base.py                       # BaseSkill ABC + SkillResult dataclass
+│   ├── registry.py                   # Auto-discovery, validation, loading
+│   ├── context.py                    # SkillContext (secrets, state access for skills)
+│   │
+│   ├── builtin/                      # Built-in skills (ship with system)
+│   │   ├── __init__.py
+│   │   ├── github_ops.py            # Git clone, commit, push (standardized)
+│   │   ├── runpod_launcher.py       # Launch GPU pod (standardized)
+│   │   ├── notion_sync.py           # Sync to Notion (standardized)
+│   │   ├── web_scraper.py           # Web scraping (standardized)
+│   │   └── file_manager.py          # Local file operations
+│   │
+│   └── custom/                       # User-added skills (skill marketplace)
+│       ├── __init__.py
+│       └── _template.py             # Template for creating new skills
+│
+├── core/                             # ⚙️ Shared infrastructure
+│   ├── __init__.py
+│   ├── event_bus.py                  # Redis Streams-based event bus
+│   ├── state_store.py               # Redis-backed shared state
+│   ├── config.py                     # Pydantic Settings (all configuration)
+│   ├── secrets.py                    # Secrets management (layered: .env → env vars → vault)
+│   ├── errors.py                     # Custom exception hierarchy
+│   ├── logging.py                    # Structured logging (JSON format)
+│   ├── models.py                     # Shared data models (Event, Task, Job, etc.)
+│   └── retry.py                      # Retry policies and decorators
+│
+├── api/                              # 🌐 FastAPI backend
+│   ├── __init__.py
+│   ├── main.py                       # FastAPI app factory
+│   ├── dependencies.py              # Dependency injection (agents, state, etc.)
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── chat.py                  # POST /chat → Orchestrator
+│   │   ├── jobs.py                  # GET/POST /jobs → Infra Manager
+│   │   ├── skills.py               # GET /skills, POST /skills/execute
+│   │   ├── agents.py               # GET /agents/status
+│   │   ├── workflows.py            # GET/POST /workflows → Workflow CRUD
+│   │   └── webhooks.py             # POST /webhooks/{source} → Integration Agent
+│   ├── middleware/
+│   │   ├── auth.py                  # API key + optional JWT
+│   │   ├── rate_limiter.py          # Token bucket rate limiting
+│   │   ├── error_handler.py         # Consistent error response format
+│   │   └── request_id.py           # Correlation ID injection
+│   └── websocket/
+│       └── realtime.py              # WebSocket endpoint for dashboard
+│
+├── dashboard/                        # 🖥️ Next.js 14 application
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx             # Home: Real-time activity feed
+│   │   │   ├── jobs/
+│   │   │   │   └── page.tsx         # Live job monitoring
+│   │   │   ├── workflows/
+│   │   │   │   ├── page.tsx         # Workflow list
+│   │   │   │   └── builder/
+│   │   │   │       └── page.tsx     # Visual workflow builder
+│   │   │   ├── skills/
+│   │   │   │   └── page.tsx         # Skill marketplace
+│   │   │   └── agents/
+│   │   │       └── page.tsx         # Agent status dashboard
+│   │   ├── components/
+│   │   │   ├── JobCard.tsx
+│   │   │   ├── WorkflowCanvas.tsx   # Drag-and-drop workflow builder
+│   │   │   ├── AgentStatusBadge.tsx
+│   │   │   └── RealTimeLog.tsx      # Live log viewer
+│   │   ├── hooks/
+│   │   │   ├── useWebSocket.ts      # WebSocket connection hook
+│   │   │   └── useSystemState.ts    # Real-time state hook
+│   │   └── lib/
+│   │       └── api.ts               # Typed API client
+│   ├── package.json
+│   └── tailwind.config.ts
+│
+├── workflows/                        # 📋 Predefined workflow templates
+│   ├── finetune_llm.yaml
+│   ├── train_stable_diffusion.yaml
+│   ├── code_review_pr.yaml
+│   └── _template.yaml               # Template for creating workflows
+│
+├── tests/                            # 🧪 Testing infrastructure
+│   ├── conftest.py                  # Shared fixtures (mock event bus, state store)
+│   ├── unit/
+│   │   ├── agents/
+│   │   │   ├── test_orchestrator.py
+│   │   │   └── test_infra_manager.py
+│   │   ├── skills/
+│   │   │   └── test_github_ops.py
+│   │   └── core/
+│   │       ├── test_event_bus.py
+│   │       └── test_task_graph.py
+│   ├── integration/
+│   │   ├── test_runpod_workflow.py
+│   │   └── test_notion_sync.py
+│   └── fixtures/
+│       ├── sample_repo/
+│       └── mock_responses/
+│
+├── scripts/                          # 🛠️ Operational scripts
+│   ├── setup.sh                     # Initial setup (install deps, configure Redis)
+│   ├── dev.sh                       # Start all services for local dev
+│   ├── migrate.sh                   # Migrate from old structure
+│   └── health_check.sh             # Quick system health check
+│
+├── docs/                             # 📚 Documentation
+│   ├── architecture.md              # This design document
+│   ├── agents.md                    # Agent reference
+│   ├── skills-authoring.md          # How to create new skills
+│   ├── api-reference.md             # API endpoint documentation
+│   ├── deployment.md                # Deployment guide
+│   └── workflows.md                 # Workflow template reference
+│
+├── docker-compose.yml               # Local dev: Redis + API + Dashboard
+├── Dockerfile                       # API container
+├── pyproject.toml                   # Python project config (poetry/uv)
+├── .env.example                     # Template for required env vars
+└── README.md
+Directory Rationale
+DirectoryPurposeKey Design Decisionagents/Agent implementationsEach agent is a sub-package with its own module structure. Shared base class ensures consistency.skills/Plugin systemSeparate from agents. Skills are reusable tools. builtin/ ships with system, custom/ is user-extensible.core/Shared infrastructureNo agent-specific logic here. Pure infrastructure: events, state, config, logging.api/HTTP interfaceThin layer. Routes delegate to agents. Middleware handles cross-cutting concerns.dashboard/Next.js frontendSelf-contained Next.js app. Communicates only via API and WebSocket.workflows/Declarative workflowsYAML files that define task sequences. Loaded by orchestrator. Version-controlled.tests/TestingMirrors source structure. Shared fixtures avoid test duplication.
+
+5. Orchestration Improvements
+5.1 Message Passing / Communication Protocol
+Implementation: Redis Streams-based Event Bus
+pythonCopy# core/event_bus.py
+@dataclass
+class Event:
+    event_id: str = field(default_factory=lambda: str(uuid4()))
+    event_type: str = ""          # e.g., "job.completed", "task.assigned"
+    source: str = ""              # Agent that emitted the event
+    correlation_id: str = ""      # Links all events in a workflow
+    timestamp: datetime = field(default_factory=datetime.utcnow)
+    payload: dict = field(default_factory=dict)
+
+class EventBus:
+    def __init__(self, redis_client: Redis):
+        self.redis = redis_client
+        self._handlers: dict[str, list[Callable]] = defaultdict(list)
+    
+    async def publish(self, event: Event):
+        """Publish event to Redis Stream"""
+        await self.redis.xadd(
+            f"events:{event.event_type}",
+            event.to_dict()
+        )
+    
+    def subscribe(self, event_pattern: str, handler: Callable):
+        """Subscribe to events matching pattern (supports wildcards)"""
+        self._handlers[event_pattern].append(handler)
+    
+    async def listen(self):
+        """Consumer loop - routes events to registered handlers"""
+        # Uses Redis consumer groups for reliable delivery
+        ...
+Event Type Taxonomy:
+Copytask.*          → Orchestrator task lifecycle
+  task.created
+  task.assigned
+  task.started
+  task.progress
+  task.completed
+  task.failed
+
+job.*           → GPU job lifecycle
+  job.queued
+  job.provisioning
+  job.running
+  job.progress     (includes metrics: loss, epoch, GPU util)
+  job.completed
+  job.failed
+  job.cancelled
+
+skill.*         → Skill execution
+  skill.invoked
+  skill.completed
+  skill.failed
+
+agent.*         → Agent health
+  agent.started
+  agent.heartbeat
+  agent.error
+
+sync.*          → Integration events
+  sync.notion.pushed
+  sync.notion.pulled
+  sync.github.pushed
+  sync.github.webhook
+
+system.*        → System-level events
+  system.alert
+  system.health_check
+5.2 State Management and Shared Context
+Implementation: Redis-backed State Store with typed access
+pythonCopy# core/state_store.py
+class StateStore:
+    """Typed, namespaced state management backed by Redis"""
+    
+    async def get_workflow(self, workflow_id: str) -> WorkflowState:
+        """Get current state of a workflow (task graph + progress)"""
+        
+    async def get_job(self, job_id: str) -> JobState:
+        """Get current state of a GPU job"""
+        
+    async def get_agent_health(self) -> dict[str, AgentHealth]:
+        """Get health status of all agents"""
+    
+    async def get_dashboard_state(self) -> DashboardState:
+        """Aggregated state optimized for dashboard rendering"""
+State Namespaces:
+Copystate:workflows:{id}     → Workflow execution state (task DAG, progress)
+state:jobs:{id}          → GPU job state (status, metrics, artifacts)
+state:agents:{name}      → Agent health (last heartbeat, error count)
+state:skills:registry    → Registered skills and their metadata
+state:context:{session}  → Conversation context per session
+state:dashboard          → Pre-computed dashboard state (updated on events)
+Context Management Strategy:
+
+Conversation context: Sliding window of recent messages + summarized history (managed by Orchestrator)
+Workflow context: Accumulated results from completed tasks in a workflow (passed forward to dependent tasks)
+Global context: System state accessible to all agents (agent health, active jobs, etc.)
+
+5.3 Task Queuing and Prioritization
+Two-level queue system:
+Level 1: Task Queue (Orchestrator → Agents)
+pythonCopy# In-process asyncio queue with priority support
+class TaskQueue:
+    PRIORITY_CRITICAL = 0    # System recovery, error handling
+    PRIORITY_HIGH = 1        # User-initiated requests
+    PRIORITY_NORMAL = 2      # Automated workflows
+    PRIORITY_LOW = 3         # Background analysis, documentation
+    PRIORITY_BACKGROUND = 4  # Cleanup, optimization
+    
+    async def enqueue(self, task: Task, priority: int = PRIORITY_NORMAL):
+        await self.queue.put((priority, task.created_at, task))
+Level 2: GPU Job Queue (Infrastructure Manager → RunPod)
+pythonCopyclass GPUJobQueue:
+    """Persistent queue backed by Redis sorted sets"""
+    
+    MAX_CONCURRENT_PODS = 2  # Budget constraint
+    
+    async def enqueue(self, job: GPUJob):
+        score = self._compute_priority_score(job)
+        await self.redis.zadd("gpu_queue", {job.id: score})
+    
+    async def process_loop(self):
+        while True:
+            active_pods = await self.get_active_pod_count()
+            if active_pods < self.MAX_CONCURRENT_PODS:
+                next_job = await self.dequeue_highest()
+                if next_job:
+                    await self.provision_and_execute(next_job)
+            await asyncio.sleep(5)  # Check interval
+5.4 Error Handling and Recovery
+Layered error handling with escalation:
+CopyLayer 1: Skill Level
+  → Skill raises SkillError with context
+  → Agent catches, checks retry policy
+
+Layer 2: Agent Level  
+  → Agent retries based on policy (exponential backoff)
+  → If retries exhausted, reports failure to Orchestrator
+
+Layer 3: Orchestrator Level
+  → Orchestrator evaluates workflow impact
+  → Options: retry task, skip (if optional), use fallback, abort workflow
+  → Emits failure event for dashboard
+
+Layer 4: System Level
+  → Unhandled errors caught by global handler
+  → Logged with full context (correlation ID, stack trace, agent state)
+  → Alert sent to user (dashboard notification + optional email/Slack)
+Recovery strategies (configurable per task):
+yamlCopy# In workflow template
+tasks:
+  - name: provision_gpu
+    agent: infra_manager
+    retry_policy:
+      max_retries: 3
+      backoff: exponential
+      base_delay: 5s
+      max_delay: 60s
+      retry_on: [ConnectionError, TimeoutError, PodProvisioningError]
+    fallback: use_cpu_fallback
+    on_failure: abort_workflow
+    
+  - name: update_notion
+    agent: integrations
+    retry_policy:
+      max_retries: 2
+      backoff: fixed
+      delay: 10s
+    on_failure: skip  # Non-critical, don't abort workflow
+Circuit breaker for external services:
+pythonCopyclass CircuitBreaker:
+    """Prevents cascading failures when external services are down"""
+    
+    CLOSED = "closed"      # Normal operation
+    OPEN = "open"          # Service down, fail fast
+    HALF_OPEN = "half_open" # Testing if service recovered
+    
+    failure_threshold: int = 5
+    recovery_timeout: int = 60  # seconds
+5.5 Monitoring and Logging
+Structured logging (JSON format, correlation IDs):
+pythonCopy# core/logging.py
+import structlog
+
+def setup_logging():
+    structlog.configure(
+        processors=[
+            structlog.processors.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso"),
+            add_correlation_id,       # From event context
+            add_agent_context,        # Which agent is logging
+            structlog.dev.ConsoleRenderer()  # Dev: readable
+            # Production: structlog.processors.JSONRenderer()
+        ]
+    )
+
+# Usage in any agent:
+logger.info("task.started", 
+    task_id="abc-123",
+    agent="infra_manager", 
+    workflow_id="wf-456",
+    details={"pod_type": "A100", "dataset_size": "2.3GB"}
+)
+Output:
+jsonCopy{
+  "timestamp": "2024-01-15T10:23:45Z",
+  "level": "info",
+  "event": "task.started",
+  "correlation_id": "wf-456",
+  "agent": "infra_manager",
+  "task_id": "abc-123",
+  "details": {"pod_type": "A100", "dataset_size": "2.3GB"}
+}
+Health monitoring:
+
+Each agent sends heartbeat events every 30 seconds
+Infrastructure Manager runs health checks on RunPod endpoints every 60 seconds
+Dashboard shows agent status badges (green/yellow/red)
+Alert triggers: agent heartbeat missed for 2 minutes, job failure rate > 20%, budget threshold exceeded
+
+
+6. System Architecture Diagram
+Copy┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                              MISSION CONTROL SYSTEM                                   │
+│                                                                                      │
+│  ┌─────────────────────────────────────────────────────────────────────────────────┐ │
+│  │                           USER INTERFACE LAYER                                   │ │
+│  │                                                                                  │ │
+│  │   ┌──────────────────────┐     ┌──────────────────────────────────────────┐     │ │
+│  │   │    Claude Code CLI    │     │         Next.js Dashboard                │     │ │
+│  │   │   (Terminal/Chat)     │     │  ┌────────┬──────────┬──────────┬─────┐ │     │ │
+│  │   │                       │     │  │Activity│  Jobs    │Workflows │Skills│ │     │ │
+│  │   │  User ──► Requests    │     │  │  Feed  │ Monitor  │ Builder  │ Mkt │ │     │ │
+│  │   │       ◄── Responses   │     │  └────┬───┴────┬─────┴────┬─────┴──┬──┘ │     │ │
+│  │   └──────────┬───────────┘     │       │        │          │        │     │     │ │
+│  │              │                  └───────┼────────┼──────────┼────────┼─────┘     │ │
+│  │              │                          │        │          │        │            │ │
+│  │              │    HTTP/REST             │  WebSocket (real-time)     │            │ │
+│  └──────────────┼──────────────────────────┼────────┼──────────┼────────┼────────────┘ │
+│                 │                          │        │          │        │              │
+│  ┌──────────────┼──────────────────────────┼────────┼──────────┼────────┼────────────┐ │
+│  │              ▼                          ▼        ▼          ▼        ▼             │ │
+│  │         ┌─────────────────────────────────────────────────────────────────┐       │ │
+│  │         │                      FastAPI Backend                            │       │ │
+│  │         │  ┌──────┬───────┬───────┬──────────┬──────────┬──────────┐     │       │ │
+│  │         │  │/chat │/jobs  │/skills│/workflows│/webhooks │/agents   │     │       │ │
+│  │         │  └──┬───┴───┬───┴───┬───┴────┬─────┴────┬─────┴────┬────┘     │       │ │
+│  │         │     │       │       │        │          │          │           │       │ │
+│  │         │  ┌──┴───────┴───────┴────────┴──────────┴──────────┴────┐     │       │ │
+│  │         │  │  Middleware: Auth │ Rate Limit │ Error Handler │ ReqID │     │       │ │
+│  │         │  └──────────────────────────────┬───────────────────────┘     │       │ │
+│  │         └─────────────────────────────────┼───────────────────────────┘       │ │
+│  │                            API LAYER      │                                    │ │
+│  └───────────────────────────────────────────┼────────────────────────────────────┘ │
+│                                              │                                      │
+│  ┌───────────────────────────────────────────┼────────────────────────────────────┐ │
+│  │                          AGENT LAYER      │                                     │ │
+│  │                                           ▼                                     │ │
+│  │              ┌─────────────────────────────────────────────┐                    │ │
+│  │              │          🧠 ORCHESTRATOR AGENT               │                    │ │
+│  │              │                                             │                    │ │
+│  │              │  ┌──────────┐ ┌───────────┐ ┌───────────┐  │                    │ │
+│  │              │  │ Planner  │ │Task Graph │ │ Recovery  │  │                    │ │
+│  │              │  │          │ │  Engine   │ │  Engine   │  │                    │ │
+│  │              │  └──────────┘ └───────────┘ └───────────┘  │                    │ │
+│  │              └────────┬──────────┬──────────┬─────────────┘                    │ │
+│  │                       │          │          │                                   │ │
+│  │          ┌────────────┘          │          └────────────┐                      │ │
+│  │          │    Task Dispatch      │    Task Dispatch      │                      │ │
+│  │          ▼           (via Event Bus)                     ▼                      │ │
+│  │  ┌───────────────┐  ┌───────────────┐  ┌────────────────────┐                  │ │
+│  │  │ 💻 CODER      │  │ 📊 REPO       │  │ 🔧 INFRA MANAGER   │                  │ │
+│  │  │    AGENT      │  │   ANALYST     │  │                    │                  │ │
+│  │  │               │  │               │  │ ┌──────────────┐   │                  │ │
+│  │  │ • Generate    │  │ • Map repos   │  │ │  Job Queue   │   │                  │ │
+│  │  │ • Review      │  │ • Analyze     │  │ │  (Priority)  │   │                  │ │
+│  │  │ • Refactor    │  │ • Document    │  │ └──────┬───────┘   │                  │ │
+│  │  │ • Test gen    │  │ • Impact      │  │        │           │                  │ │
+│  │  └───────────────┘  └───────────────┘  │ ┌──────▼───────┐   │                  │ │
+│  │                                        │ │ Pod Manager  │   │                  │ │
+│  │  ┌───────────────┐  ┌───────────────┐  │ │ • Provision  │   │                  │ │
+│  │  │ 🔗 INTEGRATION│  │ 🖥️ UI/DASH    │  │ │ • Monitor    │   │                  │ │
+│  │  │    AGENT      │  │    AGENT      │  │ │ • Terminate  │   │                  │ │
+│  │  │               │  │               │  │ └──────────────┘   │                  │ │
+│  │  │ • GitHub ops  │  │ • State agg   │  │ ┌──────────────┐   │                  │ │
+│  │  │ • Notion sync │  │ • WebSocket   │  │ │ Cost Tracker │   │                  │ │
+│  │  │ • Webhooks    │  │ • Notify      │  │ └──────────────┘   │                  │ │
+│  │  │ • Transforms  │  │ • Workflows   │  └────────────────────┘                  │ │
+│  │  └───────────────┘  └───────────────┘                                          │ │
+│  │                                                                                 │ │
+│  └─────────────────────────────────────────────────────────────────────────────────┘ │
+│                                              │                                      │
+│  ┌───────────────────────────────────────────┼────────────────────────────────────┐ │
+│  │                     INFRASTRUCTURE LAYER   │                                    │ │
+│  │                                           │                                    │ │
+│  │  ┌─────────────────────────────────────────────────────────────────────────┐   │ │
+│  │  │                         ⚡ EVENT BUS (Redis Streams)                     │   │ │
+│  │  │                                                                         │   │ │
+│  │  │  Channels: task.* │ job.* │ skill.* │ agent.* │ sync.* │ system.*      │   │ │
+│  │  └─────────────────────────────────────────────────────────────────────────┘   │ │
+│  │                                                                                │ │
+│  │  ┌──────────────────────┐  ┌──────────────────────┐  ┌────────────────────┐   │ │
+│  │  │  📦 STATE STORE      │  │  🔧 SKILL REGISTRY   │  │  🔑 SECRETS MGR   │   │ │
+│  │  │  (Redis)             │  │                       │  │                    │   │ │
+│  │  │                      │  │  ┌─────────────────┐  │  │  .env (dev)       │   │ │
+│  │  │  • Workflow state    │  │  │  Built-in:      │  │  │  Env vars (prod)  │   │ │
+│  │  │  • Job state         │  │  │  • github_ops   │  │  │  Pydantic valid.  │   │ │
+│  │  │  • Agent health      │  │  │  • runpod       │  │  │                    │   │ │
+│  │  │  • Context/sessions  │  │  │  • notion_sync  │  │  └────────────────────┘   │ │
+│  │  │  • Dashboard cache   │  │  │  • web_scraper  │  │                           │ │
+│  │  │                      │  │  │  • file_manager │  │                           │ │
+│  │  └──────────────────────┘  │  ├─────────────────┤  │                           │ │
+│  │                            │  │  Custom:        │  │                           │ │
+│  │                            │  │  • (user-added) │  │                           │ │
+│  │                            │  └─────────────────┘  │                           │ │
+│  │                            └──────────────────────┘                            │ │
+│  └────────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                      │
+│  ┌────────────────────────────────────────────────────────────────────────────────┐ │
+│  │                         EXTERNAL SERVICES                                       │ │
+│  │                                                                                 │ │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │ │
+│  │  │   🚀 RunPod   │  │   🐙 GitHub   │  │   📝 Notion   │  │  🤖 Claude API   │   │ │
+│  │  │              │  │              │  │              │  │                  │   │ │
+│  │  │ • finetune-  │  │ • Repos      │  │ • Databases  │  │ • 3.5 Sonnet    │   │ │
+│  │  │   llama      │  │ • PRs        │  │ • Pages      │  │ • Context mgmt  │   │ │
+│  │  │ • stable-    │  │ • Issues     │  │ • Sync       │  │                  │   │ │
+│  │  │   diffusion  │  │ • Webhooks   │  │ • Webhooks   │  │                  │   │ │
+│  │  │ • (future    │  │              │  │              │  │                  │   │ │
+│  │  │   endpoints) │  │              │  │              │  │                  │   │ │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────────┘   │ │
+│  │                                                                                 │ │
+│  └─────────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DATA FLOW: "Fine-tune Llama on customer support dataset"
+
+  Scott ──► [Chat API] ──► [Orchestrator]
+                                │
+                    ┌───────────┴───────────┐
+                    │    Plan: 5 tasks       │
+                    │    (DAG with deps)     │
+                    └───────────┬───────────┘
+                                │
+              ┌─────────────────┼─────────────────┐
+              │ (parallel)      │                  │
+              ▼                 │                  │
+     [Integration Agent]       │         [Infra Manager]
+      Clone dataset repo       │          Provision A100 pod
+              │                 │                  │
+              ▼                 │                  ▼
+     ─── Both complete ─────►  │  ◄──── Both complete ───
+                                │
+                                ▼
+                       [Infra Manager]
+                        Upload data to pod
+                        Execute training
+                                │
+                    ┌───────────┴───────────┐
+                    │  job.progress events   │
+                    │  (every 30 seconds)    │
+                    └───────────┬───────────┘
+                                │
+              ┌─────────────────┼─────────────────┐
+              │                 │                  │
+              ▼                 ▼                  ▼
+      [UI Agent]        [Orchestrator]    [State Store]
+     WebSocket push      Monitor DAG      Update job state
+     to dashboard        progress
+                                │
+                    (job.completed event)
+                                │
+              ┌─────────────────┼─────────────────┐
+              │ (parallel)      │                  │
+              ▼                 ▼                  ▼
+     [Integration Agent] [Integration Agent] [Infra Manager]
+      Push model to       Update Notion       Terminate pod
+      GitHub              "✅ Completed"       (cost savings)
+                                │
+                                ▼
+                         [Orchestrator]
+                          Aggregate results
+                          Respond to Scott
+                                │
+                                ▼
+                     "Training complete! Model pushed
+                      to github.com/scott/models.
+                      Final loss: 0.23, 3 epochs, 47min.
+                      Notion updated. Pod terminated."
+
+7. Implementation Steps
+Phase 1: Foundation (Week 1-2) — "Build the Floor"
+Step 1: Core Infrastructure
+
+ Implement core/event_bus.py — Redis Streams event bus with publish/subscribe
+ Implement core/state_store.py — Redis-backed typed state management
+ Implement core/config.py — Pydantic Settings model consolidating all configuration
+ Implement core/secrets.py — Layered secrets management (.env → env vars)
+ Implement core/logging.py — Structured JSON logging with correlation IDs
+ Implement core/models.py — Shared data models (Event, Task, Job, WorkflowState)
+ Set up docker-compose.yml with Redis
+ Set up pyproject.toml with proper dependencies and dev tools (pytest, ruff, mypy)
+
+Why first: Everything else depends on the event bus, state store, and configuration. Without this foundation, agents can't communicate or share state. This is the single most important step.
+Validation: Write integration tests that publish events and verify subscribers receive them. Verify state round-trips through Redis.
+
+Phase 2: Skill System (Week 2-3) — "Standardize the Tools"
+Step 2: Skill Interface and Registry
+
+ Implement skills/base.py — BaseSkill ABC with standardized interface:
+pythonCopyclass BaseSkill(ABC):
+    name: str
+    description: str
+    input_schema: dict          # JSON Schema for validation
+    output_schema: dict
+    required_secrets: list[str]
+    retry_policy: RetryPolicy
+    
+    @abstractmethod
+    async def execute(self, params: dict, context: SkillContext) -> SkillResult
+
+ Implement skills/registry.py — Auto-discovery (scans builtin/ and custom/), validation, hot-reload
+ Implement skills/context.py — SkillContext (provides secrets, state access, logging to skills)
+ Migrate existing skills to new interface:
+
+github_ops.py → standardized params, proper error handling, declares required secrets
+runpod_launcher.py → standardized, returns structured results
+notion_sync.py → standardized, bi-directional capability
+web_scraper.py → standardized
+
+
+ Create skills/custom/_template.py with documentation
+ Write skill unit tests using mock SkillContext
+
+Why second: Skills are the primitives that agents use. Standardizing them before building agents means agents get a clean, consistent tool interface from day one. This also unblocks the "skill marketplace" goal.
+Backward compatibility: Existing Notion sync continues to work (same underlying API calls, just wrapped in standard interface). Add bi-directional sync as a new capability alongside existing one-way push.
+
+Phase 3: Agent Framework + Orchestrator (Week 3-4) — "Replace the Brain"
+Step 3: Base Agent Class and Orchestrator
+
+ Implement agents/base.py — BaseAgent with:
+
+Event bus subscription/publishing
+State store access
+Skill registry access
+Heartbeat emission
+Structured logging
+Lifecycle management (start, stop, health check)
+
+
+ Implement agents/orchestrator/ — The core orchestrator:
+
+planner.py: Uses Claude API to decompose requests into task DAGs
+task_graph.py: DAG execution engine (topological sort, parallel dispatch, dependency tracking)
+workflow_loader.py: Loads YAML workflow templates for common patterns
+recovery.py: Retry, skip, fallback, abort strategies
+
+
+ Create initial workflow templates:
+
+workflows/finetune_llm.yaml
+workflows/code_review.yaml
+
+
+ Migrate from main_agent.py: Orchestrator replaces the monolithic agent. Keep main_agent.py as a compatibility shim during transition.
+
+Key design for the task graph:
+pythonCopyclass TaskGraph:
+    tasks: dict[str, Task]
+    edges: list[tuple[str, str]]  # (dependency, dependent)
+    
+    def get_ready_tasks(self) -> list[Task]:
+        """Return tasks whose dependencies are all completed"""
+        
+    def mark_completed(self, task_id: str, result: Any):
+        """Mark task done, check if dependents are now ready"""
+        
+    def mark_failed(self, task_id: str, error: Error):
+        """Mark task failed, apply recovery policy"""
+Validation: End-to-end test: submit a simple two-step workflow, verify both tasks execute in order, results are aggregated correctly.
+
+Phase 4: Infrastructure Manager (Week 4-5) — "Tame the GPUs"
+Step 4: Proper RunPod Job Management
+
+ Implement agents/infra_manager/runpod/client.py — Typed RunPod API client (replaces ad-hoc API calls)
+ Implement agents/infra_manager/runpod/job_queue.py — Redis-backed priority queue with:
+
+Configurable max concurrent pods (budget constraint)
+Priority levels (urgent, normal, background)
+Job deduplication (prevent accidentally running same job twice)
+
+
+ Implement agents/infra_manager/runpod/pod_manager.py — Full lifecycle:
+
+Provision with resource requirements matching
+Health monitoring (GPU util, memory, training metrics)
+Auto-terminate on completion or after idle timeout
+Artifact retrieval (model checkpoints, logs)
+
+
+ Implement agents/infra_manager/runpod/cost_tracker.py:
+
+Track spend per job, per day, per month
+Alert when approaching budget threshold
+Recommend spot vs. on-demand based on job urgency
+
+
+ Implement RunPod callback webhook — RunPod calls back when job status changes, eliminating polling
+ Add GPU job progress events — emit job.progress with loss, epoch, GPU utilization every 30s
+
+Why now: This is the highest-impact improvement for Scott's daily workflow. The fine-tuning use case goes from 5 manual steps to fully automated. This is where the system starts delivering real value.
+Validation: Submit a test training job, verify it queues → provisions → runs → emits progress → completes → terminates pod → reports results. All without manual intervention.
+
+Phase 5: API + Real-Time Dashboard (Week 5-6) — "Make it Visible"
+Step 5: API Layer Hardening + WebSocket
+
+ Refactor api/main.py into modular routes (api/routes/)
+ Implement middleware:
+
+auth.py: API key validation (existing) + optional JWT for dashboard sessions
+rate_limiter.py: Token bucket per endpoint (prevent accidental API abuse)
+error_handler.py: Consistent error response format across all endpoints
+request_id.py: Inject correlation ID into every request (links to events)
+
+
+ Implement api/websocket/realtime.py:
+
+WebSocket endpoint for dashboard
+UI Agent subscribes to all events, pushes relevant ones to connected clients
+Supports multiple connected clients
+Heartbeat/reconnection handling
+
+
+ New API endpoints:
+
+GET /agents/status — Health of all agents
+GET /workflows/{id}/status — Real-time workflow progress
+POST /workflows — Submit a workflow (from workflow builder)
+GET /skills — List all registered skills with schemas
+POST /webhooks/runpod — RunPod callback receiver
+POST /webhooks/github — GitHub webhook receiver
+POST /webhooks/notion — Notion webhook receiver
+
+
+
+Step 6: Dashboard Real-Time Upgrade
+
+ Implement useWebSocket.ts hook — Auto-connecting, reconnecting WebSocket client
+ Implement useSystemState.ts hook — Maintains real-time system state from WebSocket events
+ Upgrade pages:
+
+Home/Activity: Real-time event feed (no more hardcoded data)
+Jobs: Live job monitoring with progress bars, GPU metrics, cost tracking
+Agents: Agent health dashboard with status badges
+
+
+ Begin Workflow Builder UI:
+
+Canvas with drag-and-drop skill nodes
+Visual dependency connections between nodes
+Configuration panel for each node (parameters, retry policy)
+Save/load workflow definitions (stored as YAML)
+
+
+
+Validation: Open dashboard, trigger a workflow, watch the activity feed update in real-time. Jobs page shows live progress of a GPU job.
+
+Phase 6: Integration Agent + Remaining Agents (Week 6-7) — "Connect Everything"
+Step 7: Integration Agent with Bi-Directional Sync
+
+ Implement agents/integrations/github/:
+
+Full PR lifecycle (create, review, merge, close)
+Issue management (create, assign, label)
+Webhook handler (push events, PR events → trigger workflows)
+
+
+ Implement agents/integrations/notion/:
+
+Bi-directional sync engine:
+
+MC → Notion: Push task/job status updates (existing, standardized)
+Notion → MC: Poll for changes or webhook (trigger workflows from Notion)
+
+
+Conflict resolution: timestamp-based last-write-wins, with human review option for conflicts
+Field mapping configuration (extensible via YAML)
+
+
+ Backward compatibility: Existing Notion workflows continue unchanged. New bi-directional sync is additive.
+
+Step 7b: Coder + Repo Analyst Agents
+
+ Implement agents/coder/ — Code generation and review using Claude API with specialized prompts
+ Implement agents/repo_analyst/ — Repository mapping, analysis, documentation generation
+ Implement agents/ui_agent/ — State aggregation, notification management, workflow validation
+
+Validation: Change a task status in Notion → verify it flows back to Mission Control within 60 seconds. Create a GitHub PR → verify webhook triggers a code review workflow.
+
+Phase 7: Testing, Documentation, and Hardening (Week 7-8) — "Make it Reliable"
+Step 8: Testing Infrastructure
+
+ Unit tests for all core modules (event bus, state store, task graph)
+ Unit tests for all skills (using mock SkillContext)
+ Integration tests for key workflows:
+
+Fine-tune LLM end-to-end (with mocked RunPod)
+Notion bi-directional sync
+Workflow builder → execution
+
+
+ conftest.py with shared fixtures (mock Redis, mock RunPod, mock GitHub API)
+ CI configuration (GitHub Actions: lint, type check, test on every push)
+
+Step 9: Documentation
+
+ docs/architecture.md — This document, expanded with implementation details
+ docs/skills-authoring.md — Step-by-step guide to creating new skills
+ docs/api-reference.md — Auto-generated from FastAPI OpenAPI spec
+ docs/deployment.md — Local dev setup + cloud deployment (Railway/Fly.io)
+ docs/workflows.md — How to create and manage workflow templates
+ Inline code documentation (docstrings on all public methods)
+
+Step 10: Deployment Preparation
+
+ Dockerfile for API + agents
+ docker-compose.yml for full local stack (Redis + API + agents + dashboard)
+ Environment-specific configs (dev, staging, production)
+ scripts/deploy.sh for Railway/Fly.io deployment
+ Health check endpoint (GET /health) that validates all agent heartbeats + Redis connectivity
+
+
+Implementation Priority Matrix
+StepImpactEffortRiskPriority1. Core Infrastructure🔴 CriticalMediumLowP02. Skill System🔴 HighMediumLowP03. Orchestrator🔴 CriticalHighMediumP14. Infra Manager🔴 HighHighMediumP15. API + WebSocket🟡 MediumMediumLowP26. Dashboard Real-Time🟡 MediumMediumLowP27. Integration Agent🟡 MediumHighMediumP37b. Coder + Repo Analyst🟢 LowerMediumLowP38. Testing🟡 MediumMediumLowOngoing9. Documentation🟡 MediumLowLowOngoing10. Deployment🟢 LowerLowLowP4
+Critical Path: Steps 1 → 2 → 3 → 4. Once these four are complete, the system delivers transformative value for the fine-tuning workflow. Steps 5-10 are incremental improvements that can be done in any order.
+
+Migration Strategy (From Old → New)
+The migration is incremental, not big-bang. At no point does the existing system stop working.
+
+Week 1: Deploy Redis alongside existing system. Implement core/ modules. Existing code untouched.
+Week 2: Migrate skills to new interface. Old main_agent.py continues to work using old skills. New skill tests pass.
+Week 3: Deploy Orchestrator alongside main_agent.py. Route new requests to Orchestrator, fall back to old agent. Feature flag controls routing.
+Week 4: Orchestrator handles all requests. main_agent.py becomes dead code. Remove after 1 week of stable operation.
+Week 5+: Incremental addition of new capabilities (real-time dashboard, Notion sync, etc.)
+
+CopyWeek 1-2:  [Old System] ──────────────► [Old System + Redis + Core]
+Week 3:    [Old System + Orchestrator] ► [Feature flag: 50/50 routing]
+Week 4:    [Orchestrator primary] ──────► [Old agent deprecated]
+Week 5+:   [New System] ──────────────► [Incremental enhancements]
+This ensures Scott and his team experience zero downtime and can roll back at any point.
+</architecture_design>

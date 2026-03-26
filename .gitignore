@@ -14,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -257,3 +256,5 @@ data/_tmp_chunk.txt
 
 # Memory project files (local only)
 memory/projects/
+adc3k-deploy/shared/MCHD/
+adc3k-deploy/shared/MC-Files/
