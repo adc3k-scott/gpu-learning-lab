@@ -240,3 +240,20 @@ id_ed25519*
 !.env.example
 .vercel
 investor-packages/
+
+# Sensitive financial data — NEVER commit
+adc3k-deploy/shared/Tax Docs/
+adc3k-deploy/shared/Taxes/
+adc3k-deploy/shared/Adapt TAX Stuff/
+adc3k-deploy/shared/advdesho/
+adc3k-deploy/shared/stfmotor/
+adc3k-deploy/shared/stfu_2026_backup/
+adc3k-deploy/shared/*.ptb
+
+# Temp upload chunks
+data/_chunk_*.txt
+data/_uc_*.txt
+data/_tmp_chunk.txt
+
+# Memory project files (local only)
+memory/projects/
