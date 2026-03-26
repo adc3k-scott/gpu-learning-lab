@@ -59,33 +59,49 @@ Every business falls into one of these patterns. Once an installer learns the pa
 
 ---
 
-## Security Layer: NVIDIA NemoClaw
+## Self-Hosted on ADC Infrastructure
 
-Every agent we deploy runs inside a **NemoClaw sandbox** — NVIDIA's open source security stack for AI agents. This is non-negotiable.
+AI Advantage runs on ADC's own NVL72 hardware at MARLIE I in Lafayette, Louisiana. No third-party cloud. No retail API fees. We generate our own power at $0.027/kWh and run our own compute — raw token cost drops to ~$0.004/M tokens (vs $0.20-$150/M at retail cloud pricing). That margin is the entire business model.
+
+**ADC is its own first customer.** AI Advantage is the reference deployment that proves the token factory works. Every client agent running through our infrastructure validates the neocloud model before we sell tokens to enterprise customers.
+
+### Technology Stack
+| Component | What It Does |
+|-----------|-------------|
+| **NVIDIA NIM microservices** | Containerized model inference — deploy any model as an API endpoint in minutes |
+| **Dynamo 1.0** | NVIDIA's open-source inference OS — 7x performance on same Blackwell hardware |
+| **Run:AI scheduling** | GPU workload orchestration — each customer gets a project with guaranteed quota |
+| **MIG isolation** | Multi-Instance GPU — hardware-level tenant isolation, one GPU serves multiple customers safely |
+| **DCGM + Mission Control** | Real-time GPU monitoring, utilization, thermals, error tracking from MARLIE I |
+
+### Security Layer
+Every agent we deploy runs inside a sandboxed environment with NVIDIA's security tooling. This is non-negotiable.
 
 | What It Does | Why It Matters |
 |-------------|---------------|
 | **Sandboxed execution** | Agent can't access anything outside its workspace. Landlock + seccomp + network isolation. |
 | **Network policy** | Only approved endpoints allowed. Unknown requests blocked and surfaced to our monitoring team. |
-| **Inference routing** | All AI processing routes through AI Advantage / ADC infrastructure — we control cost, model selection, and data flow. |
-| **Remote monitoring** | AI Advantage manages every sandbox from MARLIE I. We see blocked requests, approve/deny, push updates. |
+| **Inference routing** | All AI processing routes through ADC's NIM endpoints at MARLIE I — we control cost, model selection, and data flow. |
+| **Remote monitoring** | AI Advantage manages every deployment from MARLIE I's Mission Control dashboard. We see blocked requests, approve/deny, push updates. |
 | **Vertical-specific policies** | Medical gets HIPAA lockdown. Legal gets privilege lockdown. Restaurant gets basic lockdown. |
+| **MIG isolation** | Each customer's inference runs on a hardware-isolated GPU partition. No shared memory, no data leakage between tenants. |
 
 **Key docs:**
-- `playbooks/nemoclaw-installer-guide.md` — Full installer training on NemoClaw deployment
+- `playbooks/nemoclaw-installer-guide.md` — Full installer training on secure agent deployment
 - `client-process.md` — Client-facing 5-step process + advertising copy + FAQ
 - `installer-kit.md` — Field kit checklist, scope of work, what you do and don't do
 
 **How inference routing generates revenue:**
 ```
-Client's Agent → NemoClaw Sandbox → AI Advantage / ADC Infrastructure (MARLIE I / Willow Glen) → AI Model → Response
-                                     ↑
-                            We bill per token here.
-                            Client pays subscription.
-                            We keep the spread.
+Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE I NVL72) → Dynamo 1.0 → AI Model → Response
+                            ↑
+                   We bill per token here.
+                   Client pays subscription.
+                   Our cost: $0.004/M tokens.
+                   We keep the spread (95%+ margin).
 ```
 
-Every client agent consuming tokens flows through our infrastructure. 96 clients per installer per year × average 50,000+ tokens per day per agent = massive token volume on ADC GPUs. AI Advantage feeds the token factory.
+Every client agent consuming tokens flows through our infrastructure. 96 clients per installer per year x average 50,000+ tokens per day per agent = massive token volume on ADC GPUs. AI Advantage feeds the token factory.
 
 ---
 
@@ -266,6 +282,28 @@ Features:
 - Right panel: metrics, client health, activity feed, top verticals
 - Tabs: Dispatch Board, Client Pipeline, Playbooks (quick reference), Revenue
 - Revenue tab: per-installer performance, monthly growth chart, YTD totals
+
+---
+
+## Employee Onboarding / New Computer Setup
+
+When a new installer or team member joins, they need to get set up with the AI Advantage tools and repo access.
+
+### Day 1 Setup
+1. **Clone the repo:**
+   ```bash
+   git clone https://github.com/ADC3K/gpu-learning-lab.git
+   cd gpu-learning-lab/ai-advantage
+   ```
+2. **Install Python dependencies:**
+   ```bash
+   pip install -e ".[dev]"
+   ```
+3. **Configure environment:** Copy `.env.example` to `.env` and fill in credentials (Scott provides API keys — never share them outside the team).
+4. **Test Mission Control access:** Open `http://marlie1.local:8000` (on ADC network) or VPN in. Verify the dashboard loads and you can see agent status.
+5. **SSH key for MARLIE I:** Generate a key pair, send the public key to Scott. Once added, verify: `ssh installer@marlie1.local`
+6. **Read the playbooks:** Start with `installer-kit.md`, then your first vertical (Salon or Law Firm). Do a practice install on your own test workspace before going to a client.
+7. **Join the team channel:** Scott will add you to the AI Advantage installer group for real-time support during your first installs.
 
 ---
 

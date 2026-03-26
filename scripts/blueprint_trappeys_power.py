@@ -2,12 +2,12 @@
 Ragin' Cajun Compute Campus — Trappeys Cannery, Lafayette, LA
 Power Distribution Schematic
 4-Layer Hierarchy: Solar -> Gas -> Diesel -> Grid (sell-back)
-Gas G3520C -> Switchgear -> Eaton 800V DC -> Busway -> Racks
+Cat G3516J x3 N+1 -> Switchgear -> Eaton Beam Rubin DSX + ORV3 -> 800V DC -> Busway -> TI/Infineon GaN -> Racks
 """
 import svgwrite
 
-W, H = 1400, 1050
-OUT = "adc3k-deploy/blueprints/trappeys-power-distribution.svg"
+W, H = 1400, 1200
+OUT = "adc3k-deploy/trappeys/blueprints/power-distribution.svg"
 
 ACCENT = "#CE181E"
 
@@ -100,20 +100,23 @@ def build():
     # ================================================================
     y2 = 165
 
-    gen_w = 155
-    box(dwg, 30, y2, gen_w, 70, "CAT G3520C #1\n1.5 MW | 480V AC\nNatural Gas Prime\nLayer 2 Backbone",
+    gen_w = 130
+    box(dwg, 30, y2, gen_w, 70, "CAT G3516J #1\n1.6 MW | 480V AC\nNatural Gas Prime\nLayer 2 Backbone",
         "Louisiana Cat | American Made",
         color="#0a1a0a", border="#22c55e", text_color="#22c55e")
-    box(dwg, 200, y2, gen_w, 70, "CAT G3520C #2\n1.5 MW | 480V AC\nN+1 REDUNDANT\nMaintenance Spare",
+    box(dwg, 170, y2, gen_w, 70, "CAT G3516J #2\n1.6 MW | 480V AC\nNatural Gas Prime\nLayer 2 Backbone",
+        "Louisiana Cat | American Made",
+        color="#0a1a0a", border="#22c55e", text_color="#22c55e")
+    box(dwg, 310, y2, gen_w, 70, "CAT G3516J #3\n1.6 MW | 480V AC\nN+1 REDUNDANT\nMaintenance Spare",
         "Any unit offline = no impact",
         color="#0a1a0a", border="#22c55e", text_color="#4ade80")
 
     # Diesel genset
-    box(dwg, 370, y2, 120, 70, "DIESEL GENSET\n250 kW\n480V | Emergency\nAuto-Start", "Layer 3 only",
+    box(dwg, 460, y2, 120, 70, "DIESEL GENSET\n250 kW\n480V | Emergency\nAuto-Start", "Layer 3 only",
         color="#2e1a1a", border="#ef4444", text_color="#ef4444")
 
     # Solar array
-    box(dwg, 510, y2, 150, 70, "FIRST SOLAR ARRAY\n2.05 MW Rooftop\nSeries 7 TR1 Panels\n952V DC Strings",
+    box(dwg, 600, y2, 150, 70, "FIRST SOLAR ARRAY\n2.05 MW Rooftop\nSeries 7 TR1 (550W)\n5-panel strings @ 952V",
         "3,731 panels | All 4 buildings",
         color="#1a1a00", border="#fbbf24", text_color="#fbbf24")
 
@@ -122,29 +125,29 @@ def build():
     # ================================================================
     y3 = 285
 
-    for gx in [107, 277, 430]:
-        arrow_down(dwg, gx, y2 + 70, y3, "#22c55e" if gx != 430 else "#ef4444")
+    for gx in [95, 235, 375, 520]:
+        arrow_down(dwg, gx, y2 + 70, y3, "#22c55e" if gx != 520 else "#ef4444")
 
-    box(dwg, 30, y3, 330, 55, "PARALLELING SWITCHGEAR + ATS\nLouisiana Cat Controls | Auto-Sync | Load Sharing\nBoth G3520C parallel to common 480V AC bus",
+    box(dwg, 30, y3, 380, 55, "PARALLELING SWITCHGEAR + ATS\nLouisiana Cat Controls | Auto-Sync | Load Sharing\n3x G3516J parallel to common 480V AC bus | ABB SACE Infinitus DC Protection",
         "Automatic load balancing | Generator protection relays",
         border="#22c55e", text_color="#86efac")
 
-    box(dwg, 380, y3, 120, 55, "EMERGENCY\nATS\nDiesel Auto\nTransfer", "",
+    box(dwg, 430, y3, 120, 55, "EMERGENCY\nATS\nDiesel Auto\nTransfer", "",
         border="#ef4444", text_color="#fca5a5")
 
     # Solar combiner
-    arrow_down(dwg, 585, y2 + 70, y3, "#fbbf24")
-    box(dwg, 520, y3, 120, 55, "SOLAR\nCOMBINER\nBOX\nString Fusing", "",
+    arrow_down(dwg, 675, y2 + 70, y3, "#fbbf24")
+    box(dwg, 570, y3, 120, 55, "SOLAR\nCOMBINER\nBOX\nString Fusing", "",
         border="#fbbf24", text_color="#fbbf24")
 
     # ================================================================
     # ROW 4: 480V AC BUS (y=385)
     # ================================================================
     y4 = 385
-    for bx in [195, 440, 580]:
+    for bx in [220, 490, 630]:
         arrow_down(dwg, bx, y3 + 55, y4, "#ff6b35")
 
-    dwg.add(dwg.rect((30, y4 - 3), (780, 6), fill="#ff6b35", rx=2))
+    dwg.add(dwg.rect((30, y4 - 3), (810, 6), fill="#ff6b35", rx=2))
     dwg.add(dwg.text("480V AC DISTRIBUTION BUS", insert=(420, y4 - 10), text_anchor="middle",
                       fill="#ff6b35", font_size=10, font_family="Arial", font_weight="bold"))
 
@@ -172,17 +175,17 @@ def build():
     arrow_down(dwg, 200, y5 + 45, y6, "#ff6b35")
     arrow_down(dwg, 450, y5 + 45, y6, "#ff6b35")
 
-    box(dwg, 80, y6, 250, 65, "EATON BEAM RUBIN DSX\nAC/DC RECTIFIER #1\n480V AC -> 800V DC\n96%+ Conversion Efficiency",
+    box(dwg, 80, y6, 250, 65, "EATON BEAM RUBIN DSX\n+ ORV3 SIDECAR\n480V AC -> 800V DC | #1\n96%+ Conversion Efficiency",
         "Grid-to-chip platform | Modular",
         border="#8b5cf6", text_color="#c4b5fd")
 
-    box(dwg, 370, y6, 250, 65, "EATON BEAM RUBIN DSX\nAC/DC RECTIFIER #2\n480V AC -> 800V DC\nN+1 Redundant Module",
+    box(dwg, 370, y6, 250, 65, "EATON BEAM RUBIN DSX\n+ ORV3 SIDECAR\n480V AC -> 800V DC | #2\nN+1 Redundant Module",
         "Automatic failover",
         border="#8b5cf6", text_color="#c4b5fd")
 
     # Solar DC-Direct bypass
     solar_bypass_x = 660
-    pipe(dwg, [(580, y3 + 55), (580, y3 + 70), (solar_bypass_x + 50, y3 + 70),
+    pipe(dwg, [(630, y3 + 55), (630, y3 + 70), (solar_bypass_x + 50, y3 + 70),
                (solar_bypass_x + 50, y6)], "#fbbf24", 2)
     box(dwg, solar_bypass_x, y6, 180, 65, "DC-DC BUCK\nCONVERTER\n952V String -> 800V Bus\n97% Efficiency",
         "Bypasses AC entirely | Solar DC-Direct",
@@ -202,17 +205,19 @@ def build():
     # BESS on 800V bus
     bess_x = 30
     wire(dwg, bess_x + 60, y7 + 3, bess_x + 60, y7 + 15, "#8b5cf6")
-    box(dwg, bess_x, y7 + 15, 120, 55, "EATON xStorage\nBATTERY (BESS)\n800V DC Native\nRide-Through",
+    box(dwg, bess_x, y7 + 15, 120, 55, "EATON xStorage\nBESS\n800V DC Native\nRide-Through",
         "Peak shaving | Reserve",
         border="#3b82f6", text_color="#93c5fd")
 
     # ================================================================
-    # ROW 8: BUSWAY + RACKS (y=680)
+    # ROW 8: BUSWAY + DELTA + RACKS (y=680)
     # ================================================================
     y8 = 680
-    y9 = 740
-    y10 = 790
-    y11 = 840
+    y8b = 735
+    y8c = 790
+    y9 = 845
+    y10 = 890
+    y11 = 940
 
     busway_positions = [(200, "Rack 1-2"), (400, "Rack 3-4"), (600, "Expansion")]
     for bx, label in busway_positions:
@@ -222,12 +227,23 @@ def build():
 
     for bx, label in busway_positions[:2]:
         cx = bx + 50
-        arrow_down(dwg, cx, y8 + 35, y9, "#8b5cf6")
+        # Delta 660 kW Power Rack
+        arrow_down(dwg, cx, y8 + 35, y8b, "#8b5cf6")
+        box(dwg, bx - 5, y8b, 110, 38, "DELTA 660 kW RACK\n6x 110 kW Shelves", "480 kW BBU",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+
+        # Delta e-Fuse + DC/DC
+        arrow_down(dwg, cx, y8b + 38, y8c, "#00bcd4")
+        box(dwg, bx - 5, y8c, 110, 35, "DELTA e-FUSE (SiC <3us)\n90 kW DC/DC 800V->50V", "NVIDIA MGX",
+            border="#00bcd4", text_color="#00e5ff", font=7)
+
+        # Rack PDU
+        arrow_down(dwg, cx, y8c + 35, y9, "#00bcd4")
         box(dwg, bx + 10, y9, 80, 30, "RACK PDU\n800V DC", "",
             border="#8b5cf6", text_color="#c4b5fd", font=7)
 
         arrow_down(dwg, cx, y9 + 30, y10, "#76b900")
-        box(dwg, bx + 5, y10, 90, 30, "64:1 LLC DC-DC\n800V -> 12.5V", "99%+ eff",
+        box(dwg, bx + 5, y10, 90, 30, "TI 800V-to-6V GaN\nInfineon CoolGaN IBC", "99%+ eff",
             border="#76b900", text_color="#76b900", font=7)
 
         arrow_down(dwg, cx, y10 + 30, y11, "#76b900")
@@ -241,7 +257,7 @@ def build():
 
     # Expansion placeholder
     exp_bx = busway_positions[2][0]
-    box(dwg, exp_bx - 5, y9, 110, y11 - y9 + 50, "EXPANSION\nPHASE 2\n\nUp to 32\nmore racks\nin Middle Low\n\nPre-wired",
+    box(dwg, exp_bx - 5, y8b, 110, y11 - y8b + 50, "EXPANSION\nPHASE 2\n\nUp to 32\nmore racks\nin Middle Low\n\nPre-wired",
         "", border="#333", text_color="#555", font=8)
 
     # ================================================================
@@ -250,7 +266,7 @@ def build():
     hx = 880
     hy = 75
 
-    dwg.add(dwg.rect((hx, hy), (490, 820), rx=8, fill="#111318", stroke="#1e2230", stroke_width=1))
+    dwg.add(dwg.rect((hx, hy), (490, 960), rx=8, fill="#111318", stroke="#1e2230", stroke_width=1))
     dwg.add(dwg.text("4-LAYER POWER HIERARCHY", insert=(hx + 245, hy + 20), text_anchor="middle",
                       fill="#f0f2f5", font_size=12, font_family="Arial", font_weight="bold"))
 
@@ -259,7 +275,7 @@ def build():
             "num": "1", "name": "SOLAR", "color": "#fbbf24",
             "role": "PRIMARY OFFSET",
             "details": [
-                "First Solar Series 7 TR1 panels",
+                "First Solar Series 7 TR1 panels (550W)",
                 "Rooftop arrays across all 4 buildings",
                 "3,731 panels = 2.05 MW total",
                 "DC-Direct to 800V bus (97% eff)",
@@ -272,11 +288,11 @@ def build():
             "num": "2", "name": "NATURAL GAS", "color": "#22c55e",
             "role": "BACKBONE — ALWAYS RUNNING",
             "details": [
-                "Cat G3520C generators (1.5 MW each)",
-                "2 units: 3.0 MW total (N+1 redundant)",
+                "Caterpillar G3516J generators (1.6 MW each)",
+                "3 units: 4.8 MW total (N+1 redundant)",
                 "ATMOS Energy trunk line on property",
                 "Henry Hub pricing = cheapest in USA",
-                "480V AC output to Eaton rectifiers",
+                "480V AC output to Eaton Beam Rubin DSX + ORV3",
                 "Louisiana Cat service contract",
                 "Carries FULL load 24/7/365",
             ]
@@ -325,10 +341,10 @@ def build():
     # ================================================================
     # BOTTOM: PHASE 1 STATS
     # ================================================================
-    sy = 920
+    sy = 1060
     dwg.add(dwg.rect((30, sy), (1340, 40), rx=6, fill="#111318", stroke="#1e2230"))
     stats = [
-        ("GAS GENERATION", "3.0 MW (N+1)"),
+        ("GAS GENERATION", "4.8 MW (3x G3516J N+1)"),
         ("SOLAR", "2.05 MW Rooftop"),
         ("IT LOAD", "520 kW"),
         ("TOTAL FACILITY", "~650 kW"),
@@ -347,14 +363,14 @@ def build():
     # ================================================================
     # NOTES
     # ================================================================
-    ny = 975
+    ny = 1115
     notes = [
         "1. Gas is the BACKBONE (Layer 2) — always running, carries full facility load 24/7. Solar offsets but does not replace gas.",
         "2. Grid (LUS) is SELL-BACK ONLY (Layer 4) — excess generation returns to LUS. GPUs NEVER run on grid power.",
-        "3. N+1 generator redundancy: 2x G3520C for single-unit load. Either unit offline = zero impact to operations.",
-        "4. Solar DC-Direct bypasses all AC conversion — 952V strings buck to 800V, feeds DSX bus at 97% efficiency.",
-        "5. BESS provides ride-through during generator sync/transfer events + peak shaving for GPU training spikes.",
-        "6. All equipment American-made: Cat generators (Louisiana Cat), Eaton power distribution, First Solar panels.",
+        "3. DUAL POWER STACK: Eaton (facility) + Delta (rack). Eaton Beam Rubin DSX + ORV3 rectifiers. ABB SACE Infinitus DC protection.",
+        "4. Delta 660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU). Delta e-Fuse (SiC, <3 us). Delta 90 kW DC/DC (800V to 50V MGX).",
+        "5. TI 800V-to-6V GaN + Infineon CoolGaN IBC at GPU die — 99%+ eff. First Solar DC-Direct at 97% eff.",
+        "6. Eaton xStorage BESS ride-through + peak shaving. N+1 redundancy: 3x Cat G3516J. All American-made.",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 12), fill="#4b5563",
@@ -366,5 +382,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/trappeys/blueprints", exist_ok=True)
     build()

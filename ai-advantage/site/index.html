@@ -501,7 +501,7 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
 <div class="section" id="faq" style="border-top:1px solid var(--border)">
   <div class="section-label">Questions &amp; Answers</div>
   <h2>Everything you want to know. No runaround.</h2>
-  <p class="sub">We get these questions every day. Here are straight answers. If you don't see yours, ask Ally — our AI assistant — in the chat bubble below.</p>
+  <p class="sub">We get these questions every day. Here are straight answers. If you don't see yours, ask ROXY — our AI assistant — in the chat bubble below.</p>
 
   <div class="faq-cats">
     <button class="faq-cat active" data-cat="all">All</button>
@@ -626,8 +626,8 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
 
   <div class="faq-ally-cta">
     <h3>Don't see your question?</h3>
-    <p>Ask Ally — our AI assistant. She knows everything about AI Advantage and can answer instantly.</p>
-    <button class="btn btn-primary" onclick="document.getElementById('ally-toggle').click()">Ask Ally</button>
+    <p>Ask ROXY — our AI assistant. She knows everything about AI Advantage and can answer instantly.</p>
+    <button class="btn btn-primary" onclick="document.getElementById('ally-toggle').click()">Ask ROXY</button>
   </div>
 </div>
 
@@ -696,12 +696,12 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
 
 <div id="ally-panel">
   <div class="ally-header">
-    <div class="ally-title"><div class="ally-dot"></div>Ally &mdash; AI Advantage</div>
+    <div class="ally-title"><div class="ally-dot"></div>ROXY &mdash; AI Advantage</div>
     <button class="ally-close" aria-label="Close chat">&times;</button>
   </div>
   <div id="ally-messages"></div>
   <div id="ally-input-bar">
-    <input type="text" id="ally-input" placeholder="Ask Ally anything..." maxlength="2000" autocomplete="off">
+    <input type="text" id="ally-input" placeholder="Ask ROXY anything..." maxlength="2000" autocomplete="off">
     <button id="ally-send">Send</button>
   </div>
 </div>
@@ -740,19 +740,58 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
   const toggle = document.getElementById('ally-toggle');
   const panel = document.getElementById('ally-panel');
   const closeBtn = panel.querySelector('.ally-close');
-  const messages = document.getElementById('ally-messages');
+  const messagesEl = document.getElementById('ally-messages');
   const input = document.getElementById('ally-input');
   const sendBtn = document.getElementById('ally-send');
   let opened = false;
   let sending = false;
 
+  // Conversation state — persists for the tab lifetime
+  const history = []; // { role: "user"|"assistant", content: string }
+  const sessionId = 'roxy_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  let sessionContext = {};
+
   function addMsg(text, cls) {
     const div = document.createElement('div');
     div.className = 'ally-msg ' + cls;
     div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
     return div;
+  }
+
+  function addToolIndicator(tools) {
+    if (!tools || tools.length === 0) return;
+    const labels = {
+      'search_playbooks': 'Searched playbooks',
+      'capture_lead': 'Saved your info',
+      'build_quote': 'Built a quote',
+      'book_appointment': 'Generated booking link',
+      'get_contact_info': 'Looked up contact info',
+      'send_followup_email': 'Sent follow-up email',
+      'crm_lookup': 'Checked records',
+      'business_lookup': 'Researched your business',
+      'competitor_intel': 'Reviewed compatibility',
+      'calculate_roi': 'Calculated your ROI',
+      'send_sms': 'Sent you a text',
+      'log_conversation': 'Saved for follow-up',
+      'generate_payment_link': 'Created checkout link',
+      'franchise_qualifier': 'Built franchise quote',
+      'create_urgency_offer': 'Created special offer',
+      'generate_live_demo': 'Built your demo',
+      'local_market_intel': 'Analyzed your market',
+      'generate_ad_copy': 'Created your ads',
+      'respond_to_review': 'Drafted review response',
+      'generate_social_posts': 'Created social content',
+      'request_review': 'Created review request',
+      'generate_lead_magnet': 'Built lead magnet',
+      'build_email_campaign': 'Built email campaign',
+    };
+    const text = tools.map(t => labels[t] || t).join(' · ');
+    const div = document.createElement('div');
+    div.style.cssText = 'font-size:10px;color:var(--dim);padding:2px 14px;align-self:flex-start;font-family:monospace;letter-spacing:0.5px';
+    div.textContent = '⚡ ' + text;
+    messagesEl.appendChild(div);
   }
 
   function showTyping() {
@@ -760,8 +799,8 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
     div.className = 'ally-typing';
     div.id = 'ally-typing-ind';
     div.innerHTML = '<span>.</span><span>.</span><span>.</span>';
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
   function hideTyping() {
@@ -773,7 +812,7 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
     panel.classList.toggle('open');
     if (!opened) {
       opened = true;
-      addMsg("Hey! I'm Ally, your AI Advantage assistant. Ask me anything about how we can help your business \u2014 pricing, industries, how it works, security. What's on your mind?", 'bot');
+      addMsg("Hey! I'm ROXY, your AI Advantage assistant. I can answer questions, look up industry-specific details, build you a quote, or book a discovery call \u2014 right here. What's on your mind?", 'bot');
     }
     if (panel.classList.contains('open')) {
       input.focus();
@@ -794,16 +833,33 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
     sendBtn.disabled = true;
     showTyping();
 
+    // Add to conversation history
+    history.push({ role: 'user', content: text });
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({
+          messages: history.slice(-20),
+          sessionId: sessionId,
+          sessionContext: sessionContext,
+        })
       });
       const data = await res.json();
       hideTyping();
+
       if (data.reply) {
+        // Update session context from server
+        if (data.sessionContext) {
+          sessionContext = data.sessionContext;
+        }
+        // Show tool usage indicator
+        addToolIndicator(data.toolsUsed);
+        // Show the reply
         addMsg(data.reply, 'bot');
+        // Add to history for multi-turn
+        history.push({ role: 'assistant', content: data.reply });
       } else if (data.error) {
         addMsg(data.error, 'bot');
       } else {

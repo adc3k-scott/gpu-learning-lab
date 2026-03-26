@@ -2,6 +2,8 @@
 
 **AI Advantage pays installers to install. No cold calling. No prospecting quotas. Show up, follow the playbook, get paid.**
 
+> **Why commissions are generous:** All compute runs on ADC's own NVL72 hardware at MARLIE I. Token cost is ~$0.004/M (self-generated power at $0.027/kWh). With 95%+ margins on every subscription, there is no cloud compute bill eating into revenue. Monthly recurring revenue per customer flows through ADC's token metering — the spread between our cost and the subscription price funds everything, including installer commissions.
+
 ---
 
 ## Employment Models
@@ -46,13 +48,14 @@ When the installer sells hardware (Starter Kit, Mac Mini, DGX Spark), they earn 
 
 ### 3. Recurring Override — 5% of Monthly Subscription Revenue
 
-This is the wealth builder. Every client the installer sets up generates a monthly override payment **forever** (as long as the client stays active).
+This is the wealth builder. Every client the installer sets up generates a monthly override payment **forever** (as long as the client stays active). Because compute is self-hosted (no cloud provider taking a cut), the full subscription amount stays in-house — which is what makes a 5% perpetual override sustainable.
 
 ```
 5% of monthly subscription from every client you installed.
 Paid on the 15th of each month.
 Compounds every month as you add clients.
 Never expires — your clients, your override.
+All token metering flows through ADC's infrastructure — clean, auditable, no third-party billing disputes.
 ```
 
 ---

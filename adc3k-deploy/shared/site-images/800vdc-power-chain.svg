@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" width="1920" height="1200">
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#aaaaaa"/>
+  </marker>
+  <marker id="ah-cool" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4fc3f7"/>
+  </marker>
+</defs>
+<rect width="1920" height="1200" fill="#0a0a0f"/>
+<text x="960.0" y="36" fill="#fff" font-size="22" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">ADC 800V DC Power Architecture — Complete Vendor Stack</text>
+<text x="960.0" y="58" fill="#cccccc" font-size="14" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">From Gas Molecule to GPU Chip — Every Component, Every Vendor</text>
+<rect x="30" y="80" width="1260" height="470" rx="10" fill="#76b900" fill-opacity="0.04" stroke="#76b900" stroke-width="0.5" stroke-dasharray="6,4"/>
+<text x="660" y="100" fill="#76b900" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">FACILITY LEVEL  (Eaton + Partners)</text>
+<rect x="30" y="565" width="1260" height="480" rx="10" fill="#00bcd4" fill-opacity="0.04" stroke="#00bcd4" stroke-width="0.5" stroke-dasharray="6,4"/>
+<text x="660" y="585" fill="#00bcd4" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">RACK LEVEL  (Delta + Partners)</text>
+<rect x="1320" y="80" width="570" height="965" rx="10" fill="#4fc3f7" fill-opacity="0.04" stroke="#4fc3f7" stroke-width="0.5" stroke-dasharray="6,4"/>
+<text x="1605" y="100" fill="#4fc3f7" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">COOLING CHAIN  (Parallel)</text>
+<rect x="60" y="120" width="220" height="60" rx="6" fill="#ffffff" fill-opacity="0.15" stroke="#ffffff" stroke-width="1.5"/>
+<text x="170.0" y="146.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">ATMOS Gas Pipeline</text>
+<text x="170.0" y="161.5" fill="#ffffff" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Henry Hub · 13 pipelines</text>
+<line x1="280" y1="150" x2="320" y2="150" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="320" y="120" width="260" height="60" rx="6" fill="#ffffff" fill-opacity="0.15" stroke="#ffffff" stroke-width="1.5"/>
+<text x="450.0" y="146.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Cat G3516J Generator</text>
+<text x="450.0" y="161.5" fill="#ffffff" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">1.6 MW · 480V AC 3-phase</text>
+<text x="450.0" y="190" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">480V AC</text>
+<rect x="60" y="220" width="220" height="60" rx="6" fill="#ffffff" fill-opacity="0.15" stroke="#ffffff" stroke-width="1.5"/>
+<text x="170.0" y="246.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">First Solar Series 7 TR1</text>
+<text x="170.0" y="261.5" fill="#ffffff" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">550W · 5-panel string @ 952V DC</text>
+<text x="170" y="290" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">952V DC</text>
+<line x1="280" y1="250" x2="320" y2="250" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="320" y="220" width="260" height="60" rx="6" fill="#f5a623" fill-opacity="0.15" stroke="#f5a623" stroke-width="1.5"/>
+<text x="450.0" y="246.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">TI GaN Buck Converter</text>
+<text x="450.0" y="261.5" fill="#f5a623" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">952V → 800V · SiC/GaN</text>
+<text x="450.0" y="290" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC</text>
+<text x="590" y="255" fill="#ff6b6b" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">~97%</text>
+<line x1="450.0" y1="180" x2="450.0" y2="220" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="370" y="310" width="260" height="60" rx="6" fill="#76b900" fill-opacity="0.15" stroke="#76b900" stroke-width="1.5"/>
+<text x="500.0" y="336.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Eaton MV Switchgear</text>
+<text x="500.0" y="351.5" fill="#76b900" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Medium voltage distribution</text>
+<line x1="500.0" y1="280" x2="500.0" y2="310" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="370" y="395" width="260" height="60" rx="6" fill="#76b900" fill-opacity="0.15" stroke="#76b900" stroke-width="1.5"/>
+<text x="500.0" y="421.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Eaton Beam Rubin DSX</text>
+<text x="500.0" y="436.5" fill="#76b900" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Rectifier · 480V AC → 800V DC</text>
+<line x1="500.0" y1="370" x2="500.0" y2="395" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="500.0" y="465" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC</text>
+<text x="640" y="430" fill="#ff6b6b" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">97% eff</text>
+<rect x="700" y="310" width="260" height="60" rx="6" fill="#3b9eff" fill-opacity="0.15" stroke="#3b9eff" stroke-width="1.5"/>
+<text x="830.0" y="336.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">ABB SACE Infinitus</text>
+<text x="830.0" y="351.5" fill="#3b9eff" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Solid-state DC breaker · <3ms</text>
+<line x1="630" y1="340" x2="700" y2="340" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="830.0" y="380" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC (protected)</text>
+<rect x="700" y="395" width="260" height="60" rx="6" fill="#76b900" fill-opacity="0.15" stroke="#76b900" stroke-width="1.5"/>
+<text x="830.0" y="421.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Eaton ORV3 Sidecar</text>
+<text x="830.0" y="436.5" fill="#76b900" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">±400V DC · 800 kW/row</text>
+<line x1="830.0" y1="370" x2="830.0" y2="395" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="830.0" y="465" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">±400V DC</text>
+<rect x="700" y="480" width="260" height="60" rx="6" fill="#76b900" fill-opacity="0.15" stroke="#76b900" stroke-width="1.5"/>
+<text x="830.0" y="506.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Eaton xStorage BESS</text>
+<text x="830.0" y="521.5" fill="#76b900" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">761-1200 VDC · Microgrid buffer</text>
+<line x1="830.0" y1="455" x2="830.0" y2="480" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="830.0" y1="540" x2="260.0" y2="605" stroke="#aaaaaa" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#ah)"/>
+<text x="545.0" y="570" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC Bus</text>
+<rect x="120" y="610" width="280" height="70" rx="6" fill="#00bcd4" fill-opacity="0.15" stroke="#00bcd4" stroke-width="1.5"/>
+<text x="260.0" y="634.0" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Delta 660 kW Power Rack</text>
+<text x="260.0" y="649.0" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">6× 110 kW shelves</text>
+<text x="260.0" y="664.0" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">480 kW embedded BBU</text>
+<text x="410" y="650" fill="#ff6b6b" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">98% AC-DC</text>
+<line x1="260.0" y1="680" x2="260.0" y2="710" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="120" y="710" width="280" height="60" rx="6" fill="#00bcd4" fill-opacity="0.15" stroke="#00bcd4" stroke-width="1.5"/>
+<text x="260.0" y="736.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Delta e-Fuse (SiC)</text>
+<text x="260.0" y="751.5" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif"><3 μs fault cutoff</text>
+<line x1="260.0" y1="770" x2="260.0" y2="800" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="260.0" y="795" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V → 50V</text>
+<rect x="120" y="800" width="280" height="60" rx="6" fill="#00bcd4" fill-opacity="0.15" stroke="#00bcd4" stroke-width="1.5"/>
+<text x="260.0" y="826.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Delta 90 kW DC/DC Shelf</text>
+<text x="260.0" y="841.5" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V → 50V · NVIDIA MGX</text>
+<text x="410" y="835" fill="#ff6b6b" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">98.5% eff</text>
+<line x1="260.0" y1="860" x2="260.0" y2="890" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="90" y="890" width="340" height="70" rx="6" fill="#f5a623" fill-opacity="0.15" stroke="#f5a623" stroke-width="1.5"/>
+<text x="260.0" y="914.0" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">TI 800V-to-6V GaN (97.6% eff)</text>
+<text x="260.0" y="929.0" fill="#f5a623" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Infineon CoolGaN IBC</text>
+<text x="260.0" y="944.0" fill="#f5a623" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V → 50V (>98% eff)</text>
+<line x1="260.0" y1="960" x2="260.0" y2="990" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="260.0" y="985" fill="#ffdd57" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">800V → 12V (64:1 LLC)</text>
+<rect x="90" y="990" width="340" height="70" rx="6" fill="#00e87a" fill-opacity="0.15" stroke="#00e87a" stroke-width="1.5"/>
+<text x="260.0" y="1014.0" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">NVIDIA NVL72 Rack</text>
+<text x="260.0" y="1029.0" fill="#00e87a" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">72 Blackwell GPUs · 130 kW</text>
+<text x="260.0" y="1044.0" fill="#00e87a" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">On-chip LLC converter 800V → 12V</text>
+<text x="480" y="645" fill="#ffdd57" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC</text>
+<text x="480" y="745" fill="#ffdd57" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">800V DC</text>
+<text x="480" y="835" fill="#ffdd57" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">50V DC</text>
+<text x="480" y="930" fill="#ffdd57" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">6-50V DC</text>
+<text x="480" y="1030" fill="#ffdd57" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">12V → GPU die</text>
+<rect x="1370" y="140" width="480" height="75" rx="6" fill="#4fc3f7" fill-opacity="0.15" stroke="#4fc3f7" stroke-width="1.5"/>
+<text x="1610.0" y="166.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">BAC TrilliumSeries Adiabatic Cooler</text>
+<text x="1610.0" y="181.5" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">External · optimized for Louisiana humidity</text>
+<text x="1610.0" y="196.5" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Dry operation >80% of year</text>
+<line x1="1610.0" y1="215" x2="1610.0" y2="270" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="1610.0" y="248" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Facility water loop</text>
+<rect x="1370" y="270" width="480" height="75" rx="6" fill="#4fc3f7" fill-opacity="0.15" stroke="#4fc3f7" stroke-width="1.5"/>
+<text x="1610.0" y="296.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">CoolIT CHx2000 CDU</text>
+<text x="1610.0" y="311.5" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">2,000 kW row-level cooling</text>
+<text x="1610.0" y="326.5" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Staubli UQD quick-disconnect couplings</text>
+<line x1="1610.0" y1="345" x2="1610.0" y2="400" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="1610.0" y="378" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Rack cooling loop</text>
+<rect x="1370" y="400" width="480" height="75" rx="6" fill="#00bcd4" fill-opacity="0.15" stroke="#00bcd4" stroke-width="1.5"/>
+<text x="1610.0" y="426.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Delta 140 kW In-Rack CDU</text>
+<text x="1610.0" y="441.5" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">4 RU · NVL72 certified</text>
+<text x="1610.0" y="456.5" fill="#00bcd4" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Rack-level liquid distribution</text>
+<line x1="1610.0" y1="475" x2="1610.0" y2="530" stroke="#aaaaaa" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="1610.0" y="508" fill="#4fc3f7" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Chip-level cooling</text>
+<rect x="1370" y="530" width="480" height="75" rx="6" fill="#00e87a" fill-opacity="0.15" stroke="#00e87a" stroke-width="1.5"/>
+<text x="1610.0" y="556.5" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">NVIDIA NVL72 Cooling Manifolds</text>
+<text x="1610.0" y="571.5" fill="#00e87a" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">45°C supply → 55-65°C return</text>
+<text x="1610.0" y="586.5" fill="#00e87a" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Direct-to-chip liquid cooling</text>
+<text x="1610.0" y="640" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Temperature Cascade</text>
+<text x="1430" y="665" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">External ambient:</text>
+<text x="1650" y="665" fill="#4fc3f7" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">35°C (Louisiana peak)</text>
+<text x="1430" y="685" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Facility water supply:</text>
+<text x="1650" y="685" fill="#4fc3f7" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">30-35°C</text>
+<text x="1430" y="705" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Rack water supply:</text>
+<text x="1650" y="705" fill="#4fc3f7" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">40-45°C</text>
+<text x="1430" y="725" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">GPU junction:</text>
+<text x="1650" y="725" fill="#ff6b6b" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">75-85°C (max 90°C)</text>
+<text x="1430" y="745" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Return water:</text>
+<text x="1650" y="745" fill="#4fc3f7" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">55-65°C → waste heat recovery</text>
+<rect x="1370" y="780" width="480" height="190" rx="8" fill="#ff6b6b" fill-opacity="0.05" stroke="#ff6b6b" stroke-width="0.5"/>
+<text x="1610.0" y="800" fill="#ff6b6b" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">END-TO-END EFFICIENCY</text>
+<text x="1400" y="820" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Gas → Electricity (Cat G3516J)</text>
+<text x="1830" y="820" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">42%</text>
+<text x="1400" y="840" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">AC → DC Rectifier (Eaton Beam)</text>
+<text x="1830" y="840" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">97%</text>
+<text x="1400" y="860" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">DC Breaker (ABB SACE)</text>
+<text x="1830" y="860" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">99.9%</text>
+<text x="1400" y="880" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Row PDU (Eaton ORV3)</text>
+<text x="1830" y="880" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">99.5%</text>
+<text x="1400" y="900" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Power Rack (Delta 660 kW)</text>
+<text x="1830" y="900" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">98%</text>
+<text x="1400" y="920" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">DC/DC Shelf (Delta 90 kW)</text>
+<text x="1830" y="920" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">98.5%</text>
+<text x="1400" y="940" fill="#cccccc" font-size="10" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">VRM to chip (TI/Infineon)</text>
+<text x="1830" y="940" fill="#ff6b6b" font-size="10" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">97.6%</text>
+<line x1="1390" y1="965" x2="1830" y2="965" stroke="#ff6b6b" stroke-width="0.5"/>
+<text x="1400" y="980" fill="#fff" font-size="11" font-weight="bold" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Combined electrical path (post-gen):</text>
+<text x="1830" y="980" fill="#ff6b6b" font-size="13" font-weight="bold" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif">~91%</text>
+<text x="1610.0" y="1005" fill="#76b900" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">Solar DC-direct path: ~95% (no AC conversion)</text>
+<rect x="60" y="1080" width="1200" height="90" rx="8" fill="#ffffff" fill-opacity="0.03" stroke="#444" stroke-width="0.5"/>
+<text x="660.0" y="1098" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">VENDOR COLOR LEGEND</text>
+<rect x="80" y="1110" width="14" height="14" rx="3" fill="#76b900" fill-opacity="0.3" stroke="#76b900" stroke-width="1"/>
+<text x="102" y="1122" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Eaton (Distribution)</text>
+<rect x="380" y="1110" width="14" height="14" rx="3" fill="#00bcd4" fill-opacity="0.3" stroke="#00bcd4" stroke-width="1"/>
+<text x="402" y="1122" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Delta (Rack Power + Cooling)</text>
+<rect x="680" y="1110" width="14" height="14" rx="3" fill="#3b9eff" fill-opacity="0.3" stroke="#3b9eff" stroke-width="1"/>
+<text x="702" y="1122" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">ABB (Protection)</text>
+<rect x="980" y="1110" width="14" height="14" rx="3" fill="#f5a623" fill-opacity="0.3" stroke="#f5a623" stroke-width="1"/>
+<text x="1002" y="1122" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">TI / Infineon (VRM)</text>
+<rect x="80" y="1134" width="14" height="14" rx="3" fill="#00e87a" fill-opacity="0.3" stroke="#00e87a" stroke-width="1"/>
+<text x="102" y="1146" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">NVIDIA (Compute + Cooling)</text>
+<rect x="380" y="1134" width="14" height="14" rx="3" fill="#4fc3f7" fill-opacity="0.3" stroke="#4fc3f7" stroke-width="1"/>
+<text x="402" y="1146" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">CoolIT / BAC (Cooling)</text>
+<rect x="680" y="1134" width="14" height="14" rx="3" fill="#ffffff" fill-opacity="0.3" stroke="#ffffff" stroke-width="1"/>
+<text x="702" y="1146" fill="#cccccc" font-size="11" font-weight="normal" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif">Cat / First Solar (Generation)</text>
+<text x="960.0" y="1188" fill="#555" font-size="10" font-weight="normal" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif">ADC 3K — Advantage Design & Construction · adc3k.com · 2026</text>
+</svg>

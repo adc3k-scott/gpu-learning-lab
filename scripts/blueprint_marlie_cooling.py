@@ -7,7 +7,7 @@ CDUs per floor -> Facility loop -> Exterior dry coolers -> Return
 import svgwrite
 
 W, H = 1400, 950
-OUT = "adc3k-deploy/blueprints/marlie-cooling-schematic.svg"
+OUT = "adc3k-deploy/marlie/blueprints/cooling-schematic.svg"
 
 ACCENT = "#3b82f6"
 
@@ -81,7 +81,7 @@ def build():
     dc_y = 100
 
     box(dwg, dc_x, dc_y, 160, 180,
-        "EXTERIOR\nDRY COOLERS\n(Concrete Pad)\n\nFan-Assisted\nAir-Cooled\nHeat Rejection\n\nNo Water Tower\nNo River",
+        "BAC TrilliumSeries\nADIABATIC COOLER\n(Concrete Pad)\n\nFan-Assisted\nAdiabatic\nHeat Rejection\n\nNo Water Tower\nNo River",
         "Infrastructure Yard | Outdoor",
         border="#22c55e", text_color="#22c55e")
 
@@ -125,46 +125,60 @@ def build():
     temp_label(dwg, 445, 120, "FACILITY LOOP 30-35C", "#22c55e")
 
     box(dwg, cdu1_x, cdu1_y, 160, 110,
-        "FLOOR 1\nCDU PAIR\n(N+1)\n\nFacility Loop In\nvs\nRack Loop Out\n\nPumps + Controls",
+        "FLOOR 1\nCoolIT CHx200 (200 kW)\nCDU PAIR (N+1)\n\nStaubli UQD\nQuick-Disconnect\n\nPumps + Controls",
         "Downstairs — System 1",
         border="#76b900", text_color="#76b900")
 
     # ================================================================
+    # FLOOR 1 DELTA IN-RACK CDU
+    # ================================================================
+    delta1_x = 710
+    delta1_y = 85
+
+    pipe(dwg, [(680, 110), (delta1_x, 110)], "#76b900", 3)
+    arrow_right(dwg, delta1_x - 2, 110, "#76b900")
+
+    box(dwg, delta1_x, delta1_y, 100, 60,
+        "DELTA 140 kW\nIN-RACK CDU\n4RU | NVL72 Cert",
+        "Per-rack precision",
+        border="#00bcd4", text_color="#00e5ff", font=8)
+
+    # ================================================================
     # FLOOR 1 RACKS
     # ================================================================
-    rack1_x = 750
+    rack1_x = 850
     r1_y = 80
 
-    pipe(dwg, [(680, 110), (rack1_x, 110)], "#76b900", 3)
+    pipe(dwg, [(delta1_x + 100, 110), (rack1_x, 110)], "#76b900", 3)
     arrow_right(dwg, rack1_x - 2, 110, "#76b900")
-    temp_label(dwg, 685, 100, "TO RACKS 45C (113F)", "#76b900")
+    temp_label(dwg, delta1_x + 105, 100, "45C (113F)", "#76b900")
 
     # Supply manifold
-    box(dwg, rack1_x, r1_y, 120, 40,
+    box(dwg, rack1_x, r1_y, 100, 40,
         "SUPPLY\nMANIFOLD", "", border="#76b900", text_color="#76b900", font=9)
 
     # 4 racks
     rack_labels = ["NVL72 R1\n130 kW", "NVL72 R2\n130 kW", "NVL72 R3\n130 kW", "NVL72 R4\n130 kW"]
     rack_ys = [130, 190, 250, 310]
     for ry, label in zip(rack_ys, rack_labels):
-        pipe(dwg, [(rack1_x + 60, r1_y + 40), (rack1_x + 60, ry)], "#76b900", 2)
-        box(dwg, rack1_x, ry, 120, 45, label, "Cold plates on GPU/HBM",
+        pipe(dwg, [(rack1_x + 50, r1_y + 40), (rack1_x + 50, ry)], "#76b900", 2)
+        box(dwg, rack1_x, ry, 100, 45, label, "Cold plates on GPU/HBM",
             color="#111a00", border="#76b900", text_color="#76b900", font=9)
         # Return right
-        pipe(dwg, [(rack1_x + 120, ry + 22), (rack1_x + 155, ry + 22)], "#ff6b6b", 2)
+        pipe(dwg, [(rack1_x + 100, ry + 22), (rack1_x + 130, ry + 22)], "#ff6b6b", 2)
 
     # Return manifold
-    ret1_x = rack1_x + 155
-    box(dwg, ret1_x, r1_y, 120, 40,
+    ret1_x = rack1_x + 130
+    box(dwg, ret1_x, r1_y, 100, 40,
         "RETURN\nMANIFOLD", "", border="#ff6b6b", text_color="#ff6b6b", font=9)
 
     for ry in rack_ys:
-        pipe(dwg, [(ret1_x + 60, ry + 22), (ret1_x + 60, r1_y + 40)], "#ff6b6b", 2)
+        pipe(dwg, [(ret1_x + 50, ry + 22), (ret1_x + 50, r1_y + 40)], "#ff6b6b", 2)
 
     # Return from floor 1 manifold to CDU
-    pipe(dwg, [(ret1_x + 60, r1_y + 40), (ret1_x + 60, 380), (cdu1_x + 80, 380),
+    pipe(dwg, [(ret1_x + 50, r1_y + 40), (ret1_x + 50, 380), (cdu1_x + 80, 380),
                (cdu1_x + 80, cdu1_y + 110)], "#ff6b6b", 3)
-    temp_label(dwg, ret1_x + 70, 375, "RETURN 55-60C (131-140F)", "#ff6b6b")
+    temp_label(dwg, ret1_x + 60, 375, "RETURN 55-60C (131-140F)", "#ff6b6b")
 
     # CDU 1 return to facility loop
     pipe(dwg, [(cdu1_x, 170), (loop_x + 180, 170)], "#ff6b6b", 3)
@@ -184,41 +198,55 @@ def build():
     pipe(dwg, [(loop_x + 50, loop_y + 100), (loop_x + 50, 460), (440, 460)], "#22c55e", 3)
 
     box(dwg, cdu2_x, cdu2_y, 160, 110,
-        "FLOOR 2\nCDU PAIR\n(N+1)\n\nFacility Loop In\nvs\nRack Loop Out\n\nPumps + Controls",
+        "FLOOR 2\nCoolIT CHx200 (200 kW)\nCDU PAIR (N+1)\n\nStaubli UQD\nQuick-Disconnect\n\nPumps + Controls",
         "Upstairs — System 2",
         border="#76b900", text_color="#76b900")
 
     # ================================================================
+    # FLOOR 2 DELTA IN-RACK CDU
+    # ================================================================
+    delta2_x = 710
+    delta2_y = 435
+
+    pipe(dwg, [(680, 460), (delta2_x, 460)], "#76b900", 3)
+    arrow_right(dwg, delta2_x - 2, 460, "#76b900")
+
+    box(dwg, delta2_x, delta2_y, 100, 60,
+        "DELTA 140 kW\nIN-RACK CDU\n4RU | NVL72 Cert",
+        "Per-rack precision",
+        border="#00bcd4", text_color="#00e5ff", font=8)
+
+    # ================================================================
     # FLOOR 2 RACKS
     # ================================================================
-    rack2_x = 750
+    rack2_x = 850
     r2_y = 430
 
-    pipe(dwg, [(680, 460), (rack2_x, 460)], "#76b900", 3)
+    pipe(dwg, [(delta2_x + 100, 460), (rack2_x, 460)], "#76b900", 3)
     arrow_right(dwg, rack2_x - 2, 460, "#76b900")
-    temp_label(dwg, 685, 450, "TO RACKS 45C (113F)", "#76b900")
+    temp_label(dwg, delta2_x + 105, 450, "45C (113F)", "#76b900")
 
-    box(dwg, rack2_x, r2_y, 120, 40,
+    box(dwg, rack2_x, r2_y, 100, 40,
         "SUPPLY\nMANIFOLD", "", border="#76b900", text_color="#76b900", font=9)
 
     rack_labels2 = ["NVL72 R5\n130 kW", "NVL72 R6\n130 kW", "NVL72 R7\n130 kW", "NVL72 R8\n130 kW"]
     rack_ys2 = [480, 540, 600, 660]
     for ry, label in zip(rack_ys2, rack_labels2):
-        pipe(dwg, [(rack2_x + 60, r2_y + 40), (rack2_x + 60, ry)], "#76b900", 2)
-        box(dwg, rack2_x, ry, 120, 45, label, "Cold plates on GPU/HBM",
+        pipe(dwg, [(rack2_x + 50, r2_y + 40), (rack2_x + 50, ry)], "#76b900", 2)
+        box(dwg, rack2_x, ry, 100, 45, label, "Cold plates on GPU/HBM",
             color="#111a00", border="#76b900", text_color="#76b900", font=9)
-        pipe(dwg, [(rack2_x + 120, ry + 22), (rack2_x + 155, ry + 22)], "#ff6b6b", 2)
+        pipe(dwg, [(rack2_x + 100, ry + 22), (rack2_x + 130, ry + 22)], "#ff6b6b", 2)
 
-    ret2_x = rack2_x + 155
-    box(dwg, ret2_x, r2_y, 120, 40,
+    ret2_x = rack2_x + 130
+    box(dwg, ret2_x, r2_y, 100, 40,
         "RETURN\nMANIFOLD", "", border="#ff6b6b", text_color="#ff6b6b", font=9)
 
     for ry in rack_ys2:
-        pipe(dwg, [(ret2_x + 60, ry + 22), (ret2_x + 60, r2_y + 40)], "#ff6b6b", 2)
+        pipe(dwg, [(ret2_x + 50, ry + 22), (ret2_x + 50, r2_y + 40)], "#ff6b6b", 2)
 
-    pipe(dwg, [(ret2_x + 60, r2_y + 40), (ret2_x + 60, 730), (cdu2_x + 80, 730),
+    pipe(dwg, [(ret2_x + 50, r2_y + 40), (ret2_x + 50, 730), (cdu2_x + 80, 730),
                (cdu2_x + 80, cdu2_y + 110)], "#ff6b6b", 3)
-    temp_label(dwg, ret2_x + 70, 725, "RETURN 55-60C (131-140F)", "#ff6b6b")
+    temp_label(dwg, ret2_x + 60, 725, "RETURN 55-60C (131-140F)", "#ff6b6b")
 
     # CDU 2 return to facility loop
     pipe(dwg, [(cdu2_x, 510), (loop_x + 130, 510), (loop_x + 130, loop_y + 100)], "#ff6b6b", 3)
@@ -292,8 +320,8 @@ def build():
 
     dwg.add(dwg.rect((600, ly - 5), (650, 55), rx=6, fill="#111318", stroke="#1e2230"))
     specs = [
-        ("COOLING TYPE", "Dry Coolers"),
-        ("CDU PAIRS", "2 (1 per floor)"),
+        ("COOLING TYPE", "BAC TrilliumSeries Adiabatic"),
+        ("CDU PAIRS", "2x CoolIT CHx200 (1/floor)"),
         ("RACK COOLING", "45C Hot Water"),
         ("TOTAL REJECTION", "~1,240 kW"),
         ("PUE TARGET", "< 1.20"),
@@ -312,8 +340,8 @@ def build():
     fd_y = 820
     dwg.add(dwg.text("COMPLETE COOLING PATH:", insert=(50, fd_y), fill=ACCENT,
                       font_size=10, font_family="Arial", font_weight="bold"))
-    path = ("Dry Coolers (30-35C) -> Facility Loop -> CDU (per floor) -> "
-            "Rack Manifold (45C) -> GPU Cold Plates -> Return (55-60C) -> CDU -> Facility Loop -> Dry Coolers")
+    path = ("BAC TrilliumSeries (30-35C) -> Facility Loop -> CoolIT CHx200 CDU (per floor) -> "
+            "Delta 140 kW In-Rack CDU -> Rack Manifold (45C) -> GPU Cold Plates -> Return (55-60C) -> CDU -> Facility Loop -> BAC TrilliumSeries")
     dwg.add(dwg.text(path, insert=(50, fd_y + 16), fill="#9ca3af",
                       font_size=8, font_family="Arial"))
 
@@ -322,13 +350,13 @@ def build():
     # ================================================================
     ny = 850
     notes = [
-        "1. Dry coolers on concrete pad (infrastructure yard) reject heat to ambient air — no water consumption, no discharge permits",
-        "2. No water tower at MARLIE I — unlike Trappeys. Dry cooler capacity sized with margin for Louisiana summer peaks (~95F)",
+        "1. BAC TrilliumSeries adiabatic coolers on concrete pad — no water tower, no discharge permits, minimal water use",
+        "2. No water tower at MARLIE I — unlike Trappeys. BAC TrilliumSeries sized with margin for Louisiana summer peaks (~95F)",
         "3. NVIDIA NVL72 racks use direct liquid cooling with 45C (113F) hot water supply — no chillers needed in most conditions",
-        "4. 2 CDU pairs (1 per floor), each N+1 redundant — regulate flow and temperature independently per floor",
-        "5. Facility loop uses treated water/glycol mix to prevent corrosion — isolated from IT rack cooling loops via CDUs",
-        "6. Total building heat rejection ~1,240 kW with ~1,500 kW dry cooler capacity — 21% headroom",
-        "7. Summer peak supplemental: evaporative pre-cooling spray on dry cooler coils (future upgrade if needed)",
+        "4. 2x CoolIT CHx200 row-level CDU pairs + Delta 140 kW In-Rack CDUs (4RU, NVL72 cert) per rack — Staubli UQD — N+1 redundancy",
+        "5. Facility loop uses treated water/glycol mix, Munters HCD humidity control — isolated from IT rack cooling loops via CDUs",
+        "6. Total building heat rejection ~1,240 kW with ~1,500 kW BAC TrilliumSeries capacity — 21% headroom",
+        "7. Ansul Novec 1230 clean-agent fire suppression + VESDA-E VEU very early smoke detection in all compute zones",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -340,5 +368,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/marlie/blueprints", exist_ok=True)
     build()

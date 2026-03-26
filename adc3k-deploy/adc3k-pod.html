@@ -134,6 +134,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <nav>
   <a href="/" class="nav-logo">ADC<span>3K</span></a>
   <a href="/hub" class="nav-back">< ALL PAGES</a>
+  <a href="/operations-center" class="nav-back">Operations</a>
 </nav>
 
 <!-- HERO -->
@@ -219,8 +220,8 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
   <h2>Layout Blueprint</h2>
   <p class="sub">Three-view engineering drawing: top, side, and end cross-section. All dimensions verified against NVIDIA NVL72 specifications and standard 40-ft HC container geometry. Solar roof panel array shown in top view -- 320 sq ft of First Solar panels provide shade and power for all internal support systems.</p>
   <div class="blueprint-wrap">
-    <object data="/blueprints/adc3k-pod-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
-      <img src="/blueprints/adc3k-pod-layout.svg" alt="ADC 3K Pod Blueprint - Three View Layout">
+    <object data="/adc3k-pod/blueprints/adc3k-pod-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
+      <img src="/adc3k-pod/blueprints/adc3k-pod-layout.svg" alt="ADC 3K Pod Blueprint - Three View Layout">
     </object>
   </div>
 </section>
@@ -289,8 +290,12 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
       <p>NVMe-oF high-speed shared storage. NVIDIA Base Command Manager. Prometheus/Grafana monitoring. Jetson Orin edge controller. Rack-mount UPS.</p>
     </div>
     <div class="inside-item power">
-      <h4>Eaton Beam Rubin DSX</h4>
-      <p>800V DC native power distribution. 97% efficiency (vs 92% AC path). Overhead busway from electrical panel to each rack position. N+N redundant power shelves.</p>
+      <h4>Eaton Beam Rubin DSX — Facility Power</h4>
+      <p>480V AC to 800V DC rectification. ORV3 Sidecar distribution (+/-400V, 800 kW/row). Overhead busway from electrical panel to each rack position. ABB SACE Infinitus solid-state DC breakers. 97% efficiency (vs 92% AC path).</p>
+    </div>
+    <div class="inside-item power">
+      <h4>Delta Electronics — Rack Power</h4>
+      <p>660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU — no separate UPS). Delta e-Fuse SiC switch (&lt;3 &mu;s fault cutoff, arc-flash prevention). 90 kW DC/DC Shelf (800V to 50V, 98.5%, NVIDIA MGX). 140 kW In-Rack CDU (4RU, NVL72 certified). Eaton powers the facility. Delta powers the rack.</p>
     </div>
     <div class="inside-item">
       <h4>Dual CDU System</h4>
@@ -350,6 +355,42 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px">ZERO ON-SITE STAFF</div>
     <h2 style="font-size:32px;font-weight:700;color:var(--text-white);margin-bottom:16px">100% AI-Managed</h2>
     <p style="font-size:16px;color:var(--text);line-height:1.7;max-width:650px;margin:0 auto">Mission Control AI monitors and manages every pod remotely. Thermal, power, network, workload -- all autonomous. Add a pod -- it joins the cluster. Remove a pod -- workloads redistribute. No technician required for daily operations.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION: OPERATIONS STACK -->
+<section class="section">
+  <div class="section-label">Operations Stack</div>
+  <h2>From Rack to Revenue in 11 Steps</h2>
+  <p class="sub">Every ADC 3K Pod runs the complete NVIDIA software stack -- automated, production-ready, zero custom engineering.</p>
+
+  <div class="feature-grid" style="margin-bottom:32px">
+    <div class="feature-card">
+      <div class="tag">SCHEDULING</div>
+      <h4>NVIDIA Run:AI</h4>
+      <p>Multi-tenant GPU scheduling with fair-share allocation. Each customer gets guaranteed GPU quota. RBAC across all pods and clusters.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">INFERENCE</div>
+      <h4>NVIDIA Dynamo 1.0</h4>
+      <p>Open-source inference engine. Prefill/decode disaggregation across GPUs. 7x throughput on Blackwell. The token factory runs on this.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">MODEL SERVING</div>
+      <h4>NVIDIA NIM</h4>
+      <p>Pre-optimized model containers with OpenAI-compatible API. Deploy Llama, Mixtral, DeepSeek with one command. Autoscaling built in.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">MONITORING</div>
+      <h4>DCGM + Grafana</h4>
+      <p>30+ GPU metrics in real-time. Temperature, power, utilization, ECC errors. Alerts before problems become outages.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:20px 24px;max-width:900px;margin:0 auto">
+    <p style="font-size:14px;color:var(--text);line-height:1.7;margin:0">Software cost: $0 with NVL72 rack purchase. All components are open source or included with NVIDIA AI Enterprise. ADC builds the facility and the billing system -- NVIDIA provides everything in between.</p>
   </div>
 </section>
 
@@ -598,6 +639,61 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
       <h4>Edge Inference Nodes</h4>
       <p>Distributed inference network. Low-latency serving. Connected back to Willow Glen primary hub via fiber or satellite. Token factory at the edge.</p>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION: INDUSTRY VALIDATED — CERAWeek 2026 -->
+<section class="section">
+  <div class="section-label">Validated</div>
+  <h2>Built to the Standard</h2>
+  <p class="sub">The industry caught up. CERAWeek 2026 confirmed what ADC has been building.</p>
+
+  <div class="stat-grid" style="margin-bottom:40px">
+    <div class="stat-card">
+      <div class="val">30%</div>
+      <div class="label">Lower TCO</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="val">94%</div>
+      <div class="label">Power Efficiency</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="val">2 hr</div>
+      <div class="label">Rack Install</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="val">ZERO</div>
+      <div class="label">Grid Dependency</div>
+    </div>
+  </div>
+
+  <div class="feature-grid" style="margin-bottom:32px">
+    <div class="feature-card">
+      <div class="tag">CERAWeek 2026</div>
+      <h4>Prefab Micro AI Factories</h4>
+      <p>NVIDIA + EPRI + Prologis announced prefab micro AI factories (5-20 MW) at existing substation sites at CERAWeek 2026 -- the ADC 3K Pod is this concept, production-ready.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">DSX Standard</div>
+      <h4>800V DC Native Power</h4>
+      <p>800V DC native power architecture -- the NVIDIA Vera Rubin DSX standard. Eaton Beam Rubin DSX (facility) + Delta 660 kW Power Rack with e-Fuse and 90 kW DC/DC (rack). 30% lower TCO, 45% less copper, zero grid dependency.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">Behind the Meter</div>
+      <h4>On-Site Power Generation</h4>
+      <p>Behind-the-meter power generation with Caterpillar G3500 natural gas gensets + First Solar panels. CERAWeek 2026 consensus: behind the meter is not a choice, it's a necessity.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag">American Made</div>
+      <h4>100% US-Manufactured</h4>
+      <p>100% American-manufactured components. Caterpillar (Illinois), First Solar (Ohio), Eaton (Ohio), Delta (Fremont CA / Research Triangle NC), Vertiv (Ohio). Built by American workers for American infrastructure.</p>
+    </div>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(0,232,122,0.08),rgba(59,158,255,0.06));border:1px solid var(--accent);border-radius:12px;padding:32px 40px;text-align:center">
+    <p style="font-size:16px;color:var(--text-bright);line-height:1.8;max-width:800px;margin:0 auto">The biggest names in energy and tech are now saying what ADC has been engineering for a year: <strong style="color:var(--accent)">small, self-powered, rapidly deployable AI compute at the grid edge.</strong> We're not following the announcement. We're shipping the product.</p>
   </div>
 </section>
 

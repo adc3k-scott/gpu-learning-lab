@@ -67,7 +67,7 @@ strong{color:#fff}
 </head>
 <body>
 
-<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a></div>
+<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a> <a href="/operations-center" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600;margin-left:20px">Operations</a></div>
 
 <h1>Trappeys AI Factory — 800V DC Power Architecture</h1>
 <div class="sub">From gas molecule to GPU chip — every step, every component, every vendor</div>
@@ -102,12 +102,24 @@ strong{color:#fff}
 <div class="detail">Eaton busway<br>45% less copper<br>85% more capacity</div>
 </div>
 <div class="arrow volt"><span>&rarr;</span>800V DC</div>
-<div class="block green">
+<div class="block blue">
 <div class="label">Rack Power</div>
-<div class="value">Rack PDU</div>
-<div class="detail">Eaton HDX G4<br>Per-rack distribution<br>Monitoring + switching</div>
+<div class="value">Delta Power Rack</div>
+<div class="detail">660 kW (6x 110 kW shelves)<br>480 kW embedded BBU<br>Eliminates separate UPS</div>
 </div>
 <div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block blue">
+<div class="label">Rack Protection</div>
+<div class="value">Delta e-Fuse</div>
+<div class="detail">SiC solid-state switch<br>&lt;3 &mu;s fault cutoff<br>Arc-flash prevention</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>800V DC</div>
+<div class="block green">
+<div class="label">DC/DC Conversion</div>
+<div class="value">Delta 90 kW Shelf</div>
+<div class="detail">800V &rarr; 50V<br>98.5% efficiency<br>NVIDIA MGX designed</div>
+</div>
+<div class="arrow volt"><span>&rarr;</span>50V DC</div>
 <div class="block red">
 <div class="label">Final Conversion</div>
 <div class="value">64:1 LLC</div>
@@ -124,7 +136,8 @@ strong{color:#fff}
 
 <div class="callout">
 <strong>What YOU buy vs what NVIDIA ships:</strong><br>
-You buy: Gas gensets (Cat) + Rectifier/switchgear/bus/PDUs (Eaton) + Solar panels (First Solar)<br>
+You buy: Gas gensets (Cat) + Facility power (Eaton Beam Rubin DSX) + Rack power (Delta 660 kW + e-Fuse + 90 kW DC/DC + 140 kW CDU) + Solar panels (First Solar)<br>
+<strong>Eaton powers the facility. Delta powers the rack.</strong><br>
 NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You just plug 800V DC into the rack input.
 </div>
 
@@ -176,10 +189,12 @@ NVIDIA ships: The NVL72 rack comes with the 64:1 DC/DC converters built in. You 
 <div class="block blue" style="min-width:auto;width:100%"><div class="label">Eaton Rectifier</div><div class="value" style="font-size:0.85rem">480V AC → 800V DC</div><div class="detail">Beam Rubin DSX<br>Loss: ~2% (only conversion)</div></div>
 <div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; straight DC</div>
 <div class="block green" style="min-width:auto;width:100%"><div class="label">800V DC Bus</div><div class="value" style="font-size:0.85rem">800V DC</div><div class="detail">Eaton busway<br>45% less copper<br>85% more capacity</div></div>
-<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; direct to rack</div>
-<div class="block green" style="min-width:auto;width:100%;padding:16px"><div class="label" style="font-size:0.7rem">No Rack PSUs</div><div class="value" style="font-size:0.85rem">Zero conversion</div><div class="detail" style="color:rgba(118,185,0,0.7)">No PSUs. No fans.<br>No wasted rack space.<br>No copper busbars.</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; to rack</div>
+<div class="block blue" style="min-width:auto;width:100%"><div class="label">Delta Power Rack</div><div class="value" style="font-size:0.85rem">660 kW + BBU</div><div class="detail">6x 110 kW shelves<br>480 kW embedded battery<br>No separate UPS</div></div>
+<div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; 800V &rarr; 50V</div>
+<div class="block blue" style="min-width:auto;width:100%"><div class="label">Delta 90 kW DC/DC</div><div class="value" style="font-size:0.85rem">800V &rarr; 50V</div><div class="detail">98.5% efficient<br>NVIDIA MGX designed<br>e-Fuse &lt;3&mu;s protection</div></div>
 <div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660; one step down</div>
-<div class="block green" style="min-width:auto;width:100%"><div class="label">64:1 LLC Converter</div><div class="value" style="font-size:0.85rem">800V → 12V</div><div class="detail">98% efficient<br>Built into rack by NVIDIA<br>Right next to GPU</div></div>
+<div class="block green" style="min-width:auto;width:100%"><div class="label">64:1 LLC Converter</div><div class="value" style="font-size:0.85rem">800V &rarr; 12V</div><div class="detail">98% efficient<br>Built into rack by NVIDIA<br>Right next to GPU</div></div>
 <div style="text-align:center;color:rgba(118,185,0,0.5);font-size:0.7rem;padding:2px 0">&#9660;</div>
 <div class="block gold" style="min-width:auto;width:100%"><div class="label">GPU</div><div class="value" style="font-size:0.85rem">12V → Core</div></div>
 </div>
@@ -272,13 +287,28 @@ G3520C gas gensets, paralleling switchgear, ATS, Cat Financial leasing<br>
 </div>
 
 <div class="vendor">
-<div class="role">800V DC Conversion — Rectifier + Bus + PDUs</div>
+<div class="role">Facility Power — 800V DC Rectification + Distribution</div>
 <div class="name">Eaton (Beam Rubin DSX)</div>
 <div class="info">
 HQ: Cleveland, OH. Reps nationwide.<br>
 Contact made at GTC 2026.<br>
-Beam Rubin DSX = complete 800V DC platform. Rectifier + busway + rack PDUs + microgrid controller.<br>
-Co-designed with NVIDIA. THE reference standard.
+Beam Rubin DSX = 480V AC &rarr; 800V DC rectification. ORV3 Sidecar (+/-400V DC distribution, 800 kW/row). Overhead busway. Microgrid controller.<br>
+ABB SACE Infinitus solid-state DC breaker for bus protection. Eaton xStorage BESS (761-1200 VDC) microgrid buffer.<br>
+Co-designed with NVIDIA. THE facility-level reference standard.<br>
+<strong>Eaton powers the facility.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Rack Power — Power Delivery + Protection + Cooling</div>
+<div class="name">Delta Electronics</div>
+<div class="info">
+HQ: Taipei / US operations: Fremont, CA + Research Triangle, NC.<br>
+<strong>Delta 660 kW Power Rack:</strong> 6x 110 kW shelves, 480 kW embedded BBU — eliminates separate UPS entirely.<br>
+<strong>Delta e-Fuse:</strong> SiC solid-state switch, &lt;3 microsecond fault cutoff — arc-flash prevention at rack level.<br>
+<strong>Delta 90 kW DC/DC Shelf:</strong> 800V to 50V, 98.5% efficiency, NVIDIA MGX designed.<br>
+<strong>Delta 140 kW In-Rack CDU:</strong> 4RU, NVIDIA NVL72 CERTIFIED — shipping now.<br>
+<strong>Delta powers the rack.</strong>
 </div>
 </div>
 
@@ -289,7 +319,7 @@ Co-designed with NVIDIA. THE reference standard.
 Factory: New Iberia, LA (at the airport, 30 mi from Trappeys)<br>
 <strong>modulesales@firstsolar.com / 419-662-6899</strong><br>
 Series 7 TR1: 550W, CdTe thin film, humidity advantage, 0.3%/yr degradation<br>
-3,827 panels = 2.05 MW across 4 Trappeys rooftops.
+3,731 panels = 2.05 MW across 4 Trappeys rooftops.
 </div>
 </div>
 
@@ -320,7 +350,7 @@ LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
 <div style="padding:10px">
 <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);line-height:1.6">
 <strong style="color:#76b900">You don't buy this.</strong> It ships inside the NVIDIA NVL72 rack. But here's what it does:<br><br>
-<strong>Input:</strong> 800V DC from the Eaton bus<br>
+<strong>Input:</strong> 800V DC from the Eaton bus, through Delta 660 kW Power Rack + e-Fuse protection<br>
 <strong>Topology:</strong> LLC resonant converter (Direct Current Transformer)<br>
 <strong>Ratio:</strong> 64:1 step-down (800V &rarr; 12.5V)<br>
 <strong>Efficiency:</strong> Up to 98%<br>
@@ -338,11 +368,11 @@ LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
 <table class="cmp">
 <tr><th>Category</th><th>Partners</th><th>Role</th></tr>
 <tr><td class="highlight">Silicon (power ICs)</td><td>Analog Devices, Infineon, MPS, Navitas, OnSemi, Renesas, ROHM, STMicro, Texas Instruments</td><td>GaN/SiC switches for DC/DC converters</td></tr>
-<tr><td class="highlight">Power Components</td><td>Delta, Flex Power, LiteOn, Megmeet, Lead Wealth</td><td>Rectifiers, converters, PSU modules</td></tr>
-<tr><td class="highlight">Facility Power</td><td>Eaton, Schneider Electric, Vertiv, ABB, GE Vernova, Siemens, Hitachi</td><td>Switchgear, UPS, busway, PDUs, transformers</td></tr>
+<tr><td class="highlight">Rack Power</td><td>Delta (660 kW rack, e-Fuse, 90 kW DC/DC, 140 kW CDU), Flex Power, LiteOn, Megmeet</td><td>Rack-level power delivery, protection, conversion, cooling</td></tr>
+<tr><td class="highlight">Facility Power</td><td>Eaton (Beam Rubin DSX, ORV3, xStorage BESS), ABB (SACE Infinitus), Schneider, Vertiv, GE Vernova, Siemens</td><td>Rectification, busway, DC protection, energy storage</td></tr>
 </table>
 
-<p class="note">Eaton is NVIDIA's primary partner (Beam Rubin DSX co-developed). Schneider and Vertiv are alternatives. All American or with major US operations.</p>
+<p class="note">Eaton powers the facility (Beam Rubin DSX co-developed with NVIDIA). Delta powers the rack (660 kW power rack, e-Fuse, DC/DC shelves, in-rack CDU — all NVIDIA-certified). Two vendors, clean boundary.</p>
 
 <!-- ═══════════════════════════════════════ -->
 <h2>Key Numbers to Know</h2>
@@ -356,9 +386,89 @@ LUS Fiber: municipal fiber, 0.8 mi from site. Metro connectivity.
 <div class="spec"><div class="num">3 MW</div><div class="what">N+1 genset capacity</div><div class="why">2x Cat G3520C at 1.5 MW each. Covers Phase 3-4. Add third for Phase 5.</div></div>
 </div>
 
+<!-- ═══════════════════════════════════════ -->
+<h2>CERAWeek 2026 Industry Validation</h2>
+
+<div class="callout">
+<strong>Independent validation — Enteligent research (February 2026):</strong><br>
+ADC's 800V DC solar-direct architecture achieves <strong>94-95% efficiency</strong> vs 78% for traditional AC conversion. <strong>$5.8-8M CapEx savings per 10 MW.</strong> <strong>$711K annual OpEx savings.</strong> This is exactly the architecture deployed at Trappeys.
+</div>
+
+<h3>800V DC Ecosystem — Shipping Now</h3>
+
+<div class="vendor">
+<div class="role">Rack-Level Power — Delivery + Protection + Conversion + Cooling</div>
+<div class="name">Delta Electronics</div>
+<div class="info">
+<strong>660 kW Power Rack:</strong> 6x 110 kW shelves, 480 kW embedded BBU — eliminates separate UPS.<br>
+<strong>e-Fuse:</strong> SiC solid-state switch, &lt;3 &mu;s fault cutoff — arc-flash prevention.<br>
+<strong>90 kW DC/DC Shelf:</strong> 800V to 50V, 98.5% efficiency, NVIDIA MGX designed.<br>
+<strong>140 kW In-Rack CDU:</strong> 4RU, NVIDIA NVL72 CERTIFIED.<br>
+Eaton powers the facility. <strong>Delta powers the rack. Shipping now.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">800V DC Sidecar</div>
+<div class="name">Schneider Electric</div>
+<div class="info">
+AC to 800V DC conversion at rack level. Up to 1.2 MW per rack.<br>
+<strong>Available now.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">800V-to-6V GaN Architecture</div>
+<div class="name">Texas Instruments</div>
+<div class="info">
+Complete 800V-to-6V GaN power architecture. 97.6% efficiency.<br>
+<strong>Silicon available.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">CoolGaN IBC — 800V-to-50V</div>
+<div class="name">Infineon</div>
+<div class="info">
+800V-to-50V intermediate bus converter. &gt;98% efficiency.<br>
+<strong>Reference designs available.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Modular Grid-to-Chip 800V Platform</div>
+<div class="name">Eaton Beam Rubin DSX</div>
+<div class="info">
+Modular 800V platform purpose-built for NVL72 racks. Grid-to-chip power delivery.<br>
+<strong>Production H2 2026.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Complete 800V DC Portfolio</div>
+<div class="name">Vertiv</div>
+<div class="info">
+Full 800V DC power portfolio: rectifiers, busway, distribution, monitoring.<br>
+<strong>H2 2026.</strong>
+</div>
+</div>
+
+<div class="vendor">
+<div class="role">Solid-State DC Circuit Breaker</div>
+<div class="name">ABB SACE Infinitus</div>
+<div class="info">
+First IEC-certified solid-state DC circuit breaker. Zero-arc, microsecond response.<br>
+<strong>Available now.</strong>
+</div>
+</div>
+
+<div class="callout">
+<strong>Industry consensus at CERAWeek 2026:</strong> behind-the-meter power generation is no longer optional — it is a necessity. ADC's 4-layer power hierarchy (Solar + Gas + Diesel + Grid Sell-Back) was designed from day one for energy sovereignty. <strong>30% lower TCO. 45% less copper. Zero grid dependency.</strong>
+</div>
+
 <div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);font-size:0.7rem">
 Louisiana's AI Infrastructure Initiative | louisianaai.net | info@louisianaai.net<br>
-Source: NVIDIA 800 VDC Architecture Blog (May 2025), Eaton Beam Rubin DSX (GTC March 2026)<br>
+Source: NVIDIA 800 VDC Architecture Blog (May 2025), Eaton Beam Rubin DSX (GTC March 2026), Enteligent 800V DC Research (Feb 2026), CERAWeek 2026<br>
 American-made. American energy. Louisiana AI factory.
 </div>
 

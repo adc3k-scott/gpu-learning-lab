@@ -7,7 +7,7 @@ Building: ~200 ft x 100 ft = 20,000 sq ft compute hall
 import svgwrite
 
 W, H = 1400, 950
-OUT = "adc3k-deploy/blueprints/floor-plan.svg"
+OUT = "adc3k-deploy/willow-glen/blueprints/floor-plan.svg"
 
 # Building dimensions in feet (conceptual)
 BLDG_W_FT = 200
@@ -90,13 +90,13 @@ def build():
     # MECHANICAL ROOM (LEFT SIDE)
     # ════════════════════════════════════════════
     mech_w = 30 * SCALE  # 30 ft
-    box(dwg, bx, by, mech_w, BLDG_H, "MECHANICAL\nROOM\n\nCDUs (N+1)\nPumps\nValves\nPipe Headers\nElec Panels\n\n30' x 100'",
+    box(dwg, bx, by, mech_w, BLDG_H, "MECHANICAL\nROOM\n\nCoolIT CHx2000\nCDUs (2,000 kW)\nN+1 Redundant\nStaubli UQD\nMunters HCD\n\n30' x 100'",
         color="#111318", border="#4fc3f7", text_color="#4fc3f7")
 
     # CDU positions inside mech room
     cdu_positions = [130, 210, 290, 370, 450]
     for cy in cdu_positions:
-        box(dwg, bx + 10, by + (cy - ORIGIN_Y) - 5, 50, 25, "CDU", color="#0a1628", border="#4fc3f7", text_color="#4fc3f7", font=7)
+        box(dwg, bx + 10, by + (cy - ORIGIN_Y) - 5, 50, 25, "CoolIT\nCHx2000", color="#0a1628", border="#4fc3f7", text_color="#4fc3f7", font=6)
 
     # ════════════════════════════════════════════
     # NOC / OFFICE (RIGHT SIDE)
@@ -111,7 +111,7 @@ def build():
         color="#111318", border="#6b7280", text_color="#9ca3af")
 
     # Electrical room
-    box(dwg, noc_x, by + BLDG_H * 0.75, noc_w, BLDG_H * 0.25, "ELECTRICAL\nROOM\n\nPDUs\n800V DC\nBusway\n\n25' x 25'",
+    box(dwg, noc_x, by + BLDG_H * 0.75, noc_w, BLDG_H * 0.25, "ELECTRICAL\nROOM\n\nEaton Beam Rubin\nORV3 Sidecar\nABB SACE Infinitus\n\n25' x 25'",
         color="#111318", border="#8b5cf6", text_color="#c4b5fd")
 
     # ════════════════════════════════════════════
@@ -271,14 +271,14 @@ def build():
     # ════════════════════════════════════════════
     ny = 800
     notes = [
-        "1. NVL72 rack: 72 Vera Rubin GPUs, 130 kW, liquid cooled, 45C hot water supply, ~2,500 lbs loaded",
+        "1. NVL72 rack: 72 Vera Rubin GPUs, 130 kW, liquid cooled (CoolIT CHx2000 CDU, 2,000 kW), Staubli UQD quick-disconnect, ~2,500 lbs loaded",
         "2. Hot aisle containment prevents mixing of exhaust and supply air — critical for 130 kW/rack density",
-        "3. CDUs in mechanical room: N+1 redundancy, one pair per row, facility loop to rack manifolds",
+        "3. CoolIT CHx2000 CDUs in mechanical room: N+1 redundancy, one pair per row, facility loop to rack manifolds",
         "4. 800V DC busway runs overhead from electrical room to each rack position (not shown for clarity)",
         "5. Reinforced concrete slab required: ~250 lb/sq ft concentrated load at rack positions",
         "6. 18\" raised floor optional — NVIDIA DSX allows overhead cable tray + underfloor cooling manifold",
         "7. Phase 1 = 36 racks. Building designed for expansion to 72 racks (double rows, add 3 pods)",
-        "8. Fire suppression: clean agent (FM-200 or Novec 1230) in compute area, wet pipe in support spaces",
+        "8. Fire suppression: Ansul Novec 1230 + VESDA-E VEU early detection in compute area. Greenheck SBE-300 exhaust. Munters HCD humidity control.",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -290,5 +290,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/willow-glen/blueprints", exist_ok=True)
     build()

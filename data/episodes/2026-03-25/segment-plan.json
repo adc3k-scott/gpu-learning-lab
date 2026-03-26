@@ -1,0 +1,60 @@
+[
+  {
+    "id": "open",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "Good morning. This is AI Daily Omniverse for Wednesday, March 25th, 2026. I'm Armando, and today we're covering five stories reshaping AI infrastructure, from NVIDIA's new power play with the energy sector, to Elon Musk betting twenty-five billion on his own chips. Let's get into it."
+  },
+  {
+    "id": "story1",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "title": "NVIDIA and Emerald AI Turn AI Factories Into Flexible Grid Assets",
+    "thumbnail": "story1-nvidia-emerald.png",
+    "text": "NVIDIA just redefined what an AI factory can be. At CERAWeek in Houston, NVIDIA and a startup called Emerald AI announced a partnership with six major energy companies, AES, Constellation, Invenergy, NextEra, Nscale, and Vistra, to build AI factories that double as flexible grid assets. The technology is called DSX Flex, built into NVIDIA's new Vera Rubin reference design. It lets AI factories ramp compute up or down in real time based on grid demand. Emerald AI claims this approach could unlock up to one hundred gigawatts of capacity across the US power system. That is not a typo. One hundred gigawatts. The first commercial deployment is planned for NVIDIA's Virginia AI Factory Research Center later this year. This is the energy-first model we have been talking about, and now NVIDIA is building the software to make it standard."
+  },
+  {
+    "id": "story2",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "title": "Elon Musk Launches 25 Billion Dollar Terafab Chip Factory in Austin",
+    "thumbnail": "story2-terafab.jpg",
+    "text": "Elon Musk stood on stage at a decommissioned power plant in Austin last Friday and announced what he called the most epic chip building exercise in history. Terafab is a twenty-five billion dollar semiconductor fab, a joint venture between Tesla, SpaceX, and xAI, targeting two-nanometer process technology under one roof. Design, lithography, fabrication, memory, packaging, and testing. All of it. The first chip off the line will be AI5, Tesla's fifth-generation inference chip, with small batches targeted for late this year. Here is the number that matters: Musk says eighty percent of Terafab's output goes to space, orbital AI satellites. Twenty percent stays on the ground. He is not competing with NVIDIA for your AI factory. He is building his own supply chain for orbit. Whether he can actually execute a bleeding-edge fab from scratch, that is the trillion-dollar question."
+  },
+  {
+    "id": "story3",
+    "avatar": "Adriana_Business_Front_public",
+    "role": "field",
+    "title": "Eaton and NVIDIA Unveil 800-Volt DC Power Platform for AI Factories",
+    "thumbnail": "story3-eaton-800v.png",
+    "text": "Adriana here. If NVIDIA is building the brain of the AI factory, Eaton just built the spine. The Beam Rubin DSX is a modular, pre-engineered power platform designed specifically for NVIDIA's NVL72 racks running on eight hundred volts DC. That is a major shift. Traditional facilities convert power from AC to DC multiple times before it reaches the GPU. Each conversion wastes energy as heat. Eight hundred volt DC eliminates those stages. Eaton says it can support rack densities above one hundred thirty kilowatts, nearly triple what facilities handled just a few years ago. The ecosystem already includes ABB, Delta, Schneider Electric, Texas Instruments, Infineon, and Vertiv. Over two hundred partners. This is not a prototype. This is the new power standard for every AI factory being built from here forward. Back to you, Armando."
+  },
+  {
+    "id": "story4",
+    "avatar": "Adriana_Business_Front_public",
+    "role": "field",
+    "title": "Meta Hyperion Hits 27 Billion - First Workforce Class Graduates",
+    "thumbnail": "story4a-meta-hyperion.png",
+    "text": "Adriana reporting from Northeast Louisiana. Two stories here that go together. First, Meta's Hyperion campus in Richland Parish has ballooned to twenty-seven billion dollars. That is up from ten billion announced in late 2024. The site now covers thirty-six hundred fifty acres, four times the size of Central Park. Three thousand seven hundred construction workers are on site today, heading to five thousand by summer. Hotels are full. Restaurants are packed. Monroe is a different city. But here is the story underneath the story. Yesterday, Louisiana Delta Community College graduated its first class of fiber technicians from a four-week program built specifically for Meta's workforce needs. Four weeks. From classroom to career. That is the LED FastStart model in action, and it is proof that when the AI factories come, the jobs follow. The question for South Louisiana is simple: are we building the same pipeline? Back to you."
+  },
+  {
+    "id": "story5",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "title": "FAA Part 108 BVLOS Drone Rule Nears Final Publication",
+    "thumbnail": "story5-bvlos-drone.jpg",
+    "text": "And finally, the rule that the entire drone industry has been waiting for. The FAA's Part 108, the framework that legalizes beyond-visual-line-of-sight drone operations at scale, is expected to reach final publication this spring. The comment period closed last October with over three thousand responses. The framework creates two tiers: operating permits for lower-risk flights and operating certificates for complex missions. It covers drones up to thirteen hundred twenty pounds and replaces the current waiver-by-waiver system that has bottlenecked commercial drone ops for years. When this rule drops, companies like Skydio, FlytBase, and every first responder drone program in the country will have a clear legal path to fly autonomously. This is the unlock."
+  },
+  {
+    "id": "close",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "That is your AI Daily Omniverse briefing for Wednesday, March 25th. Power is becoming the product. Chips are being built from scratch. And Louisiana is training the workforce in four weeks flat. Follow us for daily updates. Visit louisianaai.net to get your school registered before the March 31st deadline. This has been Ground Zero. See you tomorrow."
+  },
+  {
+    "id": "sponsor",
+    "avatar": "Armando_Suit_Front_public",
+    "role": "anchor",
+    "text": "Today's briefing is powered by ADC, Advantage Design and Construction. Louisiana's AI infrastructure company. Building the factories that power the future. adc3k.com."
+  }
+]

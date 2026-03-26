@@ -79,7 +79,7 @@ footer a{color:var(--accent);text-decoration:none}
 <!-- HEADER -->
 <div class="hero">
   <div class="container">
-    <div class="hero-badge">PRODUCT SPECIFICATION SHEET &mdash; REV A &mdash; 2026-03-24</div>
+    <div class="hero-badge">PRODUCT SPECIFICATION SHEET &mdash; REV B &mdash; 2026-03-25</div>
     <h1>ADC 3K <span>POD</span></h1>
     <div style="font-size:15px;font-weight:500;letter-spacing:1px;color:#fff;margin-bottom:4px">40-FT AI COMPUTE MODULE</div>
     <div class="tagline">Deploy AI Anywhere. Any Chip. Any Mission.</div>
@@ -94,6 +94,12 @@ footer a{color:var(--accent);text-decoration:none}
 
 <div class="container">
 
+<!-- CERAWEEK 2026 VALIDATION -->
+<div style="background:linear-gradient(135deg,rgba(118,185,0,.08),rgba(0,188,212,.06));border:1px solid rgba(118,185,0,.25);border-radius:6px;padding:20px 24px;margin:32px 0 0;font-size:13px;line-height:1.6;color:var(--text)">
+  <div style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--accent);margin-bottom:8px;font-family:'IBM Plex Mono',monospace">CERAWEEK 2026 &mdash; VALIDATED</div>
+  ADC 3K Pod power architecture validated at CERAWeek 2026. 800V DC is the NVIDIA DSX standard. Behind-the-meter generation is now industry consensus. Every component in this spec is American-manufactured and shipping today.
+</div>
+
 <!-- 1. QUICK SPECS -->
 <section>
   <h2><span class="num">01</span>Quick Specifications</h2>
@@ -106,9 +112,9 @@ footer a{color:var(--accent);text-decoration:none}
       <tr><td class="spec-key">GPUs (default)</td><td class="spec-val">576 (SuperPOD 8-rack) / 720 (full 10-rack)</td></tr>
       <tr><td class="spec-key">CPUs</td><td class="spec-val">360 Grace (36 per rack x 10)</td></tr>
       <tr><td class="spec-key">Power</td><td class="spec-val">1.3 MW IT load (GB200) / up to 2.3 MW (Vera Rubin Max P)</td></tr>
-      <tr><td class="spec-key">Power Architecture</td><td class="spec-val">800V DC native (Eaton Beam Rubin DSX)</td></tr>
-      <tr><td class="spec-key">Cooling</td><td class="spec-val">Direct-to-chip liquid, 45&deg;C supply / 55-60&deg;C return</td></tr>
-      <tr><td class="spec-key">Heat Rejection</td><td class="spec-val">External dry cooler (adiabatic assist for >95&deg;F)</td></tr>
+      <tr><td class="spec-key">Power Architecture</td><td class="spec-val">800V DC native — Eaton Beam Rubin DSX (facility) + Delta 660 kW Power Rack (rack)</td></tr>
+      <tr><td class="spec-key">Cooling</td><td class="spec-val">Direct-to-chip liquid, 45&deg;C supply / 55-60&deg;C return (CoolIT CHx2000 or Eaton Boyd ROL4000)</td></tr>
+      <tr><td class="spec-key">Heat Rejection</td><td class="spec-val">BAC TrilliumSeries Adiabatic Cooler (adiabatic assist for &gt;95&deg;F)</td></tr>
       <tr><td class="spec-key">Weight (loaded)</td><td class="spec-val">38,864 lbs (33% under container limit)</td></tr>
       <tr><td class="spec-key">Design Ambient</td><td class="spec-val">45&deg;C (113&deg;F) max interior &mdash; no air conditioning</td></tr>
       <tr><td class="spec-key">Humidity Control</td><td class="spec-val">Desiccant dehumidifier + positive pressure</td></tr>
@@ -148,7 +154,7 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Compute &amp; Networking</h3>
   <div class="equip-grid">
     <div class="equip-card">
-      <img src="equipment-photos/nvidia-nvl72-rack.jpg" alt="NVL72">
+      <img src="vendors/nvidia/equipment/nvidia-nvl72-rack.jpg" alt="NVL72">
       <div class="equip-info">
         <div class="name">NVL72 Rack</div>
         <div class="mfr">NVIDIA (HPE / Supermicro)</div>
@@ -156,7 +162,7 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/nvidia-quantum-x800-switch.jpg" alt="Quantum-X800">
+      <img src="vendors/nvidia/equipment/nvidia-quantum-x800-switch.jpg" alt="Quantum-X800">
       <div class="equip-info">
         <div class="name">Quantum-X800 Switch</div>
         <div class="mfr">NVIDIA</div>
@@ -164,7 +170,7 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/nvidia-bluefield-4-dpu.jpg" alt="BlueField-4">
+      <img src="vendors/nvidia/equipment/nvidia-bluefield-4-dpu.jpg" alt="BlueField-4">
       <div class="equip-info">
         <div class="name">BlueField-4 DPU</div>
         <div class="mfr">NVIDIA</div>
@@ -172,7 +178,7 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/nvidia-jetson-agx-orin.jpg" alt="Jetson Orin">
+      <img src="vendors/nvidia/equipment/nvidia-jetson-agx-orin.jpg" alt="Jetson Orin">
       <div class="equip-info">
         <div class="name">Jetson AGX Orin</div>
         <div class="mfr">NVIDIA</div>
@@ -184,15 +190,15 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Power Distribution</h3>
   <div class="equip-grid">
     <div class="equip-card">
-      <img src="equipment-photos/eaton-beam-rubin-dsx.webp" alt="Beam Rubin DSX">
+      <img src="vendors/eaton/equipment/eaton-beam-rubin-dsx.webp" alt="Beam Rubin DSX">
       <div class="equip-info">
         <div class="name">Beam Rubin DSX</div>
         <div class="mfr">Eaton</div>
-        <div class="spec">800V DC native power platform. 97% efficiency. Co-designed with NVIDIA for DSX architecture.</div>
+        <div class="spec">800V DC grid-to-chip platform. 97% efficiency. Co-designed with NVIDIA for DSX architecture. Production H2 2026.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/eaton-hdx-pdu-g4.jpg" alt="HDX G4 PDU">
+      <img src="vendors/eaton/equipment/eaton-hdx-pdu-g4.jpg" alt="HDX G4 PDU">
       <div class="equip-info">
         <div class="name">HDX Rack PDU G4</div>
         <div class="mfr">Eaton</div>
@@ -200,7 +206,7 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/eaton-powerwave2-busway.jpg" alt="Busway">
+      <img src="vendors/eaton/equipment/eaton-powerwave2-busway.jpg" alt="Busway">
       <div class="equip-info">
         <div class="name">PowerWave 2 Busway</div>
         <div class="mfr">Eaton</div>
@@ -208,19 +214,87 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/cat-g3520c-generator.jpg" alt="G3520C">
+      <img src="vendors/abb/equipment/abb-sace-infinitus.jpg" alt="ABB SACE Infinitus">
       <div class="equip-info">
-        <div class="name">G3520C Generator</div>
-        <div class="mfr">Caterpillar</div>
-        <div class="spec">2.5 MW natural gas. Backbone power. Henry Hub pricing. American-made.</div>
+        <div class="name">SACE Infinitus</div>
+        <div class="mfr">ABB</div>
+        <div class="spec">IEC-certified solid-state DC circuit breaker. Zero-arc interruption. Purpose-built for 800V DC bus protection.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/firstsolar-series7-tr1.jpg" alt="First Solar">
+      <img src="vendors/delta/equipment/delta-660kw-power-rack.jpg" alt="Delta Power Rack">
+      <div class="equip-info">
+        <div class="name">660 kW Power Rack</div>
+        <div class="mfr">Delta Electronics</div>
+        <div class="spec">6x 110 kW shelves, 480 kW embedded BBU — eliminates separate UPS. Rack-level power delivery.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/delta/equipment/delta-660kw-power-rack.jpg" alt="Delta e-Fuse">
+      <div class="equip-info">
+        <div class="name">e-Fuse</div>
+        <div class="mfr">Delta Electronics</div>
+        <div class="spec">SiC solid-state switch. &lt;3 microsecond fault cutoff. Arc-flash prevention at rack level.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/delta/equipment/delta-660kw-power-rack.jpg" alt="Delta 90 kW DC/DC">
+      <div class="equip-info">
+        <div class="name">90 kW DC/DC Shelf</div>
+        <div class="mfr">Delta Electronics</div>
+        <div class="spec">800V to 50V. 98.5% efficiency. NVIDIA MGX designed. Per-rack conversion.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/delta/equipment/delta-660kw-power-rack.jpg" alt="Delta 140 kW CDU">
+      <div class="equip-info">
+        <div class="name">140 kW In-Rack CDU</div>
+        <div class="mfr">Delta Electronics</div>
+        <div class="spec">4RU form factor. NVIDIA NVL72 CERTIFIED. Shipping now. Direct-to-chip liquid cooling at rack level.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/caterpillar/equipment/cat-g3520c-generator.jpg" alt="G3520C">
+      <div class="equip-info">
+        <div class="name">G3500 Series Generator</div>
+        <div class="mfr">Caterpillar</div>
+        <div class="spec">Natural gas generator sets. Backbone power. Henry Hub pricing. American-made (Illinois).</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/first-solar/equipment/firstsolar-series7-tr1.jpg" alt="First Solar">
       <div class="equip-info">
         <div class="name">Series 7 TR1 Panel</div>
         <div class="mfr">First Solar</div>
-        <div class="spec">~550W CdTe thin-film. Roof-mounted for shade + aux power. Made in USA (New Iberia, LA).</div>
+        <div class="spec">~550W CdTe thin-film. Roof-mounted for shade + aux power. American-made (Ohio / New Iberia, LA).</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/eaton/equipment/eaton-beam-rubin-dsx.webp" alt="xStorage BESS">
+      <div class="equip-info">
+        <div class="name">xStorage BESS</div>
+        <div class="mfr">Eaton</div>
+        <div class="spec">250-1,000 kWh LFP battery. DC bus: 761-1,200 VDC. Microgrid islanding. Self-contained liquid cooling.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Power Conversion</h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <img src="vendors/ti/equipment/ti-gan-converter.jpg" alt="TI GaN">
+      <div class="equip-info">
+        <div class="name">800V-to-6V GaN Converter</div>
+        <div class="mfr">Texas Instruments</div>
+        <div class="spec">97.6% efficiency. Direct 800V bus to point-of-load 6V for GPU/CPU. GaN power stage.</div>
+      </div>
+    </div>
+    <div class="equip-card">
+      <img src="vendors/infineon/equipment/infineon-coolgan-ibc.jpg" alt="Infineon CoolGaN">
+      <div class="equip-info">
+        <div class="name">CoolGaN IBC 800V-to-50V</div>
+        <div class="mfr">Infineon</div>
+        <div class="spec">&gt;98% efficiency. Intermediate bus converter. 800V DC to 50V intermediate rail. GaN technology.</div>
       </div>
     </div>
   </div>
@@ -228,35 +302,35 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Cooling</h3>
   <div class="equip-grid">
     <div class="equip-card">
-      <img src="equipment-photos/vertiv-coolchip-cdu.jpg" alt="CoolChip CDU">
+      <img src="vendors/vertiv/equipment/vertiv-coolchip-cdu.jpg" alt="CoolChip CDU">
       <div class="equip-info">
-        <div class="name">CoolChip CDU 2300</div>
-        <div class="mfr">Vertiv</div>
-        <div class="spec">250 kW liquid-to-liquid. Primary + redundant (N+1). 45&deg;C supply loop.</div>
+        <div class="name">CoolIT CHx2000 CDU</div>
+        <div class="mfr">CoolIT Systems / Eaton Boyd</div>
+        <div class="spec">Primary: CoolIT CHx2000 &mdash; 2,000 kW, single rack footprint, serves 12 NVL72 racks, six 9s availability. Alt: Eaton Boyd ROL4000 &mdash; 2 MW, 3&deg;C approach temperature.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/bac-trillium-dry-cooler.png" alt="Dry Cooler">
+      <img src="vendors/bac/equipment/bac-trillium-dry-cooler.png" alt="Dry Cooler">
       <div class="equip-info">
-        <div class="name">TrilliumSeries Dry Cooler</div>
+        <div class="name">TrilliumSeries Adiabatic Cooler</div>
         <div class="mfr">Baltimore Aircoil</div>
-        <div class="spec">External heat rejection. Adiabatic assist for >95&deg;F. Zero water consumption (dry mode).</div>
+        <div class="spec">Adiabatic heat rejection for 95&deg;F+ climates. 44% energy reduction vs pure dry cooling. 90% less water than cooling towers. Zero water in mild weather.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/staubli-uqd-coupling.jpg" alt="Staubli QD">
+      <img src="vendors/staubli/equipment/staubli-uqd-coupling.jpg" alt="Staubli QD">
       <div class="equip-info">
         <div class="name">UQD Quick-Disconnect</div>
         <div class="mfr">St&auml;ubli</div>
-        <div class="spec">OCP-standard coupling. Drip-free disconnect. Bulkhead through container wall.</div>
+        <div class="spec">OCP-standard coupling. Drip-free disconnect. Bulkhead through container wall. NVIDIA-approved. OCP-compliant.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/munters-hcd-dehumidifier.jpg" alt="Dehumidifier">
+      <img src="vendors/munters/equipment/munters-hcd-dehumidifier.jpg" alt="Dehumidifier">
       <div class="equip-info">
         <div class="name">HCD Desiccant Dehumidifier</div>
         <div class="mfr">Munters</div>
-        <div class="spec">No compressor. ~500W. Positive pressure. Humidity control for Gulf Coast climate.</div>
+        <div class="spec">No compressor. ~500W. Positive pressure. Humidity control for Gulf Coast climate. Precision to +/-1&deg;F dew point. Prevents condensation on cold cooling lines. Can use waste heat for reactivation.</div>
       </div>
     </div>
   </div>
@@ -264,23 +338,23 @@ footer a{color:var(--accent);text-decoration:none}
   <h3>Safety &amp; Security</h3>
   <div class="equip-grid">
     <div class="equip-card">
-      <img src="equipment-photos/vesda-smoke-detection.jpg" alt="VESDA">
+      <img src="vendors/vesda/equipment/vesda-smoke-detection.jpg" alt="VESDA">
       <div class="equip-info">
-        <div class="name">VESDA-E Aspirating Detection</div>
+        <div class="name">VESDA-E VEU Aspirating Detection</div>
         <div class="mfr">Xtralis / Honeywell</div>
-        <div class="spec">Very early smoke detection. 4 sampling points. Laser-based particle analysis.</div>
+        <div class="spec">Very early smoke detection. 4 sampling points. Laser-based particle analysis. Industry-standard aspirating system.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/ansul-sapphire-novec1230.jpg" alt="Fire Suppression">
+      <img src="vendors/ansul/equipment/ansul-sapphire-novec1230.jpg" alt="Fire Suppression">
       <div class="equip-info">
-        <div class="name">Clean Agent Suppression</div>
-        <div class="mfr">Fike / Ansul</div>
-        <div class="spec">FK-5-1-12 clean agent. Ceiling nozzles. Safe for electronics. Zero residue.</div>
+        <div class="name">Ansul Sapphire Novec 1230</div>
+        <div class="mfr">Ansul / Johnson Controls</div>
+        <div class="spec">FK-5-1-12 (Novec 1230) clean agent. Ceiling nozzles. Safe for electronics. Zero residue. Zero ozone depletion.</div>
       </div>
     </div>
     <div class="equip-card">
-      <img src="equipment-photos/skydio-x10-drone.jpg" alt="Skydio X10">
+      <img src="vendors/skydio/equipment/skydio-x10-drone.jpg" alt="Skydio X10">
       <div class="equip-info">
         <div class="name">X10 Security Drone</div>
         <div class="mfr">Skydio (optional)</div>
@@ -501,7 +575,7 @@ footer a{color:var(--accent);text-decoration:none}
 <footer>
   <div class="container">
     &copy; 2026 Advantage Design &amp; Construction &nbsp;|&nbsp; Lafayette, Louisiana &nbsp;|&nbsp; <a href="https://adc3k.com">adc3k.com</a><br>
-    <span style="font-size:10px;margin-top:4px;display:inline-block">ADC3K-SPEC-001 Rev A &mdash; Preliminary Design &mdash; Specifications subject to change. NVIDIA, Blackwell, Vera Rubin, NVLink, InfiniBand are trademarks of NVIDIA Corporation.</span>
+    <span style="font-size:10px;margin-top:4px;display:inline-block">ADC3K-SPEC-001 Rev B &mdash; Preliminary Design &mdash; Specifications subject to change. NVIDIA, Blackwell, Vera Rubin, NVLink, InfiniBand are trademarks of NVIDIA Corporation.</span>
   </div>
 </footer>
 

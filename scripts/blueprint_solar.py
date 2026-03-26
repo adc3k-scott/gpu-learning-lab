@@ -6,7 +6,7 @@ SVG output
 import svgwrite
 
 W, H = 1400, 950
-OUT = "adc3k-deploy/blueprints/solar-layout.svg"
+OUT = "adc3k-deploy/willow-glen/blueprints/solar-layout.svg"
 
 
 def box(dwg, x, y, w, h, label, sublabel="", color="#1a1a2e", border="#3b82f6", text_color="#e0e0e0", font=10):
@@ -106,12 +106,12 @@ def build():
     eq_x = field_x + field_w + 50
 
     # String combiner panel
-    box(dwg, eq_x, 100, 160, 60, "STRING COMBINER\nPANEL\n18 strings x 5 panels", "Fused inputs | Monitoring",
+    box(dwg, eq_x, 100, 160, 60, "STRING COMBINER\nPANEL\n5-panel strings @ 952V", "Fused inputs | Monitoring",
         border="#fbbf24", text_color="#fbbf24")
 
     # DC-DC Converter
     dwg.add(dwg.line((eq_x + 80, 160), (eq_x + 80, 200), stroke="#fbbf24", stroke_width=1.5))
-    box(dwg, eq_x, 200, 160, 60, "DC-DC BUCK\nCONVERTER\n952V --> 800V DC", "97% efficiency | MPPT tracking",
+    box(dwg, eq_x, 200, 160, 60, "DC-DC BUCK\nTI 800V-to-6V GaN\n952V --> 800V DC", "Infineon CoolGaN IBC | MPPT | 97%",
         border="#fbbf24", text_color="#fbbf24")
 
     # To 800V bus
@@ -134,7 +134,7 @@ def build():
                       text_anchor="middle", fill="#fbbf24", font_size=10, font_family="Arial", font_weight="bold"))
 
     specs = [
-        ("Panel Model", "First Solar Series 7 TR1"),
+        ("Panel Model", "First Solar Series 7 TR1 (550W)"),
         ("Rated Power", "550W per panel"),
         ("Efficiency", "19.7% (CdTe thin-film)"),
         ("Dimensions", "~2.5m x 1.2m (8.2' x 3.9')"),
@@ -238,5 +238,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/willow-glen/blueprints", exist_ok=True)
     build()

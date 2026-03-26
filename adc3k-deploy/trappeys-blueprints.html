@@ -21,7 +21,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 </head>
 <body>
 
-<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a></div>
+<div style="padding:12px 24px"><a href="/trappeys" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600">&larr; Back to Ragin' Cajun Campus</a> <a href="/operations-center" style="font-size:13px;color:#CE181E;text-decoration:none;font-weight:600;margin-left:20px">Operations</a></div>
 
 <h1>Ragin' Cajun Compute Campus — Engineering Blueprints</h1>
 <div class="sub">Trappeys Cannery, Lafayette, LA | 6-Sheet MVP Design Intent Package | NOT FOR CONSTRUCTION</div>
@@ -33,7 +33,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>S-001: Site Plan</h2>
 <span class="tag">22 Acres | 112,500 SF</span>
 </div>
-<img src="blueprints/trappeys-site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="trappeys/blueprints/site-plan.svg" alt="Site Plan" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">4 buildings with dimensions: Front (300x75, bayou view), Middle Low (300x100), Middle High (300x75, PHASE 1 DEPLOY), Rear High (250x150, staging). Water tower, concrete pad infrastructure yard, Bayou Vermilion frontage. Deploy sequence: Stage in Rear High, deploy compute in Middle High.</div>
 </div>
 
@@ -44,8 +44,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>E-001: Electrical Single-Line Diagram</h2>
 <span class="tag">800V DC Native</span>
 </div>
-<img src="blueprints/trappeys-electrical-sld.svg" alt="Electrical SLD" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">ATMOS gas to Cat G3520C generators (480V AC), Eaton Beam Rubin DSX rectification to 800V DC bus, busway to rack PDUs, 64:1 LLC converters to GPU. Solar DC-Direct bypass at 97% efficiency. LUS sell-back. Diesel emergency. BESS ride-through.</div>
+<img src="trappeys/blueprints/electrical-sld.svg" alt="Electrical SLD" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">ATMOS gas to Caterpillar G3516J generators (480V AC). Eaton Beam Rubin DSX rectification (facility level) with ORV3 sidecar distribution to 800V DC bus. ABB SACE Infinitus solid-state DC breakers for arc-free protection. Delta 660 kW Power Rack (6x 110 kW shelves, 480 kW embedded BBU) with e-Fuse SiC switch (&lt;3 &mu;s fault cutoff) and 90 kW DC/DC shelf (800V to 50V, 98.5%, NVIDIA MGX) at rack level. Delta 140 kW In-Rack CDU (4RU, NVL72 certified). TI 800V-to-6V GaN + Infineon CoolGaN IBC for final power conversion. Solar DC-Direct bypass at 97% efficiency. LUS sell-back. Diesel emergency. BESS ride-through. Eaton powers the facility. Delta powers the rack.</div>
 </div>
 
 <div class="section-label">Architectural</div>
@@ -55,7 +55,7 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>A-001: Compute Hall Floor Plan — Middle High</h2>
 <span class="tag">300' x 75' | Phase 1</span>
 </div>
-<img src="blueprints/trappeys-floor-plan.svg" alt="Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
+<img src="trappeys/blueprints/floor-plan.svg" alt="Floor Plan" style="width:100%;background:#0a0b0f;padding:10px">
 <div class="desc">Middle High building (22,500 sq ft) — Phase 1 compute hall. 4 NVL72 racks in hot/cold aisle containment. CDU area, electrical room, wooden truss structure preserved. Loading access from Rear High staging area. Cooling pipes from water tower.</div>
 </div>
 
@@ -66,8 +66,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>C-001: Cooling Flow Schematic</h2>
 <span class="tag">Water Tower + Dry Coolers</span>
 </div>
-<img src="blueprints/trappeys-cooling-schematic.svg" alt="Cooling Schematic" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Water tower (100 ft, thermal buffer) to dry coolers on concrete pad, through plate heat exchangers, CDU distribution to NVL72 rack manifolds. 45C hot water supply, no mechanical chillers in mild weather. Flow temperatures labeled throughout.</div>
+<img src="trappeys/blueprints/cooling-schematic.svg" alt="Cooling Schematic" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Water tower primary cooling loop (100 ft, thermal buffer). CoolIT CHx200 CDUs (200 kW each, sized for Phase 1) distribute to NVL72 rack manifolds via Staubli UQD couplings (NVIDIA-approved). BAC TrilliumSeries Adiabatic Coolers on concrete pad for supplemental heat rejection (44% energy reduction, adiabatic assist for 95F+ Lafayette summers). Munters HCD desiccant humidity control. 45C hot water supply, no mechanical chillers in mild weather.</div>
 </div>
 
 <div class="section-label">Power</div>
@@ -77,8 +77,8 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>P-001: Power Distribution Schematic</h2>
 <span class="tag">4-Layer Hierarchy</span>
 </div>
-<img src="blueprints/trappeys-power-distribution.svg" alt="Power Distribution" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">Complete 4-layer hierarchy: Solar (rooftop 2.05 MW), Gas (Cat G3520C backbone), Diesel (emergency), Grid (LUS sell-back only). Fuel-to-chip path through Eaton 800V DC platform. Phase 1: 650 kW total, gensets at 22% load with massive headroom.</div>
+<img src="trappeys/blueprints/power-distribution.svg" alt="Power Distribution" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">Complete 4-layer hierarchy: Solar (rooftop 2.05 MW), Gas (Caterpillar G3516J generators, 1.6 MW each, N+1 = 3 units), Diesel (emergency), Grid (LUS sell-back only). Facility power: Eaton Beam Rubin DSX 800V DC rectification with ORV3 sidecar distribution (+/-400V, 800 kW/row). ABB SACE Infinitus DC protection. Eaton xStorage BESS for microgrid buffer and ride-through. Rack power: Delta 660 kW Power Rack (480 kW embedded BBU), e-Fuse (&lt;3 &mu;s), 90 kW DC/DC (800V to 50V, 98.5%), 140 kW In-Rack CDU (NVL72 certified). Phase 1: 650 kW total, gensets at 22% load with massive headroom.</div>
 </div>
 
 <div class="section-label">Solar</div>
@@ -88,13 +88,13 @@ footer{text-align:center;padding:40px 0;color:rgba(255,255,255,0.2);font-size:0.
 <h2>L-001: Solar Rooftop Layout</h2>
 <span class="tag">2.05 MW | 3,731 Panels</span>
 </div>
-<img src="blueprints/trappeys-solar-layout.svg" alt="Solar Layout" style="width:100%;background:#0a0b0f;padding:10px">
-<div class="desc">First Solar Series 7 TR1 rooftop layout across all 4 buildings. Front: 658 panels, Middle Low: 1,105, Middle High: 658, Rear High: 1,310. Total: 3,731 panels = 2.05 MW. DC-Direct to 800V bus at 97% efficiency. Made in New Iberia, 30 miles away.</div>
+<img src="trappeys/blueprints/solar-layout.svg" alt="Solar Layout" style="width:100%;background:#0a0b0f;padding:10px">
+<div class="desc">First Solar Series 7 TR1 panels (550W, American-made New Iberia LA — 30 miles) across all 4 rooftops. Front: 658 panels, Middle Low: 1,105, Middle High: 658, Rear High: 1,310. 3,731 panels = 2.05 MW. 5-panel strings at 952V, buck to 800V DSX bus — 97% efficiency. No AC conversion losses.</div>
 </div>
 
 <footer>
 Ragin' Cajun Compute Campus — Trappeys Cannery, Lafayette, Louisiana<br>
-Louisiana's AI Infrastructure Initiative — (337) 448-4242 — louisianaai.net<br>
+Louisiana's AI Infrastructure Initiative — (337) 780-1535 — louisianaai.net<br>
 MVP Design Intent — All drawings require PE-stamped engineering review before construction
 </footer>
 

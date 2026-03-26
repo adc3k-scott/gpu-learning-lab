@@ -14,6 +14,23 @@ Traditional IT vendors charge per-location as if each one is a brand new project
 
 ---
 
+## Infrastructure: ADC Central Compute
+
+Franchisees connect to ADC's central compute at MARLIE I — not a third-party cloud. Each franchise territory gets a **Run:AI project** with a guaranteed GPU quota based on their location count and subscription tier.
+
+| What ADC Handles | What the Franchisee Handles |
+|------------------|---------------------------|
+| All GPU hardware (NVL72 at MARLIE I) | Sales and lead generation in their territory |
+| NIM microservice deployment per customer | Customer discovery calls and installs |
+| Run:AI scheduling and GPU quotas | Staff training at client sites |
+| DCGM monitoring + Mission Control | Local relationship management |
+| Power generation ($0.027/kWh self-generated) | Collecting referrals |
+| Security, updates, model upgrades | Following the playbooks |
+
+**Cost advantage:** The franchisee pays zero cloud compute fees. ADC's self-hosted infrastructure means token costs are ~$0.004/M — the margin stays in the system instead of going to AWS or Azure. This is why franchise economics work: the franchisee doesn't carry infrastructure cost, only sales and install labor.
+
+---
+
 ## Solution: Master Config + Clone Deploy
 
 ### Step 1: Discovery (One Call)
@@ -30,7 +47,7 @@ Traditional IT vendors charge per-location as if each one is a brand new project
 
 ### Step 3: Clone Deploy (Each Additional Location)
 - **1 hour per location** — config clone + site-specific customization.
-- What gets cloned: AI agent config, workflow rules, integrations, NemoClaw policies, dashboard layout.
+- What gets cloned: AI agent config, workflow rules, integrations, sandbox policies, dashboard layout. Each location gets a NIM instance under the franchise's Run:AI project.
 - What gets customized: Staff names, business hours, local phone number, location-specific inventory, local vendor contacts.
 - Train local staff (30 min — they already know the brand's workflow, just need to learn the AI tools).
 

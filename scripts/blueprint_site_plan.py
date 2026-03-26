@@ -6,7 +6,7 @@ SVG output
 import svgwrite
 
 W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/site-plan.svg"
+OUT = "adc3k-deploy/willow-glen/blueprints/site-plan.svg"
 
 # Approximate site layout based on satellite imagery and helicam photos
 # Property is roughly 3,500 ft along river (N-S) x ~4,000 ft deep (E-W)
@@ -165,7 +165,7 @@ def build():
     ft_rect(dwg, gen_x, gen_y, gen_w, gen_h, fill="#0a1a0a", stroke="#22c55e", stroke_width=1.5, rx=4)
     ft_text(dwg, gen_x + gen_w / 2, gen_y + 100, "GENERATOR YARD",
             text_anchor="middle", fill="#22c55e", font_size=9, font_family="Arial", font_weight="bold")
-    ft_text(dwg, gen_x + gen_w / 2, gen_y + 180, "3x Cat CG260-16 (8.4 MW)",
+    ft_text(dwg, gen_x + gen_w / 2, gen_y + 180, "3x Caterpillar G3616A4 (8.7 MW ea)",
             text_anchor="middle", fill="#22c55e", font_size=7, font_family="Arial")
     ft_text(dwg, gen_x + gen_w / 2, gen_y + 250, "Natural Gas | H2-Ready",
             text_anchor="middle", fill="#22c55e", font_size=7, font_family="Arial")
@@ -180,9 +180,9 @@ def build():
     ft_rect(dwg, elec_x, elec_y, elec_w, elec_h, fill="#0a0a1a", stroke="#8b5cf6", stroke_width=1.5, rx=4)
     ft_text(dwg, elec_x + elec_w / 2, elec_y + 100, "POWER BUILDING",
             text_anchor="middle", fill="#8b5cf6", font_size=9, font_family="Arial", font_weight="bold")
-    ft_text(dwg, elec_x + elec_w / 2, elec_y + 170, "800V DC Rectifiers | Eaton Beam Rubin DSX",
+    ft_text(dwg, elec_x + elec_w / 2, elec_y + 170, "Eaton Beam Rubin DSX + ORV3 Sidecar",
             text_anchor="middle", fill="#c4b5fd", font_size=7, font_family="Arial")
-    ft_text(dwg, elec_x + elec_w / 2, elec_y + 230, "Switchgear | ATS | BESS",
+    ft_text(dwg, elec_x + elec_w / 2, elec_y + 230, "ABB SACE Infinitus | Eaton xStorage BESS",
             text_anchor="middle", fill="#c4b5fd", font_size=7, font_family="Arial")
 
     # ════════════════════════════════════════════
@@ -195,7 +195,7 @@ def build():
             stroke_width=1, stroke_dasharray="6,3", rx=4)
     ft_text(dwg, solar1_x + solar1_w / 2, solar1_y + 300, "SOLAR ARRAY ZONE A",
             text_anchor="middle", fill="#fbbf24", font_size=10, font_family="Arial", font_weight="bold")
-    ft_text(dwg, solar1_x + solar1_w / 2, solar1_y + 420, "First Solar Series 7 TR1 | Ground Mount",
+    ft_text(dwg, solar1_x + solar1_w / 2, solar1_y + 420, "First Solar Series 7 TR1 (550W) | 5-panel strings @ 952V",
             text_anchor="middle", fill="#fbbf24", font_size=7, font_family="Arial")
     ft_text(dwg, solar1_x + solar1_w / 2, solar1_y + 520, "~3 MW | DC-Direct to 800V Bus",
             text_anchor="middle", fill="#fbbf24", font_size=7, font_family="Arial")
@@ -314,5 +314,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/willow-glen/blueprints", exist_ok=True)
     build()

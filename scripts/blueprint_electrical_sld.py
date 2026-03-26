@@ -5,8 +5,8 @@ SVG output — web-ready + print-quality
 """
 import svgwrite
 
-W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/electrical-sld.svg"
+W, H = 1400, 1200
+OUT = "adc3k-deploy/willow-glen/blueprints/electrical-sld.svg"
 
 
 def box(dwg, x, y, w, h, label, sublabel="", color="#1a1a2e", border="#3b82f6", text_color="#e0e0e0", font=11):
@@ -78,12 +78,12 @@ def build():
 
     # Cat CG260 Generators
     gen_colors = {"color": "#1a2e1a", "border": "#22c55e", "text_color": "#22c55e"}
-    box(dwg, 520, y1, 120, 55, "CAT CG260-16\n#1 — 2.8 MW", "Natural Gas | H2-Ready 25%", **gen_colors)
-    box(dwg, 660, y1, 120, 55, "CAT CG260-16\n#2 — 2.8 MW", "Natural Gas | H2-Ready 25%", **gen_colors)
-    box(dwg, 800, y1, 120, 55, "CAT CG260-16\n#3 (N+1)", "Redundant | Maintenance Spare", **gen_colors)
+    box(dwg, 520, y1, 120, 55, "CAT G3616A4\n#1 — 8.7 MW", "Natural Gas | H2-Ready 25%", **gen_colors)
+    box(dwg, 660, y1, 120, 55, "CAT G3616A4\n#2 — 8.7 MW", "Natural Gas | H2-Ready 25%", **gen_colors)
+    box(dwg, 800, y1, 120, 55, "CAT G3616A4\n#3 (N+1)", "Redundant | Maintenance Spare", **gen_colors)
 
     # First Solar
-    box(dwg, 980, y1, 140, 55, "FIRST SOLAR\nGround Mount", "Series 7 TR1 | 5+ MW Phase 1",
+    box(dwg, 980, y1, 140, 55, "FIRST SOLAR\nGround Mount", "Series 7 TR1 (550W) | 5-panel @ 952V",
         color="#1a1a2e", border="#fbbf24", text_color="#fbbf24")
 
     # Diesel Emergency
@@ -139,13 +139,13 @@ def build():
     arrow_down(dwg, 1000, y3 + 3, y4, "#ff6b35")
 
     box(dwg, 300, y4, 230, 55, "AC/DC RECTIFIER #1\n13.8kV AC → 800V DC",
-        "Eaton Beam Rubin DSX | 96%+ Efficiency",
+        "Eaton Beam Rubin DSX + ORV3 Sidecar | 96%+ Eff",
         border="#8b5cf6", text_color="#c4b5fd")
     box(dwg, 600, y4, 230, 55, "AC/DC RECTIFIER #2\n13.8kV AC → 800V DC",
-        "Eaton Beam Rubin DSX | 96%+ Efficiency",
+        "Eaton Beam Rubin DSX + ORV3 Sidecar | 96%+ Eff",
         border="#8b5cf6", text_color="#c4b5fd")
     box(dwg, 900, y4, 230, 55, "AC/DC RECTIFIER #3\n13.8kV AC → 800V DC",
-        "Eaton Beam Rubin DSX | N+1 Redundant",
+        "Eaton Beam Rubin DSX + ORV3 Sidecar | N+1",
         border="#8b5cf6", text_color="#c4b5fd")
 
     # Solar DC-Direct bypass
@@ -154,7 +154,7 @@ def build():
     wire(dwg, 1050, y1 + 70, solar_dc_x, y1 + 70, "#fbbf24")
     wire(dwg, solar_dc_x, y1 + 70, solar_dc_x, y4, "#fbbf24")
     box(dwg, solar_dc_x - 55, y4, 130, 55, "DC-DC CONVERTER\n952V → 800V DC",
-        "Buck converter | 97% Eff | Bypasses AC",
+        "TI 800V-to-6V GaN | 97% Eff | Bypasses AC",
         border="#fbbf24", text_color="#fbbf24")
 
     # ════════════════════════════════════════════
@@ -169,7 +169,7 @@ def build():
     # ── BESS on 800V bus ──
     bess_x = 40
     wire(dwg, bess_x + 60, y5 + 3, bess_x + 60, y5 + 20, "#8b5cf6")
-    box(dwg, bess_x, y5 + 20, 120, 50, "EATON xStorage\nBESS", "800V DC | Grid Buffer\nRide-through | Peak Shaving",
+    box(dwg, bess_x, y5 + 20, 120, 50, "EATON xStorage\nBESS (761-1200 VDC)", "800V DC | Grid Buffer\nRide-through | Peak Shaving",
         border="#3b82f6", text_color="#93c5fd")
 
     # Grid sell-back indicator
@@ -189,27 +189,54 @@ def build():
             border="#8b5cf6", text_color="#c4b5fd", font=9)
 
     # ════════════════════════════════════════════
-    # ROW 7: RACK PDUs (y=555)
+    # ROW 6B: DELTA 660 kW POWER RACK (y=545)
     # ════════════════════════════════════════════
-    y7 = 555
+    y6b = 545
     for bx in busway_positions:
-        arrow_down(dwg, bx + 55, y6 + 40, y7, "#8b5cf6")
+        arrow_down(dwg, bx + 55, y6 + 40, y6b, "#8b5cf6")
+        box(dwg, bx, y6b, 110, 45, "DELTA 660 kW\nPOWER RACK\n6x 110 kW Shelves", "480 kW Embedded BBU",
+            border="#00bcd4", text_color="#00e5ff", font=9)
+
+    # ════════════════════════════════════════════
+    # ROW 6C: DELTA e-FUSE (y=615)
+    # ════════════════════════════════════════════
+    y6c = 615
+    for bx in busway_positions:
+        arrow_down(dwg, bx + 55, y6b + 45, y6c, "#00bcd4")
+        box(dwg, bx, y6c, 110, 35, "DELTA e-FUSE\nSiC | <3 us", "",
+            border="#00bcd4", text_color="#00e5ff", font=9)
+
+    # ════════════════════════════════════════════
+    # ROW 6D: DELTA 90 kW DC/DC (y=675)
+    # ════════════════════════════════════════════
+    y6d = 675
+    for bx in busway_positions:
+        arrow_down(dwg, bx + 55, y6c + 35, y6d, "#00bcd4")
+        box(dwg, bx, y6d, 110, 40, "DELTA 90 kW DC/DC\n800V -> 50V", "NVIDIA MGX Bus",
+            border="#00bcd4", text_color="#00e5ff", font=9)
+
+    # ════════════════════════════════════════════
+    # ROW 7: RACK PDUs (y=740)
+    # ════════════════════════════════════════════
+    y7 = 740
+    for bx in busway_positions:
+        arrow_down(dwg, bx + 55, y6d + 40, y7, "#8b5cf6")
         box(dwg, bx, y7, 110, 40, "RACK PDU\n800V DC Input", "",
             border="#8b5cf6", text_color="#c4b5fd", font=9)
 
     # ════════════════════════════════════════════
-    # ROW 8: LLC CONVERTERS (y=630)
+    # ROW 8: LLC CONVERTERS (y=805)
     # ════════════════════════════════════════════
-    y8 = 630
+    y8 = 805
     for bx in busway_positions:
         arrow_down(dwg, bx + 55, y7 + 40, y8, "#8b5cf6")
-        box(dwg, bx, y8, 110, 40, "64:1 LLC DC-DC\n800V → 12.5V", "99%+ Efficiency",
+        box(dwg, bx, y8, 110, 40, "64:1 LLC DC-DC\n800V → 12.5V", "Infineon CoolGaN IBC | 99%+",
             border="#76b900", text_color="#76b900", font=9)
 
     # ════════════════════════════════════════════
-    # ROW 9: GPU RACKS (y=710)
+    # ROW 9: GPU RACKS (y=870)
     # ════════════════════════════════════════════
-    y9 = 710
+    y9 = 870
     rack_labels = [
         "NVIDIA NVL72\nRACKS 1-7\n130 kW each\n0.91 MW",
         "NVIDIA NVL72\nRACKS 8-14\n130 kW each\n0.91 MW",
@@ -225,12 +252,12 @@ def build():
     # ════════════════════════════════════════════
     # PHASE 1 SUMMARY BAR
     # ════════════════════════════════════════════
-    sy = 800
+    sy = 960
     dwg.add(dwg.rect((30, sy), (1340, 45), rx=6, fill="#111318", stroke="#1e2230", stroke_width=1))
     stats = [
         ("PHASE 1 IT LOAD", "4.68 MW"),
         ("TOTAL FACILITY", "~6.5 MW"),
-        ("GENERATORS", "3x CG260 = 8.4 MW (N+1)"),
+        ("GENERATORS", "3x G3616A4 = 26.1 MW (N+1)"),
         ("SOLAR", "5+ MW (DC-Direct)"),
         ("RACKS", "36 NVL72 (2,592 GPUs)"),
         ("ARCHITECTURE", "800V DC Native"),
@@ -246,17 +273,17 @@ def build():
     # ════════════════════════════════════════════
     # NOTES
     # ════════════════════════════════════════════
-    ny = 860
+    ny = 1020
     notes = [
         "1. 500kV and 230kV substations are EXISTING Entergy assets on-site — LIVE and accepting new interconnections",
         "2. Cat CG260-16 generators are hydrogen-ready (25% blend) — future-proof for green fuel transition",
         "3. First Solar arrays connect DC-direct to 800V bus at 97% efficiency, bypassing AC conversion entirely",
         "4. 800V DC per NVIDIA DSX Reference Design — 85% more power through same copper vs 415V AC",
         "5. 64:1 LLC resonant converters: 800V DC to 12.5V at GPU die — 99%+ conversion efficiency",
-        "6. Eaton Beam Rubin DSX: complete grid-to-chip platform (rectification + distribution + rack PDU)",
-        "7. N+1 generator redundancy — any single unit offline for maintenance without load reduction",
-        "8. Grid is SELL-BACK ONLY (Layer 4) — excess power returns to Entergy, never consumed from grid",
-        "9. BESS provides ride-through for transfer events + peak shaving for GPU training spike loads",
+        "6. Eaton Beam Rubin DSX + ORV3 Sidecar: facility-level rectification. Delta 660 kW Power Rack: rack-level distribution (6x 110 kW shelves, 480 kW embedded BBU)",
+        "7. Delta e-Fuse (SiC): <3 microsecond fault isolation — protects GPUs from DC arc flash. Delta 90 kW DC/DC: 800V to 50V for NVIDIA MGX bus",
+        "8. N+1 generator redundancy — any single unit offline for maintenance without load reduction",
+        "9. Grid is SELL-BACK ONLY (Layer 4) — excess power returns to Entergy, never consumed from grid",
     ]
     for i, note in enumerate(notes):
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
@@ -283,5 +310,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/willow-glen/blueprints", exist_ok=True)
     build()

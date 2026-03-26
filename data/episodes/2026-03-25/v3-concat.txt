@@ -1,0 +1,8 @@
+file 'v3-open-norm.mp4'
+file 'v3-story1-norm.mp4'
+file 'v3-story2-norm.mp4'
+file 'v3-story3-norm.mp4'
+file 'v3-story4-norm.mp4'
+file 'v3-story5-norm.mp4'
+file 'v3-close-norm.mp4'
+file 'v3-sponsor-norm.mp4'

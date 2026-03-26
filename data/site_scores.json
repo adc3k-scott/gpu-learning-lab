@@ -1,0 +1,148 @@
+{
+  "version": "2.0",
+  "created": "2026-03-25",
+  "scoring_system": "10-base (100 pts) + 6-bonus (24 pts) = 124 max",
+  "tiers": {
+    "S": {"min": 90, "label": "Exceptional"},
+    "A": {"min": 80, "label": "Top Priority"},
+    "B": {"min": 60, "label": "Strong Candidate"},
+    "C": {"min": 40, "label": "Marginal"},
+    "D": {"min": 0, "label": "Disqualified"}
+  },
+  "reference_sites": [
+    {
+      "id": "ref_trappeys",
+      "name": "Trappeys Cannery",
+      "parish": "Lafayette",
+      "gps": "30.21356N, 92.00163W",
+      "status": "THE CORE PROJECT",
+      "scores": {
+        "gas_pipeline": {"value": 10, "weight": 15, "pts": 15, "detail": "Trunk line ON SITE, city hub up the road"},
+        "water_access": {"value": 10, "weight": 12, "pts": 12, "detail": "Vermilion River adjacent (riverfront)"},
+        "flood_zone": {"value": 7, "weight": 10, "pts": 7, "detail": "Zone X Shaded (river-adjacent, elevated)"},
+        "foundation": {"value": 10, "weight": 8, "pts": 8, "detail": "100-yr concrete pads + floors, solid"},
+        "grid_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "LUS Pin Hook Substation visible from site"},
+        "fiber_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "LUS Fiber conduit confirmed"},
+        "road_access": {"value": 10, "weight": 8, "pts": 8, "detail": "US 90 / SE Evangeline Thruway"},
+        "rail_access": {"value": 4, "weight": 5, "pts": 2, "detail": "LDRR within ~1 mi"},
+        "zoning": {"value": 10, "weight": 12, "pts": 12, "detail": "Industrial corridor"},
+        "acquisition_cost": {"value": 0, "weight": 10, "pts": 0, "detail": "~$125K/acre (high — structures included)"}
+      },
+      "base_score": 84,
+      "bonus": {
+        "historic_tax_credit": {"eligible": true, "pts": 5, "detail": "National Register APPROVED — 45% credits"},
+        "brownfield_epa": {"eligible": true, "pts": 5, "detail": "Former cannery — industrial since 1920s"},
+        "university_5mi": {"eligible": true, "pts": 5, "detail": "UL Lafayette ~1 mile"},
+        "existing_structure": {"eligible": true, "pts": 3, "detail": "112,500 sq ft across 4 buildings"},
+        "municipal_utility": {"eligible": true, "pts": 3, "detail": "LUS electric + fiber"},
+        "port_dock_access": {"eligible": false, "pts": 0, "detail": "Vermilion River — small craft only"}
+      },
+      "bonus_total": 21,
+      "total_score": 105,
+      "base_tier": "A",
+      "effective_tier": "S"
+    },
+    {
+      "id": "ref_marlie_i",
+      "name": "MARLIE I",
+      "parish": "Lafayette",
+      "gps": "30.21975N, 92.00645W",
+      "status": "Command Center",
+      "scores": {
+        "gas_pipeline": {"value": 10, "weight": 15, "pts": 15, "detail": "Natural gas confirmed, trunk line nearby"},
+        "water_access": {"value": 7, "weight": 12, "pts": 8.4, "detail": "Vermilion River ~0.5 mi"},
+        "flood_zone": {"value": 10, "weight": 10, "pts": 10, "detail": "Zone X (Evangeline Thruway corridor)"},
+        "foundation": {"value": 7, "weight": 8, "pts": 5.6, "detail": "Existing parcels, demolish + slab"},
+        "grid_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "LUS substation <1 mi"},
+        "fiber_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "LUS Fiber conduit confirmed"},
+        "road_access": {"value": 10, "weight": 8, "pts": 8, "detail": "SE Evangeline Thruway (US 90)"},
+        "rail_access": {"value": 0, "weight": 5, "pts": 0, "detail": "None on-site, LDRR ~1.5 mi"},
+        "zoning": {"value": 10, "weight": 12, "pts": 12, "detail": "Industrial corridor"},
+        "acquisition_cost": {"value": 10, "weight": 10, "pts": 10, "detail": "$15K land debt — effectively free"}
+      },
+      "base_score": 89,
+      "bonus": {
+        "historic_tax_credit": {"eligible": false, "pts": 0, "detail": "Blighted structures — no historic value"},
+        "brownfield_epa": {"eligible": false, "pts": 0, "detail": "Not brownfield"},
+        "university_5mi": {"eligible": true, "pts": 5, "detail": "UL Lafayette ~2 mi"},
+        "existing_structure": {"eligible": false, "pts": 0, "detail": "Structures to demolish, building new"},
+        "municipal_utility": {"eligible": true, "pts": 3, "detail": "LUS electric + fiber"},
+        "port_dock_access": {"eligible": false, "pts": 0, "detail": "No"}
+      },
+      "bonus_total": 8,
+      "total_score": 97,
+      "base_tier": "A",
+      "effective_tier": "S"
+    },
+    {
+      "id": "ref_klft",
+      "name": "KLFT Airport Area",
+      "parish": "Lafayette",
+      "gps": "30.21256N, 91.99069W",
+      "status": "Drone Hub (Future Edge Compute)",
+      "scores": {
+        "gas_pipeline": {"value": 7, "weight": 15, "pts": 10.5, "detail": "Acadian Gas corridor through Lafayette"},
+        "water_access": {"value": 4, "weight": 12, "pts": 4.8, "detail": "Vermilion River ~1.5 mi"},
+        "flood_zone": {"value": 10, "weight": 10, "pts": 10, "detail": "Zone X (airport elevated)"},
+        "foundation": {"value": 10, "weight": 8, "pts": 8, "detail": "Airport land — engineered fill"},
+        "grid_proximity": {"value": 7, "weight": 10, "pts": 7, "detail": "LUS/SLEMCO substations within 2 mi"},
+        "fiber_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "LUS Fiber metro coverage"},
+        "road_access": {"value": 10, "weight": 8, "pts": 8, "detail": "Airport Road / Hwy 90"},
+        "rail_access": {"value": 0, "weight": 5, "pts": 0, "detail": "None at airport"},
+        "zoning": {"value": 7, "weight": 12, "pts": 8.4, "detail": "Airport/commercial — special use likely"},
+        "acquisition_cost": {"value": 7, "weight": 10, "pts": 7, "detail": "Airport land lease — cost TBD"}
+      },
+      "base_score": 74,
+      "bonus": {
+        "historic_tax_credit": {"eligible": false, "pts": 0, "detail": "No"},
+        "brownfield_epa": {"eligible": false, "pts": 0, "detail": "No"},
+        "university_5mi": {"eligible": true, "pts": 5, "detail": "UL Lafayette ~3 mi"},
+        "existing_structure": {"eligible": true, "pts": 3, "detail": "Airport facilities available"},
+        "municipal_utility": {"eligible": true, "pts": 3, "detail": "LUS available"},
+        "port_dock_access": {"eligible": false, "pts": 0, "detail": "No"}
+      },
+      "bonus_total": 11,
+      "total_score": 85,
+      "base_tier": "B",
+      "effective_tier": "A"
+    },
+    {
+      "id": "ref_willow_glen",
+      "name": "Willow Glen Terminal",
+      "parish": "Iberville",
+      "gps": "30.24700N, 91.09850W",
+      "status": "PRIMARY HUB (Big Daddy)",
+      "scores": {
+        "gas_pipeline": {"value": 10, "weight": 15, "pts": 15, "detail": "Pipeline corridor ON SITE, direct tap"},
+        "water_access": {"value": 10, "weight": 12, "pts": 12, "detail": "Mississippi River, 3,500 ft, 43-ft dock"},
+        "flood_zone": {"value": 10, "weight": 10, "pts": 10, "detail": "Zone X confirmed"},
+        "foundation": {"value": 10, "weight": 8, "pts": 8, "detail": "Former 2,200 MW station — engineered"},
+        "grid_proximity": {"value": 10, "weight": 10, "pts": 10, "detail": "On-site 230kV + 138kV substation"},
+        "fiber_proximity": {"value": 7, "weight": 10, "pts": 7, "detail": "Industrial corridor fiber ~1 mi"},
+        "road_access": {"value": 10, "weight": 8, "pts": 8, "detail": "LA-75 / I-10 access"},
+        "rail_access": {"value": 10, "weight": 5, "pts": 5, "detail": "CN Railway ON SITE"},
+        "zoning": {"value": 10, "weight": 12, "pts": 12, "detail": "M2 Heavy Industrial"},
+        "acquisition_cost": {"value": 7, "weight": 10, "pts": 7, "detail": "Price upon request — likely $50-100K/ac"}
+      },
+      "base_score": 94,
+      "bonus": {
+        "historic_tax_credit": {"eligible": false, "pts": 0, "detail": "Former power station — needs NPS review"},
+        "brownfield_epa": {"eligible": true, "pts": 5, "detail": "Former power station — Phase I ESA needed"},
+        "university_5mi": {"eligible": false, "pts": 0, "detail": "LSU ~15 mi (too far)"},
+        "existing_structure": {"eligible": true, "pts": 3, "detail": "20K SF warehouse, tank farm, dock"},
+        "municipal_utility": {"eligible": false, "pts": 0, "detail": "Entergy (not municipal)"},
+        "port_dock_access": {"eligible": true, "pts": 3, "detail": "43-ft deepwater dock, 3,500 ft frontage"}
+      },
+      "bonus_total": 11,
+      "total_score": 105,
+      "base_tier": "S",
+      "effective_tier": "S"
+    }
+  ],
+  "ranking_summary": [
+    {"rank": 1, "name": "Willow Glen Terminal", "base": 94, "bonus": 11, "total": 105, "tier": "S"},
+    {"rank": 2, "name": "Trappeys Cannery", "base": 84, "bonus": 21, "total": 105, "tier": "S"},
+    {"rank": 3, "name": "MARLIE I", "base": 89, "bonus": 8, "total": 97, "tier": "S"},
+    {"rank": 4, "name": "KLFT Airport Area", "base": 74, "bonus": 11, "total": 85, "tier": "A"}
+  ]
+}

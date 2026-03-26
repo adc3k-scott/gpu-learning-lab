@@ -6,7 +6,7 @@ SVG output
 import svgwrite
 
 W, H = 1400, 1000
-OUT = "adc3k-deploy/blueprints/trappeys-site-plan.svg"
+OUT = "adc3k-deploy/trappeys/blueprints/site-plan.svg"
 
 # Scale: 1 ft = 1.2 px (fits ~800 ft across ~960 px)
 S = 1.2
@@ -203,13 +203,13 @@ def build():
             fill="#6b7280", font_size=9, font_family="Arial", font_weight="bold")
     ft_text(dwg, pad_x + pad_w / 2, pad_y + 65, "Infrastructure Yard", text_anchor="middle",
             fill="#9ca3af", font_size=7, font_family="Arial")
-    ft_text(dwg, pad_x + pad_w / 2, pad_y + 80, "Cat G3520C Gensets", text_anchor="middle",
+    ft_text(dwg, pad_x + pad_w / 2, pad_y + 80, "Caterpillar G3516J (1.6 MW) x3 N+1", text_anchor="middle",
             fill="#22c55e", font_size=7, font_family="Arial")
-    ft_text(dwg, pad_x + pad_w / 2, pad_y + 92, "Eaton 800V DC", text_anchor="middle",
+    ft_text(dwg, pad_x + pad_w / 2, pad_y + 92, "Eaton Beam Rubin DSX + ORV3 Sidecar", text_anchor="middle",
             fill="#8b5cf6", font_size=7, font_family="Arial")
-    ft_text(dwg, pad_x + pad_w / 2, pad_y + 104, "Switchgear + ATS", text_anchor="middle",
+    ft_text(dwg, pad_x + pad_w / 2, pad_y + 104, "ABB SACE Infinitus DC Protection", text_anchor="middle",
             fill="#8b5cf6", font_size=7, font_family="Arial")
-    ft_text(dwg, pad_x + pad_w / 2, pad_y + 116, "BESS Battery", text_anchor="middle",
+    ft_text(dwg, pad_x + pad_w / 2, pad_y + 116, "Eaton xStorage BESS", text_anchor="middle",
             fill="#3b82f6", font_size=7, font_family="Arial")
     ft_text(dwg, pad_x + pad_w / 2, pad_y + 130, "NOT solar — equipment only", text_anchor="middle",
             fill="#555", font_size=6, font_family="Arial")
@@ -333,7 +333,7 @@ def build():
         ("REAR HIGH", "37,500 sf"),
         ("TOTAL", "112,500 sf"),
         ("SOLAR", "2.05 MW rooftop"),
-        ("GENSETS", "2x G3520C (3 MW)"),
+        ("GENSETS", "3x Cat G3516J (4.8 MW N+1)"),
     ]
     sx2 = OX
     for label, value in stats:
@@ -361,7 +361,7 @@ def build():
         "1. All 4 buildings line up on the left (river/bayou side). Rear High is 50 ft narrower on the right.",
         "2. Concrete pad is the infrastructure yard — generators, switchgear, battery. NOT solar.",
         "3. Solar is ROOFTOP ONLY on all 4 buildings. 3,731 First Solar Series 7 TR1 panels = 2.05 MW.",
-        "4. Water tower = thermal cooling mass. 100 ft tall. Supplement to dry coolers for GPU cooling.",
+        "4. Water tower = thermal cooling mass. 100 ft tall. Supplement to BAC TrilliumSeries adiabatic coolers for GPU cooling.",
         "5. LUS Pin Hook substation is next door. Grid = sell-back only. ATMOS gas trunk line on property.",
     ]
     for i, note in enumerate(notes):
@@ -374,5 +374,5 @@ def build():
 
 if __name__ == "__main__":
     import os
-    os.makedirs("adc3k-deploy/blueprints", exist_ok=True)
+    os.makedirs("adc3k-deploy/trappeys/blueprints", exist_ok=True)
     build()
