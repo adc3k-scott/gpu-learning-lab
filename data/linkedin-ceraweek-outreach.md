@@ -70,3 +70,85 @@ I'd welcome 15 minutes to discuss how [COMPANY] and ADC can work together in Lou
 Scott Tomsu
 Founder, ADC
 scott@adc3k.com | adc3k.com
+
+---
+
+## INVESTOR CONNECTION TEMPLATES
+
+### For Angel Investors / HNW Individuals
+
+**Connection request (300 char max):**
+[Name] — Scott Tomsu, founder of ADC in Lafayette LA. We're building Louisiana's first American-owned AI factory. $5M seed round, 35% Louisiana Angel Tax Credit. Self-hosted AI agent live at ai-advantage.info. Would love to share the deck.
+
+**Follow-up message:**
+Thanks for connecting. ADC manufactures inference tokens on NVIDIA hardware, powered by Henry Hub natural gas (40 miles, $0.027/kWh). We own one site, acquiring a second. ROXY — our 27-tool AI agent — is running on our own GPU right now. Call her: (337) 486-3149.
+
+Full pitch deck: adc3k.com/investor-pitch
+Operations center: adc3k.com/operations-center
+
+Louisiana Angel Tax Credit gives you 35% back on day one. $1M invested costs you $650K.
+
+Happy to walk through the deck or schedule a site visit to Lafayette. scott@adc3k.com / (337) 780-1535
+
+---
+
+### For Ornn Investor Network (Crucible Capital, Vine Ventures, Link Ventures, Box Group)
+
+**Connection request:**
+[Name] — Scott Tomsu, ADC founder. We're building token factories in Louisiana on Henry Hub gas at $0.027/kWh. You invested in the financial layer for compute (Ornn). We're the physical layer. Self-hosted AI agent live today. Would love to connect.
+
+**Follow-up:**
+ADC manufactures inference tokens on NVIDIA hardware in Louisiana. We see Ornn's OCPI as the benchmark we'll price against, and RVS as the tool that makes our hardware bankable for lenders. We're raising $5M seed — 35% Louisiana Angel Tax Credit.
+
+Our AI agent ROXY has 27 tools and runs on our own GPU. Call her: (337) 486-3149. Pitch deck: adc3k.com/investor-pitch
+
+---
+
+### For Oil & Gas Investors / Operators (Flare Gas Angle)
+
+**Connection request:**
+[Name] — Scott Tomsu, ADC in Lafayette LA. 25 years offshore ROV operations. Now building AI compute that runs on stranded gas at well sites. Crusoe proved the model at $10B. They left Louisiana wide open. Would love to discuss.
+
+**Follow-up:**
+ADC deploys containerized AI compute at flare sites — converting waste gas into GPU-hours at $0 fuel cost. Louisiana flares 1.8 BCF/year. We've identified 5 operators within 30 miles of our Lafayette facility with 593,000 MCF/month of gas production.
+
+The pitch to operators: your waste gas becomes AI compute revenue. You stop flaring, we run GPUs. Zero cost to you.
+
+Deck: adc3k.com/investor-pitch | scott@adc3k.com | (337) 780-1535
+
+---
+
+### For VCs / Infrastructure Funds
+
+**Connection request:**
+[Name] — Scott Tomsu, founder ADC. Building neoclouds in Louisiana — token factories on Henry Hub gas at $0.027/kWh. Crusoe model + local operator advantage. $5M seed, 35% state tax credit. 27-tool AI agent live on self-hosted GPU today.
+
+**Follow-up:**
+ADC is the only American-owned, Louisiana-based AI infrastructure operator. $50B is flowing into Louisiana AI — zero is locally owned. We own one site, acquiring a second. Full NVIDIA DSX spec, 800V DC architecture, 22 US vendors.
+
+Neocloud comparables: CoreWeave $71B, Nebius $24B, Crusoe $10B+. We're pre-revenue at $5M seed with the cheapest power in America and a working AI agent proving the software layer.
+
+Pitch deck: adc3k.com/investor-pitch
+Call ROXY: (337) 486-3149
+scott@adc3k.com | (337) 780-1535
+
+---
+
+### For Hospital / Healthcare Contacts
+
+**Connection request:**
+[Name] — Scott Tomsu, ADC in Lafayette. We're deploying NVIDIA GPU compute infrastructure for medical AI — HIPAA-compliant, on-premise, local. Hospitals need local compute for radiology AI, clinical notes, insurance verification. Would love to discuss.
+
+---
+
+### For University / Education Contacts
+
+**Connection request:**
+[Name] — Scott Tomsu, ADC in Lafayette. We're building AI compute infrastructure for Louisiana universities — CUDA platform access, research computing, workforce development. 46 universities already registered at louisianaai.net. March 31 NVIDIA Academic Grant deadline approaching.
+
+---
+
+### For Governor's Office / State Government
+
+**Connection request:**
+[Name] — Scott Tomsu, ADC in Lafayette. Louisiana-owned AI infrastructure company. $50B flowing into LA for AI — zero locally owned. We're building the Louisiana version of what UF did with HiPerGator. 70 school districts + 46 universities registered at louisianaai.net. Would value a conversation.
