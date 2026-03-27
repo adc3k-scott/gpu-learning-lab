@@ -1,6 +1,6 @@
 # ADC MASTER INVESTOR PACKAGE
 ### Advantage Design & Construction — Louisiana's American-Owned AI Factory
-### Prepared March 25, 2026
+### Updated March 26, 2026
 
 ---
 
@@ -61,20 +61,52 @@ $50 billion is flowing into Louisiana AI infrastructure right now:
 
 ### Scott Tomsu — Founder, Licensed General Contractor
 
-**This is a construction project, not a tech startup. Scott builds things.**
+**This is a construction project from a builder, not a tech pitch from a programmer.**
 
-- **Licensed General Contractor** — built a complete medical center with X-ray room in New Iberia, 80+ residential houses, commercial and restaurant remodels
-- **25 years mission-critical remote operations** — ROV Superintendent, deepwater robotics, remote operations worldwide (West Africa, Gulf of America, global)
-- **IMCA ROV Supervisor** — International Marine Contractors Association certified
-- **Commercial Diver** — Divers Academy graduate
-- **Electronic Technician** — hands-on hardware, not just management
+### Louisiana Contractor Licenses (State Licensing Board)
+
+| License | Year | Business Entity |
+|---------|------|----------------|
+| Home Improvement Contractor | 2000 | A1 Remodeling & Repair (first business) |
+| Residential Building Contractor | 2000 | Advantage Design Homes, Inc. (2004) |
+| Building Construction (Commercial) | 2006 | Advantage Design & Construction (name change when commercial added) |
+
+*(Photo of all three licenses + Secretary of State corporate filing available: Building Certs.jpg)*
+
+### What Scott Built
+
+- **Family Practice Medical Center** — New Iberia, LA. Full medical center with X-ray room. Ground up.
+- **Socatini** — Saki restaurant interior buildout, Youngsville, LA. Still operating today.
+- **80+ residential houses** — Multiple subdivisions across Lafayette (Tall Oaks, Pavilion, Summerfest, Festival, Chevalier, Peak Run, and more). All financed through Farmers Bank and Home Bank construction loans.
+- **Mini warehouses** — Commercial construction.
+- **Multiple commercial remodels** — Restaurants, offices.
+- **Chief Architect 10.0 CAD Certified** — Professional design and drafting. Week-long certification course. Also proficient in Fusion 360 (Autodesk CAD/CAM). Scott draws his own plans.
+
+### Why Construction Stopped — And Why It Matters Now
+
+In 2009, the moratorium brought a flood of out-of-state building companies into Louisiana. They brought cheap labor, cheap materials — everything except concrete (it dried too fast to ship). Developers let them in. Scott couldn't compete on price against crews importing their own workforce and materials. Nothing came from the city. It pushed local builders out.
+
+Scott left with a bad taste and went back offshore. He ran ROV operations for ExxonMobil in West Africa for five years, managing robotics and remote systems at 3,000+ meters depth.
+
+**Now it's happening again — but with AI.** $50 billion is flowing into Louisiana for AI infrastructure, and every dollar is from out-of-state or foreign companies. Hut 8 (Canada), Nscale (UK), Amazon (Seattle), Meta (Menlo Park). They're taking Louisiana's land, power, tax breaks, and workforce — and every dollar of profit leaves the state.
+
+Scott is not watching it happen twice. ADC is the American-owned, Louisiana-built answer.
+
+### Technical Certifications
+
+- **NCA-AIIO Certified** — NVIDIA Certified Associate, AI Infrastructure and Operations. Attended GTC 2026 in San Jose to learn every layer of the NVIDIA stack firsthand.
+- **25 years mission-critical remote operations** — ROV Superintendent, deepwater robotics worldwide (West Africa, Gulf of America, Brazil, Mexico, Trinidad, Canada, Equatorial Guinea)
+- **IMCA ROV Supervisor** — International Marine Contractors Association
+- **Commercial Diver** — Divers Academy of the Eastern Seaboard (760 feet saturation)
+- **Electronic Technician** — hands-on hardware diagnostics and repair
 - **FAA Private Pilot** — fixed wing, instrument written 90%
 - **FuelTech Engine Management Certified** — multi-time drag racing champion (precision engineering under extreme conditions)
-- **NCA-AIIO Certified** — NVIDIA Certified Associate, AI Infrastructure and Operations
 
-Scott has spent his career running remote operations and robotics in the most dangerous environments on Earth. AI factories are the logical next step: same mission-critical infrastructure, same 24/7 uptime requirements, same precision engineering — but on land, in Louisiana, creating American jobs.
+### The Personal Stake
 
-**Why this matters personally:** Scott's daughter graduated from David Thibodaux STEM Magnet Academy in Lafayette — the same school ADC is now working to equip with AI compute access through the Louisiana AI Infrastructure Initiative. This isn't abstract. It's a father building the infrastructure his daughter's generation needs to compete. Scott, his brother Josh, and his daughter are all in Lafayette. This is home. ADC isn't expanding into Louisiana from somewhere else — it was born here, and it's building out from here to serve the whole state.
+Scott's daughter graduated from David Thibodaux STEM Magnet Academy in Lafayette — the same school ADC is now working to equip with AI compute through the Louisiana AI Infrastructure Initiative (louisianaai.net). She's in college now, asking whether she should even go. The answer is yes — but she needs to learn to create with AI, not just use it. That's why ADC is partnering with schools and universities.
+
+This isn't abstract. It's a father building the infrastructure his daughter's generation needs. Scott, his brother Josh, and his daughter are all in Lafayette. This is home. ADC was born here, and it's building out from here.
 
 ### Josh Tomsu — Site Operations Manager / Partner
 
@@ -141,6 +173,37 @@ On March 20, 2026 (a Friday night), ADC documented a **complete global GPU stock
 - Real API receipts documenting the stockout
 
 This is not a blip. Jensen Huang (GTC 2026): **"Inference is the engine of intelligence."** The $1+ trillion inference market is supply-constrained, not demand-constrained.
+
+### March 2026 Market Data — Structural Demand Confirmed
+
+| Event | Impact | Date |
+|-------|--------|------|
+| **AWS commits to 1 million NVIDIA GPUs** ($50B+ through 2027) | Largest single GPU purchase in history. One customer, one million chips. | March 25 |
+| **PJM grid fails reliability test** — first time in history | 6.6 GW shortfall. Data centers = 94% of load growth. Grid-dependent AI factories face blackout risk. | March 25 |
+| **Dell posts $113.5B revenue, $43B AI server backlog** | 342% YoY AI server growth. 12-18 month lead times. Order now or wait. | March 25 |
+| **GPU compute now trades as a commodity** | Ornn Compute Price Index (OCPI) listed on Bloomberg. B200: $4.50/hr neocloud, $7.00/hr hyperscaler. | Live |
+
+### GPU Market Pricing (Ornn OCPI Benchmark, March 2026)
+
+| Hardware | Purchase Price | Rental (Neocloud) | Rental (Hyperscaler) |
+|----------|---------------|-------------------|---------------------|
+| B200 SXM | ~$50,000/GPU | $4.50/hr | $7.00/hr |
+| B300 SXM | ~$53,000/GPU | $5.00-7.25/hr | N/A |
+| GB200 NVL72 Rack | $3.0-3.9M | N/A | N/A |
+| GB300 NVL72 Rack | $3.7-5.0M+ | N/A | N/A |
+
+*Source: Ornn AI (ornn.com) — first regulated compute derivatives exchange, Bloomberg-listed. Backed by Crucible Capital, Vine Ventures, Link Ventures, Box Group, and angels from OpenAI, Palantir, Blackstone, Coinbase, Together AI.*
+
+**ADC targets GB200 NVL72 (B200-based) for inference.** B200 and B300 deliver identical memory bandwidth (~8 TB/s) — inference is bandwidth-bound, not compute-bound. B200 is 15-40% cheaper per GPU-hour. The market is bifurcating: training fleets go B300, inference fleets go B200. ADC is inference.
+
+### GPU Value Protection (Ornn Residual Value Swap)
+
+Ornn offers **GPU Value Protection (RVS)** — a contract that guarantees a minimum resale price for GPU hardware at a future date. Pay a quarterly premium, get a guaranteed floor.
+
+- Eliminates depreciation/obsolescence risk for lenders and investors
+- Enables higher advance rates on equipment financing (70-80% vs 50% without RVS)
+- Example: $3.5M GB200 rack with $1.5M guaranteed residual = $2M real capital at risk
+- ADC will obtain RVS quotes as part of hardware procurement
 
 ### CERAWeek 2026 Consensus (March 2026, Houston)
 
@@ -351,6 +414,43 @@ ADC deploys the highest-performing open-source AI models available, all at $0 li
 
 **What this means for investors:** ADC doesn't pay licensing fees for AI models. The entire model stack — from reasoning to vision to speech — is open source and runs on ADC's own hardware. Revenue is pure token margin at 95%+.
 
+### ROXY — ADC's AI Agent (Live, Self-Hosted, Proof of Concept)
+
+**ADC is already its own first customer.** ROXY is a 27-tool autonomous AI sales agent running on ADC's own GPU hardware right now. Not a prototype — a live production system serving real customers.
+
+**Brain:** Qwen 3 8B fine-tuned on 118 tool-calling examples, baked into model weights. Self-hosted on NVIDIA RTX A6000. No OpenAI. No Anthropic. No third-party cloud. American hardware, American software.
+
+**What ROXY does (27 tools):**
+
+| Category | Tools |
+|----------|-------|
+| **Sales & Closing** | Industry playbook search (17 verticals), quote builder, ROI calculator, payment links (Stripe), franchise qualifier (multi-location), urgency offers, live demos |
+| **CRM & Outreach** | Lead capture (auto-segments to 12 industry-specific Brevo lists), returning visitor detection, personalized follow-up emails, SMS, appointment booking, conversation logging |
+| **Intelligence** | Business research, competitor positioning (11 software tools mapped), local market analysis (17 industries), lead scoring |
+| **SaaS Marketing Suite** | Ad copy generator (Facebook/Instagram/Google), social media content (week of posts in 60 seconds), Google review responses, review requests, lead magnet creation, email drip campaigns |
+| **Platform** | White-label embeddable chat widgets, pre-install onboarding questionnaires, outbound phone calls |
+
+**Channels:** Chat widget (ai-advantage.info), phone ((337) 486-3149 — call ROXY right now), email (Brevo), SMS (Twilio)
+
+**An investor can call (337) 486-3149 right now and talk to ROXY.** She will answer questions about AI Advantage, recommend a plan, calculate ROI, and book a discovery call — all running on ADC's own GPU in real time.
+
+**Why this matters for the raise:**
+1. **Proves the software layer** — ADC didn't just spec hardware. We built and deployed a production AI agent on our own infrastructure.
+2. **Proves the token factory model** — every ROXY conversation is a self-hosted token. Real customers, real revenue, real proof.
+3. **Creates a SaaS revenue stream** — every AI Advantage customer gets their own ROXY. 27 tools, white-labeled, running on ADC's GPU. That's recurring SaaS revenue at 95%+ margins.
+4. **First customer is ourselves** — ADC uses its own infrastructure to serve its own customers. The flywheel is running.
+
+### AI Advantage — ADC's SMB Division
+
+AI Advantage (ai-advantage.info) installs dedicated AI agents for small businesses. 17 industry playbooks (law firms, dental offices, plumbing companies, restaurants, salons, etc.). Hardware tiers from $0 (cloud) to $5,499 (DGX Spark). Monthly subscriptions from $199 to $1,299.
+
+- **145 contacts** in CRM (Brevo), auto-segmented across 12 industry lists
+- **Stripe payments** wired (6 products: 3 plans + 3 hardware tiers)
+- **Bland.ai phone bot** answers calls with ROXY's brain
+- **Brevo email campaigns** — 3 sent, 82% open rate on school districts
+
+This is not a future plan. This is running today.
+
 ---
 
 ## 7. FINANCIAL MODEL
@@ -498,6 +598,7 @@ Token prices deflate ~25%/year (slowing from historical 10x). ADC's moat:
 - Oil & gas industry contacts (ROV/offshore community)
 - Friends and family
 - Small infrastructure-focused VCs
+- **Ornn compute exchange investor network** — Crucible Capital, Vine Ventures, Link Ventures, Box Group, and angels from OpenAI, McKinsey, Blackstone, Coinbase, Palantir, Together AI. These investors already believe compute is a tradeable commodity. ADC is the physical production layer.
 
 ---
 
@@ -594,7 +695,7 @@ These items are in progress and strengthen with funding:
 |-----|--------|-------------------|
 | Site control (Trappeys) | Identified, not under contract | Seed funding enables acquisition |
 | NVIDIA NPN registration | Invitation-only. NOT a web form. Jim Hennessy (NVIDIA Sr Partner Business Manager) actively working to get ADC portal access. | Jim Hennessy confirmed interest, getting ADC an Account Rep + NPN access. Second path: Marc Spieler (NVIDIA Energy, CERAWeek). |
-| Financial model precision | Ranges (NVIDIA pricing unpublished) | Refines as hardware pricing becomes available |
+| Financial model precision | Market pricing now available via Ornn OCPI benchmark (Bloomberg-listed). B200: $50K/GPU, GB200 NVL72: $3.0-3.9M/rack. | Refines further with direct NPN pricing from NVIDIA. |
 | Customer pipeline | UL Lafayette anchor tenant + Louisiana AI Initiative school network (45 universities, 69 school districts registered at louisianaai.net). Schools are the first customers — bulk compute access for AI curriculum. | Warm intro through LEDA. louisianaai.net registration pipeline is LIVE with automated eligibility engine. |
 | Management team | Solo founder + brother | Key hires post-seed |
 | Entergy/LUS rate negotiation | Not started | Parallel with site acquisition |
