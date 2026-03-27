@@ -110,10 +110,15 @@ def assemble_episode(date_str):
             print(f"  {seg_id}: video not found, skipping")
             continue
 
-        # Story thumbnail
-        story_image = str(episode_dir / f"v2-{seg_id}-thumb.jpg")
-        if not os.path.exists(story_image):
-            story_image = None
+        # Story thumbnail — use the filename from segment plan
+        thumb_name = seg.get('thumbnail')
+        if thumb_name and (episode_dir / thumb_name).exists():
+            story_image = str(episode_dir / thumb_name)
+        else:
+            # Fallback to old naming convention
+            story_image = str(episode_dir / f"v2-{seg_id}-thumb.jpg")
+            if not os.path.exists(story_image):
+                story_image = None
 
         # Title
         title = seg.get('title', seg_id.upper())
