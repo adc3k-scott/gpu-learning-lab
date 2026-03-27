@@ -154,7 +154,7 @@ This isn't abstract. It's a father building the infrastructure his daughter's ge
 ### Engineering Package — COMPLETE
 
 - **22 US vendors** spec'd with primary and backup for every component
-- **19 engineering blueprints** completed (site plans, floor plans, electrical SLDs, cooling schematics, power distribution, solar layouts — for Trappeys, MARLIE I, and Willow Glen)
+- **24 engineering blueprints** completed (site plans, floor plans, electrical SLDs, cooling schematics, power distribution, solar layouts — for Trappeys, MARLIE I, and Willow Glen)
 - **Full bill of materials** priced for Phase 1
 - **800V DC electrical architecture** designed end-to-end (solar-direct to rack)
 - **Vendor procurement matrix** with lead times, contacts, and Phase 1 quantities
@@ -284,7 +284,38 @@ Layer 4: Grid (LUS)     SELL-BACK ONLY -- excess power goes BACK to grid, NOT a 
 - **Delta 660 kW rack PDU** + e-Fuse + 140 kW CDU — rack-level power and cooling
 - **ABB SACE Infinitus** — DC circuit protection (no arc flash on DC faults)
 
-### 6. Proximity Advantage
+### 6. Flare Gas to Compute — The Crusoe Playbook, Louisiana Edition
+
+Louisiana flares and vents ~1.8 billion cubic feet of natural gas annually. Oil operators burn this gas because pipeline infrastructure is too far or volumes are too small. ADC deploys containerized AI compute at flare sites — converting waste gas into GPU-hours at $0 fuel cost.
+
+**This is Crusoe Energy's exact playbook** — they scaled from zero to $10B+ valuation doing this. But Crusoe sold their flare division in March 2025 and pivoted to hyperscale. **Nobody is doing flare-gas AI compute in Louisiana. The field is wide open.**
+
+**ADC's advantages over Crusoe:**
+- **Louisiana-based** — Crusoe operates in North Dakota, Wyoming, Colorado. No Louisiana presence.
+- **Local relationships** — Scott knows Louisiana oil & gas operators from 25 years offshore
+- **Water cooling** — Louisiana bayous and rivers everywhere (Crusoe's dry-state deployments need air cooling)
+- **Backhaul to AI factory** — flare-site pods connect back to Trappeys/MARLIE I via fiber
+- **Regulatory alignment** — January 2024 Louisiana rule requires "alternative beneficial uses" evaluation before flaring permits. ADC IS the alternative beneficial use.
+
+**5 priority operators identified (all within 30 miles of Trappeys):**
+
+| Operator | Gas Volume (MCF/mo) | Parish | Wells |
+|----------|-------------------|--------|-------|
+| Formentera Operations | 160,867 | Vermilion/Iberia | Multiple |
+| The Termo Company | 139,018 | St. Martin | 16 |
+| Dunn Exploration | 133,407 | Vermilion | 145 |
+| Pledger West Broussard | 107,467 | Vermilion | 6 |
+| Zachry Exploration | 52,000+ | Acadia | Multiple |
+
+**Unit economics:** $0 fuel cost + GPU cloud rates ($4.50/hr B200) = 80%+ margins per site. Carbon credits (63% CO2e reduction vs flaring) provide additional revenue. The pitch to operators: "You're burning money. We take the gas, run AI compute, you stop paying penalties. Zero cost to you."
+
+**This creates ADC's second product line:**
+- **Line 1:** Fixed AI factories (Trappeys, MARLIE I, Willow Glen) — token factory, SaaS, managed inference
+- **Line 2:** Mobile AI compute — containerized pods at flare sites, chip-neutral, modular, deployable in weeks
+
+**Additional value to oil operators:** AI-powered equipment monitoring. The GPU is already on-site running inference — allocate a slice to monitor pumps, compressors, pipelines. Predictive maintenance, leak detection, pressure anomalies. The operator gets compute AND equipment monitoring from one deployment.
+
+### 7. Proximity Advantage
 
 | Vendor / Partner | Distance from Trappeys | Product |
 |-----------------|----------------------|---------|
@@ -696,7 +727,7 @@ These items are in progress and strengthen with funding:
 | Site control (Trappeys) | Identified, not under contract | Seed funding enables acquisition |
 | NVIDIA NPN registration | Invitation-only. NOT a web form. Jim Hennessy (NVIDIA Sr Partner Business Manager) actively working to get ADC portal access. | Jim Hennessy confirmed interest, getting ADC an Account Rep + NPN access. Second path: Marc Spieler (NVIDIA Energy, CERAWeek). |
 | Financial model precision | Market pricing now available via Ornn OCPI benchmark (Bloomberg-listed). B200: $50K/GPU, GB200 NVL72: $3.0-3.9M/rack. | Refines further with direct NPN pricing from NVIDIA. |
-| Customer pipeline | UL Lafayette anchor tenant + Louisiana AI Initiative school network (45 universities, 69 school districts registered at louisianaai.net). Schools are the first customers — bulk compute access for AI curriculum. | Warm intro through LEDA. louisianaai.net registration pipeline is LIVE with automated eligibility engine. |
+| Customer pipeline | UL Lafayette anchor tenant + Louisiana AI Initiative: **70 school districts + 46 universities registered** at louisianaai.net. Automated eligibility engine matches institutions to funding programs. 3 email campaigns sent (82% open rate on school districts). March 31 NVIDIA Academic Grant deadline driving urgency. Hospitals (Lafayette General, Our Lady of Lourdes) identified as highest-priority compute customers — HIPAA requires local GPU, can't use cloud. | Warm intro through LEDA. louisianaai.net registration pipeline is LIVE. Hospital outreach next. |
 | Management team | Solo founder + brother | Key hires post-seed |
 | Entergy/LUS rate negotiation | Not started | Parallel with site acquisition |
 

@@ -36,6 +36,12 @@ We didn't outsource this. We built it. In Lafayette, Louisiana.
 - Dell is sitting on a $43B AI server backlog. Hardware is the bottleneck. You need to be in line now.
 - GPU compute is now a traded commodity (Ornn exchange, Bloomberg-listed). This isn't speculation — it's the new oil.
 
+**Flare gas to compute:**
+Louisiana burns 1.8 billion cubic feet of natural gas every year at well sites. We deploy containerized AI compute at those flare sites — converting waste gas into GPU-hours at zero fuel cost. Crusoe proved this model at a $10B valuation. They don't operate in Louisiana. We do. Five operators within 30 miles of our facility are already identified.
+
+**Louisiana AI Initiative:**
+70 school districts and 46 universities have registered at louisianaai.net. Hospitals are next — they need local GPU compute for HIPAA-compliant medical AI. We're building the infrastructure they all need.
+
 **What I need:**
 $5M seed round. Louisiana Angel Tax Credit gives investors 35% back on day one — $1M costs you $650K.
 
