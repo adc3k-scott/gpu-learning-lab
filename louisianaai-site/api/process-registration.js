@@ -350,6 +350,31 @@ export default async function handler(req, res) {
       }
     }
 
+    // Save registrant to Brevo CRM
+    try {
+      const listMap = {
+        'university': 6, 'university-private': 6, 'community-college': 6,
+        'k12-public': 4, 'k12-private': 4, 'k12-charter': 4,
+      };
+      const listId = listMap[type] || 4;
+      await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'api-key': BREVO_API_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          attributes: { FIRSTNAME: name.split(' ')[0], LASTNAME: name.split(' ').slice(1).join(' '), COMPANY: org },
+          listIds: [listId],
+          updateEnabled: true,
+        })
+      });
+      console.log(`Contact ${email} added to Brevo list ${listId}`);
+    } catch (e) {
+      console.error('Failed to save contact to Brevo:', e.message);
+    }
+
     // Send copy + notification to Mission Control via Brevo
     try {
       await fetch('https://api.brevo.com/v3/smtp/email', {
