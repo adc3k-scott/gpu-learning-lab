@@ -1,0 +1,60 @@
+[
+  {
+    "id": "open",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "text": "Good morning. This is AI Daily Omniverse for Thursday, March 27th, 2026 — the final day of CERAWeek in Houston. I'm Armando, and today we've got five stories. Meta's Louisiana AI factory just hit twenty-seven billion dollars. Constellation Energy merged with Calpine to create a sixty-gigawatt energy giant for behind-the-meter AI. NVIDIA's Vera Rubin GPUs are in full production. Natural gas proposals for AI have tripled in one year. And GPU prices are climbing, not falling. Let's get into it."
+  },
+  {
+    "id": "story1",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "title": "Meta Hyperion Louisiana Explodes to $27 Billion",
+    "thumbnail": "story1-meta-louisiana.jpg",
+    "text": "Meta's Hyperion AI factory in Richland Parish, northeast Louisiana, has ballooned from ten billion dollars to an estimated twenty-seven billion through a joint venture with Blue Owl Capital. The site now spans thirty-six hundred fifty acres, four million square feet. Thirty-seven hundred construction workers are on site today, heading to five to eight thousand by mid-2026. Over three hundred million already spent on local infrastructure. Louisiana Delta Community College is running workforce training pipelines. But the community impact cuts both ways. Local businesses are booming with forty percent hiring increases for some contractors. But housing costs are spiking, residents are being displaced, and the rural character of the area is gone. One business owner put it bluntly: you talk about supporting the local community, but then you outsource. This is what twenty-seven billion dollars looks like when it lands in a rural parish. The question for the rest of Louisiana is whether AI investment has to look like this."
+  },
+  {
+    "id": "story2",
+    "avatar": "Adriana_BizTalk_Front_public",
+    "role": "field",
+    "title": "Constellation and Calpine Create 60 GW Energy Giant for AI",
+    "thumbnail": "story2-constellation-calpine.jpg",
+    "text": "Adriana here. Constellation Energy just completed its sixteen point four billion dollar acquisition of Calpine, creating a sixty-gigawatt clean energy giant — the nation's largest nuclear fleet merged with Calpine's gas and geothermal assets. The strategic play is behind-the-meter AI factory colocation directly at power generation sites. They have already signed a three hundred eighty megawatt deal with CyrusOne in Texas, and analysts expect at least two more major colocation partnerships before year-end. This is the energy-first AI model going mainstream. Build compute where the power already exists instead of running new transmission lines that take years to permit. It validates everything the behind-the-meter operators have been saying. The question is no longer whether this model works. The question is how fast it scales. Back to you, Armando."
+  },
+  {
+    "id": "story3",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "title": "NVIDIA Vera Rubin GPUs in Full Production",
+    "thumbnail": "story3-vera-rubin.jpg",
+    "text": "NVIDIA's next-generation Vera Rubin platform is now in full production, with cloud availability expected in the second half of 2026. Thirty thousand units are shipping. The Vera Rubin architecture builds on Blackwell with higher memory bandwidth and compute density per rack. For anyone planning an AI factory buildout, this is the hardware timeline that matters. Orders placed now will receive Vera Rubin. Orders placed later get in line. With Dell sitting on a forty-three billion dollar server backlog and AWS buying a million GPUs, the allocation window for smaller operators is narrowing. If you are not in the NVIDIA partner pipeline today, you are already behind."
+  },
+  {
+    "id": "story4",
+    "avatar": "Adriana_BizTalk_Front_public",
+    "role": "field",
+    "title": "Natural Gas for AI Triples Year Over Year",
+    "thumbnail": "story4-natural-gas-ai.jpg",
+    "text": "Adriana here with the energy numbers. Proposals for natural gas power to serve AI infrastructure have tripled year over year. NextEra Energy alone has ten gigawatts approved. The grid is at its limits. PJM failed its reliability test for the first time last December. The consensus from CERAWeek is clear — behind-the-meter generation is no longer alternative. It is the standard. Henry Hub natural gas is sitting at two dollars and ninety cents per million BTU today, down from three eighteen last week. Sub-three dollar gas makes on-site generation the cheapest power source for AI in America. For operators positioned at the intersection of gas supply and AI demand, the economics have never been stronger. Back to you."
+  },
+  {
+    "id": "story5",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "title": "GPU Prices Climb 15-19 Percent in Q1 2026",
+    "thumbnail": "story5-gpu-prices.jpg",
+    "text": "And finally, the GPU pricing story that everyone in the market is watching. GPU prices climbed fifteen to nineteen percent in the first quarter of 2026. This is not a temporary spike. With AWS buying a million chips, Dell reporting a forty-three billion dollar backlog, and NVIDIA transitioning from Blackwell to Vera Rubin, the supply constraints are structural. For cloud customers, this means higher compute costs. For GPU owners, this means higher revenue per chip. The GPU is the new barrel of oil — a traded commodity with rising prices, limited supply, and massive demand. Ornn's Compute Price Index on Bloomberg shows B200s trading at four fifty an hour on neocloud markets. If you own the hardware and generate your own power, the math is simple. If you are renting from someone else, the math just got harder."
+  },
+  {
+    "id": "close",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "text": "That is your five for Thursday. Twenty-seven billion in Louisiana. Sixty gigawatts of behind-the-meter energy. Vera Rubin shipping. Gas demand tripling. GPU prices climbing. CERAWeek wraps today in Houston, and every signal from that conference points in the same direction — own your power, own your compute, own your future. I'm Armando. This has been AI Daily Omniverse. See you tomorrow."
+  },
+  {
+    "id": "sponsor",
+    "avatar": "Armando_Sweater_Front_public",
+    "role": "anchor",
+    "text": "Today's briefing is powered by ADC, Advantage Design and Construction. Louisiana's AI infrastructure company. Building the factories that power the future. adc3k.com."
+  }
+]
