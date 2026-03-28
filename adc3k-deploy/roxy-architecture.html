@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROXY — AI Agent Architecture</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060a10;
+  --bg2: #0a1018;
+  --surface: #0e1520;
+  --surface2: #141e2c;
+  --border: #1a2840;
+  --text: #8fa4bc;
+  --text-dim: #4a6078;
+  --text-bright: #d0dce8;
+  --text-white: #f0f4f8;
+  --green: #00e87a;
+  --green-dim: rgba(0, 232, 122, 0.12);
+  --accent: #3b9eff;
+  --accent-dim: rgba(59, 158, 255, 0.10);
+  --red: #ff6b7a;
+  --amber: #f5a623;
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.12);
+  --cyan: #00d4ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,232,122,0.6)} 50%{opacity:0.7;box-shadow:0 0 0 8px rgba(0,232,122,0)} }
+@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+@keyframes flow { 0%{stroke-dashoffset:20} 100%{stroke-dashoffset:0} }
+
+.page-header {
+  text-align: center;
+  padding: 80px 32px 40px;
+}
+.page-header .eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.page-header .eyebrow .live-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+.page-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.page-header h1 span { color: var(--green); }
+.page-header .subtitle {
+  font-size: 18px;
+  color: var(--text);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 32px;
+}
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-white);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-title span { color: var(--green); }
+.section-sub {
+  font-size: 15px;
+  color: var(--text);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+/* ===== REVENUE LOOP ===== */
+.revenue-loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 40px 0;
+  position: relative;
+}
+.loop-node {
+  width: 180px;
+  padding: 24px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.loop-node.active {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.loop-node .node-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.loop-node .node-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-white);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.loop-node .node-desc {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.loop-arrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  color: var(--green);
+  padding: 0 12px;
+  z-index: 1;
+}
+.loop-return {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ===== POD DIAGRAM ===== */
+.pod-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 0;
+}
+.pod-core {
+  position: relative;
+  width: 360px;
+  height: 360px;
+}
+.pod-ring {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+}
+.pod-ring-inner {
+  position: absolute;
+  top: 40px; left: 40px; right: 40px; bottom: 40px;
+  border: 2px solid rgba(0,232,122,0.3);
+  border-radius: 50%;
+}
+.pod-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+}
+.pod-center-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+.pod-center-sub {
+  font-size: 11px;
+  color: var(--text);
+  margin-top: 4px;
+}
+.pod-role {
+  position: absolute;
+  width: 90px;
+  text-align: center;
+  z-index: 2;
+}
+.pod-role .role-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 auto 6px;
+}
+.pod-role .role-name {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-bright);
+  letter-spacing: 0.5px;
+}
+.pod-role .role-maps {
+  font-size: 9px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+/* positions */
+.pod-role.top { top: 8px; left: 50%; transform: translateX(-50%); }
+.pod-role.right { top: 50%; right: -10px; transform: translateY(-50%); }
+.pod-role.bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.pod-role.left { top: 50%; left: -10px; transform: translateY(-50%); }
+
+.pod-outer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pod-outer-node {
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 160px;
+}
+.pod-outer-node .outer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+.pod-outer-node .outer-desc {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ===== FALLBACK ===== */
+.fallback-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 0;
+}
+.fallback-box {
+  padding: 28px 32px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 200px;
+}
+.fallback-box.primary {
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+}
+.fallback-box.secondary {
+  background: var(--accent-dim);
+  border: 2px solid var(--accent);
+}
+.fallback-box.result {
+  background: var(--purple-dim);
+  border: 2px solid var(--purple);
+}
+.fallback-box .fb-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.fallback-box .fb-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 4px;
+}
+.fallback-box .fb-desc {
+  font-size: 12px;
+  color: var(--text);
+}
+.fallback-arrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ===== TOOL WHEEL ===== */
+.tool-wheel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.tool-quadrant {
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.tool-quadrant .tq-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.tool-quadrant .tq-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.tool-quadrant .tq-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tool-quadrant .tq-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+.tool-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tool-list li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-bright);
+}
+
+/* ===== INDUSTRY GRID ===== */
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.industry-chip {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.industry-chip:hover {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.industry-chip .ic-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-white);
+  letter-spacing: 0.5px;
+}
+
+/* ===== GROWTH PATH ===== */
+.growth-path {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+.growth-step {
+  flex: 1;
+  padding: 20px 16px;
+  text-align: center;
+  border-top: 3px solid var(--border);
+  position: relative;
+}
+.growth-step.active {
+  border-top-color: var(--green);
+  background: var(--green-dim);
+}
+.growth-step.next {
+  border-top-color: var(--accent);
+}
+.growth-step .gs-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.growth-step.active .gs-num { color: var(--green); }
+.growth-step.next .gs-num { color: var(--accent); }
+.growth-step .gs-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 6px;
+}
+.growth-step .gs-desc {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.growth-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--text-dim);
+  font-size: 18px;
+  padding: 0 4px;
+}
+
+/* ===== CTA ===== */
+.cta-section {
+  text-align: center;
+  padding: 60px 32px 80px;
+}
+.cta-box {
+  display: inline-block;
+  padding: 32px 48px;
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+}
+.cta-box .cta-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.cta-box .cta-phone {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+.cta-box .cta-url {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+}
+.cta-box a { color: inherit; text-decoration: none; }
+
+.divider {
+  max-width: 1100px;
+  margin: 0 auto;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .page-header h1 { font-size: 32px; }
+  .revenue-loop { flex-direction: column; gap: 8px; }
+  .loop-arrow { transform: rotate(90deg); }
+  .loop-return { display: none; }
+  .pod-diagram { flex-direction: column; }
+  .fallback-row { flex-direction: column; gap: 12px; }
+  .fallback-arrow { transform: rotate(90deg); }
+  .tool-wheel { grid-template-columns: 1fr; }
+  .industry-grid { grid-template-columns: repeat(3, 1fr); }
+  .growth-path { flex-direction: column; }
+  .growth-arrow { transform: rotate(90deg); justify-content: center; }
+}
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: var(--bg) !important; }
+  .section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="page-header">
+  <div class="eyebrow"><span class="live-dot"></span> LIVE IN PRODUCTION</div>
+  <h1>ROXY <span>Agent Architecture</span></h1>
+  <div class="subtitle">A 23-tool autonomous AI agent that sells, supports, and scales — running on ADC's own GPU infrastructure. Not a chatbot. A business operations platform.</div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 1. REVENUE LOOP ===== -->
+<div class="section">
+  <div class="section-label">01 — THE TOKEN REVENUE LOOP</div>
+  <div class="section-title">Every Conversation Is <span>Revenue.</span></div>
+  <div class="section-sub">ROXY generates inference tokens on ADC's own GPU with every customer interaction. The AI isn't a cost center — it's a revenue engine. Raw token cost: $0.004/M. Customer price: $0.20-$150/M. That's the margin.</div>
+
+  <div class="revenue-loop" style="position:relative">
+    <div class="loop-node">
+      <div class="node-icon">&#128172;</div>
+      <div class="node-title">CUSTOMER ASKS</div>
+      <div class="node-desc">Phone call, chat, or API request hits ROXY</div>
+    </div>
+    <div class="loop-arrow">&#8594;</div>
+    <div class="loop-node active">
+      <div class="node-icon">&#9889;</div>
+      <div class="node-title">GPU INFERENCE</div>
+      <div class="node-desc">Self-hosted model generates tokens on ADC hardware</div>
+    </div>
+    <div class="loop-arrow">&#8594;</div>
+    <div class="loop-node">
+      <div class="node-icon">&#128736;</div>
+      <div class="node-title">TOOL EXECUTION</div>
+      <div class="node-desc">ROXY selects from 23 tools, takes action, responds</div>
+    </div>
+    <div class="loop-arrow">&#8594;</div>
+    <div class="loop-node" style="border-color:var(--amber)">
+      <div class="node-icon">&#128176;</div>
+      <div class="node-title">TOKEN REVENUE</div>
+      <div class="node-desc">Every token = revenue at 95%+ margins</div>
+    </div>
+    <div style="position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:1px">&#8634; CONTINUOUS LOOP — EVERY INTERACTION GENERATES REVENUE</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 2. AI POD STRUCTURE ===== -->
+<div class="section">
+  <div class="section-label">02 — THE AI POD</div>
+  <div class="section-title">ROXY's <span>Core Team.</span></div>
+  <div class="section-sub">Inspired by the Enterprise AI Pod Framework. Every function is mapped. ROXY orchestrates all four roles as the AI Experience Architect.</div>
+
+  <div class="pod-diagram">
+    <div class="pod-outer">
+      <div class="pod-outer-node">
+        <div class="outer-label" style="color:var(--amber)">BIZ</div>
+        <div class="outer-desc">AI Advantage<br>The business ROXY serves</div>
+      </div>
+    </div>
+
+    <div class="pod-core">
+      <div class="pod-ring"></div>
+      <div class="pod-ring-inner"></div>
+      <div class="pod-center">
+        <div class="pod-center-label">ROXY</div>
+        <div class="pod-center-sub">AI Experience Architect</div>
+        <div class="pod-center-sub" style="color:var(--green);font-weight:600">Orchestrates all 4 roles</div>
+      </div>
+
+      <div class="pod-role top">
+        <div class="role-badge" style="background:var(--green-dim);border:2px solid var(--green)">PM</div>
+        <div class="role-name">Product Manager</div>
+        <div class="role-maps">Scott defines priorities</div>
+      </div>
+      <div class="pod-role right">
+        <div class="role-badge" style="background:var(--accent-dim);border:2px solid var(--accent)">UX</div>
+        <div class="role-name">User Experience</div>
+        <div class="role-maps">Chat + phone interface</div>
+      </div>
+      <div class="pod-role bottom">
+        <div class="role-badge" style="background:var(--purple-dim);border:2px solid var(--purple)">ENG</div>
+        <div class="role-name">Engineering</div>
+        <div class="role-maps">23-tool agent loop</div>
+      </div>
+      <div class="pod-role left">
+        <div class="role-badge" style="background:rgba(245,166,35,0.12);border:2px solid var(--amber)">DS</div>
+        <div class="role-name">Data Science</div>
+        <div class="role-maps">RAG pipeline + scoring</div>
+      </div>
+    </div>
+
+    <div class="pod-outer">
+      <div class="pod-outer-node">
+        <div class="outer-label" style="color:var(--red)">GUARDRAILS</div>
+        <div class="outer-desc">System prompt boundaries<br>No hallucinated pricing<br>No false claims</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 3. FALLBACK ARCHITECTURE ===== -->
+<div class="section">
+  <div class="section-label">03 — RELIABILITY</div>
+  <div class="section-title">Never Goes <span>Down.</span></div>
+  <div class="section-sub">Dual-model architecture with automatic failover. If the primary self-hosted model is unavailable, ROXY seamlessly falls back to a cloud provider. Zero downtime for customers.</div>
+
+  <div class="fallback-row">
+    <div class="fallback-box primary">
+      <div class="fb-label" style="color:var(--green)">PRIMARY</div>
+      <div class="fb-title">Self-Hosted GPU</div>
+      <div class="fb-desc">Open-source model<br>on ADC hardware<br>95%+ margin</div>
+    </div>
+    <div class="fallback-arrow">fails?<br>&#8594;</div>
+    <div class="fallback-box secondary">
+      <div class="fb-label" style="color:var(--accent)">FALLBACK</div>
+      <div class="fb-title">Cloud Provider</div>
+      <div class="fb-desc">Enterprise LLM<br>native tool calling<br>instant switchover</div>
+    </div>
+    <div class="fallback-arrow">always<br>&#8594;</div>
+    <div class="fallback-box result">
+      <div class="fb-label" style="color:var(--purple)">RESULT</div>
+      <div class="fb-title">100% Uptime</div>
+      <div class="fb-desc">Customer never knows<br>which model responded<br>same 23 tools either way</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 4. TOOL WHEEL ===== -->
+<div class="section">
+  <div class="section-label">04 — 23 TOOLS</div>
+  <div class="section-title">Not a Chatbot. A <span>Platform.</span></div>
+  <div class="section-sub">ROXY doesn't just answer questions — she takes action. Four tool categories cover the full business operations stack.</div>
+
+  <div class="tool-wheel">
+    <div class="tool-quadrant">
+      <div class="tq-header">
+        <div class="tq-icon" style="background:var(--green-dim);color:var(--green)">&#128176;</div>
+        <div>
+          <div class="tq-title" style="color:var(--green)">SALES</div>
+          <div class="tq-count">7 tools</div>
+        </div>
+      </div>
+      <ul class="tool-list">
+        <li>search playbooks</li>
+        <li>build quote</li>
+        <li>calculate ROI</li>
+        <li>payment link</li>
+        <li>franchise qualifier</li>
+        <li>urgency offer</li>
+        <li>live demo</li>
+      </ul>
+    </div>
+
+    <div class="tool-quadrant">
+      <div class="tq-header">
+        <div class="tq-icon" style="background:var(--accent-dim);color:var(--accent)">&#128203;</div>
+        <div>
+          <div class="tq-title" style="color:var(--accent)">CRM</div>
+          <div class="tq-count">6 tools</div>
+        </div>
+      </div>
+      <ul class="tool-list">
+        <li>capture lead</li>
+        <li>CRM lookup</li>
+        <li>send email</li>
+        <li>send SMS</li>
+        <li>book appointment</li>
+        <li>log conversation</li>
+      </ul>
+    </div>
+
+    <div class="tool-quadrant">
+      <div class="tq-header">
+        <div class="tq-icon" style="background:rgba(245,166,35,0.12);color:var(--amber)">&#128269;</div>
+        <div>
+          <div class="tq-title" style="color:var(--amber)">INTEL</div>
+          <div class="tq-count">4 tools</div>
+        </div>
+      </div>
+      <ul class="tool-list">
+        <li>contact info</li>
+        <li>business lookup</li>
+        <li>competitor intel</li>
+        <li>local market intel</li>
+      </ul>
+    </div>
+
+    <div class="tool-quadrant">
+      <div class="tq-header">
+        <div class="tq-icon" style="background:var(--purple-dim);color:var(--purple)">&#128640;</div>
+        <div>
+          <div class="tq-title" style="color:var(--purple)">SAAS</div>
+          <div class="tq-count">6 tools</div>
+        </div>
+      </div>
+      <ul class="tool-list">
+        <li>ad copy</li>
+        <li>social posts</li>
+        <li>review response</li>
+        <li>request review</li>
+        <li>lead magnet</li>
+        <li>email campaign</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 5. INDUSTRY SEGMENTATION ===== -->
+<div class="section">
+  <div class="section-label">05 — SMART ROUTING</div>
+  <div class="section-title">12 Industries. <span>Auto-Segmented.</span></div>
+  <div class="section-sub">Every lead is automatically classified into one of 12 industry segments. ROXY adjusts her pitch, her ROI calculations, and her follow-up cadence based on who she's talking to. Not generic AI — targeted business intelligence.</div>
+
+  <div class="industry-grid">
+    <div class="industry-chip"><div class="ic-name">Restaurants</div></div>
+    <div class="industry-chip"><div class="ic-name">Home Services</div></div>
+    <div class="industry-chip"><div class="ic-name">Real Estate</div></div>
+    <div class="industry-chip"><div class="ic-name">Healthcare</div></div>
+    <div class="industry-chip"><div class="ic-name">Legal</div></div>
+    <div class="industry-chip"><div class="ic-name">Auto / Dealers</div></div>
+    <div class="industry-chip"><div class="ic-name">Fitness</div></div>
+    <div class="industry-chip"><div class="ic-name">Retail</div></div>
+    <div class="industry-chip"><div class="ic-name">Professional Svc</div></div>
+    <div class="industry-chip"><div class="ic-name">Construction</div></div>
+    <div class="industry-chip"><div class="ic-name">Education</div></div>
+    <div class="industry-chip"><div class="ic-name">Hospitality</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 6. GROWTH PATH ===== -->
+<div class="section">
+  <div class="section-label">06 — THE EXPANSION PATH</div>
+  <div class="section-title">From Thin Slice to <span>Full Stack.</span></div>
+  <div class="section-sub">ROXY grows with the customer. Every step adds tools, adds value, adds recurring revenue. The SaaS expansion playbook built into an AI agent.</div>
+
+  <div class="growth-path">
+    <div class="growth-step active">
+      <div class="gs-num">01</div>
+      <div class="gs-title">Phone Bot</div>
+      <div class="gs-desc">Answer calls 24/7. Capture every lead. No missed revenue.</div>
+    </div>
+    <div class="growth-arrow">&#8594;</div>
+    <div class="growth-step active">
+      <div class="gs-num">02</div>
+      <div class="gs-title">Chat Agent</div>
+      <div class="gs-desc">Website widget. Multi-turn conversations. Instant quotes.</div>
+    </div>
+    <div class="growth-arrow">&#8594;</div>
+    <div class="growth-step active">
+      <div class="gs-num">03</div>
+      <div class="gs-title">CRM + Follow-up</div>
+      <div class="gs-desc">Auto-capture leads. Email sequences. SMS. Booking.</div>
+    </div>
+    <div class="growth-arrow">&#8594;</div>
+    <div class="growth-step next">
+      <div class="gs-num">04</div>
+      <div class="gs-title">Marketing Suite</div>
+      <div class="gs-desc">Ad copy. Social posts. Review management. Lead magnets.</div>
+    </div>
+    <div class="growth-arrow">&#8594;</div>
+    <div class="growth-step next">
+      <div class="gs-num">05</div>
+      <div class="gs-title">Full Autonomous</div>
+      <div class="gs-desc">Self-running business ops. Analytics. Campaigns. Payments.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;padding:16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:inline-block;max-width:700px;margin-left:auto;margin-right:auto;display:block">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:6px">CURRENT STATUS</div>
+    <div style="font-size:14px;color:var(--text-bright)">Steps 1-3 are <strong style="color:var(--green)">LIVE in production</strong>. Steps 4-5 are built and deploying. Every step adds tools, adds revenue, adds stickiness.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== CTA ===== -->
+<div class="cta-section">
+  <div class="cta-box">
+    <div class="cta-title">TALK TO ROXY RIGHT NOW</div>
+    <div class="cta-phone"><a href="tel:3374863149">(337) 486-3149</a></div>
+    <div class="cta-url"><a href="https://ai-advantage.info" target="_blank">ai-advantage.info</a></div>
+    <div style="margin-top:16px;font-size:12px;color:var(--text-dim)">Self-hosted inference. 23 tools. Running on ADC GPU.</div>
+  </div>
+</div>
+
+</body>
+</html>
