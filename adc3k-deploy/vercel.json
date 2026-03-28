@@ -48,6 +48,8 @@
 
     { "source": "/alumni-investors", "destination": "/investor-gate.html" },
     { "source": "/investor-pitch", "destination": "/investor-pitch.html" },
+    { "source": "/roxy-architecture", "destination": "/roxy-architecture.html" },
+    { "source": "/draper-pitch", "destination": "/draper-pitch.html" },
     { "source": "/investor", "destination": "/investor-neocloud.html" },
     { "source": "/terafab-louisiana", "destination": "/terafab-louisiana.html" },
     { "source": "/join", "destination": "/join-team.html" },

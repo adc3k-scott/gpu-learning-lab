@@ -259,3 +259,6 @@ memory/projects/
 adc3k-deploy/shared/MCHD/
 adc3k-deploy/shared/MC-Files/
 credentials/
+
+# Binary / large files — deploy via Vercel, don't commit
+*.pdf

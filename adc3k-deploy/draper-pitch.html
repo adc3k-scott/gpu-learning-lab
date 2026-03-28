@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC — Draper Associates Pitch Deck</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060a10;
+  --bg2: #0a1018;
+  --surface: #0e1520;
+  --surface2: #141e2c;
+  --border: #1a2840;
+  --text: #8fa4bc;
+  --text-dim: #4a6078;
+  --text-bright: #d0dce8;
+  --text-white: #f0f4f8;
+  --green: #00e87a;
+  --green-dim: rgba(0, 232, 122, 0.12);
+  --accent: #3b9eff;
+  --accent-dim: rgba(59, 158, 255, 0.10);
+  --red: #ff6b7a;
+  --amber: #f5a623;
+  --purple: #a855f7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* --- CONFIDENTIAL WATERMARK --- */
+body::after {
+  content: 'CONFIDENTIAL — NOT FOR PUBLIC DISTRIBUTION';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 4vw;
+  font-weight: 700;
+  color: rgba(255,255,255,0.018);
+  letter-spacing: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,232,122,0.6)} 50%{opacity:0.7;box-shadow:0 0 0 6px rgba(0,232,122,0)} }
+
+/* --- NAV DOTS --- */
+.nav-dots {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nav-dots a {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s;
+  position: relative;
+}
+.nav-dots a.active,
+.nav-dots a:hover {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 8px rgba(0,232,122,0.4);
+}
+.nav-dots a .dot-label {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+.nav-dots a:hover .dot-label {
+  opacity: 1;
+  color: var(--text-bright);
+}
+
+/* --- SLIDE --- */
+.slide {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  position: relative;
+  scroll-snap-align: start;
+}
+.slide-inner {
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* --- TYPOGRAPHY --- */
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 20px;
+}
+.slide-title {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.slide-subtitle {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 700px;
+}
+.slide-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  position: absolute;
+  bottom: 32px;
+  left: 40px;
+}
+.highlight { color: var(--green); font-weight: 600; }
+.highlight-blue { color: var(--accent); font-weight: 600; }
+.highlight-red { color: var(--red); font-weight: 600; }
+.highlight-amber { color: var(--amber); font-weight: 600; }
+
+/* --- STAT CARDS --- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.stat-card.blue { border-top-color: var(--accent); }
+.stat-card.amber { border-top-color: var(--amber); }
+.stat-card.red { border-top-color: var(--red); }
+.stat-card.purple { border-top-color: var(--purple); }
+.stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* --- TABLES --- */
+.deck-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 13px;
+}
+.deck-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.deck-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(26,40,64,0.5);
+  color: var(--text-bright);
+  vertical-align: top;
+}
+.deck-table tr:hover td {
+  background: rgba(0,232,122,0.03);
+}
+.deck-table .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+}
+.deck-table .green { color: var(--green); }
+.deck-table .red { color: var(--red); }
+.deck-table .dim { color: var(--text-dim); font-size: 11px; }
+
+/* --- CARDS GRID --- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 28px 0;
+}
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+}
+.info-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+.info-card p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.info-card .tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+/* --- POWER LAYERS --- */
+.power-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 24px 0;
+}
+.power-layer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-left: 4px solid var(--green);
+}
+.power-layer:nth-child(2) { border-left-color: var(--accent); }
+.power-layer:nth-child(3) { border-left-color: var(--amber); }
+.power-layer:nth-child(4) { border-left-color: var(--red); }
+.power-layer .layer-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  min-width: 70px;
+}
+.power-layer .layer-name {
+  font-weight: 600;
+  color: var(--text-white);
+  font-size: 15px;
+  min-width: 130px;
+}
+.power-layer .layer-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+
+/* --- COVER SLIDE --- */
+#cover {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 30%, rgba(0,232,122,0.04) 0%, transparent 60%);
+}
+#cover .slide-title { font-size: 72px; max-width: none; }
+#cover .company-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--text);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+#cover .seed-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 10px 28px;
+  border-radius: 6px;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+}
+#cover .tagline {
+  font-size: 16px;
+  color: var(--text-bright);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+#cover .contact-line {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 28px;
+  letter-spacing: 0.5px;
+}
+#cover .confidential-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  border: 1px solid rgba(255,107,122,0.3);
+  padding: 6px 16px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 40px;
+}
+
+/* --- DIVIDER --- */
+.slide-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--green);
+  margin: 20px 0;
+}
+.slide-divider.center { margin: 20px auto; }
+
+/* --- BULLET LIST --- */
+.deck-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+.deck-list li {
+  padding: 8px 0 8px 20px;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-bright);
+}
+.deck-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+/* --- TWO COLUMN --- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 24px 0;
+}
+
+/* --- COMPETITIVE TABLE --- */
+.comp-table td.us { color: var(--green); font-weight: 600; }
+.comp-table td.them { color: var(--red); }
+.comp-table td.check { color: var(--green); font-family: 'IBM Plex Mono', monospace; font-weight: 700; }
+.comp-table td.x { color: var(--red); font-family: 'IBM Plex Mono', monospace; font-weight: 700; }
+
+/* --- ASK SECTION --- */
+.ask-box {
+  background: linear-gradient(135deg, rgba(0,232,122,0.06) 0%, rgba(59,158,255,0.04) 100%);
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin: 32px 0;
+}
+.ask-box .ask-amount {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.ask-box .ask-label {
+  font-size: 15px;
+  color: var(--text-bright);
+}
+
+/* --- CONTACT SLIDE --- */
+#contact-slide { text-align: center; }
+#contact-slide .contact-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  color: var(--text);
+  margin: 10px 0;
+  letter-spacing: 0.5px;
+}
+#contact-slide .contact-item a {
+  color: var(--green);
+  text-decoration: none;
+}
+#contact-slide .contact-item a:hover {
+  text-decoration: underline;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; gap: 24px; }
+  .slide-title { font-size: 36px; }
+  #cover .slide-title { font-size: 48px; }
+  .stat-value { font-size: 24px; }
+  .slide { padding: 60px 24px; }
+  .nav-dots { right: 10px; gap: 8px; }
+  .nav-dots a { width: 8px; height: 8px; }
+  .nav-dots a .dot-label { display: none; }
+  .deck-table { font-size: 11px; }
+  .deck-table th, .deck-table td { padding: 8px 10px; }
+}
+
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr; }
+  #cover .slide-title { font-size: 36px; }
+  .slide-title { font-size: 28px; }
+  .slide { padding: 48px 16px; }
+  body::after { font-size: 6vw; }
+  .ask-box .ask-amount { font-size: 36px; }
+  .power-layer { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  html { scroll-snap-type: none; }
+  body { background: var(--bg) !important; }
+  body::after { display: none; }
+  .nav-dots { display: none !important; }
+  .slide {
+    page-break-after: always;
+    page-break-inside: avoid;
+    min-height: auto !important;
+    height: auto !important;
+    scroll-snap-align: none;
+    padding: 32px 40px !important;
+  }
+  .slide:last-child { page-break-after: auto; }
+  .slide-inner { max-width: 100%; }
+  img { max-height: 160px; }
+  a { text-decoration: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" id="navDots">
+  <a href="#cover"><span class="dot-label">COVER</span></a>
+  <a href="#problem"><span class="dot-label">PROBLEM</span></a>
+  <a href="#solution"><span class="dot-label">SOLUTION</span></a>
+  <a href="#founder"><span class="dot-label">FOUNDER</span></a>
+  <a href="#assets"><span class="dot-label">ASSETS</span></a>
+  <a href="#market"><span class="dot-label">MARKET</span></a>
+  <a href="#technology"><span class="dot-label">TECHNOLOGY</span></a>
+  <a href="#factory"><span class="dot-label">FACTORY</span></a>
+  <a href="#numbers"><span class="dot-label">NUMBERS</span></a>
+  <a href="#customers"><span class="dot-label">CUSTOMERS</span></a>
+  <a href="#incentives"><span class="dot-label">INCENTIVES</span></a>
+  <a href="#use-of-funds"><span class="dot-label">USE OF FUNDS</span></a>
+  <a href="#competitive"><span class="dot-label">COMPETITIVE</span></a>
+  <a href="#the-ask"><span class="dot-label">THE ASK</span></a>
+  <a href="#contact-slide"><span class="dot-label">CONTACT</span></a>
+</nav>
+
+
+<!-- ========== SLIDE 1: COVER ========== -->
+<section class="slide" id="cover">
+  <div class="slide-inner">
+    <div class="eyebrow" style="justify-content:center">INVESTOR PRESENTATION -- MARCH 2026</div>
+    <div class="slide-title" style="margin-bottom:8px">ADC</div>
+    <div class="company-name">Advantage Design &amp; Construction</div>
+    <div style="font-size:24px;color:var(--text-bright);font-weight:300;margin-bottom:32px;line-height:1.5">Louisiana's AI Factory</div>
+    <div class="seed-badge">$5M SEED ROUND</div>
+    <div style="height:24px"></div>
+    <div class="tagline">American-Owned. American-Built. American-Powered.</div>
+    <div class="contact-line">scott@adc3k.com &nbsp;|&nbsp; adc3k.com &nbsp;|&nbsp; (337) 780-1535</div>
+    <div class="confidential-badge">Confidential -- Not for public distribution</div>
+  </div>
+  <span class="slide-number">01 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 2: THE PROBLEM ========== -->
+<section class="slide" id="problem">
+  <div class="slide-inner">
+    <div class="eyebrow">The Problem</div>
+    <div class="slide-title">$50B Flowing Into Louisiana AI.<br><span class="highlight-red">Zero Is Louisiana-Owned.</span></div>
+    <div class="slide-divider"></div>
+    <div class="slide-subtitle" style="margin-bottom:32px">Every dollar of profit leaves the state. Every token produced enriches foreign or out-of-state shareholders.</div>
+
+    <table class="deck-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Investment</th>
+          <th>HQ</th>
+          <th>NVIDIA Certs</th>
+          <th>LA Jobs</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">Hut 8</td>
+          <td class="num green">$12.5B</td>
+          <td class="red">Canada</td>
+          <td class="red">Zero</td>
+          <td>75 claimed</td>
+          <td class="dim">Land scandal, Trump JV, Bitcoin miner pivot</td>
+        </tr>
+        <tr>
+          <td class="num">Amazon</td>
+          <td class="num green">$10B+</td>
+          <td class="red">Seattle</td>
+          <td>N/A</td>
+          <td>Undisclosed</td>
+          <td class="dim">Through Entergy agreements</td>
+        </tr>
+        <tr>
+          <td class="num">Meta</td>
+          <td class="num green">$10B+</td>
+          <td class="red">Menlo Park</td>
+          <td>N/A</td>
+          <td>Undisclosed</td>
+          <td class="dim">Richland Parish</td>
+        </tr>
+        <tr>
+          <td class="num">Nscale</td>
+          <td class="num green">$14.6B</td>
+          <td class="red">London, UK</td>
+          <td>Unknown</td>
+          <td>Unknown</td>
+          <td class="dim">730K+ GPUs, Microsoft + OpenAI</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;font-size:15px;color:var(--text-bright)"><span class="highlight">Foreign money. Foreign profits.</span> Louisiana provides the land, the power, the tax breaks — and gets nothing back.</div>
+  </div>
+  <span class="slide-number">02 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 3: THE SOLUTION ========== -->
+<section class="slide" id="solution">
+  <div class="slide-inner">
+    <div class="eyebrow">The Solution</div>
+    <div class="slide-title">ADC Is a Neocloud<br><span class="highlight">Token Factory.</span></div>
+    <div class="slide-divider"></div>
+    <div class="slide-subtitle" style="margin-bottom:32px">Own the power. Own the compute. Sell tokens. Not a landlord renting rack space — a manufacturer producing AI inference tokens on NVIDIA hardware.</div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">$0.027</div>
+        <div class="stat-label">per kWh fuel cost<br>Henry Hub natural gas</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value">35x</div>
+        <div class="stat-label">tokens per watt<br>Dynamo + Groq decode</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-value">800V</div>
+        <div class="stat-label">DC native architecture<br>CERAWeek validated</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value">40 mi</div>
+        <div class="stat-label">to Henry Hub<br>13 pipelines, global benchmark</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:1px">4-LAYER POWER HIERARCHY</div>
+    <div class="power-stack">
+      <div class="power-layer">
+        <span class="layer-num">LAYER 1</span>
+        <span class="layer-name" style="color:var(--green)">Solar</span>
+        <span class="layer-role">PRIMARY OFFSET -- rooftop arrays, DC-direct to 800V bus</span>
+      </div>
+      <div class="power-layer">
+        <span class="layer-num">LAYER 2</span>
+        <span class="layer-name" style="color:var(--accent)">Natural Gas</span>
+        <span class="layer-role">BACKBONE -- carries main load 24/7, Henry Hub pricing</span>
+      </div>
+      <div class="power-layer">
+        <span class="layer-num">LAYER 3</span>
+        <span class="layer-name" style="color:var(--amber)">Diesel</span>
+        <span class="layer-role">EMERGENCY -- on-site fuel, pipeline-independent</span>
+      </div>
+      <div class="power-layer">
+        <span class="layer-num">LAYER 4</span>
+        <span class="layer-name" style="color:var(--red)">Grid (LUS)</span>
+        <span class="layer-role">SELL-BACK ONLY -- excess power goes BACK to grid, NOT a source</span>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:14px;color:var(--text-bright)"><span class="highlight">We don't need the grid. We don't scare anybody. We sell back to the grid.</span></div>
+  </div>
+  <span class="slide-number">03 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 4: THE FOUNDER ========== -->
+<section class="slide" id="founder">
+  <div class="slide-inner">
+    <div class="eyebrow">The Founder</div>
+    <div class="slide-title">Scott Tomsu</div>
+    <div class="slide-divider"></div>
+    <div class="slide-subtitle" style="margin-bottom:16px">This is a construction project from a builder, not a tech pitch from a programmer.</div>
+
+    <div style="margin-bottom:24px;padding:16px 20px;background:var(--green-dim);border:1px solid rgba(0,232,122,0.2);border-radius:6px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:8px;font-weight:600">LOUISIANA CONTRACTOR LICENSES</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:13px;color:var(--text-bright)">
+        <div><strong style="color:var(--text-white)">Home Improvement</strong><br>2000 — A1 Remodeling &amp; Repair</div>
+        <div><strong style="color:var(--text-white)">Residential Building</strong><br>2000 — Advantage Design Homes</div>
+        <div><strong style="color:var(--text-white)">Commercial Construction</strong><br>2006 — Advantage Design &amp; Construction</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:6px;border-left:4px solid var(--amber)">
+      <div style="font-size:14px;color:var(--text-bright);line-height:1.7">In 2009, out-of-state companies flooded Louisiana with cheap labor and cheap materials. They brought everything but concrete. Scott couldn't compete. He built 80+ houses, a medical center, restaurants — then had to walk away. He went offshore, ran ROV operations in West Africa for 5 years. <span class="highlight">Now it's happening again — but with AI.</span> $50B flowing into Louisiana, zero locally owned. He's not watching it happen twice.</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="info-card">
+        <div class="tag">CONSTRUCTION</div>
+        <h3>Licensed General Contractor</h3>
+        <p>Medical center (New Iberia), Socatini restaurant (Youngsville, still open), 80+ houses, mini warehouses. Chief Architect CAD certified. Draws his own plans.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag">REMOTE OPERATIONS</div>
+        <h3>25 Years Mission-Critical Ops</h3>
+        <p>ROV Superintendent. Deepwater robotics, remote operations worldwide — West Africa, Gulf of America, global deployments. IMCA ROV Supervisor.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag">TECHNICAL</div>
+        <h3>Hands-On Engineering</h3>
+        <p>Commercial Diver (Divers Academy). Electronic Technician. FuelTech Engine Management Certified. FAA Private Pilot, instrument written 90%.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag" style="color:var(--accent)">NVIDIA CERTIFIED</div>
+        <h3>NCA-AIIO Certified</h3>
+        <p>NVIDIA Certified Associate, AI Infrastructure and Operations. Not just a builder — certified on the technology stack being deployed.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="padding:20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;border-left:4px solid var(--green)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:8px;font-weight:600">SCOTT TOMSU -- FOUNDER</div>
+        <div style="font-size:14px;color:var(--text-bright);line-height:1.7">25 years running mission-critical systems in the most dangerous environments on Earth. Built a medical center. Built 80+ houses. Now building AI factories — same precision, same uptime, on land in Louisiana.</div>
+      </div>
+      <div style="padding:20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;border-left:4px solid var(--accent)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;font-weight:600">JOSH TOMSU -- SITE OPERATIONS MANAGER</div>
+        <div style="font-size:14px;color:var(--text-bright);line-height:1.7">Scott's brother. Real estate background in Lafayette. Manages site operations, property acquisition, local vendor relationships, day-to-day build coordination. Going 100% ADC. Family business.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:20px 24px;background:rgba(0,232,122,0.04);border:1px solid rgba(0,232,122,0.15);border-radius:8px;text-align:center">
+      <div style="font-size:15px;color:var(--text-bright);line-height:1.8;max-width:700px;margin:0 auto">Scott's daughter graduated from <strong style="color:var(--text-white)">David Thibodaux STEM Magnet Academy</strong> in Lafayette — the same school ADC is now working to equip with AI compute. This isn't abstract. It's a father building the infrastructure his daughter's generation needs. Scott, Josh, and his daughter are all in Lafayette. <strong style="color:var(--green)">This is home. ADC was born here, and it's building out from here.</strong></div>
+    </div>
+  </div>
+  <span class="slide-number">04 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 5: ASSETS ========== -->
+<section class="slide" id="assets">
+  <div class="slide-inner">
+    <div class="eyebrow">Assets We Already Own</div>
+    <div class="slide-title">We Already Have<br><span class="highlight">Two Tier S Sites.</span></div>
+    <div class="slide-divider"></div>
+
+    <div class="two-col">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:12px">OWNED -- READY NOW</div>
+        <div style="font-size:22px;font-weight:700;color:var(--text-white);margin-bottom:8px">MARLIE I</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:16px">1201 SE Evangeline Thruway, Lafayette, LA</div>
+        <ul class="deck-list">
+          <li><span class="highlight">Scott owns this property outright</span></li>
+          <li>Ready for first compute deployment NOW</li>
+          <li>Property = <span class="highlight">collateral</span> for equipment financing</li>
+          <li>Command center, edge AI, backup NOC, R&D lab</li>
+          <li>Site Score: <span class="highlight">97 (Tier S)</span></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:12px">~$1M ACQUISITION -- COMPETITOR STALLED 5 YEARS</div>
+        <div style="font-size:22px;font-weight:700;color:var(--text-white);margin-bottom:8px">Trappeys Cannery</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:16px">Evangeline Thruway, Lafayette, LA</div>
+        <ul class="deck-list">
+          <li>112,500 sq ft across 4 buildings</li>
+          <li>2.05 MW rooftop solar capacity (3,731 panels)</li>
+          <li>Water tower for cooling infrastructure</li>
+          <li>Concrete pad = infrastructure yard</li>
+          <li>Gas on-site, 2 mi from UL Lafayette, 30 mi from First Solar</li>
+          <li>Site Score: <span class="highlight">105 (Tier S)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:6px">
+      <div style="font-size:14px;color:var(--text-bright)"><span class="highlight">Engineering package complete:</span> 22 US vendors spec'd, 19 engineering blueprints, full BOM priced, 800V DC architecture designed end-to-end. All live at adc3k.com.</div>
+    </div>
+  </div>
+  <span class="slide-number">05 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 6: THE MARKET ========== -->
+<section class="slide" id="market">
+  <div class="slide-inner">
+    <div class="eyebrow">The Market</div>
+    <div class="slide-title">GPU Scarcity Is<br><span class="highlight">Structural.</span></div>
+    <div class="slide-divider"></div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">1M</div>
+        <div class="stat-label">GPUs purchased by AWS<br>$50B+ through 2027</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value">6.6 GW</div>
+        <div class="stat-label">PJM grid shortfall<br>first failure in history</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$43B</div>
+        <div class="stat-label">Dell AI server backlog<br>12-18 month lead times</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-value">$4.50</div>
+        <div class="stat-label">B200 GPU per hour<br>Ornn OCPI (Bloomberg)</div>
+      </div>
+    </div>
+
+    <div style="margin:32px 0 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1.5px">CERAWEEK 2026 VALIDATED ADC'S ARCHITECTURE</div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3>Behind-the-Meter Is the Standard</h3>
+        <p>On-site generation, not grid dependency. Every major operator confirmed this architecture.</p>
+      </div>
+      <div class="info-card">
+        <h3>Tokens-per-Watt Is the New Metric</h3>
+        <p>Not PUE, not uptime percentage. The market measures output per unit of energy.</p>
+      </div>
+      <div class="info-card">
+        <h3>800V DC Validated</h3>
+        <p>Multiple major players confirmed the 800V DC architecture ADC has already designed.</p>
+      </div>
+      <div class="info-card">
+        <h3>Micro AI Factories Are Viable</h3>
+        <p>Not everything needs to be 200 MW. ADC's phased approach from 3 MW fits the emerging model.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+      <div style="padding:16px 20px;background:var(--surface);border:1px solid var(--accent);border-radius:6px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;font-weight:600">ORNN COMPUTE EXCHANGE (BLOOMBERG-LISTED)</div>
+        <div style="font-size:13px;color:var(--text-bright);line-height:1.6">GPU compute is now a traded commodity. OCPI benchmark: B200 at $4.50/hr neocloud. <strong style="color:var(--text-white)">GPU Value Protection (RVS)</strong> guarantees hardware residual value — eliminates depreciation risk for lenders. ADC hardware is bankable.</div>
+      </div>
+      <div style="padding:16px 20px;background:var(--surface);border:1px solid var(--amber);border-radius:6px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:2px;margin-bottom:8px;font-weight:600">FLARE GAS TO COMPUTE — CRUSOE PLAYBOOK</div>
+        <div style="font-size:13px;color:var(--text-bright);line-height:1.6">Louisiana burns 1.8 BCF of gas/year at well sites. ADC deploys containerized compute at flare sites — $0 fuel cost, 80%+ margins. Crusoe proved this at $10B valuation. <strong style="color:var(--text-white)">Zero Louisiana competitors. 5 operators identified within 30 miles.</strong></div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1.5px">NEOCLOUD VALUATIONS</div>
+    <table class="deck-table">
+      <thead><tr><th>Company</th><th>Valuation</th><th>Multiple</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>CoreWeave</td><td class="num green">$71B</td><td class="num">~30x</td><td class="dim">BMaaS, NVIDIA strategic investor</td></tr>
+        <tr><td>Nebius</td><td class="num green">$24B</td><td class="num">~40x</td><td class="dim">"Token Factory" branding, NVIDIA $2B invested</td></tr>
+        <tr><td>Crusoe</td><td class="num green">$10B+</td><td class="num">~25x</td><td class="dim">Energy-first model (stranded gas), NVIDIA Preferred Partner</td></tr>
+        <tr><td>Lambda Labs</td><td class="num green">$2.5B</td><td class="num">~20x</td><td class="dim">BMaaS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-number">06 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 7: TECHNOLOGY ========== -->
+<section class="slide" id="technology">
+  <div class="slide-inner">
+    <div class="eyebrow">Technology Stack</div>
+    <div class="slide-title">Full NVIDIA Stack.<br><span class="highlight">Every Vendor American-Made.</span></div>
+    <div class="slide-divider"></div>
+
+    <div class="two-col">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:16px">COMPUTE + SOFTWARE</div>
+        <table class="deck-table" style="font-size:12px">
+          <thead><tr><th>Component</th><th>Vendor</th></tr></thead>
+          <tbody>
+            <tr><td>GPU Racks</td><td>NVIDIA NVL72 (Vera Rubin)</td></tr>
+            <tr><td>Inference OS</td><td>NVIDIA Dynamo 1.0</td></tr>
+            <tr><td>Decode Accel</td><td>Groq 3 LPX</td></tr>
+            <tr><td>Networking</td><td>NVIDIA Quantum InfiniBand</td></tr>
+            <tr><td>DPU / Security</td><td>NVIDIA BlueField-4 STX</td></tr>
+          </tbody>
+        </table>
+
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin:24px 0 16px">POWER -- DUAL STACK</div>
+        <table class="deck-table" style="font-size:12px">
+          <thead><tr><th>Level</th><th>Vendor</th><th>Product</th></tr></thead>
+          <tbody>
+            <tr><td>Facility</td><td>Eaton</td><td>Beam Rubin DSX (800V DC)</td></tr>
+            <tr><td>Rack</td><td>Delta</td><td>660 kW PDU + 140 kW CDU</td></tr>
+            <tr><td>Protection</td><td>ABB</td><td>SACE Infinitus (DC breaker)</td></tr>
+            <tr><td>Solar</td><td>First Solar</td><td>Series 7 TR1 (550W)</td></tr>
+            <tr><td>Gas</td><td>Caterpillar</td><td>G3516J (1.6 MW)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);letter-spacing:2px;margin-bottom:16px">VENDOR PROXIMITY</div>
+        <table class="deck-table" style="font-size:12px">
+          <thead><tr><th>Vendor</th><th>Distance</th><th>Product</th></tr></thead>
+          <tbody>
+            <tr><td>First Solar</td><td class="num green">30 mi</td><td>TR1 panels (New Iberia)</td></tr>
+            <tr><td>Louisiana Cat</td><td class="num green">30 mi</td><td>Gas gensets</td></tr>
+            <tr><td>Cajun Industries</td><td class="num green">30 mi</td><td>Container fab (New Iberia)</td></tr>
+            <tr><td>Fibrebond</td><td class="num">250 mi</td><td>Modular enclosures (Minden)</td></tr>
+            <tr><td>UL Lafayette</td><td class="num green">2 mi</td><td>Workforce + research</td></tr>
+            <tr><td>KLFT Airport</td><td class="num green">0.5 mi</td><td>Drone ops hub</td></tr>
+            <tr><td>ATMOS Gas</td><td class="num green">On-site</td><td>Natural gas supply</td></tr>
+            <tr><td>LUS Substation</td><td class="num green">Adjacent</td><td>Grid sell-back</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:24px;padding:16px 20px;background:var(--green-dim);border:1px solid rgba(0,232,122,0.2);border-radius:6px">
+          <div style="font-size:14px;color:var(--text-bright);line-height:1.6"><span class="highlight">800V DC Solar-Direct:</span> Panels wire DC-direct to 800V bus. No inverters. 97% efficiency vs 92% AC path. NVIDIA DSX spec from day one.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-number">07 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 8: INSIDE THE FACTORY ========== -->
+<section class="slide" id="factory">
+  <div class="slide-inner">
+    <div class="eyebrow">Operations</div>
+    <div class="slide-title">Inside the Factory.</div>
+    <div class="slide-subtitle" style="margin-bottom:8px">This is what it looks like when ADC is running.</div>
+    <div class="slide-divider"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <img src="vendors/nvidia/screenshots/runai-overview-dashboard.webp" alt="Run:AI Overview Dashboard" style="width:100%;height:200px;object-fit:cover;display:block">
+        <div style="padding:16px 20px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--green);margin-bottom:8px">CLUSTER OPERATIONS</div>
+          <div style="font-size:13px;color:var(--text-bright);line-height:1.5">Real-time GPU availability, active workloads, pending tasks — the control room view.</div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <img src="vendors/nvidia/screenshots/runai-gpu-allocation.png" alt="Run:AI GPU Allocation" style="width:100%;height:200px;object-fit:cover;display:block">
+        <div style="padding:16px 20px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--accent);margin-bottom:8px">GPU ALLOCATION</div>
+          <div style="font-size:13px;color:var(--text-bright);line-height:1.5">Every GPU tracked. Every workload scheduled. Fair-share allocation across customers.</div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <img src="vendors/nvidia/screenshots/runai-workloads.png" alt="Run:AI Workloads" style="width:100%;height:200px;object-fit:cover;display:block">
+        <div style="padding:16px 20px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--amber);margin-bottom:8px">WORKLOAD MANAGEMENT</div>
+          <div style="font-size:13px;color:var(--text-bright);line-height:1.5">Training, inference, and agent workloads — all managed from one dashboard.</div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <img src="vendors/nvidia/screenshots/runai-consumption.png" alt="Run:AI Consumption" style="width:100%;height:200px;object-fit:cover;display:block">
+        <div style="padding:16px 20px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--purple);margin-bottom:8px">CONSUMPTION TRACKING</div>
+          <div style="font-size:13px;color:var(--text-bright);line-height:1.5">Per-customer GPU usage for billing. Real-time cost allocation and chargeback.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:20px 24px;background:var(--green-dim);border:1px solid rgba(0,232,122,0.2);border-radius:6px">
+      <div style="font-size:14px;color:var(--text-bright);line-height:1.7">Hut 8 builds buildings. Amazon builds buildings. Meta builds buildings. <span class="highlight">ADC operates AI factories.</span> This is the difference between a landlord and a factory — and it's why token factory margins are 3x colocation margins.</div>
+    </div>
+
+    <!-- LIVE PROOF — Self-Hosted Inference -->
+    <div style="margin-top:24px;padding:28px 32px;background:linear-gradient(135deg,rgba(0,232,122,0.08) 0%,rgba(59,158,255,0.05) 100%);border:2px solid var(--green);border-radius:10px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:12px;right:16px;display:flex;align-items:center;gap:6px">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s ease-in-out infinite"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:var(--green);letter-spacing:2px">LIVE NOW</span>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--green);letter-spacing:2px;margin-bottom:12px">PROOF OF CONCEPT — TOKENS FLOWING TODAY</div>
+      <div style="font-size:16px;font-weight:600;color:var(--text-white);line-height:1.5;margin-bottom:16px">ADC is already serving real AI inference on its own GPU hardware.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+        <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--green)">Qwen 3 8B</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Self-hosted model</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--accent)">vLLM</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">OpenAI-compatible API</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--amber)">27 Tools</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">ROXY AI Agent</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7">
+        <strong style="color:var(--text-white)">ROXY</strong> — our 27-tool AI agent at <strong style="color:var(--text-white)">ai-advantage.info</strong> — answers phones, captures leads, builds quotes, calculates ROI, generates ad copy, responds to reviews, and books appointments. All on ADC's own GPU. <strong style="color:var(--green)">Call her right now: (337) 486-3149.</strong> <span class="highlight">ADC is its own first customer.</span>
+      </div>
+      <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim)">70 school districts + 46 universities registered at louisianaai.net | Hospitals identified as highest-priority customers</div>
+    </div>
+
+    <div style="margin-top:16px;text-align:center">
+      <a href="/operations-center" style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-decoration:none;letter-spacing:1.5px;padding:10px 24px;border:1px solid var(--accent);border-radius:6px;display:inline-block;transition:all 0.3s" onmouseover="this.style.background='rgba(59,158,255,0.1)'" onmouseout="this.style.background='transparent'">VIEW FULL OPERATIONS CENTER →</a>
+    </div>
+
+    <div style="margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.5px;line-height:1.5">Screenshots from NVIDIA Run:AI and Mission Control — the production software stack ADC deploys. Not mockups.</div>
+  </div>
+  <span class="slide-number">08 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 9: CUSTOMER DELIGHT + NETWORK EFFECTS ========== -->
+<section class="slide" id="customers">
+  <div class="slide-inner">
+    <div class="eyebrow">Customer Experience &amp; Network Effects</div>
+    <div class="slide-title">How We Win<br><span class="highlight">And Keep Customers.</span></div>
+    <div class="slide-divider"></div>
+
+    <div class="two-col">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:16px">HOW WE DELIGHT CUSTOMERS</div>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px">
+          <div class="info-card">
+            <div class="tag">PRICE</div>
+            <h3>50-80% Below Hyperscaler Rates</h3>
+            <p>$0.027/kWh power cost flows straight to token pricing. Customers get dedicated NVIDIA capacity at a fraction of AWS/Azure/GCP rates. B200 at $4.50/hr vs $7.00/hr hyperscaler.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--accent)">DEDICATED CAPACITY</div>
+            <h3>Not Shared, Not Spot — Yours</h3>
+            <p>No noisy neighbors. No spot instance revocations. Customers get guaranteed GPU allocation on NVIDIA's latest hardware with SLA-backed uptime. University research jobs don't get preempted.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--amber)">PROXIMITY</div>
+            <h3>Local Support, Not a Ticket Queue</h3>
+            <p>Customers are 2 miles away (UL Lafayette), not 2,000. Same-day onboarding. On-site demos. Direct access to the team that built and operates the facility. Oil operators get on-site GPU + equipment monitoring from one deployment.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--purple)">LIVE PROOF</div>
+            <h3>ROXY — Call Her Right Now</h3>
+            <p>Our 27-tool AI agent at ai-advantage.info runs on self-hosted inference. Answers phones, captures leads, builds quotes, books appointments. Call (337) 486-3149. ADC is its own first customer — we eat our own cooking.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:16px">NETWORK &amp; FLYWHEEL EFFECTS</div>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px">
+          <div class="info-card">
+            <div class="tag">FLARE SITE NETWORK</div>
+            <h3>Every Well Site Adds Compute</h3>
+            <p>Each flare-gas pod deployed adds capacity to ADC's network. 5 operators identified, ~1M MCF/month within 30 miles. More sites = more capacity = more customers = more sites. The pods pay for themselves with $0 fuel cost.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--accent)">UNIVERSITY PIPELINE</div>
+            <h3>45 Universities Create Permanent Demand</h3>
+            <p>louisianaai.net targets every LA university and 69 school districts. UL Lafayette (43,000 students) has zero GPU infrastructure. Research compute is recurring, grant-funded, and grows every semester. Students graduate into ADC's workforce.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--amber)">ORNN EXCHANGE</div>
+            <h3>Commodity Listing = Distribution</h3>
+            <p>Listing on Ornn's Bloomberg-tracked exchange puts ADC's capacity in front of institutional compute buyers globally. GPU-hours become tradeable, hedgeable, bankable. Every new customer on the exchange can route to ADC.</p>
+          </div>
+          <div class="info-card">
+            <div class="tag" style="color:var(--purple)">FACILITY MODULE SALES</div>
+            <h3>ADC 3K Pods = Productized Neocloud</h3>
+            <p>DSX-compliant facility modules are a product line. Every pod sold to another operator expands the network. Managed services on top = recurring SaaS revenue from hardware you manufactured and deployed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:16px 24px;background:var(--green-dim);border:1px solid rgba(0,232,122,0.2);border-radius:6px;text-align:center">
+      <div style="font-size:15px;color:var(--text-bright);line-height:1.6"><span class="highlight">Four flywheels spinning simultaneously:</span> flare sites add compute, universities add demand, the exchange adds distribution, and pod sales add operators. Each one feeds the others.</div>
+    </div>
+  </div>
+  <span class="slide-number">09 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 10: THE NUMBERS ========== -->
+<section class="slide" id="numbers">
+  <div class="slide-inner">
+    <div class="eyebrow">Financial Model</div>
+    <div class="slide-title">The Numbers.</div>
+    <div class="slide-divider"></div>
+
+
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:16px">REVENUE PER MW -- INDUSTRY BENCHMARKS</div>
+    <table class="deck-table">
+      <thead>
+        <tr><th>Phase</th><th>IT Load</th><th>Bear</th><th>Base</th><th>Bull</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 1A (Y1)</td><td class="num">3 MW</td><td class="num">$6M</td><td class="num green">$12M</td><td class="num">$21M</td></tr>
+        <tr><td>Phase 1C (Y2)</td><td class="num">12 MW</td><td class="num">$24M</td><td class="num green">$48M</td><td class="num">$84M</td></tr>
+        <tr><td>Phase 2 (Y3)</td><td class="num">50 MW</td><td class="num">$100M</td><td class="num green">$200M</td><td class="num">$350M</td></tr>
+        <tr><td>Phase 3 (Y5)</td><td class="num">100+ MW</td><td class="num">$200M</td><td class="num green">$600M</td><td class="num">$1.4B</td></tr>
+      </tbody>
+    </table>
+
+    <div class="two-col" style="margin-top:32px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:12px">PHASE 1A P&L -- 3 MW (PROOF OF CONCEPT)</div>
+        <table class="deck-table" style="font-size:12px">
+          <thead><tr><th>Line Item</th><th>Bear</th><th>Base</th><th>Bull</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue</td><td class="num">$6.0M</td><td class="num green">$12.0M</td><td class="num">$21.0M</td></tr>
+            <tr><td>Power</td><td class="num red">($1.8M)</td><td class="num red">($1.7M)</td><td class="num red">($1.5M)</td></tr>
+            <tr><td>Hardware (5-yr dep.)</td><td class="num red">($6.0M)</td><td class="num red">($5.0M)</td><td class="num red">($4.0M)</td></tr>
+            <tr><td>Staff (5-8 people)</td><td class="num red">($0.8M)</td><td class="num red">($0.7M)</td><td class="num red">($0.6M)</td></tr>
+            <tr><td>Maintenance + SW</td><td class="num red">($0.5M)</td><td class="num red">($0.5M)</td><td class="num red">($0.5M)</td></tr>
+            <tr><td>Insurance + OH</td><td class="num red">($0.3M)</td><td class="num red">($0.3M)</td><td class="num red">($0.3M)</td></tr>
+            <tr style="border-top:2px solid var(--green)"><td style="font-weight:700;color:var(--text-white)">EBITDA</td><td class="num red" style="font-weight:700">($3.4M)</td><td class="num green" style="font-weight:700">$3.8M</td><td class="num green" style="font-weight:700">$14.1M</td></tr>
+            <tr><td style="color:var(--text-dim)">EBITDA Margin</td><td class="num red">-57%</td><td class="num green">32%</td><td class="num green">67%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:12px">PHASE 1C P&L -- 12 MW (WHERE MONEY IS MADE)</div>
+        <table class="deck-table" style="font-size:12px">
+          <thead><tr><th>Line Item</th><th>Bear</th><th>Base</th><th>Bull</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue</td><td class="num">$24.0M</td><td class="num green">$48.0M</td><td class="num">$84.0M</td></tr>
+            <tr style="border-top:2px solid var(--accent)"><td style="font-weight:700;color:var(--text-white)">EBITDA</td><td class="num green" style="font-weight:700">$13.7M</td><td class="num green" style="font-weight:700">$38.3M</td><td class="num green" style="font-weight:700">$74.7M</td></tr>
+            <tr><td style="color:var(--text-dim)">EBITDA Margin</td><td class="num green">57%</td><td class="num green">80%</td><td class="num green">89%</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:6px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:8px">HUT 8 COMPARISON</div>
+          <div style="font-size:14px;color:var(--text-bright);line-height:1.6">Hut 8 River Bend (245 MW, NNN lease): <span style="color:var(--text-dim)">$1.85M NOI/MW</span><br>ADC at 50 MW (base): <span class="highlight">$3.39M NOI/MW</span> -- 1.8x return because token factory margins beat colo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-number">10 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 11: INCENTIVE STACK ========== -->
+<section class="slide" id="incentives">
+  <div class="slide-inner">
+    <div class="eyebrow">Incentive Stack</div>
+    <div class="slide-title">Louisiana Is the Most<br><span class="highlight">Incentivized State</span> for AI.</div>
+    <div class="slide-divider"></div>
+
+    <table class="deck-table">
+      <thead>
+        <tr><th>Incentive</th><th>Value</th><th>Requirements</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:600;color:var(--text-white)">Louisiana Angel Tax Credit</td><td class="num green" style="font-size:16px">35%</td><td>Certified Louisiana business -- investors pay $650K for $1M of equity</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">Historic Tax Credits</td><td class="num green" style="font-size:16px">45%</td><td>Certified historic structure -- Trappeys qualifies</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">ITEP / PILOT</td><td class="num green" style="font-size:16px">80%</td><td>Property tax abatement, 10 years -- PILOT preferred (no NAICS restriction)</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">Act 730</td><td class="num green" style="font-size:16px">20 yr</td><td>Sales tax exemption -- $200M+ investment, 50 jobs (Phase 2)</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">Federal Solar ITC</td><td class="num green" style="font-size:16px">30-50%</td><td>30% base + 10% domestic content (First Solar) + 10% energy community</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">Quality Jobs Program</td><td class="num green">5-6%</td><td>Payroll rebate, 10 years -- 5+ jobs at $18.74/hr</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">R&D Tax Credit</td><td class="num green">30%</td><td>Qualified R&D -- UL Lafayette partnership strengthens</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-white)">LED FastStart</td><td class="num green">FREE</td><td>Workforce training -- available immediately</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div style="background:var(--surface);border:1px solid var(--green);border-radius:8px;padding:24px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:8px">PHASE 1 (12 MW)</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--green)">$11-24M</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">total tax savings</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--accent);border-radius:8px;padding:24px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:8px">PHASE 2 (50 MW)</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--accent)">$75-150M</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">total tax savings</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--amber);border-radius:8px;padding:24px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:8px">PHASE 3 (100+ MW)</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--amber)">$150-300M</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">total tax savings</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:20px 24px;background:var(--green-dim);border:1px solid rgba(0,232,122,0.25);border-radius:8px;text-align:center">
+      <div style="font-size:18px;color:var(--text-white);font-weight:600"><span class="highlight">$1M invested costs you $650K after credits.</span></div>
+      <div style="font-size:13px;color:var(--text);margin-top:4px">Louisiana Angel Tax Credit = 35% day-one state tax credit on your investment.</div>
+    </div>
+  </div>
+  <span class="slide-number">11 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 12: USE OF FUNDS ========== -->
+<section class="slide" id="use-of-funds">
+  <div class="slide-inner">
+    <div class="eyebrow">Use of Funds</div>
+    <div class="slide-title">What Your Capital Buys.</div>
+    <div class="slide-divider"></div>
+
+    <div style="max-width:700px;margin:0 auto">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);letter-spacing:2px;margin-bottom:16px;font-weight:600">$5M SEED ROUND — USE OF FUNDS</div>
+      <table class="deck-table" style="font-size:13px">
+        <thead><tr><th>Use</th><th style="text-align:right">Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Trappeys site acquisition (112,500 sq ft, 4 buildings)</td><td class="num">$1,000,000</td></tr>
+          <tr><td>Trappeys Building 2 rehab (brick compute room)</td><td class="num">$500,000</td></tr>
+          <tr><td>First equipment (Cat G3516J x2, Delta 660 kW rack, NVL72 deposit)</td><td class="num">$1,500,000</td></tr>
+          <tr><td>MARLIE I deployment (gas, fiber, pad, first rack)</td><td class="num">$500,000</td></tr>
+          <tr><td>18 months operating runway (Scott + Josh)</td><td class="num">$600,000</td></tr>
+          <tr><td>Trucks, computers, tools, travel, insurance, legal</td><td class="num">$400,000</td></tr>
+          <tr><td>Working capital buffer</td><td class="num">$500,000</td></tr>
+          <tr style="border-top:2px solid var(--green)"><td style="font-weight:700;color:var(--text-white)">Total</td><td class="num green" style="font-weight:700">$5,000,000</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:12px;line-height:1.6">Two Tier S sites deploying simultaneously. First tokens in 6-9 months. Louisiana Angel Tax Credit = 35% back on day one. Real investor exposure after credits: $3.25M.</div>
+    </div>
+
+    <div style="margin-top:32px">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card">
+          <div class="stat-value">6-9</div>
+          <div class="stat-label">months to first tokens</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-value">$3.25M</div>
+          <div class="stat-label">real exposure after 35% credit</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Tier S sites deploying</div>
+        </div>
+        <div class="stat-card" style="border-top-color:#a855f7">
+          <div class="stat-value">$500K</div>
+          <div class="stat-label">working capital buffer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-number">12 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 13: COMPETITIVE LANDSCAPE ========== -->
+<section class="slide" id="competitive">
+  <div class="slide-inner">
+    <div class="eyebrow">Competitive Landscape</div>
+    <div class="slide-title">The Only American-Owned Operator<br><span class="highlight">in Louisiana.</span></div>
+    <div class="slide-divider"></div>
+
+    <table class="deck-table comp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="color:var(--green)">ADC</th>
+          <th>Hut 8</th>
+          <th>Nscale</th>
+          <th>CoreWeave</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--text-dim)">Headquarters</td>
+          <td class="us">Lafayette, LA</td>
+          <td class="them">Canada</td>
+          <td class="them">London, UK</td>
+          <td>New Jersey</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">American-Owned</td>
+          <td class="check">YES</td>
+          <td class="x">NO</td>
+          <td class="x">NO</td>
+          <td class="check">YES</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">Louisiana Presence</td>
+          <td class="check">YES</td>
+          <td>River Bend</td>
+          <td class="x">NO (WV)</td>
+          <td class="x">NO</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">Behind-the-Meter Power</td>
+          <td class="check">YES</td>
+          <td class="x">Grid-dependent</td>
+          <td class="x">Grid-dependent</td>
+          <td class="x">Grid-dependent</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">NVIDIA DSX Spec</td>
+          <td class="check">800V DC native</td>
+          <td class="x">Zero NVIDIA certs</td>
+          <td>Unknown</td>
+          <td class="check">Partner</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">Power Cost</td>
+          <td class="us">$0.027-0.035/kWh</td>
+          <td class="them">Grid rate</td>
+          <td class="them">Grid rate</td>
+          <td class="them">Grid rate</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">Model</td>
+          <td class="us">Token Factory</td>
+          <td>NNN Lease / Colo</td>
+          <td>BMaaS</td>
+          <td>BMaaS</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">All US-Made Vendors</td>
+          <td class="check">YES</td>
+          <td class="x">NO</td>
+          <td class="x">NO</td>
+          <td class="x">NO</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text-dim)">Founder Background</td>
+          <td class="us">Licensed GC, 25yr ops</td>
+          <td class="them">Bitcoin mining</td>
+          <td>Tech / VC</td>
+          <td>Tech / VC</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;padding:16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:6px;border-left:4px solid var(--green)">
+      <div style="font-size:15px;color:var(--text-bright);line-height:1.6"><span class="highlight">ADC is the only American-owned, behind-the-meter, NVIDIA-spec'd, all-US-vendor operator in Louisiana.</span> No one else checks all those boxes.</div>
+    </div>
+  </div>
+  <span class="slide-number">13 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 14: THE ASK ========== -->
+<section class="slide" id="the-ask">
+  <div class="slide-inner" style="text-align:center">
+    <div class="eyebrow" style="justify-content:center">The Ask</div>
+    <div class="slide-title" style="max-width:none;margin:0 auto 20px">Invest in Louisiana's<br><span class="highlight">AI Future.</span></div>
+    <div class="slide-divider center"></div>
+
+    <div class="ask-box">
+      <div class="ask-amount">$5M SEED ROUND</div>
+      <div class="ask-label">Equity in a neocloud at the intersection of the cheapest energy in America and the fastest-growing market in technology.</div>
+    </div>
+
+    <div class="stats-row" style="grid-template-columns:repeat(3,1fr);max-width:800px;margin:32px auto">
+      <div class="stat-card">
+        <div class="stat-value">35%</div>
+        <div class="stat-label">Day-one state tax credit<br>Louisiana Angel Tax Credit</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value">6-9 mo</div>
+        <div class="stat-label">First tokens flowing<br>at MARLIE I</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$48M</div>
+        <div class="stat-label">Base revenue path<br>within 24 months</div>
+      </div>
+    </div>
+
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:1.5px;margin:32px 0 16px">IMPLIED VALUATION PATH (BASE CASE)</div>
+    <table class="deck-table" style="max-width:700px;margin:0 auto">
+      <thead><tr><th>Milestone</th><th>Revenue</th><th>Multiple</th><th>Implied Value</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1A proof (Y1)</td><td class="num">$12M</td><td class="num">15-25x</td><td class="num green">$180-300M</td></tr>
+        <tr><td>Phase 1C (Y2)</td><td class="num">$48M</td><td class="num">15-20x</td><td class="num green">$720M-$960M</td></tr>
+        <tr><td>Phase 2 (Y3)</td><td class="num">$200M</td><td class="num">12-18x</td><td class="num green">$2.4-3.6B</td></tr>
+        <tr><td>Phase 3 (Y5)</td><td class="num">$600M</td><td class="num">10-15x</td><td class="num green">$6-9B</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:32px;font-size:15px;color:var(--text-bright);line-height:1.7;max-width:700px;margin-left:auto;margin-right:auto;margin-top:32px">
+      <span class="highlight">$1M invested costs you $650K after the Angel Tax Credit.</span><br>
+      First-mover advantage in a state where $50B is flowing but zero local operators exist.
+    </div>
+  </div>
+  <span class="slide-number">14 / 15</span>
+</section>
+
+
+<!-- ========== SLIDE 15: CONTACT ========== -->
+<section class="slide" id="contact-slide" style="background:radial-gradient(ellipse at 50% 50%, rgba(0,232,122,0.03) 0%, transparent 60%)">
+  <div class="slide-inner" style="text-align:center">
+    <div class="eyebrow" style="justify-content:center">Let's Build</div>
+    <div class="slide-title" style="max-width:none;margin:0 auto 12px;font-size:56px">Scott Tomsu</div>
+    <div style="font-size:16px;color:var(--text);margin-bottom:40px">Founder, Advantage Design &amp; Construction</div>
+    <div class="slide-divider center"></div>
+
+    <div style="margin-top:40px">
+      <div class="contact-item" style="font-size:18px;margin-bottom:16px"><a href="mailto:scott@adc3k.com">scott@adc3k.com</a></div>
+      <div class="contact-item">(337) 780-1535</div>
+      <div class="contact-item"><a href="https://adc3k.com" target="_blank">adc3k.com</a></div>
+      <div class="contact-item"><a href="https://louisianaai.net" target="_blank">louisianaai.net</a></div>
+      <div class="contact-item" style="color:var(--text-dim);margin-top:24px">1201 SE Evangeline Thruway, Lafayette, LA 70501</div>
+    </div>
+
+    <div style="margin-top:48px;font-size:14px;color:var(--text-bright);letter-spacing:1px">American-Owned. American-Built. American-Powered.</div>
+
+    <div class="confidential-badge" style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);border:1px solid rgba(255,107,122,0.3);padding:6px 16px;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-top:40px">Confidential -- Not for public distribution</div>
+  </div>
+  <span class="slide-number">15 / 15</span>
+</section>
+
+
+<script>
+// --- NAV DOT ACTIVE STATE ---
+(function() {
+  const dots = document.querySelectorAll('.nav-dots a');
+  const slides = [];
+  dots.forEach(d => {
+    const id = d.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) slides.push({ dot: d, el: el });
+  });
+
+  function update() {
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+    let active = slides[0];
+    for (const s of slides) {
+      const top = s.el.offsetTop;
+      if (scrollY >= top - vh * 0.4) active = s;
+    }
+    dots.forEach(d => d.classList.remove('active'));
+    if (active) active.dot.classList.add('active');
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>
