@@ -1,0 +1,33 @@
+# NVIDIA Certifications
+*Notion backup — 2026-03-28*
+
+> NCA-AIIO course materials (Units 1-14) and certification documents. Exam: 2026-03-13.
+## NCA-AIIO — AI Infrastructure and Operations
+50 questions, 60 minutes, 3 domains:
+D1: Essential AI Knowledge (38%) — Units 1-5
+D2: AI Infrastructure (40%) — Units 6-10
+D3: AI Operations (22%) — Units 11-14
+---
+### Course Materials (Units 1-14)
+PDFs are currently in General/Branding — drag them here in Notion to organize.
+
+Unit 01 — AI Transformation Across Industries
+Unit 02 — Introduction to Artificial Intelligence
+Unit 03 — Generative AI and Beyond
+Unit 04 — Accelerating AI with GPUs
+Unit 05 — AI Software Ecosystem
+Unit 06 — Data Center and Cloud Computing
+Unit 07 — Compute Platforms for AI
+Unit 08 — Networking for AI
+Unit 09 — Storage for AI
+Unit 10 — Energy Efficient Computing
+Unit 11 — Reference Architectures
+Unit 12 — AI in the Cloud
+Unit 13 — Provisioning, Monitoring and Management
+Unit 14 — Orchestration and Job Scheduling
+---
+### Other NVIDIA Certifications
+Add future certs here as you earn them (DGX-Ready, Omniverse, etc.)
+![](https://prod-files-secure.s3.us-west-2.amazonaws.com/5a788f09-7e31-81eb-a3dc-00039a1662d6/88e4fb61-41a4-4dc7-b3d3-0eea214fad79/A.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466434XTPT2%2F20260329%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260329T002758Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLXdlc3QtMiJGMEQCIGOkIghlp1wbmd36%2BFG7gM8hnU0vvaR1JPq5EkBjmA8TAiBd9PG1iGdMJ0bH4ETm6jUV46%2FG8ThjUfDN%2Fyc4LNhVUSr%2FAwgBEAAaDDYzNzQyMzE4MzgwNSIM8SjYzPBpcK%2FzKTMrKtwDmqCf3wh%2BCMJHgKMkNou%2BBB44Y1FLWt1nqquxySv7k5Q8Q1RSgJgrNzht8HBynxvR%2B%2BIyR9%2FnnypVLJYDf6Rn4YSvK6PpT4L0jQ0YSHe2wFMSoEW0F3%2BUBljmBN0lOYSIMkm2DhjcpadsZsdmIDhlsjSLc5BLY%2F8fXAm3ttV6dzfi0d81jBeTZMly8%2BdNt67KiPgyfbVbGu0q%2Bq3lR8mB7d%2FoUiNrxreyP%2FVyaPxv57gGEotfvKhkQJsLV8FMVWG2zzLugwdBe%2FrX03xDievYPdWyV%2Fu2xXZntA6A9R3gKVqbl4y3PPNaRBRgD5QBtYgQTYD%2B7ASHnhzoHKboWk7Yja7w%2Fet%2BdschIky%2BITvvIXJYKeK8%2BaZv%2FDC6cs4Y3W4W4p5AlSUNsjvCpp4V8%2FlePIrpwLNtEJKXildfbMLQs0EtS7NQF4rPxjemxQ0lG1JA0681f62JTbKLMfGh40E66TTLSazlt6s%2FrfbhNBvrQa6xQ1K7bQidvRXIV4FaaUOdUmoW20ix5LHIyeQvJZPuwVa2wxz4wj22G3SGTwt3dYFntFQVgIkS4utNElBcTQW6dxkO34AVRToODcjQouzcmwa8ApT%2FHUDiqVdpu5bEIZ2gSMuwt13VHDKDmP0wpdehzgY6pgFNVd0iRrc015IC1VViU4ReucxIsg5D6Wd%2Bm9pD9MGsKYYRfFTbSVS3pL5kKGr%2FeOjfMeYpIwcaleXnhaP1WbcDoFy6l%2FwqMJOm8%2BsXR9StCj2L2HatPO9IJ1YozzLCLVawdAn7nWk6jqvtE8gf9ZePydFE0vd3CQPT7mSI3JNy8vcxxHAMa2BTPiRt5AnvmH6V7Nm4gVejTM4pNpiNO2Atn2TmBLMr&X-Amz-Signature=4ee0a86e7310bb4eacbed9c6060b66225a4d7436d1af2028ced89945c5508c8e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![](https://prod-files-secure.s3.us-west-2.amazonaws.com/5a788f09-7e31-81eb-a3dc-00039a1662d6/2967dedf-a965-41ca-8e03-a7c4a45dc7e7/Electronics_cert.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466434XTPT2%2F20260329%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260329T002758Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLXdlc3QtMiJGMEQCIGOkIghlp1wbmd36%2BFG7gM8hnU0vvaR1JPq5EkBjmA8TAiBd9PG1iGdMJ0bH4ETm6jUV46%2FG8ThjUfDN%2Fyc4LNhVUSr%2FAwgBEAAaDDYzNzQyMzE4MzgwNSIM8SjYzPBpcK%2FzKTMrKtwDmqCf3wh%2BCMJHgKMkNou%2BBB44Y1FLWt1nqquxySv7k5Q8Q1RSgJgrNzht8HBynxvR%2B%2BIyR9%2FnnypVLJYDf6Rn4YSvK6PpT4L0jQ0YSHe2wFMSoEW0F3%2BUBljmBN0lOYSIMkm2DhjcpadsZsdmIDhlsjSLc5BLY%2F8fXAm3ttV6dzfi0d81jBeTZMly8%2BdNt67KiPgyfbVbGu0q%2Bq3lR8mB7d%2FoUiNrxreyP%2FVyaPxv57gGEotfvKhkQJsLV8FMVWG2zzLugwdBe%2FrX03xDievYPdWyV%2Fu2xXZntA6A9R3gKVqbl4y3PPNaRBRgD5QBtYgQTYD%2B7ASHnhzoHKboWk7Yja7w%2Fet%2BdschIky%2BITvvIXJYKeK8%2BaZv%2FDC6cs4Y3W4W4p5AlSUNsjvCpp4V8%2FlePIrpwLNtEJKXildfbMLQs0EtS7NQF4rPxjemxQ0lG1JA0681f62JTbKLMfGh40E66TTLSazlt6s%2FrfbhNBvrQa6xQ1K7bQidvRXIV4FaaUOdUmoW20ix5LHIyeQvJZPuwVa2wxz4wj22G3SGTwt3dYFntFQVgIkS4utNElBcTQW6dxkO34AVRToODcjQouzcmwa8ApT%2FHUDiqVdpu5bEIZ2gSMuwt13VHDKDmP0wpdehzgY6pgFNVd0iRrc015IC1VViU4ReucxIsg5D6Wd%2Bm9pD9MGsKYYRfFTbSVS3pL5kKGr%2FeOjfMeYpIwcaleXnhaP1WbcDoFy6l%2FwqMJOm8%2BsXR9StCj2L2HatPO9IJ1YozzLCLVawdAn7nWk6jqvtE8gf9ZePydFE0vd3CQPT7mSI3JNy8vcxxHAMa2BTPiRt5AnvmH6V7Nm4gVejTM4pNpiNO2Atn2TmBLMr&X-Amz-Signature=18f882ed5e00ec0a02df6db01751bd554f8d9081e4eca28624553fa0ed9a2afd&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![](https://prod-files-secure.s3.us-west-2.amazonaws.com/5a788f09-7e31-81eb-a3dc-00039a1662d6/f224fff2-cf47-428b-8487-9593bf4d600a/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466434XTPT2%2F20260329%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260329T002758Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLXdlc3QtMiJGMEQCIGOkIghlp1wbmd36%2BFG7gM8hnU0vvaR1JPq5EkBjmA8TAiBd9PG1iGdMJ0bH4ETm6jUV46%2FG8ThjUfDN%2Fyc4LNhVUSr%2FAwgBEAAaDDYzNzQyMzE4MzgwNSIM8SjYzPBpcK%2FzKTMrKtwDmqCf3wh%2BCMJHgKMkNou%2BBB44Y1FLWt1nqquxySv7k5Q8Q1RSgJgrNzht8HBynxvR%2B%2BIyR9%2FnnypVLJYDf6Rn4YSvK6PpT4L0jQ0YSHe2wFMSoEW0F3%2BUBljmBN0lOYSIMkm2DhjcpadsZsdmIDhlsjSLc5BLY%2F8fXAm3ttV6dzfi0d81jBeTZMly8%2BdNt67KiPgyfbVbGu0q%2Bq3lR8mB7d%2FoUiNrxreyP%2FVyaPxv57gGEotfvKhkQJsLV8FMVWG2zzLugwdBe%2FrX03xDievYPdWyV%2Fu2xXZntA6A9R3gKVqbl4y3PPNaRBRgD5QBtYgQTYD%2B7ASHnhzoHKboWk7Yja7w%2Fet%2BdschIky%2BITvvIXJYKeK8%2BaZv%2FDC6cs4Y3W4W4p5AlSUNsjvCpp4V8%2FlePIrpwLNtEJKXildfbMLQs0EtS7NQF4rPxjemxQ0lG1JA0681f62JTbKLMfGh40E66TTLSazlt6s%2FrfbhNBvrQa6xQ1K7bQidvRXIV4FaaUOdUmoW20ix5LHIyeQvJZPuwVa2wxz4wj22G3SGTwt3dYFntFQVgIkS4utNElBcTQW6dxkO34AVRToODcjQouzcmwa8ApT%2FHUDiqVdpu5bEIZ2gSMuwt13VHDKDmP0wpdehzgY6pgFNVd0iRrc015IC1VViU4ReucxIsg5D6Wd%2Bm9pD9MGsKYYRfFTbSVS3pL5kKGr%2FeOjfMeYpIwcaleXnhaP1WbcDoFy6l%2FwqMJOm8%2BsXR9StCj2L2HatPO9IJ1YozzLCLVawdAn7nWk6jqvtE8gf9ZePydFE0vd3CQPT7mSI3JNy8vcxxHAMa2BTPiRt5AnvmH6V7Nm4gVejTM4pNpiNO2Atn2TmBLMr&X-Amz-Signature=f4d1472271281f57c62ab7e137f20b93b1b01c855ad6c7bca96e7de0ce16db42&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
