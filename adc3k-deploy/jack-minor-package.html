@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADC — Deal Package for Jack Minor / Ornn</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060a10;
+  --bg2: #0a1018;
+  --surface: #0e1520;
+  --surface2: #141e2c;
+  --border: #1a2840;
+  --text: #8fa4bc;
+  --text-dim: #4a6078;
+  --text-bright: #d0dce8;
+  --text-white: #f0f4f8;
+  --green: #00e87a;
+  --green-dim: rgba(0, 232, 122, 0.12);
+  --accent: #3b9eff;
+  --accent-dim: rgba(59, 158, 255, 0.10);
+  --red: #ff6b7a;
+  --amber: #f5a623;
+  --amber-dim: rgba(245, 166, 35, 0.10);
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: 'CONFIDENTIAL — NOT FOR PUBLIC DISTRIBUTION';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 3.5vw;
+  font-weight: 700;
+  color: rgba(255,255,255,0.02);
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(6,10,16,0.95);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--green); font-weight: 700; letter-spacing: 0.1em; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-size: 0.8rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text-bright); }
+
+/* SECTIONS */
+section {
+  min-height: 100vh;
+  padding: 100px 2rem 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+section.tight { min-height: auto; padding: 80px 2rem 60px; }
+
+/* HERO */
+.hero {
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 60px;
+}
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.hero h1 span { color: var(--green); }
+.hero-sub {
+  font-size: 1.2rem;
+  color: var(--text);
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.hero-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+/* SECTION HEADERS */
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.section-title span { color: var(--green); }
+.section-intro {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 720px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+/* STACK */
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+.stack-layer {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  transition: border-color 0.2s;
+}
+.stack-layer:hover { border-color: var(--accent); }
+.stack-layer.featured {
+  border-color: var(--amber);
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(245,166,35,0.05) 100%);
+}
+.stack-layer.featured .layer-num { color: var(--amber); border-color: var(--amber); }
+.stack-layer.top-layer {
+  border-color: var(--green);
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(0,232,122,0.05) 100%);
+}
+.stack-layer.top-layer .layer-num { color: var(--green); border-color: var(--green); }
+.layer-left { display: flex; flex-direction: column; gap: 0.5rem; }
+.layer-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  width: fit-content;
+}
+.layer-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+.layer-who {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.layer-body { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
+.layer-body strong { color: var(--text-bright); }
+
+/* CARDS */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.card-title { font-size: 0.9rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.5rem; }
+.card-body { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+.card-body strong { color: var(--green); }
+
+/* MOAT BOX */
+.moat-box {
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(59,158,255,0.05) 100%);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+.moat-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.moat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.moat-item { display: flex; flex-direction: column; gap: 0.25rem; }
+.moat-item-title { font-size: 0.85rem; font-weight: 700; color: var(--text-bright); }
+.moat-item-body { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+
+/* NUMBERS TABLE */
+.numbers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+.numbers-table th {
+  background: var(--surface2);
+  color: var(--text-dim);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.numbers-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.numbers-table tr:last-child td { border-bottom: none; }
+.numbers-table .highlight td { color: var(--text-bright); background: rgba(0,232,122,0.04); }
+.num-green { color: var(--green); font-weight: 600; }
+.num-amber { color: var(--amber); font-weight: 600; }
+
+/* CREDIT BOX */
+.credit-box {
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.credit-big { font-size: 2.5rem; font-weight: 700; color: var(--green); font-family: 'IBM Plex Mono', monospace; }
+.credit-label { font-size: 0.85rem; color: var(--text-bright); line-height: 1.5; }
+
+/* DEMAND GRID */
+.demand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+.demand-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+}
+.demand-num { font-size: 1.5rem; font-weight: 700; color: var(--green); font-family: 'IBM Plex Mono', monospace; }
+.demand-label { font-size: 0.8rem; color: var(--text); margin-top: 0.25rem; }
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-phase {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  text-transform: uppercase;
+  padding-top: 0.2rem;
+}
+.timeline-title { font-size: 0.95rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.4rem; }
+.timeline-body { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+
+/* FIRST MOVER */
+.firstmover {
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(168,85,247,0.06) 100%);
+  border: 1px solid var(--purple);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+.firstmover-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--purple);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.firstmover-items { display: flex; flex-direction: column; gap: 0.75rem; }
+.firstmover-item { display: flex; gap: 1rem; align-items: start; }
+.firstmover-dot { color: var(--purple); font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0; }
+.firstmover-text { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+.firstmover-text strong { color: var(--text-bright); }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.contact-name { font-size: 1rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.25rem; }
+.contact-role { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; font-family: 'IBM Plex Mono', monospace; }
+.contact-detail { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+.contact-detail a { color: var(--green); text-decoration: none; }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .stack-layer { grid-template-columns: 1fr; }
+  .timeline-item { grid-template-columns: 1fr; }
+  .timeline-phase { padding-bottom: 0; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ADC // DEAL PACKAGE</div>
+  <div class="nav-links">
+    <a href="#stack">The Stack</a>
+    <a href="#opportunity">Opportunity</a>
+    <a href="#assets">Assets</a>
+    <a href="#numbers">Numbers</a>
+    <a href="#path">Path Forward</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="top">
+  <div class="hero">
+    <div class="hero-label">Prepared for Jack Minor / Ornn — Confidential</div>
+    <h1>Louisiana's<br><span>American-Owned</span><br>AI Factory</h1>
+    <p class="hero-sub">Advantage Design & Construction is building the physical layer of AI infrastructure in Louisiana — the only American-owned, NVIDIA-compliant token factory between Houston and Atlanta.</p>
+    <p class="hero-meta">MARCH 2026 &nbsp;·&nbsp; $5M SEED ROUND &nbsp;·&nbsp; LAFAYETTE, LOUISIANA</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PAGE 1: THE STACK -->
+<section id="stack">
+  <div class="section-label">Page 01 — Deal Structure</div>
+  <h2 class="section-title">The Capital <span>Stack</span></h2>
+  <p class="section-intro">Every layer of this deal is defined. Every role is filled or identified. Ornn sits at the critical position — the layer that connects world-class physical infrastructure to the capital that funds it.</p>
+
+  <div class="stack">
+
+    <div class="stack-layer top-layer">
+      <div class="layer-left">
+        <span class="layer-num">LAYER 01</span>
+        <div class="layer-title">Sponsor</div>
+        <div class="layer-who">Scott Tomsu / ADC</div>
+      </div>
+      <div class="layer-body">
+        <strong>The only person in Louisiana who could build this.</strong> Scott Tomsu is a Licensed General Contractor, FAA Private Pilot, IMCA ROV Supervisor, Commercial Diver, and 25-year veteran of the most demanding remote operations environments on the planet — deepwater robotics in West Africa, Gulf of America, Brazil, Trinidad, Canada, and Equatorial Guinea. He ran ROV operations for ExxonMobil at 3,000+ meters depth. He built a full medical center with X-ray room from the ground up. He built 80+ residential homes across Lafayette. He managed precision engineering under extreme conditions as a multi-time drag racing champion.<br><br>
+        <strong>This is not a tech pitch from a programmer. This is a construction project from a builder who has operated mission-critical systems his entire career.</strong> MARLIE I is already owned. 22 US vendors are spec'd. 24 engineering blueprints are complete. The permits get pulled in-house. The build gets managed in-house. The operations get run in-house. Nobody hires this out — because nobody else in this market has Scott Tomsu's combination of construction licenses, field operations experience, and deep Louisiana roots. ADC was born here. It is building out from here.
+      </div>
+    </div>
+
+    <div class="stack-layer featured">
+      <div class="layer-left">
+        <span class="layer-num">LAYER 02</span>
+        <div class="layer-title">Placement Agent</div>
+        <div class="layer-who">Jack Minor / Ornn</div>
+      </div>
+      <div class="layer-body">
+        <strong>The architect of the deal — and the most connected layer in the stack.</strong> Ornn built the world's first regulated compute derivatives exchange, now listed on Bloomberg. Their OCPI benchmark gives GPU hardware a live market price for the first time in history. Ornn's Residual Value Swap (RVS) insures GPU hardware against depreciation, taking lender advance rates from 50% to 70–80% on a $3.5M rack — transforming a hardware risk into a bankable asset.<br><br>
+        Jack Minor brings something rare: <strong>the academic credibility and institutional network to open doors that money alone cannot.</strong> With an MIT background and deep ties to the institutional investment and higher education world, Jack is uniquely positioned to broker introductions not just to capital partners — but to university leadership, hospital systems, and the research community that will become ADC's anchor tenants. He structures the financing, connects the players, and takes a standard placement fee when capital closes.<br><br>
+        <strong>Jack does not just introduce ADC to investors. He introduces ADC to the right investors — and then helps close the room.</strong>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="layer-left">
+        <span class="layer-num">LAYER 03</span>
+        <div class="layer-title">Capital Partner</div>
+        <div class="layer-who">The Check Writer</div>
+      </div>
+      <div class="layer-body">
+        <strong>The most powerful seat at the table.</strong> The capital partner does not just fund ADC — they own a position in Louisiana's only American-built AI infrastructure platform. $5M seed. Louisiana Angel Tax Credit returns <strong>35% on day one</strong> — a $1M check costs $650K after state credits. MARLIE I is owned collateral. Trappeys is the acquisition target.<br><br>
+        ADC is actively seeking capital partners from the <strong>healthcare and university sectors</strong> — and not only because they write checks. A hospital system CIO or university foundation board member who invests in ADC becomes more than a financial partner — <strong>they become an anchor tenant.</strong> Their institution gets first access to HIPAA-compliant on-premise AI compute, research GPU infrastructure, and a seat at the table as Louisiana's AI factory is built around them. The investor and the customer are the same person. That is a deal structure no one else in this market is offering.<br><br>
+        <strong>First capital partner in gets preferred equity position on every future ADC project</strong> — Willow Glen (100+ MW), flare gas deployments, pod manufacturing. This is the ground floor of a $500M+ infrastructure platform built by the only operator who was already here when the money arrived.
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="layer-left">
+        <span class="layer-num">LAYER 04</span>
+        <div class="layer-title">Demand</div>
+        <div class="layer-who">Already Live</div>
+      </div>
+      <div class="layer-body">
+        <strong>The customers are already here.</strong> 46 Louisiana universities registered at louisianaai.net. 70 school districts registered. City of Lafayette — MARLIE I, Trappeys, and KLFT airport are all in the city's AI infrastructure plan. Healthcare, first responders, state government. ROXY — ADC's self-hosted AI agent — is running on our own GPU right now. Call her: <strong>(337) 486-3149</strong>. The demand layer is not a projection. It's a pipeline with names, websites, and registered users.
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="layer-left">
+        <span class="layer-num">LAYER 05</span>
+        <div class="layer-title">Energy</div>
+        <div class="layer-who">In Place</div>
+      </div>
+      <div class="layer-body">
+        <strong>Cheapest power in America.</strong> First Solar manufacturing plant — New Iberia, LA, 30 miles from Trappeys. Series 7 TR1 panels coming off the line. Henry Hub natural gas hub — 40 miles away, 13 pipelines, global benchmark pricing, $0.027–$0.035/kWh on-site generation. Five O&G operators within 30 miles with 593,000 MCF/month of stranded flare gas — <strong>$0 fuel cost</strong> on containerized deployments. Crusoe Energy proved this model at $10B+ valuation. In Louisiana, the field is wide open.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PAGE 2: THE OPPORTUNITY -->
+<section id="opportunity">
+  <div class="section-label">Page 02 — The Opportunity</div>
+  <h2 class="section-title">$50 Billion Is Flowing Into Louisiana.<br><span>None of It Is Louisiana-Owned.</span></h2>
+  <p class="section-intro">Amazon, Meta, Hut 8, Nscale. Every dollar of AI infrastructure investment in Louisiana is controlled by foreign or out-of-state companies. Every dollar of profit leaves the state. ADC is the only American-owned, Louisiana-built operator in the pipeline.</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🇨🇦</div>
+      <div class="card-title">Hut 8 — $12.5B River Bend</div>
+      <div class="card-body">Canadian Bitcoin miner. <strong>Zero NVIDIA certifications.</strong> Land scandal. 75 promised jobs. Trump joint venture. Profit leaves Canada.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🇬🇧</div>
+      <div class="card-title">Nscale — $14.6B Monarch</div>
+      <div class="card-body">London-headquartered. 730,000+ GPUs. Microsoft and OpenAI backing. <strong>Zero Louisiana presence.</strong> Zero Louisiana workforce.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏔️</div>
+      <div class="card-title">Amazon / Meta — $20B+</div>
+      <div class="card-body">Seattle and Menlo Park. Louisiana's land, Louisiana's power infrastructure, Louisiana's tax breaks. <strong>Zero locally-owned benefit.</strong></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🇺🇸</div>
+      <div class="card-title">ADC — Lafayette, Louisiana</div>
+      <div class="card-body">American-owned. Louisiana-built. Every vendor US-manufactured. <strong>Every dollar of profit stays in Louisiana.</strong> Scott Tomsu's family has been here for decades. This is home.</div>
+    </div>
+  </div>
+
+  <div class="moat-box" style="margin-top:2.5rem; border-color: var(--amber); background: linear-gradient(135deg, var(--surface) 0%, rgba(245,166,35,0.04) 100%);">
+    <div class="moat-title" style="color:var(--amber);">CERAWeek 2026 Validated ADC's Entire Architecture</div>
+    <div class="moat-grid">
+      <div class="moat-item">
+        <div class="moat-item-title">800V DC Confirmed</div>
+        <div class="moat-item-body">Multiple major players confirmed 800V DC is the standard. ADC designed to spec from day one.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Behind-the-Meter is Standard</div>
+        <div class="moat-item-body">On-site generation is now the consensus. Grid dependency is a liability.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Tokens-Per-Watt is the Metric</div>
+        <div class="moat-item-body">Not PUE. Not uptime. Tokens per watt. ADC's power model was built for exactly this.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Micro AI Factories Are Viable</div>
+        <div class="moat-item-body">Not everything needs 200 MW. ADC's phased model — starting at MARLIE I — is the validated path.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PAGE 3: THE ASSETS -->
+<section id="assets">
+  <div class="section-label">Page 03 — What ADC Already Owns</div>
+  <h2 class="section-title">This Is Not a Concept.<br><span>It's a Construction Project.</span></h2>
+  <p class="section-intro">The engineering is done. The vendors are spec'd. The sites are identified. The software is running. ADC is not asking for money to figure out what to build — ADC is asking for money to break ground on what is already fully designed.</p>
+
+  <div class="cards">
+    <div class="card" style="border-color:var(--green);">
+      <div class="card-title" style="color:var(--green);">MARLIE I — OWNED</div>
+      <div class="card-body">1201 SE Evangeline Thruway, Lafayette. <strong>Scott owns this outright.</strong> Ready for deployment now. No acquisition, no lease, no negotiation. Serves as collateral for equipment financing. Site Score: 97 Tier S.</div>
+    </div>
+    <div class="card" style="border-color:var(--accent);">
+      <div class="card-title" style="color:var(--accent);">Trappeys Cannery — IDENTIFIED</div>
+      <div class="card-body">112,500 sq ft across 4 buildings. Historic hot sauce and yam cannery. 2.05 MW solar capacity. Water tower cooling. Competing developer stalled 5 years — <strong>~$1M acquisition.</strong> Site Score: 105 Tier S.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Engineering Package — COMPLETE</div>
+      <div class="card-body">22 US vendors spec'd with primary and backup for every component. 24 engineering blueprints completed. Full BOM priced for Phase 1. 800V DC architecture designed end-to-end.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">ROXY — LIVE NOW</div>
+      <div class="card-body">ADC's AI agent runs on our own GPU hardware today. 27 tools. Self-hosted inference. <strong>Call her: (337) 486-3149.</strong> This is ADC's own hardware proving the software layer works.</div>
+    </div>
+  </div>
+
+  <!-- MOAT BOX -->
+  <div class="moat-box">
+    <div class="moat-title">The Site Intelligence Moat</div>
+    <p style="font-size:0.95rem; color:var(--text-bright); margin-bottom:1.25rem; line-height:1.7;">Most investors back someone who still has to figure out where to build. ADC already has a scored database of every viable AI factory site in Louisiana — pipeline corridor sites and river corridor sites, catalogued, ranked, and ready. This is not something a company from Seattle or London can replicate in a year.</p>
+    <div class="moat-grid">
+      <div class="moat-item">
+        <div class="moat-item-title">16 Pipeline Corridor Sites</div>
+        <div class="moat-item-body">Scored across power access, fiber, water, zoning, vendor proximity, and pipeline distance.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">15 River Corridor Sites</div>
+        <div class="moat-item-body">Mississippi River and Atchafalaya basin sites scored for cooling water access and industrial infrastructure.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Willow Glen — Score 94 Tier A</div>
+        <div class="moat-item-body">Former 2,200 MW Entergy station, St. Gabriel. 700 acres. 230kV substation on-site. Mississippi River cooling. Henry Hub pipeline on property.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Already Home Base</div>
+        <div class="moat-item-body">Scott Tomsu has operated in Louisiana for 25+ years. The relationships, the permits, the vendors — they're not being built. They already exist.</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-dim); margin-top:1.25rem; line-height:1.6;">When it's time to deploy the next $50M, ADC doesn't need six months of site selection. The work is done. The capital partner gets access to that entire pipeline — not just one site.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PAGE 4: THE NUMBERS -->
+<section id="numbers">
+  <div class="section-label">Page 04 — The Numbers</div>
+  <h2 class="section-title">What the <span>Money Does</span></h2>
+  <p class="section-intro">$5M seed. MARLIE I is owned collateral. Trappeys is the acquisition. First tokens flowing within 6–9 months of groundbreaking. The Louisiana Angel Tax Credit changes the math on day one.</p>
+
+  <div class="credit-box">
+    <div class="credit-big">35%</div>
+    <div class="credit-label"><strong style="color:var(--text-white);">Louisiana Angel Tax Credit — Day One.</strong><br>A $1M investment costs the capital partner $650,000 after state credits.<br>A $5M investment costs $3,250,000. The return starts before ADC earns a dollar.</div>
+  </div>
+
+  <!-- FULL INCENTIVE STACK -->
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:0 0 0.75rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em; text-transform:uppercase;">The Louisiana Incentive Stack — Federal + State + Local</h3>
+  <p style="font-size:0.9rem; color:var(--text); line-height:1.7; margin-bottom:1.5rem;">Most investors coming into Louisiana do not know what is available. The tax incentive stack at ADC's sites is not a minor benefit — it is a structural financial advantage that changes the economics of every dollar invested. No other state in the country offers this combination.</p>
+
+  <h4 style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:0.5rem;">FEDERAL INCENTIVES</h4>
+  <table class="numbers-table" style="margin-bottom:1.5rem;">
+    <thead><tr><th>Incentive</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Solar Investment Tax Credit (ITC)</td><td class="num-green">30% base</td><td>Direct credit against federal tax liability on solar installation CapEx</td></tr>
+      <tr><td>+ Domestic Content Bonus</td><td class="num-green">+10%</td><td>First Solar panels manufactured in New Iberia, LA — 30 miles from site. Qualifies automatically.</td></tr>
+      <tr><td>+ Energy Community Bonus</td><td class="num-green">+10%</td><td>Willow Glen is a former fossil fuel power site (2,200 MW Entergy station). Almost certain to qualify.</td></tr>
+      <tr class="highlight"><td>Total Solar ITC Potential</td><td class="num-green">Up to 50%</td><td>Half the solar CapEx returned as federal tax credit. Must begin construction by July 2026.</td></tr>
+      <tr><td>Federal Historic Tax Credit</td><td class="num-green">20%</td><td>20% of qualified rehabilitation costs at Trappeys Cannery. Stacks with state credit.</td></tr>
+      <tr><td>100% First-Year MACRS Depreciation</td><td class="num-green">Full value Y1</td><td>Solar equipment fully depreciated in year one. Accelerates investor tax benefit.</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; color:var(--amber); text-transform:uppercase; margin-bottom:0.5rem;">STATE OF LOUISIANA INCENTIVES</h4>
+  <table class="numbers-table" style="margin-bottom:1.5rem;">
+    <thead><tr><th>Incentive</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Louisiana Angel Tax Credit</td><td class="num-amber">35% day one</td><td>State tax credit on qualified investments. $1M invested = $650K net cost to investor. No waiting.</td></tr>
+      <tr><td>ITEP — Industrial Tax Exemption</td><td class="num-amber">80% abatement</td><td>80% property tax abatement on new capital investment for 10 years. Mega-projects ($150M+) qualify for 93–100%. $8–16M savings on Phase 1.</td></tr>
+      <tr><td>Act 730 — Sales Tax Exemption</td><td class="num-amber">100% exempt</td><td>State AND local sales/use tax on all equipment and software. 20-year term + 10-year renewal. Requires $200M investment and 50 jobs by July 2029. ADC hits this at Phase 2.</td></tr>
+      <tr><td>State Historic Tax Credit</td><td class="num-amber">25%</td><td>25% of rehab costs at Trappeys — stacks directly on top of the 20% federal credit. Combined: 45% of every dollar spent restoring Trappeys comes back.</td></tr>
+      <tr><td>Quality Jobs Program</td><td class="num-amber">5–6% rebate</td><td>Annual payroll rebate for 10 years on all new qualifying jobs. Stacks with other credits.</td></tr>
+      <tr><td>LED FastStart</td><td class="num-amber">Free</td><td>State-funded customized workforce recruitment, screening, and training. No cost to ADC.</td></tr>
+      <tr><td>R&amp;D Tax Credit</td><td class="num-amber">30%</td><td>30% of qualified R&amp;D spending — unlocked through UL Lafayette research partnership.</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; color:var(--purple); text-transform:uppercase; margin-bottom:0.5rem;">LOCAL / PARISH INCENTIVES</h4>
+  <table class="numbers-table" style="margin-bottom:1.5rem;">
+    <thead><tr><th>Incentive</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>PILOT Agreement</td><td class="num-green">Negotiated</td><td>Payment in Lieu of Taxes — negotiated directly with Iberville Parish IDB. What Hut 8 ($2.5B), Meta, and Amazon all use in Louisiana. No NAICS restriction. Iberville Parish has $48.8M in active PILOT contracts — they know how to do this deal.</td></tr>
+      <tr><td>Enterprise Zone Credit</td><td class="num-green">$2,500/job</td><td>One-time state and local credit per new qualifying job created.</td></tr>
+      <tr><td>LUS Municipal Power (Lafayette)</td><td class="num-green">$0.12/kWh</td><td>Lafayette Utilities System — municipal utility, not LPSC-regulated. City Council sets rates. ADC builds relationship directly with city government.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="moat-box" style="border-color:var(--green); background: linear-gradient(135deg, var(--surface) 0%, rgba(0,232,122,0.04) 100%); margin-bottom:2.5rem;">
+    <div class="moat-title" style="color:var(--green);">Combined Incentive Impact by Phase</div>
+    <table class="numbers-table" style="margin:0;">
+      <thead><tr><th>Phase</th><th>ITEP / PILOT (10yr)</th><th>Act 730 (20yr)</th><th>Solar ITC</th><th>Historic Credits</th><th>Total Estimated Savings</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1 — 12 MW</td><td class="num-amber">$8–16M</td><td>N/A (below $200M)</td><td class="num-green">$2–5M</td><td class="num-green">$5–12M</td><td class="num-green"><strong>$15–33M</strong></td></tr>
+        <tr><td>Phase 2 — 50 MW</td><td class="num-amber">$20–40M</td><td class="num-green">$40–80M</td><td class="num-green">$15–30M</td><td>—</td><td class="num-green"><strong>$75–150M</strong></td></tr>
+        <tr class="highlight"><td>Phase 3 — 100+ MW</td><td class="num-amber">$40–80M</td><td class="num-green">$80–160M</td><td class="num-green">$30–60M</td><td>—</td><td class="num-green"><strong>$150–300M</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.8rem; color:var(--text-dim); margin-top:1rem; line-height:1.5;">These incentives are not included in the revenue projections above. They stack on top of operating income. At Phase 3 scale, the incentive stack alone exceeds the entire seed round investment — many times over.</p>
+  </div>
+
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:2rem 0 0.75rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em;">USE OF PROCEEDS — $5M SEED</h3>
+  <table class="numbers-table">
+    <thead>
+      <tr><th>Use</th><th>Amount</th><th>What It Gets</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Trappeys Cannery Acquisition</td><td class="num-amber">~$1M</td><td>112,500 sq ft. 4 buildings. Solar-ready. Competing developer stalled 5 years.</td></tr>
+      <tr><td>MARLIE I — First Deployment</td><td class="num-amber">~$2M</td><td>First racks operational. Gas connection. LFT Fiber. LUS power. Proof of concept live.</td></tr>
+      <tr><td>Equipment Deposits</td><td class="num-amber">~$1M</td><td>Cat G3516J genset deposit. Delta 660kW rack. Locks hardware allocation.</td></tr>
+      <tr class="highlight"><td>Operating Runway</td><td class="num-green">~$1M</td><td>18 months ops. Scott + Josh + VP Operations hire.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:2rem 0 0.75rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em;">REVENUE PROJECTIONS — BASE CASE</h3>
+  <table class="numbers-table">
+    <thead>
+      <tr><th>Phase</th><th>Capacity</th><th>Annual Revenue</th><th>EBITDA Margin</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Phase 1A — First Racks</td><td>3 MW</td><td class="num-amber">$12M</td><td>32%</td></tr>
+      <tr><td>Phase 1C — MARLIE I + Trappeys Full</td><td>12 MW</td><td class="num-amber">$48M</td><td>80%</td></tr>
+      <tr><td>Phase 2 — Campus</td><td>50 MW</td><td class="num-green">$200M</td><td>85%</td></tr>
+      <tr class="highlight"><td>Phase 3 — Full Build</td><td>100+ MW</td><td class="num-green">$600M</td><td>83%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:2rem 0 0.75rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em;">NEOCLOUD VALUATION BENCHMARKS</h3>
+  <table class="numbers-table">
+    <thead>
+      <tr><th>Company</th><th>Valuation</th><th>Model</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>CoreWeave</td><td class="num-green">$71B</td><td>BMaaS + managed inference</td><td>NVIDIA strategic investor</td></tr>
+      <tr><td>Nebius</td><td class="num-green">$24B</td><td>"Token Factory"</td><td>NVIDIA $2B stake</td></tr>
+      <tr><td>Crusoe</td><td class="num-green">$10B+</td><td>Energy-first (same as ADC)</td><td>NVIDIA Preferred Partner</td></tr>
+      <tr class="highlight"><td>ADC (implied, base Y3)</td><td class="num-amber">$2.4–3.6B</td><td>Token factory, energy-first</td><td>Pre-revenue at $5M seed</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:2rem 0 0.75rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em;">POWER COST ADVANTAGE</h3>
+  <table class="numbers-table">
+    <thead>
+      <tr><th>Source</th><th>Cost/kWh</th><th>ADC Advantage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>US industrial grid average</td><td>$0.073</td><td>—</td></tr>
+      <tr><td>ADC Phase 1 (on-site gas + solar)</td><td class="num-amber">$0.058–0.068</td><td>20–30% below grid</td></tr>
+      <tr class="highlight"><td>ADC at scale (100+ MW, CCGT)</td><td class="num-green">$0.040–0.050</td><td>30–45% below grid</td></tr>
+      <tr><td>ADC flare gas deployments</td><td class="num-green">~$0.00</td><td>$0 fuel cost — waste gas</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="divider">
+
+<!-- PAGE 5: PATH FORWARD -->
+<section id="path">
+  <div class="section-label">Page 05 — Path Forward</div>
+  <h2 class="section-title">The <span>First Mover</span> Wins This Market</h2>
+  <p class="section-intro">There is no other Louisiana-owned AI infrastructure operator. The site intelligence is built. The engineering is done. The demand is registered. The only thing between here and groundbreaking is the capital partner.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-phase">Now</div>
+      <div>
+        <div class="timeline-title">Capital Partner Closes</div>
+        <div class="timeline-body">$5M seed. Louisiana Angel Tax Credit locks in 35% return on day one. MARLIE I is collateral. Trappeys acquisition begins. Jack structures the close.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase">Month 1–3</div>
+      <div>
+        <div class="timeline-title">Trappeys Acquisition + MARLIE I Buildout</div>
+        <div class="timeline-body">Purchase Trappeys Cannery. Pour pad at MARLIE I. Connect ATMOS gas, LFT Fiber, LUS power. First Cat G3516J genset deposit. First Delta rack order. Licensed GC pulls all permits in-house.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase">Month 6–9</div>
+      <div>
+        <div class="timeline-title">First Tokens Flowing</div>
+        <div class="timeline-body">MARLIE I operational. First NVIDIA racks live. Dynamo inference OS deployed. First token revenue. ROXY running on ADC's own hardware. Proof of concept becomes proof of revenue.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase">Year 2</div>
+      <div>
+        <div class="timeline-title">Trappeys Full Build + Series A</div>
+        <div class="timeline-body">Trappeys Building 2 operational. 12 MW capacity. $48M base case revenue. Series A raise — capital partner from seed has preferred position. Willow Glen permitting begins.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-phase">Year 3–5</div>
+      <div>
+        <div class="timeline-title">Louisiana's AI Factory at Scale</div>
+        <div class="timeline-body">Willow Glen campus — 50–100+ MW, former 2,200 MW Entergy station. $200M–$600M revenue. NVIDIA reference site. Pod manufacturing at Cajun Industries. Flare gas deployments statewide.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="firstmover">
+    <div class="firstmover-title">First Capital Partner — What You Get</div>
+    <div class="firstmover-items">
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>35% Louisiana Angel Tax Credit on day one.</strong> A $1M check costs $650K. Built-in return before ADC earns a dollar.</div>
+      </div>
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>Preferred equity position on all future ADC projects.</strong> Willow Glen (100+ MW), flare gas deployments, pod manufacturing. This is not a single-site bet — it's a platform.</div>
+      </div>
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>MARLIE I as collateral.</strong> Owned outright by Scott Tomsu. Real property, real asset, real security.</div>
+      </div>
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>Historic Tax Credits at Trappeys — 45% of rehab costs returned.</strong> Federal + state stack. The building pays for part of its own restoration.</div>
+      </div>
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>GPU hardware protected by Ornn RVS.</strong> Residual Value Swap guarantees minimum resale price. Eliminates depreciation risk. Lenders advance 70–80% vs 50% without it.</div>
+      </div>
+      <div class="firstmover-item">
+        <div class="firstmover-dot">◆</div>
+        <div class="firstmover-text"><strong>Ground floor of a $2.4–3.6B implied valuation at Year 3.</strong> CoreWeave, Nebius, Crusoe — all energy-first or NVIDIA-native neoclouds — validate the multiple. ADC is pre-revenue at seed.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <h3 style="font-size:1rem; color:var(--text-bright); margin:3rem 0 0; font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em; text-transform:uppercase;">Contact</h3>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-name">Scott Tomsu</div>
+      <div class="contact-role">Founder — Sponsor Layer</div>
+      <div class="contact-detail">
+        Advantage Design & Construction<br>
+        Lafayette, Louisiana<br>
+        <a href="tel:3377801535">(337) 780-1535</a><br>
+        <a href="mailto:scott@adc3k.com">scott@adc3k.com</a><br>
+        <a href="https://adc3k.com">adc3k.com</a>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-name">Jack Minor</div>
+      <div class="contact-role">COO — Placement Agent Layer</div>
+      <div class="contact-detail">
+        Ornn AI<br>
+        Compute Derivatives Exchange<br>
+        OCPI · Bloomberg-Listed · RVS<br>
+        <a href="https://ornn.com">ornn.com</a>
+      </div>
+    </div>
+    <div class="contact-card" style="border-color:var(--green);">
+      <div class="contact-name">ROXY — Live Now</div>
+      <div class="contact-role">ADC AI Agent — Running on Our Own GPU</div>
+      <div class="contact-detail">
+        ROXY is ADC's self-hosted AI agent — proof that our own GPU hardware runs production AI today. She handles sales, lead qualification, and business inquiries for ADC's AI Advantage platform.<br><br>
+        <strong style="color:var(--green);">This is the proof of concept.</strong> The same hardware that runs ROXY is the hardware ADC is deploying at scale.<br><br>
+        <a href="tel:3374863149" style="font-size:1.1rem; font-weight:700;">(337) 486-3149</a>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.75rem; color:var(--text-dim); margin-top:3rem; line-height:1.6; font-family:'IBM Plex Mono',monospace; text-align:center;">
+    CONFIDENTIAL — PREPARED FOR JACK MINOR / ORNN — MARCH 2026<br>
+    NOT FOR PUBLIC DISTRIBUTION — ALL PROJECTIONS ARE ESTIMATES AND SUBJECT TO CHANGE
+  </p>
+</section>
+
+</body>
+</html>
