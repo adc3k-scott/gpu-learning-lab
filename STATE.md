@@ -1,5 +1,59 @@
 # Mission Control — Project State
-Last updated: 2026-03-26 (end of session)
+Last updated: 2026-03-28 (end of session)
+
+---
+
+## SESSION SUMMARY — March 29, 2026
+
+### DSX Blueprint — Docker Container Path, Almost Done
+
+**What got done:**
+- Docker Desktop installed on Windows desktop machine
+- WSL2 Ubuntu installed
+- DSX repo cloned and built successfully (BUILD RELEASE SUCCEEDED)
+- Dockerfile.dsx written with correct structure
+- `scottay007/dsx-kit:v2` built and pushed — BROKEN (exits immediately, wrong CMD)
+- `scottay007/dsx-kit:stable` built and pushed — stays alive but no DSX runtime
+- v3 build started but WSL crashed during kit-kernel copy step
+
+**What's left — ONE SESSION TO FINISH:**
+- WSL reinstalled fresh on desktop (blank /root/)
+- Resume from `memory/projects/dsx_master_reference.md` → "To complete v3 build"
+- Use Gordon on laptop for build steps
+- Test image locally BEFORE deploying to RunPod
+- Deploy via UI (RunPod API broken for podFindAndDeployOnDemand)
+- Download 32GB content pack after pod boots
+
+**Pods:**
+- `boring_violet_woodpecker` (6e66lq53yhvbhz) — STOPPED, RTX PRO 6000, safe to resume
+- `roxy-brain` (g5t4hxa9rjm7cm) — RUNNING, not touched
+
+**Money burned today:** Multiple pod restarts, crash loops, wasted GPU time. All preventable.
+
+**DO NOT start a new pod until `scottay007/dsx-kit:v3` is built, tested locally, and confirmed staying alive.**
+
+---
+
+## SESSION SUMMARY — March 28, 2026
+
+### DSX Blueprint — Two Days Wasted, Lesson Locked
+
+Attempted to run NVIDIA Omniverse DSX Blueprint on RunPod pytorch container. Spent two days on a path that can never work.
+
+**Root cause:** RunPod pytorch containers do not expose `/dev/nvidia-modeset`. NVIDIA's Kit SDK requires Vulkan, which requires that device. Every launch ends with SIGSEGV. Cannot be fixed.
+
+**What was right in front of us the whole time:** GitHub README bottom link:
+`build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories`
+NVIDIA hosts the full DSX Blueprint as a live web experience. No setup. No pod. Open in Chrome.
+
+**What was built (on aido-workspace 55alwnycav):**
+- `/workspace/omniverse-dsx-blueprint-for-ai-factories` — cloned + built (493 seconds, BUILD RELEASE SUCCEEDED)
+- Artifacts preserved if Docker approach ever pursued
+
+**pod weak_sapphire_finch (aaf3uql6xnao9o):** STOPPED. Billing halted.
+**roxy-brain (g5t4hxa9rjm7cm):** RUNNING. Not touched.
+
+**Next for DSX:** Open `build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories` in Chrome. That's it.
 
 ---
 
