@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NVIDIA Meeting — Cheat Sheet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0a0e14;color:#b0bec5;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(10,14,20,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:700;color:#e8edf2;letter-spacing:0.5px}
+.header h1 span{color:#76b900}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;background:#76b900;color:#0a0e14}
+
+.tabs{position:sticky;top:53px;z-index:99;background:rgba(10,14,20,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1a2436;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 12px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 16px;font-size:12px;font-weight:700;color:#607080;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
+.tab.active{color:#76b900;border-bottom-color:#76b900}
+.tab:hover{color:#e8edf2}
+
+.panel{display:none}.panel.active{display:block}
+
+.section-title{padding:20px 20px 8px;font-size:13px;font-weight:700;color:#76b900;letter-spacing:0.8px;text-transform:uppercase}
+
+/* PEOPLE CARDS */
+.people-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 16px}
+.person{background:#111820;border:1px solid #1a2436;border-radius:10px;padding:16px}
+.person.mike{border-left:4px solid #00b4d8}
+.person.antonio{border-left:4px solid #f5a623}
+.person .name{font-size:15px;font-weight:800;color:#e8edf2;margin-bottom:2px}
+.person .title{font-size:11px;color:#76b900;font-weight:600;margin-bottom:10px}
+.person .row{font-size:11px;color:#8899aa;line-height:1.6}
+.person .row strong{color:#cdd6e0}
+.person .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;margin-top:6px;margin-right:4px}
+.tag-blue{background:#003a4d;color:#00b4d8}
+.tag-amber{background:#3d2800;color:#f5a623}
+.tag-green{background:#0a2a0a;color:#00d68f}
+
+/* NUMBERS BAR */
+.numbers-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:10px 16px}
+.num-card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:10px 12px;text-align:center}
+.num-card .label{font-size:9px;color:#607080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.num-card .value{font-size:20px;font-weight:900;color:#76b900}
+.num-card .sub{font-size:9px;color:#4a5568;margin-top:2px}
+
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 16px}
+.card{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px}
+.card.orange{border-left:3px solid #ff6b35}
+.card.green{border-left:3px solid #76b900}
+.card.blue{border-left:3px solid #00b4d8}
+.card.amber{border-left:3px solid #f5a623}
+.card.purple{border-left:3px solid #e040fb}
+.card.red{border-left:3px solid #f44336}
+.card .q{font-size:12px;font-weight:700;color:#e8edf2;line-height:1.35;margin-bottom:6px}
+.card .a{font-size:11px;color:#8899aa;line-height:1.5}
+.card .a strong{color:#cdd6e0;font-weight:600}
+
+/* SCRIPT BLOCKS */
+.script-block{background:#0d1520;border:1px solid #1a2436;border-left:4px solid #76b900;border-radius:8px;padding:16px 18px;margin:8px 16px;font-size:12px;color:#a0b4c8;line-height:1.7}
+.script-block .label{font-size:10px;font-weight:700;color:#76b900;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.script-block em{color:#e8edf2;font-style:normal;font-weight:600}
+
+/* POWER DIAGRAM */
+.diagram{background:#0d1520;border:1px solid #1a2436;border-radius:8px;margin:8px 16px;padding:16px 18px}
+.diagram pre{font-family:'SF Mono',Monaco,Consolas,monospace;font-size:11px;color:#6a8090;line-height:1.6}
+.diagram pre .hi{color:#76b900;font-weight:700}
+.diagram pre .mid{color:#00b4d8}
+.diagram pre .lo{color:#f5a623}
+
+/* QUESTIONS */
+.q-list{padding:8px 16px}
+.q-item{background:#111820;border:1px solid #1a2436;border-radius:8px;padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.q-num{font-size:20px;font-weight:900;color:#76b900;min-width:28px;line-height:1}
+.q-body .q-text{font-size:12px;font-weight:700;color:#e8edf2;line-height:1.4;margin-bottom:4px}
+.q-body .q-why{font-size:11px;color:#607080;line-height:1.4}
+.q-body .q-why strong{color:#f5a623}
+
+/* CLOSE */
+.close-block{background:#0a1a0a;border:1px solid #1d3a1d;border-left:4px solid #00d68f;border-radius:8px;padding:16px 18px;margin:8px 16px}
+.close-block .label{font-size:10px;font-weight:700;color:#00d68f;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.close-block p{font-size:13px;color:#e8edf2;font-style:italic;line-height:1.6}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .numbers-grid{grid-template-columns:repeat(3,1fr)}
+  .people-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>NVIDIA Meeting — <span>Cheat Sheet</span></h1>
+  <span class="badge">CONFIDENTIAL</span>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('people')">WHO THEY ARE</div>
+  <div class="tab" onclick="show('adc')">ADC POSITION</div>
+  <div class="tab" onclick="show('script')">OPENING SCRIPT</div>
+  <div class="tab" onclick="show('power')">POWER STACK</div>
+  <div class="tab" onclick="show('questions')">QUESTIONS</div>
+  <div class="tab" onclick="show('logistics')">LOGISTICS</div>
+  <div class="tab" onclick="show('humidity')">HUMIDITY</div>
+  <div class="tab" onclick="show('sitevisit')">SITE VISIT</div>
+  <div class="tab" onclick="show('tenMW')">10 MW PLAN</div>
+  <div class="tab" onclick="show('close')">CLOSE</div>
+</div>
+
+<!-- WHO THEY ARE -->
+<div id="panel-people" class="panel active">
+  <div class="section-title">The Two People On The Call</div>
+  <div class="people-grid">
+    <div class="person mike">
+      <div class="name">Mike Pulice</div>
+      <div class="title">Account Executive — NVIDIA</div>
+      <div class="row"><strong>Based:</strong> Raleigh, NC</div>
+      <div class="row"><strong>His vertical:</strong> AEC, Telco, ISV — Architecture, Engineering, Construction. <strong>That's you.</strong></div>
+      <div class="row"><strong>Background:</strong> Lenovo data center solutions 7 years — rep of the year twice. Knows hardware cold.</div>
+      <div class="row"><strong>His job:</strong> He enables and accelerates partners. He loves innovators and entrepreneurs (his words).</div>
+      <div class="row"><strong>How to play it:</strong> Talk site, talk construction, talk GC background. He gets the facility side.</div>
+      <span class="tag tag-blue">FACILITY SIDE</span>
+      <span class="tag tag-green">CLOSER</span>
+    </div>
+    <div class="person antonio">
+      <div class="name">Antonio Rivera</div>
+      <div class="title">Account Manager — NVIDIA (ex-Run:ai)</div>
+      <div class="row"><strong>Based:</strong> Austin, TX</div>
+      <div class="row"><strong>His background:</strong> Head of Business Development - West at Run:ai BEFORE NVIDIA acquired them. Run:ai = GPU workload scheduling (Kubernetes-native). He knows how tokens flow.</div>
+      <div class="row"><strong>His tagline:</strong> "Compute optimization for AI/ML teams." That's your token factory lane.</div>
+      <div class="row"><strong>How to play it:</strong> Talk Dynamo, token economics, GPU utilization. He follows all of it.</div>
+      <span class="tag tag-amber">COMPUTE SIDE</span>
+      <span class="tag tag-green">TECHNICAL</span>
+    </div>
+  </div>
+
+  <div class="section-title">Key Numbers Going In</div>
+  <div class="numbers-grid">
+    <div class="num-card">
+      <div class="label">ADC Site</div>
+      <div class="value">112.5K</div>
+      <div class="sub">sq ft Trappeys</div>
+    </div>
+    <div class="num-card">
+      <div class="label">Solar</div>
+      <div class="value">2 MW</div>
+      <div class="sub">3,731 panels rooftop</div>
+    </div>
+    <div class="num-card">
+      <div class="label">Phase 1</div>
+      <div class="value">4 racks</div>
+      <div class="sub">288 GPUs, 1 MW</div>
+    </div>
+    <div class="num-card">
+      <div class="label">Token Gain</div>
+      <div class="value">7x</div>
+      <div class="sub">Dynamo on same HW</div>
+    </div>
+    <div class="num-card">
+      <div class="label">Tokens/Watt</div>
+      <div class="value">35x</div>
+      <div class="sub">GPU + Groq decode</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADC POSITION -->
+<div id="panel-adc" class="panel">
+  <div class="section-title">What ADC Is</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">Louisiana's NVIDIA Neocloud</div>
+      <div class="a">GPU-first cloud provider. <strong>Not a colo.</strong> We operate the compute. Full NVIDIA stack — no alternatives. Sell optimized tokens, not GPU hours.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Energy-First Model</div>
+      <div class="a">Same playbook as Crusoe ($10B+). Gas is primary backbone. Solar is the offset. Grid is <strong>sell-back only — we don't consume it.</strong> Nobody can touch our power cost in Louisiana.</div>
+    </div>
+    <div class="card orange">
+      <div class="q">The Site — Trappeys Cannery</div>
+      <div class="a">112,500 sq ft, 4 buildings, Vermilion River. <strong>National Historic Register.</strong> Gas on-site confirmed. 28K sq ft concrete pad = infrastructure yard. Water tower = thermal buffer.</div>
+    </div>
+    <div class="card amber">
+      <div class="q">MARLIE I — Half Mile Up The Road</div>
+      <div class="a">Scott's own shop. <strong>Owned free and clear.</strong> Dig once — run conduit for fiber, gas, electrical to both sites simultaneously. Two locations, one trench.</div>
+    </div>
+    <div class="card purple">
+      <div class="q">Workforce Nobody Else Has</div>
+      <div class="a">ROV industry — 25 years deploying and maintaining containerized computer systems in hostile environments offshore. Same skillset, different application.</div>
+    </div>
+    <div class="card green">
+      <div class="q">In The System, Not Just Interested</div>
+      <div class="a">Multiple NVIDIA certifications completed. Jim Hennessy getting ADC into NPN. <strong>Building to DSX spec, Vera Rubin NVL72.</strong></div>
+    </div>
+  </div>
+
+  <div class="section-title">ADC's Power Moat vs Everyone Else</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">Henry Hub — 40 miles away</div>
+      <div class="a">13 pipelines. Gas at <strong>$0.027-0.035/kWh</strong> on-site generation. Lowest industrial energy cost in the country.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">First Solar — 20 miles down Hwy 90</div>
+      <div class="a">$1.1B New Iberia factory. <strong>American-made panels, local supply chain.</strong> Series 7 TR1, manufactured next door.</div>
+    </div>
+    <div class="card orange">
+      <div class="q">800 VDC Power Reference Architecture</div>
+      <div class="a">NVIDIA's official power spec for Vera Rubin. Multiple tier-1 vendors (Eaton, GE Vernova, ABB) build to this standard. <strong>We're evaluating best fit — not locked to one vendor.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- OPENING SCRIPT -->
+<div id="panel-script" class="panel">
+  <div class="section-title">Opening — Say This First (60 seconds)</div>
+  <div class="script-block">
+    <div class="label">Your Opening</div>
+    <em>"I'm Scott Tomsu, ADC — Advantage Design and Construction. Licensed GC in Louisiana, three contractor licenses, 25-year ROV superintendent background. I deploy and maintain complex compute systems in hostile environments. That's the workforce angle.</em>
+    <br><br>
+    <em>We're building Louisiana's first NVIDIA neocloud. Lead site is Trappeys Cannery in Lafayette — 112,500 square feet across four buildings, historic property on the Vermilion River. Two megawatts of solar rooftop, gas trunk line already confirmed on-site, 28,000 square foot concrete pad for the infrastructure yard. Water tower for thermal buffering. Half mile from my own shop, owned free and clear, ready to run simultaneously.</em>
+    <br><br>
+    <em>We're going full 800 VDC from the jump — building to NVIDIA's DSX power reference. Gas is primary, solar is the offset, grid is sell-back only. We're evaluating the right tier-1 power partners right now.</em>
+    <br><br>
+    <em>Jim Hennessy is getting us into NPN. We've got NVIDIA certifications completed and we're continuing that path. Building to DSX spec, Vera Rubin NVL72. That's why we're here."</em>
+  </div>
+
+  <div class="section-title">Antonio Specifically — Run:ai Angle</div>
+  <div class="script-block">
+    <div class="label">For Antonio (compute optimization)</div>
+    <em>"Antonio — I know your background is Run:ai and compute optimization. We're building a token factory, not a GPU rental shop. Dynamo 1.0 gives us 7x inference on the same hardware. Groq decode gives us 35x tokens per watt. Run:ai is our workload scheduler on top of that. We sell optimized tokens. That's the margin play — we're not racing to the bottom on GPU hours."</em>
+  </div>
+
+  <div class="section-title">Mike Specifically — AEC Angle</div>
+  <div class="script-block">
+    <div class="label">For Mike (AEC, builders)</div>
+    <em>"Mike — I know you work with AEC partners. I'm a licensed GC — I've been in construction my whole career. Trappeys is not a tear-down, it's a restoration. 100-year-old historic building with 45-55% tax credits coming back. We dig the trench once, we infrastructure two sites simultaneously. We move in months, not years — Lafayette permitting is city council, not LPSC."</em>
+  </div>
+</div>
+
+<!-- POWER STACK -->
+<div id="panel-power" class="panel">
+  <div class="section-title">800 VDC Power Architecture — If They Ask</div>
+  <div class="diagram">
+    <pre>
+<span class="hi">LAYER 2 — GAS (PRIMARY BACKBONE — ALWAYS RUNNING)</span>
+  Cat G3500 gensets on concrete pad
+       ↓
+<span class="hi">MVSST  ← NVIDIA DSX power reference (vendor TBD — Eaton / GE Vernova / ABB)</span>
+  13.8kV AC → 800V DC at facility perimeter
+  (Medium Voltage Solid State Transformer)
+       ↓
+<span class="hi">800V DC BUS  ← facility spine, no AC inside</span>
+       ↑
+<span class="lo">LAYER 1 — SOLAR (OFFSET)</span>
+  First Solar Series 7 TR1 — 5 panels/string
+  952V string → DC-DC buck → 800V bus
+  2 MW across 112,500 sq ft rooftop
+       ↑
+<span class="mid">BATTERY BUFFER</span>
+  800V nominal, cloud transient handling
+       ↓
+<span class="hi">RACK PDU (OCP ORV3)</span>
+  800V DC → 48V DC (16:1 internal conversion)
+       ↓
+<span class="hi">NVIDIA VERA RUBIN NVL72</span>
+  72 GPUs + 36 Vera CPUs per rack
+  Max Q: 190 kW / Max P: 230 kW (software-configured, same HW)
+
+<span class="lo">LAYER 3 — DIESEL: Emergency only, pipeline-independent</span>
+<span class="lo">LAYER 4 — GRID (LUS): SELL-BACK ONLY. We do NOT consume grid power.</span>
+    </pre>
+  </div>
+
+  <div class="section-title">Phase Plan</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">Phase 1 — Start</div>
+      <div class="a"><strong>4 racks</strong> · 288 GPUs · 520 kW IT load · ~1 MW total<br>One MVSST unit · Solar + gas genset</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Phase 2 — Scale</div>
+      <div class="a"><strong>8 racks</strong> · 576 GPUs · 1 MW IT load · ~1.3 MW total<br>Parallel second MVSST unit</div>
+    </div>
+    <div class="card amber">
+      <div class="q">Full Trappeys Buildout</div>
+      <div class="a"><strong>225–525 racks possible</strong> — power-limited not space-limited<br>Scale genset yard as compute grows</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div id="panel-questions" class="panel">
+  <div class="section-title">Questions To Ask — These Make You Sharp</div>
+  <div class="q-list">
+
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">"Jim Hennessy is getting us into NPN. What does our registration need to look like to get into the Vera Rubin H2 2026 allocation conversation — is there anything beyond NPN we should be doing right now?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Drops Jim's name — they know who he is. Signals you're already inside NVIDIA's network. Forces them to give you a concrete next step on allocation.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">"We're going 800 VDC, building to DSX power spec. Who are the power vendors you see deploying this right in your deployments — and do any of them have field engineers in Texas who've been through a DSX site prep with a municipality before? We need that person in the room with us in Lafayette."</div>
+        <div class="q-why"><strong>Why ask:</strong> Keeps you vendor-neutral — let THEM name who's doing it best. Gets you the technical translator for the city/utility conversation without committing to anyone.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">"What does Trappeys need to document to start the DGX-Ready certification process — power availability confirmation, civil survey, cooling design? Give me the checklist."</div>
+        <div class="q-why"><strong>Why ask:</strong> Moves the conversation from "we want to do this" to "we are doing this." Forces a concrete action list.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">4</div>
+      <div class="q-body">
+        <div class="q-text">"Antonio — with Run:ai now inside NVIDIA, how does that change the GPU scheduling story for a token factory deployment running Dynamo? Are we looking at Run:ai plus Dynamo, or has that been folded in?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Speaks directly to Antonio's background. Shows you know Run:ai was acquired. Makes him lean in — nobody asks him this.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">5</div>
+      <div class="q-body">
+        <div class="q-text">"We're planning to pick up our own equipment in Texas rather than waiting on freight. Who are your preferred OEM partners for Vera Rubin NVL72 with distribution presence in Texas — Supermicro, HPE, Dell?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Practical ops question. Shows you're thinking deployment speed, not just spec sheets. They'll appreciate the logistics thinking.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">6</div>
+      <div class="q-body">
+        <div class="q-text">"What did the early neoclouds — Crusoe, CoreWeave, Lambda — do in their first 90 days with NVIDIA that we should be doing right now?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Flatters them as insiders with intel. Gets you the real playbook, not the public version. This is the highest-value question on the call.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">7</div>
+      <div class="q-body">
+        <div class="q-text">"We've got a 75×300 ft compute hall — physically fits 720 racks. We're designing Phase 1 for 10 MW, which puts us at 50 racks and 3,600 GPUs. What's the minimum footprint NVIDIA considers for DGX-Ready certification — and is 10 MW a real conversation for H2 2026 allocation, or are we talking 2027?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Signals you're not a 3-rack hobby shop. 50 racks is a serious order. Forces them to either confirm H2 2026 is in play or tell you the real timeline — both answers are valuable. The room size number makes it credible, not boastful.</div>
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-num">8</div>
+      <div class="q-body">
+        <div class="q-text">"We have capital partners actively looking to invest specifically because of GPU supply access. If we could commit to 50 racks in H2 2026, what does that conversation look like on your end — is that a volume that moves up the allocation queue?"</div>
+        <div class="q-why"><strong>Why ask:</strong> This is the Ornn card. Shows you have funding lined up, not just a dream. Puts the ball in their court — they now have to tell you what it takes to get to the front of the line. Changes the dynamic from you asking for favors to you being a real buyer.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LOGISTICS -->
+<div id="panel-logistics" class="panel">
+  <div class="section-title">Lafayette Logistics — Why This Location Deploys Fast</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">I-10 / I-49 Interchange — On Site</div>
+      <div class="a">Trappeys sits at the I-10 / I-49 corridor. <strong>Any oversized load, any truck, any crane — straight in.</strong> No winding rural roads, no permit nightmares for heavy haul. Interstate access is the address.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Vermilion River — Barge Access</div>
+      <div class="a">Site is on the river. <strong>Barge delivery is a real option.</strong> Modular power skids, gensets, large transformers — barge it up from the Gulf if it's faster or cheaper than trucking. Not many AI sites can say that.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Rail Access — Lafayette Hub</div>
+      <div class="a">Lafayette is a rail corridor city. Heavy industrial freight by rail is an option for large equipment that doesn't fit on a standard flatbed. Backup to trucking, not primary — but it exists.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">28,000 sq ft Concrete Pad — Ready Now</div>
+      <div class="a"><strong>Truck pulls in, unloads, done.</strong> Heavy duty concrete held a building for decades — handles any equipment weight. Start stacking modular power units immediately. No site prep required.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">On-Site Receiving Warehouse</div>
+      <div class="a">Large receiving building on-site. <strong>Equipment goes straight inside, out of the weather, secured.</strong> No staging in a parking lot, no exposure to Louisiana rain while waiting on install crews.</div>
+    </div>
+    <div class="card amber">
+      <div class="q">Diesel — Bridge Power, Available Now</div>
+      <div class="a">Trucking, rail, and diesel genset supply are all local and abundant. <strong>If gas interconnect hits a bottleneck — run diesel to stay on schedule.</strong> More expensive short-term but keeps deployment moving. Never held hostage to one power path.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Phased Power — Flexible By Design</div>
+  <div class="script-block">
+    <div class="label">If They Ask About Power Readiness On Day One</div>
+    <em>"We're not waiting on a single power source to break ground. Day one we can run on diesel gensets trucked in — generators are readily available in Lafayette, diesel supply is local. That gets us to first rack energized. Gas interconnect follows. Solar goes on the roof in parallel. Each layer adds as it comes online. We never stop moving because one piece is delayed."</em>
+  </div>
+
+  <div class="section-title">Modular Power Units — Truck In, Stack, Connect</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">The Concrete Pad Strategy</div>
+      <div class="a">28K sq ft pad = the infrastructure yard. <strong>Modular power skids from GE, ABB, Caterpillar truck straight onto the pad.</strong> Stack them as capacity grows. Solar panels go on top eventually. No building required — it's an outdoor power plant.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Caterpillar — Irving TX</div>
+      <div class="a">G3500 series gas gensets. Cat dealer network in Louisiana = parts same day. <strong>Drive to Texas, pick up, bring back.</strong> No waiting on freight from California. Local service, local parts.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">GE Vernova / ABB / Eaton</div>
+      <div class="a">All have Texas manufacturing or distribution. Modular MV switchgear, transformers, MVSST units — <strong>one day drive from Lafayette.</strong> Pick up in Texas, install next week. No 6-week freight wait.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Question To Ask NVIDIA On This</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">→</div>
+      <div class="q-body">
+        <div class="q-text">"On modular power deployments — we've got a large concrete pad ready to receive equipment and an on-site receiving warehouse. Do you see operators using modular gas genset skids as bridge power while permanent interconnect is being established? And do your power partners have distribution in Texas where we could source and self-transport to accelerate delivery timelines?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Shows you're thinking deployment speed and flexibility, not just the final state. Signals that ADC won't be stopped by a single bottleneck. Mike's AEC background means he'll appreciate the logistics thinking immediately.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HUMIDITY -->
+<div id="panel-humidity" class="panel">
+  <div class="section-title">The Lafayette Problem — Why This Matters More Than Most Sites</div>
+  <div class="grid">
+    <div class="card red">
+      <div class="q">Lafayette Avg RH: 75-80%</div>
+      <div class="a">ASHRAE target for compute: <strong>40-60% RH.</strong> NVL72 racks have internal fans on PSUs, NVLink switches, networking — they pull ambient air. At 80% RH, you're blowing warm wet air over hot electronics 24/7. Corrosion, condensation, shortened life.</div>
+    </div>
+    <div class="card amber">
+      <div class="q">NVL72 Is NOT Fully Liquid Cooled</div>
+      <div class="a">GPU chips = liquid cooled via coldplates. <strong>PSUs, NVSwitches, networking cards = air cooled with internal fans.</strong> The ambient air quality inside the building matters. This is the hidden problem most northern operators never face.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Solar Solves It During The Day</div>
+      <div class="a">Sunny days = highest humidity load AND highest solar output. <strong>Run dehumidifiers direct off solar during peak sun hours.</strong> When it's hottest and most humid, we have the most free power to fight it. The problem and the solution peak at the same time.</div>
+    </div>
+  </div>
+
+  <div class="section-title">The Enclosure Strategy — Offshore Logic Applied</div>
+  <div class="diagram">
+    <pre>
+<span class="hi">MUNTERS DESICCANT DEHUMIDIFIER  ← solar-powered during day</span>
+  No refrigerant — absorbs moisture via desiccant wheel
+  Waste heat from racks regenerates the wheel = free operation
+  5,000–50,000 CFM industrial units
+       ↓
+<span class="mid">DUCTWORK TO EACH RACK ENCLOSURE</span>
+  Positive pressure dry air inside each pod
+  Humid outside air physically cannot enter (pressure differential)
+  Same concept as pressurized instrument shelters on offshore platforms
+       ↓
+<span class="hi">RACK INTERNAL FANS PULL FROM DRY AIR SUPPLY</span>
+  Target: 40–50% RH inside enclosure
+  Electronics see controlled environment regardless of outside conditions
+       ↓
+<span class="lo">EXHAUST EXITS THROUGH CONTROLLED OUTLET</span>
+  Heat recovery possible — warm exhaust used for desiccant regeneration loop
+    </pre>
+  </div>
+
+  <div class="section-title">Dehumidification Vendors</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">Munters — TOP PICK</div>
+      <div class="a"><strong>MX / HCD series.</strong> Industrial desiccant, no refrigerant. Offshore/marine proven. <strong>Waste heat from racks regenerates desiccant wheel — free dehumidification at scale.</strong> US operations, global install base. munters.com</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Stulz — Precision Control</div>
+      <div class="a">CyberAir series — purpose-built for compute environments. Handles temp AND humidity simultaneously. Used in existing AI facilities globally. stulz.us</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Vertiv (Liebert)</div>
+      <div class="a">Liebert DS/DSE precision units. <strong>Already in DSX ecosystem.</strong> Temp + humidity. Integrates with NVIDIA monitoring stack. vertiv.com</div>
+    </div>
+    <div class="card amber">
+      <div class="q">Trane Technologies</div>
+      <div class="a">Precedent + Sintesis series. Large Gulf South install base, Texas distribution — <strong>drive up and pick up parts.</strong> Local service in Louisiana. trane.com</div>
+    </div>
+    <div class="card amber">
+      <div class="q">YORK (Johnson Controls)</div>
+      <div class="a">Triathlon series — <strong>designed for high-humidity climates.</strong> Massive installed base in Gulf South. Local Louisiana service network. johnsoncontrols.com/york</div>
+    </div>
+    <div class="card amber">
+      <div class="q">Daikin Applied</div>
+      <div class="a">Magnitude + Rebel series. <strong>Manufacturing in Waller TX (near Houston) — one drive away.</strong> Built for hot/humid climates specifically. daikinapplied.com</div>
+    </div>
+  </div>
+
+  <div class="section-title">The Bigger Picture — Run:ai Controls The Whole Factory</div>
+  <div class="script-block">
+    <div class="label">The Vision — Say This If The Conversation Goes There</div>
+    <em>"We're not just using Run:ai to schedule GPU workloads. The same orchestration layer controls the entire operational environment — humidity removal, chip cooling loops, CDU flow rates, genset load dispatch, solar input. When the sun comes up and solar output peaks, the system automatically ramps dehumidifiers to burn that free power on the worst part of our humidity problem. At night when humidity drops and gas is primary, the system dials back accordingly. The factory is fully autonomous from day one — no operator needed to make those decisions in real time."</em>
+  </div>
+
+  <div class="section-title">Question To Ask NVIDIA On This</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">→</div>
+      <div class="q-body">
+        <div class="q-text">"The NVL72 has internal fans on PSUs and networking that pull ambient air. In a 75-80% RH environment like Lafayette, what humidity control are you seeing in Gulf South or tropical deployments — building-level dehumidification, enclosure-level positive pressure, or both? And does NVIDIA have a preferred integration path for environmental controls into the same ops layer as Run:ai?"</div>
+        <div class="q-why"><strong>Why ask:</strong> Nobody in the north asks this. It shows you've solved a real deployment problem. Antonio's compute optimization background means he'll know exactly why ambient air quality matters to GPU utilization and uptime.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Capex Reality</div>
+  <div class="grid">
+    <div class="card orange">
+      <div class="q">Yes, This Costs More Upfront</div>
+      <div class="a">Dehumidification adds to Capex vs a dry-climate site. But the alternative is <strong>shortened component life, higher failure rates, and warranty issues.</strong> This is a required line item for Louisiana — not optional.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Solar Offsets The Opex</div>
+      <div class="a">Desiccant dehumidifiers run on electricity. <strong>2 MW of solar powers them for free during peak humidity hours.</strong> The ongoing electricity cost is near-zero during the day. Capex hit, minimal Opex.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Waste Heat = Free Regeneration</div>
+      <div class="a">Munters desiccant wheels need heat to regenerate. NVL72 racks produce massive waste heat. <strong>Route exhaust air through desiccant regeneration loop — the racks pay for their own dehumidification.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- SITE VISIT -->
+<div id="panel-sitevisit" class="panel">
+
+  <div class="section-title">Bring This</div>
+  <div class="grid">
+    <div class="card green">
+      <div class="q">Tools</div>
+      <div class="a">Laser distance measurer · Standard tape · Flashlight/headlamp · Chalk or spray paint (mark floor measurements) · Phone on video (narrate while walking — easier than notes)</div>
+    </div>
+    <div class="card green">
+      <div class="q">People</div>
+      <div class="a">At least one other person — hold the tape, spot you in the dark, witness conditions. If electrical PE or structural person is available, bring them.</div>
+    </div>
+    <div class="card red">
+      <div class="q">Stay Out Of Front Lower</div>
+      <div class="a"><strong>Fence it off, photograph from outside only.</strong> Vat holes in the floor — fall hazard. Mark the perimeter, don't send anyone in until it's properly shored and lit.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Middle High — Phase 1 Compute Space (DO THIS FIRST)</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">Full interior dimensions — length × width. Confirm the 75 × 300 ft estimate.</div>
+        <div class="q-why">Sets rack row count and layout. Every other number depends on this.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">Clear height — floor to bottom of lowest truss or obstruction.</div>
+        <div class="q-why">NVL72 rack = 7.3 ft tall. CDU units add height. Need min 12 ft clear, 16+ ft preferred for airflow above racks. If it's tight, know now.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">Truss spacing — center to center, and truss depth (top chord to bottom chord).</div>
+        <div class="q-why">Determines if overhead crane/hoist can run between trusses for rack installation. Also load path for any ceiling-hung equipment.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">4</div>
+      <div class="q-body">
+        <div class="q-text">Loading dock — door width, door height, dock height off grade, and whether a standard flatbed can back straight in.</div>
+        <div class="q-why">Largest NVL72 component ships ~5 ft wide × 7.3 ft tall × 3.5 ft deep, 1,500 kg. Must fit through the door on a pallet jack or forklift.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">5</div>
+      <div class="q-body">
+        <div class="q-text">All door locations, widths, swing direction.</div>
+        <div class="q-why">Emergency egress, equipment routing paths, HVAC/duct penetration options.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">6</div>
+      <div class="q-body">
+        <div class="q-text">Floor condition — walk every square foot. Mark cracks, low spots, drains, existing penetrations. Tap suspect areas.</div>
+        <div class="q-why">NVL72 rack = 3,000 lbs on 4 feet. Concrete must be verified before you commit rack positions. Any soft spots = PE inspection before install.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">7</div>
+      <div class="q-body">
+        <div class="q-text">Concrete floor thickness — find any slab edge or crack where you can see depth. Probe with a screwdriver at any spall.</div>
+        <div class="q-why">4 inch slab = marginal for 3,000 lb point loads. 6 inch+ = fine. Determines if you need pedestals or reinforcement.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">8</div>
+      <div class="q-body">
+        <div class="q-text">Truss condition — photograph each truss end where it bears on the brick wall. Look for rot, insect damage, broken members, wall separation.</div>
+        <div class="q-why">The bearing point is the failure point. Everything else can be sistered. A failed bearing = wall repair + new bearing seat.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">9</div>
+      <div class="q-body">
+        <div class="q-text">Roof — from inside, scan for daylight through wood slat decking. Any staining, soft spots, or active drips.</div>
+        <div class="q-why">A compute clean room cannot have roof leaks. Seal the roof before a single rack goes in. Know the full scope now.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">10</div>
+      <div class="q-body">
+        <div class="q-text">Brick wall condition — all four walls. Any bowing, leaning, cracks, mortar loss, efflorescence (white salt staining = moisture intrusion).</div>
+        <div class="q-why">Brick is your insulation and your humidity barrier. Any breach = moisture path into the compute space.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Rear Warehouse — Staging Area</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">Full interior dimensions. Confirm 150 × 250 ft estimate.</div>
+        <div class="q-why">Staging for NVL72 crates, CDUs, power skids. Also housing for dehumidifier units and future expansion racks.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">Clear height and truss/beam spacing.</div>
+        <div class="q-why">Can you stack shipping crates 2-high? Can a forklift operate safely?</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">Can a flatbed truck pull in and turn around — inside or in the adjacent yard?</div>
+        <div class="q-why">Receiving workflow: truck in → unload → straight into staging. If it can't turn around, you're unloading on the street.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">4</div>
+      <div class="q-body">
+        <div class="q-text">Roll path from rear warehouse to Middle High — distance, surface, any grade change or threshold.</div>
+        <div class="q-why">3,000 lb racks move on pallet jacks. Any lip, crack, or grade change needs a ramp plate. Know it before delivery day.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">5</div>
+      <div class="q-body">
+        <div class="q-text">Connection point to rear brick building — width of opening, condition of threshold, any step change.</div>
+        <div class="q-why">All three rear buildings are interconnected — this is a major operational advantage. Confirm the pass-through is actually usable for equipment movement.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Rear Brick Building — $50K Fix</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">Which wall section is damaged — mark on a sketch. Linear footage of gap. Height of gap.</div>
+        <div class="q-why">Scope drives cost. If it's 20 linear feet of wall plate and rafters, that's a 2-day crew job. 80 feet is a different number.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">Steel truss condition — count the trusses, check for rust at bearing plates and mid-span. Any visible deflection (sagging)?</div>
+        <div class="q-why">Steel trusses don't rot but they do rust through at bearing points. A deflected truss means load redistribution — needs PE eyes before you put a new roof on it.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">Brick wall height — all standing walls. Any sections that are cracked or bulging.</div>
+        <div class="q-why">Historic register building — any repair has to meet preservation standards for the tax credit. Document existing condition before touching anything.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Utilities — Mark Everything On A Sketch</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">GAS</div>
+      <div class="q-body">
+        <div class="q-text">Where does the trunk line enter the Middle High building? Follow it, photograph every fitting, valve, and tee. Find the main shutoff. Measure pipe diameter.</div>
+        <div class="q-why">Pipe diameter tells you what gas flow you're starting with. A 2-inch line won't feed a 1 MW genset — you'll need a new service drop. Know this before calling ATMOS.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">ELEC</div>
+      <div class="q-body">
+        <div class="q-text">Any existing service panels, disconnects, meters still in the buildings. Note location, voltage markings, amperage if labeled. Note direction the power poles run toward the site from Pin Hook.</div>
+        <div class="q-why">LUS Pin Hook substation = 13.8 kV service voltage (confirmed in our files). Knowing where the poles run tells you the shortest path for your new service drop.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">WATER</div>
+      <div class="q-body">
+        <div class="q-text">Any existing water lines, standpipes, drains still intact. Fire suppression piping — trace it, find the main control valve, photograph the riser and any sprinkler heads.</div>
+        <div class="q-why">Existing fire suppression infrastructure = huge value. If the pipes are intact and the riser is good, you may be able to reuse most of it with new heads and a new suppression agent. A PE can evaluate.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">FIBER</div>
+      <div class="q-body">
+        <div class="q-text">Any existing conduit entering the buildings — even if empty. Note entry point location and direction it runs toward the street.</div>
+        <div class="q-why">LFT Fiber (municipal 25G) serves the area. An existing conduit stub = pull fiber same day. No conduit = short dig, but you need to know the entry point before you design it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Water Tower</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">Height — ground to bottom of tank, and ground to top overflow. Measure or laser.</div>
+        <div class="q-why">Gravity head pressure from the tank drives the cooling return loop. More height = more pressure = less pump work. This number goes into the hydraulic design.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">Inlet and outlet pipe sizes at the base. Any valves present and condition.</div>
+        <div class="q-why">Sets the pipe sizing for the cooling loop connection. Also tells you if existing plumbing can be reused.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">Tank shell condition — any rust-through, holes, visible patch repairs. Is the ladder climbable safely?</div>
+        <div class="q-why">A structural inspection will be required before any hydraulic use. This is your pre-inspection walkaround — know what you're dealing with before spending money on the formal inspection.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">4</div>
+      <div class="q-body">
+        <div class="q-text">Distance from water tower base to Middle High building.</div>
+        <div class="q-why">Cooling loop pipe run length. Longer run = more friction loss = affects pump sizing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Concrete Pad — Infrastructure Yard</div>
+  <div class="q-list">
+    <div class="q-item">
+      <div class="q-num">1</div>
+      <div class="q-body">
+        <div class="q-text">Full dimensions of the pad. Any sections that are cracked, heaved, or deteriorated.</div>
+        <div class="q-why">Gensets and transformers are heavy. Cat G3500 = ~25,000 lbs. Need to know where the good concrete is before you position equipment.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">2</div>
+      <div class="q-body">
+        <div class="q-text">Road access to the pad — can a heavy haul truck (flatbed with 25-ton load) pull directly onto the pad from the street?</div>
+        <div class="q-why">Modular power skids arrive on flatbeds. You want to drive onto the pad and set it down, not drag it across dirt.</div>
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">3</div>
+      <div class="q-body">
+        <div class="q-text">Distance from pad to Middle High building.</div>
+        <div class="q-why">Sets the 800V DC cable run length from MVSST on the pad to the building. Longer runs = larger conductor = more copper cost. Under 200 ft is clean.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Other — Don't Forget</div>
+  <div class="grid">
+    <div class="card amber">
+      <div class="q">Fence The Front Lower NOW</div>
+      <div class="a">Vat holes, partial roof — liability exposure the moment you take ownership. First order of business. T-posts and orange construction fence, minimum. Mark it on the sketch so contractors know it's off limits.</div>
+    </div>
+    <div class="card amber">
+      <div class="q">Document For Historic Tax Credit</div>
+      <div class="a">Photograph every wall, every structural element, every original feature BEFORE any work begins. The NPS Part 1 application needs existing condition documentation. You cannot recreate this after demo starts.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Pest / Rodent Evidence</div>
+      <div class="a">30 years vacant. Look for rodent nests, bat colonies (protected species — matters for permit timeline), wasp nests in trusses. Note locations. Remediation before workers go in regularly.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Drainage — Where Does Water Go</div>
+      <div class="a">When it rains, where does water pool on the floors? Any evidence of standing water (tide marks on walls, efflorescence on lower brick courses). Compute space must be dry. Know the drainage path now.</div>
+    </div>
+    <div class="card blue">
+      <div class="q">Neighbor Activity</div>
+      <div class="a">Note any city vehicle activity next door at Public Works. Camera angles, sight lines from their property. This is relevant for your security camera placement and perimeter design.</div>
+    </div>
+    <div class="card green">
+      <div class="q">Narrate Everything On Video</div>
+      <div class="a">Phone video, talk while you walk. "This is the northeast corner of Middle High, truss looks good, floor has a crack running about 8 feet toward the loading dock..." Transcription later. Don't rely on memory or photos alone.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 10 MW PLAN -->
+<div id="panel-tenMW" class="panel">
+  <div class="section-title">10 MW Plan — The Real Numbers</div>
+
+  <div class="section-title" style="padding-top:8px">The Site</div>
+  <div class="numbers-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="num-card"><div class="label">Compute Hall</div><div class="value">75×300</div><div class="sub">sq ft, Building 3</div></div>
+    <div class="num-card"><div class="label">Max Racks (Physical)</div><div class="value">720</div><div class="sub">room capacity</div></div>
+    <div class="num-card"><div class="label">Phase 1 Target</div><div class="value">50</div><div class="sub">NVL72 racks</div></div>
+    <div class="num-card"><div class="label">Phase 1 GPUs</div><div class="value">3,600</div><div class="sub">Vera Rubin / Blackwell</div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">Power</div>
+  <div class="numbers-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="num-card"><div class="label">IT Load</div><div class="value">10 MW</div><div class="sub">Phase 1</div></div>
+    <div class="num-card"><div class="label">Gas Genset</div><div class="value">Wärtsilä 34SG</div><div class="sub">~10 MW, partial load efficient</div></div>
+    <div class="num-card"><div class="label">Solar Offset</div><div class="value">2.05 MW</div><div class="sub">3,731 First Solar panels</div></div>
+    <div class="num-card"><div class="label">Topology</div><div class="value">800V DC</div><div class="sub">OCP Stage 1d — SST → bus</div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">CapEx Breakdown</div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">SITE</div><div class="q-body"><div class="q-text">Trappeys acquisition + Building 3 + Building 4 rehab</div><div class="q-why">~$1.8M</div></div></div>
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">GEN</div><div class="q-body"><div class="q-text">Wärtsilä 34SG gas genset (10 MW, installed) + 800V DC SST + switchgear</div><div class="q-why">~$13-19M</div></div></div>
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">SOL</div><div class="q-body"><div class="q-text">Solar panels + mounting + DC-DC converters (2.05 MW, First Solar)</div><div class="q-why">~$2M</div></div></div>
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">RACK</div><div class="q-body"><div class="q-text">50× NVL72 @ $3.5M + Delta rack PDUs + CDUs</div><div class="q-why">~$180M gross / ~$36M cash after 80% equipment financing (Ornn RVS)</div></div></div>
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">NET</div><div class="q-body"><div class="q-text">Total cash needed after financing + tax credits</div><div class="q-why" style="color:#00d68f;font-weight:700">~$55-60M raise</div></div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">Revenue Projection</div>
+  <div class="numbers-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="num-card"><div class="label">40% Utilization (Ramp)</div><div class="value" style="font-size:16px">$22M/yr</div><div class="sub">Year 1</div></div>
+    <div class="num-card"><div class="label">60% Utilization (Base)</div><div class="value" style="font-size:16px;color:#00d68f">$40M/yr</div><div class="sub">EBITDA ~$32M</div></div>
+    <div class="num-card"><div class="label">Implied Valuation</div><div class="value" style="font-size:16px">$480-640M</div><div class="sub">15-20x EBITDA base</div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">Tax Benefits Stack</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card green"><div class="q">Historic Tax Credits</div><div class="a">45% of rehab costs — ~$4M back</div></div>
+    <div class="card green"><div class="q">ITEP / PILOT</div><div class="a">80% property tax abatement, 10 years — $8-16M saved</div></div>
+    <div class="card green"><div class="q">Act 730</div><div class="a">20-year sales tax exemption — $40-80M over project life. Qualify at $55M+ investment.</div></div>
+    <div class="card green"><div class="q">Federal Solar ITC</div><div class="a">30-40% of solar CapEx — ~$600-800K</div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">The One-Liner For Jack / Ornn</div>
+  <div class="close-block">
+    <div class="label">The Pitch</div>
+    <p>"We confirmed the site supports 50 racks at 10 MW. Total cash needed after equipment financing and tax credits is ~$55-60M. Year 2 EBITDA at base case is $32M. The building physically holds 720 racks. We're starting at 50 — and NVIDIA is in the room."</p>
+  </div>
+
+  <div class="section-title" style="padding-top:8px">OCP Standard — We're Building To Spec</div>
+  <div class="close-block" style="background:#0a0e1a;border-color:#1a2a4a;border-left-color:#76b900">
+    <div class="label" style="color:#76b900">OCP LVDC White Paper — Released March 30, 2026</div>
+    <p>ADC's 800V DC topology is <strong>Stage 1d</strong> — the OCP-defined starting point for new-build AI factories. SST from 13.8kV MV → 800V DC bus. Training target: 99.9% availability. Inference target: 99.999%. NVIDIA, Eaton, ABB, Amperesand, Trane all co-authored this standard. We are building to it from day one.</p>
+  </div>
+
+</div>
+
+<!-- CLOSE -->
+<div id="panel-close" class="panel">
+  <div class="section-title">How To Close The Call</div>
+  <div class="close-block">
+    <div class="label">The One Ask — End Every Call With This</div>
+    <p>"What is the single most important thing ADC needs to have in place in the next 30 days to stay on the path to Vera Rubin allocation?"</p>
+  </div>
+
+  <div class="section-title">If They Ask What You Need Most Right Now</div>
+  <div class="script-block">
+    <div class="label">Honest Answer</div>
+    <em>"Two things. A power engineer who speaks DSX and can talk to Lafayette's utility in their language — that's the bridge into the city. And the NPN registration path — we need to be in the system before we can be in the allocation conversation. Everything else we can build."</em>
+  </div>
+
+  <div class="section-title">What NOT To Say</div>
+  <div class="grid">
+    <div class="card red">
+      <div class="q">Don't mention immersion cooling</div>
+      <div class="a">EC-110 is dead. NVIDIA ships liquid-cooled racks. You pivoted at GTC. Don't bring it up.</div>
+    </div>
+    <div class="card red">
+      <div class="q">Don't quote rack prices</div>
+      <div class="a">You don't know their exact number. They won't confirm it. Skip it.</div>
+    </div>
+    <div class="card red">
+      <div class="q">Don't undersell Willow Glen</div>
+      <div class="a">700 acres, former 2,200 MW station, 230kV substation, river water. That's a world-class site. If it comes up, own it.</div>
+    </div>
+  </div>
+
+  <div class="section-title">The One-Line Pitch If They Ask "What Is ADC?"</div>
+  <div class="script-block">
+    <div class="label">10 Seconds</div>
+    <em>"Louisiana's first NVIDIA neocloud. We own the power, we own the site, we own the permits. NVIDIA ships the racks. We sell the tokens."</em>
+  </div>
+</div>
+
+<script>
+function show(tab){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
