@@ -23,6 +23,8 @@ Last updated: 2026-03-25
   - **For ADC: Delta power components are American. Complete modular solutions are NOT.**
   - **Pair Delta power (Plano) + American container (GTI/Cajun) + American cooling (BAC/CoolIT)**
 - **Data Center Division**: Infrastructure Business (IFB), led by EVP Johnson Lee
+- **Americas President**: Austin Tseng
+- **Americas VP**: Franziskus Gehle, VP Americas Region (primary AI factory contact; involved with Meta, Microsoft, AWS deployments). LinkedIn: linkedin.com/in/franziskus-gehle-1b5aa4132/
 - **Americas Sales**: Dave Morse, VP Sales & Product; Alex Lee, VP Channel Business
 - **R&D**: Ralf Pieper, R&D Director Custom Design BU (ORV3, DC/DC converters)
 
@@ -126,49 +128,41 @@ Last updated: 2026-03-25
 
 ## 4. LIQUID COOLING PRODUCTS
 
-### 4A. 3 MW Liquid-to-Liquid CDU
-- **Cooling Capacity**: Up to 3,000 kW
-- **Hydraulic Performance**: 1.5 LPM/kW at 50 psi
-- **Scalability**: Up to 8 units operating as a group (24 MW cooling)
-- **Purpose**: Row-level cooling for high-density AI deployments
+### IMPORTANT: 800V DC Pumps Are NOT Standalone Products
+Delta's 800 VDC pumps are integral subsystems INSIDE the 2.4MW CDU — not separately purchasable.
+Delta's separately purchasable standalone pumps are 48V DC (800W and 2,000W models) for subsystem use.
+To get 800V DC pump capability: procure the full 2.4MW CDU assembly.
 
-### 4B. 2.4 MW Liquid-to-Liquid CDU (800 VDC native)
-- **Cooling Capacity**: 2,400 kW
-- **Approach Temperature**: As low as 4 deg C
-- **Pumps**: Self-contained 800 VDC electrical pumps with N+1 redundancy
-- **Dimensions**: 1,500mm W x 1,200mm D x 2,286mm H
-- **Purpose**: Engineered specifically for 800 VDC AI factory architectures
-- **Status**: Shown at GTC 2026
+### GoCool CDU Full Product Line
 
-### 4C. 1.5 MW Liquid-to-Liquid CDU (GoCool-1500)
-- **Cooling Capacity**: 1,500 kW
-- **Features**: Stainless steel plumbing, coolant filtration, precise flow/pressure/temp control
-- **Product page**: https://www.deltapowersolutions.com/en/mcis/liquid-to-liquid-coolant-distribution-unit-1500kw.php
+**Liquid-to-Air (L2A) CDUs:**
+- GoCool-80: 80 kW
+- GoCool-150: 150 kW
+- GoCool-260: 260 kW
+- GoCool-300 (2025): 300 kW, closed-loop, no raised floor required
 
-### 4D. 140 kW In-Rack CDU (4RU) -- for NVIDIA GB300 NVL72
-- **Form Factor**: 4RU
-- **Cooling Capacity**: 140 kW
-- **Type**: Plate-type heat exchanger (secondary server loop to primary facility water)
-- **Certification**: NVIDIA GB200 NVL72 certified, GB300 NVL72 compatible
-- **Status**: CERTIFIED and SHIPPING
+**Liquid-to-Liquid (L2L) CDUs — Row Level:**
+- GoCool-660: 660 kW
+- GoCool-1000: 1,000 kW
+- GoCool-1200: 1,200 kW
+- GoCool-1500: 1,500 kW — **NVIDIA RVL/AVL APPROVED** (GTC 2025). Primary certified option.
+  - Product page: https://www.deltapowersolutions.com/en/mcis/liquid-to-liquid-coolant-distribution-unit-1500kw.php
+- GoCool-2000 / 2MW In-Row: 2,000 kW, 500 GPM (1,890 LPM), OCP Deschutes-compliant
+- GoCool-2400 / 2.4MW (GTC 2026 — NEW): 2,400 kW, **800 VDC-native pumps** N+1, 4°C approach, 1,500x1,200x2,286mm. No public spec sheet yet — contact Delta Americas.
+- GoCool-3000: 3,000 kW, 3,000 LPM, 50 psi, 6" Victaulic, VFD-controlled, 2,800 kg, 10" touchscreen, SNMP/Modbus/BACnet
+  - Spec sheet: https://www.deltapowersolutions.com/en/mcis/liquid-to-liquid-coolant-distribution-unit-3000kw--specifications.php
 
-### 4E. 200 kW In-Rack CDU (6RU)
-- **Form Factor**: 6RU
-- **Cooling Capacity**: 200 kW
-- **Type**: Liquid-to-Liquid
+**In-Rack CDUs:**
+- 4RU / 140 kW: NVL72/NVL36 — NVIDIA GB300 NVL72 compatible, plate-type L2L heat exchanger. CERTIFIED and SHIPPING.
+- 6RU / 200-250 kW: Next-gen chips beyond NVL72
 
-### 4F. 24 kW In-Rack CDU (20RU)
-- **Form Factor**: 20RU
-- **Cooling Capacity**: 24 kW
-- **Type**: Liquid-to-Air (L2A)
+### 800V DC Pump Architecture (How It Works)
+Traditional path: AC mains → transformer → VFD → AC pump motor (multiple conversion losses)
+Delta 800V DC path: 800V DC bus → pump motor controller → DC pump directly (eliminates CDU internal AC power supply, ~2-3% efficiency gain, load-following cooling tracks GPU utilization, compatible with BBU backup)
 
-### 4G. 3D Vapor Chamber (4RU)
-- **Cooling Capacity**: 1,000 W per chip
-- **Purpose**: Direct chip-level cooling
-
-### 4H. Micro Channel Cold Plates
-- **Technology**: Novel bonding process for reduced flow resistance
-- **Purpose**: GPU/CPU direct contact cooling
+### Liquid Cooling Overview
+- https://www.deltapowersolutions.com/en/mcis/data-center-liquid-cooling.php
+- https://www.deltaww.com/en-US/products/coolant-distribution-unit
 
 ---
 

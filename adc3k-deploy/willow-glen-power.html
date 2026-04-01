@@ -92,9 +92,9 @@ nav a:hover,nav a.active{color:#76b900}
 <a href="https://louisianaai.net">Home</a>
 <a href="/willow-glen">Tiger Campus</a>
 <a href="/learn">Learn</a>
-<a href="/reference">Library</a>
+
 <a href="/willow-glen-power" class="active">Power</a>
-<a href="/operations-center">Operations</a>
+
 </nav>
 
 <h1>Tiger Compute Campus — 800V DC Power Architecture</h1>
@@ -647,10 +647,95 @@ Eaton powers the facility. <strong>Delta powers the rack. Shipping now.</strong>
 <strong>CERAWeek 2026 consensus:</strong> behind-the-meter generation is the industry standard for AI factories. Willow Glen's 4-layer power hierarchy — solar primary offset, natural gas backbone, diesel emergency, grid sell-back only — delivers energy sovereignty that grid-dependent facilities cannot match.
 </div>
 
+<h2>Eaton Beam Rubin DSX — Five-Layer Power Architecture</h2>
+<p style="color:rgba(255,255,255,0.6);max-width:700px;margin:0 auto 30px;text-align:center">Presented live at NVIDIA GTC 2026 by JP Buzzell, VP &amp; Chief Architect, Eaton Global Data Center Segment. Willow Glen deploys all five layers.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 1 — Generation &amp; Grid</div><div style="font-weight:700;margin-bottom:6px">Power Generation + Grid Connection</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">Siemens SGT-800 gas turbines + First Solar arrays + diesel emergency backup + 230kV Entergy grid sell-back.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 2 — Gray Space</div><div style="font-weight:700;margin-bottom:6px">MV Power Conditioning + Stability</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">Solid State Transformers (SST) — scalable, pad-mount or modular. Steps 15–35 kV to 800V DC (compute) and 480V 3-phase (mechanical). Siemens Omnivise dispatch optimization every 15 minutes.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 3 — White Space</div><div style="font-weight:700;margin-bottom:6px">800V DC Delivery + Distribution</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">Busway Distribution Center + high-capacity bus bars. Plug-and-play rack feeds via bus plugs. DCRPP sidecar splits 800V DC into branch circuits with local protection + monitoring.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 4 — Cooling</div><div style="font-weight:700;margin-bottom:6px">Power + Cooling for High-Density Racks</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">Delta 140 kW in-rack CDU + BAC dry coolers. Mississippi River proximity for large-scale cooling. 45°C hot water loop. 130+ kW per rack.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 5 — Software &amp; Services</div><div style="font-weight:700;margin-bottom:6px">Control, Health, Digital Twin</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">Eaton Brightlayer EPMS + Siemens Omnivise + NVIDIA Omniverse DSX digital twin. Predictive maintenance. Autonomous 24/7 generation optimization.</div></div>
+</div>
+
+<h2>ABB — Medium Voltage UPS + Circuit Protection</h2>
+<p style="color:rgba(255,255,255,0.6);max-width:700px;margin:0 auto 20px;text-align:center">Formal NVIDIA R&D partner (Oct 2025). Paolo Catapane (ABB) co-chairs OCP Power Distribution Sub-Project alongside JP Buzzell (Eaton) — writing the 800V DC standard together.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">MV UPS — Grid Entry</div><div style="font-weight:700;margin-bottom:6px">ABB HiPerGuard</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">24 kV input. Up to <strong>22.5 MVA</strong> (10 units). <strong>98% efficiency</strong>. Sits between utility grid and Eaton distribution. Available now.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Branch Circuit Protection</div><div style="font-weight:700;margin-bottom:6px">ABB SACE Infinitus</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">World's first IEC-certified solid-state DC circuit breaker. 1,000 VDC / 2,500 A. <strong>&lt;25 µs fault cutoff</strong>. Zero arc flash. Available now.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">AI-Ready LV Switchgear</div><div style="font-weight:700;margin-bottom:6px">ABB SACE Emax 3 + MNS</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">IEC 62443 SL2 cybersecurity. Real-time sensing. Predictive maintenance. 800V DC variant 2027.</div></div>
+</div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px;margin-bottom:40px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<div style="flex:1;min-width:200px"><div style="color:#76b900;font-weight:700;font-size:0.8rem;margin-bottom:4px">Joint White Paper — ABB + NVIDIA</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.7)">"Redefining Power Infrastructure for AI: The Role of 800 VDC in Data Centers"</div></div>
+<a href="/vendors/abb/whitepapers/abb-nvidia-800vdc-whitepaper.pdf" target="_blank" style="color:#76b900;font-size:0.8rem;text-decoration:none;border:1px solid #76b900;padding:6px 16px;border-radius:4px;white-space:nowrap">Download PDF &rarr;</a>
+</div>
+
+<h2>Delta Electronics — Rack Power + Cooling</h2>
+<p style="color:rgba(255,255,255,0.6);max-width:700px;margin:0 auto 20px;text-align:center">Most complete 800V DC rack-level stack available today. NVIDIA co-developed the 90 kW DC/DC shelf. 140 kW CDU is NVL72 certified. Manufactured in Plano, Texas.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">In-Row Rack Power</div><div style="font-weight:700;margin-bottom:6px">Delta 660 kW Power Rack</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">6x 110 kW shelves. 800V DC output. <strong>480 kW embedded BBU</strong> — no UPS room needed. e-Fuse SiC (&lt;3 µs). Plano TX. Shipping now.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">DC/DC Conversion</div><div style="font-weight:700;margin-bottom:6px">Delta 90 kW DC/DC Shelf</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">1U. 800V → 50V. <strong>98.5% efficiency</strong>. 180% transient response. NVIDIA MGX co-design. Shipping now.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">In-Rack Cooling</div><div style="font-weight:700;margin-bottom:6px">Delta 140 kW CDU</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">4RU. <strong>NVIDIA NVL72 certified</strong>. On NVIDIA RVL/AVL. Plate L2L heat exchanger. Shipping now.</div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Row-Level Cooling</div><div style="font-weight:700;margin-bottom:6px">Delta 2.4 MW CDU</div><div style="color:rgba(255,255,255,0.6);font-size:0.85rem">2,400 kW. 4°C approach. <strong>800 VDC-native pumps</strong>. N+1 redundancy. GTC 2026.</div></div>
+</div>
+
+<h2>800V DC White Paper Library</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:40px">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">OCP — Sept 2025</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Power Architecture Evolution</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">800V industry standard. 98% LLC efficiency.</div><a href="/vendors/ocp/ocp-power-architecture-evolution.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">NVIDIA — May 2025</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">800 VDC Architecture</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">45% copper reduction. 100 kW to 1 MW+ per rack.</div><a href="/vendors/nvidia/whitepapers/nvidia-800vdc-architecture.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Eaton — 2025</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Deploying 800VDC Architectures</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">Beam Rubin DSX, DCRPP, busbar. JP Buzzell GTC 2026.</div><a href="/vendors/eaton/whitepapers/eaton-800vdc-architecture.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">ABB + NVIDIA — Oct 2025</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Redefining Power for AI</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">800 VDC role in AI factories. Joint ABB/NVIDIA paper.</div><a href="/vendors/abb/whitepapers/abb-nvidia-800vdc-whitepaper.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Renesas — Oct 2025</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Power Architecture Evolution</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">800V → 48V at 98% efficiency. OCP companion.</div><a href="/vendors/ocp/renesas-power-architecture-evolution.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Delta Electronics — 2024</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Solid State Transformer (SST) Datasheet</div><div style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-bottom:10px">MV AC (10–33 kV) direct to 800 VDC. 98.5% efficiency. SiC modules. Eliminates transformer + rectifier chain.</div><a href="/vendors/delta/whitepapers/delta-sst-datasheet.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:3px 10px;border-radius:4px">Download PDF &rarr;</a></div>
+</div>
+
+<h2>Liquid Cooling Infrastructure — GPU Die to Mississippi River</h2>
+<p style="color:rgba(255,255,255,0.6);max-width:700px;margin:0 auto 20px;text-align:center">Every NVL72 rack runs 100% liquid cooling. Boyd cold plates at the die. Staubli quick-disconnects at 450 per rack. CoolIT row-level CDUs at 2 MW each. Danfoss CoolTrain pre-fabricated piping. Heat rejected to the Mississippi River — the largest natural heat sink in North America, 1,000 ft from the site boundary.</p>
+
+<div class="diagram" style="margin-bottom:24px">
+<div class="flow" style="flex-wrap:wrap;gap:6px;justify-content:center">
+<div class="block blue"><div class="label">GPU Die</div><div class="value">~700 W</div><div class="detail">per GPU · 36 GPUs/tray</div></div>
+<div class="arrow">→</div>
+<div class="block green"><div class="label">Boyd Cold Plate</div><div class="value">Copper</div><div class="detail">NVIDIA RVL ✓ · Eaton-owned</div></div>
+<div class="arrow">→</div>
+<div class="block white"><div class="label">Staubli UQD</div><div class="value">450 / rack</div><div class="detail">GB300 NVL72 · drip-free</div></div>
+<div class="arrow">→</div>
+<div class="block gold"><div class="label">Rack Manifold</div><div class="value">Supply / Return</div><div class="detail">CoolIT / Boyd</div></div>
+<div class="arrow">→</div>
+<div class="block green"><div class="label">CDU</div><div class="value">2 MW / row</div><div class="detail">CoolIT CHx2000</div></div>
+<div class="arrow">→</div>
+<div class="block blue"><div class="label">CoolTrain TCS</div><div class="value">Pre-fab piping</div><div class="detail">Danfoss · March 2026</div></div>
+<div class="arrow">→</div>
+<div class="block purple"><div class="label">Heat Rejection</div><div class="value">Mississippi River</div><div class="detail">1,000 ft · 100+ MW capacity</div></div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:40px">
+<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:18px">
+<div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Primary</div>
+<div style="font-weight:700;margin-bottom:6px">CoolIT CHx2000</div>
+<div style="color:rgba(255,255,255,0.6);font-size:0.82rem"><strong>2 MW</strong> per unit. Serves 12 NVL72 racks. 750 mm footprint. Hot-swap pumps. <strong>6-nines availability.</strong> NVIDIA RVL/AVL confirmed. Shipping.</div>
+</div>
+<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:18px">
+<div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Backup</div>
+<div style="font-weight:700;margin-bottom:6px">Vertiv CoolChip CDU 2300</div>
+<div style="color:rgba(255,255,255,0.6);font-size:0.82rem"><strong>2.3 MW</strong> per unit. Variable speed pumps. Integrated leak detection. <strong>70% first-batch GB200 volume share.</strong> SNMP / BACnet. Shipping.</div>
+</div>
+<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:18px">
+<div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Per-Rack CDU</div>
+<div style="font-weight:700;margin-bottom:6px">Motivair MCDU-10</div>
+<div style="color:rgba(255,255,255,0.6);font-size:0.82rem"><strong>210 kW</strong>. 4RU. Co-engineered with NVIDIA for GB300 NVL72. Schneider EcoStruxure monitoring. NVIDIA RVL/AVL. Shipping.</div>
+</div>
+<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(118,185,0,0.3);border-radius:8px;padding:18px">
+<div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">TCS Piping</div>
+<div style="font-weight:700;margin-bottom:6px">Danfoss CoolTrain</div>
+<div style="color:rgba(255,255,255,0.6);font-size:0.82rem">Pre-fabricated, pre-tested valve train — factory assembled, <strong>eliminates field pipe fabrication.</strong> Isolation, balancing, sensors, strainers — all in one bolt-together assembly.</div>
+</div>
+</div>
+
 <div style="text-align:center;padding:40px 0 10px;color:rgba(255,255,255,0.3);font-size:0.7rem;border-top:1px solid rgba(255,255,255,0.06);margin-top:40px">
 Louisiana's AI Infrastructure Initiative<br>
 <strong style="color:rgba(255,255,255,0.5)">(337) 780-1535</strong> &nbsp;|&nbsp; <strong style="color:rgba(255,255,255,0.5)">info@louisianaai.net</strong><br><br>
-Source: NVIDIA 800 VDC Architecture Blog (May 2025), Eaton Beam Rubin DSX (GTC March 2026)<br>
+Sources: OCP (Sept 2025), NVIDIA 800 VDC (May 2025), Eaton Beam Rubin DSX (GTC March 2026), ABB/NVIDIA 800 VDC (Oct 2025), Delta Electronics GTC 2026, CERAWeek 2026<br>
 American-made. American energy. Louisiana AI factory.
 </div>
 

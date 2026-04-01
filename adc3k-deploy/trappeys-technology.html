@@ -163,7 +163,6 @@ a:hover{text-decoration:underline}
       <a href="/trappeys-university">University</a>
       <a href="/trappeys-responders">First Responders</a>
       <a href="/trappeys-investors">Investors</a>
-      <a href="/operations-center">Operations</a>
     </div>
   </div>
 </nav>
@@ -188,8 +187,8 @@ a:hover{text-decoration:underline}
     <div class="pillar pillar-flex">
       <div class="p-name">DSX Flex</div>
       <div class="p-type p-type-solar">Power Management</div>
-      <p>Grid collaboration, power optimization, and solar-constrained site management. Flex understands that Trappeys runs on a 4-layer power hierarchy and dynamically adjusts compute load to match available power.</p>
-      <div class="p-spec">Solar variability &rarr; workload scheduling<br>Grid sell-back &rarr; revenue optimization<br>Gas backbone &rarr; guaranteed baseline</div>
+      <p>Grid collaboration, power optimization, and DC microgrid management. Flex understands that Trappeys runs on a full DC architecture and dynamically adjusts compute load to match available Bloom SOFC output and solar generation in real time.</p>
+      <div class="p-spec">Solar variability &rarr; workload scheduling<br>Bloom SOFC throttle &rarr; fuel optimization<br>Grid sell-back &rarr; revenue dispatch</div>
     </div>
     <div class="pillar pillar-boost">
       <div class="p-name">DSX Boost</div>
@@ -214,8 +213,8 @@ a:hover{text-decoration:underline}
 <!-- ============================================================ -->
 <div class="section">
   <div class="section-label">Power Architecture</div>
-  <h2>4-Layer Power Hierarchy</h2>
-  <p class="sub">Four layers, strict hierarchy. Solar offsets the top, natural gas carries the backbone, diesel sits on standby for emergencies, and the grid exists only as a sell-back revenue channel.</p>
+  <h2>Full DC Microgrid — No AC Conversion</h2>
+  <p class="sub">Two DC layers. 1500V collection. 800V distribution. Bloom SOFC generates DC directly from natural gas. Solar charges the battery bank at 1500V. Run:ai controls every layer autonomously. No inverters. No AC bus. No grid dependency.</p>
 
   <div class="power-bar">
     <div class="bar-solar"></div>
@@ -224,57 +223,57 @@ a:hover{text-decoration:underline}
     <div class="bar-grid"></div>
   </div>
   <div class="bar-labels">
-    <span class="bl-solar">SOLAR</span>
-    <span class="bl-gas">NATURAL GAS</span>
-    <span class="bl-diesel">DIESEL</span>
-    <span class="bl-grid">GRID</span>
+    <span class="bl-solar">1500V SOLAR</span>
+    <span class="bl-gas">BLOOM SOFC</span>
+    <span class="bl-diesel">800V BUS</span>
+    <span class="bl-grid">LUS BACKSTOP</span>
   </div>
 
   <div class="power-stack">
     <div class="power-layer layer-solar">
       <div class="layer-badge">
-        <div class="layer-num">Layer 1</div>
-        <div class="layer-name">Solar</div>
-        <div class="layer-role">Primary Offset</div>
+        <div class="layer-num">COLLECTION</div>
+        <div class="layer-name">Solar — 1500V DC</div>
+        <div class="layer-role">170,000 sq ft rooftop</div>
       </div>
       <div class="layer-desc">
-        <strong>1,830 First Solar Series 7 panels</strong> across all rooftop surfaces. Approximately 1 MW capacity. Offsets daytime grid draw. Excess feeds Layer 4 sell-back. First Solar's factory is 30 miles away in New Iberia &mdash; shortest supply chain in the industry.
+        <strong>4,100 First Solar Series 7 TR1 panels</strong> at 1500V DC strings — the NEC LVDC ceiling. Higher voltage = lower current = I&sup2;R losses drop by the square. Smaller wire gauge across 170,000 sq ft of roof. MPPT DC-DC converters charge the battery bank directly. No inverters anywhere. First Solar's factory is 30 miles away in New Iberia.
       </div>
     </div>
     <div class="power-layer layer-gas">
       <div class="layer-badge">
-        <div class="layer-num">Layer 2</div>
-        <div class="layer-name">Natural Gas</div>
-        <div class="layer-role">Backbone 24/7</div>
+        <div class="layer-num">GENERATION</div>
+        <div class="layer-name">Bloom Energy SOFC</div>
+        <div class="layer-role">10 MW, DC Direct</div>
       </div>
       <div class="layer-desc">
-        <strong>Always running.</strong> Carries the main compute load around the clock. Henry Hub pricing &mdash; Louisiana is at the source. Caterpillar reciprocating engines provide reliable, dispatchable power that solar cannot. This is the layer that guarantees uptime.
+        <strong>Natural gas in. DC out. No combustion.</strong> Bloom solid oxide fuel cells convert natural gas electrochemically &mdash; 54% efficiency vs 38-40% for reciprocating engines. No spinning parts, no noise, no NOx emissions. Throttles instantly as solar varies. Run:ai adjusts fuel flow in real time. 9% overbuild achieves 99.9% availability vs 30% overbuild for generators.
       </div>
     </div>
     <div class="power-layer layer-diesel">
       <div class="layer-badge">
-        <div class="layer-num">Layer 3</div>
-        <div class="layer-name">Diesel Gensets</div>
-        <div class="layer-role">Emergency Only</div>
+        <div class="layer-num">DISTRIBUTION</div>
+        <div class="layer-name">800V DC Bus</div>
+        <div class="layer-role">OCP Stage 1d</div>
       </div>
       <div class="layer-desc">
-        <strong>On-site fuel. Pipeline-independent.</strong> Cummins American-made generators. Only activates if gas supply is interrupted. Fuel stored on-site in the infrastructure yard. Zero dependency on external pipelines during emergencies.
+        <strong>OCP LVDC standard, released March 30, 2026.</strong> Bloom SOFC and battery bank both feed the 800V DC bus through DC-DC converters. Supercapacitors absorb AI workload spikes (20%&rarr;150% in milliseconds). Rack PDUs step 800V to 48V internally (OCP ORV3). No separate UPS array required. No AC conversion anywhere in the compute path.
       </div>
     </div>
     <div class="power-layer layer-grid">
       <div class="layer-badge">
-        <div class="layer-num">Layer 4</div>
-        <div class="layer-name">Grid (LUS)</div>
-        <div class="layer-role">Sell-Back Only</div>
+        <div class="layer-num">BACKSTOP</div>
+        <div class="layer-name">LUS Grid</div>
+        <div class="layer-role">Emergency + Sell-Back</div>
       </div>
       <div class="layer-desc">
-        <strong>NOT a power source.</strong> Excess generation goes back to the LUS grid for revenue. The grid connection exists to sell power, not to consume it. Trappeys generates its own &mdash; the grid is a customer, not a supplier.
+        <strong>NOT a power source for operations.</strong> LUS Pin Hook substation (13.8kV) connects via SST to the 800V bus as emergency backstop only. Excess generation sells back to LUS grid for revenue. Trappeys is a net-negative load on the city's grid &mdash; it gives power back, not takes it.
       </div>
     </div>
   </div>
 
   <div class="callout callout-blue">
-    <strong>Why this order matters:</strong> Most facilities put grid first and hope for the best. Trappeys puts generation first and treats the grid as a revenue stream. Solar and gas cover 100% of load. Diesel covers 100% of emergencies. The grid buys our excess.
+    <strong>The Moat:</strong> Bloom SOFC + 170,000 sq ft solar + Vermilion River heat exchanger + water tower thermal mass + Run:ai full factory control. Nobody else has this stack. The site cost $1M. It would cost $50M+ to replicate anywhere near an AI corridor.
   </div>
 </div>
 
@@ -424,27 +423,22 @@ a:hover{text-decoration:underline}
     <div class="supply-card">
       <div class="sc-company">First Solar</div>
       <div class="sc-location">New Iberia, LA &mdash; 30 mi</div>
-      <p>Series 7 solar panels. $1.1B factory 30 miles from Trappeys. Shortest solar supply chain in the industry. 1,830 panels across rooftops.</p>
+      <p>Series 7 TR1 panels. $1.1B factory 30 miles from Trappeys. ~4,100 panels at 1500V DC strings across 170,000 sq ft. Shortest solar supply chain in the industry.</p>
     </div>
     <div class="supply-card">
-      <div class="sc-company">Eaton</div>
-      <div class="sc-location">Cleveland, OH</div>
-      <p>Power distribution units, switchgear, UPS systems. Full electrical distribution from utility entrance to rack PDU.</p>
+      <div class="sc-company">Bloom Energy</div>
+      <div class="sc-location">San Jose, CA (NYSE: BE)</div>
+      <p>Solid oxide fuel cells — natural gas to DC direct. No combustion. 54% efficiency. 10 MW Phase 1. Modular, hot-swap, 90-day delivery. Primary generation source.</p>
     </div>
     <div class="supply-card">
-      <div class="sc-company">Caterpillar</div>
-      <div class="sc-location">Irving, TX</div>
-      <p>Natural gas reciprocating generators. Layer 2 backbone power. Reliable, dispatchable, American-made prime power.</p>
+      <div class="sc-company">Delta Electronics</div>
+      <div class="sc-location">Plano, TX</div>
+      <p>660 kW rack PDU, e-Fuse arc protection, 140 kW in-rack CDU (NVL72 certified). Rack-level power and cooling. Ships now.</p>
     </div>
     <div class="supply-card">
-      <div class="sc-company">Powell Industries</div>
-      <div class="sc-location">Houston, TX</div>
-      <p>Custom switchgear and power control assemblies. Medium-voltage distribution for the 4-layer power hierarchy.</p>
-    </div>
-    <div class="supply-card">
-      <div class="sc-company">Cummins</div>
-      <div class="sc-location">Columbus, IN</div>
-      <p>Emergency diesel generators. Layer 3 backup power. On-site fuel, pipeline-independent, American-made reliability.</p>
+      <div class="sc-company">Munters</div>
+      <div class="sc-location">Gulf South distributor</div>
+      <p>Desiccant dehumidifiers. NVL72 exhaust heat regenerates the desiccant wheel. Racks pay for their own dehumidification. Offshore/marine proven — perfect for Louisiana 75-80% RH.</p>
     </div>
     <div class="supply-card">
       <div class="sc-company">Siemens Energy</div>
@@ -454,10 +448,76 @@ a:hover{text-decoration:underline}
   </div>
 
   <div class="callout callout-green" style="margin-top:24px">
-    <strong>Louisiana advantage:</strong> First Solar is 30 miles away. Caterpillar and Powell Industries are in Texas. Cummins ships from Indiana. Every critical component is domestic, most are regional. No transoceanic shipping, no tariff exposure, no geopolitical supply risk.
+    <strong>Louisiana advantage:</strong> First Solar is 30 miles away. Bloom Energy ships in 90 days. Delta Electronics is in Plano TX. Every critical component is domestic, most are regional. No transoceanic shipping, no tariff exposure, no geopolitical supply risk.
   </div>
 </div>
 
+<div style="max-width:1100px;margin:0 auto;padding:40px 20px">
+<h2 style="text-align:center;margin-bottom:10px">Eaton Beam Rubin DSX — Five-Layer Power Architecture</h2>
+<p style="color:rgba(0,0,0,0.5);max-width:700px;margin:0 auto 30px;text-align:center;font-size:0.9rem">Presented live at NVIDIA GTC 2026 by JP Buzzell, VP &amp; Chief Architect, Eaton Global Data Center Segment.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 1 — Generation &amp; Grid</div><div style="font-weight:700;margin-bottom:6px">Power Generation + Grid Connection</div><div style="color:#555;font-size:0.85rem">Caterpillar G3520C nat gas + First Solar 2.05 MW + diesel emergency backup + LUS grid sell-back.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 2 — Gray Space</div><div style="font-weight:700;margin-bottom:6px">MV Power Conditioning + Stability</div><div style="color:#555;font-size:0.85rem">Solid State Transformers (SST) — scalable, pad-mount or modular. 15–35 kV to 800V DC (compute) and 480V 3-phase (mechanical).</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 3 — White Space</div><div style="font-weight:700;margin-bottom:6px">800V DC Delivery + Distribution</div><div style="color:#555;font-size:0.85rem">Busway Distribution Center + high-capacity bus bars. Plug-and-play rack feeds. DCRPP sidecar with local protection + monitoring.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 4 — Cooling</div><div style="font-weight:700;margin-bottom:6px">Power + Cooling for High-Density Racks</div><div style="color:#555;font-size:0.85rem">Delta 140 kW in-rack CDU + water tower cooling. 45°C hot water loop. 130+ kW per rack supported.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 5 — Software &amp; Services</div><div style="font-weight:700;margin-bottom:6px">Control, Health, Digital Twin</div><div style="color:#555;font-size:0.85rem">Eaton Brightlayer EPMS + Siemens Omnivise + NVIDIA Omniverse DSX digital twin. Predictive maintenance. Autonomous optimization.</div></div>
+</div>
+
+<h2 style="text-align:center;margin-bottom:20px">800V DC White Paper Library</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">OCP — Sept 2025</div><div style="font-weight:700;margin-bottom:6px">Power Architecture Evolution in Data Centers</div><div style="color:#555;font-size:0.85rem;margin-bottom:12px">800V industry standard. 98% efficiency LLC converter. Co-developed with Renesas + NVIDIA.</div><a href="/vendors/ocp/ocp-power-architecture-evolution.pdf" target="_blank" style="color:#76b900;font-size:0.8rem;text-decoration:none;border:1px solid #76b900;padding:4px 12px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">NVIDIA — May 2025</div><div style="font-weight:700;margin-bottom:6px">800 VDC Architecture for Next-Gen AI Infrastructure</div><div style="color:#555;font-size:0.85rem;margin-bottom:12px">45% copper reduction. 5% efficiency gain. 100 kW to 1 MW+ per rack. Full production 2027.</div><a href="/vendors/nvidia/whitepapers/nvidia-800vdc-architecture.pdf" target="_blank" style="color:#76b900;font-size:0.8rem;text-decoration:none;border:1px solid #76b900;padding:4px 12px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Eaton — 2025</div><div style="font-weight:700;margin-bottom:6px">Deploying 800VDC Architectures for AI Factories</div><div style="color:#555;font-size:0.85rem;margin-bottom:12px">Grid-to-chip architecture, Beam Rubin DSX, DCRPP, supercapacitors. By JP Buzzell, GTC 2026.</div><a href="/vendors/eaton/whitepapers/eaton-800vdc-architecture.pdf" target="_blank" style="color:#76b900;font-size:0.8rem;text-decoration:none;border:1px solid #76b900;padding:4px 12px;border-radius:4px">Download PDF &rarr;</a></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Renesas — Oct 2025</div><div style="font-weight:700;margin-bottom:6px">Power Architecture Evolution in Data Centers</div><div style="color:#555;font-size:0.85rem;margin-bottom:12px">800V to 48V at 98% efficiency. Semiconductor implementation guide. OCP companion paper.</div><a href="/vendors/ocp/renesas-power-architecture-evolution.pdf" target="_blank" style="color:#76b900;font-size:0.8rem;text-decoration:none;border:1px solid #76b900;padding:4px 12px;border-radius:4px">Download PDF &rarr;</a></div>
+</div>
+</div>
+
+
+  <h2 style="text-align:center;margin-top:50px;margin-bottom:10px">ABB &mdash; Medium Voltage UPS + Circuit Protection</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Formal NVIDIA R&amp;D partner (Oct 2025). Paolo Catapane (ABB) co-chairs OCP Power Distribution Sub-Project alongside JP Buzzell (Eaton).</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:16px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">MV UPS &mdash; Grid Entry</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB HiPerGuard</div><div style="color:#555;font-size:0.82rem">24 kV. Up to <strong>22.5 MVA</strong>. <strong>98% efficiency</strong>. Grid to HiPerGuard to Eaton to racks. Available now.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Circuit Protection</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB SACE Infinitus</div><div style="color:#555;font-size:0.82rem">1,000 VDC / 2,500 A. <strong>Less than 25 microsecond fault cutoff</strong>. Zero arc flash. IEC-certified. Available now.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">LV Switchgear</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB SACE Emax 3 + MNS</div><div style="color:#555;font-size:0.82rem">IEC 62443 SL2 cybersecurity. Real-time sensing. Predictive maintenance. 800V DC 2027.</div></div>
+  </div>
+  <div style="background:#f0f7e6;border:1px solid #c8e6a0;border-radius:8px;padding:14px;margin-bottom:40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+  <div style="flex:1;min-width:200px"><div style="color:#76b900;font-weight:700;font-size:0.78rem;margin-bottom:3px">ABB + NVIDIA Joint White Paper</div><div style="font-size:0.83rem;color:#333">Redefining Power Infrastructure for AI: The Role of 800 VDC in Data Centers</div></div>
+  <a href="/vendors/abb/whitepapers/abb-nvidia-800vdc-whitepaper.pdf" target="_blank" style="color:#76b900;font-size:0.78rem;text-decoration:none;border:1px solid #76b900;padding:5px 14px;border-radius:4px;white-space:nowrap">Download PDF</a>
+  </div>
+  <h2 style="text-align:center;margin-bottom:10px">Delta Electronics &mdash; Rack Power + Cooling</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Most complete 800V DC rack stack available today. NVIDIA MGX co-design. NVL72 certified CDU. Manufactured in Plano, Texas.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:40px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Rack Power</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 660 kW Power Rack</div><div style="color:#555;font-size:0.82rem">6x 110 kW. 800V DC. <strong>480 kW embedded BBU</strong>. e-Fuse SiC under 3 microseconds. Plano TX. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">DC/DC Conversion</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 90 kW DC/DC Shelf</div><div style="color:#555;font-size:0.82rem">1U. 800V to 50V. <strong>98.5% efficiency</strong>. 180% transient. NVIDIA MGX co-design. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">In-Rack Cooling</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 140 kW CDU</div><div style="color:#555;font-size:0.82rem">4RU. <strong>NVIDIA NVL72 certified</strong>. RVL/AVL listed. L2L plate exchanger. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row Cooling</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 2.4 MW CDU</div><div style="color:#555;font-size:0.82rem">2,400 kW. 4C approach. <strong>800 VDC-native pumps</strong>. N+1 redundancy. GTC 2026.</div></div>
+  </div>
+
+  <h2 style="text-align:center;margin-bottom:10px">Liquid Cooling Infrastructure &mdash; GPU Die to Facility Loop</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Every NVL72 rack runs 100% liquid cooling. Boyd cold plates at the GPU die, Staubli quick-disconnects at 450 per rack, CoolIT row-level CDUs at 2 MW each, and Danfoss CoolTrain pre-fabricated piping to the Vermilion River and Trappeys water tower.</p>
+  <div style="background:#f0f0f0;border-radius:8px;padding:16px;margin-bottom:24px;overflow-x:auto">
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;min-width:fit-content">
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">GPU Die</div><div style="font-size:0.9rem;font-weight:800">~700 W</div><div style="font-size:0.6rem;color:#666">per GPU</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">Boyd Cold Plate</div><div style="font-size:0.9rem;font-weight:800">Copper</div><div style="font-size:0.6rem;color:#666">NVIDIA RVL ✓</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#76b900;margin-bottom:3px">Staubli UQD</div><div style="font-size:0.9rem;font-weight:800">450 / rack</div><div style="font-size:0.6rem;color:#666">GB300 NVL72</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#e65100;margin-bottom:3px">Rack Manifold</div><div style="font-size:0.9rem;font-weight:800">Supply/Return</div><div style="font-size:0.6rem;color:#666">CoolIT / Boyd</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">CDU</div><div style="font-size:0.9rem;font-weight:800">2 MW / row</div><div style="font-size:0.6rem;color:#666">CoolIT CHx2000</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#1565c0;margin-bottom:3px">CoolTrain TCS</div><div style="font-size:0.9rem;font-weight:800">Pre-fab</div><div style="font-size:0.6rem;color:#666">Danfoss</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#1565c0;margin-bottom:3px">Heat Rejection</div><div style="font-size:0.9rem;font-weight:800">Vermilion River</div><div style="font-size:0.6rem;color:#666">+ Water Tower</div></div>
+  </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:40px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Primary</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">CoolIT CHx2000</div><div style="color:#555;font-size:0.82rem"><strong>2 MW</strong>. 12 NVL72 racks per unit. 750 mm footprint. Hot-swap pumps. <strong>6-nines availability.</strong> NVIDIA RVL/AVL. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Backup</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Vertiv CoolChip CDU 2300</div><div style="color:#555;font-size:0.82rem"><strong>2.3 MW</strong>. Variable speed pumps. Integrated leak detection. <strong>70% GB200 volume share.</strong> SNMP / BACnet. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Per-Rack CDU</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Motivair MCDU-10</div><div style="color:#555;font-size:0.82rem"><strong>210 kW</strong>. 4RU. GB300 NVL72 co-engineered. Schneider EcoStruxure. NVIDIA RVL/AVL.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">TCS Piping</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Danfoss CoolTrain</div><div style="color:#555;font-size:0.82rem">Pre-fabricated valve train. Factory pre-tested. <strong>Eliminates field pipe fabrication.</strong> Balancing valves, sensors, strainers — bolt-together on site.</div></div>
+  </div>
 
 <!-- FOOTER -->
 <div class="footer">
@@ -467,7 +527,7 @@ a:hover{text-decoration:underline}
     <a href="/trappeys">Overview</a>
     <a href="/trappeys-campus">Campus</a>
     <a href="/trappeys-investors">Investors</a>
-    <a href="/hub">ADC Hub</a>
+    <a href="/">ADC3K.com</a>
   </div>
   <div class="f-contact">
     <a href="mailto:scott@adc3k.com">scott@adc3k.com</a> &nbsp;|&nbsp; <a href="https://adc3k.com">adc3k.com</a>
