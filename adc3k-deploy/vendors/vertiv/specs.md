@@ -1,5 +1,18 @@
 # Vertiv — Products for ADC
-Last updated: 2026-03-25
+Last updated: 2026-03-30
+
+## Market Position
+- **70%+ volume share** of first-batch GB200 NVL72 rack CDU shipments
+- Hyperscale-first deployer for Blackwell liquid cooling
+- NVIDIA DSX reference partner
+
+## CoolChip CDU 121 — NVL72 Per-Rack CDU
+- **Capacity:** 121 kW per rack
+- **Form factor:** 4U, in-rack or adjacent
+- **Certified:** On NVIDIA RVL/AVL for NVL72 deployments
+- Variable speed pump + intelligent flow control
+- Integrated leak detection + auto shutoff
+- SNMP / BACnet / Trellis monitoring
 
 ## CoolChip CDU 2300
 - Up to 2.3 MW capacity per unit
