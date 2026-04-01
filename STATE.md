@@ -1,149 +1,104 @@
 # Mission Control — Project State
-Last updated: 2026-03-28 (end of session)
+Last updated: 2026-03-31 (end of session — 10 MW plan locked, NVIDIA meeting tomorrow)
 
 ---
 
-## SESSION SUMMARY — March 29, 2026
+## SESSION SUMMARY — March 31, 2026 (SESSION 2)
 
-### DSX Blueprint — Docker Container Path, Almost Done
+### Key Decisions This Session
 
-**What got done:**
-- Docker Desktop installed on Windows desktop machine
-- WSL2 Ubuntu installed
-- DSX repo cloned and built successfully (BUILD RELEASE SUCCEEDED)
-- Dockerfile.dsx written with correct structure
-- `scottay007/dsx-kit:v2` built and pushed — BROKEN (exits immediately, wrong CMD)
-- `scottay007/dsx-kit:stable` built and pushed — stays alive but no DSX runtime
-- v3 build started but WSL crashed during kit-kernel copy step
+**Trappeys Building Layout — LOCKED**
+- Building 3 = Compute Hall (75×300 ft) — racks go here
+- Building 4 = Power Hall (150×250 ft) — CDUs, 800V bulk transformer, MV switchgear, batteries, all power equipment. Generators stay outside.
+- Buildings 1 & 2 = Trappeys Museum — full restoration, historic value, public-facing, park out front
+- 170,000 sq ft total rooftop solar across campus
 
-**What's left — ONE SESSION TO FINISH:**
-- WSL reinstalled fresh on desktop (blank /root/)
-- Resume from `memory/projects/dsx_master_reference.md` → "To complete v3 build"
-- Use Gordon on laptop for build steps
-- Test image locally BEFORE deploying to RunPod
-- Deploy via UI (RunPod API broken for podFindAndDeployOnDemand)
-- Download 32GB content pack after pod boots
+**10 MW Phase 1 Plan — LOCKED (replaces 3 MW)**
+- Previous phase plan was sized to $5M seed raise — not a physical site constraint
+- Physical room holds 720 racks. Power is always the constraint.
+- New Phase 1: 10 MW, 50 NVL72 racks, 3,600 GPUs
+- Genset: Wärtsilä 34SG (~10 MW, partial load efficient) — one unit handles full Phase 1
+- Total project CapEx: ~$198-204M gross
+- Cash needed after 80% equipment financing (Ornn RVS) + tax credits: ~$55-60M
+- Year 2 base case EBITDA: ~$32M → $480-640M implied valuation at 15-20x
+- Raise target: ~$55-60M (not $5M — Ornn partnership changes the capital structure)
 
-**Pods:**
-- `boring_violet_woodpecker` (6e66lq53yhvbhz) — STOPPED, RTX PRO 6000, safe to resume
-- `roxy-brain` (g5t4hxa9rjm7cm) — RUNNING, not touched
+**OCP LVDC White Paper — Saved as Industry Bible**
+- Released March 30, 2026 — Open Compute Project
+- ADC = Stage 1d: SST (13.8kV → 800V DC) for racks, separate transformer for building AC
+- Training AI factory: 99.9% availability. Inference: 99.999%
+- No DC UPS bypass exists — must have N+1 SST modules from day one
+- NVIDIA, Eaton, ABB, Amperesand, Trane all co-authored
+- Memory file: `memory/projects/ocp_lvdc_standard.md`
 
-**Money burned today:** Multiple pod restarts, crash loops, wasted GPU time. All preventable.
+**13.8kV confirmed from internal docs** — LUS runs 69/13.8kV across 18 substations. Pin Hook near Trappeys is one of those. Pre-development meeting (337) 291-8426 needed to confirm Pin Hook specific rating.
 
-**DO NOT start a new pod until `scottay007/dsx-kit:v3` is built, tested locally, and confirmed staying alive.**
+**Rendering — Middle3.jpg** — Water tower painted white. Natural red brick kept. Black-frame industrial windows replacing bay doors. File: `adc3k-deploy/trappeys-middle3-render.jpg`
 
----
+### NVIDIA Meeting Cheat Sheet Updates (adc3k.com/nvidia-meeting)
+- Added Q7: 50 racks / 10 MW / H2 2026 allocation question
+- Added Q8: Ornn capital card — committed buyer, not just a prospect
+- Added new tab: **10 MW PLAN** — full CapEx, revenue, tax stack, OCP standard reference, one-liner for Jack
 
-## SESSION SUMMARY — March 28, 2026
-
-### DSX Blueprint — Two Days Wasted, Lesson Locked
-
-Attempted to run NVIDIA Omniverse DSX Blueprint on RunPod pytorch container. Spent two days on a path that can never work.
-
-**Root cause:** RunPod pytorch containers do not expose `/dev/nvidia-modeset`. NVIDIA's Kit SDK requires Vulkan, which requires that device. Every launch ends with SIGSEGV. Cannot be fixed.
-
-**What was right in front of us the whole time:** GitHub README bottom link:
-`build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories`
-NVIDIA hosts the full DSX Blueprint as a live web experience. No setup. No pod. Open in Chrome.
-
-**What was built (on aido-workspace 55alwnycav):**
-- `/workspace/omniverse-dsx-blueprint-for-ai-factories` — cloned + built (493 seconds, BUILD RELEASE SUCCEEDED)
-- Artifacts preserved if Docker approach ever pursued
-
-**pod weak_sapphire_finch (aaf3uql6xnao9o):** STOPPED. Billing halted.
-**roxy-brain (g5t4hxa9rjm7cm):** RUNNING. Not touched.
-
-**Next for DSX:** Open `build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories` in Chrome. That's it.
+### Next Actions
+1. **NVIDIA call** — Mike Pulice + Antonio Rivera. Use adc3k.com/nvidia-meeting. Key new questions: rack allocation minimum for DGX-Ready, H2 2026 feasibility at 50 racks.
+2. **After call** — Rewrite phase plan with 10 MW as Phase 1. Update investor package.
+3. **Jack / Ornn outreach** — After NVIDIA call confirms allocation path. One-liner ready: "50 racks, 10 MW, $55-60M raise, $32M EBITDA Year 2."
+4. **ATMOS call** — Confirm existing gas service size + pressure at Trappeys meter. Sets genset sizing ceiling.
+5. **LUS pre-development** — (337) 291-8426. Confirm Pin Hook transformer rating for emergency backstop + sell-back interconnection.
+6. **Electrical PE** — N+1 SST module design, DC protection coordination study per OCP standard.
 
 ---
 
-## SESSION SUMMARY — March 26, 2026
+## SESSION SUMMARY — March 31, 2026 (SESSION 1)
 
-### ROXY: AI Advantage Agent Platform (23 tools)
+### NVIDIA Meeting Cheat Sheet — LIVE at adc3k.com/nvidia-meeting
 
-Built ROXY from scratch — a tool-calling AI agent that runs on ADC's own GPU hardware. Started as a simple chatbot, ended as a 23-tool SaaS platform.
+Built full meeting cheat sheet for call with Mike Pulice (NVIDIA AEC Account Exec) and Antonio Rivera (NVIDIA Account Manager, ex-Run:ai Head of BD West).
 
-**Architecture:**
-- ReAct-style agent loop (max 3 tool iterations per request)
-- Vercel serverless functions (ai-advantage.info)
-- Primary: vLLM + Qwen 3 8B on RunPod (pod 38df7s7h46h8u4, $0.20/hr)
-- Fallback: Anthropic Claude (native tool calling)
-- vLLM restarted with `--enable-auto-tool-choice --tool-call-parser hermes` — full tool calling LIVE
-- Multi-turn conversation with client-side history (20 messages)
-- RAG index: 480 chunks from 21 files, TF-IDF keyword search
+**8 tabs:** WHO THEY ARE / ADC POSITION / OPENING SCRIPT / POWER STACK / QUESTIONS / LOGISTICS / HUMIDITY / SITE VISIT / CLOSE / 10 MW PLAN
 
-**Sales & Closing Tools (7):**
-1. `search_playbooks` — RAG over 17 industry playbooks
-2. `build_quote` — Pricing calculator with industry recommendations
-3. `calculate_roi` — Dollar ROI math ("pays for itself in 3 days, $6,680/mo net")
-4. `generate_payment_link` — Stripe checkout in-chat (needs STRIPE_SECRET_KEY)
-5. `franchise_qualifier` — 8x revenue multi-location quotes with volume discounts
-6. `create_urgency_offer` — Time-limited offers with unique promo codes
-7. `generate_live_demo` — "Day in the life" before/after scenarios by industry
+**Key decisions locked this session:**
+- Power vendor language = vendor-neutral. Ask NVIDIA who they see working in DSX deployments. Never name-drop Eaton as locked.
+- NCP exam: Scott sat for it at GTC, did NOT pass. All references updated. Never say passed.
+- Humidity/dehumidification: Munters desiccant top pick. Waste heat from racks regenerates desiccant wheel. Solar powers dehumidifiers during peak humidity hours. Run:ai controls full factory environment — not just GPU scheduling.
+- Logistics: I-10/I-49 + barge + rail. 28K sq ft concrete pad + receiving warehouse. Diesel bridge power. Texas supply chain = one drive. MARLIE I and Trappeys dug simultaneously.
+- 800V DC MVSST topology confirmed: genset AC → MVSST → 800V DC bus ← solar strings ← battery. Rack PDU steps 800V → 48V (16:1, OCP ORV3 internal).
 
-**CRM & Outreach Tools (6):**
-8. `capture_lead` — Brevo CRM with auto-segmentation to 12 industry lists + 7 custom attributes
-9. `crm_lookup` — Returning visitor detection
-10. `send_followup_email` — Personalized HTML email with industry playbook highlights
-11. `send_sms` — Text messages via Brevo (needs SMS credits)
-12. `book_appointment` — Booking link generation
-13. `log_conversation` — Saves summaries for training data flywheel
+**New memory files:**
+- `memory/projects/nvidia_meeting_prep.md`
+- `memory/projects/trappeys_humidity_cooling.md`
+- `memory/projects/trappeys_logistics.md`
+- `memory/projects/ocp_lvdc_standard.md`
 
-**Intelligence Tools (4):**
-14. `get_contact_info` — Prevents hallucinated details
-15. `business_lookup` — Web research on prospect's business
-16. `competitor_intel` — Positions against 11 competitors (ServiceTitan, Toast, Dentrix, etc.)
-17. `local_market_intel` — "Only 2 of 47 plumbers in Lafayette use AI" FOMO data
+---
 
-**SaaS Marketing Suite (6):**
-18. `generate_ad_copy` — Facebook, Instagram, Google ads with multiple angles
-19. `generate_social_posts` — Week of social media content (tips, humor, behind-scenes)
-20. `respond_to_review` — Professional responses to positive/negative reviews
-21. `request_review` — Review request templates via email/SMS
-22. `generate_lead_magnet` — Downloadable guides and checklists by industry
-23. `build_email_campaign` — Drip campaign sequences (welcome, reactivation, referral)
+## SESSION SUMMARY — March 29, 2026 (DAY 3 — SHELVED)
 
-**Brevo CRM Setup:**
-- 7 custom contact attributes: INDUSTRY, INTEREST_LEVEL, RECOMMENDED_PLAN, SOURCE, ROXY_QUOTE, ROI_MONTHLY, LAST_ROXY_CHAT
-- 12 industry-specific lists (IDs 13-24) + master "AI Advantage Leads" (ID 9)
-- Auto-segmentation: every lead tagged by industry, interest level, source
-- 141 total contacts, 3 campaigns sent
-- BREVO_API_KEY + BREVO_LIST_ID set on Vercel
+### DSX Blueprint — ABANDONED after 3 days, WSL unfixable
 
-**Investor Pitch Updated:**
-- Slide 8 (Inside the Factory): "PROOF OF CONCEPT — TOKENS FLOWING TODAY" section with pulsing LIVE indicator
-- Operations Center page: "Tokens Flowing Today" section with production path timeline
-- Both deployed at adc3k.com
+**Root cause:** WSL Ubuntu on Windows crashes every time under the I/O load of the DSX packman build. Not fixable on Windows with WSL.
 
-**File Structure — ROXY Agent:**
+**DO NOT attempt WSL-based DSX build again. Ever.**
+
+**To resume DSX (only two valid options):**
+
+Option A — Docker Desktop (16GB RAM in settings):
 ```
-ai-advantage/site/
-  api/chat.js                    — Agent entry point
-  lib/agent/loop.js              — ReAct agent loop (max 3 iterations)
-  lib/agent/providers.js         — vLLM + Anthropic abstraction
-  lib/agent/system-prompt.js     — Dynamic prompt builder
-  lib/tools/index.js             — Tool registry (23 tools)
-  lib/tools/*.js                 — Individual tool files
-  lib/rag/build-index.js         — Playbook index builder
-  lib/rag/playbook-index.json    — Pre-built search index (603 KB)
-  lib/util/rate-limiter.js       — 20 req/min per IP
-  index.html                     — Frontend with multi-turn chat + tool indicators
-  vercel.json                    — Function config (512MB, 30s, includeFiles)
-  package.json                   — Dependencies + build:index script
+.\scripts\build-dsx-docker.ps1
 ```
 
-**Other:**
-- Renamed Ally → ROXY across all files
-- Fine-tuning dataset generated: 93 examples in data/roxy-training-data.jsonl
-- RunPod pod: 38df7s7h46h8u4, A4500, vLLM with tool calling enabled
-- Vercel env vars: ADC_INFERENCE_URL, ADC_MODEL, ANTHROPIC_API_KEY, BREVO_API_KEY, BREVO_LIST_ID, BOOKING_URL
+Option B — Native Linux (RunPod CPU pod $0.03/hr):
+```
+git clone ... && ./repo.sh build && ./repo.sh package --container && docker push
+```
 
-### Prior Session (March 25, 2026)
-- EP002 published, $5M pitch deck, Operations Center, KLFT page
-- 22 vendors spec'd, 24 blueprints, 8 NVIDIA playbooks
-- 5 competitive intel reports, 4 Louisiana infrastructure reports
-- File structure reorganized into job folders
-- AI Advantage migrated to self-hosted model
+Option C — Skip the build entirely, use NVIDIA's hosted version:
+```
+https://build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories
+```
+
+**DSX is NOT the priority. Come back to it when there's time and patience.**
 
 ---
 
@@ -157,16 +112,16 @@ ai-advantage/site/
 
 ## Action Items — Priority Order
 
-1. **Twilio 10DLC approval** — Submitted, waiting on carrier. Once approved SMS works from +13372423607.
-2. **Stripe live mode** — Swap sk_test_ to sk_live_ when ready for real payments. Products already created.
-3. **Brevo drip campaigns** — Build industry-specific email automations using the 12 lists.
-4. **ROXY v2 training** — Use a SEPARATE pod for training. 334 examples ready (data/roxy-training-v3.jsonl). Use vllm/vllm-openai:latest image per RunPod guide.
-5. **Agent orchestration harness** — Job lifecycle states, resource caps, stop conditions. Job manager v1 built, needs completion.
-6. **Mission Control archive scan** — MC-Files and MCHD folders have SaaS tools (JSX components, marketing kit, Supabase schema). Scan when ready.
-7. **Tax docs** — Peachtree exports needed from Scott. Structure is ready.
-8. **LinkedIn outreach** — CERAWeek contacts + Delta
-9. **NPN** — Follow up with Jim Hennessy (NVIDIA). Invitation only.
-10. **Episode 3 production** — briefing ready
+1. **NVIDIA call** — Tomorrow. adc3k.com/nvidia-meeting.
+2. **10 MW plan** — Update investor package after NVIDIA call confirms allocation path.
+3. **Jack / Ornn outreach** — Post-NVIDIA call. 50 racks, $55-60M raise.
+4. **ATMOS** — Confirm gas service size at Trappeys meter.
+5. **LUS pre-development** — (337) 291-8426 — Pin Hook capacity.
+6. **Electrical PE** — N+1 SST design, OCP coordination study.
+7. **Twilio 10DLC approval** — Submitted, waiting on carrier.
+8. **Stripe live mode** — Swap sk_test_ to sk_live_ when ready.
+9. **ROXY v2 training** — Separate pod. 334 examples ready.
+10. **Episode 3 production** — briefing ready.
 
 ---
 
@@ -186,8 +141,8 @@ ai-advantage/site/
 ---
 
 ## Raise
-- $5M seed round
+- **REVISED: ~$55-60M** (up from $5M seed — Ornn partnership changes capital structure)
 - MARLIE I owned (collateral)
 - Trappeys ~$1M acquisition
-- Pitch deck LIVE at /investor-pitch (14 slides, self-hosted proof of concept)
-- Master doc: business-model/MASTER-INVESTOR-PACKAGE.md
+- 80% equipment financing via Ornn RVS on $180M rack CapEx
+- Master doc: business-model/MASTER-INVESTOR-PACKAGE.md (needs update to 10 MW numbers)
