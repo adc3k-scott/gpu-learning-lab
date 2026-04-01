@@ -48,6 +48,7 @@
 
     { "source": "/alumni-investors", "destination": "/investor-gate.html" },
     { "source": "/investor-pitch", "destination": "/investor-pitch.html" },
+    { "source": "/ornn-deal-package", "destination": "/ornn-deal-package.html" },
     { "source": "/jack-minor", "destination": "/jack-minor-package.html" },
     { "source": "/deal-package", "destination": "/jack-minor-package.html" },
     { "source": "/roxy-architecture", "destination": "/roxy-architecture.html" },
@@ -75,6 +76,7 @@
     { "source": "/cheatsheet", "destination": "/cheatsheet.html" },
     { "source": "/ncp-study", "destination": "/ncp-study.html" },
     { "source": "/ncp-cheat", "destination": "/ncp-cheat.html" },
+    { "source": "/nvidia-meeting", "destination": "/nvidia-meeting-cheat.html" },
     { "source": "/gtc", "destination": "/gtc-plan-26.html" },
     { "source": "/boot", "destination": "/boot.html" },
 

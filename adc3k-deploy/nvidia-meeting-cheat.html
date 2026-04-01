@@ -110,6 +110,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
   <div class="tab" onclick="show('humidity')">HUMIDITY</div>
   <div class="tab" onclick="show('sitevisit')">SITE VISIT</div>
   <div class="tab" onclick="show('tenMW')">10 MW PLAN</div>
+  <div class="tab" onclick="show('moat')">THE MOAT</div>
   <div class="tab" onclick="show('close')">CLOSE</div>
 </div>
 
@@ -148,14 +149,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
       <div class="sub">sq ft Trappeys</div>
     </div>
     <div class="num-card">
-      <div class="label">Solar</div>
-      <div class="value">2 MW</div>
-      <div class="sub">3,731 panels rooftop</div>
+      <div class="label">Solar Phase 1</div>
+      <div class="value">2.05 MW</div>
+      <div class="sub">3,731 panels — Building 3</div>
     </div>
     <div class="num-card">
       <div class="label">Phase 1</div>
-      <div class="value">4 racks</div>
-      <div class="sub">288 GPUs, 1 MW</div>
+      <div class="value">50 racks</div>
+      <div class="sub">3,600 GPUs, 10 MW</div>
     </div>
     <div class="num-card">
       <div class="label">Token Gain</div>
@@ -224,9 +225,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
     <div class="label">Your Opening</div>
     <em>"I'm Scott Tomsu, ADC — Advantage Design and Construction. Licensed GC in Louisiana, three contractor licenses, 25-year ROV superintendent background. I deploy and maintain complex compute systems in hostile environments. That's the workforce angle.</em>
     <br><br>
-    <em>We're building Louisiana's first NVIDIA neocloud. Lead site is Trappeys Cannery in Lafayette — 112,500 square feet across four buildings, historic property on the Vermilion River. Two megawatts of solar rooftop, gas trunk line already confirmed on-site, 28,000 square foot concrete pad for the infrastructure yard. Water tower for thermal buffering. Half mile from my own shop, owned free and clear, ready to run simultaneously.</em>
+    <em>We're building Louisiana's first NVIDIA neocloud. Lead site is Trappeys Cannery in Lafayette — 112,500 square feet across four buildings, historic property on the Vermilion River. 2.05 megawatts of Phase 1 solar on the Building 3 roof — 3,731 First Solar panels — with 170,000 square feet of total rooftop across the campus. Gas trunk line confirmed on-site. 28,000 square foot concrete pad for the infrastructure yard. Water tower on-site for thermal buffering. Half mile from my own shop, owned free and clear, ready to run simultaneously.</em>
     <br><br>
-    <em>We're going full 800 VDC from the jump — building to NVIDIA's DSX power reference. Gas is primary, solar is the offset, grid is sell-back only. We're evaluating the right tier-1 power partners right now.</em>
+    <em>We're going full 800 VDC from the jump — building to NVIDIA's DSX power reference. DC generation, 1500V solar collection layer, 800V distribution bus. Gas is primary, solar is the offset, grid is sell-back only.</em>
     <br><br>
     <em>Jim Hennessy is getting us into NPN. We've got NVIDIA certifications completed and we're continuing that path. Building to DSX spec, Vera Rubin NVL72. That's why we're here."</em>
   </div>
@@ -249,22 +250,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
   <div class="section-title">800 VDC Power Architecture — If They Ask</div>
   <div class="diagram">
     <pre>
-<span class="hi">LAYER 2 — GAS (PRIMARY BACKBONE — ALWAYS RUNNING)</span>
-  Cat G3500 gensets on concrete pad
-       ↓
-<span class="hi">MVSST  ← NVIDIA DSX power reference (vendor TBD — Eaton / GE Vernova / ABB)</span>
-  13.8kV AC → 800V DC at facility perimeter
-  (Medium Voltage Solid State Transformer)
-       ↓
-<span class="hi">800V DC BUS  ← facility spine, no AC inside</span>
+<span class="hi">GENERATION — DC DIRECT (PRIMARY BACKBONE — ALWAYS RUNNING)</span>
+  Bloom Energy SOFC — natural gas → DC out (no AC stage)
+  54% efficiency vs 38-40% recip engines. Modular 65 kW units.
+  Throttles in real time. No combustion. No moving parts.
+       ↓ DC-DC converter → 800V
+<span class="hi">800V DC BUS  ← facility spine, OCP Stage 1d, no AC inside</span>
        ↑
-<span class="lo">LAYER 1 — SOLAR (OFFSET)</span>
-  First Solar Series 7 TR1 — 5 panels/string
-  952V string → DC-DC buck → 800V bus
-  2 MW across 112,500 sq ft rooftop
+<span class="lo">SOLAR COLLECTION LAYER — 1500V DC (OFFSET)</span>
+  First Solar Series 7 TR1 — 3,731 panels, Building 3 roof
+  2.05 MW Phase 1. Strings at 1500V DC (NEC LVDC ceiling)
+  Lower current across 170K sq ft roof = lower I²R losses
+  MPPT DC-DC → battery bank → 800V bus. Zero inverters.
        ↑
-<span class="mid">BATTERY BUFFER</span>
-  800V nominal, cloud transient handling
+<span class="mid">BATTERY BANK</span>
+  Buffers solar variability. Absorbs AI workload spikes.
+  Run:ai dispatches charge/discharge in real time.
        ↓
 <span class="hi">RACK PDU (OCP ORV3)</span>
   800V DC → 48V DC (16:1 internal conversion)
@@ -281,16 +282,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
   <div class="section-title">Phase Plan</div>
   <div class="grid">
     <div class="card green">
-      <div class="q">Phase 1 — Start</div>
-      <div class="a"><strong>4 racks</strong> · 288 GPUs · 520 kW IT load · ~1 MW total<br>One MVSST unit · Solar + gas genset</div>
+      <div class="q">Phase 1 — 10 MW</div>
+      <div class="a"><strong>50 NVL72 racks</strong> · 3,600 GPUs · 6.5 MW IT load · ~10 MW total facility<br>Bloom SOFC 10 MW · 2.05 MW solar offset · 800V DC bus</div>
     </div>
     <div class="card blue">
-      <div class="q">Phase 2 — Scale</div>
-      <div class="a"><strong>8 racks</strong> · 576 GPUs · 1 MW IT load · ~1.3 MW total<br>Parallel second MVSST unit</div>
+      <div class="q">Phase 2 — Expand</div>
+      <div class="a"><strong>Add Bloom SOFC modules</strong> — same concrete pad, same bus<br>Building 3 holds 720 racks physically. Add capacity modularly as demand grows.</div>
     </div>
     <div class="card amber">
       <div class="q">Full Trappeys Buildout</div>
-      <div class="a"><strong>225–525 racks possible</strong> — power-limited not space-limited<br>Scale genset yard as compute grows</div>
+      <div class="a"><strong>720 racks maximum</strong> — physical limit of Building 3<br>4 buildings total. Additional solar across 170K sq ft rooftop as each phase adds.</div>
     </div>
   </div>
 </div>
@@ -823,16 +824,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
 
   <div class="section-title" style="padding-top:8px">Power</div>
   <div class="numbers-grid" style="grid-template-columns:repeat(4,1fr)">
-    <div class="num-card"><div class="label">IT Load</div><div class="value">10 MW</div><div class="sub">Phase 1</div></div>
-    <div class="num-card"><div class="label">Gas Genset</div><div class="value">Wärtsilä 34SG</div><div class="sub">~10 MW, partial load efficient</div></div>
-    <div class="num-card"><div class="label">Solar Offset</div><div class="value">2.05 MW</div><div class="sub">3,731 First Solar panels</div></div>
+    <div class="num-card"><div class="label">Total Facility Load</div><div class="value">10 MW</div><div class="sub">6.5 MW IT + cooling + facility</div></div>
+    <div class="num-card"><div class="label">Generation</div><div class="value">Bloom SOFC</div><div class="sub">DC direct, modular 65 kW units</div></div>
+    <div class="num-card"><div class="label">Solar Offset</div><div class="value">2.05 MW</div><div class="sub">3,731 panels — Building 3</div></div>
     <div class="num-card"><div class="label">Topology</div><div class="value">800V DC</div><div class="sub">OCP Stage 1d — SST → bus</div></div>
   </div>
 
   <div class="section-title" style="padding-top:8px">CapEx Breakdown</div>
   <div class="q-list">
     <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">SITE</div><div class="q-body"><div class="q-text">Trappeys acquisition + Building 3 + Building 4 rehab</div><div class="q-why">~$1.8M</div></div></div>
-    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">GEN</div><div class="q-body"><div class="q-text">Wärtsilä 34SG gas genset (10 MW, installed) + 800V DC SST + switchgear</div><div class="q-why">~$13-19M</div></div></div>
+    <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">GEN</div><div class="q-body"><div class="q-text">Bloom SOFC generation (10 MW, modular 65 kW units) + DC-DC converters + 800V DC bus + switchgear</div><div class="q-why">~$13-19M</div></div></div>
     <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">SOL</div><div class="q-body"><div class="q-text">Solar panels + mounting + DC-DC converters (2.05 MW, First Solar)</div><div class="q-why">~$2M</div></div></div>
     <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">RACK</div><div class="q-body"><div class="q-text">50× NVL72 @ $3.5M + Delta rack PDUs + CDUs</div><div class="q-why">~$180M gross / ~$36M cash after 80% equipment financing (Ornn RVS)</div></div></div>
     <div class="q-item"><div class="q-num" style="background:#1a2436;color:#607080;min-width:36px;text-align:center;border-radius:4px;padding:4px 6px;font-size:11px">NET</div><div class="q-body"><div class="q-text">Total cash needed after financing + tax credits</div><div class="q-why" style="color:#00d68f;font-weight:700">~$55-60M raise</div></div></div>
@@ -863,6 +864,145 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
   <div class="close-block" style="background:#0a0e1a;border-color:#1a2a4a;border-left-color:#76b900">
     <div class="label" style="color:#76b900">OCP LVDC White Paper — Released March 30, 2026</div>
     <p>ADC's 800V DC topology is <strong>Stage 1d</strong> — the OCP-defined starting point for new-build AI factories. SST from 13.8kV MV → 800V DC bus. Training target: 99.9% availability. Inference target: 99.999%. NVIDIA, Eaton, ABB, Amperesand, Trane all co-authored this standard. We are building to it from day one.</p>
+  </div>
+
+</div>
+
+<!-- THE MOAT -->
+<div id="panel-moat" class="panel">
+  <div class="section-title">The Moat — Nobody Else Has This Stack</div>
+
+  <div style="padding:8px 16px 0">
+    <div style="background:#0a0e14;border:1px solid #1a2436;border-radius:10px;padding:20px;overflow-x:auto">
+
+      <!-- TREE DIAGRAM -->
+      <style>
+        .tree{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',monospace;font-size:12px;line-height:1.8;color:#b0bec5}
+        .tree .root{font-size:15px;font-weight:900;color:#76b900;letter-spacing:1px;margin-bottom:4px}
+        .tree .branch{color:#76b900;font-weight:700;font-size:12px}
+        .tree .leaf{color:#cdd6e0}
+        .tree .leaf span{color:#607080}
+        .tree .highlight{color:#00d68f;font-weight:700}
+        .tree .amber{color:#f5a623;font-weight:700}
+        .tree .blue{color:#00b4d8;font-weight:700}
+        .tree .dim{color:#455060}
+      </style>
+
+      <div class="tree">
+        <div class="root">ADC TRAPPEYS — FULL SYSTEM TREE</div>
+        <br>
+
+        <div class="branch">├── GENERATION (Full DC — No AC Conversion)</div>
+        <div class="leaf">│   ├── <span class="highlight">Bloom Energy SOFC</span> <span>— natural gas → DC direct</span></div>
+        <div class="leaf">│   │   ├── 54% efficiency <span>(vs 38-40% recip engines)</span></div>
+        <div class="leaf">│   │   ├── No combustion, no moving parts, no noise</div>
+        <div class="leaf">│   │   ├── Throttles instantly — Run:ai adjusts fuel flow in real time</div>
+        <div class="leaf">│   │   ├── 9% overbuild for 99.9% <span>(vs 30% for recip engines)</span></div>
+        <div class="leaf">│   │   └── 90-day delivery, modular add-as-you-grow</div>
+        <div class="leaf">│   │</div>
+        <div class="leaf">│   ├── <span class="highlight">Solar — 170,000 sq ft rooftop</span> <span>(1500V DC Collection Layer)</span></div>
+        <div class="leaf">│   │   ├── 2.05 MW Phase 1 (3,731 First Solar Series 7 TR1)</div>
+        <div class="leaf">│   │   ├── Strings at 1500V DC <span>(NEC LVDC ceiling — lower current, lower wire losses)</span></div>
+        <div class="leaf">│   │   ├── Same power, higher voltage = I²R losses drop by the square</div>
+        <div class="leaf">│   │   ├── Smaller wire gauge across 170K sq ft — real BOS savings</div>
+        <div class="leaf">│   │   ├── 1500V strings → MPPT DC-DC → charges Battery bank</div>
+        <div class="leaf">│   │   └── Sunny day = peak humidity + free dehumidifier power</div>
+        <div class="leaf">│   │</div>
+        <div class="leaf">│   ├── <span class="highlight">Battery Bank</span> <span>(Buffer Layer — between 1500V collection + 800V bus)</span></div>
+        <div class="leaf">│   │   ├── Charged at 1500V from solar strings <span>(high voltage, low current — efficient)</span></div>
+        <div class="leaf">│   │   ├── Discharges via DC-DC converter → 800V bus</div>
+        <div class="leaf">│   │   ├── Buffers bus from solar variability</div>
+        <div class="leaf">│   │   └── Night: battery + Bloom carry full 800V bus load</div>
+        <div class="leaf">│   │</div>
+        <div class="leaf">│   └── <span class="highlight">Supercapacitor Buffer</span> <span>(on 800V bus)</span></div>
+        <div class="leaf">│       ├── Absorbs AI workload spikes <span>(20%→150% in milliseconds)</span></div>
+        <div class="leaf">│       └── Eliminates large separate battery array for load following</div>
+        <br>
+
+        <div class="branch">├── DISTRIBUTION</div>
+        <div class="leaf">│   └── <span class="highlight">800V DC Bus</span> <span>— OCP Stage 1d, LVDC standard</span></div>
+        <div class="leaf">│       ├── Bloom SOFC → DC-DC converter → 800V</div>
+        <div class="leaf">│       ├── Battery bank → DC-DC converter → 800V</div>
+        <div class="leaf">│       ├── Supercaps on bus — millisecond spike absorption</div>
+        <div class="leaf">│       ├── Rack PDU → 48V <span>(OCP ORV3 internal, 16:1)</span></div>
+        <div class="leaf">│       └── LUS Pin Hook 13.8kV → SST → 800V <span>(emergency backstop only)</span></div>
+        <br>
+
+        <div class="branch">├── COOLING (Three-Layer Heat Rejection)</div>
+        <div class="leaf">│   ├── <span class="highlight">Layer 1 — CDU (Rack Level)</span></div>
+        <div class="leaf">│   │   ├── NVL72 coldplates → CDU → facility loop</div>
+        <div class="leaf">│   │   └── Motivair MCDU-70 / Delta 140 kW <span>(NVL72 certified)</span></div>
+        <div class="leaf">│   │</div>
+        <div class="leaf">│   ├── <span class="highlight">Layer 2 — Water Tower</span> <span class="amber">(on-site asset)</span></div>
+        <div class="leaf">│   │   ├── Thermal mass buffer — absorbs heat load spikes</div>
+        <div class="leaf">│   │   ├── Radiates overnight when ambient temps drop</div>
+        <div class="leaf">│   │   └── Eliminates dry coolers during cooler periods</div>
+        <div class="leaf">│   │</div>
+        <div class="leaf">│   └── <span class="highlight">Layer 3 — Vermilion River Heat Exchanger</span> <span class="amber">(THE MOAT)</span></div>
+        <div class="leaf">│       ├── River temp 65-75°F vs 95°F Louisiana summer air</div>
+        <div class="leaf">│       ├── NVL72 inlet limit 45°C — river well within spec</div>
+        <div class="leaf">│       ├── Facility loop → plate HX → river discharge</div>
+        <div class="leaf">│       ├── Replaces dry coolers + cooling towers</div>
+        <div class="leaf">│       └── LDEQ permit needed <span>(water intake/discharge)</span></div>
+        <br>
+
+        <div class="branch">├── HUMIDITY CONTROL</div>
+        <div class="leaf">│   ├── <span class="highlight">Munters Desiccant Dehumidifiers</span></div>
+        <div class="leaf">│   │   ├── NVL72 exhaust heat regenerates desiccant wheel</div>
+        <div class="leaf">│   │   ├── Racks pay for their own dehumidification</div>
+        <div class="leaf">│   │   └── Solar peak = run dehumidifiers on free power</div>
+        <div class="leaf">│   └── Positive pressure rack enclosures <span>(40-50% RH inside)</span></div>
+        <br>
+
+        <div class="branch">├── ORCHESTRATION</div>
+        <div class="leaf">│   └── <span class="highlight">Run:ai — Full Facility Control</span></div>
+        <div class="leaf">│       ├── GPU workload scheduling</div>
+        <div class="leaf">│       ├── Bloom SOFC throttle <span>(up/down vs solar in real time)</span></div>
+        <div class="leaf">│       ├── Solar MPPT + battery charge management <span>(1500V collection layer)</span></div>
+        <div class="leaf">│       ├── Battery → 800V bus dispatch timing</div>
+        <div class="leaf">│       ├── CDU flow rates + cooling loop valves</div>
+        <div class="leaf">│       ├── Water tower routing <span>(tower vs river vs both)</span></div>
+        <div class="leaf">│       ├── Vermilion River HX management</div>
+        <div class="leaf">│       ├── Munters dehumidifier ramp</div>
+        <div class="leaf">│       └── LUS grid sell-back dispatch</div>
+        <br>
+
+        <div class="branch">└── THE SITE</div>
+        <div class="leaf">    ├── <span class="highlight">$1M acquisition</span> <span>— 22 acres, 4 buildings, 112,500 sq ft</span></div>
+        <div class="leaf">    ├── Building 3 <span class="blue">Compute Hall</span> — 75×300 ft, 720 rack max</div>
+        <div class="leaf">    ├── Building 4 <span class="blue">Power Hall</span> — 150×250 ft, all power equipment</div>
+        <div class="leaf">    ├── Buildings 1+2 <span class="blue">Trappeys Museum</span> — historic restoration, park</div>
+        <div class="leaf">    ├── Concrete pad — generators, infrastructure yard</div>
+        <div class="leaf">    ├── Vermilion River frontage <span>(barge delivery + cooling)</span></div>
+        <div class="leaf">    ├── 0.5 mi from MARLIE I NOC</div>
+        <div class="leaf">    └── 30 mi from First Solar $1.1B factory <span>(New Iberia)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="padding-top:16px">Why Nobody Can Copy This</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card green"><div class="q">Vermilion River</div><div class="a">Free cooling. You have to be on that river. Can't be moved. Can't be bought elsewhere.</div></div>
+    <div class="card green"><div class="q">170,000 sq ft Solar</div><div class="a">Historic brick campus at $1M. Same asset costs $50M+ to replicate anywhere near an AI corridor.</div></div>
+    <div class="card green"><div class="q">Bloom SOFC + No AC Bus</div><div class="a">Most sites locked into AC gen. ADC starts DC-native. No legacy conversion losses — ever.</div></div>
+    <div class="card green"><div class="q">Waste Heat Dehumidification</div><div class="a">Lafayette RH problem solved by the racks themselves. Capex hit, near-zero OpEx. Others pay monthly.</div></div>
+    <div class="card green"><div class="q">Water Tower Thermal Mass</div><div class="a">Already on site. Buffer that money can't buy on a greenfield. Peak load absorption for free.</div></div>
+    <div class="card green"><div class="q">Run:ai Full Factory</div><div class="a">Not just GPU scheduling — autonomous control of every energy system. Zero operators. True lights-out.</div></div>
+  </div>
+
+  <div class="section-title" style="padding-top:16px">Open Engineering Questions</div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div class="q-body"><div class="q-text">What voltage does Bloom output natively?</div><div class="q-why">Sets the DC-DC converter spec to 800V. Call bloomenergy.com/contact</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div class="q-body"><div class="q-text">Can Munters configure MX series with DC motor drives?</div><div class="q-why">Keeps full DC bus — no AC inverter needed for dehumidifiers</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div class="q-body"><div class="q-text">LDEQ water intake/discharge permit — Vermilion River</div><div class="q-why">Start early. Standard industrial water use permit. Need PE + environmental attorney.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div class="q-body"><div class="q-text">Water tower capacity vs Phase 1 heat load</div><div class="q-why">PE needs to size it against 10 MW IT load. May need to know tower volume.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div class="q-body"><div class="q-text">Has NVIDIA seen Bloom Energy in any DSX deployments?</div><div class="q-why">Ask tomorrow. If NVIDIA has a Bloom relationship, that's the fastest path to a site visit + validation.</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div class="q-body"><div class="q-text">1500V solar string temperature correction — PE must size Voc for coldest Lafayette morning</div><div class="q-why">1500V is the NEC LVDC ceiling. One string over = MVDC territory, completely different permitting. First Solar TR1 has low temp coefficient — manageable but must be confirmed in string design.</div></div></div>
+  </div>
+
+  <div class="close-block" style="margin-top:12px;background:#050a05;border-color:#0d2a0d;border-left-color:#00d68f">
+    <div class="label" style="color:#00d68f">DO NOT BROADCAST</div>
+    <p>Bloom + Vermilion River cooling is the competitive moat. Don't name it publicly until permitted and locked. The story gets told after it's built.</p>
   </div>
 
 </div>

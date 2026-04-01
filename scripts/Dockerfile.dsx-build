@@ -1,0 +1,72 @@
+# DSX Blueprint Docker Build
+# Builds the NVIDIA Omniverse DSX Blueprint entirely inside Docker.
+# No WSL required. Run from PowerShell with Docker Desktop running.
+#
+# Usage:
+#   docker build -t scottay007/dsx-kit:v3 -f scripts/Dockerfile.dsx-build - < scripts/Dockerfile.dsx-build
+#   OR use the build script: scripts/build-dsx-docker.ps1
+#
+# Requirements:
+#   - Docker Desktop with at least 16GB RAM allocated (Settings > Resources > Advanced)
+#   - 50GB+ free disk space for Docker
+#   - Internet access (packman downloads ~8GB from NVIDIA CDN)
+#
+# Build time: 20-40 minutes first run, subsequent runs use Docker layer cache.
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    HOME=/root \
+    NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute \
+    NVIDIA_VISIBLE_DEVICES=all
+
+# Install build dependencies + runtime libraries
+RUN apt-get update && apt-get install -y \
+    git \
+    git-lfs \
+    build-essential \
+    cmake \
+    curl \
+    wget \
+    python3 \
+    python3-pip \
+    libssl-dev \
+    ca-certificates \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    libgomp1 \
+    libegl1 \
+    libgles2 \
+    libvulkan1 \
+    libx11-6 \
+    libxcb1 \
+    libxrandr2 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root
+
+# Clone DSX repo (layer cached — only re-clones if you add --no-cache)
+RUN git clone https://github.com/NVIDIA-Omniverse-blueprints/omniverse-dsx-blueprint-for-ai-factories.git dsx
+
+WORKDIR /root/dsx
+
+# Init git-lfs and submodules
+RUN git lfs install && git submodule update --init --recursive
+
+# Build DSX
+# packman downloads ~8GB of NVIDIA packages (USD, kit-kernel, carb_sdk, etc.)
+# cmake compiles USD schemas
+# Output: _build/linux-x86_64/release/
+# This layer is cached after first successful build.
+RUN ./repo.sh build
+
+# Verify build output exists before declaring success
+RUN ls _build/linux-x86_64/release/ && \
+    echo "BUILD VERIFIED — _build/linux-x86_64/release/ exists"
+
+EXPOSE 49100 8080 8111
+
+CMD ["/root/dsx/run_streaming.sh"]
