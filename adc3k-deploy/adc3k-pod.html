@@ -321,27 +321,27 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <section class="section">
   <div class="section-label">Power</div>
   <h2>Power Options</h2>
-  <p class="sub">Self-powered, grid-independent. The pod takes whatever power source you have -- or bring your own.</p>
+  <p class="sub">Gas in. Tokens out. The pod runs on natural gas via Bloom SOFC — no grid, no inverter, no utility approval queue.</p>
   <div class="power-grid">
-    <div class="power-card">
-      <div class="icon" style="color:var(--amber)">&#x26A1;</div>
-      <h4>Natural Gas Generator</h4>
-      <p>External Cat generator on natural gas. Ideal for oil fields with on-site gas. Continuous run. Lowest fuel cost per kWh.</p>
-    </div>
-    <div class="power-card">
-      <div class="icon" style="color:var(--red)">&#x26FD;</div>
-      <h4>Diesel Generator</h4>
-      <p>Pipeline-independent. On-site fuel storage. Emergency backup or primary power for remote deployment where gas is unavailable.</p>
-    </div>
-    <div class="power-card">
-      <div class="icon" style="color:var(--blue)">&#x26A0;</div>
-      <h4>Grid Tie-In</h4>
-      <p>Standard utility connection. 480V 3-phase AC or 800V DC if available. Campus deployments, university sites, fixed installations.</p>
+    <div class="power-card" style="border:1px solid rgba(0,232,122,0.3);border-top:3px solid var(--accent)">
+      <div class="icon" style="color:var(--accent)">&#x26A1;</div>
+      <h4>Bloom SOFC — Primary</h4>
+      <p>Natural gas → 800V DC direct. 54% fuel-to-electricity efficiency. No inverter, no rectifier losses. Quiet, no combustion exhaust, no standoff distance. One Bloom skid powers multiple pods.</p>
     </div>
     <div class="power-card">
       <div class="icon" style="color:var(--accent)">&#x2600;</div>
       <h4>Solar Supplement</h4>
-      <p>Ground-mount or carport solar array as offset. 800V DC solar-direct architecture for maximum efficiency. Reduces generator runtime.</p>
+      <p>~6 kW First Solar panels on every pod roof. DC-direct into the 800V bus. Powers internal support systems. Reduces fuel burn. Peak solar coincides with peak heat.</p>
+    </div>
+    <div class="power-card">
+      <div class="icon" style="color:var(--blue)">&#x26A0;</div>
+      <h4>Grid Tie-In</h4>
+      <p>Standard utility connection. 480V 3-phase AC or 800V DC if available. Campus deployments, university sites, fixed installations where gas is already primary.</p>
+    </div>
+    <div class="power-card">
+      <div class="icon" style="color:var(--red)">&#x26FD;</div>
+      <h4>Diesel — Emergency Only</h4>
+      <p>Pipeline-independent. On-site fuel storage. Activates when both gas and grid are unavailable. Hurricane-rated. Not primary — never primary.</p>
     </div>
   </div>
 </section>
@@ -430,7 +430,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
       <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Expand in Any Direction</h3>
       <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Start with 1 pod (720 GPUs). Add pods as demand grows. North-south expansion adds pods in a row. East-west expansion adds rows. Scale from a single site to a campus without redesigning anything.</p>
-      <p style="font-size:14px;color:var(--text);line-height:1.7">Shared cooling, shared power, shared monitoring. One dry cooler serves 2-3 pods. One generator powers 2-3 pods. Infrastructure scales with compute.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Shared cooling, shared power, shared monitoring. One Bloom SOFC skid powers multiple pods. One Munters skid — fed by Bloom exhaust heat — conditions air for the entire array. Infrastructure scales with compute.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
       <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Self-Organizing Fleet</h3>
@@ -579,7 +579,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
       <p style="font-size:15px;color:var(--text-bright);line-height:1.7">Oil operators across Louisiana flare natural gas they can't economically pipeline. That's <strong style="color:#ef4444">22 MW of continuous compute power</strong> being set on fire.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #f97316;border-radius:0 8px 8px 0;padding:20px 24px">
-      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">ADC deploys pods at flare sites. We connect a Cat generator to the flare stack. Their waste gas becomes our fuel. They stop paying flaring penalties. We get free power.</p>
+      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">ADC deploys pods at flare sites with a Bloom SOFC skid plumbed directly to the flare header. Their waste gas becomes our fuel. They stop paying flaring penalties. We get free power — and the SOFC produces no combustion exhaust.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #ef4444;border-radius:0 8px 8px 0;padding:20px 24px">
       <p style="font-size:15px;color:var(--text-bright);line-height:1.7">Louisiana's January 2024 regulation requires operators to evaluate <strong style="color:#f97316">"alternative beneficial uses"</strong> before flaring. The ADC 3K pod IS that alternative.</p>
@@ -682,12 +682,12 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     <div class="feature-card">
       <div class="tag">Behind the Meter</div>
       <h4>On-Site Power Generation</h4>
-      <p>Behind-the-meter power generation with Caterpillar G3500 natural gas gensets + First Solar panels. CERAWeek 2026 consensus: behind the meter is not a choice, it's a necessity.</p>
+      <p>Bloom SOFC converts natural gas to 800V DC direct — no inverter, no AC anywhere. First Solar panels on every pod roof for solar offset. CERAWeek 2026 consensus: behind the meter is not a choice, it's a necessity.</p>
     </div>
     <div class="feature-card">
       <div class="tag">American Made</div>
       <h4>100% US-Manufactured</h4>
-      <p>100% American-manufactured components. Caterpillar (Illinois), First Solar (Ohio), Eaton (Ohio), Delta (Fremont CA / Research Triangle NC), Vertiv (Ohio). Built by American workers for American infrastructure.</p>
+      <p>100% American-manufactured components. Bloom Energy (San Jose CA), First Solar (Ohio / New Iberia LA), Eaton (Ohio), Delta (Plano TX / Research Triangle NC), Vertiv (Ohio). Built by American workers for American infrastructure.</p>
     </div>
   </div>
 
