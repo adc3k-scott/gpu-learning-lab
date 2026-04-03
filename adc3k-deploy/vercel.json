@@ -76,6 +76,7 @@
     { "source": "/card", "destination": "/card.html" },
     { "source": "/qr", "destination": "/qr.html" },
 
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/", "destination": "/adc3k-indexpage.html" },
+    { "source": "/(.*)", "destination": "/adc3k-indexpage.html" }
   ]
 }
