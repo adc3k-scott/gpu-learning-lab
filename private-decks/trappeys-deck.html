@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trappeys AI Center — Acadiana's Industrial Heritage Reborn</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #04080f;
+    --panel: #08111e;
+    --border: #0f2035;
+    --border2: #1a3a5c;
+    --green: #00e87a;
+    --gold: #f5a623;
+    --amber: #e8890a;
+    --blue: #3b9eff;
+    --blue2: #00c8ff;
+    --purple: #9b6dff;
+    --red: #ff4d6d;
+    --text: #e8f0fc;
+    --muted: #4a6480;
+    --muted2: #7a9ab8;
+  }
+  html, body { height: 100%; background: #000; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+
+  #deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    background: var(--bg); padding: 0; overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(245,166,35,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none; z-index: 0;
+  }
+
+  /* SLIDE HEADER */
+  .slide-bar {
+    display: flex; align-items: center; gap: 16px; padding: 10px 28px;
+    background: rgba(4,8,15,0.9); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px); z-index: 10; flex-shrink: 0;
+  }
+  .bar-logo { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--gold); white-space: nowrap; }
+  .bar-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .bar-meta { font-size: 10px; color: var(--muted); font-family: monospace; letter-spacing: 1px; white-space: nowrap; }
+
+  /* SLIDE CONTENT */
+  .slide-content { flex: 1; display: flex; align-items: stretch; overflow: hidden; z-index: 1; position: relative; }
+
+  /* TWO-COLUMN LAYOUT */
+  .std-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 28px 36px; width: 100%; align-items: start; overflow: hidden; }
+  .std-inner.std-two { grid-template-columns: 1fr 1fr; }
+  .std-inner.std-wide { grid-template-columns: 1.2fr 0.8fr; }
+
+  /* FULL-WIDTH CONTENT */
+  .full-inner { padding: 24px 36px; width: 100%; display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
+
+  /* IMAGE PANEL */
+  .vis-panel {
+    background: var(--panel); border: 1px solid var(--border2); border-radius: 14px;
+    padding: 18px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;
+  }
+  .vis-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted2); border-bottom: 1px solid var(--border); padding-bottom: 8px; flex-shrink: 0; }
+
+  .vis-img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; flex: 1; min-height: 0; }
+  .vis-img-cover { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; flex: 1; min-height: 0; }
+
+  /* FULL SLIDE IMAGE */
+  .img-slide { flex: 1; display: flex; align-items: center; justify-content: center; padding: 16px; overflow: hidden; }
+  .img-slide img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; }
+
+  /* PHOTO GRID */
+  .photo-grid { display: grid; gap: 8px; flex: 1; min-height: 0; }
+  .photo-grid.grid-2 { grid-template-columns: 1fr 1fr; }
+  .photo-grid.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .photo-grid img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+
+  /* ICON STRIP */
+  .icon-strip { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .icon-strip img { height: 40px; width: auto; object-fit: contain; opacity: 0.85; }
+
+  /* ICON GRID */
+  .icon-grid { display: grid; gap: 10px; }
+  .icon-grid.g2 { grid-template-columns: 1fr 1fr; }
+  .icon-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+  .icon-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 8px;
+    border: 1px solid var(--border2); border-radius: 8px; background: var(--panel); }
+  .icon-cell img { height: 36px; width: auto; object-fit: contain; }
+  .icon-cell-label { font-size: 10px; color: var(--muted2); text-align: center; line-height: 1.3; }
+
+  /* TEXT ELEMENTS */
+  .slide-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px; }
+  .slide-h2 { font-size: clamp(20px, 2.4vw, 30px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 10px; }
+  .slide-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; margin-bottom: 14px; }
+
+  /* BULLETS */
+  .bullets { display: flex; flex-direction: column; gap: 10px; }
+  .bullet { display: flex; gap: 12px; align-items: flex-start; }
+  .bullet-icon { font-size: 14px; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .bullet-body { display: flex; flex-direction: column; gap: 2px; }
+  .bullet-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .bullet-desc { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+
+  /* STAT ROW */
+  .stat-row { display: flex; gap: 12px; margin-bottom: 14px; }
+  .stat-card { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel); text-align: center; }
+  .sv { font-size: clamp(18px, 2vw, 26px); font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .sl { font-size: 10px; color: var(--muted2); letter-spacing: 0.5px; }
+
+  /* PILL TAGS */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .pill { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--border2); color: var(--muted2); background: var(--panel); }
+  .pill.green { border-color: rgba(0,232,122,0.3); color: var(--green); background: rgba(0,232,122,0.06); }
+  .pill.blue { border-color: rgba(0,200,255,0.3); color: var(--blue2); background: rgba(0,200,255,0.06); }
+  .pill.gold { border-color: rgba(245,166,35,0.3); color: var(--gold); background: rgba(245,166,35,0.06); }
+  .pill.purple { border-color: rgba(155,109,255,0.3); color: var(--purple); background: rgba(155,109,255,0.06); }
+
+  /* QUOTE BOX */
+  .quote-box { padding: 16px 20px; border-radius: 10px; border-left: 3px solid var(--gold);
+    background: rgba(245,166,35,0.04); font-size: 13px; color: var(--muted2); line-height: 1.7; font-style: italic; }
+
+  /* WORKFLOW CHAIN */
+  .workflow { display: flex; flex-direction: column; gap: 6px; }
+  .wf-step { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px;
+    border: 1px solid var(--border2); background: var(--panel); font-size: 12px; font-weight: 600; color: var(--text); }
+  .wf-arrow { text-align: center; font-size: 14px; color: var(--border2); }
+
+  /* COMPARISON TABLE */
+  .compare-table { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; }
+  .compare-header { padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .compare-row { display: contents; }
+  .compare-cell { padding: 9px 14px; font-size: 12px; color: var(--muted2); border-top: 1px solid var(--border); }
+  .compare-cell.left { background: rgba(4,8,15,0.6); }
+  .compare-cell.right { background: rgba(245,166,35,0.04); color: var(--text); }
+
+  /* INFO PANEL */
+  .info-panel { padding: 14px 16px; border-radius: 8px; background: var(--panel); border: 1px solid var(--border2); }
+  .info-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .info-body { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+
+  /* PILLAR GRID */
+  .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pillar { padding: 18px; border-radius: 10px; border: 1px solid var(--border2); background: var(--panel); }
+  .pillar-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .pillar-items { display: flex; flex-direction: column; gap: 4px; }
+  .pillar-item { font-size: 12px; color: var(--muted2); line-height: 1.4; }
+
+  /* COVER SLIDE */
+  .cover-full { position: absolute; inset: 0; overflow: hidden; }
+  .cover-full img { width: 100%; height: 100%; object-fit: cover; }
+  .cover-overlay { position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(4,8,15,0.92) 45%, rgba(4,8,15,0.4) 100%); }
+  .cover-content { position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: center; padding: 60px 56px; gap: 18px; max-width: 580px; }
+  .cover-eyebrow { display: flex; align-items: center; gap: 8px; padding: 6px 16px;
+    border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; background: rgba(245,166,35,0.07);
+    font-size: 11px; color: var(--gold); letter-spacing: 1px; font-family: monospace; width: fit-content; }
+  .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .cover-h1 { font-size: clamp(30px, 4.5vw, 58px); font-weight: 900; color: var(--text); line-height: 1.05; }
+  .cover-sub { font-size: clamp(13px, 1.4vw, 17px); color: var(--muted2); max-width: 480px; line-height: 1.6; }
+  .cover-meta-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px; }
+  .cover-meta-item { text-align: left; }
+  .cover-meta-val { font-size: clamp(16px, 2vw, 24px); font-weight: 800; }
+  .cover-meta-lbl { font-size: 10px; color: var(--muted2); letter-spacing: 0.5px; }
+  .cover-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--green), var(--blue2)); }
+
+  /* CLOSING SLIDE */
+  .closing-inner { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; height: 100%; padding: 40px; text-align: center; position: relative; gap: 14px; }
+  .closing-glow { position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(245,166,35,0.07) 0%, transparent 70%);
+    pointer-events: none; }
+  .closing-h1 { font-size: clamp(26px, 3.5vw, 48px); font-weight: 900; color: var(--text); line-height: 1.1; }
+  .closing-sub { font-size: clamp(13px, 1.3vw, 16px); color: var(--muted2); max-width: 620px; line-height: 1.6; }
+  .contact-cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+  .contact-card { padding: 16px 24px; border-radius: 10px; border: 1px solid rgba(245,166,35,0.3);
+    background: var(--panel); font-size: 13px; color: var(--text); font-weight: 600; }
+  .contact-card span { display: block; font-size: 11px; color: var(--muted2); font-weight: 400; margin-top: 2px; }
+
+  /* NAV */
+  #nav { position: fixed; bottom: 0; left: 0; right: 0; height: 40px; z-index: 100;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: rgba(4,8,15,0.9); border-top: 1px solid var(--border); backdrop-filter: blur(12px); }
+  .nav-btn { background: transparent; border: 1px solid var(--border2); color: var(--muted2);
+    width: 28px; height: 24px; border-radius: 4px; cursor: pointer; font-size: 11px; transition: all 0.15s; }
+  .nav-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-dots { display: flex; gap: 5px; align-items: center; }
+  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: all 0.2s; }
+  .nav-dot.active { background: var(--gold); width: 16px; border-radius: 3px; }
+  #slide-counter { font-size: 10px; color: var(--muted); font-family: monospace; min-width: 40px; text-align: center; }
+
+  /* ENTERING ANIMATION */
+  .slide.entering { animation: slideIn 0.25s ease forwards; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* COLORS */
+  .c-green { color: var(--green); }
+  .c-blue { color: var(--blue2); }
+  .c-gold { color: var(--gold); }
+  .c-purple { color: var(--purple); }
+  .c-amber { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="cover-full">
+    <img src="trappeys-images/p01_img11.jpg" alt="Trappeys Cannery — Vermilion River, Lafayette LA">
+    <div class="cover-overlay"></div>
+  </div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">
+      <div class="cover-dot"></div>
+      ADC 3K &nbsp;·&nbsp; INVESTOR PRESENTATION
+    </div>
+    <h1 class="cover-h1">Trappeys<br>AI Center</h1>
+    <p class="cover-sub">A New Life for Acadiana's Industrial Heritage — Historic Cannery Transformed into a DSX-Compliant NVIDIA Neocloud Node on the Vermilion River.</p>
+    <div class="cover-meta-row">
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--gold)">Lafayette, LA</div>
+        <div class="cover-meta-lbl">Location</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--green)">River-Cooled</div>
+        <div class="cover-meta-lbl">Vermilion River</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--blue2)">100+ Years</div>
+        <div class="cover-meta-lbl">Industrial Legacy</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-strip"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2 — WHY LAFAYETTE
+══════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Why Lafayette</div>
+    <div class="bar-meta">Slide 2 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">The Right Place</div>
+        <h2 class="slide-h2">Lafayette Has<br>Every Advantage<br>That Matters.</h2>
+        <p class="slide-desc">Low-cost energy. Strategic fiber. University talent. State incentives. Zero flood risk. The Gulf South is underserved for AI compute — and Lafayette is the natural answer.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon">⬡</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Henry Hub — Lowest nat gas prices in the country</div>
+              <div class="bullet-desc">40 miles from Lafayette. Primary energy advantage that no other Gulf South market can match.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">◉</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Fiber convergence hub — Southeast + Gulf corridors</div>
+              <div class="bullet-desc">Established fiber corridors from New Orleans, Houston, and beyond all run through Acadiana.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">◈</div>
+            <div class="bullet-body">
+              <div class="bullet-title">UL Lafayette — Deep STEM talent pipeline</div>
+              <div class="bullet-desc">Engineering, computer science, and technical workforce ready to staff and grow AI operations.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">▦</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Act 730 + PILOT incentives — Real tax advantages</div>
+              <div class="bullet-desc">Louisiana AI infrastructure incentives and parish-level PILOT agreements reduce cost structure significantly.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Lafayette Advantage Indicators</div>
+        <div class="icon-grid g2" style="flex:1;align-content:start">
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img15.png" alt="Energy advantage">
+            <div class="icon-cell-label">Henry Hub Energy</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img18.png" alt="Fiber connectivity">
+            <div class="icon-cell-label">Fiber Corridors</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img21.png" alt="University talent">
+            <div class="icon-cell-label">UL Lafayette</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img24.png" alt="State incentives">
+            <div class="icon-cell-label">State Incentives</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img27.png" alt="Flood zone">
+            <div class="icon-cell-label">FEMA Zone X</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p02_img30.png" alt="AI market">
+            <div class="icon-cell-label">AI Market Access</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3 — LOUISIANA'S AI INFRASTRUCTURE MOMENT
+══════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Louisiana's AI Infrastructure Moment</div>
+    <div class="bar-meta">Slide 3 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:28px 36px;max-width:900px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">The Window Is Open</div>
+        <h2 class="slide-h2" style="margin-bottom:18px">AI Compute Demand Is<br>Exploding. The Gulf South<br>Is Underserved. Louisiana Is Ready.</h2>
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="sv" style="color:var(--gold)">10×</div>
+            <div class="sl">AI power demand growth projected by 2030</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--green)">Act 730</div>
+            <div class="sl">Louisiana AI infrastructure incentive law — active</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--blue2)">$0</div>
+            <div class="sl">Major AI factories in Acadiana today</div>
+          </div>
+        </div>
+        <div class="pillar-grid" style="margin-top:8px">
+          <div class="pillar" style="border-color:rgba(245,166,35,0.3)">
+            <div class="pillar-title" style="color:var(--gold)">The Demand Surge</div>
+            <div class="pillar-items">
+              <div class="pillar-item">Every major tech company is building AI infrastructure now</div>
+              <div class="pillar-item">GPU compute is allocated 2-3 years out at major hyperscalers</div>
+              <div class="pillar-item">Mid-market AI companies have nowhere to go — that's the opening</div>
+            </div>
+          </div>
+          <div class="pillar" style="border-color:rgba(0,232,122,0.3)">
+            <div class="pillar-title" style="color:var(--green)">Louisiana's Position</div>
+            <div class="pillar-items">
+              <div class="pillar-item">Act 730: sales tax exemption on data center equipment</div>
+              <div class="pillar-item">Parish PILOT agreements reduce property tax burden</div>
+              <div class="pillar-item">State actively recruiting AI infrastructure investment</div>
+            </div>
+          </div>
+          <div class="pillar" style="border-color:rgba(0,200,255,0.3)">
+            <div class="pillar-title" style="color:var(--blue2)">The Gulf South Gap</div>
+            <div class="pillar-items">
+              <div class="pillar-item">No major AI compute facilities between Houston and Atlanta</div>
+              <div class="pillar-item">Energy costs in Acadiana are among the lowest nationally</div>
+              <div class="pillar-item">Regional enterprises lack local GPU access — latency matters</div>
+            </div>
+          </div>
+          <div class="pillar" style="border-color:rgba(155,109,255,0.3)">
+            <div class="pillar-title" style="color:var(--purple)">First Mover Wins</div>
+            <div class="pillar-items">
+              <div class="pillar-item">Land the anchor tenant and the region follows</div>
+              <div class="pillar-item">State incentives are richest for early entrants</div>
+              <div class="pillar-item">UL Lafayette + oil &amp; gas industry are waiting for local compute</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4 — POWERED BY LOUISIANA
+══════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Powered by Louisiana — First Solar</div>
+    <div class="bar-meta">Slide 4 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:28px 36px;max-width:860px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">Energy is the Business</div>
+        <h2 class="slide-h2" style="margin-bottom:14px">Louisiana Is One of the<br>Cheapest Energy States in America.<br>We Keep It That Way.</h2>
+        <div class="quote-box" style="margin-bottom:20px">
+          "We don't treat power as a cost to be managed — we treat it as a structural advantage to be locked in. Henry Hub nat gas 40 miles from site. First Solar manufacturing in Louisiana. The energy story here is real, not aspirational."
+        </div>
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="sv" style="color:var(--gold)">#2</div>
+            <div class="sl">Louisiana — lowest industrial electricity rates nationally</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--green)">2.05 MW</div>
+            <div class="sl">Rooftop solar — 3,731 First Solar panels across 112,500 sq ft</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--blue2)">Henry Hub</div>
+            <div class="sl">40 mi — primary nat gas price benchmark for N. America</div>
+          </div>
+        </div>
+        <div class="info-panel" style="border-color:rgba(0,232,122,0.3);margin-top:12px">
+          <div class="info-title" style="color:var(--green)">First Solar — 30 Miles Away</div>
+          <div class="info-body">First Solar's $1.1B New Iberia factory produces Series 7 TR1 panels 30 miles from Trappeys. 3,731 panels across 112,500 sq ft of rooftop = 2.05 MW DC. 550W each, 0.3%/year degradation, 30-year warranty. CdTe thin-film outperforms crystalline silicon by 4% in Louisiana humidity. 100% American-made.</div>
+        </div>
+        <div class="info-panel" style="border-color:rgba(245,166,35,0.3);margin-top:10px">
+          <div class="info-title" style="color:var(--gold)">4-Layer Power Hierarchy</div>
+          <div class="info-body">Layer 1: Solar — 2.05 MW rooftop offset (First Solar, 30 mi away). Layer 2: Natural Gas — BACKBONE, carries main load 24/7 (Henry Hub, 40 mi). Layer 3: Diesel Gensets — EMERGENCY, on-site fuel, pipeline-independent. Layer 4: Grid (LUS) — SELL-BACK ONLY, excess power goes back to grid. We don't need the grid. We don't scare anybody.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5 — A CENTURY OF ACADIANA INDUSTRY
+══════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">A Century of Acadiana Industry</div>
+    <div class="bar-meta">Slide 5 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:28px 36px;max-width:860px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">Industrial Heritage</div>
+        <h2 class="slide-h2" style="margin-bottom:16px">Trappeys Has Been<br>Working for Acadiana<br>Since 1898.</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:12px 16px;border-radius:8px;border-left:3px solid var(--gold);background:rgba(245,166,35,0.04)">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);min-width:52px">1898</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">Victor Trappey Sr. founds Trappey &amp; Sons — hot sauce and canning operations on the banks of the Vermilion River in Lafayette, Louisiana.</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:12px 16px;border-radius:8px;border-left:3px solid var(--amber);background:rgba(232,137,10,0.04)">
+            <div style="font-size:13px;font-weight:800;color:var(--amber);min-width:52px">1900s–<br>1980s</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">Decades of food processing, industrial canning, and workforce — one of Acadiana's anchor employers. The building becomes part of the community fabric.</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:12px 16px;border-radius:8px;border-left:3px solid var(--muted);background:rgba(74,100,128,0.06)">
+            <div style="font-size:13px;font-weight:800;color:var(--muted2);min-width:52px">1991</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">B&amp;G Foods acquires Trappey &amp; Sons. Production eventually winds down. The historic cannery complex sits idle — a century of industrial infrastructure waiting for its next purpose.</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:12px 16px;border-radius:8px;border-left:3px solid var(--green);background:rgba(0,232,122,0.04)">
+            <div style="font-size:13px;font-weight:800;color:var(--green);min-width:52px">2025</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">ADC 3K proposes transformation: Trappeys AI Center — a river-cooled GPU compute facility honoring the site's industrial legacy while powering Louisiana's AI future.</div>
+          </div>
+        </div>
+        <div class="info-panel" style="border-color:rgba(245,166,35,0.2)">
+          <div class="info-title" style="color:var(--gold)">The Building Itself Is the Story</div>
+          <div class="info-body">Heavy industrial construction. River access. Massive floor plates. Existing utility infrastructure. A building purpose-built for high-load industrial operations — exactly what AI compute demands. This isn't adaptive reuse as a compromise. It's adaptive reuse as an advantage.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 6 — THE VISION
+══════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">The Vision</div>
+    <div class="bar-meta">Slide 6 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">Restoration. Compute. Legacy.</div>
+        <h2 class="slide-h2">From Hot Sauce<br>to Hot Chips.<br>One Building.</h2>
+        <p class="slide-desc">The Trappeys Cannery becomes Louisiana's first purpose-converted AI compute facility — preserving Acadiana's industrial heritage while powering the next generation of AI workloads. River cooling. GPU density. Historic character.</p>
+        <div class="icon-grid g2" style="margin-bottom:14px">
+          <div class="icon-cell">
+            <img src="trappeys-images/p06_img11.png" alt="Restoration">
+            <div class="icon-cell-label">Historic Preservation</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p06_img13.png" alt="GPU compute">
+            <div class="icon-cell-label">AI Compute</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p06_img15.png" alt="River cooling">
+            <div class="icon-cell-label">River Cooling</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p06_img17.png" alt="Community anchor">
+            <div class="icon-cell-label">Community Anchor</div>
+          </div>
+        </div>
+        <div class="info-panel" style="border-color:rgba(0,232,122,0.2)">
+          <div class="info-title" style="color:var(--green)">Why Restore Instead of Demolish</div>
+          <div class="info-body">Demolition loses: heavy concrete construction, river access, industrial electrical capacity, and 100 years of community identity. Restoration preserves all of it — and adds compute density that couldn't exist in a new-build at this price point.</div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">The Trappeys Cannery — Then &amp; Vision</div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-height:0">
+          <img src="trappeys-images/p06_img4.jpg" alt="Trappeys Cannery building" style="width:100%;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex:1;min-height:0">
+          <img src="trappeys-images/p06_img7.jpg" alt="Trappeys facility" style="width:100%;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex:1;min-height:0">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 7 — THE SITE
+══════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">The Site</div>
+    <div class="bar-meta">Slide 7 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:0.6fr 1.4fr;gap:24px;padding:20px 28px;align-items:start">
+      <div>
+        <div class="slide-eyebrow">Location Intelligence</div>
+        <h2 class="slide-h2" style="font-size:clamp(18px,2vw,26px)">Vermilion River.<br>SE Evangeline<br>Thruway. Lafayette.</h2>
+        <p class="slide-desc" style="font-size:12px">Heavy industrial building on the river — Zone X flood classification, direct utility access, and proximity to fiber corridors. GPS: 30.21356°N, 92.00163°W.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+          <div class="icon-cell">
+            <img src="trappeys-images/p07_img5.png" alt="FEMA Zone X">
+            <div class="icon-cell-label">FEMA Zone X — No flood risk</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p07_img7.png" alt="Power grid">
+            <div class="icon-cell-label">LUS utility service area</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p07_img9.png" alt="Fiber access">
+            <div class="icon-cell-label">Fiber corridor access</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p07_img11.png" alt="River access">
+            <div class="icon-cell-label">Vermilion River cooling</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p07_img13.png" alt="Road access">
+            <div class="icon-cell-label">SE Evangeline Thruway</div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel" style="height:100%">
+        <div class="vis-label">Site Aerial — Trappeys Cannery, Lafayette LA</div>
+        <img src="trappeys-images/p07_img3.png" alt="Aerial view of Trappeys Cannery site on Vermilion River" style="width:100%;flex:1;min-height:0;object-fit:contain;border-radius:8px;background:rgba(0,0,0,0.3)">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 8 — ON THE GROUND
+══════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">On the Ground</div>
+    <div class="bar-meta">Slide 8 of 18</div>
+  </div>
+  <div class="slide-content" style="padding:0">
+    <div style="display:flex;flex-direction:column;width:100%;height:100%;padding:16px 24px 56px;gap:10px">
+      <div>
+        <div class="slide-eyebrow">Site Photography</div>
+        <h2 class="slide-h2" style="font-size:clamp(16px,1.8vw,22px);margin-bottom:4px">Heavy Construction. River Access. Industrial Scale.</h2>
+      </div>
+      <div class="photo-grid grid-3" style="flex:1;min-height:0">
+        <img src="trappeys-images/p08_img3.jpg" alt="Trappeys building exterior" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+        <img src="trappeys-images/p08_img5.jpg" alt="Trappeys building detail" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+        <img src="trappeys-images/p08_img7.jpg" alt="Trappeys facility view" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+        <img src="trappeys-images/p08_img9.jpg" alt="Trappeys interior" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+        <img src="trappeys-images/p08_img11.jpg" alt="Trappeys structure" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+        <img src="trappeys-images/p08_img13.jpg" alt="Trappeys site" style="object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 9 — ENERGY ARCHITECTURE
+══════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Energy Architecture</div>
+    <div class="bar-meta">Slide 9 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">4-Layer Power Hierarchy</div>
+        <h2 class="slide-h2">We Make Our<br>Own Power.</h2>
+        <p class="slide-desc">Redundant by design. Hurricane Ida took the grid and the pipelines for weeks. Our architecture accounts for both failure modes — independently.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <div class="info-panel" style="border-color:rgba(245,166,35,0.4)">
+            <div class="info-title" style="color:var(--green)">Layer 1 — Solar (PRIMARY OFFSET)</div>
+            <div class="info-body">2.05 MW rooftop — 3,731 First Solar Series 7 TR1 panels across 112,500 sq ft. Made 30 miles away in New Iberia. 800 VDC direct-coupled to DSX bus at 97% efficiency.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(245,166,35,0.4)">
+            <div class="info-title" style="color:var(--gold)">Layer 2 — Natural Gas (BACKBONE)</div>
+            <div class="info-body">Carries the main load 24/7. ALWAYS running. Henry Hub pricing — 40 miles away. ATMOS Energy gas hub confirmed at Pinhook, trunk lines through buildings. Cloudy day = gas carries full load.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(255,77,109,0.3)">
+            <div class="info-title" style="color:var(--red)">Layer 3 — Diesel Gensets (EMERGENCY)</div>
+            <div class="info-body">On-site fuel storage. Pipeline-independent. Ida-proven. Activates when gas supply is compromised — hurricane-rated emergency power.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(74,100,128,0.4)">
+            <div class="info-title" style="color:var(--blue2)">Layer 4 — Grid / LUS (SELL-BACK ONLY)</div>
+            <div class="info-body">Excess power goes BACK to the grid. NOT a consumption source. LUS Pin Hook Substation right next door. Revenue stream, not a dependency.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Power Architecture Components</div>
+        <div class="icon-grid g2" style="flex:1;align-content:start">
+          <div class="icon-cell">
+            <img src="trappeys-images/p09_img5.png" alt="Nat gas generator">
+            <div class="icon-cell-label">Nat Gas Primary</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p09_img13.png" alt="Diesel backup">
+            <div class="icon-cell-label">Diesel Backup</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p09_img21.png" alt="Solar panels">
+            <div class="icon-cell-label">Solar Supplement</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p09_img29.png" alt="Battery storage">
+            <div class="icon-cell-label">Battery Storage</div>
+          </div>
+        </div>
+        <div style="padding:12px;border-radius:8px;background:rgba(245,166,35,0.05);border:1px solid rgba(245,166,35,0.2)">
+          <div style="font-size:11px;color:var(--muted2);line-height:1.6">Solar: 2.05 MW (3,731 panels). Gas: phased gensets (1 MW → 7.5 MW). Diesel: emergency backup. Grid: sell-back only. We don't need the grid.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 10 — COOLING STRATEGY
+══════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Cooling Strategy</div>
+    <div class="bar-meta">Slide 10 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">The Vermilion River Advantage</div>
+        <h2 class="slide-h2">The River Is<br>Our Cooling System.<br>No HVAC. No Chillers.</h2>
+        <p class="slide-desc">The Vermilion River runs alongside the Trappeys site — providing a natural free-cooling resource that eliminates the largest power draw in traditional facilities. Combined with NVIDIA's integrated liquid cooling, this site achieves PUE levels that air-cooled facilities can't touch.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">◉</div>
+            <div class="bullet-body">
+              <div class="bullet-title">River water heat exchange — free cooling baseline</div>
+              <div class="bullet-desc">Leverages the Vermilion River's thermal mass for primary heat rejection. No chillers. No compressors. Massive energy savings.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--gold)">⬡</div>
+            <div class="bullet-body">
+              <div class="bullet-title">NVIDIA integrated liquid cooling — highest GPU density possible</div>
+              <div class="bullet-desc">NVIDIA ships complete liquid-cooled racks (45°C hot water, 2-hour install). No hot aisle/cold aisle. Rack-level thermal management built in.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">◈</div>
+            <div class="bullet-body">
+              <div class="bullet-title">PUE target: 1.03 — best-in-class efficiency</div>
+              <div class="bullet-desc">Industry average is 1.58. At 1.03, nearly every watt goes to compute — not cooling overhead. Dramatically better unit economics.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">▦</div>
+            <div class="bullet-body">
+              <div class="bullet-title">No HVAC buildout — lower CapEx, faster deployment</div>
+              <div class="bullet-desc">Traditional facility HVAC is 30-40% of construction cost. We skip it entirely. The river does the work.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Cooling System Components</div>
+        <div class="icon-grid g2" style="flex:1;align-content:start">
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img5.png" alt="River cooling">
+            <div class="icon-cell-label">River Heat Exchange</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img8.png" alt="NVIDIA liquid cooling">
+            <div class="icon-cell-label">NVIDIA Liquid Cooling</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img10.png" alt="Heat transfer">
+            <div class="icon-cell-label">Heat Transfer</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img13.png" alt="Distribution">
+            <div class="icon-cell-label">Fluid Distribution</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img15.png" alt="Monitoring">
+            <div class="icon-cell-label">Thermal Monitoring</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p10_img18.png" alt="GPU racks">
+            <div class="icon-cell-label">GPU Rack Density</div>
+          </div>
+          <div class="icon-cell" style="grid-column:span 2">
+            <img src="trappeys-images/p10_img20.png" alt="PUE efficiency" style="height:32px">
+            <div class="icon-cell-label">PUE 1.03 Target — Best-in-class</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 11 — THE PROVEN MODEL
+══════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">The Proven Model — Hut 8 vs. Trappeys</div>
+    <div class="bar-meta">Slide 11 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">Validation by Comparison</div>
+        <h2 class="slide-h2">Hut 8 Did This<br>in Canada. We Do<br>It in Louisiana.</h2>
+        <p class="slide-desc">Hut 8 Mining converted industrial facilities into high-density compute centers — became a NASDAQ-listed company. The playbook is proven. Trappeys has better energy costs, better cooling, and a stronger incentive environment.</p>
+        <div class="compare-table">
+          <div class="compare-header" style="background:rgba(74,100,128,0.2);color:var(--muted2)">Hut 8 Model</div>
+          <div class="compare-header" style="background:rgba(245,166,35,0.1);color:var(--gold)">Trappeys AI Center</div>
+          <div class="compare-cell left">Industrial facility conversion</div>
+          <div class="compare-cell right">Historic cannery conversion</div>
+          <div class="compare-cell left">Alberta nat gas + grid</div>
+          <div class="compare-cell right">Henry Hub nat gas (40 mi)</div>
+          <div class="compare-cell left">Air-cooled + some liquid cooling</div>
+          <div class="compare-cell right">100% river + NVIDIA liquid cooling</div>
+          <div class="compare-cell left">~$0.04/kWh energy cost</div>
+          <div class="compare-cell right">Henry Hub nat gas — lowest cost in U.S.</div>
+          <div class="compare-cell left">Canadian prairie climate</div>
+          <div class="compare-cell right">River cooling advantage</div>
+          <div class="compare-cell left">NASDAQ-listed outcome</div>
+          <div class="compare-cell right">Louisiana-based — anchors Gulf South AI</div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Model Comparison — Key Metrics</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted2);text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:6px">Hut 8 Indicators</div>
+            <div class="icon-strip">
+              <img src="trappeys-images/p11_img7.png" alt="Hut 8 metric">
+              <img src="trappeys-images/p11_img9.png" alt="Hut 8 metric">
+              <img src="trappeys-images/p11_img11.png" alt="Hut 8 metric">
+              <img src="trappeys-images/p11_img13.png" alt="Hut 8 metric">
+              <img src="trappeys-images/p11_img15.png" alt="Hut 8 metric">
+              <img src="trappeys-images/p11_img17.png" alt="Hut 8 metric">
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;border-bottom:1px solid rgba(245,166,35,0.2);padding-bottom:6px">Trappeys Equivalents</div>
+            <div class="icon-strip">
+              <img src="trappeys-images/p11_img23.png" alt="Trappeys metric">
+              <img src="trappeys-images/p11_img25.png" alt="Trappeys metric">
+              <img src="trappeys-images/p11_img27.png" alt="Trappeys metric">
+              <img src="trappeys-images/p11_img29.png" alt="Trappeys metric">
+              <img src="trappeys-images/p11_img31.png" alt="Trappeys metric">
+              <img src="trappeys-images/p11_img33.png" alt="Trappeys metric">
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-radius:8px;background:rgba(245,166,35,0.05);border:1px solid rgba(245,166,35,0.2);margin-top:auto">
+            <div style="font-size:12px;color:var(--muted2);line-height:1.6">The conversion model works. Hut 8 proved institutional capital will fund it, operators can scale it, and markets will reward it. We have better inputs in every category.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 12 — ACADIANA ENERGY + COMPUTE CORRIDOR
+══════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Acadiana Energy + Compute Corridor</div>
+    <div class="bar-meta">Slide 12 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">The Bigger Picture</div>
+        <h2 class="slide-h2">Trappeys Is Node One<br>of a Statewide<br>AI Infrastructure.</h2>
+        <p class="slide-desc">ADC 3K's vision extends beyond a single site. Trappeys anchors an Acadiana Energy + Compute Corridor — a network of AI infrastructure nodes linked by the same nat gas lines, fiber corridors, and power infrastructure that already connect the region.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon">⬡</div>
+            <div class="bullet-body">
+              <div class="bullet-title">MARLIE I — 1201 SE Evangeline Thruway (0.3 mi from Trappeys)</div>
+              <div class="bullet-desc">Permanent AI Factory with NVL72 racks. HQ and NOC for the ADC network.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--green)">◈</div>
+            <div class="bullet-body">
+              <div class="bullet-title">KLFT 1.1 — Lafayette Regional Airport (autonomous drone hub)</div>
+              <div class="bullet-desc">Emergency response and commercial drone operations anchored at KLFT.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--blue2)">◉</div>
+            <div class="bullet-body">
+              <div class="bullet-title">Statewide expansion — AI-scored site selection</div>
+              <div class="bullet-desc">Proprietary 6-criteria scoring model identifies high-readiness deployment sites across Louisiana.</div>
+            </div>
+          </div>
+          <div class="bullet">
+            <div class="bullet-icon" style="color:var(--purple)">▦</div>
+            <div class="bullet-body">
+              <div class="bullet-title">UL Lafayette — anchor academic partner for the corridor</div>
+              <div class="bullet-desc">Research computing, workforce pipeline, and community buy-in for city permitting.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Corridor Network — Site Nodes</div>
+        <div class="icon-grid g3" style="flex:1;align-content:start">
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img5.png" alt="Trappeys node">
+            <div class="icon-cell-label">Trappeys</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img9.png" alt="MARLIE I">
+            <div class="icon-cell-label">MARLIE I</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img12.png" alt="KLFT hub">
+            <div class="icon-cell-label">KLFT Hub</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img16.png" alt="Kinder site">
+            <div class="icon-cell-label">Kinder</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img19.png" alt="Iowa site">
+            <div class="icon-cell-label">Iowa</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img25.png" alt="New Iberia">
+            <div class="icon-cell-label">New Iberia</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img28.png" alt="Lake Charles">
+            <div class="icon-cell-label">Lake Charles</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img31.png" alt="Henry Hub">
+            <div class="icon-cell-label">Henry Hub</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p12_img34.png" alt="UL Lafayette">
+            <div class="icon-cell-label">UL Lafayette</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 13 — JOB CREATION & ECONOMIC IMPACT
+══════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Job Creation &amp; Economic Impact</div>
+    <div class="bar-meta">Slide 13 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:24px 36px;max-width:900px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">Community Return</div>
+        <h2 class="slide-h2" style="margin-bottom:16px">A Building That Employed<br>Acadiana for a Century<br>Does It Again.</h2>
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="sv" style="color:var(--gold)">40+</div>
+            <div class="sl">Direct full-time jobs — Phase 1</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--green)">150+</div>
+            <div class="sl">Construction and contract jobs</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--blue2)">$2M+</div>
+            <div class="sl">Annual parish tax contribution</div>
+          </div>
+          <div class="stat-card">
+            <div class="sv" style="color:var(--purple)">UL</div>
+            <div class="sl">Research computing partnership</div>
+          </div>
+        </div>
+        <div style="border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; margin-top: 12px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:rgba(245,166,35,0.08);border-bottom:1px solid var(--border2)">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">Role</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">Headcount</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">Avg Salary</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold)">Phase</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--border)">
+            <div style="padding:9px 14px;font-size:12px;color:var(--text)">AI Factory Ops</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">12</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">$55–70K</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--green)">Phase 1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--border)">
+            <div style="padding:9px 14px;font-size:12px;color:var(--text)">Network &amp; Systems</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">8</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">$70–90K</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--green)">Phase 1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--border)">
+            <div style="padding:9px 14px;font-size:12px;color:var(--text)">Security &amp; Facilities</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">10</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">$45–55K</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--green)">Phase 1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--border)">
+            <div style="padding:9px 14px;font-size:12px;color:var(--text)">Management &amp; Finance</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">6</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">$90–130K</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--green)">Phase 1</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr">
+            <div style="padding:9px 14px;font-size:12px;color:var(--text)">R&amp;D / UL Partnership</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">8+</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--muted2)">$65–100K</div>
+            <div style="padding:9px 14px;font-size:12px;color:var(--blue2)">Phase 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 14 — CAPITAL STACK
+══════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Capital Stack</div>
+    <div class="bar-meta">Slide 14 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner std-two">
+      <div>
+        <div class="slide-eyebrow">Investment Structure</div>
+        <h2 class="slide-h2">Multiple Capital<br>Sources. Stacked<br>for Risk Reduction.</h2>
+        <p class="slide-desc">Historic tax credits, state incentives, and private equity combine to reduce effective CapEx below what any greenfield site could achieve. The building's heritage is a financial asset.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+          <div class="info-panel" style="border-color:rgba(245,166,35,0.4)">
+            <div class="info-title" style="color:var(--gold)">Historic Tax Credits — 20% Federal + 25% State</div>
+            <div class="info-body">Certified historic structure. Federal 20% rehab credit + Louisiana 25% state credit. Combined: 45% of qualified rehab costs returned as tax credits.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(0,232,122,0.3)">
+            <div class="info-title" style="color:var(--green)">Act 730 + PILOT — Operating Incentives</div>
+            <div class="info-body">Sales tax exemption on data center equipment + parish PILOT agreement on property taxes. Ongoing cost reduction that compounds over the investment horizon.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(0,200,255,0.3)">
+            <div class="info-title" style="color:var(--blue2)">Private Equity + Debt — Senior Secured</div>
+            <div class="info-body">Institutional equity raise + senior secured debt against the real asset. Building provides hard collateral. Tenant LOIs provide revenue certainty for lenders.</div>
+          </div>
+          <div class="info-panel" style="border-color:rgba(155,109,255,0.3)">
+            <div class="info-title" style="color:var(--purple)">New Markets Tax Credit (NMTC) — Potential Layer</div>
+            <div class="info-body">Trappeys site qualifies for NMTC consideration given location and community impact. Additional 39% credit available through CDFI structure.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vis-panel">
+        <div class="vis-label">Capital Stack Components</div>
+        <div class="icon-grid g2" style="flex:1;align-content:start">
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img5.png" alt="Historic tax credits">
+            <div class="icon-cell-label">Historic Tax Credits</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img9.png" alt="Act 730">
+            <div class="icon-cell-label">Act 730 Incentive</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img13.png" alt="Private equity">
+            <div class="icon-cell-label">Private Equity</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img17.png" alt="Senior debt">
+            <div class="icon-cell-label">Senior Debt</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img21.png" alt="NMTC">
+            <div class="icon-cell-label">NMTC Layer</div>
+          </div>
+          <div class="icon-cell">
+            <img src="trappeys-images/p14_img25.png" alt="PILOT agreement">
+            <div class="icon-cell-label">Parish PILOT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 15 — RESTORATION VS. DEMOLITION
+══════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Restoration vs. Demolition</div>
+    <div class="bar-meta">Slide 15 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr 1fr;gap:24px;padding:24px 36px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="padding:14px 18px;border-radius:10px;border:2px solid rgba(245,166,35,0.4);background:rgba(245,166,35,0.05)">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Restoration — ADC 3K Approach</div>
+          <div class="bullets">
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">Historic tax credits unlock — 45% of rehab costs</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">Heavy industrial construction stays — built for load</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">River access for free cooling — permanent PUE advantage</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">Community identity preserved — city council support</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">UL Lafayette partnership enabled — academic anchor</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--gold)">✓</div><div class="bullet-body"><div class="bullet-title">Faster to market — shell exists, utilities in place</div></div></div>
+          </div>
+        </div>
+        <div style="padding:14px 18px;border-radius:10px;border:1px solid rgba(255,77,109,0.2);background:rgba(255,77,109,0.03)">
+          <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:10px">Demolition — What Gets Lost</div>
+          <div class="bullets">
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">No historic tax credits — 45% credit gone</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">Rebuild cost $15–25M more than restoration</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">River cooling integration lost — HVAC required</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">Community opposition risk — political friction</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">12–18 month longer timeline to operations</div></div></div>
+            <div class="bullet"><div class="bullet-icon" style="color:var(--red)">✗</div><div class="bullet-body"><div class="bullet-title">Worst possible outcome for a historic Acadiana landmark</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;justify-content:center">
+        <div class="slide-eyebrow">The Decision Is Clear</div>
+        <h2 class="slide-h2">Demolition Is<br>Not an Option.<br>It's a Loss.</h2>
+        <p class="slide-desc">Every dollar of tax credit unlocked, every month saved on construction, and every community relationship preserved comes from choosing restoration. The building IS the investment thesis.</p>
+        <div style="padding:16px 20px;border-radius:10px;border:1px solid rgba(245,166,35,0.3);background:rgba(245,166,35,0.06)">
+          <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px">The Bottom Line</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.6">Restore and convert: effective CapEx reduced by historic credits, faster timeline, lower cooling OpEx, community support. Demolish and rebuild: higher cost, longer timeline, no credits, opposition risk, and you destroyed something irreplaceable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 16 — THE CASE FOR ACTION
+══════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">The Case for Action</div>
+    <div class="bar-meta">Slide 16 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:24px 36px;max-width:860px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">Six Reasons. Now.</div>
+        <h2 class="slide-h2" style="margin-bottom:16px">The Window for<br>First-Mover Advantage<br>Is Closing.</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(245,166,35,0.3);background:rgba(245,166,35,0.05)">
+            <div style="font-size:22px;font-weight:900;color:var(--gold);margin-bottom:6px">01</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">AI compute demand is not theoretical</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">GPU clusters are allocated years out. The companies building AI today need more compute than exists. Regional access = real revenue.</div>
+          </div>
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(0,232,122,0.3);background:rgba(0,232,122,0.05)">
+            <div style="font-size:22px;font-weight:900;color:var(--green);margin-bottom:6px">02</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Historic tax credits require action before demolition</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">Once the structure is demolished, the credits are gone. The window to capture 45% of rehab costs as credits closes the moment the building comes down.</div>
+          </div>
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(0,200,255,0.3);background:rgba(0,200,255,0.05)">
+            <div style="font-size:22px;font-weight:900;color:var(--blue2);margin-bottom:6px">03</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Act 730 incentives reward early movers</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">Louisiana's AI infrastructure incentives are richest for first entrants into the market. As the market matures, terms will tighten. Enter now.</div>
+          </div>
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(155,109,255,0.3);background:rgba(155,109,255,0.05)">
+            <div style="font-size:22px;font-weight:900;color:var(--purple);margin-bottom:6px">04</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">UL Lafayette is ready to partner</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">The university needs local AI compute for research. Trappeys gives them that. Their partnership is the unlock for city buy-in — and it requires a committed operator, not a concept.</div>
+          </div>
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(255,77,109,0.3);background:rgba(255,77,109,0.05)">
+            <div style="font-size:22px;font-weight:900;color:var(--red);margin-bottom:6px">05</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Every day of delay is revenue not collected</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">A 2MW AI facility at market GPU colocation rates generates $4–8M annually. The construction clock starts on the day capital is committed.</div>
+          </div>
+          <div style="padding:16px 18px;border-radius:10px;border:1px solid rgba(245,166,35,0.2);background:rgba(245,166,35,0.03)">
+            <div style="font-size:22px;font-weight:900;color:var(--amber);margin-bottom:6px">06</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">This building will not be available forever</div>
+            <div style="font-size:12px;color:var(--muted2);line-height:1.5">Competing redevelopment proposals will emerge. The combination of this site, this river, this structure, and these incentives doesn't repeat anywhere else in Louisiana.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 17 — PATH FORWARD
+══════════════════════════════════════════ -->
+<div class="slide" id="s17">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">Path Forward — 5 Phases</div>
+    <div class="bar-meta">Slide 17 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="std-inner" style="grid-template-columns:1fr;padding:24px 36px;max-width:820px;margin:0 auto">
+      <div>
+        <div class="slide-eyebrow">Execution Plan</div>
+        <h2 class="slide-h2" style="margin-bottom:16px">Structured. Phased.<br>Each Phase Unlocks<br>the Next.</h2>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:10px;border:1px solid rgba(245,166,35,0.4);background:rgba(245,166,35,0.06)">
+            <div style="font-size:26px;font-weight:900;color:var(--gold);min-width:36px;line-height:1">1</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Capital Formation + Historic Certification</div>
+              <div style="font-size:12px;color:var(--muted2);line-height:1.5">Close equity raise. Submit NPS Part 1 historic certification application. Execute PILOT agreement with Lafayette Parish. Sign UL Lafayette MOU. Secure anchor tenant LOI.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,232,122,0.3);background:rgba(0,232,122,0.05)">
+            <div style="font-size:26px;font-weight:900;color:var(--green);min-width:36px;line-height:1">2</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Structural Restoration + Utility Infrastructure</div>
+              <div style="font-size:12px;color:var(--muted2);line-height:1.5">Begin certified historic rehabilitation. Install primary and backup power systems. Complete river water intake and heat exchange infrastructure. Fiber interconnection commissioned.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,200,255,0.3);background:rgba(0,200,255,0.05)">
+            <div style="font-size:26px;font-weight:900;color:var(--blue2);min-width:36px;line-height:1">3</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Compute Installation + First Tenant Onboarding</div>
+              <div style="font-size:12px;color:var(--muted2);line-height:1.5">NVIDIA liquid-cooled rack installation. Facility water loop commissioning. Network operations center build-out. First tenant online. UL Lafayette research cluster activated.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:10px;border:1px solid rgba(155,109,255,0.3);background:rgba(155,109,255,0.05)">
+            <div style="font-size:26px;font-weight:900;color:var(--purple);min-width:36px;line-height:1">4</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Full Capacity + Revenue Stabilization</div>
+              <div style="font-size:12px;color:var(--muted2);line-height:1.5">2MW fully deployed. Additional tenant contracts signed. Solar + battery commissioned. Full NOC operations with 24/7 staffing. Tax credit monetization complete.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:10px;border:1px solid rgba(232,137,10,0.3);background:rgba(232,137,10,0.05)">
+            <div style="font-size:26px;font-weight:900;color:var(--amber);min-width:36px;line-height:1">5</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Corridor Expansion + ADC 3K Pod Deployment</div>
+              <div style="font-size:12px;color:var(--muted2);line-height:1.5">Trappeys anchors the Acadiana corridor. Pod site deployments begin at Kinder, Iowa, New Iberia. MARLIE I HQ operating. Gulf South AI infrastructure network is live.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SLIDE 18 — CLOSE
+══════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="slide-bar">
+    <div class="bar-logo">TRAPPEYS</div>
+    <div class="bar-title">A Building Worth Saving</div>
+    <div class="bar-meta">Slide 18 of 18</div>
+  </div>
+  <div class="slide-content">
+    <div class="closing-inner">
+      <div class="closing-glow"></div>
+      <div class="cover-eyebrow" style="border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.06);color:var(--gold)">
+        <div class="cover-dot" style="background:var(--gold)"></div>
+        TRAPPEYS AI CENTER &nbsp;·&nbsp; LAFAYETTE, LA
+      </div>
+      <h1 class="closing-h1">Acadiana Built Something<br>That Lasted a Century.<br>We Build What Comes Next.</h1>
+      <p class="closing-sub">The same industrial spirit that made Trappeys a Gulf South institution now powers Louisiana's NVIDIA neocloud — DSX-compliant, river-cooled, selling optimized tokens via Dynamo and Groq. This building has earned another hundred years.</p>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:8px 0">
+        <div class="stat-card" style="text-align:center;min-width:120px">
+          <div class="sv" style="color:var(--gold)">1898</div>
+          <div class="sl">Founded</div>
+        </div>
+        <div class="stat-card" style="text-align:center;min-width:120px">
+          <div class="sv" style="color:var(--green)">2MW</div>
+          <div class="sl">AI Compute</div>
+        </div>
+        <div class="stat-card" style="text-align:center;min-width:120px">
+          <div class="sv" style="color:var(--blue2)">PUE 1.03</div>
+          <div class="sl">River Cooled</div>
+        </div>
+        <div class="stat-card" style="text-align:center;min-width:120px">
+          <div class="sv" style="color:var(--purple)">45%</div>
+          <div class="sl">Tax Credits</div>
+        </div>
+      </div>
+      <div class="contact-cards">
+        <div class="contact-card">
+          Scott Tomsu
+          <span>scott@adc3k.com</span>
+          <span>337-780-1535</span>
+          <span>1201 SE Evangeline Thruway</span>
+          <span>Lafayette, LA 70501</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);font-family:monospace;margin-top:4px">
+        GPS: 30.21356°N, 92.00163°W &nbsp;|&nbsp; Vermilion River Corridor
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #deck -->
+
+<!-- NAV CONTROLS -->
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>◀</button>
+  <div class="nav-dots" id="navDots"></div>
+  <span id="slide-counter">1 / 18</span>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">▶</button>
+</div>
+
+<script>
+const SLIDE_IDS = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','s17','s18'];
+const TOTAL = SLIDE_IDS.length; // 18
+
+let current = 0;
+
+const dotsEl = document.getElementById('navDots');
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= TOTAL || idx === current) return;
+  document.getElementById(SLIDE_IDS[current]).classList.remove('active');
+  current = idx;
+  const slide = document.getElementById(SLIDE_IDS[current]);
+  slide.classList.add('active', 'entering');
+  setTimeout(() => slide.classList.remove('entering'), 300);
+  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + TOTAL;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+// Mouse wheel / trackpad scroll — throttled so one scroll = one slide
+let wheelLock = false;
+document.addEventListener('wheel', e => {
+  e.preventDefault();
+  if (wheelLock) return;
+  wheelLock = true;
+  if (e.deltaY > 0) nextSlide(); else prevSlide();
+  setTimeout(() => { wheelLock = false; }, 650);
+}, { passive: false });
+
+// Touch swipe
+let touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const diff = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(diff) > 40) { if (diff > 0) nextSlide(); else prevSlide(); }
+}, { passive: true });
+
+// Init
+document.getElementById('slide-counter').textContent = '1 / ' + TOTAL;
+document.getElementById('prevBtn').disabled = true;
+</script>
+</body>
+</html>
