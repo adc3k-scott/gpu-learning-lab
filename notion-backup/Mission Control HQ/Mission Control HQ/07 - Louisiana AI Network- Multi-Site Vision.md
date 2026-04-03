@@ -1,5 +1,5 @@
 # 07 -- Louisiana AI Network: Multi-Site Vision
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Two-site network forming Louisiana AI compute backbone.
 ## Network Topology

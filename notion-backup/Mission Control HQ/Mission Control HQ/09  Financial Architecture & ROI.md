@@ -1,7 +1,7 @@
 # 09 — Financial Architecture & ROI
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
-> This is not a data center. This is a money machine. Every watt generates revenue. Every dollar goes to compute. The comparison is not close.
+> This is not an AI factory. This is a money machine. Every watt generates revenue. Every dollar goes to compute. The comparison is not close.
 ---
 ## Capital Stack
 - Infrastructure raise: ~$1.17M — covers facility buildout (electrical, cooling, fiber, power distribution, commissioning)
@@ -9,63 +9,60 @@
 - EBITDA figures below = facility-level operating cash flow
 - Full investor pro forma with hardware financing and debt service available upon request
 ---
-## MARLIE I vs Legacy Data Center — Key Comparison
-- PUE: Legacy 1.4–1.8 (40–80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)
-- Energy cost: Legacy $0.10–$0.18/kWh national avg vs MARLIE I $0.065/kWh Louisiana industrial
+## MARLIE I vs Legacy AI Factory — Key Comparison
+- PUE: Legacy 1.4-1.8 (40-80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)
+- Energy cost: Legacy $0.10-0.18/kWh national avg vs MARLIE I $0.058-0.068/kWh (Bloom SOFC on Henry Hub gas)
 - Cooling: Legacy air (CRAC units, chillers) vs MARLIE I 100% direct-to-chip liquid
-- Revenue per rack per year: Legacy $200K–$500K (colo) vs MARLIE I $3M–$5M+ (AI compute)
-- Operations: Legacy 20–50 FTE manual ops vs MARLIE I 3–5 FTE Mission Control AI
-- On-site generation: Legacy none (grid dependent) vs MARLIE I Bloom Energy fuel cells + gas generators
+- Revenue per rack per year: Legacy $200K-$500K (colo) vs MARLIE I $3M-$5M+ (AI compute)
+- Operations: Legacy 20-50 FTE manual ops vs MARLIE I 3-5 FTE Mission Control AI
+- On-site generation: Legacy none (grid dependent) vs MARLIE I 40 Bloom SOFC units, 10 MW
 - Domestic content: Legacy mixed overseas vs MARLIE I 100% USA — OBBBA compliant
 ---
+## MARLIE I Configuration
+> 40 NVL72 racks — 2,880 Rubin GPUs — 5,200 kW IT — 10 MW Bloom generation
+- Building downstairs: 10 racks, 720 GPUs, 1,300 kW IT — single-row layout, same as pod
+- Building upstairs: NOC only — no compute racks
+- Pod 1: 10 racks, 720 GPUs, 1,300 kW IT
+- Pod 2: 10 racks, 720 GPUs, 1,300 kW IT
+- Pod 3: 10 racks, 720 GPUs, 1,300 kW IT
+---
 ## Revenue Model — AI Compute Rental (Conservative Basis)
-- Rate basis: $6/GPU/hr conservative (H100 market: $2.50–$3.50). Vera Rubin 2.5x FP4 density — premium tier justified
-- At $8/GPU/hr mid estimate, Year 3 two-floor gross reaches $121.5M. OPEX stays flat. Upside is asymmetric.
-### Year 1 — 4 Racks Live, 40% Utilization
-- 288 GPUs online (Floor 1 ramp)
-- Gross revenue: $6.1M
-- OPEX: ~$1.29M (4-rack scale)
-- EBITDA: ~$4.78M
-### Year 2 — 8 Racks Live, 65% Utilization
-- 1,728 GPUs online (24 racks — Floor 1 full + Floor 2 partial)
-- Gross revenue: $44.5M
-- OPEX: ~$3.0M (24-rack scale)
-- EBITDA: ~$41.5M
-### Year 3 — 16 Racks Live, 75% Utilization
-- 2,304 GPUs online (32 racks — both floors full)
-- Gross revenue: $91.1M
-- OPEX: ~$3.68M (full two-floor scale)
-- EBITDA: ~$87.4M
+Rate basis: $6/GPU/hr base case (H100 spot: $2.50-$3.50/hr; Rubin delivers 2.5x FP4 density and 22 TB/s HBM4 bandwidth — premium tier justified). At $8/GPU/hr mid estimate, Phase 3 gross reaches $151.6M.
+### Phase 1 — Building Downstairs (720 GPUs, 10 Racks)
+- 720 GPUs online — building downstairs only
+- 40% utilization (ramp year): 720 x $6 x 8,760 x 0.40 = $15.2M gross
+- 65% utilization (stabilized): 720 x $6 x 8,760 x 0.65 = $24.7M gross
+- OPEX at 65%: ~$2.8M (Bloom fuel + staffing + maintenance)
+- EBITDA at 65%: ~$21.9M
+### Phase 2 — Building + Pod 1 (1,440 GPUs, 20 Racks)
+- 1,440 GPUs online — building + Pod 1
+- 65% utilization: 1,440 x $6 x 8,760 x 0.65 = $49.3M gross
+- OPEX: ~$4.5M
+- EBITDA: ~$44.8M
+### Phase 3 — Full Footprint (2,880 GPUs, 40 Racks)
+- 2,880 GPUs online — building + all 3 pods
+- 75% utilization at $6/hr: 2,880 x $6 x 8,760 x 0.75 = $113.7M gross
+- 75% utilization at $8/hr: 2,880 x $8 x 8,760 x 0.75 = $151.6M gross
+- OPEX: ~$7.0M
+- EBITDA at $6/hr: ~$106.7M
+- EBITDA at $8/hr: ~$144.6M
 ---
 ## Power Resilience — 5 Independent Layers
-- Layer 1: LUS Grid — primary utility ($0.065/kWh industrial)
-- Layer 2: Bloom Energy fuel cells — 300 kW continuous, $0.07–$0.09/kWh effective, 60%+ efficiency, Newark Delaware
-- Layer 3: Cat G3520H natural gas prime power (PARALLEL N+1) — 2x 2.5MW = 5MW total installed. Both units run in parallel at moderate load. True N+1 — if one requires service, the other carries full facility.
-- Layer 4: UPS battery ride-through — millisecond switchover, protects compute hardware from power transients
-- Layer 5: Diesel emergency backup — Cat C175-16, 3,365kW. 30,000-gal on-site tank, 110+ hours runtime. Hurricane layer.
-- 5 independent power layers — 0 single points of failure — 96+ hour on-site fuel reserve
+> Bloom SOFC is PRIMARY. The grid is never used for consumption at MARLIE I.
+1. Solar (Offset): 300 kW — First Solar TR1 — pod roofs + Chag Street ground mount
+1. Bloom SOFC (Primary): 40 units x 250 kW = 10 MW — 800V DC direct — gas in, DC out — 54% efficiency
+1. LFP Battery (Bridge): 600 kWh Eaton xStorage — millisecond ATS — ride-through
+1. Diesel Genset (Emergency): on-site fuel reserve — hurricane insurance — zero production dependency
+1. Grid (Never): LUS emergency backup only — not used for consumption — no sell-back at MARLIE I
+Zero single points of failure. 5 independent power layers. Bloom headroom: ~4,280 kW above full facility draw.
+---
+## Power Economics
+- Bloom SOFC effective cost: $0.058-0.068/kWh (fuel + maintenance, Henry Hub gas basis)
+- IT load: 5,200 kW — facility total at PUE 1.10: ~5,720 kW
+- Bloom generation: 10,000 kW — headroom buffer: ~4,280 kW
+- Annual power cost at Phase 3 / 75% utilization: ~$2.4M
 ---
 ## Investor Benefits
-- Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K–$500K/month compute credit.
+- Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K-$500K/month compute credit.
 - Early mover rate lock: investors before first rack goes live receive locked GPU rental rates below market for 24 months
-- Ring Power dealer relationship: single service contract covers entire Cat generator fleet (nat gas + diesel)
----
-> CORRECTED 2026-03-23: Multiple errors in financials above. Bloom Energy removed. Generator model corrected. Rack count corrected to 8 (not 16/24/32). LUS Grid is backup, NOT primary. Revenue projections above are based on wrong rack counts and must be recalculated.
-## Corrected Power Stack
-- Layer 1: Solar (300 kW rooftop + ground mount, First Solar TR1)
-- Layer 2: Natural Gas (2x Cat G3520C, 1.5 MW each, N+1). THIS IS PRIMARY POWER.
-- Layer 3: Diesel emergency backup
-- Layer 4: Grid (LUS backup only. NOT primary. NOT sell-back at MARLIE I.)
-- 600 kWh LFP battery (Eaton xStorage) for ride-through
-- NO Bloom Energy fuel cells at MARLIE I.
-- Generator model: Cat G3520C (not G3520H). 1.5 MW each (not 2.5 MW).
-## Corrected Compute Capacity
-- Total: 8 NVL72 racks, 576 GPUs, 1,040 kW IT load
-- Downstairs: 4 racks (288 GPUs, 520 kW)
-- Upstairs: 4 racks (288 GPUs, 520 kW)
-- Prior Year 2 (24 racks) and Year 3 (32 racks) projections are IMPOSSIBLE for this building.
-- Revenue projections must be recalculated against 8-rack maximum.
-- 800V DC native via Eaton Beam Rubin DSX
-## Corrected Energy Cost
-- Natural gas primary: /usr/bin/bash.058-0.068/kWh (recip engines)
-- LUS grid is backup only, not primary at /usr/bin/bash.065/kWh
+- Single operator: Scott pulls GC permits, handles NVIDIA integration, runs Mission Control — no markup, no middlemen, revenue from day one

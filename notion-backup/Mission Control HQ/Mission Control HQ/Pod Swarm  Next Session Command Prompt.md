@@ -1,5 +1,5 @@
 # 🎯 Pod Swarm — Next Session Command Prompt
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > ADC 3K session startup prompt. Copy/paste at the start of any new Claude session on ADC 3K pod engineering or deployment.
 ## COPY FROM HERE

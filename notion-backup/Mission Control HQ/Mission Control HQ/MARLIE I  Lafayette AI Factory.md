@@ -1,5 +1,5 @@
 # MARLIE I — Lafayette AI Factory
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Louisiana's first next-generation AI factory — 1201 SE Evangeline Thruway, Lafayette LA 70501 — ADC3K / Scott Tomsu — CONFIDENTIAL INVESTOR DECK
 ---
@@ -39,7 +39,7 @@
   - NVIDIA TX Manufacturing: ~4 hours — Foxconn Houston / Wistron Fort Worth
 ---
 ## Thesis 03 — Federal & State Money Is Already Flowing
-  - One Big Beautiful Bill Act (OBBBA): $500B toward domestic AI infrastructure
+  - Stargate AI Program ($500B) + One Big Beautiful Bill Act (OBBBA): federal domestic AI infrastructure push — FEOC-clean mandate, Gulf OCS revenue, BEAD broadband funding
   - Louisiana Act 730: 20-year state/local sales & use tax rebate on AI factory equipment
   - BEAD Broadband Program: federal backhaul expansion — LUS Fiber path
   - Gulf OCS Revenue: $650M/year to Louisiana through 2034
@@ -67,35 +67,57 @@
 ---
 ## Six-Chip Architecture
 ### 1. Rubin GPU
-  - 288 GB HBM4 — 22 TB/s memory bandwidth — 72 per rack
+288 GB HBM4 — 22 TB/s memory bandwidth — 72 per rack
 ### 2. Vera CPU
-  - 88 custom Olympus cores — replaces x86 for AI workload orchestration — 36 per rack
+88 custom Olympus cores — replaces x86 for AI workload orchestration — 36 per rack
 ### 3. NVLink 6 Switch
-  - 3.6 TB/s GPU-to-GPU fabric per rack — 260 TB/s at SuperPOD scale
+3.6 TB/s GPU-to-GPU fabric per rack — 260 TB/s at SuperPOD scale
 ### 4. ConnectX-9 SuperNIC
-  - 1.6 Tb/s aggregate per GPU — AI traffic with zero CPU involvement
+1.6 Tb/s aggregate per GPU — AI traffic with zero CPU involvement
 ### 5. BlueField-4 DPU
-  - Rack-scale confidential computing — unlocks healthcare, finance, government workloads
-  - Encryption, firewall, storage I/O offloaded — GPU cycles reserved for inference
+Rack-scale confidential computing — unlocks healthcare, finance, government workloads. Encryption, firewall, storage I/O offloaded — GPU cycles reserved for inference.
 ### 6. Spectrum-X Ethernet
-  - 800G per port — co-packaged optics — AI east-west traffic at rack scale
+800G per port — co-packaged optics — AI east-west traffic at rack scale
 ---
 ## 5 Investor Facts
   - Fact 01: First rack-scale confidential computing — new market segments unlocked
   - Fact 02: 18x faster deployment — 5 min install vs 1.5 hours prior gen
   - Fact 03: 50.4 ExaFLOPS from 14 racks (DGX SuperPOD)
   - Fact 04: 260 TB/s NVLink bandwidth across full SuperPOD cluster
-  - Fact 05: Full production H2 2026 — 4 hours from Marlie I
+  - Fact 05: Full production H2 2026 — 4 hours from Marlie I (Foxconn Houston / Wistron Fort Worth)
 ---
-> UPDATED 2026-03-23: MARLIE I compute allocation corrected to match 24x40 ft building footprint.
-## MARLIE I Compute Allocation
-  - Downstairs (System 1): 4 NVL72 racks, 288 GPUs, 520 kW IT load
-  - Upstairs (System 2): 4 NVL72 racks, 288 GPUs, 520 kW IT load
-  - Total: 8 NVL72 racks, 576 GPUs, 1,040 kW IT load
-  - NOT 16 racks. Prior spec exceeded building footprint and power envelope.
-  - Each floor: approx 888 sq ft usable (24x37 after staircase)
-  - 1 CDU pair per floor. NVIDIA integrated liquid cooling at 45C.
-  - Power: 800V DC native via Eaton Beam Rubin DSX
+## MARLIE I + 3 Pod Compute Allocation
+> 40 NVL72 racks total — 2,880 GPUs — 5,200 kW IT load — 10 MW Bloom SOFC generation
+### Building — Downstairs (Compute)
+  - 10 NVL72 racks — single row along 37 ft usable length
+  - Same single-row layout as ADC 3K pod — 24 ft width provides full cold aisle + CDU equipment space
+  - 720 GPUs — 1,300 kW IT load
+  - 10 Bloom SOFC units — 2,500 kW generation
+  - 1 CDU pair — NVIDIA-integrated liquid cooling, 45C hot water, exterior dry coolers
+### Building — Upstairs (NOC)
+  - Mission Control operations center — no compute racks
+  - Network core, fiber MDA, monitoring, command ops
+  - Backup NOC for Willow Glen (60 mi, dedicated fiber, management traffic only)
+### Pod 1
+  - 10 NVL72 racks — single row, 40 ft container
+  - 720 GPUs — 1,300 kW IT load
+  - 10 Bloom SOFC units — 2,500 kW generation
+### Pod 2
+  - 10 NVL72 racks — single row, 40 ft container
+  - 720 GPUs — 1,300 kW IT load
+  - 10 Bloom SOFC units — 2,500 kW generation
+### Pod 3
+  - 10 NVL72 racks — single row, 40 ft container
+  - 720 GPUs — 1,300 kW IT load
+  - 10 Bloom SOFC units — 2,500 kW generation
+---
+### Total MARLIE I Footprint
+  - 40 NVL72 racks
+  - 2,880 Rubin GPUs
+  - 5,200 kW IT load
+  - 40 Bloom SOFC units x 250 kW = 10,000 kW (10 MW) generation
+  - Facility draw at PUE 1.10: ~5,720 kW — Bloom headroom: ~4,280 kW
+  - 800V DC native via Eaton Beam Rubin DSX
 *[Child: 03 — Site & Building Specs]*
 > Scott Tomsu designed and built this building himself, 20 years ago. Multiple direct Gulf hurricane impacts — zero structural damage.
 ---
@@ -104,27 +126,32 @@
 ---
 ## Building Dimensions
   - Exterior footprint: 24 ft x 40 ft
-  - Interior Phase 1 floor: 22 ft x 35 ft — 770 sq ft
-  - Second floor: available — Phase 2 vertical expansion
-  - Adjacent property: owned — Phase 3 horizontal expansion
+  - Downstairs (compute): 24 ft wide x 37 ft usable — staircase takes 3 ft
+  - Upstairs (NOC): full second floor — operations center, no compute racks
+  - Adjacent Chag Street: 3 parcels, ~0.60 acres — owned, targeted for pod deployment
 ---
 ## Ceiling & Structure
   - Plate height: 7 ft 11 in to bottom of ceiling assembly (measured)
   - Framing: 2x12
-  - Ceiling assembly: two layers 5/8" Type X sheetrock + insulation + full floor above
+  - Ceiling assembly: two layers 5/8 Type X sheetrock + insulation + full floor above
   - Fire rating: UL-rated assembly — built-in from day one
   - Insulation: heavy throughout — complete thermal shell — optimal for liquid cooling stability
   - Foundation: reinforced concrete slab
 ---
-## Phase 1 Floor Plan — Rack Layout (Concept)
-  - Configuration: hot aisle / cold aisle containment
-  - Row A: 8x NVL72 racks
-  - Sealed hot aisle: CDU units at each end — liquid heat rejection to exterior dry coolers
-  - Row B: 8x NVL72 racks
-  - Cold supply plenums above and below rack rows
-  - Network core / fiber MDA / CDU control — compact zone near entry
-  - ALL mechanical exterior: gas generators, dry coolers, UPS batteries, security monitoring
-  - Max Phase 1 capacity: 16 NVL72 racks = 57.6 ExaFLOPS
+## Downstairs Layout — Single Row, 10 NVL72 Racks
+> Same design as ADC 3K pod. 10 racks in a single row along the 37 ft length. 24 ft width gives full cold aisle + CDU space — no second row needed.
+  - Single row of 10 NVL72 racks running 37 ft length
+  - 24 ft width: cold aisle on front face, hot aisle + CDU equipment space at rear
+  - CDU pair at row ends — liquid heat rejection to exterior dry coolers on concrete pad
+  - Network core / fiber MDA / CDU controls — compact zone near entry
+  - ALL mechanical exterior: dry coolers, UPS batteries, Bloom units, security, fuel systems
+The extra width vs a container (24 ft vs ~8 ft interior) provides full maintenance access and CDU equipment space without requiring a second rack row. Building and pods share the same thermal architecture and power design — different enclosures, same playbook.
+---
+## Upstairs — NOC
+  - Mission Control operations center
+  - Network monitoring, telemetry, command ops
+  - Backup NOC for Willow Glen (60 mi, dedicated fiber, management traffic only)
+  - No compute racks — no IT load
 ---
 ## Site Specs
   - FEMA Zone: Zone X — Minimal Flood Hazard
@@ -144,44 +171,29 @@
   - LFT Airport: adjacent — GPS 30.20529, -91.98760
   - Henry Hub: ~40 mi — Erath, LA
   - NVIDIA TX Manufacturing: ~4 hrs — Foxconn Houston / Wistron Fort Worth
+  - Trappeys Cannery: 0.5 mi
+  - Willow Glen: 60 mi — dedicated fiber (management traffic only, NOT InfiniBand)
 ---
-## Cooling Architecture — Cold Plate CDU (Marlie I Only)
-> IMPORTANT DISTINCTION: Marlie I uses COLD PLATE CDU cooling. ADC 3K pods use FULL IMMERSION cooling (EC-110). These are different products with different cooling strategies.
-  - Marlie I: Cold plate CDU — direct-to-chip liquid, fans for air handling in sealed hot aisle
-  - CDU units at each end of hot aisle — liquid heat rejection to exterior dry coolers
-  - Code-compliant building installation — hot aisle/cold aisle containment, PUE 1.10
-  - ADC 3K pods (remote sites): full immersion in Engineered Fluids EC-110 — no fans, no HVAC, zero outdoor air
-  - Why the distinction matters: Marlie I is a building (CDU optimized for permanent structure + compliance)
-  - ADC 3K is a manufactured pod (immersion optimized for Louisiana heat/humidity + no HVAC permitting)
-  - NVL72 rack spec: '100% liquid cooled' = all heat removed by liquid, no rack-level air cooling — compatible with CDU
-The NVL72 rack is designed for direct liquid cooling at the chip level. Marlie I's cold plate CDU delivers this. ADC 3K's immersion tank delivers this via a different fluid path. Both achieve the 1.10 PUE target. Different enclosures, same thermal outcome.
+## Cooling Architecture — Building
+  - NVIDIA integrated cold plate CDU — direct-to-chip liquid cooling
+  - 45C hot water output — liquid heat rejection to exterior dry coolers on concrete pad
+  - 1 CDU pair — covers 10-rack single row
+  - PUE target: 1.10
+  - No CRAC units, no chiller plant, no raised floor
 ---
-> CORRECTED 2026-03-23: Rack layout updated. Building is 24x40 ft, 2 floors, both active. 8 NVL72 racks total (not 16). Old 16-rack / single-floor layout above is superseded.
-## Corrected Layout (2026-03-23)
-  - Building footprint: 24 ft x 40 ft, 2 floors = 1,920 sq ft total
-  - Staircase takes approx 3 ft width = 24 x 37 usable per floor = approx 888 sq ft/floor
-  - Same footprint as a 40-ft shipping container
-  - Downstairs (System 1): 4 NVL72 racks, 288 GPUs, 520 kW
-  - Upstairs (System 2): 4 NVL72 racks, 288 GPUs, 520 kW
-  - Total: 8 NVL72 racks, 576 GPUs, 1,040 kW IT load
-  - 1 CDU pair per floor, exterior dry coolers on concrete pad
-  - Both floors active from initial deployment. No Phase 2 vertical expansion needed.
-## Adjacent Parcels
-  - 3 adjacent parcels on Chag Street, approx 0.60 acres total
+## Adjacent Parcels — Chag Street
+  - 3 adjacent parcels, approx 0.60 acres total
   - 3 blighted structures targeted for Phase 1 demolition
-  - Ground-mount solar + additional cooling infrastructure on cleared parcels
+  - Ground-mount First Solar TR1 panels + exterior cooling infrastructure on cleared parcels
+  - Pod deployment zone: 3 ADC 3K pods side by side adjacent to building
+---
 ## GPS & References
   - GPS: 30.21975N, 92.00645W
-  - Land debt: 5,000. Effectively debt-free.
-  - Role: Backup NOC for Willow Glen, edge compute, R&D/staging, Scott HQ
-  - Half mile from Trappeys, 60 miles from Willow Glen
-  - Blueprints: 6-sheet set COMPLETE at adc3k.com/blueprints-marlie
+  - Land debt: $5,000. Effectively debt-free.
+  - Role: Backup NOC for Willow Glen, edge compute, R&D staging, Scott HQ
+  - Half mile from Trappeys. 60 miles from Willow Glen.
+  - Blueprints: 6-sheet set at adc3k.com/blueprints-marlie
   - Sheets: E-001 (electrical SLD), C-001 (cooling), S-001 (site plan), A-001 (floor plan), P-001 (power dist), L-001 (solar layout)
-## Cooling (Corrected)
-  - CDU liquid cooling, NVIDIA integrated, 45C hot water
-  - Exterior dry coolers on concrete pad
-  - NO water tower. NO river cooling.
-  - 1 CDU pair per floor
 *[Child: 04 — Government Funding Stack]*
 > Marlie I was designed around the incentives — not retrofitted to qualify.
 ---
@@ -215,18 +227,18 @@ The NVL72 rack is designed for direct liquid cooling at the chip level. Marlie I
 ---
 ## LUS Power / Utilities
   - 1314 Walker Rd, Lafayette, LA 70506 — ~1 mile
-  - Marlie I is off-grid by design (natural gas primary). LUS Power = backup / grid-feed relationship
-  - Excess generation feeds back to LUS grid — creates revenue stream + strengthens utility relationship
+  - MARLIE I is off-grid by design (Bloom SOFC primary). LUS Power = emergency backup only.
+  - Grid not used for consumption. No sell-back at MARLIE I.
 ---
 ## Atmos Energy — Natural Gas
   - 1818 Eraste Landry Rd, Lafayette, LA 70506 — ~3 miles
-  - Primary fuel supplier for on-site generation — NOT backup power
+  - Fuel supply for Bloom SOFC primary generation — 40 units, 10 MW installed
   - Henry Hub benchmark (Erath, LA, ~40 mi) — fuel costs locked to most competitive gas price on earth
   - What Atmos gains: long-term industrial contract, high-volume predictable load, rate stability
 ---
 ## SLEMCO Electric
   - 2727 SE Evangeline Thruway — same corridor as Marlie I
-  - Secondary electric relationship
+  - Emergency backup only
 ---
 ## Lafayette Regional Airport (LFT)
   - GPS: 30.20529, -91.98760 — adjacent to Marlie I site
@@ -241,36 +253,36 @@ The NVL72 rack is designed for direct liquid cooling at the chip level. Marlie I
   - Lafayette becomes home to Louisiana's first Rubin-class AI factory
   - Hub of ADC3K Louisiana AI Network — three sites planned
 ---
-## New Iberia Solar Factory — Renewable Energy Partner
-Local utility-scale solar production facility approximately 30 miles southeast of Marlie I in New Iberia, LA. Emerging strategic energy partner for the Louisiana AI Network.
-  - Distance: ~30 miles from 1201 SE Evangeline Thruway — same Acadiana corridor
-  - Role: regional renewable energy source — supplements Bloom Energy + LUS grid
-  - Integration path: Power Purchase Agreement (PPA) or wheeled solar credits through LUS grid
-  - ADC 3K alignment: New Iberia is Site 2 candidate for ADC pod deployment — solar factory co-location potential
-  - What solar factory gains: anchor large-load industrial customer + clean energy contract anchor tenant
-  - FEOC compliance: 100% domestic renewable source — reinforces OBBBA clean-energy stack
-> New Iberia Solar Factory + Bloom Energy + LUS Grid + Nat Gas Generators = four-layer energy independence. Marlie I has more power diversity than most utility-scale data centers.
+## Bloom Energy — Primary Power Generation
+> 40 Bloom SOFC units. 10 MW installed capacity. Natural gas to 800V DC — no inverter, no rectifier. PRIMARY power for MARLIE I building and all 3 pods.
+  - Building downstairs: 10 units — 2,500 kW generation
+  - Pod 1: 10 units — 2,500 kW generation
+  - Pod 2: 10 units — 2,500 kW generation
+  - Pod 3: 10 units — 2,500 kW generation
+  - Total: 40 units x 250 kW = 10,000 kW (10 MW)
+  - 54% electrical efficiency — best-in-class for on-site generation
+  - 800V DC direct output — native to DSX power bus, no conversion loss
+  - No battery array required for steady-state — Bloom provides continuous base load
+  - 90-day delivery window — no grid interconnect required to operate
 ---
-> CORRECTED 2026-03-23: Bloom Energy removed (not in MARLIE I stack). Power and partner specs updated below.
-## Eaton (Power Distribution)
+## Eaton — Power Distribution
   - Eaton Beam Rubin DSX: 800V DC native power distribution
-  - Eaton xStorage: 600 kWh LFP battery bank
+  - Eaton xStorage: 600 kWh LFP battery — ride-through bridge, ATS, millisecond switchover
   - Contact made post-GTC 2026
-## Caterpillar (On-Site Generation)
-  - 2x Cat G3520C natural gas generators, 1.5 MW each, N+1 redundancy
-  - Ring Power dealer relationship for service
-  - Natural gas primary power. NOT backup.
-## First Solar (Renewable Energy)
-  - First Solar Series 7 TR1 panels
-  - .1B factory in New Iberia, LA (30 mi from MARLIE I)
-  - 300 kW rooftop + ground mount on adjacent Chag Street parcels
-  - LOCKED partner. American-made panels.
-## Corrected 4-Layer Power Stack
-  - Layer 1: Solar (300 kW, First Solar TR1)
-  - Layer 2: Natural Gas (2x Cat G3520C, 1.5 MW each, N+1)
-  - Layer 3: Diesel (emergency genset, on-site fuel)
-  - Layer 4: Grid (LUS backup only. NOT sell-back at MARLIE I.)
-  - 600 kWh LFP battery (Eaton xStorage) for ride-through
+---
+## First Solar — Renewable Energy
+  - First Solar Series 7 TR1 panels — $1.1B factory in New Iberia, LA (~30 mi)
+  - 300 kW: pod roofs + ground mount on cleared Chag Street parcels
+  - Note: No solar on main building roof — tree coverage
+  - LOCKED American-made partner. FEOC-clean.
+---
+## Power Stack — MARLIE I (Locked)
+> Bloom SOFC is PRIMARY. Grid is NEVER used for consumption at MARLIE I.
+  - Layer 1 (Offset):   Solar — 300 kW — First Solar TR1 — pod roofs + Chag Street ground mount
+  - Layer 2 (Primary):  Bloom SOFC — 40 units — 10 MW — 800V DC direct — gas in, DC out
+  - Layer 3 (Bridge):   LFP Battery — 600 kWh Eaton xStorage — millisecond ATS — ride-through
+  - Layer 4 (Emergency): Diesel genset — hurricane insurance — on-site fuel reserve
+  - Layer 5 (Never):    Grid — emergency backup only — not used for consumption — no sell-back
 *[Child: 06 — ADC3K Credentials]*
 > Scott Tomsu — Owner/Operator — ADC3K (Advantage Design Construction) — Lafayette, LA
 ---
@@ -294,38 +306,39 @@ Local utility-scale solar production facility approximately 30 miles southeast o
   - Revenue from day one — no markup, no delay, no middlemen
   - Field-hardened systems thinking — not finance, not software — infrastructure operations
 *[Child: 07 — Louisiana AI Network: Multi-Site Vision]*
-> We are not building a data center. We are building a network.
+> We are not building an AI factory. We are building a network.
 ---
 ## Phase 1 — MARLIE I (Active)
   - Location: 1201 SE Evangeline Thruway, Lafayette, LA 70501
   - Target: H2 2026 operational
-  - Floor: 22x35 ft Phase 1 + second floor available + adjacent property owned
+  - Building: 24 x 40 ft, 2 floors — downstairs compute (10 racks, single row), upstairs NOC
+  - 3 ADC 3K pods on adjacent Chag Street parcels (cleared, prepped)
+  - Total: 40 NVL72 racks, 2,880 Rubin GPUs, 40 Bloom SOFC units, 10 MW generation
   - Purpose: home base — cash flow, credibility, playbook for Phases 2 and 3
-> Activation: NOW — investor and infrastructure partner outreach active
+  - Activation: NOW — investor and infrastructure partner outreach active
 ---
 ## Phase 2 — Site Two (In Development)
   - Location: TBD — ADC3K Louisiana Network
   - Funded by Marlie I cash flow — no external fundraising required
   - Playbook: written. Infrastructure relationships: established. Hardware: understood.
-> Activation trigger: Marlie I reaches revenue threshold -> Site Two deploys
+  - Activation trigger: Marlie I reaches revenue threshold -> Site Two deploys
 ---
 ## Phase 3 — Site Three (In Development)
   - Location: TBD — ADC3K Louisiana Network
   - Completes hub-and-spoke Louisiana AI architecture
   - Combined: enterprise + government + city infrastructure at statewide scale
   - Three sites. One network. One operator.
-> Activation trigger: Site Two operational -> Site Three deploys
+  - Activation trigger: Site Two operational -> Site Three deploys
 ---
 ## Partner Gains Across the Full Network
   - LUS FIBER: Anchor industrial fiber customer + BEAD backhaul justification
-  - ATMOS GAS: Long-term industrial gas contract — high-volume predictable load
+  - ATMOS GAS: Long-term industrial gas contract — high-volume predictable load for Bloom fuel supply
   - LFT AIRPORT: Active Part 107 commercial UAS on the doorstep
   - CITY / LED: Louisiana's first Rubin-class AI factory — Act 730, OBBBA, 50+ jobs, Lafayette on national map
----
-> ADC3K is not asking the city for a favor. ADC3K is inviting Lafayette's infrastructure partners to build the city's next chapter with us. Every site we add is another node in Lafayette's economic future.
+ADC3K is not asking the city for a favor. ADC3K is inviting Lafayette's infrastructure partners to build the city's next chapter with us. Every site we add is another node in Lafayette's economic future.
 ---
 ## KLFT 1.1 — First Operational Remote Node
-KLFT 1.1 (Gulf Coast Emergency Drone Deployment Hub) is the first remote edge node managed from the Marlie I NOC. It demonstrates the full ADC ecosystem in a live government/emergency context.
+  - KLFT 1.1 (Gulf Coast Emergency Drone Deployment Hub) — first remote edge node managed from Marlie I NOC
   - KLFT site: Lafayette Regional Airport adjacent — Part 107 UAS operations hub
   - Command: SkyCommand fleet management, mission dispatch, live video feed
   - Drone platform: Skydio X10 + Skydio Dock (autonomous launch, charge, relay)
@@ -334,35 +347,30 @@ KLFT 1.1 (Gulf Coast Emergency Drone Deployment Hub) is the first remote edge no
   - Revenue model: government/emergency services SaaS + per-mission fees
 ---
 ## ADC 3K Pod Deployment Geography — Natural Gas Pipeline Map
-ADC 3K immersion-cooled pods deploy along Louisiana's natural gas pipeline corridor. Each pod connects to Marlie I via fiber or cellular backhaul, extending AI compute to remote industrial sites.
-  - Deployment logic: pods follow gas pipeline map — co-locate with existing Atmos/CenterPoint infrastructure
+ADC 3K pods deploy along Louisiana's natural gas pipeline corridor. Each pod connects to Marlie I via fiber or cellular backhaul. Bloom SOFC in every pod: gas in, tokens out — no grid required.
   - Henry Hub corridor (~40 mi): Erath, LA — Vermilion Parish gas hub — high-density pipeline node
   - Gulf Coast industrial corridor: refineries, LNG terminals, petrochemical plants — captive ADC pod customers
-  - New Iberia (Site 2 candidate): solar factory + industrial port + pipeline access — ADC pod + KLFT site 2
+  - New Iberia (Site 2 candidate): solar factory + industrial port + pipeline access
   - Lake Charles / Cameron Parish: LNG export terminals — security/monitoring pod deployment
   - Morgan City: offshore supply base, pipeline terminus — SAR + industrial ADC pod
-  - Cooling advantage: ADC 3K full immersion (EC-110) works inside any metal structure — no HVAC, no permits
 ---
 ## Ground Zero — Media Arm of the Louisiana AI Network
-Ground Zero (@GroundZero-ai) is the YouTube documentary arm that translates ADC ecosystem operations into public-facing content. It serves three audience layers simultaneously.
+Ground Zero (@GroundZero-ai) is the YouTube documentary arm that translates ADC ecosystem operations into public-facing content.
   - Audience 1 — General public: AI infrastructure explained at civilian level
   - Audience 2 — Technical/industry: GPU specs, deployment architecture, ROI models
   - Audience 3 — Investor/government: live proof-of-concept — Marlie I, ADC 3K pods, KLFT operations
   - ADC Insider Series: 8 planned episodes documenting MARLIE I buildout, ADC 3K pod deploy, KLFT launch
   - Monetization: YouTube revenue + sponsorships + investor lead generation + NVIDIA partner content
   - Status: EP001 live (private), EP002 in pipeline. Channel: @GroundZero-ai
-> Ground Zero turns every infrastructure milestone into investor-grade content. The construction of Marlie I IS the content strategy.
+Ground Zero turns every infrastructure milestone into investor-grade content. The construction of Marlie I IS the content strategy.
 ---
-> UPDATED 2026-03-23: EC-110 immersion cooling DEPRIORITIZED post-GTC 2026. NVIDIA ships complete liquid-cooled racks (45C hot water, 2-hr install). ADC 3K pods now receive standard NVIDIA liquid-cooled racks, not immersion tanks. References to EC-110 above are outdated.
-## MARLIE I Corrected Specs
-  - 8 NVL72 racks total (not 16). 576 GPUs. 1,040 kW IT.
-  - Backup NOC for Willow Glen. Edge compute. R&D/staging. Scott HQ.
-  - 60 miles from Willow Glen via dedicated fiber (management traffic only).
-  - 0.5 mi from Trappeys.
-## Networking
-  - Dedicated fiber to Willow Glen (60 mi, management traffic only, NOT InfiniBand)
-  - LUS Fiber (0.8 mi, municipal, 100GbE)
-  - Trappeys: 0.5 mi
+## MARLIE I Key Specs — Reference
+  - 40 NVL72 racks (10 building downstairs + 10 per pod x 3 pods), 2,880 GPUs
+  - Building: 24 x 40 ft, single-row 10-rack layout downstairs, NOC upstairs
+  - 3 ADC 3K pods: single-row 10-rack layout, 40 ft containers, Chag Street parcels adjacent
+  - Power: 40 Bloom SOFC units, 10 MW primary generation, 800V DC native
+  - Fiber: LUS (0.8 mi) + dedicated to Willow Glen (60 mi, management only)
+  - 0.5 mi from Trappeys. 60 mi from Willow Glen.
 *[Child: 08 — Contact & Next Steps]*
 ## ADC3K — Advantage Design Construction
   - Owner/Operator: Scott Tomsu
@@ -380,7 +388,7 @@ Ground Zero (@GroundZero-ai) is the YouTube documentary arm that translates ADC 
 ---
 > The federal money is flowing. The hardware is in production. The site is ready. The only question is who is at the table when Marlie I goes live.
 *[Child: 09 — Financial Architecture & ROI]*
-> This is not a data center. This is a money machine. Every watt generates revenue. Every dollar goes to compute. The comparison is not close.
+> This is not an AI factory. This is a money machine. Every watt generates revenue. Every dollar goes to compute. The comparison is not close.
 ---
 ## Capital Stack
   - Infrastructure raise: ~$1.17M — covers facility buildout (electrical, cooling, fiber, power distribution, commissioning)
@@ -388,64 +396,61 @@ Ground Zero (@GroundZero-ai) is the YouTube documentary arm that translates ADC 
   - EBITDA figures below = facility-level operating cash flow
   - Full investor pro forma with hardware financing and debt service available upon request
 ---
-## MARLIE I vs Legacy Data Center — Key Comparison
-  - PUE: Legacy 1.4–1.8 (40–80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)
-  - Energy cost: Legacy $0.10–$0.18/kWh national avg vs MARLIE I $0.065/kWh Louisiana industrial
+## MARLIE I vs Legacy AI Factory — Key Comparison
+  - PUE: Legacy 1.4-1.8 (40-80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)
+  - Energy cost: Legacy $0.10-0.18/kWh national avg vs MARLIE I $0.058-0.068/kWh (Bloom SOFC on Henry Hub gas)
   - Cooling: Legacy air (CRAC units, chillers) vs MARLIE I 100% direct-to-chip liquid
-  - Revenue per rack per year: Legacy $200K–$500K (colo) vs MARLIE I $3M–$5M+ (AI compute)
-  - Operations: Legacy 20–50 FTE manual ops vs MARLIE I 3–5 FTE Mission Control AI
-  - On-site generation: Legacy none (grid dependent) vs MARLIE I Bloom Energy fuel cells + gas generators
+  - Revenue per rack per year: Legacy $200K-$500K (colo) vs MARLIE I $3M-$5M+ (AI compute)
+  - Operations: Legacy 20-50 FTE manual ops vs MARLIE I 3-5 FTE Mission Control AI
+  - On-site generation: Legacy none (grid dependent) vs MARLIE I 40 Bloom SOFC units, 10 MW
   - Domestic content: Legacy mixed overseas vs MARLIE I 100% USA — OBBBA compliant
 ---
+## MARLIE I Configuration
+> 40 NVL72 racks — 2,880 Rubin GPUs — 5,200 kW IT — 10 MW Bloom generation
+  - Building downstairs: 10 racks, 720 GPUs, 1,300 kW IT — single-row layout, same as pod
+  - Building upstairs: NOC only — no compute racks
+  - Pod 1: 10 racks, 720 GPUs, 1,300 kW IT
+  - Pod 2: 10 racks, 720 GPUs, 1,300 kW IT
+  - Pod 3: 10 racks, 720 GPUs, 1,300 kW IT
+---
 ## Revenue Model — AI Compute Rental (Conservative Basis)
-  - Rate basis: $6/GPU/hr conservative (H100 market: $2.50–$3.50). Vera Rubin 2.5x FP4 density — premium tier justified
-  - At $8/GPU/hr mid estimate, Year 3 two-floor gross reaches $121.5M. OPEX stays flat. Upside is asymmetric.
-### Year 1 — 4 Racks Live, 40% Utilization
-  - 288 GPUs online (Floor 1 ramp)
-  - Gross revenue: $6.1M
-  - OPEX: ~$1.29M (4-rack scale)
-  - EBITDA: ~$4.78M
-### Year 2 — 8 Racks Live, 65% Utilization
-  - 1,728 GPUs online (24 racks — Floor 1 full + Floor 2 partial)
-  - Gross revenue: $44.5M
-  - OPEX: ~$3.0M (24-rack scale)
-  - EBITDA: ~$41.5M
-### Year 3 — 16 Racks Live, 75% Utilization
-  - 2,304 GPUs online (32 racks — both floors full)
-  - Gross revenue: $91.1M
-  - OPEX: ~$3.68M (full two-floor scale)
-  - EBITDA: ~$87.4M
+Rate basis: $6/GPU/hr base case (H100 spot: $2.50-$3.50/hr; Rubin delivers 2.5x FP4 density and 22 TB/s HBM4 bandwidth — premium tier justified). At $8/GPU/hr mid estimate, Phase 3 gross reaches $151.6M.
+### Phase 1 — Building Downstairs (720 GPUs, 10 Racks)
+  - 720 GPUs online — building downstairs only
+  - 40% utilization (ramp year): 720 x $6 x 8,760 x 0.40 = $15.2M gross
+  - 65% utilization (stabilized): 720 x $6 x 8,760 x 0.65 = $24.7M gross
+  - OPEX at 65%: ~$2.8M (Bloom fuel + staffing + maintenance)
+  - EBITDA at 65%: ~$21.9M
+### Phase 2 — Building + Pod 1 (1,440 GPUs, 20 Racks)
+  - 1,440 GPUs online — building + Pod 1
+  - 65% utilization: 1,440 x $6 x 8,760 x 0.65 = $49.3M gross
+  - OPEX: ~$4.5M
+  - EBITDA: ~$44.8M
+### Phase 3 — Full Footprint (2,880 GPUs, 40 Racks)
+  - 2,880 GPUs online — building + all 3 pods
+  - 75% utilization at $6/hr: 2,880 x $6 x 8,760 x 0.75 = $113.7M gross
+  - 75% utilization at $8/hr: 2,880 x $8 x 8,760 x 0.75 = $151.6M gross
+  - OPEX: ~$7.0M
+  - EBITDA at $6/hr: ~$106.7M
+  - EBITDA at $8/hr: ~$144.6M
 ---
 ## Power Resilience — 5 Independent Layers
-  - Layer 1: LUS Grid — primary utility ($0.065/kWh industrial)
-  - Layer 2: Bloom Energy fuel cells — 300 kW continuous, $0.07–$0.09/kWh effective, 60%+ efficiency, Newark Delaware
-  - Layer 3: Cat G3520H natural gas prime power (PARALLEL N+1) — 2x 2.5MW = 5MW total installed. Both units run in parallel at moderate load. True N+1 — if one requires service, the other carries full facility.
-  - Layer 4: UPS battery ride-through — millisecond switchover, protects compute hardware from power transients
-  - Layer 5: Diesel emergency backup — Cat C175-16, 3,365kW. 30,000-gal on-site tank, 110+ hours runtime. Hurricane layer.
-  - 5 independent power layers — 0 single points of failure — 96+ hour on-site fuel reserve
+> Bloom SOFC is PRIMARY. The grid is never used for consumption at MARLIE I.
+  1. Solar (Offset): 300 kW — First Solar TR1 — pod roofs + Chag Street ground mount
+  1. Bloom SOFC (Primary): 40 units x 250 kW = 10 MW — 800V DC direct — gas in, DC out — 54% efficiency
+  1. LFP Battery (Bridge): 600 kWh Eaton xStorage — millisecond ATS — ride-through
+  1. Diesel Genset (Emergency): on-site fuel reserve — hurricane insurance — zero production dependency
+  1. Grid (Never): LUS emergency backup only — not used for consumption — no sell-back at MARLIE I
+Zero single points of failure. 5 independent power layers. Bloom headroom: ~4,280 kW above full facility draw.
+---
+## Power Economics
+  - Bloom SOFC effective cost: $0.058-0.068/kWh (fuel + maintenance, Henry Hub gas basis)
+  - IT load: 5,200 kW — facility total at PUE 1.10: ~5,720 kW
+  - Bloom generation: 10,000 kW — headroom buffer: ~4,280 kW
+  - Annual power cost at Phase 3 / 75% utilization: ~$2.4M
 ---
 ## Investor Benefits
-  - Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K–$500K/month compute credit.
+  - Reserved bandwidth: GPU compute access during off-peak hours proportional to investment tier. Estimated value: $50K-$500K/month compute credit.
   - Early mover rate lock: investors before first rack goes live receive locked GPU rental rates below market for 24 months
-  - Ring Power dealer relationship: single service contract covers entire Cat generator fleet (nat gas + diesel)
----
-> CORRECTED 2026-03-23: Multiple errors in financials above. Bloom Energy removed. Generator model corrected. Rack count corrected to 8 (not 16/24/32). LUS Grid is backup, NOT primary. Revenue projections above are based on wrong rack counts and must be recalculated.
-## Corrected Power Stack
-  - Layer 1: Solar (300 kW rooftop + ground mount, First Solar TR1)
-  - Layer 2: Natural Gas (2x Cat G3520C, 1.5 MW each, N+1). THIS IS PRIMARY POWER.
-  - Layer 3: Diesel emergency backup
-  - Layer 4: Grid (LUS backup only. NOT primary. NOT sell-back at MARLIE I.)
-  - 600 kWh LFP battery (Eaton xStorage) for ride-through
-  - NO Bloom Energy fuel cells at MARLIE I.
-  - Generator model: Cat G3520C (not G3520H). 1.5 MW each (not 2.5 MW).
-## Corrected Compute Capacity
-  - Total: 8 NVL72 racks, 576 GPUs, 1,040 kW IT load
-  - Downstairs: 4 racks (288 GPUs, 520 kW)
-  - Upstairs: 4 racks (288 GPUs, 520 kW)
-  - Prior Year 2 (24 racks) and Year 3 (32 racks) projections are IMPOSSIBLE for this building.
-  - Revenue projections must be recalculated against 8-rack maximum.
-  - 800V DC native via Eaton Beam Rubin DSX
-## Corrected Energy Cost
-  - Natural gas primary: /usr/bin/bash.058-0.068/kWh (recip engines)
-  - LUS grid is backup only, not primary at /usr/bin/bash.065/kWh
-![](https://prod-files-secure.s3.us-west-2.amazonaws.com/5a788f09-7e31-81eb-a3dc-00039a1662d6/9e682da1-85a0-44a9-94e4-61045a297666/Store_Front_Pic.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666OMA7OY3%2F20260329%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260329T003254Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLXdlc3QtMiJGMEQCIAeLgOmZlKnYXtOBHCGDac3oTcCnA2Q7TxBKPYvDTRCDAiAydSpW%2BI6KEjo0mY5ch%2BZt%2BgQRgUL2qWDr8cDFFQQf%2BSr%2FAwgBEAAaDDYzNzQyMzE4MzgwNSIMCrWwAx3o8396IzuPKtwDSp0T4m3bxRtYl5IGhPQvbQaCQftxi%2B0gmNdNafLCdaX23MZprq25Wt7S%2B%2BPNg%2BrRF%2BsmOljGRBQB16n88KY6wV%2B8cF43NqH1NE3Kzna%2FeX%2FEPg8TUlpBy8oy6nG%2BkCM4BsLe6e0LFDwWHKO%2B0mQjdR3KHCuFZgwf9KeTsvepW9D%2B7Kdlx8b6Dy3awpFgMxd9C4CMAq4fdNXen59KhLW0VIMIhWyS4irPHS%2B%2BnwGFMU609fOauwqtMRCrHDKkjn2JmyXaMk2vl%2BP0PO6zmq9KBPb3IDMdWldGcKd0D720LHtuHZv286R6p8iY4PVasaj%2BJPKa0zzWMAEVQEFliMXlDJrRsw4tVe5m2eOXn03NUZG2o2VSPLPWLUB2QA%2FsTo36vBiXklEMxcubS2pVWf%2FCCR8XKhCFi5A%2BkIme4LBbFTPt28abLaz%2FmLRKCx%2BJKpKLoInxaMVPw%2FJjmxjl9k5PRCd42HVNOFZUr3OuUu4TburZInEtF1PDaD5QPa93Gq8D1O2uz%2F35KwO9HeE3nQAybXuKh8M7ZvEHHn3n68Pgze%2BUG%2FZqIypk57wDtb6i6B0%2FeAjgDk2nFgdVbL%2FPsC3jVr8qBJymOUXOqi0XcDsnPeK4%2B7QoOPGoBi804R8wodehzgY6pgHgP1xHKCrwwwy7ePyzMb%2FH2WMFuGXrmbrtcIGRDBC2gn5epUqTWKexg6V4yK0313cWWofuMjim%2FedHKfxdOQ5d1FDlEcWKJgEo5mlPTadlevCQ71tbZgpQioy9iHHGTo2%2BvRUDSdGO7y%2BmXTHS6bbTH08w65qFjXtJOQMdNoJqa8bQUHwj2BJBRneFTgJvJdufmdyDtdfsS%2BnPLzmKKGc9WJCetDu7&X-Amz-Signature=55aec80e23e2efdb772a4d6821532084210cd2aae8dd20d89cc9ec72f2191430&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+  - Single operator: Scott pulls GC permits, handles NVIDIA integration, runs Mission Control — no markup, no middlemen, revenue from day one
+![](https://prod-files-secure.s3.us-west-2.amazonaws.com/5a788f09-7e31-81eb-a3dc-00039a1662d6/9e682da1-85a0-44a9-94e4-61045a297666/Store_Front_Pic.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Y5C6SC5I%2F20260403%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260403T212038Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIBs03fzMhOoHuRdOC9xLA8Rqu%2BfJYJw2uS%2FVXFW9r3bsAiAjiW7bW79APPc8S8lxzj8c66TTW4YnPyFmsOav18GauyqIBAiL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIM3tJizb1r1nbaUNDQKtwDUuWkeLu0evkPEY%2B%2BU7ZCSbMerfKgS8AxF5YYx5QfApOfNZjSb7%2FfjfZ7TvWYXysTrmpNfy4znm0%2B99IFFjbiRCzAoyLJFMVBBYjOb2vm0bQTjGYLZizhe2g2t7aAUndSZBVRvON6iu%2FDUsFHstcfeu35jiA8B9sbK4k4VUkSrNhJj0KsNBiZHCV9L22bbxOtqKySvXs6boFY8iKJjYyszE29zwt7he%2Bd3bB%2BP0SDRtbhX5q0Q3qHwKFf3GiGwcEfGFcLSFlbKEbQg6ZWKYE7Z1%2B%2BPRcBlmIlmdNpltqHFdhn7L4SRVdMSGoZASkGtjsPaiZgN23JDGRrtZqjMe%2Bqdmj95Xubp7bcJ1DuKRsw1Xn1I4NmQL5vK86%2Bef%2Fh5923PY7JXVuE%2Bo33xgSLbrQsnMdxq4Rcf0sxe8bQkm39%2BN01cHbCJmk8X6LlDhS9%2FJAqn4r55PrxvvdeGAM5z7KVYTjJKoVemwp0AHzVeN7DKK0J%2FHyVf%2FFztwJd5yFx%2FB7RCoY4NJHu5DLzoezRN6t4mZlOhTtcBcXYJFqJmDZ8i%2FPqbA6gICYclz4LFwit3KVrUdMIoD91AhecHmG1%2BHbpo%2FSAkreZ1OFZY%2F0P%2F1bplgcV9x3k2rx8Q4qbKTwwm4TAzgY6pgG8AnmM0NyzyAUt4CbRL79JASKB3s%2BCeC2LsLqL3L7nftdWHFmeG3vNrcamhjj6jDwiUMrssXW%2Fadc34C5jbeP3kPk7aIdArqL9sAXXNGwioq%2Fk%2FfoO5wNsc64baho3D2xSP%2FBza7tV4PJRYx4iAthzHbqhYbGbSpwCyBYiG8VaFwp%2BMykDXy6ujI1N0EDhTQaaYo2XD03mQdQpXgxyqOnsGRKVgfz2&X-Amz-Signature=cbe2cac8ee5544fdae2048cad00ceee29e86b544f57df3115a30cbfd56f17797&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)

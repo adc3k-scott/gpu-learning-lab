@@ -1,5 +1,5 @@
 # ADC 3K — Master Session Prompt
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 Last Updated: February 28, 2026 — Original engineering brief. Updated architecture below (March 8, 2026).
 Use this prompt to start any new Claude session working on ADC project documents.

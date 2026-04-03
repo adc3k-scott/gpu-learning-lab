@@ -1,5 +1,5 @@
 # 🏗️ ADC 3K — Project Command Center
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 | Gate | Description | Target | Status |
 | P-1 | Provisional patent filed | Week 6 | 🟡 Disclosure ready — needs counsel |
@@ -18,6 +18,12 @@ MARLIE I = Permanent AI Factory building at 1201 SE Evangeline Thruway, Lafayett
 ADC 3K = Manufactured containerized AI compute pod. 40-ft ISO container. Immersion cooling (Engineered Fluids EC-110). Deployed to remote sites. No HVAC required. Networked back to MARLIE I. This is the PRODUCT that MARLIE I manufactures and deploys.
 
 All engineering in this Command Center labeled 'MARLIE I scope' refers to the building. ADC 3K pods have their own separate cooling, power, and deployment spec.
+> ADC 3K POD — ALL CONTENT
+Live pages:  adc3k.com/adc3k-pod  +  adc3k.com/adc3k-pod-spec
+Manufacturing strategy:  ADC Manufacturing -- Pod Factory Strategy
+GTM / sales angle:  The ADC 3K Pod — Your Edge AI Node
+Engineering specs:  Pod Swarm Engineering Suite
+---
 ---
 ## 🚀 Monday Morning Priority List
 1. Submit NVIDIA Inception — ADC3K_NVIDIA_Inception_Application_Package_Rev1.docx · Portal: nvidia.com/en-us/startups · 15 minutes
@@ -591,7 +597,7 @@ The ADC 3K Pod is a 40-ft ISO container housing NVIDIA liquid-cooled racks (NOT 
   - EC-110 immersion DEPRIORITIZED for main deployments
   - 800V DC native power distribution (Eaton Beam Rubin DSX)
   - 4-Layer Power Hierarchy: Solar -> Natural Gas -> Diesel -> Grid (sell-back only)
-  - Bloom Energy REMOVED from power stack
+  - Bloom Energy SOFC = PRIMARY power source (800V DC direct, 3 units in series, ~750 kW/cell, no inverter needed)
   - Willow Glen = PRIMARY HUB, MARLIE I = backup NOC + edge
   - Multi-vendor chip ready (NVIDIA primary, Terafab/AMD future-proofed)
   - NVIDIA Run:AI for fleet orchestration across all pods

@@ -1,5 +1,5 @@
 # 06 — ADC3K Credentials
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Scott Tomsu — Owner/Operator — ADC3K (Advantage Design Construction) — Lafayette, LA
 ---

@@ -1,5 +1,5 @@
 # 📋 Production Toolkit
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 Daily operations reference. Everything you need to produce an episode in one place.
 > 📘 NEW: Mission Control Playbook v1.0 — The definitive daily execution system has been built (March 4, Session 2). It supersedes the manual checklist below with an automated workflow: Scott triggers → Mission Control (Claude) searches, curates, writes, and delivers a complete manifest + script package in one session. See the downloaded AIDO_Mission_Control_Playbook.docx for the full system including 4 trigger modes, story selection framework, script format spec with fixed transition phrases, 10 quality gates, and 6 revenue streams.

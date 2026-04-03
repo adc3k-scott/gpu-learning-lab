@@ -1,5 +1,5 @@
 # Who Buys Edge AI — Customer Profiles
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 # Who Buys Edge AI — And Why They Pay Premium
 Edge computing isn't for startups on a budget. It's for organizations with three things: sensitive data, real-time needs, and money. Here are the five customer segments that will buy ADC 3K pods as edge nodes.

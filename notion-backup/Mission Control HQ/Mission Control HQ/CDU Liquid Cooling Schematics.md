@@ -1,5 +1,5 @@
 # CDU Liquid Cooling Schematics
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > NVL72 is 100% liquid cooled. No air cooling fallback. CDU units mount rear of each rack. Heat rejected to exterior dry coolers via closed glycol loop.
 ---

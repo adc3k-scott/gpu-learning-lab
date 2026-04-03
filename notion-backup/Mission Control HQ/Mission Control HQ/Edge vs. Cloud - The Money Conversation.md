@@ -1,5 +1,5 @@
 # Edge vs. Cloud -- The Money Conversation
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 # Edge vs. Cloud -- The Money Conversation
 When a customer asks 'why not just use AWS?' -- this is the answer.

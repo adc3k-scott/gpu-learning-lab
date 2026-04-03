@@ -1,5 +1,5 @@
 # Content Strategy & Mission
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Ground Zero is not just a YouTube channel. It is the media and public relations arm of the entire ADC infrastructure ecosystem — building audience credibility, documenting the journey, and creating awareness in the Louisiana business and tech community before MARLIE I goes live.
 ---

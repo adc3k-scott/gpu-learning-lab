@@ -1,5 +1,5 @@
 # Pod Swarm Engineering Suite
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > MARLIE I engineering specs — NVL72 racks, CDU liquid cooling, PDU layouts, network topology, RunPod API. All docs apply to the permanent building at 1201 SE Evangeline. ADC 3K pods use immersion cooling — separate spec required.
 ---
@@ -551,7 +551,7 @@ The ADC 3K Pod is a 40-ft ISO container housing NVIDIA liquid-cooled racks (NOT 
 - EC-110 immersion DEPRIORITIZED for main deployments
 - 800V DC native power distribution (Eaton Beam Rubin DSX)
 - 4-Layer Power Hierarchy: Solar -> Natural Gas -> Diesel -> Grid (sell-back only)
-- Bloom Energy REMOVED from power stack
+- Bloom Energy SOFC = PRIMARY power source (800V DC direct, 3 units in series, ~750 kW/cell, no inverter needed)
 - Willow Glen = PRIMARY HUB, MARLIE I = backup NOC + edge
 - Multi-vendor chip ready (NVIDIA primary, Terafab/AMD future-proofed)
 - NVIDIA Run:AI for fleet orchestration across all pods

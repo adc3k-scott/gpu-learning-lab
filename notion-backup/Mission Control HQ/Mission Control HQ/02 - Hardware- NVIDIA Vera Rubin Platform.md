@@ -1,5 +1,5 @@
 # 02 -- Hardware: NVIDIA Vera Rubin Platform
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > NVIDIA technology stack for Willow Glen.
 ## Platform
