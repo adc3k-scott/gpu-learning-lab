@@ -1,0 +1,287 @@
+GLCoat.dat  07/21/19   286PeachTree Accounting15  ???         
+10000          Petty Cash                         A           
+10100          Cash on Hand                       A           
+10200          Advantage Design Checking          A           
+10210          ADH Paul Beaullieu Account         A           
+10220          Home Bank Account                  A           
+10230          Home Bank Trucking                 A           
+10240          Home Bank Scott Tomsu              A           
+10250          FBT ADC                            A           
+10300          Payroll Checking Account           A           
+10400          Savings Account                    A           
+10500          Cash-Trustee Account               A           
+10600          Investments-Money Market           A           
+10700          Investments-Cert. of Deposit       A           
+11000          Accounts Receivable                A           
+11100          Contracts Receivable               A           
+11400          Other Receivables                  A           
+11500          Allowance for Doubtful Account     A           
+12000          Inventory                          A           
+14000          Prepaid Expenses                   A           
+14100          Employee Advances                  A           
+14200          Notes Receivable-Current           A           
+14300          Work in Progress                   A           
+14400          Matls-Unused & Unassigned          A           
+14500          Refundable Deposits                A           
+14700          Other Current Assets               A           
+15000          Furniture and Fixtures             A           
+15100          Equipment                          A           
+15200          Automobiles                        A           
+15300          Other Depreciable Property         A           
+15400          Leasehold Improvements             A           
+15500          Building                           A           
+15600          Building Improvements              A           
+16000          Adapt High Performance             A           
+16500          STFU Motorcycles                   A           
+16900          Land                               A           
+17000          Accum. Depreciation - Furnitur     A           
+17100          Accum. Depreciation - Equipmen     A           
+17200          Accum. Depreciation - Automobi     A           
+17300          Accum. Depreciation - Other        A           
+17400          Accum. Depreciation - Leasehol     A           
+17500          Accum. Depreciation - Building     A           
+17600          Accum. Depreciation - Bldg Imp     A           
+19000          Deposits                           A           
+19100          Organization Costs                 A           
+19150          Accum. Amortiz. - Org. Costs       A           
+19200          Note Receivable-Noncurrent         A           
+19300          Land-Improved Lots                 A           
+19350          Land-Unimproved Lots               A           
+19900          Other Noncurrent Assets            A           
+20000          Accounts Payable                   L           
+21003          ST Loan-Jerome B.-601 Sugartra     L           
+21004          ST Loan-Farmers-115 MerchantPB     L           
+21005          ST Loan-Farmers-303 Summerfest     L           
+21006          ST Loan-Ben C-115 Anslem           L           
+21007          ST Loan-Farmers-200 Summerfest     L           
+21008          ST Loan-Farmers-109 Festival       L           
+21009          ST Loan-Farmers-124 Festival       L           
+21010          ST Loan-Farmers-102 Summerfest     L           
+21011          ST Loan-Home Bank 210 Barksdal     L           
+21012          ST Loan-Home Bank 207 Waterber     L           
+21013          ST Loan - Farmers - Evangeline     L           
+21014          ST Loan-Farmers-204 Summerfest     L           
+21015          ST Loan - Farmers-112 Copeland     L           
+21016          ST Loan - Home Bank -116 Cranb     L           
+21017          ST Loan-farmers-114 cranberry      L           
+21018          ST Loan - Farmers 102 Solano       L           
+21019          ST Loan-Home Bank-205 Waterber     L           
+21020          ST-Farmers-206 Santa Cruz          L           
+21021          ST Loan-Home Bank-209 Portsmou     L           
+21022          ST Loan-Farmers-109 Portsmou       L           
+21023          ST Loan-Reed-6119 Mockingbird      L           
+21024          ST loan-Farmers-106 Fanfare        L           
+21025          ST loan-Farmers-409 Pavilion       L           
+21026          ST Loan-Home Bank-114 Colchest     L           
+21027          ST Loan-Farmers-407 Pavilion       L           
+21028          ST Loan-Farmers-101 Carnival       L           
+21029          ST Loan-Farmers-400 Pavilion       L           
+21030          st loan-103 pinhook                L           
+21031          ST Loan-Farmers-405 Breaux Rd      L           
+21032          ST Loan-Farmers-108 Katy Beth      L           
+21033          ST Loan-Farmers-102 Katy Beth      L           
+21034          ST LOan-Home B-104 Soaring Cov     L           
+21035          ST Loan-Farmer-102 Pel hav cov     L           
+21036          ST Loan-Farmers-303 Pavilion       L           
+21037          ST Loan-Home-112 Rue Rideau        L           
+21038          ST loan-Farmers-108 chevalier      L           
+21039          ST Loan-Farmers-405 Pavilion       L           
+21040          ST Loan-Farmers-120 Peak Run       L           
+21041          ST Loan-Home Bank-102 Summit C     L           
+21042          ST Loan-Matt-108 Summit Crest      L           
+21043          ST Loan-Josh-106 Peak Run          L           
+21044          ST Loan-Farmers-205 Chevalier      L           
+21045          ST loan-Irvin-218 Beaconwood       L           
+21046          ST Loan-Farmers-115 Rue Rideau     L           
+21047          ST Loan-HB-123 Tall Oaks Lane      L           
+21048          ST Loan-Farmers-105 Tall Oaks      L           
+21049          ST Loan-Al-113 Tall Oaks Lane      L           
+21050          ST Loan-Farmers-209 Pavilion       L           
+21051          ST Loan-Farmers-107 Tall Oaks      L           
+21052          ST Loan-Farmers-125 Tall Oaks      L           
+21053          4217 N Johnson s                   L           
+21054          ST Loan-HB-324 Tall Oak            L           
+21055          ST Loan-HB-215 Tall Oak            L           
+21056          ST loan-103 Octavia                L           
+21057          ST loan 115 anaheim-Jkizziar       L           
+21058          ST Loan-Farmers-108 Anaheim        L           
+21059          ST Loan-Farmers-109 Hacienda       L           
+21060          ST Loan-Farmers-103 Rue Soleil     L           
+21061          ST Loan-Farmers-105 Rue Soleil     L           
+21062          ST Loan-Bourque-JFE Lot 10         L           
+21063          Arceneaux-lot 16                   L           
+21064          720 Braquet rd / Guidry reside     L           
+21065          817 Broussard Commons              L           
+21066          1800 W gloria switch               L           
+21067          107 Rue Soleil                     L           
+21068          109 Rue Soleil                     L           
+21069          103 Parduton                       L           
+21070          316 Benman                         L           
+21071          Family Practice                    L           
+21072          103 Trinidad cicle                 L           
+21073          105 Trinidad Cicle                 L           
+21074          107 Trinidad Circle                L           
+21075          109 Trinidad Circle                L           
+21076          2874 McDonald Rd                   L           
+21077          134 Mirada Lane                    L           
+21078          MLK Project                        L           
+21079          Ville Platte Housing Authority     L           
+21080          Lakeview Estates                   L           
+21081          301 Annabelle                      L           
+21082          311 Annabelle                      L           
+21083          911 Alfred                         L           
+21084          FM Bank door job                   L           
+21085          122 collins street                 L           
+23000          Accrued Expenses                   L           
+23100          Sales Tax Payable                  L           
+23200          Wages Payable                      L           
+23300          Deductions Payable                 L           
+23400          Federal Payroll Taxes Payable      L           
+23500          FUTA Tax Payable                   L           
+23600          State Payroll Taxes Payable        L           
+23700          SUTA Payable                       L           
+23800          Local Payroll Taxes Payable        L           
+23900          Income Taxes Payable               L           
+24000          Other Taxes Payable                L           
+24100          Employee Benefits Payable          L           
+24200          Current Portion Long-Term Debt     L           
+24400          Customer Deposits                  L           
+24800          Other Current Liabilities          L           
+24900          Suspense-Clearing Account          L           
+27000          Notes Payable-Noncurrent           L           
+27050          Notes Payable-Related parties      L           
+27060          Notes payable-Scott Tomsu dep.     L           
+27075          Notes Payable - rental propert     L           
+27100          Contracts Payable-Noncurrent       L           
+27400          Other Long-Term Liabilities        L           
+39002          Beginning Balance Equity           X           
+39003          Common Stock                       X           
+39004          Paid-in Capital                    X           
+39005          Retained Earnings                  X           
+39007          Dividends Paid                     X           
+40000          Sales-Residential                  R           
+40050          Sales-Remodel and Repair           R           
+40200          Sales-Land                         R           
+40400          Sales-Extras                       R           
+40500          Sales-Rental Property              R           
+40600          Rent Income                        R           
+40601          Rent-4217 N Johnson st.            R           
+40602          Rent-4219 N Johnson st.            R           
+40800          Income on Installment Sales        R           
+41000          Commissions Earned                 R           
+41200          Interest Income                    R           
+41400          Other Income                       R           
+42000          Truck 27110                        R           
+42100          Truck 27045                        R           
+42200          Truck 28598                        R           
+43000          Contractor Income                  R           
+45400          Finance Charge Income              R           
+45500          Shipping Charges Reimbursed        R           
+48000          Sales Returns and Allowances       R           
+49000          Sales Discounts                    R           
+50000          Labor Costs                        E           
+50500          Materials Costs                    E           
+50505          Vinyl Siding                       E           
+50510          Windows and Exterior Doors         E           
+50515          Trim and Interior Doors            E           
+50520          Brick                              E           
+50700          Termite Spray                      E           
+51000          Equipment Costs                    E           
+51500          Subcontract Costs                  E           
+51505          Subcontract Materials              E           
+51510          Sheetrock finish                   E           
+51515          Sheetrock Hang                     E           
+51520          Painting                           E           
+51600          Form and Pour Slab                 E           
+52000          Carpentry Costs                    E           
+52100          Waste Disposal                     E           
+52150          Portable Toilet                    E           
+52200          Electrical Costs                   E           
+52400          Engineering Costs                  E           
+52600          Fill Dirt & Gravel Costs           E           
+52605          Roofing Material                   E           
+52800          Flooring Costs                     E           
+53000          Framing Costs                      E           
+53050          Roofing Costs                      E           
+53100          Appliances                         E           
+53200          Heating & Air Conditioning Cos     E           
+53205          Insurance - Builder's Risk         E           
+53400          Landscaping Costs                  E           
+53500          Lot Cost                           E           
+53600          Masonry Costs                      E           
+53700          Lot Cost                           E           
+53800          Plumbing Materials                 E           
+54000          Sheet Metal Costs                  E           
+54200          Survey Costs                       E           
+54400          Tiling Costs                       E           
+54600          Trim Work Costs                    E           
+54605          Utilities Systems                  E           
+57000          Cost of Sales-Salaries and Wag     E           
+57500          Cost of Sales-Freight              E           
+58000          Cost of Sales-Other                E           
+58500          Inventory Adjustments              E           
+59000          Purchase Returns and Allowance     E           
+59500          Purchase Discounts                 E           
+59505          2-10 Warranty                      E           
+59510          2-10 Builders Risk                 E           
+59520          Bonding                            E           
+59600          Closing Costs                      E           
+59700          Realtor Commisions                 E           
+59800          Apprasial                          E           
+60000          Default Purchase Expense           E           
+60100          Advertising Expense                E           
+60500          Amortization Expense               E           
+61000          Auto Expenses                      E           
+61005          Auto - Fuel                        E           
+61010          Airplane                           E           
+61500          Bad Debt Expense                   E           
+62000          Bank Charges                       E           
+62500          Rental Property Loan Payment       E           
+63000          Cleaning Expense                   E           
+63500          Closing Fees                       E           
+64000          Commissions Expense                E           
+64500          Contributions Expense              E           
+65000          Employee Benefit Programs Exp      E           
+65500          Dues and Subscriptions Exp         E           
+66000          Dental Expense                     E           
+66500          Medical Expense                    E           
+67000          Entertainment Expense              E           
+67005          Finance charge                     E           
+69500          Income Tax Expense                 E           
+69600          Property Taxes                     E           
+70000          Insurance Expense                  E           
+70005          Insurance - General Liability      E           
+70010          Insurance - Worker Comp            E           
+70015          Insurance - Auto                   E           
+70500          Interest Expense                   E           
+71500          Legal and Accounting Expense       E           
+72000          Payroll Tax Expense                E           
+72500          Maintenance & Repairs Exp          E           
+73500          Meals Expense                      E           
+74000          Office Supplies Expense            E           
+74500          Other Material Expense             E           
+75000          Other Office Expenses              E           
+75500          Other Subcontrators Exp            E           
+76000          Licenses & Permits Exp             E           
+77000          Salaries Expense                   E           
+77500          Wages Expense                      E           
+78000          Utilities Expense                  E           
+78500          Roads & Curbs Expense              E           
+79000          Depreciation Expense               E           
+80000          Subdivision Costs Expense          E           
+81000          Telephone Expense                  E           
+81005          Cell Phone                         E           
+82000          Training & Education Exp           E           
+82500          Travel Expense                     E           
+83000          Offshore Equipment Exp             E           
+83500          Union Dues Paid Expense            E           
+84000          Union Welfare Expense              E           
+84500          Rentals-Office                     E           
+85000          Rent-Equipment                     E           
+85500          Water Mains Expense                E           
+86000          Postage & Freight Exp              E           
+87000          Rental Repairs                     E           
+88000          Tools Expense                      E           
+89000          Other Expense                      E           
+89500          Purchase Disc-Expense Items        E           
+90000          Gain/Loss on Sale of Assets        E           

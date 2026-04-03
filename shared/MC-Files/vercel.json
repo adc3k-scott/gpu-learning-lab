@@ -1,0 +1,18 @@
+{
+  "functions": {
+    "src/app/api/ai-chat/route.js": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "src/app/api/stripe/webhook/route.js": {
+      "maxDuration": 15
+    }
+  },
+  "regions": ["iad1"],
+  "crons": [
+    {
+      "path": "/api/health",
+      "schedule": "0 12 * * *"
+    }
+  ]
+}

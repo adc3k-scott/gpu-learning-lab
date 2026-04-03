@@ -1,0 +1,100 @@
+GLCoat.dat  04/14/19    99PeachTree Accounting15  ???         
+10000          Petty Cash                         A           
+10200          FM Bank Checking Account           A           
+10210          Home Bank Checking Account         A           
+10220          PayPal Account                     A           
+11000          Accounts Receivable                A           
+12000          Inventory-Stock Items              A           
+12100          Inventory-Non Stock Items          A           
+14200          Notes Receivable-Current           A           
+15000          Tools and Equipment                A           
+15100          Dyno                               A           
+15200          Automobiles                        A           
+15500          Building                           A           
+17000          Accum. Depreciation - Tools        A           
+17100          Accum. Depreciation - Dyno         A           
+17200          Accum. Depreciation - Automobi     A           
+17500          Accum. Depreciation - Building     A           
+19100          Organization Costs                 A           
+19200          Note Receivable-Noncurrent         A           
+20000          Accounts Payable                   L           
+23200          Wages Payable                      L           
+23300          FUTA Taxes Payable                 L           
+23350          Fed Income Taxes Payable           L           
+23400          FICA Taxes Payable                 L           
+23450          Social Security Taxes Payable      L           
+23500          Medicare Taxes Payable             L           
+23600          State Payroll Taxes Payable        L           
+23650          Federal Payroll Taxes Payable      L           
+23700          State Sales Tax                    L           
+23800          Local Sales Tax                    L           
+24000          Other Taxes Payable                L           
+24200          Current Portion Long-Term Debt     L           
+24800          Other Current Liabilities          L           
+25000          Bike Builds                        L           
+25001          2017 Ultra Classic Bike Build      L           
+27000          Notes Payable-Dyno Payment         L           
+27100          Notes Payable-Building Payment     L           
+27300          Secured Bank Loan                  L           
+27400          Other Long-Term Liabilities        L           
+39000          Paid-In Capital Scott              X           
+39002          Beginning Balance Equity           X           
+39005          Retained Earnings                  X           
+39007          Dividends Paid                     X           
+40000          Service Repair Labor               R           
+40100          Dyno Tune Labor                    R           
+40200          Sales-Parts                        R           
+40600          Sales-Parts Tax Exempt             R           
+45400          Finance Charge Income              R           
+45500          Shipping Charges Reimbursed        R           
+48000          Sales Returns and Allowances       R           
+49000          Sales Discounts                    R           
+50000          Cost of Goods Sold                 E           
+51000          Ebay Costs                         E           
+52000          PayPal Fees                        E           
+53000          Credit Card Processing Fee         E           
+57000          Cost of Sales-Salaries and Wag     E           
+57500          Cost of Sales-Shipping             E           
+59000          Purchase Returns and Allowance     E           
+59500          Purchase Discounts                 E           
+60100          Advertising Expense                E           
+61000          Auto Expenses                      E           
+61200          Shop Show Bike                     E           
+61500          Fuel Expenses                      E           
+62000          Bank Charges                       E           
+63500          Commissions and Fees Exp           E           
+64000          Depreciation Expense Exp           E           
+64500          Dues and Subscriptions Exp         E           
+65000          Education                          E           
+66000          Gifts Expense                      E           
+67000          Insurance Expense                  E           
+67500          Interest Expense                   E           
+68000          Laundry and Cleaning Exp           E           
+68500          Legal and Professional Expense     E           
+69000          Licenses Expense                   E           
+70000          Maintenance Expense                E           
+70500          Meals and Entertainment Exp        E           
+71000          Office Supplies Expense            E           
+72000          Payroll Tax Expense                E           
+72200          Salary Payroll Expense             E           
+72500          Penalties and Fines Exp            E           
+73000          Other Taxes                        E           
+73100          State Sales Tax Paid               E           
+73200          Local Sales Tax Paid               E           
+74500          Repairs Expense                    E           
+75000          Tools and Equipment Expense        E           
+75300          Shop Improvements and Repairs      E           
+75500          Shop Supplies Expense              E           
+75800          Shop payment                       E           
+76000          R & D Expense                      E           
+76100          R & D Motorcycle Expense           E           
+76500          Travel Expense                     E           
+77000          Salaries Expense                   E           
+77500          Wages Expense                      E           
+78000          LUS Utilities Expense              E           
+78100          COX Phone / Internet Expense       E           
+78200          ADT Security Expense               E           
+78300          Waste Management Expense           E           
+78400          Website Expense                    E           
+80000          Dyno Expense                       E           
+89500          Purchase Disc-Expense Items        E           
