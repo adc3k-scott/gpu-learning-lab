@@ -17,6 +17,8 @@
   ],
   "rewrites": [
 
+    { "source": "/hub", "destination": "/hub.html" },
+
     { "source": "/trappeys", "destination": "/trappeys-investors.html" },
     { "source": "/trappeys-blueprints", "destination": "/trappeys-blueprints.html" },
     { "source": "/trappeys-renders", "destination": "/trappeys-renders.html" },
@@ -30,16 +32,39 @@
     { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
     { "source": "/trappeys-presentation", "destination": "/trappeys-presentation.html" },
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
-    { "source": "/trappeys-power", "destination": "/trappeys-power.html" },
     { "source": "/blueprints-trappeys", "destination": "/trappeys-blueprints.html" },
     { "source": "/renders-trappeys", "destination": "/trappeys-renders.html" },
-    { "source": "/power", "destination": "/trappeys-power.html" },
 
+    { "source": "/marlie", "destination": "/marlie.html" },
     { "source": "/marlie-blueprints", "destination": "/marlie-blueprints.html" },
     { "source": "/blueprints-marlie", "destination": "/marlie-blueprints.html" },
 
+    { "source": "/willow-glen", "destination": "/willow-glen-investors.html" },
+    { "source": "/willow-glen-investors", "destination": "/willow-glen-investors.html" },
+    { "source": "/willow-glen-power", "destination": "/willow-glen-power.html" },
+    { "source": "/willow-glen-blueprints", "destination": "/willow-glen-blueprints.html" },
+    { "source": "/willow-glen-renders", "destination": "/willow-glen-renders.html" },
+    { "source": "/willow-glen-renders-compare", "destination": "/willow-glen-renders-compare.html" },
+
+    { "source": "/adc3k-pod", "destination": "/adc3k-pod.html" },
+    { "source": "/adc3k-pod-spec", "destination": "/adc3k-pod-spec.html" },
+
     { "source": "/nvidia-full-stack", "destination": "/nvidia-full-stack.html" },
     { "source": "/stack", "destination": "/nvidia-full-stack.html" },
+
+    { "source": "/investor", "destination": "/investor-gate.html" },
+    { "source": "/investor-pitch", "destination": "/investor-pitch.html" },
+    { "source": "/investor-neocloud", "destination": "/investor-neocloud.html" },
+
+    { "source": "/learn", "destination": "/learn.html" },
+    { "source": "/lafayette-ai-plan", "destination": "/lafayette-ai-plan.html" },
+    { "source": "/ai-ops", "destination": "/ai-ops.html" },
+    { "source": "/join", "destination": "/join-team.html" },
+    { "source": "/reference", "destination": "/reference-library.html" },
+    { "source": "/leadership", "destination": "/leadership.html" },
+    { "source": "/boot", "destination": "/boot.html" },
+    { "source": "/dsx-renders", "destination": "/dsx-renders.html" },
+    { "source": "/roxy-architecture", "destination": "/roxy-architecture.html" },
 
     { "source": "/ops", "destination": "/operations-center.html" },
     { "source": "/ops-center", "destination": "/operations-center.html" },

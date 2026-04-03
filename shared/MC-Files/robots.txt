@@ -1,0 +1,23 @@
+# Mission Control — robots.txt
+# Allow public pages, block private routes
+
+User-agent: *
+Allow: /
+Allow: /pricing
+Allow: /blog
+Allow: /harley
+Allow: /auto
+Allow: /trucking
+Allow: /ebike
+Allow: /scooter
+Allow: /tools
+
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /garage
+Disallow: /ai-chat
+Disallow: /account
+Disallow: /onboarding
+Disallow: /login
+
+Sitemap: https://missioncontrol.app/sitemap.xml

@@ -262,3 +262,9 @@ credentials/
 
 # Binary / large files — deploy via Vercel, don't commit
 *.pdf
+
+# Secrets and large personal files — never commit
+shared/MCHD/pk_test_*.txt
+shared/MCHD/stuff.txt
+shared/Tax Docs/**/*.bmp
+shared/Tax Docs/**/*.BMP

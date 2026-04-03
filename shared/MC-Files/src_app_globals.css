@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   MISSION CONTROL — Global Styles
+   ============================================ */
+
+:root {
+  --background: #0A0A0B;
+  --surface: #111113;
+  --border: #1E1E21;
+  --text-primary: #F5F5F6;
+  --text-secondary: #C4C4CE;
+  --text-muted: #8E8E9A;
+  --text-dim: #6B6B76;
+  --text-faint: #4A4A55;
+  --harley: #E8720E;
+  --auto: #8B5CF6;
+  --trucking: #FF6F00;
+  --ebike: #22C55E;
+  --scooter: #06B6D4;
+  --premium: #8B5CF6;
+  --pro: #F59E0B;
+}
+
+/* --- Base --- */
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}
+
+/* --- Focus Styles --- */
+*:focus-visible {
+  outline: 2px solid var(--harley);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Selection --- */
+::selection {
+  background-color: rgba(232, 114, 14, 0.3);
+  color: var(--text-primary);
+}
+
+@layer components {
+  /* --- Card --- */
+  .mc-card {
+    @apply bg-surface border border-border rounded-mc p-4 transition-all duration-200;
+  }
+
+  .mc-card-hover {
+    @apply mc-card hover:border-text-faint hover:shadow-lg hover:shadow-black/20;
+  }
+
+  /* --- Button --- */
+  .mc-btn {
+    @apply px-4 py-2 rounded-mc font-medium transition-all duration-200 text-sm
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus-visible:ring-2 focus-visible:ring-harley focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .mc-btn-primary {
+    @apply mc-btn bg-harley text-white hover:brightness-110 active:brightness-95;
+  }
+
+  .mc-btn-secondary {
+    @apply mc-btn bg-surface text-text-secondary border border-border
+           hover:bg-border hover:text-text-primary;
+  }
+
+  .mc-btn-ghost {
+    @apply mc-btn text-text-muted hover:text-text-primary hover:bg-surface;
+  }
+
+  /* --- Input --- */
+  .mc-input {
+    @apply w-full px-3 py-2 bg-surface border border-border rounded-mc text-text-primary
+           placeholder:text-text-faint
+           focus:border-harley focus:ring-1 focus:ring-harley focus:outline-none
+           transition-colors duration-200;
+  }
+
+  /* --- Badge --- */
+  .mc-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .mc-badge-harley { @apply bg-harley/15 text-harley; }
+  .mc-badge-auto { @apply bg-auto/15 text-auto; }
+  .mc-badge-trucking { @apply bg-trucking/15 text-trucking; }
+  .mc-badge-ebike { @apply bg-ebike/15 text-ebike; }
+  .mc-badge-scooter { @apply bg-scooter/15 text-scooter; }
+  .mc-badge-premium { @apply bg-premium/15 text-premium; }
+  .mc-badge-pro { @apply bg-pro/15 text-pro; }
+
+  /* --- Skeleton Shimmer --- */
+  .mc-skeleton {
+    @apply bg-surface rounded-mc animate-shimmer;
+    background-image: linear-gradient(
+      90deg,
+      var(--surface) 0%,
+      var(--border) 50%,
+      var(--surface) 100%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* --- Platform accent border --- */
+  .mc-accent-harley { @apply border-l-4 border-l-harley; }
+  .mc-accent-auto { @apply border-l-4 border-l-auto; }
+  .mc-accent-trucking { @apply border-l-4 border-l-trucking; }
+  .mc-accent-ebike { @apply border-l-4 border-l-ebike; }
+  .mc-accent-scooter { @apply border-l-4 border-l-scooter; }
+}
+
+@layer utilities {
+  /* --- Gradient Text --- */
+  .text-gradient-harley {
+    @apply bg-gradient-to-r from-harley to-yellow-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-harley via-auto to-ebike bg-clip-text text-transparent;
+  }
+
+  /* --- Glow Effects --- */
+  .glow-harley {
+    box-shadow: 0 0 20px rgba(232, 114, 14, 0.15);
+  }
+
+  .glow-auto {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  }
+}

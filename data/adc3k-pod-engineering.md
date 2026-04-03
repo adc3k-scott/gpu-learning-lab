@@ -8,6 +8,15 @@
 
 ---
 
+## OPEN ITEMS — Resolve Before Manufacturing Commit
+
+| # | Item | Risk | Action |
+|---|------|------|--------|
+| 1 | **NVL72 height — HPE vs. Supermicro** | HPE spec (2,495 mm) leaves only 8 in overhead vs. 18 in for Supermicro (2,236 mm). If HPE height applies, cable routing is dangerously tight. | Get confirmed rack height from NVIDIA or OEM before ordering containers. |
+| 2 | **Vera Rubin power budget** | GB200 baseline = 130 kW/rack. Vera Rubin H2 2026 = two profiles (Max Q 190 kW / Max P 230 kW). At 230 kW, 10-rack pod hits 2.3 MW IT — power and cooling architecture may require redesign. | Get Vera Rubin thermal/power spec from NVIDIA. Lock rack count to GB200 until confirmed. |
+
+---
+
 ## 1. VERIFIED EQUIPMENT SPECIFICATIONS
 
 ### 1.1 NVL72 Rack — Physical Dimensions (VERIFIED)
