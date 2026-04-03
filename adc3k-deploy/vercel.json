@@ -66,6 +66,9 @@
     { "source": "/dsx-renders", "destination": "/dsx-renders.html" },
     { "source": "/roxy-architecture", "destination": "/roxy-architecture.html" },
 
+    { "source": "/louisiana/natural-gas/henry-hub/pipeline-network", "destination": "/louisiana-natural-gas-pipeline-network.html" },
+    { "source": "/louisiana-natural-gas-pipeline-network", "destination": "/louisiana-natural-gas-pipeline-network.html" },
+
     { "source": "/ops", "destination": "/operations-center.html" },
     { "source": "/ops-center", "destination": "/operations-center.html" },
     { "source": "/operations-center", "destination": "/operations-center.html" },
