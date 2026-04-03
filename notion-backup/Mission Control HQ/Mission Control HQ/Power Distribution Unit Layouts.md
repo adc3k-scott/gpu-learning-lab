@@ -1,5 +1,5 @@
 # Power Distribution Unit Layouts
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Phase 1 target: ~2 MW total load (16 NVL72 racks + cooling + network). Natural gas generators and UPS batteries stay outside the thermal envelope.
 ---

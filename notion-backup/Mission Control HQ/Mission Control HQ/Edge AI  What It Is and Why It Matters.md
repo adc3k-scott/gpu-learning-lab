@@ -1,5 +1,5 @@
 # Edge AI — What It Is and Why It Matters
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 # What Is Edge Computing?
 Imagine you run a factory. Every second, your machines produce data — temperature readings, camera feeds, vibration sensors, quality checks. Right now, most companies send all that data to a big computer building hundreds of miles away (the "cloud") to be analyzed, then wait for the answer to come back.

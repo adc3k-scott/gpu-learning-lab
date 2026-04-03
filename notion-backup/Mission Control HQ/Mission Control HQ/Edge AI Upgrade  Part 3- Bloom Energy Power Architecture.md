@@ -1,5 +1,5 @@
 # Edge AI Upgrade — Part 3: Bloom Energy Power Architecture
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 Status: 🟡 WRITTEN — Ready for insertion as dedicated section in next revision pass (not yet in .docx files as standalone section)
 > Insert into Spec: After Power Distribution section or as new subsection of Power Architecture

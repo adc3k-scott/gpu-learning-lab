@@ -1,5 +1,5 @@
 # 05 -- Infrastructure Partners
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Vendor stack for Willow Glen. Every vendor who helps on Trappeys earns their place here.
 ## Confirmed / Target Partners

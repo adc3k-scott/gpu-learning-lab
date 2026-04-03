@@ -1,5 +1,5 @@
 # LSU + Willow Glen -- Tiger AI Factory
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > TIGER AI FACTORY -- LSU + Willow Glen Terminal. Former 2,200 MW Entergy station on the Mississippi River, 20 min from LSU campus. 700 acres, 100+ MW scale ceiling. Parallel project to Trappeys. Purple and gold. Geaux Tigers.
 GPS: 30.24700N, 91.09850W  |  St. Gabriel, Iberville Parish  |  Scout Score: 94/100 Tier A

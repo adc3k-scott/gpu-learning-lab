@@ -1,5 +1,5 @@
 # Ground Zero — Command Center
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > YouTube channel @GroundZero-ai — AI news show. AIDO pipeline handles TTS, B-roll, render, and upload. EP001 is private and live. EP002 in pipeline.
 ---

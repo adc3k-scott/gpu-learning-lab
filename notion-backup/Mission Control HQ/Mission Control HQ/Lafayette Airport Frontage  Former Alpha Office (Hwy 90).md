@@ -1,5 +1,5 @@
 # Lafayette Airport Frontage — Former Alpha Office (Hwy 90)
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > STATUS: PROSPECT — For sale sign observed. Airport property. Large one-story building. CDU rack installation candidate (TYPE A). Not suited for immersion pods — existing structure optimized for rack cooling.
 ---

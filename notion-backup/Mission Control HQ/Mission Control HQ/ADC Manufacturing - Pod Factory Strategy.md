@@ -1,5 +1,5 @@
 # ADC Manufacturing -- Pod Factory Strategy
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 # ADC Manufacturing -- Two-Step Strategy
 Step 1: Bootstrap factory in existing building. Get pods built, get revenue flowing, learn what to automate. Step 2: Purpose-built automated factory with robots, solar roof, pipeline gas, and NVIDIA Omniverse digital twin. Step 1 funds Step 2.
@@ -397,7 +397,7 @@ Cameras at each station feed images to an AI that's been trained on thousands of
 - Step 1: Baton Rouge Terminal -- manual assembly, 40-ft containers, 2-3 pods/month
 - Step 2: New Iberia -- Omniverse-designed automated factory, 8-12 pods/month
 ### What Goes In Each 40-ft Pod:
-- 1-2 NVIDIA Vera Rubin NVL72 racks (130 kW each, liquid cooled)
+- 10 NVIDIA NVL72 racks per pod (8 compute + 1 network + 1 storage) — 576 GPUs (C1 SuperPOD), 1.3 MW IT load, 800V DC native
 - Eaton Beam Rubin DSX (800V DC rectifier + busway + PDU)
 - Integrated dry cooler (exterior mount, self-contained cooling)
 - Portable natural gas generator hookup OR grid tie

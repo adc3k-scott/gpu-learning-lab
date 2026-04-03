@@ -1,5 +1,5 @@
 # 04 — Government Funding Stack
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Marlie I was designed around the incentives — not retrofitted to qualify.
 ---

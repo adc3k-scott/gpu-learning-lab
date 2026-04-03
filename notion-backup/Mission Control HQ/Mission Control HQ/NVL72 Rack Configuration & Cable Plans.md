@@ -1,5 +1,5 @@
 # NVL72 Rack Configuration & Cable Plans
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > NVIDIA Vera Rubin NVL72 — 72 Rubin GPUs + 36 Vera CPUs per rack. 3.6 ExaFLOPS NVFP4. 100% liquid cooled. Full production H2 2026.
 ---

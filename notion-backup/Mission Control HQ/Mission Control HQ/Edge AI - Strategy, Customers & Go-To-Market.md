@@ -1,5 +1,5 @@
 # Edge AI -- Strategy, Customers & Go-To-Market
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Edge AI deployment specs, drone/UAS integration, and distributed inference architecture documents.
 ---
@@ -687,10 +687,10 @@ Here's the checklist. If a product does all five of these things, it's edge infr
 
 EDGE INFRASTRUCTURE CHECKLIST          ADC 3K POD
 ─────────────────────────────────      ──────────────────────
-✅ 1. Deploys AT the customer site     20-ft ISO container, crane-ready
-✅ 2. Runs WITHOUT cloud dependency    Self-powered (nat gas + solar + battery)
+✅ 1. Deploys AT the customer site     40-ft ISO container, crane-ready
+✅ 2. Runs WITHOUT cloud dependency    Self-powered (Bloom SOFC + solar + battery)
 ✅ 3. Processes data LOCALLY            GPU racks running NVIDIA AI Enterprise
-✅ 4. Survives harsh environments      Immersion cooled, no HVAC needed
+✅ 4. Survives harsh environments      Liquid cooled, desiccant humidity control
 ✅ 5. Managed REMOTELY                 MARLIE I NOC, 24/7 monitoring
 
                     SCORE: 5 out of 5 — THIS IS AN EDGE PRODUCT
@@ -702,7 +702,7 @@ Let's walk through a real deployment — step by step — so anyone can understa
 ### Step 1: The Customer Has a Problem
 A hospital in Baton Rouge wants to run AI on their radiology images. They can't send patient X-rays to Amazon's cloud because of HIPAA laws. They don't have GPU engineers on staff. They need a solution that works without changing how their hospital operates.
 ### Step 2: We Ship a Pod
-We manufacture the pod at our facility in Lafayette. It's a 20-foot shipping container — the same kind you see on trucks and cargo ships. Inside: 4 GPU server racks, immersion cooling tanks, a power system, networking equipment, and fire suppression. Everything is pre-configured before it leaves our building.
+We manufacture the pod at our facility in Lafayette. It's a 40-foot High Cube ISO container — the same kind you see on cargo ships. Inside: 10 NVL72 GPU racks (8 compute + 1 network + 1 storage), a liquid cooling loop with external dry cooler, 800V DC power system, networking equipment, and Novec 1230 fire suppression. Everything is pre-configured before it leaves our building.
 ```plain text
 
 INSIDE AN ADC 3K EDGE POD

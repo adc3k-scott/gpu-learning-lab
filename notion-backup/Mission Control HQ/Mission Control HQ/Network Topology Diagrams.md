@@ -1,5 +1,5 @@
 # Network Topology Diagrams
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Three separate fabrics: NVLink 6 (intra-rack GPU), InfiniBand NDR (inter-rack compute), Spectrum-X Ethernet (external/storage). Management on isolated 10GbE.
 ---

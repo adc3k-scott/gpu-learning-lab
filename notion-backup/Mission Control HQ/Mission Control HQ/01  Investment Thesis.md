@@ -1,5 +1,5 @@
 # 01 — Investment Thesis
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > The market is building for Blackwell. Marlie I is built for Rubin. That gap is the investment.
 ---
@@ -19,7 +19,7 @@
 - NVIDIA TX Manufacturing: ~4 hours — Foxconn Houston / Wistron Fort Worth
 ---
 ## Thesis 03 — Federal & State Money Is Already Flowing
-- One Big Beautiful Bill Act (OBBBA): $500B toward domestic AI infrastructure
+- Stargate AI Program ($500B) + One Big Beautiful Bill Act (OBBBA): federal domestic AI infrastructure push — FEOC-clean mandate, Gulf OCS revenue, BEAD broadband funding
 - Louisiana Act 730: 20-year state/local sales & use tax rebate on AI factory equipment
 - BEAD Broadband Program: federal backhaul expansion — LUS Fiber path
 - Gulf OCS Revenue: $650M/year to Louisiana through 2034

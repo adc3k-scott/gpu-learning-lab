@@ -1,5 +1,5 @@
 # 05 — Infrastructure Partners
-*Notion backup — 2026-03-28*
+*Notion backup — 2026-04-03*
 
 > Every infrastructure partner is not a vendor. They are a node in the same network.
 ---
@@ -10,18 +10,18 @@
 ---
 ## LUS Power / Utilities
 - 1314 Walker Rd, Lafayette, LA 70506 — ~1 mile
-- Marlie I is off-grid by design (natural gas primary). LUS Power = backup / grid-feed relationship
-- Excess generation feeds back to LUS grid — creates revenue stream + strengthens utility relationship
+- MARLIE I is off-grid by design (Bloom SOFC primary). LUS Power = emergency backup only.
+- Grid not used for consumption. No sell-back at MARLIE I.
 ---
 ## Atmos Energy — Natural Gas
 - 1818 Eraste Landry Rd, Lafayette, LA 70506 — ~3 miles
-- Primary fuel supplier for on-site generation — NOT backup power
+- Fuel supply for Bloom SOFC primary generation — 40 units, 10 MW installed
 - Henry Hub benchmark (Erath, LA, ~40 mi) — fuel costs locked to most competitive gas price on earth
 - What Atmos gains: long-term industrial contract, high-volume predictable load, rate stability
 ---
 ## SLEMCO Electric
 - 2727 SE Evangeline Thruway — same corridor as Marlie I
-- Secondary electric relationship
+- Emergency backup only
 ---
 ## Lafayette Regional Airport (LFT)
 - GPS: 30.20529, -91.98760 — adjacent to Marlie I site
@@ -36,33 +36,33 @@
 - Lafayette becomes home to Louisiana's first Rubin-class AI factory
 - Hub of ADC3K Louisiana AI Network — three sites planned
 ---
-## New Iberia Solar Factory — Renewable Energy Partner
-Local utility-scale solar production facility approximately 30 miles southeast of Marlie I in New Iberia, LA. Emerging strategic energy partner for the Louisiana AI Network.
-- Distance: ~30 miles from 1201 SE Evangeline Thruway — same Acadiana corridor
-- Role: regional renewable energy source — supplements Bloom Energy + LUS grid
-- Integration path: Power Purchase Agreement (PPA) or wheeled solar credits through LUS grid
-- ADC 3K alignment: New Iberia is Site 2 candidate for ADC pod deployment — solar factory co-location potential
-- What solar factory gains: anchor large-load industrial customer + clean energy contract anchor tenant
-- FEOC compliance: 100% domestic renewable source — reinforces OBBBA clean-energy stack
-> New Iberia Solar Factory + Bloom Energy + LUS Grid + Nat Gas Generators = four-layer energy independence. Marlie I has more power diversity than most utility-scale data centers.
+## Bloom Energy — Primary Power Generation
+> 40 Bloom SOFC units. 10 MW installed capacity. Natural gas to 800V DC — no inverter, no rectifier. PRIMARY power for MARLIE I building and all 3 pods.
+- Building downstairs: 10 units — 2,500 kW generation
+- Pod 1: 10 units — 2,500 kW generation
+- Pod 2: 10 units — 2,500 kW generation
+- Pod 3: 10 units — 2,500 kW generation
+- Total: 40 units x 250 kW = 10,000 kW (10 MW)
+- 54% electrical efficiency — best-in-class for on-site generation
+- 800V DC direct output — native to DSX power bus, no conversion loss
+- No battery array required for steady-state — Bloom provides continuous base load
+- 90-day delivery window — no grid interconnect required to operate
 ---
-> CORRECTED 2026-03-23: Bloom Energy removed (not in MARLIE I stack). Power and partner specs updated below.
-## Eaton (Power Distribution)
+## Eaton — Power Distribution
 - Eaton Beam Rubin DSX: 800V DC native power distribution
-- Eaton xStorage: 600 kWh LFP battery bank
+- Eaton xStorage: 600 kWh LFP battery — ride-through bridge, ATS, millisecond switchover
 - Contact made post-GTC 2026
-## Caterpillar (On-Site Generation)
-- 2x Cat G3520C natural gas generators, 1.5 MW each, N+1 redundancy
-- Ring Power dealer relationship for service
-- Natural gas primary power. NOT backup.
-## First Solar (Renewable Energy)
-- First Solar Series 7 TR1 panels
-- .1B factory in New Iberia, LA (30 mi from MARLIE I)
-- 300 kW rooftop + ground mount on adjacent Chag Street parcels
-- LOCKED partner. American-made panels.
-## Corrected 4-Layer Power Stack
-- Layer 1: Solar (300 kW, First Solar TR1)
-- Layer 2: Natural Gas (2x Cat G3520C, 1.5 MW each, N+1)
-- Layer 3: Diesel (emergency genset, on-site fuel)
-- Layer 4: Grid (LUS backup only. NOT sell-back at MARLIE I.)
-- 600 kWh LFP battery (Eaton xStorage) for ride-through
+---
+## First Solar — Renewable Energy
+- First Solar Series 7 TR1 panels — $1.1B factory in New Iberia, LA (~30 mi)
+- 300 kW: pod roofs + ground mount on cleared Chag Street parcels
+- Note: No solar on main building roof — tree coverage
+- LOCKED American-made partner. FEOC-clean.
+---
+## Power Stack — MARLIE I (Locked)
+> Bloom SOFC is PRIMARY. Grid is NEVER used for consumption at MARLIE I.
+- Layer 1 (Offset):   Solar — 300 kW — First Solar TR1 — pod roofs + Chag Street ground mount
+- Layer 2 (Primary):  Bloom SOFC — 40 units — 10 MW — 800V DC direct — gas in, DC out
+- Layer 3 (Bridge):   LFP Battery — 600 kWh Eaton xStorage — millisecond ATS — ride-through
+- Layer 4 (Emergency): Diesel genset — hurricane insurance — on-site fuel reserve
+- Layer 5 (Never):    Grid — emergency backup only — not used for consumption — no sell-back
