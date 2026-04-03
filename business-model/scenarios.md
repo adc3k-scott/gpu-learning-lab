@@ -251,6 +251,23 @@ Token prices have been falling ~10x/year but are slowing. This is the biggest ri
 
 ---
 
+## Corporate Income Tax Rate
+
+**Louisiana corporate income tax: 5.5% flat rate (effective 2024, HB 2 / Act 1 of 2024 Special Session).**
+
+This replaces the prior graduated rate (4%/5%/6%). Any financial model using ~25% blended rate is WRONG — that was the old federal+state estimate. Current correct rate:
+
+| Entity | Rate | Notes |
+|--------|------|-------|
+| Louisiana corporate income tax | 5.5% | Flat, effective Jan 1 2025 |
+| Federal corporate income tax | 21% | TCJA rate |
+| **Combined effective rate** | **~25%** | Federal + state (no double-count — state is deductible) |
+| **Effective combined (with deduction)** | **~24.2%** | LA deductible against federal |
+
+> If the xlsx model shows ~25% as a blended rate it is *accidentally correct* at the combined federal+state level — but the LA-only rate must be shown as 5.5% on the Assumptions tab, not 25%. Update the Assumptions tab to split these: LA = 5.5%, Federal = 21%, Combined ~24.2%.
+
+---
+
 ## Louisiana Tax Incentive Impact
 
 These incentives are NOT included in the P&L above. They stack on top.
