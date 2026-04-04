@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure DC AI Factory — Vendor Architecture Package | ADC</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #04080f;
+    --panel: #080f1c;
+    --border: #0d1f35;
+    --border2: #163352;
+    --green: #00e87a;
+    --gold: #f5a623;
+    --amber: #e8890a;
+    --blue: #3b9eff;
+    --cyan: #00c8ff;
+    --purple: #9b6dff;
+    --red: #ff4d6d;
+    --text: #e8f0fc;
+    --muted: #3a5470;
+    --muted2: #7090b0;
+  }
+  html, body { height: 100%; background: #000; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+  #deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    background: var(--bg); overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,200,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.012) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
+  }
+
+  .slide-bar {
+    display: flex; align-items: center; gap: 16px; padding: 9px 28px;
+    background: rgba(4,8,15,0.95); border-bottom: 1px solid var(--border);
+    z-index: 10; flex-shrink: 0;
+  }
+  .bar-logo { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--cyan); white-space: nowrap; }
+  .bar-title { font-size: 12px; font-weight: 600; color: var(--text); flex: 1; }
+  .bar-meta { font-size: 10px; color: var(--muted2); font-family: monospace; letter-spacing: 1px; white-space: nowrap; }
+  .bar-conf { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--red);
+    border: 1px solid rgba(255,77,109,0.4); padding: 2px 8px; border-radius: 3px; }
+
+  .slide-content { flex: 1; display: flex; overflow: hidden; z-index: 1; position: relative; }
+
+  /* LAYOUTS */
+  .l-split { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 24px 32px; width: 100%; align-items: start; overflow: hidden; }
+  .l-split-wide { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 28px; padding: 24px 32px; width: 100%; align-items: start; overflow: hidden; }
+  .l-full { padding: 20px 32px; width: 100%; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+  .l-thirds { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 20px 32px; width: 100%; overflow: hidden; }
+
+  /* PANELS */
+  .panel { background: var(--panel); border: 1px solid var(--border2); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .panel-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); border-bottom: 1px solid var(--border); padding-bottom: 7px; flex-shrink: 0; }
+  .panel.green-border { border-color: rgba(0,232,122,0.25); }
+  .panel.cyan-border { border-color: rgba(0,200,255,0.25); }
+  .panel.amber-border { border-color: rgba(245,166,35,0.25); }
+  .panel.purple-border { border-color: rgba(155,109,255,0.2); }
+  .panel.red-border { border-color: rgba(255,77,109,0.25); }
+
+  /* TYPE */
+  .eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 5px; }
+  .h1 { font-size: clamp(28px, 3.5vw, 52px); font-weight: 900; color: var(--text); line-height: 1.05; margin-bottom: 10px; }
+  .h2 { font-size: clamp(18px, 2.2vw, 28px); font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 8px; }
+  .h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .desc { font-size: 12.5px; color: var(--muted2); line-height: 1.7; }
+  .mono { font-family: 'Courier New', monospace; }
+
+  /* STAT CARDS */
+  .stat-row { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 80px; padding: 12px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); text-align: center; }
+  .stat.green { border-color: rgba(0,232,122,0.3); background: rgba(0,232,122,0.04); }
+  .stat.cyan { border-color: rgba(0,200,255,0.3); background: rgba(0,200,255,0.04); }
+  .stat.amber { border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.04); }
+  .stat.purple { border-color: rgba(155,109,255,0.3); background: rgba(155,109,255,0.04); }
+  .stat.red { border-color: rgba(255,77,109,0.3); background: rgba(255,77,109,0.04); }
+  .sv { font-size: clamp(16px, 2vw, 26px); font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .sv.green { color: var(--green); }
+  .sv.cyan { color: var(--cyan); }
+  .sv.amber { color: var(--gold); }
+  .sv.purple { color: var(--purple); }
+  .sv.red { color: var(--red); }
+  .sl { font-size: 9px; color: var(--muted2); letter-spacing: 0.5px; line-height: 1.3; }
+
+  /* BULLETS */
+  .bullets { display: flex; flex-direction: column; gap: 9px; }
+  .bullet { display: flex; gap: 10px; align-items: flex-start; }
+  .bdot { width: 5px; height: 5px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .bdot.green { background: var(--green); }
+  .bdot.cyan { background: var(--cyan); }
+  .bdot.amber { background: var(--gold); }
+  .bdot.purple { background: var(--purple); }
+  .bdot.red { background: var(--red); }
+  .bt { font-size: 12.5px; font-weight: 700; color: var(--text); }
+  .bd { font-size: 11.5px; color: var(--muted2); line-height: 1.5; }
+
+  /* PILLS */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pill { padding: 4px 11px; border-radius: 20px; font-size: 10.5px; font-weight: 600;
+    border: 1px solid var(--border2); color: var(--muted2); background: var(--panel); }
+  .pill.green { border-color: rgba(0,232,122,0.35); color: var(--green); background: rgba(0,232,122,0.06); }
+  .pill.cyan { border-color: rgba(0,200,255,0.35); color: var(--cyan); background: rgba(0,200,255,0.06); }
+  .pill.amber { border-color: rgba(245,166,35,0.35); color: var(--gold); background: rgba(245,166,35,0.06); }
+  .pill.purple { border-color: rgba(155,109,255,0.3); color: var(--purple); background: rgba(155,109,255,0.06); }
+
+  /* SPEC TABLE */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .spec-table tr { border-bottom: 1px solid var(--border); }
+  .spec-table tr:last-child { border-bottom: none; }
+  .spec-table td { padding: 7px 6px; }
+  .spec-table td:first-child { color: var(--muted2); font-size: 11px; letter-spacing: 0.3px; white-space: nowrap; width: 45%; }
+  .spec-table td:last-child { color: var(--text); font-weight: 600; }
+
+  /* COMPARISON TABLE */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .cmp-table th { padding: 8px 10px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); border-bottom: 1px solid var(--border2); text-align: left; }
+  .cmp-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table td:first-child { color: var(--muted2); font-size: 10.5px; }
+  .cmp-table td.ac-col { color: var(--red); font-weight: 600; }
+  .cmp-table td.dc-col { color: var(--green); font-weight: 700; }
+
+  /* VENDOR TABLE */
+  .vendor-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .vendor-table th { padding: 7px 8px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); border-bottom: 1px solid var(--border2); text-align: left; background: rgba(8,15,28,0.8); }
+  .vendor-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .vendor-table tr:last-child td { border-bottom: none; }
+  .vendor-table td:first-child { color: var(--muted2); font-size: 10px; white-space: nowrap; }
+  .vendor-table td:nth-child(2) { color: var(--text); font-weight: 600; }
+  .vendor-table td:last-child { font-size: 10px; color: var(--muted2); }
+  .badge-q { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; }
+  .badge-q.green { background: rgba(0,232,122,0.12); color: var(--green); border: 1px solid rgba(0,232,122,0.3); }
+  .badge-q.amber { background: rgba(245,166,35,0.1); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+
+  /* QUOTE */
+  .quote-box { padding: 14px 18px; border-radius: 8px; border-left: 3px solid var(--cyan);
+    background: rgba(0,200,255,0.04); font-size: 12.5px; color: var(--muted2); line-height: 1.7; font-style: italic; }
+  .quote-box.green-accent { border-left-color: var(--green); background: rgba(0,232,122,0.04); }
+  .quote-box.amber-accent { border-left-color: var(--gold); background: rgba(245,166,35,0.04); }
+
+  /* NAV */
+  .nav { position: fixed; bottom: 18px; right: 24px; display: flex; gap: 8px; z-index: 100; }
+  .nav-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border2);
+    background: var(--panel); color: var(--muted2); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .nav-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .slide-counter { position: fixed; bottom: 24px; left: 32px; font-size: 10px; color: var(--muted);
+    font-family: monospace; letter-spacing: 1px; z-index: 100; }
+
+  /* COVER SPECIFIC */
+  .cover-inner { flex: 1; display: flex; align-items: center; padding: 40px 64px; gap: 0; }
+  .cover-left { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+  .cover-kpi-strip { display: flex; gap: 0; border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; margin-top: 8px; }
+  .kpi { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid var(--border2); }
+  .kpi:last-child { border-right: none; }
+  .kpi-v { font-size: clamp(16px, 2vw, 28px); font-weight: 900; }
+  .kpi-l { font-size: 9px; color: var(--muted2); letter-spacing: 1px; margin-top: 3px; }
+  .cover-badge { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px;
+    border: 1px solid rgba(0,200,255,0.3); border-radius: 20px; background: rgba(0,200,255,0.06); }
+  .cover-badge-text { font-size: 10px; font-weight: 700; color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* DIAGRAM */
+  .diagram-wrap { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+  /* NUMBERED LIST */
+  .num-list { display: flex; flex-direction: column; gap: 10px; }
+  .num-item { display: flex; gap: 14px; align-items: flex-start; }
+  .num-badge { width: 22px; height: 22px; border-radius: 50%; background: rgba(0,200,255,0.12); border: 1px solid rgba(0,200,255,0.3); color: var(--cyan); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .num-badge.amber { background: rgba(245,166,35,0.12); border-color: rgba(245,166,35,0.3); color: var(--gold); }
+  .num-badge.green { background: rgba(0,232,122,0.12); border-color: rgba(0,232,122,0.3); color: var(--green); }
+
+  /* ELIM TABLE */
+  .elim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .elim-box { padding: 12px 14px; border-radius: 8px; }
+  .elim-box.gone { background: rgba(255,77,109,0.05); border: 1px solid rgba(255,77,109,0.2); }
+  .elim-box.kept { background: rgba(0,232,122,0.05); border: 1px solid rgba(0,232,122,0.2); }
+  .elim-box-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 7px; }
+  .elim-box.gone .elim-box-label { color: var(--red); }
+  .elim-box.kept .elim-box-label { color: var(--green); }
+  .elim-item { font-size: 11px; color: var(--muted2); line-height: 1.8; display: flex; gap: 6px; align-items: baseline; }
+  .elim-item::before { content: '—'; font-size: 10px; flex-shrink: 0; }
+  .elim-box.gone .elim-item::before { color: var(--red); opacity: 0.6; }
+  .elim-box.kept .elim-item::before { color: var(--green); opacity: 0.6; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 1: COVER                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Pure DC AI Factory — Vendor Architecture Package</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="cover-inner">
+      <div class="cover-left">
+        <div>
+          <div class="cover-badge">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--cyan);display:inline-block;"></span>
+            <span class="cover-badge-text">Louisiana · Purpose-Built · Greenfield</span>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Vendor-Neutral Design Package · April 2026</div>
+          <div class="h1">Pure DC<br>AI Factory</div>
+          <div style="font-size:clamp(13px,1.5vw,18px);color:var(--muted2);font-weight:500;line-height:1.5;">The Vendor-Neutral Architecture for Gas-Primary,<br>Grid-Independent AI Compute</div>
+        </div>
+        <div class="cover-kpi-strip">
+          <div class="kpi"><div class="kpi-v" style="color:var(--cyan);">200 MW</div><div class="kpi-l">IT LOAD</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:var(--green);">1500V DC</div><div class="kpi-l">FORWARD DESIGN</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:var(--gold);">1.05</div><div class="kpi-l">TARGET PUE</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:var(--purple);">0%</div><div class="kpi-l">GRID DEPENDENCY</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:var(--text);">Pure DC</div><div class="kpi-l">NO AC ANYWHERE</div></div>
+        </div>
+        <div class="pill-row">
+          <span class="pill cyan">NVIDIA DSX Compliant</span>
+          <span class="pill green">OCP Stage 1d</span>
+          <span class="pill green">Bloom Energy</span>
+          <span class="pill cyan">FuelCell Energy</span>
+          <span class="pill amber">First Solar TR1</span>
+          <span class="pill">Southern Natural Gas</span>
+        </div>
+        <div style="padding:14px 18px;border-radius:8px;border-left:3px solid var(--cyan);background:rgba(0,200,255,0.04);">
+          <div style="font-size:13px;color:var(--text);font-weight:600;font-style:italic;line-height:1.6;">"Gas pipe to chip. Solar panel to chip. Nothing wasted in between."</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);font-family:monospace;">
+          CONFIDENTIAL &nbsp;|&nbsp; ADC &nbsp;|&nbsp; scott@adc3k.com &nbsp;|&nbsp; (337) 780-1535 &nbsp;|&nbsp; adc3k.com
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 2: THE PURE DC PRINCIPLE                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">The Pure DC Principle</span>
+    <span class="bar-meta">02 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-split-wide">
+      <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+        <div>
+          <div class="eyebrow">Why Pure DC. Why Now.</div>
+          <div class="h2">The 100-Year AC Assumption<br><span style="color:var(--cyan);">Is Broken.</span></div>
+          <div class="desc">For a century, generation was AC because rotating machines spin and output AC. Every downstream system was built around that physical fact. That assumption no longer holds.</div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bdot red"></div>
+            <div><div class="bt">The old reason AC existed</div><div class="bd">Rotating generators spin and output AC. Distribution at high AC voltage was efficient. Transformation was cheap. Everything downstream adapted to AC.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot green"></div>
+            <div><div class="bt">Fuel cells generate DC electrochemically</div><div class="bd">Solid oxide and molten carbonate fuel cells have no spinning parts. They produce DC at the electrode. There is no physical reason to convert to AC — that step only exists if you inherit AC infrastructure.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot green"></div>
+            <div><div class="bt">Solar panels output DC natively</div><div class="bd">First Solar TR1 panels output DC. BESS stores and discharges DC. The GPU chip needs DC. Every conversion between source and chip costs efficiency, capital, and failure surface.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot cyan"></div>
+            <div><div class="bt">OCP Stage 1d validates 1500V DC distribution</div><div class="bd">Published March 2026. The Open Compute Project ratified 1500V DC as the standard for AI factory distribution. This is not experimental — it is the published industry spec.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot amber"></div>
+            <div><div class="bt">NVIDIA DSX requires 800V DC at the rack</div><div class="bd">The NVIDIA Data Center Scale X program mandates 800V DC delivery to the rack sidecar. We designed to that spec and extended forward to 1500V DC — no retrofit when the industry moves.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot purple"></div>
+            <div><div class="bt">Pure DC eliminates every unnecessary conversion</div><div class="bd">Inverters, rectifiers, UPS rooms, transformer banks, synchronization gear, and grid interconnect all exist only because AC used to be unavoidable. Remove the AC assumption and they disappear.</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+        <div class="panel">
+          <div class="panel-label">Traditional AC Path vs. Pure DC Path</div>
+          <table class="cmp-table">
+            <tr>
+              <th style="width:40%;"></th>
+              <th style="color:var(--red);">Traditional AC</th>
+              <th style="color:var(--green);">Pure DC</th>
+            </tr>
+            <tr>
+              <td>Generation output</td>
+              <td class="ac-col">AC</td>
+              <td class="dc-col">DC native</td>
+            </tr>
+            <tr>
+              <td>Conversion stages</td>
+              <td class="ac-col">3 – 4</td>
+              <td class="dc-col">1</td>
+            </tr>
+            <tr>
+              <td>End-to-end efficiency</td>
+              <td class="ac-col">~78%</td>
+              <td class="dc-col">94 – 97%</td>
+            </tr>
+            <tr>
+              <td>Grid dependency</td>
+              <td class="ac-col">High</td>
+              <td class="dc-col">Zero</td>
+            </tr>
+            <tr>
+              <td>Bus voltage</td>
+              <td class="ac-col">480V AC</td>
+              <td class="dc-col">800V / 1500V DC</td>
+            </tr>
+            <tr>
+              <td>Grid interconnect wait</td>
+              <td class="ac-col">3 – 7 years</td>
+              <td class="dc-col">None required</td>
+            </tr>
+            <tr>
+              <td>UPS rooms</td>
+              <td class="ac-col">Required</td>
+              <td class="dc-col">Eliminated</td>
+            </tr>
+            <tr>
+              <td>AC anywhere</td>
+              <td class="ac-col">Yes — everywhere</td>
+              <td class="dc-col">None</td>
+            </tr>
+          </table>
+        </div>
+        <div class="panel amber-border">
+          <div class="panel-label">Standards Backing</div>
+          <div class="bullets">
+            <div class="bullet"><div class="bdot amber"></div><div><div class="bt">OCP DCF LVDC v1.0</div><div class="bd">155-page standard. 400–1500V DC distribution for AI factories. Stage 1d: 1500V DC ceiling.</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bt">NVIDIA DSX</div><div class="bd">800V DC at the rack. Flex/Boost/Exchange tiers. Eaton ORV3 sidecar co-designed.</div></div></div>
+            <div class="bullet"><div class="bdot green"></div><div><div class="bt">NEC Article 712</div><div class="bd">DC systems code. Governs all DC distribution, grounding, and protection in this facility.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 3: THREE DC SOURCES. ONE BUS.                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Three DC Sources. One Bus.</span>
+    <span class="bar-meta">03 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-full" style="gap:12px;">
+      <div>
+        <div class="eyebrow">Every Source DC Native. Every Source Louisiana.</div>
+        <div class="h2" style="margin-bottom:4px;">Three Sources. One 1500V DC Bus.<br><span style="color:var(--green);">No AC Anywhere in the Chain.</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;overflow:hidden;">
+
+        <!-- Source 1: Fuel Cells -->
+        <div style="display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="panel green-border" style="padding:14px;gap:8px;flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:1.5px;">SOURCE 1 · PRIMARY</div>
+              <span class="pill green" style="font-size:9px;">DC NATIVE</span>
+            </div>
+            <div style="font-size:15px;font-weight:800;color:var(--text);">Natural Gas Fuel Cells</div>
+            <div style="font-size:11px;color:var(--muted2);">Southern Natural Gas mainline on property · 40 miles from Henry Hub</div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;">
+              <div style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:5px;">Bloom Energy SOFC</div>
+              <div class="desc" style="font-size:11px;">800V DC direct output · 54% efficiency · no moving parts · no inverter · 90-day delivery · N+1 redundancy</div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;">
+              <div style="font-size:11.5px;font-weight:700;color:var(--text);margin-bottom:5px;">FuelCell Energy MCFC</div>
+              <div class="desc" style="font-size:11px;">DC output platform · 2.5 MW modules · integrated BESS path · 725°F exhaust → absorption cooling · CHP efficiency 80%+</div>
+            </div>
+            <div class="quote-box green-accent" style="font-size:10.5px;padding:8px 12px;">Both qualified to same interface spec. Vendors compete. Architecture never changes.</div>
+          </div>
+        </div>
+
+        <!-- Source 2: Solar -->
+        <div style="display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="panel cyan-border" style="padding:14px;gap:8px;flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;">SOURCE 2 · OFFSET</div>
+              <span class="pill cyan" style="font-size:9px;">1500V DC DIRECT</span>
+            </div>
+            <div style="font-size:15px;font-weight:800;color:var(--text);">First Solar TR1</div>
+            <div style="font-size:11px;color:var(--muted2);">US-manufactured · Louisiana · American-made</div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;">
+              <div class="bullets">
+                <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">String voltage: 952V DC · DC-DC buck converter → 1500V DC bus</div></div></div>
+                <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">No inverter · no AC stage on the roof or in the field</div></div></div>
+                <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">97% solar-to-rack efficiency vs 92% AC path</div></div></div>
+                <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">Roof mount + adjacent field arrays · same DC bus connection</div></div></div>
+                <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">Local supply chain: factory 30 miles from site</div></div></div>
+              </div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;">
+              <div style="font-size:10px;color:var(--muted2);">DC-DC converters: TI / Infineon / Vicor · &gt;97% efficiency · all NVIDIA-aligned</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source 3: BESS + DC Bus -->
+        <div style="display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="panel amber-border" style="padding:14px;gap:8px;flex:0 0 auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.5px;">SOURCE 3 · BRIDGE</div>
+              <span class="pill amber" style="font-size:9px;">DC COUPLED</span>
+            </div>
+            <div style="font-size:15px;font-weight:800;color:var(--text);">LFP BESS</div>
+            <div class="bullets" style="gap:6px;">
+              <div class="bullet"><div class="bdot amber"></div><div><div class="bd">DC-coupled · 800 MWh minimum · 4-hour full-load bridge</div></div></div>
+              <div class="bullet"><div class="bdot amber"></div><div><div class="bd">No AC conversion anywhere in storage loop</div></div></div>
+              <div class="bullet"><div class="bdot amber"></div><div><div class="bd">Saft / Fluence / LG ES Vertech — all qualified to same DC interface</div></div></div>
+              <div class="bullet"><div class="bdot amber"></div><div><div class="bd">Hitachi Energy AMPS PCS — multi-port DC · all source switching invisible to load</div></div></div>
+            </div>
+          </div>
+          <div class="panel" style="padding:14px;gap:8px;border-color:rgba(0,200,255,0.2);">
+            <div style="font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;">DC BUS SPECIFICATION</div>
+            <table class="spec-table">
+              <tr><td>Operating voltage</td><td style="color:var(--cyan);">800V DC</td></tr>
+              <tr><td>Rated ceiling</td><td style="color:var(--green);">1500V DC (OCP Stage 1d)</td></tr>
+              <tr><td>Bus run to rack</td><td>≤ 15 feet</td></tr>
+              <tr><td>Conversion losses</td><td style="color:var(--green);">&lt; 3%</td></tr>
+              <tr><td>AC anywhere</td><td style="color:var(--green);">None</td></tr>
+              <tr><td>Protection</td><td>SSCB per source tie-in</td></tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 4: THE INTERFACE SPECIFICATION                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">The Interface Specification</span>
+    <span class="bar-meta">04 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-split">
+      <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+        <div>
+          <div class="eyebrow">The Spec That Keeps You Free</div>
+          <div class="h2">One Interface Standard.<br><span style="color:var(--cyan);">Any Qualified Vendor.</span></div>
+          <div class="desc">This is the document that prevents vendor lock-in. Any generation, storage, or distribution vendor who meets this interface connects to the building. Vendors compete on price, delivery, and service. The architecture never changes.</div>
+        </div>
+        <div class="panel green-border">
+          <div class="panel-label">DC Bus Interface — Generation Side</div>
+          <table class="spec-table">
+            <tr><td>Output voltage nominal</td><td>800V DC</td></tr>
+            <tr><td>Output voltage maximum</td><td>1500V DC (OCP Stage 1d)</td></tr>
+            <tr><td>Connection point</td><td>DC bus tie-in at generation zone firewall</td></tr>
+            <tr><td>Grounding system</td><td>TN-S or IT per OCP DCF LVDC v1.0</td></tr>
+            <tr><td>Source protection</td><td>SSCB (solid-state DC CB) at each tie-in</td></tr>
+            <tr><td>Revenue metering</td><td>DC grade at each source connection</td></tr>
+          </table>
+        </div>
+        <div class="panel cyan-border">
+          <div class="panel-label">DC Bus Interface — Rack Side</div>
+          <table class="spec-table">
+            <tr><td>Delivery voltage</td><td>800V DC (Eaton ORV3 sidecar)</td></tr>
+            <tr><td>Rack standard</td><td>OCP Open Rack V3</td></tr>
+            <tr><td>Power per rack nominal</td><td>130 kW</td></tr>
+            <tr><td>Power per rack future</td><td>1 MW (Kyber roadmap)</td></tr>
+            <tr><td>GPU platform</td><td>NVIDIA NVL72 DSX compliant</td></tr>
+            <tr><td>Cooling delivery</td><td>Facility water loop · 45°C max inlet</td></tr>
+          </table>
+        </div>
+        <div class="panel amber-border">
+          <div class="panel-label">BESS Interface</div>
+          <table class="spec-table">
+            <tr><td>Architecture</td><td>DC-coupled — no AC conversion</td></tr>
+            <tr><td>PCS platform</td><td>Hitachi Energy AMPS or equivalent DC PCS</td></tr>
+            <tr><td>Output to bus</td><td>800V DC regulated</td></tr>
+            <tr><td>Input from sources</td><td>1,100 – 1,500V DC accepted</td></tr>
+            <tr><td>Bridge requirement</td><td>4-hour full load minimum (800 MWh)</td></tr>
+            <tr><td>NFPA compliance</td><td>NFPA 855 primary · FM Global #1 outdoor</td></tr>
+          </table>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+        <div class="panel purple-border">
+          <div class="panel-label">What Vendors Must Certify To</div>
+          <div class="bullets">
+            <div class="bullet"><div class="bdot purple"></div><div><div class="bt">DC output only</div><div class="bd">No AC generation permitted at any point in the generation or distribution chain. Every source ties directly into the DC bus.</div></div></div>
+            <div class="bullet"><div class="bdot purple"></div><div><div class="bt">OCP Stage 1d compliant</div><div class="bd">Distribution design must conform to OCP DCF LVDC v1.0. 1500V DC ceiling. Stage 1d grounding and protection requirements apply.</div></div></div>
+            <div class="bullet"><div class="bdot purple"></div><div><div class="bt">NFPA 855 (BESS only)</div><div class="bd">Battery energy storage systems must be NFPA 855 primary, UL 9540A tested, FM Global Outdoor Class 1.</div></div></div>
+            <div class="bullet"><div class="bdot purple"></div><div><div class="bt">NEC Article 712</div><div class="bd">All DC system wiring, grounding, and protection must comply with NEC Article 712 DC systems requirements.</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bt">NVIDIA DSX compatible at rack interface</div><div class="bd">Power delivery to rack must be compatible with Eaton ORV3 sidecar and NVIDIA NVL72 platform at 800V DC, 130 kW per rack.</div></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-label">Why the Interface Spec Is the Asset</div>
+          <div class="desc" style="line-height:1.8;">The building is vendor-neutral because the interface is locked, not the vendor. When Bloom quotes a price, FuelCell Energy is already qualified to the same spec. When Fluence quotes BESS, Saft is already on the list. The ADC interface specification is the mechanism that converts vendor competition into lower project cost — every procurement cycle, every phase.</div>
+          <div class="quote-box" style="margin-top:4px;">"Define the interface. Let the vendors fight for the contract. Never let one vendor own the architecture."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 5: PURE DC EFFICIENCY STACK                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Pure DC Efficiency Stack</span>
+    <span class="bar-meta">05 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-full" style="gap:12px;">
+      <div>
+        <div class="eyebrow">What You Eliminate. What You Keep.</div>
+        <div class="h2" style="margin-bottom:4px;">Remove Everything That Exists<br><span style="color:var(--green);">Only Because AC Used to Be Unavoidable.</span></div>
+      </div>
+      <div class="elim-grid" style="flex:0 0 auto;">
+        <div class="elim-box gone">
+          <div class="elim-box-label">Eliminated — AC Is No Longer Required</div>
+          <div class="elim-item">Inverters (generation side)</div>
+          <div class="elim-item">Rectifiers (distribution side)</div>
+          <div class="elim-item">Step-down transformers (LV distribution)</div>
+          <div class="elim-item">UPS rooms (replaced by DC-coupled BESS)</div>
+          <div class="elim-item">PDU banks (replaced by direct DC distribution)</div>
+          <div class="elim-item">Generator-to-AC-bus synchronization systems</div>
+          <div class="elim-item">Grid interconnect and associated switchgear</div>
+          <div class="elim-item">Grid interconnect queue (3–7 years eliminated)</div>
+          <div class="elim-item">Cooling towers (replaced by dry coolers + waste heat)</div>
+        </div>
+        <div class="elim-box kept">
+          <div class="elim-box-label">Retained — Only What Adds Value</div>
+          <div class="elim-item">Fuel cells — DC generation (Bloom SOFC / FCE MCFC)</div>
+          <div class="elim-item">Solar array + DC-DC converters — DC offset (First Solar TR1)</div>
+          <div class="elim-item">BESS + PCS — DC bridge and source switching (Hitachi AMPS)</div>
+          <div class="elim-item">1500V DC backbone — distribution (OCP Stage 1d)</div>
+          <div class="elim-item">Eaton ORV3 sidecar — rack-level DC distribution</div>
+          <div class="elim-item">NVL72 internal 64:1 LLC converter — chip-level</div>
+          <div class="elim-item">Facility water loop + dry coolers — heat rejection</div>
+          <div class="elim-item">SSCB per source tie-in — DC protection</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:0 0 auto;">
+        <div class="panel green-border" style="padding:14px;gap:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:1.5px;">POWER PATH EFFICIENCY</div>
+          <div style="display:flex;gap:10px;align-items:baseline;">
+            <div><div style="font-size:11px;color:var(--muted2);">Traditional AC path</div><div style="font-size:22px;font-weight:800;color:var(--red);">~78%</div><div style="font-size:10px;color:var(--muted2);">source to chip</div></div>
+            <div style="font-size:18px;color:var(--muted);align-self:center;">→</div>
+            <div><div style="font-size:11px;color:var(--muted2);">Pure DC path</div><div style="font-size:22px;font-weight:800;color:var(--green);">94–97%</div><div style="font-size:10px;color:var(--muted2);">source to chip</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted2);">At 200 MW: the efficiency delta represents meaningful compute capacity freed from overhead losses — not wasted as heat.</div>
+        </div>
+        <div class="panel cyan-border" style="padding:14px;gap:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;">FUELCELL ENERGY CHP ADVANTAGE</div>
+          <div class="bullets" style="gap:6px;">
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">725°F exhaust → absorption chillers → chilled water</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">Electric cooling load reduced by 60%+</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">PUE improvement: 1.44 → 1.30 on cooling alone</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bd">Waste heat integration with desiccant dehumidification (Louisiana RH mitigation)</div></div></div>
+            <div class="bullet"><div class="bdot green"></div><div><div class="bd">Overall system efficiency with CHP: 80%+</div></div></div>
+          </div>
+        </div>
+        <div class="panel amber-border" style="padding:14px;gap:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.5px;">PUE TARGET</div>
+          <div style="font-size:32px;font-weight:900;color:var(--gold);line-height:1;">1.05</div>
+          <div style="font-size:11px;color:var(--muted2);">Industry average: 1.44 — 1.58</div>
+          <div style="margin-top:6px;">
+            <table class="spec-table">
+              <tr><td>IT load</td><td>200 MW</td></tr>
+              <tr><td>Total facility</td><td>210 MW at PUE 1.05</td></tr>
+              <tr><td>Overhead vs. average</td><td style="color:var(--green);">78 MW saved at 1.44 baseline</td></tr>
+              <tr><td>Cooling method</td><td>Water loop + dry coolers</td></tr>
+              <tr><td>Cooling towers</td><td style="color:var(--green);">None</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 6: VENDOR QUALIFICATION MATRIX                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Vendor Qualification Matrix</span>
+    <span class="bar-meta">06 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-full" style="gap:10px;">
+      <div>
+        <div class="eyebrow">Open Architecture. Qualified Vendors. No Lock-In.</div>
+        <div class="h2" style="margin-bottom:0px;">Every Category Open. Every Vendor Competes.</div>
+      </div>
+      <div style="flex:1;overflow:hidden;">
+        <div class="panel" style="height:100%;overflow:auto;">
+          <table class="vendor-table" style="width:100%;">
+            <thead>
+              <tr>
+                <th style="width:18%;">Category</th>
+                <th style="width:28%;">Vendor / Product</th>
+                <th style="width:30%;">Key Specs</th>
+                <th style="width:12%;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color:var(--green);font-weight:700;">Generation — Primary</td>
+                <td style="color:var(--text);">Bloom Energy (SOFC)</td>
+                <td>800V DC native · 54% eff · 90-day delivery · shipping now</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--green);">Generation — Primary</td>
+                <td style="color:var(--text);">FuelCell Energy (MCFC)</td>
+                <td>DC output platform advancing · integrated BESS path · 2.5 MW modules · CHP 80%+</td>
+                <td><span class="badge-q amber">PENDING DC CONFIRM</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);font-weight:700;">Generation — Offset</td>
+                <td style="color:var(--text);">First Solar Series 7 TR1</td>
+                <td>952V DC strings · US-manufactured · American-made</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);">DC-DC Converters</td>
+                <td style="color:var(--text);">TI / Infineon / Vicor</td>
+                <td>Solar string → 1500V DC bus · &gt;97% efficiency · NVIDIA-aligned platforms</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--gold);font-weight:700;">BESS</td>
+                <td style="color:var(--text);">Fluence Gridstack Pro</td>
+                <td>Grid-forming confirmed · UL 9540A · DC block · open architecture</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--gold);">BESS</td>
+                <td style="color:var(--text);">Saft Intensium Flex</td>
+                <td>LFP · DC block · 1500V DC · modular outdoor · NFPA 855 compliant</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--gold);">BESS</td>
+                <td style="color:var(--text);">LG ES Vertech JF2 DC LINK</td>
+                <td>Holland MI · UL 9540A · LFP · DC-coupled · American-manufactured</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--purple);font-weight:700;">PCS</td>
+                <td style="color:var(--text);">Hitachi Energy AMPS</td>
+                <td>Multi-port DC PCS · validated 1550V input · all source switching · no AC loop</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);font-weight:700;">DC Bus / Distribution</td>
+                <td style="color:var(--text);">Eaton Beam / Rubin DSX</td>
+                <td>800V DC native · NVIDIA DSX co-designed · ORV3 sidecar · 130 kW/rack</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);">DC Bus / Protection</td>
+                <td style="color:var(--text);">ABB SACE Infinitus SSCB</td>
+                <td>Solid-state DC circuit breaker · per source tie-in protection</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);">DC Distribution</td>
+                <td style="color:var(--text);">Schneider Electric</td>
+                <td>800V DC sidecar · ORV3 compatible · OCP-aligned</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--text);font-weight:700;">Rack Power</td>
+                <td style="color:var(--text);">Eaton ORV3 Sidecar</td>
+                <td>OCP Open Rack V3 · 130 kW nominal · 800V DC input · NVIDIA NVL72 certified</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--cyan);font-weight:700;">Compute</td>
+                <td style="color:var(--text);">NVIDIA NVL72</td>
+                <td>DSX compliant · Flex/Boost/Exchange · Vera Rubin platform · Dec 2026 delivery via HPE</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--muted2);font-weight:700;">Cooling</td>
+                <td style="color:var(--text);">CoolIT / Motivair / Delta CDU</td>
+                <td>45°C hot water · rear-door HX · facility water loop · multiple vendors</td>
+                <td><span class="badge-q green">QUALIFIED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 7: THE VENDOR CHALLENGE                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 7: LOUISIANA — THE INCENTIVE STACK               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Louisiana — The Incentive Stack</span>
+    <span class="bar-meta">07 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div style="display:flex;flex-direction:column;gap:12px;padding:16px 28px;width:100%;overflow:hidden;">
+      <div>
+        <div class="eyebrow">Why Louisiana. Why DC-Native Systems Unlock More.</div>
+        <div class="h2" style="margin-bottom:0;">Louisiana — The Incentive Stack</div>
+      </div>
+      <div class="l-split" style="padding:0;flex:1;overflow:hidden;">
+        <!-- LEFT COLUMN -->
+        <div style="display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="panel amber-border" style="padding:14px;gap:8px;flex:1;overflow:auto;">
+            <div class="panel-label">State &amp; Parish Incentives</div>
+            <div class="bullets">
+              <div class="bullet">
+                <div class="bdot amber"></div>
+                <div><div class="bt">Act 730 — 20-Year Sales &amp; Use Tax Exemption</div><div class="bd">Applies to all qualifying equipment — fuel cells, BESS, racks, electrical infrastructure — $200M+ investment threshold.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot amber"></div>
+                <div><div class="bt">ITEP — 80% Property Tax Exemption</div><div class="bd">10 years on capital equipment. Must file before groundbreaking.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot amber"></div>
+                <div><div class="bt">Iberia Parish PILOT</div><div class="bd">Payment in lieu of taxes — negotiated for anchor employers.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot gold" style="background:var(--gold);"></div>
+                <div><div class="bt">Quality Jobs Program</div><div class="bd">Up to 6% annual gross payroll rebate · 10 years · AI factory operations qualify.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot gold" style="background:var(--gold);"></div>
+                <div><div class="bt">LED FastSites Fund</div><div class="bd">Up to $25M per site · gas pipeline extensions, site prep eligible · Act 365, 2025.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot gold" style="background:var(--gold);"></div>
+                <div><div class="bt">LED Enterprise Zone</div><div class="bd">Additional state tax credits + local incentives.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT COLUMN -->
+        <div style="display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="panel cyan-border" style="padding:14px;gap:8px;flex:1;overflow:auto;">
+            <div class="panel-label">Federal Programs + DC-Native Advantage</div>
+            <div class="bullets">
+              <div class="bullet">
+                <div class="bdot cyan"></div>
+                <div><div class="bt">Solar ITC — 30% Federal Investment Tax Credit</div><div class="bd">On First Solar arrays. DC-direct integration qualifies.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot cyan"></div>
+                <div><div class="bt">OBBBA / Stargate Compliant</div><div class="bd">FEOC-clean, US-manufactured hardware, domestic ownership — fully qualifies for $500B Stargate AI program.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot green"></div>
+                <div><div class="bt">DOE Grid Modernization Initiative</div><div class="bd">Pure DC behind-the-meter microgrid is a showcase candidate — on-site gas generation + solar + BESS.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot red" style="background:var(--red);"></div>
+                <div><div class="bt">No Title V Permitting</div><div class="bd">Fuel cells produce NOx at 0.01 lbs/MWh — 200 MW deployable without triggering EPA major source classification. Combustion-based competitors limited to ~30 MW before Title V.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot green"></div>
+                <div><div class="bt">No Grid Interconnect Queue</div><div class="bd">Zero utility approval required. Critical path is construction only.</div></div>
+              </div>
+              <div class="bullet">
+                <div class="bdot green"></div>
+                <div><div class="bt">DC-Native CapEx Reduction</div><div class="bd">DC-native systems eliminate: UPS rooms, transformer vaults, PDU banks, rectifier banks — direct CapEx reduction.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FULL-WIDTH CALLOUT -->
+      <div style="padding:14px 18px;border-radius:8px;border:1px solid rgba(0,200,255,0.25);background:rgba(0,200,255,0.04);flex-shrink:0;">
+        <div style="font-size:12px;color:var(--text);line-height:1.75;">DC-native generation technology specifically unlocks the Title V advantage. Combustion-based generation at this scale triggers major source classification and years of permitting. Fuel cells do not. This is not a marginal benefit — it is the difference between buildable and not buildable at 200 MW in Louisiana.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SLIDE 8: CLOSE                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-bar">
+    <span class="bar-logo">ADC · MISSION CONTROL</span>
+    <span class="bar-title">Pure DC. Louisiana Built. Ready to Scale.</span>
+    <span class="bar-meta">08 / 08</span>
+    <span class="bar-conf">CONFIDENTIAL</span>
+  </div>
+  <div class="slide-content">
+    <div class="l-split-wide">
+      <div style="display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+        <div>
+          <div class="eyebrow">Summary</div>
+          <div class="h2">Pure DC. Louisiana Built.<br><span style="color:var(--green);">Ready to Scale.</span></div>
+        </div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bdot cyan"></div>
+            <div><div class="bt">Architecture locked at highest level</div><div class="bd">NVIDIA DSX, OCP Stage 1d, 1500V DC forward design. No retrofit required when the industry moves to the next voltage tier.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot green"></div>
+            <div><div class="bt">Vendor-neutral by design</div><div class="bd">Generation, storage, and distribution all open to qualified competitors. Interface spec is the lock. Vendors compete on every procurement cycle.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot amber"></div>
+            <div><div class="bt">Louisiana supply chain — nothing imported</div><div class="bd">First Solar TR1 30 miles. Southern Natural Gas on property. Henry Hub 40 miles. Local steel and construction. American-manufactured at every layer.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot purple"></div>
+            <div><div class="bt">No grid queue — critical path is construction only</div><div class="bd">22 months Phase 1 (100 MW). No 3–7 year utility interconnect wait. Permitting to energization — that is the entire critical path.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot green"></div>
+            <div><div class="bt">Replicable at any site with gas and fiber</div><div class="bd">Same building, same spec, different ZIP code. Gas tap, fiber, slab, done. The Pure DC architecture is the product — not just this site.</div></div>
+          </div>
+          <div class="bullet">
+            <div class="bdot cyan"></div>
+            <div><div class="bt">Pre-sell before build</div><div class="bd">Full spec package enables capacity sales before concrete is poured. The interface spec is the sales document. Hyperscaler commitments lock before construction starts.</div></div>
+          </div>
+        </div>
+        <div style="padding:16px 20px;border-radius:10px;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.2);margin-top:4px;">
+          <div style="font-size:12.5px;color:var(--muted2);line-height:1.8;font-style:italic;">"Design the entire stack around DC, and eliminate everything that exists only because AC used to be unavoidable."</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden;">
+        <div class="panel">
+          <div class="panel-label">Project Snapshot</div>
+          <div class="stat-row" style="flex-wrap:wrap;margin-bottom:6px;">
+            <div class="stat cyan" style="min-width:90px;"><div class="sv cyan">200</div><div class="sl">MW IT Load</div></div>
+            <div class="stat green" style="min-width:90px;"><div class="sv green">1.05</div><div class="sl">Target PUE</div></div>
+          </div>
+          <div class="stat-row" style="flex-wrap:wrap;margin-bottom:6px;">
+            <div class="stat amber" style="min-width:90px;"><div class="sv amber">22</div><div class="sl">Months<br>Phase 1</div></div>
+            <div class="stat purple" style="min-width:90px;"><div class="sv purple">0%</div><div class="sl">Grid<br>Dependency</div></div>
+          </div>
+          <table class="spec-table">
+            <tr><td>Total racks</td><td>1,538 NVL72-class</td></tr>
+            <tr><td>Total GPUs</td><td>110,736</td></tr>
+            <tr><td>Total HBM</td><td>8.86 PB</td></tr>
+            <tr><td>DC bus voltage</td><td>800V DC / 1500V DC ready</td></tr>
+            <tr><td>AC anywhere</td><td style="color:var(--green);">None</td></tr>
+            <tr><td>Grid interconnect</td><td style="color:var(--green);">Not required</td></tr>
+            <tr><td>Gas source</td><td>SNG mainline on property</td></tr>
+            <tr><td>Solar source</td><td>First Solar TR1 · 30 mi</td></tr>
+            <tr><td>BESS</td><td>800 MWh LFP DC-coupled</td></tr>
+          </table>
+        </div>
+        <div class="panel green-border">
+          <div class="panel-label">Next Steps</div>
+          <div class="num-list">
+            <div class="num-item">
+              <div class="num-badge green">1</div>
+              <div><div class="bd">Bloom Energy — generation zone layout and DC output one-line</div></div>
+            </div>
+            <div class="num-item">
+              <div class="num-badge amber">2</div>
+              <div><div class="bd">FuelCell Energy — DC delivery date confirmation + CHP integration layout</div></div>
+            </div>
+            <div class="num-item">
+              <div class="num-badge cyan">3</div>
+              <div><div class="bd">SNG call — mainline tap capacity and connection timeline</div></div>
+            </div>
+            <div class="num-item">
+              <div class="num-badge cyan">4</div>
+              <div><div class="bd">Site option executed — Hwy 14 &amp; US-90 parcel</div></div>
+            </div>
+            <div class="num-item">
+              <div class="num-badge cyan">5</div>
+              <div><div class="bd">CAD site drawing — three-zone layout to engineering standard</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:14px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--panel);">
+          <div style="font-size:10px;color:var(--muted2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Contact</div>
+          <div style="font-size:15px;font-weight:700;color:var(--text);">Scott Tomsu</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:2px;">Founder, ADC</div>
+          <div style="font-size:11.5px;color:var(--cyan);margin-top:8px;">scott@adc3k.com · (337) 780-1535 · adc3k.com</div>
+          <div style="font-size:10px;color:var(--muted2);margin-top:4px;">Louisiana · Gulf Coast</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #deck -->
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<div class="slide-counter" id="counter">01 / 08</div>
+<div class="nav">
+  <button class="nav-btn" id="prev" onclick="navigate(-1)">&#8592;</button>
+  <button class="nav-btn" id="next" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<script>
+  const TOTAL = 8;
+  let current = 1;
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const s = document.getElementById('s' + n);
+    if (s) s.classList.add('active');
+    document.getElementById('counter').textContent =
+      String(n).padStart(2, '0') + ' / ' + String(TOTAL).padStart(2, '0');
+    document.getElementById('prev').style.opacity = n === 1 ? '0.3' : '1';
+    document.getElementById('next').style.opacity = n === TOTAL ? '0.3' : '1';
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next < 1 || next > TOTAL) return;
+    current = next;
+    showSlide(current);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  showSlide(1);
+</script>
+</body>
+</html>
