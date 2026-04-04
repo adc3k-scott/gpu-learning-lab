@@ -482,7 +482,7 @@
           <table class="spec-table">
             <tr><td>Delivery voltage</td><td>800V DC (Eaton ORV3 sidecar)</td></tr>
             <tr><td>Rack standard</td><td>OCP Open Rack V3</td></tr>
-            <tr><td>Power per rack nominal</td><td>130 kW</td></tr>
+            <tr><td>Power per rack</td><td>230 kW (Vera Rubin Max P · liquid cooled)</td></tr>
             <tr><td>Power per rack future</td><td>1 MW (Kyber roadmap)</td></tr>
             <tr><td>GPU platform</td><td>NVIDIA NVL72 DSX compliant</td></tr>
             <tr><td>Cooling delivery</td><td>Facility water loop · 45°C max inlet</td></tr>
@@ -508,7 +508,7 @@
             <div class="bullet"><div class="bdot purple"></div><div><div class="bt">OCP Stage 1d compliant</div><div class="bd">Distribution design must conform to OCP DCF LVDC v1.0. 1500V DC ceiling. Stage 1d grounding and protection requirements apply.</div></div></div>
             <div class="bullet"><div class="bdot purple"></div><div><div class="bt">NFPA 855 (BESS only)</div><div class="bd">Battery energy storage systems must be NFPA 855 primary, UL 9540A tested, FM Global Outdoor Class 1.</div></div></div>
             <div class="bullet"><div class="bdot purple"></div><div><div class="bt">NEC Article 712</div><div class="bd">All DC system wiring, grounding, and protection must comply with NEC Article 712 DC systems requirements.</div></div></div>
-            <div class="bullet"><div class="bdot cyan"></div><div><div class="bt">NVIDIA DSX compatible at rack interface</div><div class="bd">Power delivery to rack must be compatible with Eaton ORV3 sidecar and NVIDIA NVL72 platform at 800V DC, 130 kW per rack.</div></div></div>
+            <div class="bullet"><div class="bdot cyan"></div><div><div class="bt">NVIDIA DSX compatible at rack interface</div><div class="bd">Power delivery to rack must be compatible with Eaton ORV3 sidecar and NVIDIA NVL72 platform at 800V DC, 230 kW per rack (Vera Rubin Max P).</div></div></div>
           </div>
         </div>
         <div class="panel">
@@ -680,7 +680,7 @@
               <tr>
                 <td style="color:var(--cyan);font-weight:700;">DC Bus / Distribution</td>
                 <td style="color:var(--text);">Eaton Beam / Rubin DSX</td>
-                <td>800V DC native · NVIDIA DSX co-designed · ORV3 sidecar · 130 kW/rack</td>
+                <td>800V DC native · NVIDIA DSX co-designed · ORV3 sidecar · 230 kW/rack</td>
                 <td><span class="badge-q green">QUALIFIED</span></td>
               </tr>
               <tr>
@@ -698,7 +698,7 @@
               <tr>
                 <td style="color:var(--text);font-weight:700;">Rack Power</td>
                 <td style="color:var(--text);">Eaton ORV3 Sidecar</td>
-                <td>OCP Open Rack V3 · 130 kW nominal · 800V DC input · NVIDIA NVL72 certified</td>
+                <td>OCP Open Rack V3 · 230 kW · 800V DC input · NVIDIA NVL72 Vera Rubin certified</td>
                 <td><span class="badge-q green">QUALIFIED</span></td>
               </tr>
               <tr>
@@ -846,7 +846,7 @@
           </div>
           <div class="bullet">
             <div class="bdot purple"></div>
-            <div><div class="bt">No grid queue — critical path is construction only</div><div class="bd">22 months Phase 1 (100 MW). No 3–7 year utility interconnect wait. Permitting to energization — that is the entire critical path.</div></div>
+            <div><div class="bt">No grid queue — critical path is construction only</div><div class="bd">Full 200 MW. No 3–7 year utility interconnect wait. Permitting to energization — that is the entire critical path.</div></div>
           </div>
           <div class="bullet">
             <div class="bdot green"></div>
@@ -869,13 +869,13 @@
             <div class="stat green" style="min-width:90px;"><div class="sv green">1.05</div><div class="sl">Target PUE</div></div>
           </div>
           <div class="stat-row" style="flex-wrap:wrap;margin-bottom:6px;">
-            <div class="stat amber" style="min-width:90px;"><div class="sv amber">22</div><div class="sl">Months<br>Phase 1</div></div>
+            <div class="stat amber" style="min-width:90px;"><div class="sv amber">870</div><div class="sl">NVL72<br>Racks</div></div>
             <div class="stat purple" style="min-width:90px;"><div class="sv purple">0%</div><div class="sl">Grid<br>Dependency</div></div>
           </div>
           <table class="spec-table">
-            <tr><td>Total racks</td><td>1,538 NVL72-class</td></tr>
-            <tr><td>Total GPUs</td><td>110,736</td></tr>
-            <tr><td>Total HBM</td><td>8.86 PB</td></tr>
+            <tr><td>Total racks</td><td>870 NVL72-class (Vera Rubin)</td></tr>
+            <tr><td>Total GPUs</td><td>62,640</td></tr>
+            <tr><td>Total HBM</td><td>18.04 PB</td></tr>
             <tr><td>DC bus voltage</td><td>800V DC / 1500V DC ready</td></tr>
             <tr><td>AC anywhere</td><td style="color:var(--green);">None</td></tr>
             <tr><td>Grid interconnect</td><td style="color:var(--green);">Not required</td></tr>
