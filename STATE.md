@@ -1,5 +1,26 @@
 # Mission Control — Project State
-Last updated: 2026-04-03 (end of session — power stack finalized, Notion cleaned, financial model fixed)
+Last updated: 2026-04-04 (end of session — Pure DC AI Factory deck updated, rack numbers corrected to Vera Rubin Max P)
+
+---
+
+## SESSION SUMMARY — April 4, 2026 (Pure DC AI Factory — Deck Update)
+
+### pure-dc-ai-factory-package.html — UPDATED
+- **Hardware platform corrected:** Blackwell → Vera Rubin NVL72 (Max P, liquid cooled, full buildout)
+- **kW per rack:** 130 kW → **230 kW** (Vera Rubin Max P)
+- **Total racks:** 1,538 → **870**
+- **Total GPUs:** 110,736 → **62,640**
+- **Total HBM:** 8.86 PB → **18.04 PB** (Vera Rubin 288 GB/GPU vs Blackwell 192 GB/GPU)
+- **Phase language removed entirely** — hyperscalers want full buildout at once, no phase 1/2 framing
+- **New stat in Project Snapshot:** "870 NVL72 Racks" replaces "22 Months Phase 1"
+- **new-iberia-200mw-spec.html:** NOT updated yet — hold until Bloom/FCE return with footprint
+- **Feedback saved:** `memory/feedback_no_phase_language.md` — no phase 1/2 in hyperscaler decks
+
+### Key Decisions — April 4
+- Bloom and FuelCell Energy will design the building footprint — ADC gives them the hard compute numbers, they size their generation zone
+- No diagrams handed to vendors — just numbers
+- Full 200 MW single buildout, no phases
+- Vendor strategy unchanged: send spec to both, don't tell them about each other, let them compete
 
 ---
 
