@@ -1,0 +1,1484 @@
+MARLIE I — Lafayette Infrastructure Partnership — ADC3K
+
+  
+    
+      PROJECT ONE ·
+      ADC3K NEOCLOUD INITIATIVE ·
+      2026
+    
+
+    
+      ADC3K
+
+      
+        ADVANTAGE DESIGN CONSTRUCTION
+
+        LAFAYETTE, LOUISIANA — WWW.ADC3K.COM
+      
+
+    
+
+  
+
+  
+    MARLIE I
+
+  
+
+  
+    LAFAYETTE INFRASTRUCTURE PARTNERSHIP — H2 2026
+  
+
+  
+    Louisiana’s first NVIDIA neocloud command center — built on Lafayette ground,
+    powered by Lafayette gas, connected by LUS Fiber, and operated by a
+    Lafayette-licensed general contractor. DSX-compliant, NVIDIA liquid-cooled, running Dynamo inference OS.
+    This is Lafayette building its own AI infrastructure — and inviting its utility partners
+    to be part of it from day one. Shovel-ready. Federally eligible. Act 730 qualified. H2 2026.
+  
+
+  
+    NVIDIA NEOCLOUD — DSX COMPLIANT
+
+    NVIDIA RUBIN — H2 2026
+
+    NATURAL GAS POWERED
+
+    LUS FIBER CONNECTED
+
+    FEDERAL FUNDING ELIGIBLE
+
+    LA ACT 730 — 20YR TAX EXEMPT
+
+    FEMA ZONE X — HIGH GROUND
+
+    AIRPORT ADJACENT — PART 107 UAS
+
+    GC PERMITS READY — 6 MO DEPLOY
+
+  
+
+  
+    Power Strategy
+
+    BLOOM SOFC
+PRIMARY
+
+    Pure DC microgrid — no grid, no AC anywhere
+
+  
+
+  
+
+  
+    Marlie I runs on 40 Bloom Energy SOFC units — 10 MW, 800V DC direct.
+    Natural gas in, 800V DC out — no inverter, no rectifier, no conversion loss.
+    54% electrical efficiency, best-in-class for on-site generation.
+    Henry Hub — the world’s most liquid natural gas
+    benchmark — sits 40 miles away in Erath, LA, locking fuel costs to the
+    most competitive gas price on earth. First Solar TR1 panels offset daytime load.
+    Eaton xStorage battery provides instant ATS bridge. The grid is never used for consumption at Marlie I.
+    Five layers. Bloom first. Hurricane-rated. Pure DC.
+  
+
+  
+
+  
+    
+      5
+
+      Power
+layers
+
+    
+
+    
+      10MW
+
+      Bloom SOFC
+installed
+
+    
+
+    
+      800V
+
+      DC native
+no AC ever
+
+    
+
+  
+
+  
+    HARDWARE — What We Are Building
+  
+
+  
+
+  
+  
+    
+      40
+
+      NVL72 RACKS
+TOTAL
+
+    
+
+    
+      2,880
+
+      VERA RUBIN
+GPUs
+
+    
+
+    
+      144
+
+      EXAFLOPS
+NVFP4
+
+    
+
+    
+      10 MW
+
+      BLOOM SOFC
+PRIMARY
+
+    
+
+  
+
+  
+  
+    
+      INTERIOR — MISSION CONTROL + DEMO LAYER
+
+      10 Racks
+
+      
+        Downstairs compute floor — 770 sq ft (22 × 35 ft). Walkable environment for
+        investor and partner visibility. Live system demonstration. Upstairs: Mission Control
+        operations center — monitoring, control, and engineering workspace.
+        Owned building. $15K total debt. No lease risk.
+      
+
+      
+        Show live system to partners and customers
+
+        Develop and refine deployment playbooks
+
+        Central command for statewide expansion
+
+      
+    
+
+    
+      EXTERIOR — PRODUCTION LAYER
+
+      3 ADC 3K Cassettes
+
+      
+        Three ADC 3K Cassettes on Chag Street parcels. Each is a 40-ft ISO container
+        housing 10 NVL72 racks — 720 Rubin GPUs per cassette. Revenue-generating compute.
+        AI-managed. Zero on-site staff required. Fully integrated with Bloom DC power.
+      
+
+      
+        Actual revenue-generating compute from day one
+
+        First scalable deployment unit in Louisiana
+
+        Template cloned for every future site
+
+      
+    
+
+  
+
+  
+  
+    WHY THIS STRUCTURE MATTERS
+
+    
+      This is not just an AI factory — it is a working prototype, a sales platform, a deployment template,
+      and a scaling engine. The interior layer proves the model live to every partner who walks through the door.
+      The exterior cassettes generate revenue immediately. Every future deployment is cloned from this system.
+    
+
+    
+      
+        Working Prototype
+
+        Live proof of the Pure DC model
+
+      
+
+      
+        Sales Platform
+
+        Walkable demo for every prospect
+
+      
+
+      
+        Deploy Template
+
+        Playbook for every site after this
+
+      
+
+      
+        Scaling Engine
+
+        Each node builds on the last
+
+      
+
+    
+
+  
+
+  
+  
+    
+      NVIDIA NVL72 — PER RACK SPECIFICATIONS
+    
+
+    
+      
+        Rubin GPUs
+
+        72 / rack
+
+      
+
+      
+        Vera CPUs
+
+        36 / rack
+
+      
+
+      
+        Inference NVFP4
+
+        3.6 ExaFLOPS
+
+      
+
+      
+        HBM4 bandwidth
+
+        22 TB/s / GPU
+
+      
+
+      
+        NVLink 6 aggregate
+
+        260 TB/s intra-rack
+
+      
+
+      
+        Power architecture
+
+        800V DC — DSX
+
+      
+
+      
+        Cooling
+
+        100% liquid
+
+      
+
+      
+        Availability
+
+        H2 2026
+
+      
+
+    
+
+  
+
+  
+    POWER — 10 MW — Pure DC Microgrid — No Grid. No AC. No Diesel.
+  
+
+  
+
+  
+    
+      
+        Marlie I runs on a pure 800V DC microgrid. Natural gas in, 800V DC out —
+        direct to the NVIDIA DSX rack bus. No inverter. No rectifier. No conversion loss.
+        Bloom SOFC is primary. First Solar TR1 offsets daytime load. Eaton xStorage LFP bridges
+        transitions. The grid is never used for compute power at Marlie I.
+        Louisiana gas infrastructure has survived every Cat 4 storm on record without interruption.
+        This power stack does not depend on transmission lines.
+      
+
+      
+        NVIDIA DSX COMPLIANT
+
+        OCP STAGE 1d
+
+        800V DC NATIVE
+
+        NO GRID
+
+        NO AC
+
+        NO DIESEL
+
+      
+
+    
+
+    
+      FIVE-LAYER POWER STACK
+
+      
+        
+          L1
+          Bloom SOFC — PRIMARY
+40 units × 250 kW = 10 MW · 800V DC direct · 54% efficiency · N+1
+
+        
+
+        
+          L2
+          First Solar TR1 — OFFSET
+300 kW · 1500V DC direct · Louisiana-manufactured
+
+        
+
+        
+          L3
+          Eaton xStorage LFP — BRIDGE
+600 kWh · DC-coupled · instant ATS · 4-hr minimum
+
+        
+
+        
+          L4
+          800V DC Bus — Eaton Beam Rubin DSX
+800V operating · 1500V rated · OCP Stage 1d · plug-and-play rack feeds
+
+        
+
+        
+          L5
+          Eaton Brightlayer + Siemens Omnivise
+Digital twin · NVIDIA Omniverse DSX · 65-sensor AI monitoring
+
+        
+
+      
+
+    
+
+  
+
+  
+  
+    BLOOM ENERGY SOFC — WHY IT IS FIRST
+
+    
+      54%
+Electrical efficiency — best-in-class on-site generation
+
+      800V DC
+Native DC output — no inverter, no rectifier, no conversion loss
+
+      90 days
+Order to energized — fastest path to compute-ready power
+
+      N+1
+One unit offline — zero downtime. Hurricane-rated gas supply.
+
+    
+
+  
+
+  
+  
+    40 mi
+
+    
+      Henry Hub — world's most liquid natural gas benchmark — 40 miles from Marlie I in Erath, LA.
+      Natural gas on site — live. Henry Hub 40 miles. Fuel costs locked to the most competitive gas price on earth.
+      Louisiana gas lines tested through Cat 4 storms. Power stack independent of transmission infrastructure.
+    
+
+  
+
+  
+    COOLING — Full Liquid Stack — GPU Die to Heat Rejection — Gulf Coast Hardened
+  
+
+  
+
+  
+    
+      
+        Every NVL72 rack at Marlie I runs 100% liquid cooled end-to-end —
+        from the Boyd cold plate at the GPU die through the CoolIT row CDU to facility heat rejection.
+        No air cooling anywhere in the compute loop. Louisiana's Gulf Coast climate runs
+        75–80% relative humidity 8 months a year. The Munters HCD desiccant system is
+        integrated from day one to manage moisture at the cassette and building level,
+        preventing condensation on cold cooling lines and protecting electronics from the environment.
+      
+
+      
+        100% LIQUID COOLED
+
+        ZERO AIR COOLING
+
+        GULF COAST HARDENED
+
+        NVIDIA RVL / AVL
+
+      
+
+    
+
+    
+    
+      LIQUID COOLING CHAIN — GPU DIE TO FACILITY LOOP
+
+      
+        
+          GPU DIE
+          Boyd Cold Plate
+Copper · NVIDIA RVL certified · ~700W per GPU captured at die
+
+        
+
+        
+          RACK
+          Staubli UQD Quick-Disconnects
+450 connections per NVL72 rack · dry-break, no spillage · hot-swap capable
+
+        
+
+        
+          ROW CDU
+          CoolIT CHx2000
+2 MW per unit · 12 NVL72 racks · hot-swap pumps · NVIDIA RVL/AVL · 6-nines availability
+
+        
+
+        
+          PIPING
+          Danfoss CoolTrain TCS
+Pre-fabricated valve train · factory pre-tested · bolt-together on site · eliminates field pipe fab
+
+        
+
+        
+          REJECT
+          Adiabatic Dry Cooler
+Exterior heat rejection · adiabatic assist for Louisiana summer peaks >95°F
+
+        
+
+      
+
+    
+
+  
+
+  
+  
+    
+      
+        HUMIDITY CONTROL — MUNTERS HCD DESICCANT — PHASED IN
+
+        
+          Lafayette averages 75–80% relative humidity eight months a year.
+          Cold liquid cooling lines in a high-humidity environment create condensation risk that
+          destroys electronics. The Munters HCD desiccant dehumidifier controls interior humidity
+          with no compressor — approximately 500W draw — maintaining positive pressure
+          to keep moist outside air from infiltrating the compute environment.
+          Precision control to ±1°F dew point. Phased into each cassette as deployed.
+          Waste heat from Bloom SOFC reactivates the desiccant wheel at no additional energy cost.
+        
+
+        
+          MUNTERS HCD
+
+          NO COMPRESSOR
+
+          500W DRAW
+
+          WASTE HEAT REACTIVATION
+
+          POSITIVE PRESSURE
+
+        
+
+      
+
+      
+        
+          75–80%
+
+          Lafayette RH — 8 months/year
+
+        
+
+        
+          ±1°F
+
+          Dew point precision control
+
+        
+
+        
+          ~500W
+
+          System draw — no compressor
+
+        
+
+        
+          0
+
+          Reactivation energy cost — uses Bloom waste heat
+
+        
+
+      
+
+    
+
+  
+
+  
+  
+    130 kW
+
+    
+      Per-rack TDP supported by the Delta 140 kW CDU (NVIDIA NVL72 certified, RVL/AVL listed).
+      45°C supply / 55–60°C return. Hot water loop — usable for waste heat recovery downstream.
+      Delta Electronics manufactured in Plano, Texas.
+    
+
+  
+
+  
+    NETWORK — InfiniBand + Groq LPU — LUS Fiber On Site — Zero Bottleneck
+  
+
+  
+
+  
+    
+      INTRA-SITE — COMPUTE FABRIC
+
+      
+        
+          Intra-rack interconnect
+          NVLink 6 — 260 TB/s
+        
+
+        
+          Scale-out fabric (rack to rack)
+          InfiniBand NDR — 400 Gb/s
+        
+
+        
+          Scale-out switch
+          NVIDIA Quantum-X800
+        
+
+        
+          Ethernet fabric
+          Spectrum-X — 800G
+        
+
+        
+          Infrastructure offload
+          BlueField-4 DPU
+        
+
+        
+          Inference acceleration
+          Groq LPU
+        
+
+      
+
+    
+
+    
+      EXTERNAL CONNECTIVITY — LUS FIBER
+
+      
+        LUS Fiber is a city-owned gigabit network serving Lafayette — one of the
+        fastest municipal broadband networks in the country. The nearest LUS Fiber
+        infrastructure is on site at Marlie I — live and connected.
+        Direct fiber connection is straightforward and already within the BEAD program's
+        expansion scope for the SE Evangeline corridor.
+      
+
+      
+        
+          LUS Fiber distance to site
+          ON SITE
+        
+
+        
+          Network type
+          Municipal gigabit — city-owned
+        
+
+        
+          BEAD eligibility
+          SE Evangeline corridor
+        
+
+      
+
+    
+
+  
+
+  
+  
+    
+      
+        GROQ LPU — INFERENCE ACCELERATION
+
+        
+          Groq Language Processing Units (LPUs) are purpose-built inference engines —
+          not trained on Groq hardware, but run on Groq hardware at speeds
+          no GPU can match for deterministic single-stream inference workloads.
+          Marlie I integrates Groq LPUs alongside NVIDIA NVL72 racks to give customers a
+          choice of inference platform. GPU clusters handle training, fine-tuning, and
+          high-throughput batch inference. Groq handles latency-sensitive, real-time,
+          and edge-routed workloads. Same DC power bus. Same management plane. Complementary — not competing.
+        
+
+        
+          GROQ LPU
+
+          DETERMINISTIC INFERENCE
+
+          LOW LATENCY
+
+          800V DC COMPATIBLE
+
+        
+
+      
+
+      
+        
+          GPU
+
+          Training + batch inference + fine-tuning — NVIDIA NVL72
+
+        
+
+        
+          LPU
+
+          Real-time inference — deterministic latency — Groq
+
+        
+
+        
+          One DC Power Bus. Two Inference Engines. Full Workload Coverage.
+
+        
+
+      
+
+    
+
+  
+
+  
+    DE-RISKED — What Is Already In Place
+  
+
+  
+
+  
+    Traditional AI factory projects fail on acquisition, permitting, infrastructure, and execution timelines.
+    Marlie I eliminates every one of those variables before the first dollar is deployed.
+    This removes the largest delays seen in comparable projects.
+  
+
+  
+    
+      PROPERTY
+
+      Site secured. No acquisition required. Building already in place. $15K total debt. Three adjacent Chag Street parcels for cassette deployment.
+
+      OWNED
+
+    
+
+    
+      POWER + GAS
+
+      Natural gas on site — live. Henry Hub 40 miles. 3-phase power confirmed. Bloom SOFC 90-day delivery from order.
+
+      CONFIRMED
+
+    
+
+    
+      FIBER
+
+      LUS Fiber on site — live and connected. City-owned gigabit network. No run required.
+
+      0.8 MI OUT
+
+    
+
+    
+      ZONING
+
+      Industrial zoning. Heavy use permitted. No rezoning required. No variance hearings. No timeline risk from planning board.
+
+      NO REZONING
+
+    
+
+    
+      EXECUTION
+
+      Louisiana GC license active. Scott Tomsu pulls permits and executes directly. No third-party GC. No markup. 7 NVIDIA certifications in hand.
+
+      GC LICENSED
+
+    
+
+    
+      TIMELINE
+
+      Site ready now. Build and install 3–6 months. First compute online immediately after install. H2 2026 hardware availability aligns exactly.
+
+      BUILD STARTS NOW
+
+    
+
+  
+
+  
+  
+    TRADITIONAL MODEL VS MARLIE I
+
+    
+      
+        TRADITIONAL
+
+        
+          Land acquisition — 6–24 months
+
+          Rezoning + permitting — 12–36 months
+
+          Grid interconnect — 2–5 years
+
+          Billion-dollar upfront exposure
+
+          Multi-year construction before first dollar of revenue
+
+        
+      
+
+      
+        MARLIE I
+
+        
+          Site owned — today
+
+          Zoning cleared — today
+
+          No grid dependency — Bloom SOFC is primary
+
+          Modular deployment — cassette by cassette
+
+          Revenue from first rack powered on
+
+        
+      
+
+    
+
+  
+
+  
+    STRATEGIC IMPORTANCE — First Mover — Scaling Path
+  
+
+  
+
+  
+    
+      WHY THIS DEPLOYMENT IS CRITICAL
+
+      
+        
+          01
+
+          Establishes market presence in Louisiana before any outside operator gets here
+
+        
+
+        
+          02
+
+          Validates Pure DC architecture in a live production environment — proof nobody else has
+
+        
+
+        
+          03
+
+          Locks in Bloom partnership alignment with a live reference deployment
+
+        
+
+        
+          04
+
+          Demonstrates execution capability to NVIDIA, partners, and customers — not a concept, a building
+
+        
+
+        
+          05
+
+          Enables rapid follow-on expansion — each node cloned from the Marlie I playbook
+
+        
+
+      
+
+    
+
+    
+      SCALING PATH — AFTER MARLIE I
+
+      
+        
+          Step 1 — Marlie I Online
+
+          10 MW · 40 racks · 144 ExaFLOPS · H2 2026 · Revenue day one
+
+        
+
+        
+          Step 2 — 20–50 MW Nodes
+
+          Marlie I cash flow funds next deployments · playbook already written
+
+        
+
+        
+          Step 3 — 100 MW+ Statewide
+
+          Urban nodes + Pure DC AI Factory farms · Louisiana-wide network
+
+        
+
+        
+          Each Node Adds
+
+          Revenue · customer base · partner depth · NVIDIA certified capacity
+
+        
+
+      
+
+    
+
+  
+
+  
+    01 — Investment Thesis
+  
+
+  
+
+    
+      
+
+      01
+      Skip Blackwell. Deploy Rubin.
+
+      
+        The market is building AI facilities around Blackwell — last generation's answer.
+        Marlie I is designed from the ground up for NVIDIA Vera Rubin, shipping H2 2026.
+        Rubin delivers 2.5x the FP4 compute density of GB200 NVL72 (3.6 vs 1.44 ExaFLOPS per rack),
+        22 TB/s HBM4 memory bandwidth per GPU, and 24x faster rack deployment. Investors who move now own
+        the next generation of inference infrastructure — not a commodity rack of yesterday's hardware.
+      
+
+    
+
+    
+      
+
+      02
+      Infrastructure Already Exists
+
+      
+        1201 SE Evangeline Thruway is not a greenfield project. ADC3K already owns the
+        building. LUS Fiber is on site — live. The LUS power substation is 1 mile out. Natural gas
+        access via Atmos Energy — on site. The property carries only $15K in total debt.
+        Site prep, permits, and GC licensing are in hand. We are not buying land and hoping. We are
+        converting an existing, debt-free asset into a revenue-generating AI factory.
+      
+
+    
+
+    
+      
+
+      03
+      Money Is Already Flowing
+
+      
+        The One Big Beautiful Bill Act allocates $500B toward domestic AI infrastructure.
+        Louisiana's Act 730 provides a 20-year state and local tax exemption on
+        qualifying manufacturing equipment. The BEAD Broadband Program and Gulf OCS
+        Revenue sharing add further federal pathways. Marlie I is positioned at the intersection of
+        every major capital flow into domestic AI — 100% US ownership, Texas-manufactured
+        NVIDIA hardware, Louisiana-licensed GC. The funding is not hypothetical. We qualify.
+      
+
+    
+
+  
+
+  
+  
+    
+      2.5x
+
+      FP4 compute density
+vs GB200 NVL72
+
+    
+
+    
+      6mo
+
+      Estimated deploy
+timeline
+
+    
+
+    
+      $15K
+
+      Total property
+debt
+
+    
+
+    
+      20yr
+
+      LA tax exemption
+on equipment
+
+    
+
+    
+      #1
+
+      Louisiana industrial
+power rates — USA
+
+    
+
+  
+
+  
+    02 — Government Funding Stack — Federal + State + Local
+  
+
+  
+
+  
+
+    
+      Federal
+
+      One Big Beautiful Bill Act
+
+      
+        Signed July 4, 2025, the OBBBA creates the most favorable federal policy environment for
+        domestic AI infrastructure in US history. It codifies FEOC (Foreign Entity of Concern)
+        restrictions — any project with Chinese, Russian, Iranian, or North Korean supply
+        chain involvement is disqualified from federal tax credits, grants, and incentives. Marlie I
+        is purpose-built for full compliance: NVIDIA hardware manufactured in Texas
+        (Foxconn Houston, Wistron Fort Worth), 100% US ownership, Louisiana-licensed GC. The OBBBA
+        also added $500M to the BEAD broadband program and raised Gulf OCS revenue
+        sharing to $650M/year — both of which directly benefit Louisiana AI infrastructure.
+        The $500B Stargate public-private AI program runs parallel to the OBBBA; Marlie I's FEOC-clean
+        structure qualifies it for Stargate-aligned federal procurement and financing channels.
+      
+
+    
+
+    
+      Federal
+
+      BEAD Broadband Program
+
+      
+        The Broadband Equity, Access, and Deployment (BEAD) Program distributes federal
+        funding to expand broadband infrastructure in underserved areas. Lafayette sits within a region
+        with significant BEAD allocation. AI factories require massive bandwidth — and the presence of
+        LUS Fiber, a city-owned gigabit network, creates a unique opportunity to layer
+        BEAD-funded backhaul expansion directly into the Marlie I connectivity plan.
+        LUS Fiber is on site at Marlie I — live and connected. The AI
+        factory accelerates BEAD project eligibility for the City of Lafayette while simultaneously
+        solving Marlie I's connectivity requirements.
+      
+
+    
+
+    
+      Federal
+
+      Gulf OCS Revenue
+
+      
+        The OBBBA raised Louisiana's annual Gulf of America OCS revenue-sharing cap from
+        $500M to $650M/year through 2034 — a 30% increase in the state's offshore
+        energy dividend. Louisiana's share (~$200M/year at cap) funds the Coastal Master Plan,
+        the infrastructure backbone that protects sites like Marlie I from long-term flood risk.
+        Simultaneously, Louisiana's offshore energy production — the same natural gas supply chain
+        feeding Marlie I's generators — is the economic engine behind this revenue. Henry Hub,
+        the world's most liquid natural gas trading point, is 40 miles from Marlie I in Erath,
+        LA. Marlie I's fuel costs are benchmarked to the most competitive gas price on earth.
+      
+
+    
+
+    
+      State
+
+      Louisiana Act 730
+
+      
+        Louisiana Act 730 (effective July 1, 2024) provides a 20-year state and local
+        sales and use tax rebate on qualifying AI factory equipment, software, construction
+        materials, and installation — with a 10-year renewal option (30 years total). Qualification
+        requires $200M+ in capital investment and 50+ new permanent jobs
+        certified by Louisiana Economic Development. Marlie I's capital plan is structured to meet
+        both thresholds. Once certified, a Direct Payment Number eliminates tax
+        liability on the single largest cost in the project: GPU hardware. Stackable with the
+        Quality Jobs Program (6% payroll rebate, 10 years) and LED FastStart
+        (free customized workforce training). Combined with Louisiana's #1-ranked industrial
+        electricity rates, Act 730 makes Marlie I's per-token economics unbeatable.
+      
+
+    
+
+  
+
+  
+    ADC3K Compliance Note
+
+    
+      Federal funding under the OBBBA requires strict domestic content and zero involvement by prohibited foreign entities.
+      Marlie I is purpose-built for compliance — NVIDIA hardware manufactured in Texas (Foxconn Houston, Wistron Fort Worth),
+      100% US ownership, US-licensed general contractor. We are not just eligible — we are the ideal candidate.
+    
+
+  
+
+  
+    04 — The ADC3K Ecosystem — Beyond the AI Factory
+  
+
+  
+
+    
+      ⚡
+
+      Self-Powered + Grid Feed
+
+      
+        Marlie I runs on Bloom SOFC fuel cells as primary power.
+        Solar and LFP battery bridge are integrated into the 800V DC microgrid. No grid connection.
+        No diesel. AI factories live or die on power availability — Marlie I owns its power stack.
+      
+
+      ENERGY INDEPENDENT
+
+    
+
+    
+      🚗
+
+      EV Charging Substation
+
+      
+        Expansion plans include a commercial EV charging substation
+        on-site. Lafayette's proximity to I-10 and US-90 makes the location ideal for
+        fleet charging infrastructure. The substation leverages existing power capacity
+        from the natural gas generation system, adding a high-margin ancillary revenue
+        stream without additional land acquisition.
+      
+
+      SITE TWO EXPANSION
+
+    
+
+    
+      ✈
+
+      Airport Adjacent — Part 107 UAS
+
+      
+        Marlie I sits adjacent to Lafayette Regional Airport (LFT).
+        ADC3K holds a FAA Part 107 Remote Pilot Certificate, enabling
+        commercial UAS operations from the site. Drone-based infrastructure inspection,
+        aerial survey, and last-mile logistics represent near-term revenue opportunities
+        that leverage the site's location and existing certifications — no additional
+        real estate required.
+      
+
+      UAS / DRONE READY
+
+    
+
+    
+      🔒
+
+      Physical Security — Built In
+
+      
+        AI factory physical security is not an afterthought at Marlie I — it is part of
+        the original buildout design. Perimeter hardening, access control, and
+        24/7 monitoring infrastructure are included in the initial buildout
+        scope. Colocation and managed inference customers require SOC 2-equivalent physical
+        controls. Marlie I meets that bar from day one, enabling premium-tier customer
+        contracts without post-hoc security retrofits.
+      
+
+      SECURED FACILITY
+
+    
+
+    
+      🌐
+
+      Hub & Spoke — Louisiana Network
+
+      
+        Marlie I is designed as the hub of a Louisiana AI network.
+        Spoke facilities in Baton Rouge, New Orleans, and Lake Charles extend
+        inference capacity to enterprise customers across the state. LUS Fiber
+        and existing Louisiana broadband infrastructure provide the backbone.
+        This hub-and-spoke model scales revenue without proportional capital
+        expenditure — each spoke builds on Marlie I's existing operations team,
+        software stack, and customer relationships.
+      
+
+      SCALABLE NETWORK
+
+    
+
+    
+      📡
+
+      LUS Fiber — City-Owned Network
+
+      
+        LUS Fiber is one of the few municipal gigabit networks
+        in the United States — owned and operated by the City of Lafayette.
+        On site at Marlie I, LUS Fiber provides direct, low-latency
+        connection to city infrastructure, state government networks, and
+        regional enterprise customers. City ownership means no incumbent
+        telco gatekeeping, competitive pricing, and a natural public-private
+        partnership pathway for Marlie I's connectivity buildout.
+      
+
+      DIRECT FIBER CONNECTION
+
+    
+
+  
+
+  
+    05 — Site & Infrastructure — 1201 SE Evangeline Thruway
+  
+
+  
+  
+    
+      The Building Today
+      1201 SE Evangeline Thruway — Lafayette, LA
+    
+
+    
+    
+      
+        Future home of MARLIE I. Metal-clad industrial structure on owned land, built by Scott Tomsu 20 years ago. High ceilings, reinforced slab foundation, roll-up bay access for equipment delivery, frontage on SE Evangeline Thruway. Zero structural damage through multiple Gulf hurricanes. The bones of an AI factory — already standing.
+      
+
+    
+
+  
+
+  
+  
+    Owner-Built Infrastructure
+
+    
+      Scott Tomsu designed and built this building himself, 20 years ago.
+      Exterior footprint: 24 ft × 40 ft. Interior working floor:
+      22 ft × 35 ft — 770 sq ft of compute space (downstairs), plus a full
+      second floor and the adjoining property. The ceiling is 2×12 framing with
+      two layers of 5/8″ Type X sheetrock — a UL-rated fire assembly, built that
+      way from day one because the shop was originally a motorcycle garage. Heavy insulation throughout
+      creates thermal stability ideal for optimizing liquid cooling airflow between rack cabinets and rails.
+      It has survived multiple direct Gulf hurricane impacts with zero structural damage.
+      Reinforced slab foundation. Built on high ground in the Lafayette city core — above
+      regional base flood elevation, in FEMA Zone X. This is not a leased warehouse or a speculative
+      build. It is a proven, battle-tested structure on owned land, built by the same hands that will
+      deploy the AI factory inside it.
+      The GC license, the building, and the certifications are all one team.
+    
+
+  
+
+  
+
+    
+    
+      Infrastructure Proximity
+
+      
+        
+          
+            LUS Fiber
+
+            ON SITE
+
+          
+
+          
+            LUS Power Substation
+
+            ~1 mi
+
+          
+
+          
+            Atmos Energy — Natural Gas
+
+            ON SITE
+
+          
+
+          
+            Perard Backup Substation
+
+            ~3 mi
+
+          
+
+          
+            Henry Hub — World Gas Price Benchmark
+
+            ~40 mi
+
+          
+
+          
+            First Solar — 3.5 GW Factory (Iberia Parish)
+
+            ~20 mi
+
+          
+
+          
+            NVIDIA TX Manufacturing
+
+            ~4 hrs
+
+          
+
+          
+            Lafayette Regional Airport (LFT)
+
+            Adjacent
+
+          
+
+        
+      
+    
+
+    
+    
+      
+        1201 SE EVANGELINE THRUWAY
+
+        LAFAYETTE, LA 70501 · ADC3K HQ
+      
+
+      
+        FEMA Zone
+        Zone X — Minimal Flood Hazard
+      
+
+      
+        Ground Elevation
+        High Ground — Above Regional Base Flood
+      
+
+      
+        Zoning
+        Industrial — Heavy Use Permitted
+      
+
+      
+        Exterior Footprint
+        24 ft × 40 ft
+      
+
+      
+        Interior Floor (Compute)
+        22 ft × 35 ft — 770 sq ft
+      
+
+      
+        Roof
+        Solar + Skylight Ready
+      
+
+      
+        Cooling
+        100% Liquid Cooling Design
+      
+
+      
+        Expansion
+        Adjacent Land Available
+      
+
+      
+        Property Debt
+        $15,000 Total
+      
+
+      
+        Structure Age
+        Owner-Built — 20 Years Standing
+      
+
+      
+        Storm History
+        Multiple Hurricanes — Zero Structural Damage
+      
+
+      
+        Foundation
+        Reinforced Concrete Slab
+      
+
+      
+        Plate Height
+        7 ft 11 in to bottom of ceiling assembly (measured)
+      
+
+      
+        Ceiling Structure
+        2×12 Framing — Two Layers 5/8″ Type X Sheetrock + Full Floor Above
+      
+
+      
+        Fire Rating
+        UL-Rated Assembly — Built-In from Day One
+      
+
+      
+        Insulation
+        Heavy — Complete Thermal Shell, Ideal for Cooling Stability
+      
+
+      
+        Second Floor
+        Mission Control — AI Operations Center
+      
+
+      
+        Adjacent Property
+        Owned — Horizontal Expansion Ready
+      
+
+      
+        GC Permits
+        Louisiana GC License — Active
+      
+
+      
+        NVIDIA Certs
+        7 Active Certifications
+      
+
+      
+        FAA Certs
+        Private Pilot + Part 107 UAS
+      
+
+      
+        Security
+        Phase 1 Scope — 24/7 Monitoring
+      
+
+    
+
+  
+
+  
+
+  MARLIE I
+
+  Mission Control — First 10 MW Deployment — Lafayette, Louisiana
+
+  
+    This is not funding a concept. It is funding the first operational Pure DC AI Factory —
+    a live system that validates the model, generates revenue from day one, and launches statewide expansion.
+    Owned site. Owned building. Active GC license. 7 NVIDIA certifications. Bloom SOFC primary power.
+    H2 2026 hardware in production. We are ready to build now.
+  
+
+  
+    ADC3K — ADVANTAGE DESIGN CONSTRUCTION
+
+    Scott Tomsu — Founder  · 
+      scott@adc3k.com  · 
+      (337) 780-1535  · 
+      adc3k.com
+    
+
+  
+
+  
+    © 2026 ADVANTAGE DESIGN CONSTRUCTION — ADC3K · MARLIE I PROJECT · LAFAYETTE, LOUISIANA
+  
+
+  CONFIDENTIAL — FOR PARTNER USE ONLY
