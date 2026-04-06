@@ -1,5 +1,5 @@
 # 01 -- Investment Thesis
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Tiger AI Factory
 Content source: Main page above + memory/projects/lsu_willow_glen.md

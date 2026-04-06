@@ -1,5 +1,5 @@
 # 07 — Louisiana AI Network: Multi-Site Vision
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > We are not building an AI factory. We are building a network.
 ---

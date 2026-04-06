@@ -1,5 +1,5 @@
 # NVIDIA Certification & Edge Go-To-Market
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 # NVIDIA Certification & Go-To-Market Path
 What ADC needs to do to go from 'we build pods' to 'we sell NVIDIA-certified edge AI infrastructure.'

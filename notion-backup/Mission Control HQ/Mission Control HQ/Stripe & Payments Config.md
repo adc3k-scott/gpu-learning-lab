@@ -1,5 +1,5 @@
 # Stripe & Payments Config
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 # Stripe & Payments Configuration
 > Stripe is in LIVE mode as of March 2026. Test mode keys are archived. Do NOT use test price IDs in production.

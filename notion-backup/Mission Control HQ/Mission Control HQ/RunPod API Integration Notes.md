@@ -1,5 +1,5 @@
 # RunPod API Integration Notes
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Mission Control manages RunPod cloud GPU pods via GraphQL API. IntegrationAgent dispatches via runpod skill. When MARLIE I goes live, on-prem racks replace RunPod cloud as primary.
 ---

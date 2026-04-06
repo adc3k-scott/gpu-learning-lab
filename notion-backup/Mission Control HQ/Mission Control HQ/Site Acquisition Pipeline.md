@@ -1,5 +1,5 @@
 # Site Acquisition Pipeline
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Mission: identify, evaluate, and onboard Louisiana AI infrastructure sites. Every site gets the right technology: Full Factory (CDU racks) | ADC 3K Pods (immersion) | Mixed. All sites connect back to MARLIE I NOC. All sites get EV charging.
 ---

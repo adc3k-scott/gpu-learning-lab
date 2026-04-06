@@ -1,5 +1,5 @@
 # 02 — Hardware: NVIDIA Vera Rubin Platform
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Jensen Huang: "Rubin arrives at exactly the right moment... Rubin takes a giant leap toward the next frontier of AI."
 > Sam Altman: "Intelligence scales with compute... The NVIDIA Rubin platform helps us keep scaling this progress."

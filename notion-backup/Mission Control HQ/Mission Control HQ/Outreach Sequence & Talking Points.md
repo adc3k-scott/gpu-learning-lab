@@ -1,5 +1,5 @@
 # Outreach Sequence & Talking Points
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Execute in this order. Each completed agreement strengthens the next conversation. Do not pitch investors until Tier 1 supply agreements are in progress.
 ---

@@ -1,5 +1,5 @@
 # EP002 — Apple M5 Fusion, OpenAI GitHub Rival, Nuclear Powers AI
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 ## Episode 002 — Dry Run (March 4, 2026)
 Status: Manifest + Script complete. Awaiting Omniverse render pipeline and TTS voice setup.

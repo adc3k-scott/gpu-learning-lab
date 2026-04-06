@@ -1,5 +1,5 @@
 # 03 — Site & Building Specs
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Scott Tomsu designed and built this building himself, 20 years ago. Multiple direct Gulf hurricane impacts — zero structural damage.
 ---

@@ -1,5 +1,5 @@
 # Edge AI Upgrade — Part 4: Terminology Map, Site Strategy & Roadmap
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Status: DRAFT — March 2026. Covers official project terminology, site layout strategy, and phased deployment roadmap.
 ## PART A — TERMINOLOGY MAP

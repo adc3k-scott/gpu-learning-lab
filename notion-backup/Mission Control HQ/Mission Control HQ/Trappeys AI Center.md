@@ -1,5 +1,5 @@
 # Trappeys AI Center
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > THE CORE PROJECT. Solar AI factory at former Trappeys Cannery, Lafayette LA. 112,500 sq ft across 4 buildings. 2.05 MW First Solar rooftop. Water tower cooling. Site walked 2026-03-21 -- all buildings structurally sound.
 GPS: 30.21356N, 92.00163W  |  Acquisition: ~$1M  |  Half mile from MARLIE I  |  30 mi from First Solar

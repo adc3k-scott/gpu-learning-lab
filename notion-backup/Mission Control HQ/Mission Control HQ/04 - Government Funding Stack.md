@@ -1,5 +1,5 @@
 # 04 -- Government Funding Stack
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Incentive pipeline: $28-55M+ through combined programs.
 ## Programs

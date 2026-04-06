@@ -1,5 +1,5 @@
 # EP001 — NVIDIA’s $4B Photonics Play
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 ## Episode 001 — March 4, 2026
 Script: AIDO_EP001_2026-03-04_script.md

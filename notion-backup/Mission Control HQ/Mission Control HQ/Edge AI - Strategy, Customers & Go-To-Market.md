@@ -1,5 +1,5 @@
 # Edge AI -- Strategy, Customers & Go-To-Market
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Edge AI deployment specs, drone/UAS integration, and distributed inference architecture documents.
 ---

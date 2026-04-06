@@ -1,5 +1,5 @@
 # 🏗️ ADC 3K — Project Command Center
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 | Gate | Description | Target | Status |
 | P-1 | Provisional patent filed | Week 6 | 🟡 Disclosure ready — needs counsel |
@@ -43,7 +43,7 @@ Engineering specs:  Pod Swarm Engineering Suite
 File: ADC-3K-Master-Website-V3.html (~728 KB, single-file SPA)
 Status: Production-ready, 10-page site with embedded images
 Branding: ADC-3K POD (global rename complete)
-Contact: (337) 780-1535 / ADHSCOTT@yahoo.com / Data Center Design Professional
+Contact: (337) 780-1535 / scott@adc3k.com / Data Center Design Professional
 Full build log, edit history, and source image inventory:
 *[Child: Master Task Tracker]*
 *[Child: Pod Swarm Engineering Suite]*
@@ -139,95 +139,6 @@ Pod architecture is chip-agnostic at the facility level -- 800V DC and liquid co
 ---
 > WARNING (2026-03-24): Pre-GTC content above says 16 racks and InfiniBand NDR/Quantum-3. CORRECT specs are in the POST-GTC section: 8 racks per floor at MARLIE I, Quantum-X800 (800 Gb/s), 130 kW per rack.
 *[Child: CDU Liquid Cooling Schematics]*
-> NVL72 is 100% liquid cooled. No air cooling fallback. CDU units mount rear of each rack. Heat rejected to exterior dry coolers via closed glycol loop.
----
-## System Overview
-    - Type: Rear-door liquid cooling — CDU (Coolant Distribution Unit) per rack
-    - Loop: Closed primary loop: rack CDU <-> exterior dry cooler
-    - Coolant: Deionized water + glycol mix (40/60 for Louisiana climate)
-    - Heat rejection: Exterior dry coolers — no chiller required at Phase 1 scale
-    - Phase 1 total heat load: NVIDIA rack TDP unconfirmed — size service for 150-250 kW/rack per analyst estimates (not NVIDIA-confirmed)
----
-## Loop Topology
-### Primary Loop (High Temp)
-    - Supply temp target: 45C supply to CDU inlet
-    - Return temp target: 55-60C return from CDU outlet
-    - Flow rate: Per NVIDIA CDU spec — typically 20-40 L/min per rack
-    - Pump: Variable speed — pressure regulated
----
-### Secondary Loop (Dry Cooler)
-    - Location: Exterior — north wall or rooftop mount
-    - Type: Adiabatic dry cooler — air-cooled finned coil, optional misting for peak days
-    - Climate note: Lafayette avg high 93F summer — size dry cooler for 100F ambient
-    - Glycol loop: Runs through exterior wall penetration (insulated sleeve)
-    - Isolation valve: 1x ball valve per dry cooler — serviceable without rack downtime
----
-## Pipe Routing Schematic — Phase 1
-```plain text
-Exterior wall (north)
-  [Dry Cooler 1] [Dry Cooler 2] [Dry Cooler 3] [Dry Cooler 4]
-       |               |               |               |
-  ====[ Supply manifold — 4-inch insulated pipe along north wall ]====
-       |               |               |               |
-  [CDU A01-A04]  [CDU A05-A08]  [CDU B01-B04]  [CDU B05-B08]
-  ====[ Return manifold — 4-inch insulated pipe along north wall ]====
-       |               |               |               |
-  [ Pump station — NW corner — 2x variable speed pumps, 1 redundant ]
-```
----
-## Key Components
-    - CDU units: 16x — 1 per NVL72 rack (NVIDIA-supplied or approved vendor)
-    - Dry coolers: 4x exterior — sized for 500 kW each (2 MW total capacity)
-    - Pump station: 2x variable speed pumps — N+1 redundancy
-    - Expansion tank: 1x — pressure relief, glycol makeup
-    - Flow meters: 1x per CDU loop — monitored via BMS
-    - Leak detection: Rope-style sensor along entire manifold run
-    - Isolation valves: Ball valves at each CDU inlet/outlet — hot-swap capable
----
-## Wall Penetration Detail
-    - Penetration size: 6-inch core drill — north exterior wall
-    - Sleeve: Insulated pipe sleeve — vapor barrier sealed
-    - Fire stop: Intumescent firestop collar — maintain Type X fire rating
-    - Contractor: Licensed mechanical contractor — permit required
----
-## Monitoring
-    - BMS: Building Management System — supply/return temps, flow rate, leak status
-    - Alerts: High temp (>62C return), low flow, leak detection — SMS + Mission Control event
-    - Integration: InfraManagerAgent monitors BMS via HTTP API or Modbus gateway
-> SCOPE: This document applies to MARLIE I — the permanent AI Factory at 1201 SE Evangeline Thruway. NOT applicable to ADC 3K container pods, which use immersion cooling and a separate architecture.
----
-## ADC 3K Container Pod Cooling — DIFFERENT ARCHITECTURE
-> ADC 3K pods use immersion cooling, NOT rear-door CDU. Immersion eliminates HVAC requirements entirely — pods deploy into metal structures (e.g. Trappeys Cannery warehouse) with no air conditioning infrastructure needed. Separate engineering spec required for ADC 3K immersion loop, dielectric fluid selection, and heat rejection.
-    - Heat rejection: Dry cooler or liquid-to-liquid HX — same exterior rejection strategy as MARLIE I but different primary loop
-    - PUE target: 1.02-1.05 — immersion is more efficient than CDU at pod scale
-    - Advantage: No HVAC, no raised floor, no hot aisle containment — drops into any structure with power + fiber
-    - First deployment: Trappeys Cannery metal warehouse — immersion pods, no structural HVAC modifications required
----
-## ADC 3K Pod — Immersion Cooling (Remote Deployments)
-> ADC 3K pods use immersion cooling — NOT CDU/liquid cooling. CDU applies to MARLIE I (building racks). These are two separate products.
-### Dielectric Fluid — Committed Specification
-> COMMITTED: Engineered Fluids EC-110 (single-phase immersion). 3M Novec is DISCONTINUED — do not reference in investor materials or engineering specs.
-    - Fluid: Engineered Fluids EC-110 — single-phase dielectric, non-flammable, non-toxic, commercially available
-    - Cooling method: Single-phase immersion (servers submerged in fluid bath inside 40-ft ISO container)
-    - Heat rejection: Exterior dry cooler (primary) or liquid-to-liquid HX — no HVAC required at deployment site
-    - PUE target: 1.02–1.05 (immersion eliminates almost all cooling overhead)
-    - Vendor: Engineered Fluids — RFI package prepared, not yet submitted
-    - GPU platform: NVIDIA Vera Rubin NVL72 — TDP not yet published by NVIDIA. Final tank sizing pending TDP confirmation.
-### Remote Site Power Spec (Per Pod)
-    - Input: 480V 3-phase, utility feed to pod junction box
-    - Backup: N+1 diesel generator, exterior pad mount, auto-start <15 sec
-    - Fiber: Site must have fiber connectivity — pod networks back to MARLIE I NOC
-    - Remote monitoring: MARLIE I NOC manages all deployed pods centrally — no on-site staff required at remote locations
----
-> SCOPE OF THIS DOCUMENT: Cold plate CDU cooling schematics are for MARLIE I (1201 SE Evangeline Thruway ONLY). ADC 3K pods at Trappeys, KLFT, New Iberia, and all other remote sites use FULL IMMERSION (EC-110). Do NOT apply CDU schematics to ADC 3K pod deployments.
-## Cooling Architecture — Two Systems, Same GPU Platform
-    - MARLIE I: Cold plate CDU — NVL72 racks in sealed hot aisle, CDU at each end, dry coolers exterior
-    - ADC 3K pods: EC-110 full immersion — NVL72 GPUs submerged in dielectric bath inside 40-ft ISO container
-    - Both systems: achieve PUE 1.02-1.10, zero rack-level air cooling, 100% direct liquid heat removal
-    - Why CDU for MARLIE I: permanent building, code compliance, public-facing, hot aisle containment standard
-    - Why immersion for ADC 3K: field deployment, variable ambient (Louisiana heat/humidity), no HVAC permitting
-    - NVL72 GPU compatibility: same hardware in both — different fluid delivery path, same thermal outcome
----
 > UPDATED 2026-03-23 -- POST-GTC REWRITE
 ## Cooling Architecture -- Post-GTC 2026
 NVIDIA now ships complete liquid-cooled NVL72 racks. 45C hot water direct-to-chip. ADC does NOT engineer custom immersion cooling. EC-110 dielectric immersion is DEPRIORITIZED.
@@ -252,60 +163,7 @@ ADC 3K Pod: Integrated dry cooler per container -- 130-260 kW per pod
     - Coolant return: 55-60C
     - Ambient operating range: -20C to 50C (dry cooler rated)
 ---
-> CRITICAL WARNING (2026-03-24): This page has 4 CONFLICTING cooling architectures. ONLY the "POST-GTC REWRITE" section is correct. The 3 sections above it pushing EC-110 immersion are WRONG -- NVIDIA ships complete liquid-cooled racks, immersion is deprioritized. Ignore all immersion content.
 *[Child: Power Distribution Unit Layouts]*
-> Phase 1 target: ~2 MW total load (16 NVL72 racks + cooling + network). Natural gas generators and UPS batteries stay outside the thermal envelope.
----
-## Power Architecture
-    - Source A: LUS Power utility feed — primary
-    - Source B: Natural gas generators (exterior) — automatic transfer switch (ATS)
-    - UPS: Exterior battery cabinet — bridges utility-to-generator gap (~10-15 sec)
-    - Distribution: 480V 3-phase to main panel — step-down to rack PDUs
-    - Phase 1 load estimate: NVIDIA rack TDP unconfirmed — engage NVIDIA Enterprise for facility power spec
----
-## Exterior Equipment (Outside Thermal Envelope)
-    - Generators: 2x natural gas gensets — N+1 — exterior south pad mount
-    - ATS: Automatic Transfer Switch — exterior weatherproof enclosure
-    - UPS batteries: Battery cabinet — exterior weatherproof, climate controlled
-    - Main disconnect: Main breaker panel — exterior accessible
----
-## Interior Distribution
-### Main Distribution Panel
-    - Feed: 480V 3-phase from exterior ATS through conduit penetration
-    - Breakers: 1x 400A 3-phase breaker per 2-rack PDU zone (8 breakers total)
-    - Location: Network core — north end of room
----
-### Per-Rack PDU
-    - Qty: 8x dual-feed PDUs — each serves 2 NVL72 racks
-    - Type: Metered, switched — remote outlet control via SNMP/REST
-    - Input: 480V 3-phase / 200A per PDU
-    - Monitoring: Per-outlet current metering — feeds InfraManagerAgent
----
-## Generator Spec (Preliminary)
-    - Fuel: Natural gas — Atmos Energy supply line
-    - Size: 2x 1.25 MW continuous — N+1 for 2 MW load
-    - Startup: Auto-start on utility fail — <15 sec to full load
-    - Enclosure: Sound-attenuated weatherproof — exterior pad mount
-    - Fuel line: Atmos Energy commercial service — 2-inch minimum supply
----
-## PUE Target
-```plain text
-PUE = Total Facility Power / IT Equipment Power
-    = (1.92 MW compute + 0.06 MW cooling aux + 0.02 MW misc) / 1.92 MW
-    = ~1.04  (liquid cooled, no CRAC units, no hot aisle air handling)
-
-Industry best practice: <1.2
-Hyperscale liquid-cooled target: <1.1
-MARLIE I target: <1.05
-```
----
-## Monitoring
-    - Mission Control: InfraManagerAgent — real-time kW per rack, PUE, phase balance
-    - Alerts: Over-current, phase imbalance, generator ATS transfer events, UPS state
-> CORRECTED POWER HIERARCHY (March 8, 2026): LUS grid = primary. Bloom Energy fuel cell = continuous supplemental generation (baseload, not backup). Diesel gensets = emergency backup only (N+1). Do not describe Bloom as primary or as backup — it is continuous supplemental.
----
-> SCOPE: This document applies to MARLIE I — the permanent AI Factory at 1201 SE Evangeline Thruway. NOT applicable to ADC 3K container pods, which use immersion cooling and a separate architecture.
----
 > UPDATED 2026-03-23 -- POST-GTC REWRITE
 ## Power Architecture -- 800V DC Native (ALL Sites)
 ### 4-Layer Power Hierarchy (LOCKED):
@@ -329,79 +187,7 @@ ADC 3K Pod: 1x portable genset (250-500 kW), Optional roof panels, Optional grid
     - Optional grid tie for urban deployments
     - 4-layer hierarchy applies to EVERY deployment
 ---
-> CRITICAL WARNING (2026-03-24): This page has 3 CONFLICTING power hierarchies. ONLY the POST-GTC section is correct: 800V DC native, Eaton Beam Rubin DSX, 4-layer hierarchy (Solar > Gas > Diesel > Grid sell-back). Bloom Energy is REMOVED. LUS grid is backup only at MARLIE I. 480V 3-phase content is WRONG.
 *[Child: Network Topology Diagrams]*
-> Three separate fabrics: NVLink 6 (intra-rack GPU), InfiniBand NDR (inter-rack compute), Spectrum-X Ethernet (external/storage). Management on isolated 10GbE.
----
-## Fabric 1 — NVLink 6 (Intra-Rack GPU Fabric)
-    - Scope: Within each NVL72 rack only
-    - Bandwidth: 3.6 TB/s per GPU bidirectional (NVLink 6) — 260 TB/s aggregate across rack
-    - Topology: Rail-optimized via 9x NVLink 6 Switch per rack
-    - Cabling: Factory-integrated — no field assembly
-    - Latency: Sub-microsecond GPU-to-GPU within rack
----
-## Fabric 2 — InfiniBand NDR (Inter-Rack Compute Fabric)
-```plain text
-                 [ IB Spine Switch (64-port NDR400) ]
-                /              |              \
-       [IB Leaf 1]        [IB Leaf 2]        [IB Leaf 3]
-       (32-port NDR)      (32-port NDR)      (32-port NDR)
-      / | | | | \        / | | | | \        / | | | | \
-    A01 A02 A03 A04   A05 A06 A07 A08   B01 B02 B03 B04
-                                         B05 B06 B07 B08
-
-Each rack: 2x ConnectX-9 SuperNIC (1.6 Tb/s each)
-Each leaf: 16 downlinks (rack) + 8 uplinks (spine)
-Total bisection BW: ~25.6 Tb/s
-Oversubscription: 2:1 leaf-to-spine
-```
-    - Switch vendor: NVIDIA Quantum-3 InfiniBand
-    - Per-port BW: 400 Gb/s NDR
----
-## Fabric 3 — Spectrum-X Ethernet (External / Storage)
-```plain text
-[ LUS Fiber Uplink -- 100GbE (upgrade path: 400GbE) ]
-        |
-  [ Spectrum-6 (SN6810 / SN6800) Top-of-Row Switch ]
-   /    |    |    |    |    |    |    \
- A01  A02  ...  B08  [NAS] [Object Store] [Customer VPN]
-
-Each NVL72: 1x 400GbE to Spectrum-X via BlueField-4 DPU
-Purpose: external customer traffic, storage, internet uplink
-```
-    - LUS Fiber uplink: 100GbE day 1 — upgrade path to 400GbE / dark fiber
-    - BlueField-4 DPU: Offloads networking/storage from Vera CPU — 1 per rack
-    - Switch: NVIDIA Spectrum-6 SN6810 (102.4 Tb/s) / SN6800 (409.6 Tb/s) — co-packaged optics, 800 Gb/s ports
----
-## Fabric 4 — Management Network (OOB)
-```plain text
-[ Management Switch -- 24-port 10GbE ]
-  |  |  |  |  ...  |  |  |  |
- A01 A02 ... B08  [MC Server] [BMS GW] [KVM/IPMI]
-
-Purpose: out-of-band management, independent of compute fabrics
-Access: BMC/IPMI per rack + BlueField-4 DPU management port
-Remote: WireGuard / Tailscale VPN
-```
----
-## WAN / Uplink
-    - Provider: LUS Fiber — city-owned, direct negotiation, no Big Telecom premium
-    - Day 1: 100GbE dedicated
-    - Upgrade path: 400GbE or dark fiber as customer demand grows
-    - Redundancy: SLEMCO or secondary carrier as failover
-    - BGP: Own AS number + IP block for sovereign routing — Phase 2 target
----
-## IP Plan (Draft)
-```plain text
-Management:    10.0.0.0/24    -- BMC, switches, BMS
-Compute IB:    10.1.0.0/16    -- InfiniBand fabric
-Storage/Eth:   10.2.0.0/16    -- Spectrum-X tenant fabric
-Customer VMs:  10.100.0.0/16  -- NAT to LUS uplink
-Mission Ctrl:  10.0.0.1
-DNS/NTP:       10.0.0.2
-```
-> SCOPE: This document applies to MARLIE I — the permanent AI Factory at 1201 SE Evangeline Thruway. NOT applicable to ADC 3K container pods, which use immersion cooling and a separate architecture.
----
 > UPDATED 2026-03-23 -- POST-GTC REWRITE
 ## Network Architecture -- Hub and Spoke
 ### Fabric 1: NVLink 6 (Intra-Rack)
@@ -436,7 +222,6 @@ Willow Glen <-> Trappeys: Dedicated fiber, 100 Gbps (Via Lafayette fiber)
 Willow Glen <-> Remote Pods: Starlink/VSAT, 100-500 Mbps (Inference results only)
 MARLIE I <-> Trappeys: LUS Fiber, 10 Gbps (0.5 mi)
 ---
-> WARNING (2026-03-24): Pre-GTC fabric specs above reference Quantum-3 NDR 400 Gb/s. CORRECT: Quantum-X800 at 800 Gb/s. Hub-and-spoke architecture in POST-GTC section is authoritative.
 *[Child: RunPod API Integration Notes]*
 > Mission Control manages RunPod cloud GPU pods via GraphQL API. IntegrationAgent dispatches via runpod skill. When MARLIE I goes live, on-prem racks replace RunPod cloud as primary.
 ---
@@ -526,8 +311,8 @@ RunPod remains the cloud GPU provider for Phase 0 (pre-facility). The existing G
 You are the lead infrastructure engineer for ADC 3K — Advantage Design Construction containerized AI compute pod product line. Owner: Scott Tomsu, Lafayette, Louisiana.
 ### ADC 3K Product
       - 40-ft High Cube ISO container — manufactured AI compute pod, deployed to remote sites
-      - Cooling: Immersion (dielectric fluid). No CDU, no HVAC, no raised floor. PUE target: 1.02-1.05
-      - Power: 480V 3-phase + Bloom Energy supplemental + diesel N+1
+      - Cooling: Direct-to-chip liquid cooling (NVIDIA reference). External dry cooler. No immersion, no HVAC. PUE target: 1.03
+      - Power: 800V DC native. Bloom SOFC primary. Dual Bloom + CNG backup per site. No diesel — network redundancy via distributed sites.
       - Networked back to MARLIE I HQ at 1201 SE Evangeline Thruway
 ### First Deployment — Trappeys Cannery
       - Metal warehouse structure. Pods drop into bays, no structural modifications needed.
@@ -545,7 +330,7 @@ You are the lead infrastructure engineer for ADC 3K — Advantage Design Constru
 ## ADC 3K Pod -- Current Spec (Post-GTC 2026)
 ### Hardware:
       - 40-ft High Cube ISO container (NOT 20-ft)
-      - 1-2 NVIDIA Vera Rubin NVL72 racks (liquid cooled, shipped complete)
+      - 10 NVIDIA Vera Rubin NVL72 racks (8 compute + 1 network + 1 storage) — C1 SuperPOD, 576 GPUs, 1.3 MW IT load
       - Eaton Beam Rubin DSX (800V DC rectifier + bus + PDUs)
       - Integrated dry cooler (exterior mount)
       - Portable natural gas generator OR site power tie-in
@@ -557,7 +342,7 @@ You are the lead infrastructure engineer for ADC 3K — Advantage Design Constru
       - Mission Control AI (ADC autonomous ops)
       - NemoClaw (secure agent sandbox -- waiting for 403 bug fix)
 ### Power: 800V DC Native
-      - 4-Layer Hierarchy: Solar -> Gas -> Diesel -> Grid (sell-back)
+      - Power hierarchy: Solar/First Solar 1500V DC -> Bloom SOFC 800V DC (primary) -> LFP BESS (bridge/ATS) -> Grid (sell-back only). No diesel — network redundancy via distributed sites.
       - Eaton Beam Rubin DSX throughout
       - Henry Hub natural gas pricing
 ### Deployment Targets:
@@ -576,7 +361,6 @@ You are the lead infrastructure engineer for ADC 3K — Advantage Design Constru
       - AMD Instinct = future option
 Container architecture is chip-agnostic -- 800V DC + liquid cooling works for any vendor.
 ### Open Items:
-      1. NPN registration (5-min form -- DO TODAY)
       1. NemoClaw 403 bug fix (NVIDIA GitHub Issues #314, #336)
       1. Container vendor selection (40-ft HC ISO)
       1. Portable genset spec for field deployment
@@ -584,7 +368,44 @@ Container architecture is chip-agnostic -- 800V DC + liquid cooling works for an
       1. Run:AI licensing and setup
       1. First Solar panel mounting spec for container roof
 ---
-> DANGER (2026-03-24): The "COPY FROM HERE" section at the top has WRONG pre-GTC specs. DO NOT COPY IT. Use CLAUDE.md in the git repo as the session startup source. It is current and authoritative. This Notion page is ARCHIVED -- do not use for session prompts.
+---
+## Session Closeout — 2026-04-03
+Notion fixes already pushed this session (do not redo): cooling corrected to direct-to-chip liquid throughout; rack count corrected to 10 NVL72 racks (C1 SuperPOD, 576 GPUs, 1.3 MW IT); email corrected to scott@adc3k.com; Bloom SOFC confirmed as PRIMARY; First Solar 1500V DC layer + grid sell-back only; deleted NPN 5-min form block, DANGER callout, duplicate cooling bullets, March 8 Bloom demotion.
+### 10 MW Canonical Site Layout — LOCKED
+      - 4 pods x 10 NVL72 racks per pad = one 10 MW site (40 racks, 2,880 GPUs)
+      - Dual Bloom A + Bloom B — N+1 at generation level. Either covers full load solo.
+      - One Atmos gas tap, manifold splits to both Bloom units
+      - BESS vendor slot OPEN — do not lock supplier. Architecture = DC-coupled containerized BESS.
+      - First Solar panels on pod rooftops. 1500V DC forward design. Operating at 800V today.
+      - Two utility connections only per site: Atmos gas tap + LUS fiber drop. No grid. No water.
+### Two-Bus Architecture — LOCKED
+      - Bus 1 — COMPUTE (sacred): AI racks, liquid cooling, Mission Control. Hitachi AMPS + BESS. Zero interruptions. Nothing else on this bus.
+      - Bus 2 — AUXILIARY (separate): site lighting, LED screen, EV/e-bike/scooter/phone/laptop DC charging, drone dock, security cameras. Separate smaller BESS.
+      - Split happens after Bloom output. A fault on Bus 2 NEVER touches Bus 1. Both buses can be fed by either Bloom unit.
+### Public-Facing Auxiliary Layer — LOCKED
+      - LED screen on container exterior — advertising revenue + AI education content at night
+      - DC charging hub: CCS fast charge EVs, e-bikes, scooters, phones, laptops. All DC-native — no AC conversion loss.
+      - Scooter/bike docking — Lime, Bird, VeoRide partnership angle. Drop off, charge, pick up.
+      - Site lighting: ADC owns its perimeter. Full LED flood + pathway. No city lighting dependence.
+      - Drone security dock at every site. Autonomous patrol tied to Mission Control / SkyCommand. Mini KLFT node.
+### City Neural Network Concept — INTERNAL ONLY
+      - Lafayette pod network physically resembles a neural network. Each pod cluster = node, LUS fiber = axons, Bloom = synapse fuel.
+      - Framing: We are not building a data center. We are building a brain for the city.
+      - Map visualization: Lafayette street map, nodes lit at each site, edges showing fiber. MUST BUILD before investor meetings. NOT on website yet.
+      - Scale target: 300-500 MW city-wide distributed. Do NOT publish a number. Frame as city-scale only.
+      - Inference runs at nearest edge node. Training routes to Trappeys/Willow Glen. Network self-balances.
+### Deployment Zones — Inner-City Infrastructure Corridors
+      - Target: areas that cannot be traditionally developed (by water, gas infra, old neighborhoods) — already have Atmos gas + LUS fiber.
+      - Only two utility connections needed: Atmos commercial gas tap + LUS fiber drop. No grid. No city plumbing. No building permits for occupied structures.
+### OPEN ITEMS — Must Resolve Before Renders
+      - OPEN: Cooling aesthetics — dry cooler is industrial-looking. Options: (1) louvered screen enclosure, (2) roof-mount low-profile, (3) visible design feature. Pick one. Must share design language with pod + LED screen + charging canopy + drone dock.
+      - OPEN: Pad top-down site drawing — concrete pad, fenced perimeter, setback, Bloom A/B, BESS, AMPS PCS, 4 pods, cooler, charging canopy, drone dock. Lock this before renders.
+### Next Actions
+      1. Lock cooling aesthetics decision (choose one option)
+      1. Produce pad top-down site drawing (concrete, perimeter, all equipment positions)
+      1. Once pad is locked, begin renders — single design language, reusable across all sites
+      1. Build city neural network map visualization (internal, before investor meetings)
+New memory files: memory/projects/adc3k_city_network.md | memory/projects/adc3k_site_design.md | adc3k_pod_power_architecture.md updated with two-bus section at top.
 ---
 > ARCHIVED (2026-03-24): This page is empty and vestigial. No content. Use the Pod Swarm Engineering Suite parent page instead.
 ---
@@ -841,8 +662,8 @@ This section supersedes conflicting info above. The Feb 28 and March 8 briefs ar
 - Model uses ~25% blended Louisiana corporate tax rate. Actual rate: 5.5%
 - IRR is higher than currently shown — but model presented to investors is wrong
 - ACTION: Update financial model Assumptions tab before next investor meeting
-### 6. Bloom Energy Language — RESOLVED (March 8, 2026)
-- FIXED: LUS grid = primary. Bloom Energy fuel cell = continuous supplemental generation (baseload). Diesel = emergency backup N+1. Consistent across all docs.
+### 6. Bloom Energy Language — CORRECTED (2026-04-03)
+- LOCKED: Bloom Energy SOFC = PRIMARY generation (800V DC direct, no inverter, Henry Hub gas). First Solar = 1500V DC layer. LUS grid = sell-back only. Diesel = emergency N+1 only.
 - FIXED: Power Distribution page now has corrected hierarchy callout at top of page.
 ---
 ## What Institutional Investors Expect That Is Missing
@@ -870,12 +691,12 @@ This section supersedes conflicting info above. The Feb 28 and March 8 briefs ar
 - Type: Permanent building-based AI Factory — NVL72 racks inside existing structure
 - Role: ADC HQ, primary compute facility, NOC, operations base
 - Phase 1: 16 NVL72 racks on 22x35 ft floor — 57.6 ExaFLOPS NVFP4
-- Cooling: Direct-to-chip CDU liquid cooling, exterior dry coolers, Bloom Energy + LUS grid + diesel N+1
+- Cooling: Direct-to-chip CDU liquid cooling, exterior dry coolers. Power: Bloom SOFC primary + First Solar + LUS grid sell-back
 ## Product 2: ADC 3K — Containerized AI Pod (Manufactured Product Line)
 - Type: Standardized containerized compute nodes — manufactured, sold, and deployed as units
 - Role: Remote site deployments — edge AI distribution centers tied into the network
-- Cooling: Immersion cooling — no HVAC required, enables deployment into metal structures without climate control
-- First deployment site: Trappeys Cannery — metal warehouse structure, immersion-cooled pods
+- Cooling: Direct-to-chip liquid cooling. External dry cooler. No HVAC required — enables deployment into metal structures without AC.
+- First deployment site: Trappeys Cannery — metal warehouse structure, liquid-cooled pods
 - Future sites: Industrial yards, commercial facilities, any site with power + fiber — no special building required
 - Scale: Multiple pods per site, networked back to MARLIE I
 > These are two different products serving different purposes. MARLIE I is the factory. ADC 3K pods are the distributed product deployed from it.
@@ -884,7 +705,7 @@ This section supersedes conflicting info above. The Feb 28 and March 8 briefs ar
 > These 7 gaps must be addressed before institutional investor meetings. Items marked [SCOTT ACTION] require work outside Notion.
 ### Gap 1 — Unit Economics Per Pod [SCOTT ACTION]
 Missing: Revenue per pod, CapEx per pod, payback period per pod, gross margin per pod. Institutional investors need to evaluate the unit economics of the product — not just the aggregate financial model.
-- Add to financial model: pod CapEx (container + hardware + immersion tank + install), monthly revenue per pod (colocation rate × GPU capacity), OpEx per pod (fluid maintenance, remote NOC, power), payback period per pod
+- Add to financial model: pod CapEx (container + hardware + liquid cooling system + install), monthly revenue per pod (colocation rate x GPU capacity), OpEx per pod (fluid maintenance, remote NOC, power), payback period per pod
 - Target: 18–36 month payback per pod at base-case utilization
 ### Gap 2 — Remote Site Operations Model [SCOTT ACTION]
 Missing: Who manages the pod at the remote site? What is the SLA? How is maintenance handled? This is a core differentiator — answer it explicitly.
@@ -897,7 +718,7 @@ Missing: Who manages the pod at the remote site? What is the SLA? How is mainten
 ### Gap 4 — Competitive Landscape [SCOTT ACTION]
 No competitive analysis in investor materials. Institutional investors will ask: who else does this and why will you win?
 - Direct competitors: CoreWeave (cloud GPU), Lambda Labs, Crusoe Energy (stranded gas), Lancium (remote compute)
-- ADC 3K differentiators: (1) Site-agnostic immersion pod — deploy anywhere with power + fiber, (2) Louisiana incentive stack + Henry Hub gas proximity, (3) Owner-operator with captive manufacturing base (MARLIE I), (4) Small-footprint pod enables enterprise edge AI, not just hyperscale
+- ADC 3K differentiators: (1) Site-agnostic liquid-cooled pod — deploy anywhere with power + fiber, (2) Louisiana incentive stack + Henry Hub gas proximity, (3) Owner-operator with captive manufacturing base (MARLIE I), (4) Small-footprint pod enables enterprise edge AI, not just hyperscale
 - Add competitive landscape slide to investor deck — 1 slide, 4 quadrants or simple table
 ### Gap 5 — Exit Strategy [SCOTT ACTION]
 - Option A: Acqui-hire / strategic acquisition — ADC 3K as manufactured AI infrastructure product is acquisition target for hyperscalers or REITs
@@ -917,19 +738,19 @@ No team slide in investor materials. Investors bet on people as much as ideas. T
 - ALSO FIX: HB 827 threshold: Phase 1 is below $200M — replace HB 827 with parish-level PILOT and brief investors honestly
 ---
 ## ADC 3K Deployment Geography — Natural Gas Pipeline Map
-ADC 3K immersion-cooled pods deploy along Louisiana's natural gas pipeline corridor. This is not arbitrary. Gas pipeline infrastructure means: existing utility roads, 3-phase power stubs, industrial zoning, and co-location opportunity with captive industrial customers.
+ADC 3K liquid-cooled pods deploy along Louisiana natural gas pipeline corridor. This is not arbitrary. Gas pipeline infrastructure means: existing utility roads, 3-phase power stubs, industrial zoning, and co-location opportunity with captive industrial customers.
 - Deployment logic: pods follow Atmos/CenterPoint gas pipeline map — industrial site co-location
 - Henry Hub corridor: Erath, LA (~40 mi from MARLIE I) — Vermilion Parish gas distribution hub
 - Gulf Coast industrial belt: refineries, LNG export terminals, petrochemical plants — captive ADC customers
 - New Iberia (Site 2 candidate): solar factory + industrial port + pipeline access — ADC pod + energy partner
 - Lake Charles / Cameron Parish: LNG export corridor — security, monitoring, AI inference pods
 - Morgan City: offshore supply base, pipeline terminus — SAR + industrial AI
-- Scaling rule: one ADC 3K pod per industrial customer — immersion pod drops into existing metal structure
+- Scaling rule: one ADC 3K pod per industrial customer — liquid-cooled pod drops into existing metal structure
 ---
 ## Ecosystem Network — How ADC 3K Connects to Everything
 > ADC 3K is NOT a standalone product. It is the field arm of the ADC ecosystem. MARLIE I is the brain. ADC 3K pods are the muscle. KLFT is the showcase. Ground Zero tells the story.
 - MARLIE I (HQ/NOC): all ADC 3K pods managed from 1201 SE Evangeline Thruway — Mission Control AI
-- Trappeys Cannery (Site 1 planned): first remote pod deployment — metal warehouse, immersion cooling
+- Trappeys Cannery (Site 1 planned): first remote pod deployment — metal warehouse, liquid cooling
 - KLFT 1.1 (first live node): ADC 3K pod at Lafayette airport — SkyCommand compute, emergency drone ops
 - New Iberia (Site 2): solar factory + ADC pod — renewable energy anchor + industrial AI customer
 - Ground Zero: YouTube channel @GroundZero-ai — ADC ecosystem documentary, 8 planned ADC episodes
@@ -939,11 +760,9 @@ ADC 3K immersion-cooled pods deploy along Louisiana's natural gas pipeline corri
 NVIDIA ships complete liquid-cooled racks (45 deg C hot water, 2-hour install). EC-110 immersion cooling DEPRIORITIZED for main facilities post-GTC 2026. The standard is now NVIDIA reference liquid cooling with direct-to-chip cold plates. Dry coolers for heat rejection. PUE target: 1.03. EC-110 may still apply to edge/remote deployments where standard rack cooling is impractical.
 - Direct-to-chip liquid cooling: 45 deg C hot water loop. No massive AC systems. No loud fans. NVIDIA-standard for all Blackwell/Vera Rubin racks. Eaton Beam Rubin DSX handles 800V DC power delivery.
 - Louisiana rationale: 95°F+ summers, 80%+ humidity — air cooling costs 40-80% of power budget
-- Direct-to-chip liquid cooling: 45 deg C hot water loop. No massive AC systems. No loud fans. NVIDIA-standard for all Blackwell/Vera Rubin racks. Eaton Beam Rubin DSX handles 800V DC power delivery.
 - No HVAC: zero air conditioning, zero CRAC, zero raised floor — pods deploy into raw warehouse space
 - No fans: sealed fluid bath — silent, zero vibration, maximum GPU lifespan
 - MARLIE I is DIFFERENT: cold plate CDU — building-based, code-compliant, public-facing state of the art
-- Direct-to-chip liquid cooling: 45 deg C hot water loop. No massive AC systems. No loud fans. NVIDIA-standard for all Blackwell/Vera Rubin racks. Eaton Beam Rubin DSX handles 800V DC power delivery.
 ---
 ## New Iberia Solar Factory — Strategic Energy Partner
 Local utility-scale solar production facility ~30 miles from MARLIE I in New Iberia, LA. New Iberia is simultaneously a candidate for ADC 3K Site 2 deployment and a renewable energy supplier.

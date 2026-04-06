@@ -1,5 +1,5 @@
 # 09 -- Financial Architecture & ROI
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > 5-year financial model. 75% Vera Rubin / 25% Groq. Blended $2.00/M tokens.
 ## 5-Year Summary

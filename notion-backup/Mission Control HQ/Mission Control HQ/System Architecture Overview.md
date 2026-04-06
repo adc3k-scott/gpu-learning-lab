@@ -1,5 +1,5 @@
 # System Architecture Overview
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > This is the master cross-reference document for all ADC infrastructure projects. Read this first to understand how MARLIE I, ADC 3K pods, KLFT/SkyCommand, New Iberia Solar, and the City of Lafayette connect as one ecosystem.
 ---
