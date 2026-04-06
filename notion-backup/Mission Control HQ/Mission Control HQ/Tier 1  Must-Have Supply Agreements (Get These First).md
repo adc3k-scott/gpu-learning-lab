@@ -1,5 +1,5 @@
 # Tier 1 — Must-Have Supply Agreements (Get These First)
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Cannot close investors or break ground without these. Each is a bilateral win — ADC gets supply certainty, vendor gets anchor industrial customer.
 ---

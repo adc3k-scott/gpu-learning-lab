@@ -1,5 +1,5 @@
 # 06 -- ADC3K Credentials
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > ADC qualifications and track record.
 Mirrors MARLIE I credentials section. See main ADC3K deck at adc3k.com.

@@ -1,5 +1,5 @@
 # 09 — Financial Architecture & ROI
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > This is not an AI factory. This is a money machine. Every watt generates revenue. Every dollar goes to compute. The comparison is not close.
 ---

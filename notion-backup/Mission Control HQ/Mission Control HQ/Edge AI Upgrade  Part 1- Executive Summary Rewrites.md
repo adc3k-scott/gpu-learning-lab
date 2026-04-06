@@ -1,5 +1,5 @@
 # Edge AI Upgrade — Part 1: Executive Summary Rewrites
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 Status: ✅ APPLIED to V4 documents — Both exec summaries rewritten and inserted into Spec V4 and Financing V4 .docx files
 ---

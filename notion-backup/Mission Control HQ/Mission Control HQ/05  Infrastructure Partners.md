@@ -1,5 +1,5 @@
 # 05 — Infrastructure Partners
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Every infrastructure partner is not a vendor. They are a node in the same network.
 ---

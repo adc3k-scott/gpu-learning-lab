@@ -1,5 +1,5 @@
 # ADC Manufacturing -- Pod Factory Strategy
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 # ADC Manufacturing -- Two-Step Strategy
 Step 1: Bootstrap factory in existing building. Get pods built, get revenue flowing, learn what to automate. Step 2: Purpose-built automated factory with robots, solar roof, pipeline gas, and NVIDIA Omniverse digital twin. Step 1 funds Step 2.

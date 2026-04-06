@@ -1,5 +1,5 @@
 # Site Evaluation Framework & Scoring
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Use this framework on every site visit and property evaluation. Produces a TYPE classification and Priority Score. Run before any LOI or acquisition conversation.
 ---

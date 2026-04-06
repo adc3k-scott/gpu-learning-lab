@@ -1,5 +1,5 @@
 # Tier 3 — Government & Institutional Partners
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Government partners do not write checks — they open doors. A letter of support from the City of Lafayette is worth more than a financial projection in a federal funding application. Get these relationships in writing before investor meetings.
 ---

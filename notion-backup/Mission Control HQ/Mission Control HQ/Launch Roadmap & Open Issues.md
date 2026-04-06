@@ -1,5 +1,5 @@
 # Launch Roadmap & Open Issues
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 # Launch Roadmap & Open Issues
 > Site is LIVE. Most critical bugs are fixed. Remaining items are config tasks (Stripe webhook, Supabase URLs) and launch prep.

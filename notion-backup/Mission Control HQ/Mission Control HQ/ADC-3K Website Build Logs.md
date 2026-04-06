@@ -1,5 +1,5 @@
 # ADC-3K Website Build Logs
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Build logs, design decisions, and content for the ADC3K public website.
 ---

@@ -1,5 +1,5 @@
 # 01 — Investment Thesis
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > The market is building for Blackwell. Marlie I is built for Rubin. That gap is the investment.
 ---

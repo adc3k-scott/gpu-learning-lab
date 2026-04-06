@@ -1,5 +1,5 @@
 # The ADC 3K Pod — Your Edge AI Node
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 # The ADC 3K Pod Is Already an Edge Product
 > We don't need to build a new product. We need to NAME the product we already have. The pod is a self-powered, self-cooled, remotely-managed edge AI node. That's not marketing spin — that's literally what it does.

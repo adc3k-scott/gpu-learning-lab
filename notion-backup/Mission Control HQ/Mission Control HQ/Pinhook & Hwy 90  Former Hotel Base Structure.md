@@ -1,5 +1,5 @@
 # Pinhook & Hwy 90 — Former Hotel Base Structure
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > STATUS: PROSPECT — Demolished hotel, base structure remains. Urban core location. ADC 3K pod site (TYPE B). Key intersection visibility. Identify owner before approaching.
 ---

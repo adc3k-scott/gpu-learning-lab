@@ -1,5 +1,5 @@
 # Tier 2 — Operational Partners & Professional Services
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Tier 2 partners BUILD, INSTALL, CONNECT, and MAINTAIN the facility. Without them, Tier 1 hardware sits in crates.
 Tier 1 = Hardware you can't run without (NVIDIA, Cat, Eaton, First Solar)

@@ -1,5 +1,5 @@
 # Workspace Index & Navigation
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 > Last updated: March 21, 2026 (post-GTC pivot). Master navigation reference for the Mission Control HQ workspace.
 > Start here. Every active project, archive, and document in the workspace is mapped below.

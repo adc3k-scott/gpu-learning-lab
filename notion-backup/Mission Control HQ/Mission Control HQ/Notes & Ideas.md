@@ -1,5 +1,5 @@
 # 💡 Notes & Ideas
-*Notion backup — 2026-04-03*
+*Notion backup — 2026-04-06*
 
 Quick capture space for ideas, meeting notes, and reference material.
 ---
