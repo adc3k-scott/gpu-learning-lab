@@ -47,7 +47,7 @@ Last updated: 2026-03-25
 ## N+1 Configurations for ADC Sites
 
 ### Trappeys (1.3 MW IT): 3x G3516J (1.6 MW each) = 4.8 MW installed
-### MARLIE I (1 MW IT): 2x G3512H (1.03 MW each) = 2.06 MW installed
+### MARLIE 1 (1 MW IT): 2x G3512H (1.03 MW each) = 2.06 MW installed
 ### Willow Glen 10 MW: 5x G3520J (2.5 MW each) = 12.5 MW installed
 ### Willow Glen 100 MW: 3x G3616A4 (8.7 MW each) per 20 MW block
 

@@ -24,7 +24,7 @@ Here's what we've built:
 We didn't outsource this. We built it. In Lafayette, Louisiana.
 
 **The plan:**
-- MARLIE I (owned) — command center, first GPU rack deployed
+- MARLIE 1 (owned) — command center, first GPU rack deployed
 - Trappeys Cannery (~$1M acquisition) — 112,500 sq ft solar AI factory, water tower cooling, 30 miles from First Solar's New Iberia plant
 - 4-layer power: Solar → Natural Gas → Diesel → Grid (sell-back only)
 - 800V DC architecture (CERAWeek 2026 validated)

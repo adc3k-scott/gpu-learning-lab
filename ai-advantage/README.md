@@ -61,7 +61,7 @@ Every business falls into one of these patterns. Once an installer learns the pa
 
 ## Self-Hosted on ADC Infrastructure
 
-AI Advantage runs on ADC's own NVL72 hardware at MARLIE I in Lafayette, Louisiana. No third-party cloud. No retail API fees. We generate our own power at $0.027/kWh and run our own compute — raw token cost drops to ~$0.004/M tokens (vs $0.20-$150/M at retail cloud pricing). That margin is the entire business model.
+AI Advantage runs on ADC's own NVL72 hardware at MARLIE 1 in Lafayette, Louisiana. No third-party cloud. No retail API fees. We generate our own power at $0.027/kWh and run our own compute — raw token cost drops to ~$0.004/M tokens (vs $0.20-$150/M at retail cloud pricing). That margin is the entire business model.
 
 **ADC is its own first customer.** AI Advantage is the reference deployment that proves the token factory works. Every client agent running through our infrastructure validates the neocloud model before we sell tokens to enterprise customers.
 
@@ -72,7 +72,7 @@ AI Advantage runs on ADC's own NVL72 hardware at MARLIE I in Lafayette, Louisian
 | **Dynamo 1.0** | NVIDIA's open-source inference OS — 7x performance on same Blackwell hardware |
 | **Run:AI scheduling** | GPU workload orchestration — each customer gets a project with guaranteed quota |
 | **MIG isolation** | Multi-Instance GPU — hardware-level tenant isolation, one GPU serves multiple customers safely |
-| **DCGM + Mission Control** | Real-time GPU monitoring, utilization, thermals, error tracking from MARLIE I |
+| **DCGM + Mission Control** | Real-time GPU monitoring, utilization, thermals, error tracking from MARLIE 1 |
 
 ### Security Layer
 Every agent we deploy runs inside a sandboxed environment with NVIDIA's security tooling. This is non-negotiable.
@@ -81,8 +81,8 @@ Every agent we deploy runs inside a sandboxed environment with NVIDIA's security
 |-------------|---------------|
 | **Sandboxed execution** | Agent can't access anything outside its workspace. Landlock + seccomp + network isolation. |
 | **Network policy** | Only approved endpoints allowed. Unknown requests blocked and surfaced to our monitoring team. |
-| **Inference routing** | All AI processing routes through ADC's NIM endpoints at MARLIE I — we control cost, model selection, and data flow. |
-| **Remote monitoring** | AI Advantage manages every deployment from MARLIE I's Mission Control dashboard. We see blocked requests, approve/deny, push updates. |
+| **Inference routing** | All AI processing routes through ADC's NIM endpoints at MARLIE 1 — we control cost, model selection, and data flow. |
+| **Remote monitoring** | AI Advantage manages every deployment from MARLIE 1's Mission Control dashboard. We see blocked requests, approve/deny, push updates. |
 | **Vertical-specific policies** | Medical gets HIPAA lockdown. Legal gets privilege lockdown. Restaurant gets basic lockdown. |
 | **MIG isolation** | Each customer's inference runs on a hardware-isolated GPU partition. No shared memory, no data leakage between tenants. |
 
@@ -93,7 +93,7 @@ Every agent we deploy runs inside a sandboxed environment with NVIDIA's security
 
 **How inference routing generates revenue:**
 ```
-Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE I NVL72) → Dynamo 1.0 → AI Model → Response
+Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE 1 NVL72) → Dynamo 1.0 → AI Model → Response
                             ↑
                    We bill per token here.
                    Client pays subscription.
@@ -301,7 +301,7 @@ When a new installer or team member joins, they need to get set up with the AI A
    ```
 3. **Configure environment:** Copy `.env.example` to `.env` and fill in credentials (Scott provides API keys — never share them outside the team).
 4. **Test Mission Control access:** Open `http://marlie1.local:8000` (on ADC network) or VPN in. Verify the dashboard loads and you can see agent status.
-5. **SSH key for MARLIE I:** Generate a key pair, send the public key to Scott. Once added, verify: `ssh installer@marlie1.local`
+5. **SSH key for MARLIE 1:** Generate a key pair, send the public key to Scott. Once added, verify: `ssh installer@marlie1.local`
 6. **Read the playbooks:** Start with `installer-kit.md`, then your first vertical (Salon or Law Firm). Do a practice install on your own test workspace before going to a client.
 7. **Join the team channel:** Scott will add you to the AI Advantage installer group for real-time support during your first installs.
 

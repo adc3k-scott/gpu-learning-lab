@@ -79,16 +79,16 @@
 
 <nav class="tab-nav">
   <div class="tab-brand">ADC 3K <span>— Power Architecture</span></div>
-  <button class="tab-btn active" onclick="showTab('marlie')">MARLIE I (2 MW)</button>
-  <button class="tab-btn" onclick="showTab('pod')">ADC 3K Pod Site</button>
+  <button class="tab-btn active" onclick="showTab('marlie')">MARLIE 1 (2 MW)</button>
+  <button class="tab-btn" onclick="showTab('pod')">ADC Pure DC AI Cassette Site</button>
   <button class="tab-btn" onclick="showTab('gensets')">Generator Comparison</button>
   <button class="tab-btn" onclick="showTab('solar')">Solar + Battery</button>
   <button class="tab-btn" onclick="showTab('ats')">How ATS Switching Works</button>
 </nav>
 
-<!-- ===== TAB 1: MARLIE I ===== -->
+<!-- ===== TAB 1: MARLIE 1 ===== -->
 <div class="panel active" id="panel-marlie">
-  <div class="label">MARLIE I — Lafayette AI Factory</div>
+  <div class="label">MARLIE 1 — Lafayette AI Factory</div>
   <div class="section-title">Full Site Power Architecture — Phase 1</div>
   <div class="section-sub">2MW load · 16 NVL72 racks · 1201 SE Evangeline Thruway · H2 2026 target</div>
 
@@ -132,7 +132,7 @@
       <rect width="900" height="300" fill="#060d17"/>
 
       <!-- Title -->
-      <text x="450" y="22" fill="#3a6a9f" font-size="9" font-family="monospace" text-anchor="middle" letter-spacing="2">MARLIE I — PHASE 1 POWER FLOW DIAGRAM</text>
+      <text x="450" y="22" fill="#3a6a9f" font-size="9" font-family="monospace" text-anchor="middle" letter-spacing="2">MARLIE 1 — PHASE 1 POWER FLOW DIAGRAM</text>
 
       <!-- SOURCE BOXES -->
       <!-- Nat Gas Gensets — PRIMARY -->
@@ -284,7 +284,7 @@
 <div class="panel" id="panel-pod">
   <div class="label">ADC 3K — Remote Pod Deployment</div>
   <div class="section-title">Pod Site Power Architecture</div>
-  <div class="section-sub">750 kW per pod · immersion cooling · no HVAC · lights-out remote operation · managed from MARLIE I NOC</div>
+  <div class="section-sub">750 kW per pod · immersion cooling · no HVAC · lights-out remote operation · managed from MARLIE 1 NOC</div>
 
   <div class="stat-row">
     <div class="stat"><div class="val" style="color:var(--accent);">~750 kW</div><div class="lbl">Per Pod Load</div></div>
@@ -502,7 +502,7 @@
     <div class="label" style="color:var(--green);">Recommended Strategy for ADC 3K</div>
     <div class="grid2" style="margin-top:0.8rem;">
       <div>
-        <h5 style="margin-bottom:0.5rem;">Phase 1 — MARLIE I (2 MW site)</h5>
+        <h5 style="margin-bottom:0.5rem;">Phase 1 — MARLIE 1 (2 MW site)</h5>
         <p style="font-size:0.83rem;color:var(--muted);">
           <b style="color:var(--text);">Immediate:</b> Aggreko rental gensets for construction/commissioning phase. No wait, no CAPEX.<br><br>
           <b style="color:var(--text);">Permanent:</b> 2× Used CAT G3516 (1.5 MW each, N+1) from USP&E or LEL Critical. Target $200–350K total for both. Get maintenance records, run compression tests, verify emissions. 2–8 weeks to delivery.<br><br>
@@ -510,7 +510,7 @@
         </p>
       </div>
       <div>
-        <h5 style="margin-bottom:0.5rem;">Pipeline Sites — ADC 3K Pods (750 kW each)</h5>
+        <h5 style="margin-bottom:0.5rem;">Pipeline Sites — ADC Pure DC AI Cassettes (750 kW each)</h5>
         <p style="font-size:0.83rem;color:var(--muted);">
           <b style="color:var(--text);">Per site:</b> 2× Used Waukesha VHP or CAT G3512 (~750 kW each, N+1). Waukesha is ideal — Louisiana oil & gas techs know them, large surplus market, cheaper than CAT at this size.<br><br>
           <b style="color:var(--text);">Budget:</b> $80–150K per unit used = $160–300K per site for N+1 pair.<br><br>
@@ -583,7 +583,7 @@
         <div class="label">Sizing Guide — Solar + Battery Per Site Type</div>
         <table>
           <tr><th>Site Type</th><th>Solar</th><th>Battery</th><th>Est. Cost</th></tr>
-          <tr><td>MARLIE I (2 MW)</td><td>300–500 kW</td><td>500–1,000 kWh</td><td class="warn">$600K–1.1M</td></tr>
+          <tr><td>MARLIE 1 (2 MW)</td><td>300–500 kW</td><td>500–1,000 kWh</td><td class="warn">$600K–1.1M</td></tr>
           <tr><td>ADC 3K pod (750 kW)</td><td>150–300 kW</td><td>300–600 kWh</td><td class="warn">$280–550K</td></tr>
           <tr><td>Pipeline site (large acreage)</td><td>Up to 5 MW+</td><td>2,000–5,000 kWh</td><td class="bad">$5M–12M</td></tr>
         </table>

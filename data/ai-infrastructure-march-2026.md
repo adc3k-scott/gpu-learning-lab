@@ -320,7 +320,7 @@ Trappeys (Lafayette)  -----> Aggregation Server <----- Willow Glen (St. Gabriel)
   Local training            Global model              Local training
   on local data             updates only              on local data
        |                          |                          |
-MARLIE I (Lafayette)  -----> Aggregation Server <----- Edge nodes
+MARLIE 1 (Lafayette)  -----> Aggregation Server <----- Edge nodes
 ```
 
 **Why it matters:** Different ADC sites may serve different customers with different data. Federated learning lets ADC offer "train a model across all our sites without any customer's data leaving their designated facility." This is a compliance selling point for healthcare, finance, and government customers.

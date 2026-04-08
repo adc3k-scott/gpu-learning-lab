@@ -35,9 +35,10 @@
     { "source": "/blueprints-trappeys", "destination": "/trappeys-blueprints.html" },
     { "source": "/renders-trappeys", "destination": "/trappeys-renders.html" },
 
-    { "source": "/marlie", "destination": "/marlie.html" },
+    { "source": "/marlie", "destination": "/marlie-deck.html" },
     { "source": "/marlie-blueprints", "destination": "/marlie-blueprints.html" },
     { "source": "/blueprints-marlie", "destination": "/marlie-blueprints.html" },
+    { "source": "/marlie-fuelcell", "destination": "/marlie-deck-fuelcell-energy.html" },
 
     { "source": "/willow-glen", "destination": "/willow-glen-investors.html" },
     { "source": "/willow-glen-investors", "destination": "/willow-glen-investors.html" },

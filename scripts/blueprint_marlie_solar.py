@@ -1,5 +1,5 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Solar Rooftop Layout — 24x40 = 960 sq ft roof
 ~300 kW with 600 kWh battery. Small scale but meaningful offset.
 """
@@ -32,7 +32,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill="#0a0b0f"))
 
     # -- TITLE --
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("ROOFTOP SOLAR | First Solar Series 7 TR1 (550W) | 5-PANEL STRINGS @ 952V | Eaton xStorage BESS 600 kWh",
@@ -210,7 +210,7 @@ def build():
     math_x = 500
     math_y = 380
     dwg.add(dwg.rect((math_x, math_y), (580, 160), rx=6, fill="#111318", stroke="#1e2230"))
-    dwg.add(dwg.text("DC-DIRECT ARRAY MATH — MARLIE I ROOFTOP", insert=(math_x + 290, math_y + 18),
+    dwg.add(dwg.text("DC-DIRECT ARRAY MATH — MARLIE 1 ROOFTOP", insert=(math_x + 290, math_y + 18),
                       text_anchor="middle", fill="#fbbf24", font_size=10, font_family="Arial", font_weight="bold"))
 
     calcs = [
@@ -323,7 +323,7 @@ def build():
         "3. DC-Direct path: 952V strings buck-converted to 800V for direct feed into DSX bus — 97% efficiency, no AC conversion.",
         "4. 600 kWh BESS on 800V DC bus provides ~30 minutes of ride-through at full 1,240 kW facility load.",
         "5. Annual production ~450 MWh estimated. Offsets ~24% of total facility electrical consumption.",
-        "6. Made in America: First Solar manufactured in New Iberia, LA — 30 miles from MARLIE I site.",
+        "6. Made in America: First Solar manufactured in New Iberia, LA — 30 miles from MARLIE 1 site.",
         "7. Small scale compared to Trappeys (300 kW vs 2.05 MW) but meaningful offset for a 1,920 sq ft building.",
         "8. Solar is Layer 1 (offset), not primary. Gas generators carry full load 24/7. Solar reduces gas consumption.",
     ]

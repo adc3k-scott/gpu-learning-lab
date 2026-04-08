@@ -99,9 +99,9 @@ Amphenol (connectors), Asia Vital Components / AVC (thermal), Cooler Master (coo
 - OCP rack design files shared with partners through NPN (NVIDIA Partner Network)
 - Rack-scale liquid cooling designed to OCP immersion and direct-to-chip standards
 
-### How ADC 3K Pods Align with MGX
+### How ADC Pure DC AI Cassettes Align with MGX
 
-ADC 3K Pods use MGX-compatible components:
+ADC Pure DC AI Cassettes use MGX-compatible components:
 - **Staubli UQD** = the "MGX UQD" quick disconnect
 - **800V busbars** = MGX busbar standard
 - **Liquid cooling manifolds** = MGX 44RU manifold spec
@@ -566,7 +566,7 @@ Storage devices connected 1:1. DGX B300 systems at ~4:3 oversubscription. Storag
 
 | NVIDIA Architecture | ADC Application | Status |
 |--------------------|-----------------|--------|
-| **MGX** | ADC 3K Pod rack compatibility -- pods receive MGX-standard racks | Aligned (Staubli UQD, 800V busbars, Delta shelves) |
+| **MGX** | ADC Pure DC AI Cassette rack compatibility -- pods receive MGX-standard racks | Aligned (Staubli UQD, 800V busbars, Delta shelves) |
 | **DSX** | Facility-level blueprint for Trappeys + Willow Glen | Blueprint adopted, DSX Air trial pending |
 | **800V DC** | Day-1 power architecture for all new facilities | Designed in (solar-direct validated) |
 | **NVLink 6** | Intra-rack compute fabric (no ADC engineering needed -- comes with NVL72) | Built into rack purchase |

@@ -25,7 +25,7 @@ Last updated: 2026-03-25
 - Right scale for Willow Glen (200 MW) and large deployments
 
 ## Use Case
-Not for ADC 3K pods (overkill/cost). Target: Willow Glen, Trappeys enterprise build-out, hyperscaler deployments.
+Not for ADC 3K cassettes (overkill/cost). Target: Willow Glen, Trappeys enterprise build-out, hyperscaler deployments.
 
 ## Next Step
 Engage via Eaton contact JP Buzzell (VP, Global Data Center Segment)

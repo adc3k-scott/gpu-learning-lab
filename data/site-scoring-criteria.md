@@ -185,7 +185,7 @@ Former industrial sites (refineries, fabrication yards, terminals) often qualify
 ### B3. University Within 5 Miles (+5 pts)
 Research compute anchor tenant, grant pipeline (NSF, DOE, EPSCoR), workforce pipeline.
 Louisiana tier-1 targets:
-- **UL Lafayette** — Trappeys (<1 mi), MARLIE I (<2 mi)
+- **UL Lafayette** — Trappeys (<1 mi), MARLIE 1 (<2 mi)
 - **LSU** — Willow Glen (~15 mi), Port Allen sites (~5 mi)
 - **McNeese** — Lake Charles sites
 - **Nicholls State** — Thibodaux/Gray sites
@@ -238,11 +238,11 @@ Relevant for >50 MW facilities where equipment exceeds road weight limits.
 
 **TOTAL: 84 base + 21 bonus = 105 | Tier A**
 
-Notes: High price/acre offset by historic tax credits (45% of rehab), existing structures, existing infrastructure. Net effective cost is dramatically lower. Gas ON SITE. Every utility ON SITE or adjacent. Half mile from MARLIE I. 30 mi from First Solar. This is why it's THE site.
+Notes: High price/acre offset by historic tax credits (45% of rehab), existing structures, existing infrastructure. Net effective cost is dramatically lower. Gas ON SITE. Every utility ON SITE or adjacent. Half mile from MARLIE 1. 30 mi from First Solar. This is why it's THE site.
 
 ---
 
-### 2. MARLIE I — Lafayette, LA
+### 2. MARLIE 1 — Lafayette, LA
 **GPS:** 30.21975N, 92.00645W | **Status:** Command Center
 
 | Variable | Detail | Score | Weight | Points |
@@ -352,7 +352,7 @@ The SE Evangeline Thruway (US 90) from downtown Lafayette south to the Vermilion
 - Public Works facilities, water/sewer infrastructure
 
 **Properties to investigate:**
-- Parcels between Trappeys and MARLIE I (half-mile stretch)
+- Parcels between Trappeys and MARLIE 1 (half-mile stretch)
 - Former auto dealership/warehouse lots on Evangeline Thruway
 - Underutilized commercial parcels south of Johnston Street
 - City-owned surplus land near Public Works compound

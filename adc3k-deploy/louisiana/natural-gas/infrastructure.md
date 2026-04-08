@@ -21,7 +21,7 @@ Last updated: 2026-03-25
 - ~1,037 MCF/day, ~31,104 MCF/month
 - Cost: ~$171-202K/month
 
-### MARLIE I (1x Cat G3512H running, 1 spare)
+### MARLIE 1 (1x Cat G3512H running, 1 spare)
 - ~324 MCF/day, ~9,720 MCF/month
 - Cost: ~$53-63K/month
 

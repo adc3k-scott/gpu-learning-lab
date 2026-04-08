@@ -552,7 +552,7 @@ def generate_scene_config():
             "trappeys_distance_mi": 0.5,
             "trappeys_gps": "30.21356N, 92.00163W",
             "noc_primary": "Willow Glen Terminal (60 mi, fiber)",
-            "noc_backup": "MARLIE I (0.8 mi, direct)",
+            "noc_backup": "MARLIE 1 (0.8 mi, direct)",
         },
         "cameras": {
             "tower_view": "Control tower perspective — full airport surface",

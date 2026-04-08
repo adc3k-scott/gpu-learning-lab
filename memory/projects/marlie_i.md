@@ -1,7 +1,7 @@
-# MARLIE I — Mission Control Hub / First 10 MW Deployment
+# MARLIE 1 — Mission Control Hub / First 10 MW Deployment
 Last updated: 2026-04-06
 
-## What MARLIE I Is
+## What MARLIE 1 Is
 Permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette, Louisiana.
 ADC3K HQ, Mission Control operations center, and first revenue-generating compute node.
 Downstairs = compute floor (10 interior NVL72 racks). Upstairs = Mission Control AI ops center.

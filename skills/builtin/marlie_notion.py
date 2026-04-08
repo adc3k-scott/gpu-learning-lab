@@ -1,25 +1,25 @@
 """
 Built-in skill: marlie_notion
 
-Sync the MARLIE I — Lafayette AI Factory project to the Notion workspace.
+Sync the MARLIE 1 — Lafayette AI Factory project to the Notion workspace.
 All content lives under the Mission Control HQ page.
 
 === PRODUCT ARCHITECTURE (critical — do not conflate) ===
-MARLIE I  = permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette LA.
+MARLIE 1  = permanent AI Factory at 1201 SE Evangeline Thruway, Lafayette LA.
             Building-based. NVL72 racks inside existing structure.
             HQ + NOC + primary compute. CDU liquid cooling. 4-layer power:
             L1=Nat gas gensets (PRIMARY) L2=Diesel (hurricane) L3=Solar+battery L4=LUS grid (last resort).
-            This skill manages MARLIE I Notion content ONLY.
+            This skill manages MARLIE 1 Notion content ONLY.
 
 ADC 3K    = manufactured containerized pod product line. Deployed to remote sites.
-            Immersion cooling (no HVAC). Networked back to MARLIE I.
+            Immersion cooling (no HVAC). Networked back to MARLIE 1.
             First deployment: Trappeys Cannery (metal warehouse, immersion pods).
             ADC 3K Notion content lives under ADC 3K — Project Command Center.
             Page ID: 31488f09-7e31-816d-9fdc-c6aabba4e3fa
 
 === ALL PROJECT Notion IDs ===
 HQ root:           31288f09-7e31-81a5-bf43-e2af16379346
-MARLIE I root:     31e88f09-7e31-8121-b4d2-d96b0084cc50
+MARLIE 1 root:     31e88f09-7e31-8121-b4d2-d96b0084cc50
 Trappeys root:     31288f09-7e31-80a2-8712-ef09878afd53
 ADC 3K root:       31488f09-7e31-816d-9fdc-c6aabba4e3fa
 KLFT 1.1:          31d88f09-7e31-80ec-b055-f69b9108355e
@@ -34,7 +34,7 @@ Site Acq Pipeline: 31e88f09-7e31-8136-9d4f-dbc128f55757
 
 === ADC 3K PRODUCT SPECS (confirmed March 2026) ===
 Cooling fluid: Engineered Fluids EC-110 (single-phase immersion). NEVER reference 3M Novec — discontinued.
-Remote ops: MARLIE I NOC manages all pods remotely. No on-site staff at remote sites.
+Remote ops: MARLIE 1 NOC manages all pods remotely. No on-site staff at remote sites.
 Drone (KLFT): Skydio X10 + Skydio Dock ONLY. DJI removed — Countering CCP Drones Act risk.
 KLFT pitch deck: `adc3k-deploy/skydio-deck.html` — 24 slides, LIVE at adc3k.com. Accessed via KLFT project card.
 
@@ -51,10 +51,10 @@ KLFT pitch deck: `adc3k-deploy/skydio-deck.html` — 24 slides, LIVE at adc3k.co
 - Site Acquisition Pipeline: Type A=Full Factory(CDU), B=Pod(immersion), C=Mixed, D=EV/Drone only
 
 === Supported actions ===
-  sync_full       — rebuild the entire MARLIE I workbook from scratch (all 9 sections)
+  sync_full       — rebuild the entire MARLIE 1 workbook from scratch (all 9 sections)
   sync_section    — push a single named section (requires: section)
-  get_status      — return URLs and IDs of all existing MARLIE I pages
-  append_note     — append a quick note/update to the root MARLIE I page (requires: text)
+  get_status      — return URLs and IDs of all existing MARLIE 1 pages
+  append_note     — append a quick note/update to the root MARLIE 1 page (requires: text)
 
 Sections (for sync_section):
   thesis | hardware | site | funding | partners | credentials | vision | contact | financial
@@ -79,7 +79,7 @@ _NOTION_BASE = "https://api.notion.com/v1"
 _NOTION_VERSION = "2022-06-28"
 _TIMEOUT = 20.0
 _HQ_PAGE_ID = "31288f09-7e31-81a5-bf43-e2af16379346"
-_MARLIE_ROOT_TITLE = "MARLIE I — Lafayette AI Factory"
+_MARLIE_ROOT_TITLE = "MARLIE 1 — Lafayette AI Factory"
 
 
 # ---------------------------------------------------------------------------
@@ -399,7 +399,7 @@ def _vision_blocks() -> list[dict]:
         _callout("We are not building a data center. We are building a network.",
                  emoji="🌐", color="yellow_background"),
         _divider(),
-        _h2("Phase 1 — MARLIE I (Active)"),
+        _h2("Phase 1 — MARLIE 1 (Active)"),
         _bullet("Location: 1201 SE Evangeline Thruway, Lafayette, LA 70501"),
         _bullet("Target: H2 2026 operational"),
         _bullet("Floor: 22x35 ft Phase 1 + second floor available + adjacent property owned"),
@@ -443,14 +443,14 @@ def _financial_blocks() -> list[dict]:
         _bullet("EBITDA figures below = facility-level operating cash flow"),
         _bullet("Full investor pro forma with hardware financing and debt service available upon request"),
         _divider(),
-        _h2("MARLIE I vs Legacy Data Center — Key Comparison"),
-        _bullet("PUE: Legacy 1.4–1.8 (40–80% wasted) vs MARLIE I 1.10 (liquid-cooled, best-in-class)"),
-        _bullet("Energy cost: Legacy $0.10–$0.18/kWh national avg vs MARLIE I $0.065/kWh Louisiana industrial"),
-        _bullet("Cooling: Legacy air (CRAC units, chillers) vs MARLIE I 100% direct-to-chip liquid"),
-        _bullet("Revenue per rack per year: Legacy $200K–$500K (colo) vs MARLIE I $3M–$5M+ (AI compute)"),
-        _bullet("Operations: Legacy 20–50 FTE manual ops vs MARLIE I 3–5 FTE Mission Control AI"),
-        _bullet("On-site generation: Legacy none (grid dependent) vs MARLIE I Bloom Energy fuel cells + gas generators"),
-        _bullet("Domestic content: Legacy mixed overseas vs MARLIE I 100% USA — OBBBA compliant"),
+        _h2("MARLIE 1 vs Legacy Data Center — Key Comparison"),
+        _bullet("PUE: Legacy 1.4–1.8 (40–80% wasted) vs MARLIE 1 1.10 (liquid-cooled, best-in-class)"),
+        _bullet("Energy cost: Legacy $0.10–$0.18/kWh national avg vs MARLIE 1 $0.065/kWh Louisiana industrial"),
+        _bullet("Cooling: Legacy air (CRAC units, chillers) vs MARLIE 1 100% direct-to-chip liquid"),
+        _bullet("Revenue per rack per year: Legacy $200K–$500K (colo) vs MARLIE 1 $3M–$5M+ (AI compute)"),
+        _bullet("Operations: Legacy 20–50 FTE manual ops vs MARLIE 1 3–5 FTE Mission Control AI"),
+        _bullet("On-site generation: Legacy none (grid dependent) vs MARLIE 1 Bloom Energy fuel cells + gas generators"),
+        _bullet("Domestic content: Legacy mixed overseas vs MARLIE 1 100% USA — OBBBA compliant"),
         _divider(),
         _h2("Revenue Model — AI Compute Rental (Conservative Basis)"),
         _bullet("Rate basis: $6/GPU/hr conservative (H100 market: $2.50–$3.50). Vera Rubin 2.5x FP4 density — premium tier justified"),
@@ -526,7 +526,7 @@ _SECTIONS: dict[str, dict] = {
 class MarlieNotionSkill(BaseSkill):
     name = "marlie_notion"
     description = (
-        "Sync the MARLIE I Lafayette AI Factory project to the Notion workspace. "
+        "Sync the MARLIE 1 Lafayette AI Factory project to the Notion workspace. "
         "Can rebuild the full workbook (sync_full), push a single section (sync_section), "
         "check workbook status (get_status), or append a quick note (append_note)."
     )
@@ -559,7 +559,7 @@ class MarlieNotionSkill(BaseSkill):
             return SkillResult.fail(f"Unknown action '{action}'. Valid: sync_full, sync_section, get_status, append_note")
 
     async def _sync_full(self, client: "_NotionClient") -> SkillResult:
-        """Create or recreate the entire MARLIE I workbook."""
+        """Create or recreate the entire MARLIE 1 workbook."""
         try:
             # Create root page
             root = await client.create_page(
@@ -585,7 +585,7 @@ class MarlieNotionSkill(BaseSkill):
                 logger.info("Created section: %s", meta["title"])
 
             return SkillResult.ok(
-                f"MARLIE I workbook created — {len(created)} pages",
+                f"MARLIE 1 workbook created — {len(created)} pages",
                 data={"pages": created, "root_url": root_url}
             )
         except Exception as exc:
@@ -612,7 +612,7 @@ class MarlieNotionSkill(BaseSkill):
             return SkillResult.fail(str(exc))
 
     async def _get_status(self, client: "_NotionClient") -> SkillResult:
-        """Search for the MARLIE I root page and return its URL."""
+        """Search for the MARLIE 1 root page and return its URL."""
         try:
             results = await client.search(_MARLIE_ROOT_TITLE)
             pages = [{"title": r.get("properties", {}).get("title", {}).get("title", [{}])[0].get("text", {}).get("content", "?"),
@@ -620,25 +620,25 @@ class MarlieNotionSkill(BaseSkill):
                       "id": r.get("id", "")}
                      for r in results.get("results", [])
                      if r.get("object") == "page"]
-            return SkillResult.ok(f"Found {len(pages)} MARLIE I page(s) in Notion", data={"pages": pages})
+            return SkillResult.ok(f"Found {len(pages)} MARLIE 1 page(s) in Notion", data={"pages": pages})
         except Exception as exc:
             logger.exception("get_status failed")
             return SkillResult.fail(str(exc))
 
     async def _append_note(self, client: "_NotionClient", text: str) -> SkillResult:
-        """Append a timestamped note to the MARLIE I root page."""
+        """Append a timestamped note to the MARLIE 1 root page."""
         try:
             # Find root page
             results = await client.search(_MARLIE_ROOT_TITLE)
             pages = [r for r in results.get("results", []) if r.get("object") == "page"]
             if not pages:
-                return SkillResult.fail("MARLIE I root page not found in Notion. Run sync_full first.")
+                return SkillResult.fail("MARLIE 1 root page not found in Notion. Run sync_full first.")
             page_id = pages[0]["id"]
             await client.append_blocks(page_id, [
                 _divider(),
                 _callout(text, emoji="📝", color="gray_background"),
             ])
-            return SkillResult.ok("Note appended to MARLIE I Notion page", data={"page_url": pages[0]["url"]})
+            return SkillResult.ok("Note appended to MARLIE 1 Notion page", data={"page_url": pages[0]["url"]})
         except Exception as exc:
             logger.exception("append_note failed")
             return SkillResult.fail(str(exc))

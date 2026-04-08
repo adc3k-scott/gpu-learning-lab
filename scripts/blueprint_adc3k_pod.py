@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ADC 3K Pod — 40-ft AI Compute Module Blueprint (P-001 Rev B)
+"""ADC Pure DC AI Cassette — 40-ft AI Compute Module Blueprint (P-001 Rev B)
 4-view engineering drawing: Top, Side, End, Schematic.
 Output: adc3k-deploy/blueprints/adc3k-pod-layout.svg
 """
@@ -73,7 +73,7 @@ def draw_notes(dwg, g):
         "5. Solar roof: First Solar Series 7 TR1 (6 kW). Dehumidifier: Munters HCD. Exhaust: Greenheck SBE-300.",
         "6. Fire suppression: Ansul Novec 1230. Smoke detection: VESDA-E VEU aspirating.",
         "7. Networking: NVIDIA Quantum-X800 InfiniBand. Controller: NVIDIA Jetson AGX Orin. 65 AI sensors.",
-        "8. Zero on-site staff. Remote NOC at MARLIE I. All service from exterior access panels.",
+        "8. Zero on-site staff. Remote NOC at MARLIE 1. All service from exterior access panels.",
     ]
     for i, note in enumerate(notes):
         g.add(dwg.text(note, insert=(50, y0 + 16 + i * 14), fill=GRAY, font_size="9px", font_family="monospace"))
@@ -1041,7 +1041,7 @@ def draw_schematic(dwg, g):
                     font_family="monospace", text_anchor="middle", font_weight="bold"))
     g.add(dwg.text("CONTROL", insert=(mc_x + mw / 2, net_y + 8), fill=GREEN, font_size="9px",
                     font_family="monospace", text_anchor="middle", font_weight="bold"))
-    g.add(dwg.text("(MARLIE I NOC)", insert=(mc_x + mw / 2, net_y + 20), fill=GRAY, font_size="5px",
+    g.add(dwg.text("(MARLIE 1 NOC)", insert=(mc_x + mw / 2, net_y + 20), fill=GRAY, font_size="5px",
                     font_family="monospace", text_anchor="middle"))
 
     # Total sensor count

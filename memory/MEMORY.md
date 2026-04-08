@@ -2,10 +2,10 @@
 
 ## Project Purpose
 Multi-agent AI platform for CUDA/GPU computing and RunPod management. FastAPI backend + SSE dashboard.
-Owner: **Scott Tomsu** — ADC3K, MARLIE I project lead, 1201 SE Evangeline Thruway, Lafayette LA.
+Owner: **Scott Tomsu** — ADC3K, MARLIE 1 project lead, 1201 SE Evangeline Thruway, Lafayette LA.
 
 ## Project Knowledge Files
-- `memory/projects/marlie_i.md` — MARLIE I AI Factory: site, hardware, financials, incentives
+- `memory/projects/marlie_i.md` — MARLIE 1 AI Factory: site, hardware, financials, incentives
 - `memory/projects/adc3k.md` — ADC 3K pod product: specs, open investor items, action list
 - `memory/projects/trappeys.md` — Trappeys Cannery: first ADC 3K deployment site
 - `memory/projects/ground_zero.md` — Ground Zero YouTube: pipeline status, episode format, blockers
@@ -14,13 +14,13 @@ Owner: **Scott Tomsu** — ADC3K, MARLIE I project lead, 1201 SE Evangeline Thru
 - `memory/projects/nsf_fuel_louisiana.md` — **NSF FUEL (Future Use of Energy in Louisiana)**: $160M NSF Engines grant (largest ever), $45M renewal March 2026, LSU-led, 53+ partners, POC fund, energy innovation. Key contacts: Girard Melancon (partnerships, girardmelancon@lsu.edu), Stephen Loy (commercialization), Michael Mazzola (exec director). ADC fit: 800V DC solar-direct, waste heat, digital twins, workforce.
 
 ## ADC Infrastructure — Core Architecture
-- **MARLIE I** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
-- **ADC 3K** = manufactured containerized pods. EC-110 full immersion. No HVAC. Deployed remotely, managed from MARLIE I.
+- **MARLIE 1** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
+- **ADC 3K** = manufactured containerized pods. EC-110 full immersion. No HVAC. Deployed remotely, managed from MARLIE 1.
 - **KLFT 1.1** = Gulf Coast Emergency Drone Hub. Lafayette Regional Airport. GPS: 30.21256N, 91.99069W. Skydio X10 + Dock + SkyCommand.
-- **Trappeys Cannery** = first planned ADC 3K pod site. GPS: 30.21356N, 92.00163W. Metal warehouse, Vermilion River frontage. SEPARATE site from MARLIE I.
+- **Trappeys Cannery** = first planned ADC 3K pod site. GPS: 30.21356N, 92.00163W. Metal warehouse, Vermilion River frontage. SEPARATE site from MARLIE 1.
 - **New Iberia Solar Factory** = renewable energy partner. GPS: 30.03768N, 91.87524W. Site 2 ADC candidate.
 - **ADC 3K geography**: pods follow Louisiana natural gas pipeline map — Henry Hub corridor, Gulf Coast industrial belt.
-- NEVER conflate MARLIE I (CDU, permanent building) with ADC 3K (immersion, field pod). Different products.
+- NEVER conflate MARLIE 1 (CDU, permanent building) with ADC 3K (immersion, field pod). Different products.
 
 ## Site Acquisition Pipeline (GPS verified 2026-03-09)
 Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`
@@ -48,7 +48,7 @@ Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`
 - `main.py` — FastAPI app, 10 agents, SSE, streaming chat
 - `skills/builtin/notion_util.py` — Notion client. `python notion_util.py` prints full tree.
 - `skills/builtin/marlie_notion.py` — all project Notion IDs + ADC 3K specs
-- `marlie/` — MARLIE I investor deck HTML + PDF
+- `marlie/` — MARLIE 1 investor deck HTML + PDF
 - `aido/` — Ground Zero video pipeline
 - `pyproject.toml` — source of truth for deps
 
@@ -68,7 +68,7 @@ Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`
   [DB] Task Tracker | [DB] Dev Session Log
   [PAGE] Edge AI Infrastructure Documents (6 sub-pages)
   [PAGE] KLFT 1.1  (31d88f09) — 10 sub-pages
-  [PAGE] MARLIE I  (31e88f09-8121) — 9 sub-pages
+  [PAGE] MARLIE 1  (31e88f09-8121) — 9 sub-pages
   [PAGE] Trappeys AI Center  (31288f09-80a2) — 3 sub-pages
   [PAGE] ADC 3K  (31488f09) — DB + 3 page suites
   [PAGE] Mission Control HD CC  (31e88f09-8182) — 5 sub-pages

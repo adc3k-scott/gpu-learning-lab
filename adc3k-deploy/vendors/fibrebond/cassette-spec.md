@@ -8,7 +8,7 @@ Status: DRAFT — Pre-Visit Working Document
 ## What This Is
 
 A self-contained, factory-built modular AI compute unit — a cassette.
-One cassette = one ADC 3K pod = 10 NVL72 racks = 1.3 MW IT load.
+One cassette = one ADC 3K cassette = 10 NVL72 racks = 1.3 MW IT load.
 
 The cassette arrives on site with DC power, liquid cooling, fire suppression, environmental control, and monitoring pre-integrated and factory-tested. Site provides: DC bus connection, gas line (Bloom), and fiber. Nothing else.
 

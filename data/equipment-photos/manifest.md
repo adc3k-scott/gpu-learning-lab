@@ -1,4 +1,4 @@
-# ADC 3K Pod Equipment Photo Manifest
+# ADC Pure DC AI Cassette Equipment Photo Manifest
 
 Generated: 2026-03-24
 

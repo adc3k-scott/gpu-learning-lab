@@ -24,7 +24,7 @@ Last updated: 2026-04-01
 ## ADC Relevance
 - Chenbro = structural chassis layer that houses the tray manifold
 - If building custom ADC 3K pod chassis: Chenbro is a potential chassis ODM
-- Also relevant for MARLIE I custom server builds
+- Also relevant for MARLIE 1 custom server builds
 
 ## Key Contacts
 - Sales: chenbro.com/contact

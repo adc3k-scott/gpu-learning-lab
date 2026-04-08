@@ -20,7 +20,7 @@ Last updated: 2026-03-25
 - Can use waste heat for reactivation (free energy from GPU exhaust)
 - Compressors can't hit the low dew points needed around liquid-cooled racks
 
-## For ADC 3K Pod
+## For ADC Pure DC AI Cassette
 - HCD-2500 Plus recommended
 - Maintains ASHRAE A1 conditions inside sealed container
 - Solar roof powers dehumidifier during peak humidity

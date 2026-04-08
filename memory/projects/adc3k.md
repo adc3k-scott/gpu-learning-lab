@@ -2,13 +2,13 @@
 Last updated: 2026-03-08
 
 ## What ADC 3K Is
-Manufactured containerized AI compute pod product line. NOT a building — a product.
+Manufactured containerized AI compute cassette product line. NOT a building — a product.
 Deployed as individual units to remote sites. Immersion cooling (no HVAC required).
-Networked back to MARLIE I (the factory/HQ). Think of it as the product MARLIE I manufactures and deploys.
+Networked back to MARLIE 1 (the factory/HQ). Think of it as the product MARLIE 1 manufactures and deploys.
 
 ## Current Phase
 Pre-production. Engineering specs complete. No hardware ordered. No site LOI signed.
-First deployment target: Trappeys Cannery (metal warehouse, immersion pods, no HVAC needed).
+First deployment target: Trappeys Cannery (metal warehouse, immersion cassettes, no HVAC needed).
 
 ## Product Specs (confirmed)
 - Form factor: 40-ft High Cube ISO container
@@ -28,10 +28,10 @@ First deployment target: Trappeys Cannery (metal warehouse, immersion pods, no H
 5. **Financial model tax rate** — model uses ~25% LA corporate tax. Actual: 5.5%. Fix Assumptions tab. IRR is higher.
 
 ### Second-pass gaps (March 8, 2026)
-6. **Unit economics per pod** — missing: pod CapEx, revenue/pod/month, OpEx/pod, payback period. Add to financial model.
-7. **Remote site ops model** — define: MARLIE I NOC manages all pods remotely. Maintenance via local contract. SLA target 99.5%. No on-site staff required.
+6. **Unit economics per cassette** — missing: cassette CapEx, revenue/cassette/month, OpEx/cassette, payback period. Add to financial model.
+7. **Remote site ops model** — define: MARLIE 1 NOC manages all cassettes remotely. Maintenance via local contract. SLA target 99.5%. No on-site staff required.
 8. **Competitive landscape** — no comp analysis in deck. Add slide: CoreWeave, Lambda, Crusoe, Lancium vs ADC 3K differentiators.
-9. **Exit strategy** — missing from deck. Options: strategic acquisition, build-to-sell pod swarms, REIT structure.
+9. **Exit strategy** — missing from deck. Options: strategic acquisition, build-to-sell cassette swarms, REIT structure.
 10. **Management team** — no team slide. Add: founder bio, key hires plan, advisors.
 11. **3-scenario financial model** — bear (40% util, -30% GPU price), base (70% util), bull (90% util, 10+ sites Y3).
 12. **Dielectric fluid** — RESOLVED. Engineered Fluids EC-110 committed. Novec references removed from all docs.
@@ -45,7 +45,7 @@ First deployment target: Trappeys Cannery (metal warehouse, immersion pods, no H
 
 ## Notion Location
 ADC 3K — Project Command Center: 31488f09-7e31-816d-9fdc-c6aabba4e3fa
-- Pod Swarm Engineering Suite: NVL72 rack config, CDU cooling, PDU, network topology, RunPod API (all labeled MARLIE I scope — ADC 3K uses immersion, separate spec needed)
+- Cassette Swarm Engineering Suite: NVL72 rack config, CDU cooling, PDU, network topology, RunPod API (all labeled MARLIE 1 scope — ADC 3K uses immersion, separate spec needed)
 - Master Task Tracker: 41 P0/P1/P2 tasks from container order → GO-LIVE
 - Investor Review section: Items 1-5 open, Items 6-7 resolved (March 8, 2026)
 
@@ -55,8 +55,8 @@ ADC-3K-Investor-Pitch-Deck.pptx | ADC-3K-Vendor-Parts-List.xlsx
 ADC-3K-Master-Website-V3.html (~728KB SPA, production-ready)
 
 ## Remote Operations Model (confirmed)
-- NOC: MARLIE I manages all deployed pods remotely via Mission Control
-- No on-site staff at remote sites — pods are lights-out
+- NOC: MARLIE 1 manages all deployed cassettes remotely via Mission Control
+- No on-site staff at remote sites — cassettes are lights-out
 - Maintenance: on-site visits for fluid checks / GPU swaps via local contract firms
 - Site owner provides: power, fiber, and space — ADC 3K handles everything inside the container
 - SLA target: 99.5% uptime

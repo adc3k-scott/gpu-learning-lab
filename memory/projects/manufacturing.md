@@ -1,4 +1,4 @@
-# ADC Manufacturing -- Two-Step Pod Factory Strategy
+# ADC Manufacturing -- Two-Step Cassette Factory Strategy
 
 ## Step 1: Baton Rouge Terminal (Lafayette)
 - **Type**: Lease existing industrial building. Manual assembly.

@@ -67,7 +67,7 @@ Last updated: 2026-03-20
 4. ITEP filing with LED (BEFORE groundbreaking)
 
 ## Operations Model
-- MARLIE I (0.5 mi away) = NOC for fleet management, incident response, billing
+- MARLIE 1 (0.5 mi away) = NOC for fleet management, incident response, billing
 - Near-zero on-site staff — Mission Control AI handles pod health and workload routing
 - Trappeys = proof of concept template for multi-site Gulf South network
 

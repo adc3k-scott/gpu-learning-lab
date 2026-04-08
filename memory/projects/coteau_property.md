@@ -22,7 +22,7 @@
 | ADC Site | Approx. Distance | Route |
 |----------|------------------|-------|
 | Trappeys (Lafayette) | ~15 mi N | Hwy 90 / I-49 |
-| MARLIE I (Evangeline Thruway) | ~15 mi N | Hwy 90 / Evangeline |
+| MARLIE 1 (Evangeline Thruway) | ~15 mi N | Hwy 90 / Evangeline |
 | First Solar (New Iberia factory) | ~6 mi SE | Coteau Road / Hwy 182 |
 | KLFT (Lafayette Regional Airport) | ~12 mi N | Hwy 90 |
 
@@ -124,7 +124,7 @@ Brandon Elmer Breaux is related to Lynn Breaux. Both are associated with Bronco 
 - **Proximity to First Solar** (~6 mi) — panel supply chain advantage for solar installations
 - **Rural / unincorporated** — likely fewer permitting hurdles than city limits
 - **Close to Lafayette MSA** (~15 mi) — workforce access, airport, university
-- **Close to MARLIE I and Trappeys** — within the ADC operational radius
+- **Close to MARLIE 1 and Trappeys** — within the ADC operational radius
 - **Natural gas infrastructure** — Louisiana pipeline density, Henry Hub proximity
 - **Breaux family connection** — established local real estate family with 50+ years in the market, deep Iberia Parish roots (Solitude Plantation), handles commercial/industrial/land
 - **Affordable land** — rural Iberia Parish land prices significantly below Lafayette city limits

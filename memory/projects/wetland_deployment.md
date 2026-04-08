@@ -9,12 +9,12 @@ type: project
 Last updated: 2026-03-12
 
 ## What These Are
-Remote deployment sites for ADC 3K inference pods. These are edge nodes — inference-only, no training. All management, orchestration, and NOC functions run from Willow Glen (primary) and MARLIE I (backup). Sites are lights-out after deployment.
+Remote deployment sites for ADC 3K inference pods. These are edge nodes — inference-only, no training. All management, orchestration, and NOC functions run from Willow Glen (primary) and MARLIE 1 (backup). Sites are lights-out after deployment.
 
 ## Connectivity Architecture
 - **Terrestrial sites** (wetland/pipeline corridor): Dedicated fiber back to Willow Glen
 - **Offshore sites** (rigs, platforms, barges): Starlink (primary) + VSAT (backup) to Willow Glen
-- Management plane: Mission Control HD SaaS + MARLIE I NOC
+- Management plane: Mission Control HD SaaS + MARLIE 1 NOC
 - All sites connect TO Willow Glen — never to each other directly
 
 ## Deployment Environments
@@ -46,7 +46,7 @@ Remote deployment sites for ADC 3K inference pods. These are edge nodes — infe
 ## 5-Tier Edge Strategy
 ```
 Tier 1: Willow Glen          PRIMARY HUB — training, large-scale inference, storage
-Tier 2: MARLIE I             REGIONAL HUB — edge AI, R&D, backup NOC (Lafayette)
+Tier 2: MARLIE 1             REGIONAL HUB — edge AI, R&D, backup NOC (Lafayette)
 Tier 3: ADC 3K (urban/industrial)  NEAR-EDGE — Trappeys model, industrial corridors
 Tier 4: ADC 3K (wetland/piling)    MID-EDGE — Atchafalaya, pipeline ROW sites
 Tier 5: ADC 3K (offshore/barge)    FAR-EDGE — rigs, platforms, maritime

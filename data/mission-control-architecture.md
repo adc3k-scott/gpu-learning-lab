@@ -25,7 +25,7 @@ Mission Control is ADC's AI factory operating system -- the software stack that 
     (Claude)  (Self-Hosted) (Dynamo) (Jetson) (Guardrails)
 ```
 
-**Self-hosted on ADC's own NVL72 hardware.** MARLIE I is the first deployment site (Lafayette command center). Expands to Trappeys (solar AI factory, proof-of-concept) and Willow Glen (SuperPOD, primary hub).
+**Self-hosted on ADC's own NVL72 hardware.** MARLIE 1 is the first deployment site (Lafayette command center). Expands to Trappeys (solar AI factory, proof-of-concept) and Willow Glen (SuperPOD, primary hub).
 
 **ADC is its own first customer.** AI Advantage (SMB business), Ally chatbot, daily briefings, Notion sync, GPU monitoring, investor analysis -- all run on this stack before a single external token is sold.
 
@@ -100,7 +100,7 @@ Source playbooks: `adc3k-deploy/vendors/nvidia/cloud-native-stack.md`, `gpu-oper
 ### Deployment
 
 - **Serving:** NIM microservice on dedicated MIG partition (hardware-isolated from customer workloads)
-- **Fine-tuning:** LoRA via NeMo Customizer on NVL72 at MARLIE I
+- **Fine-tuning:** LoRA via NeMo Customizer on NVL72 at MARLIE 1
 - **Training data:** All memory files, vendor specs, playbooks, conversation history, Notion exports
 - **Refresh:** Re-fine-tune monthly as knowledge base grows
 - **Validation:** Test against known Q&A pairs from ADC domain before promoting new weights
@@ -292,11 +292,11 @@ Source: `adc3k-deploy/vendors/nvidia/gpu-sharing-guide.md`
 
 ## 5. Tier 4 -- Edge (Jetson AGX Orin)
 
-**Purpose:** Local inference at ADC 3K Pods, KLFT drone hub, and remote sites. Autonomous operation when disconnected.
+**Purpose:** Local inference at ADC Pure DC AI Cassettes, KLFT drone hub, and remote sites. Autonomous operation when disconnected.
 
 ### Hardware
 - NVIDIA Jetson AGX Orin: 275 TOPS, up to ~8B dense models
-- Deployed in: ADC 3K Pods, KLFT 1.1 (drone hub), remote/offshore sites, wetland pilings
+- Deployed in: ADC Pure DC AI Cassettes, KLFT 1.1 (drone hub), remote/offshore sites, wetland pilings
 
 ### Edge Model Stack
 
@@ -364,7 +364,7 @@ Trappeys (Lafayette)  -----> Aggregation Server <----- Willow Glen (St. Gabriel)
   Local training            Global model              Local training
   on local data             updates only              on local data
        |                          |                          |
-MARLIE I (Lafayette)  -----> Aggregation Server <----- Edge nodes
+MARLIE 1 (Lafayette)  -----> Aggregation Server <----- Edge nodes
 ```
 
 - Open source, production-ready (Apache 2.0)
@@ -498,7 +498,7 @@ Source docs --> Extract instruction/response pairs (script)
 JSON-L dataset (validated, deduplicated)
     |
     v
-NeMo Customizer (LoRA, on NVL72 at MARLIE I)
+NeMo Customizer (LoRA, on NVL72 at MARLIE 1)
     |
     v
 Validation: test against known Q&A pairs from ADC domain
@@ -518,7 +518,7 @@ Production (Tier 2 operations brain)
 | Rapid iteration | Unsloth for fast LoRA experiments before promoting to NeMo |
 | Schedule | Monthly re-training as knowledge grows |
 | Advanced | GRPO (reward-model-free alignment) when behavior tuning needed |
-| Hardware | NVL72 at MARLIE I (same racks that serve inference) |
+| Hardware | NVL72 at MARLIE 1 (same racks that serve inference) |
 
 ---
 
@@ -663,7 +663,7 @@ Mission Control already has:
 
 ## 13. Deployment Timeline
 
-### Phase 1 -- MARLIE I First Rack
+### Phase 1 -- MARLIE 1 First Rack
 
 | Component | Status |
 |-----------|--------|
@@ -676,7 +676,7 @@ Mission Control already has:
 | Tier 3 | Single model for customer beta (DeepSeek-V3.2 or Nemotron Ultra) |
 | Monitoring | DCGM + Prometheus + Grafana |
 
-### Phase 2 -- MARLIE I Full 8 Racks
+### Phase 2 -- MARLIE 1 Full 8 Racks
 
 | Component | Status |
 |-----------|--------|
@@ -694,7 +694,7 @@ Mission Control already has:
 | Component | Status |
 |-----------|--------|
 | Trappeys solar AI factory | 36-84 NVL72 racks at scale |
-| Federated learning | NVIDIA FLARE across MARLIE I + Trappeys |
+| Federated learning | NVIDIA FLARE across MARLIE 1 + Trappeys |
 | Groq LPX racks | Mixed GPU+LPU for ultra-low-latency decode (H2 2026) |
 | Confidential Containers | Defense/government customer readiness |
 | Self-hosted SaaS replacement | Mattermost, n8n, Keycloak, LiteLLM, Nextcloud |

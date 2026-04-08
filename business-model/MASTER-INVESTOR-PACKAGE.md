@@ -45,14 +45,14 @@ $50 billion is flowing into Louisiana AI infrastructure right now:
 
 ### What We Need
 
-**$5M seed round** to acquire the Trappeys Cannery site, deploy first compute at our already-owned MARLIE I facility, and begin generating token revenue within 6-9 months.
+**$5M seed round** to acquire the Trappeys Cannery site, deploy first compute at our already-owned MARLIE 1 facility, and begin generating token revenue within 6-9 months.
 
 ### What Investors Get
 
 - Equity in a neocloud positioned at the intersection of the cheapest energy in America and the fastest-growing market in technology
 - Louisiana Angel Tax Credit: **35% state tax credit** on investment (a $1M investment costs the investor $650K after credits)
 - Historic Tax Credits at Trappeys: **45% of rehabilitation costs** returned
-- Path to revenue within 6-9 months (MARLIE I deployment)
+- Path to revenue within 6-9 months (MARLIE 1 deployment)
 - First-mover advantage in a state where $50B is flowing but zero local operators exist
 
 ---
@@ -127,7 +127,7 @@ This isn't abstract. It's a father building the infrastructure his daughter's ge
 
 ## 3. ASSETS WE ALREADY OWN
 
-### MARLIE I — 1201 SE Evangeline Thruway, Lafayette, LA
+### MARLIE 1 — 1201 SE Evangeline Thruway, Lafayette, LA
 **STATUS: OWNED. READY FOR DEPLOYMENT. COLLATERAL.**
 
 - Scott owns this property outright
@@ -145,7 +145,7 @@ This isn't abstract. It's a father building the infrastructure his daughter's ge
 - 2.05 MW rooftop solar capacity (3,731 First Solar panels across all buildings)
 - Water tower for cooling landmark
 - Large concrete pad = infrastructure yard (generators, dry coolers, switchgear)
-- Half mile from MARLIE I, 2 miles from UL Lafayette, 30 miles from First Solar factory
+- Half mile from MARLIE 1, 2 miles from UL Lafayette, 30 miles from First Solar factory
 - Competing developer announced $120M housing plan — zero ground broken in 5 years
 - Building 2 (brick, temperature-stable) ideal for compute. Rear building perfect for staging.
 - GPS: 30.21356N, 92.00163W
@@ -154,7 +154,7 @@ This isn't abstract. It's a father building the infrastructure his daughter's ge
 ### Engineering Package — COMPLETE
 
 - **22 US vendors** spec'd with primary and backup for every component
-- **24 engineering blueprints** completed (site plans, floor plans, electrical SLDs, cooling schematics, power distribution, solar layouts — for Trappeys, MARLIE I, and Willow Glen)
+- **24 engineering blueprints** completed (site plans, floor plans, electrical SLDs, cooling schematics, power distribution, solar layouts — for Trappeys, MARLIE 1, and Willow Glen)
 - **Full bill of materials** priced for Phase 1
 - **800V DC electrical architecture** designed end-to-end (solar-direct to rack)
 - **Vendor procurement matrix** with lead times, contacts, and Phase 1 quantities
@@ -294,7 +294,7 @@ Louisiana flares and vents ~1.8 billion cubic feet of natural gas annually. Oil 
 - **Louisiana-based** — Crusoe operates in North Dakota, Wyoming, Colorado. No Louisiana presence.
 - **Local relationships** — Scott knows Louisiana oil & gas operators from 25 years offshore
 - **Water cooling** — Louisiana bayous and rivers everywhere (Crusoe's dry-state deployments need air cooling)
-- **Backhaul to AI factory** — flare-site pods connect back to Trappeys/MARLIE I via fiber
+- **Backhaul to AI factory** — flare-site pods connect back to Trappeys/MARLIE 1 via fiber
 - **Regulatory alignment** — January 2024 Louisiana rule requires "alternative beneficial uses" evaluation before flaring permits. ADC IS the alternative beneficial use.
 
 **5 priority operators identified (all within 30 miles of Trappeys):**
@@ -310,7 +310,7 @@ Louisiana flares and vents ~1.8 billion cubic feet of natural gas annually. Oil 
 **Unit economics:** $0 fuel cost + GPU cloud rates ($4.50/hr B200) = 80%+ margins per site. Carbon credits (63% CO2e reduction vs flaring) provide additional revenue. The pitch to operators: "You're burning money. We take the gas, run AI compute, you stop paying penalties. Zero cost to you."
 
 **This creates ADC's second product line:**
-- **Line 1:** Fixed AI factories (Trappeys, MARLIE I, Willow Glen) — token factory, SaaS, managed inference
+- **Line 1:** Fixed AI factories (Trappeys, MARLIE 1, Willow Glen) — token factory, SaaS, managed inference
 - **Line 2:** Mobile AI compute — containerized pods at flare sites, chip-neutral, modular, deployable in weeks
 
 **Additional value to oil operators:** AI-powered equipment monitoring. The GPU is already on-site running inference — allocate a slice to monitor pumps, compressors, pipelines. Predictive maintenance, leak detection, pressure anomalies. The operator gets compute AND equipment monitoring from one deployment.
@@ -591,7 +591,7 @@ Token prices deflate ~25%/year (slowing from historical 10x). ADC's moat:
 
 ### Phase 0 — Deploy with What We Have ($0 Raise)
 
-- MARLIE I is owned. Property = collateral.
+- MARLIE 1 is owned. Property = collateral.
 - Order equipment on financing (Cat Financial, Delta, HPE Financial Services for NVIDIA racks)
 - Apply for EPA Brownfield assessment at Trappeys (free through Acadiana Planning Commission $1.2M grant)
 - File ITEP/PILOT before any groundbreaking
@@ -601,9 +601,9 @@ Token prices deflate ~25%/year (slowing from historical 10x). ADC's moat:
 
 - Acquire Trappeys (~$1M, competing developer stalled 5 years)
 - First equipment deposits (Cat G3516J, Delta rack PDU, NVL72 order)
-- MARLIE I deployment: pour pad, connect ATMOS gas, LFT Fiber, LUS power
+- MARLIE 1 deployment: pour pad, connect ATMOS gas, LFT Fiber, LUS power
 - 12-18 months operating runway for Scott + Josh
-- First tokens flowing at MARLIE I in 6-9 months
+- First tokens flowing at MARLIE 1 in 6-9 months
 - Trappeys rehab begins (Building 2 first — the brick building)
 
 ### Phase 2 — Revenue-Funded + Follow-On ($3-5M)
@@ -616,7 +616,7 @@ Token prices deflate ~25%/year (slowing from historical 10x). ADC's moat:
 
 **Immediate (no raise needed):**
 - Equipment financing: Cat Financial, HPE Financial Services (NVL72 OEM), Delta, Eaton Capital
-- MARLIE I as collateral for SBA loan or bank line of credit
+- MARLIE 1 as collateral for SBA loan or bank line of credit
 - Historic Tax Credits at Trappeys: 45% of rehab costs
 - Federal Solar ITC: 30% of solar installation
 - EPA Brownfield assessment: FREE through APC grant
@@ -678,7 +678,7 @@ ADC's site scoring system evaluates 10 base criteria + 6 bonus factors. Maximum 
 |------|-------|------|---------------|
 | **Trappeys Cannery** | 105 | S | Solar capacity, gas on-site, historic credits, 2 mi from UL, 30 mi from First Solar |
 | **Willow Glen Terminal** | 105 | S | Former 2,200 MW station, 230kV substation, 400+ acres, M2 zoning, Mississippi River, FTZ 154D |
-| **MARLIE I** | 97 | S | Already owned, Lafayette location, ready for immediate deployment |
+| **MARLIE 1** | 97 | S | Already owned, Lafayette location, ready for immediate deployment |
 | **KLFT Airport** | 85 | A | Drone operations hub, FAA Part 108, Skydio X10, 0.5 mi from Trappeys |
 
 ### Trappeys Detail
@@ -716,7 +716,7 @@ ADC's site scoring system evaluates 10 base criteria + 6 bonus factors. Maximum 
 | **Low utilization Y1 (<30%)** | Revenue below bear case | Medium | Anchor tenant LOI first (UL Lafayette); BMaaS fills capacity |
 | **Competition (Hut 8, Nscale, others)** | Pricing pressure | High | Speed, power cost, NVIDIA relationship, local advantage |
 | **Groq 3 LPX delayed** | Lose decode advantage | Medium | GPU-only inference still works; Dynamo 7x boost is software-only |
-| **Trappeys acquisition fails** | Lose primary site | Low | MARLIE I already owned; Willow Glen as alternative |
+| **Trappeys acquisition fails** | Lose primary site | Low | MARLIE 1 already owned; Willow Glen as alternative |
 
 ### Investor Gap Items (Transparency)
 
@@ -740,7 +740,7 @@ These items are in progress and strengthen with funding:
 | Trappeys site acquisition | $1,000,000 | 112,500 sq ft, 4 buildings, solar capacity, infrastructure yard |
 | Trappeys Building 2 rehab (brick compute room) | $500,000 | Temperature-stable brick building ready for racks |
 | First equipment orders (Cat G3516J x2 N+1, Delta 660 kW rack, NVL72 deposit through HPE) | $1,500,000 | Power generation + rack power + first compute |
-| MARLIE I deployment (gas connection, fiber, pad, first rack) | $500,000 | First tokens flowing in 6-9 months |
+| MARLIE 1 deployment (gas connection, fiber, pad, first rack) | $500,000 | First tokens flowing in 6-9 months |
 | 18 months operating runway (Scott + Josh) | $600,000 | Full-time transition, salaries, benefits |
 | Trucks, computers, tools, travel, insurance, legal, permits | $400,000 | Business infrastructure |
 | Working capital buffer | $500,000 | Margin for the unexpected |
@@ -748,15 +748,15 @@ These items are in progress and strengthen with funding:
 
 ### What the $5M Gets the Investor
 
-- Two Tier S sites deploying simultaneously (MARLIE I + Trappeys)
+- Two Tier S sites deploying simultaneously (MARLIE 1 + Trappeys)
 - First token revenue in 6-9 months
 - Louisiana Angel Tax Credit: **35% = $1.75M back in state credits on day one**
 - Real exposure after credits: **$3.25M**
 - Path to $12M Year 1 revenue, $48M Year 2
-- Collateral: MARLIE I property (already owned) + Trappeys (acquired with funds)
+- Collateral: MARLIE 1 property (already owned) + Trappeys (acquired with funds)
 - Historic Tax Credits at Trappeys: 45% of $500K rehab = $225K additional return
 
-**Revenue target:** Tokens flowing at MARLIE I in 6-9 months. Trappeys Phase 1 operational in 12-15 months.
+**Revenue target:** Tokens flowing at MARLIE 1 in 6-9 months. Trappeys Phase 1 operational in 12-15 months.
 
 ### Phase 1 BOM Summary (Trappeys Building #3, 410 kW Solar + 1 MW Gas)
 

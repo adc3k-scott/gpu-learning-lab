@@ -1,5 +1,5 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Site Plan: 24x40 building on 0.60 acres, 3 parcels, Chag Street
 GPS: 30.21975N, 92.00645W
 """
@@ -8,7 +8,7 @@ import svgwrite
 W, H = 1400, 1000
 OUT = "adc3k-deploy/marlie/blueprints/site-plan.svg"
 
-ACCENT = "#3b82f6"  # Blue accent for MARLIE I
+ACCENT = "#3b82f6"  # Blue accent for MARLIE 1
 
 # Scale: 1 ft = 4 px (fits small building well)
 S = 4
@@ -56,7 +56,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill="#0a0b0f"))
 
     # -- TITLE BLOCK --
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 22), text_anchor="middle", fill="#f0f2f5",
                       font_size=15, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("SITE PLAN | 1201 SE EVANGELINE THRUWAY | 0.60 ACRES | 3 PARCELS | GPS: 30.2198N, 92.0065W",
@@ -96,7 +96,7 @@ def build():
     bldg_x, bldg_y, bldg_w, bldg_h = 30, 20, 24, 40
     ft_rect(dwg, bldg_x, bldg_y, bldg_w, bldg_h,
             fill="#0a1028", stroke=ACCENT, stroke_width=2.5, rx=3)
-    ft_text(dwg, bldg_x + bldg_w / 2, bldg_y + 10, "MARLIE I",
+    ft_text(dwg, bldg_x + bldg_w / 2, bldg_y + 10, "MARLIE 1",
             text_anchor="middle", fill=ACCENT, font_size=12, font_family="Arial", font_weight="bold")
     ft_text(dwg, bldg_x + bldg_w / 2, bldg_y + 15, "24' x 40' = 1,920 sq ft",
             text_anchor="middle", fill=ACCENT, font_size=8, font_family="Arial")
@@ -281,7 +281,7 @@ def build():
                       font_family="Arial", font_weight="bold"))
 
     legend = [
-        (ACCENT, "MARLIE I — 24x40 building, 2 floors, 1,920 sq ft"),
+        (ACCENT, "MARLIE 1 — 24x40 building, 2 floors, 1,920 sq ft"),
         ("#6b7280", "Concrete Pad (generators, adiabatic coolers, switchgear)"),
         ("#22c55e", "Caterpillar G3512H (1.03 MW) x2 N+1"),
         ("#4fc3f7", "BAC TrilliumSeries Adiabatic Cooler"),

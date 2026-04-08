@@ -46,12 +46,12 @@ type: user
 - Founded: 2003 (Advantage Design & Construction, Inc.)
 - ADC-3K division launched: 2025/2026 (use this framing for NVIDIA Inception application — NOT the 2003 founding date)
 - Core business evolution: From construction/design to AI compute infrastructure
-- The ADC 3K pod product line represents the convergence of Scott's construction, engineering, and compute expertise
+- The ADC 3K cassette product line represents the convergence of Scott's construction, engineering, and compute expertise
 
 ## Why This Background Matters for ADC
-- **Offshore AI**: 25 years on rigs and platforms = direct customer relationships and credibility for offshore pod deployment
-- **Lights-out operations**: ROV ops are remote, unmanned, and mission-critical — same model as ADC 3K pod NOC
-- **Rugged hardware mindset**: Designing for subsea and marine environments = immersion cooling, sealed enclosures, no-HVAC pods
+- **Offshore AI**: 25 years on rigs and platforms = direct customer relationships and credibility for offshore cassette deployment
+- **Lights-out operations**: ROV ops are remote, unmanned, and mission-critical — same model as ADC 3K cassette NOC
+- **Rugged hardware mindset**: Designing for subsea and marine environments = immersion cooling, sealed enclosures, no-HVAC cassettes
 - **Regulatory fluency**: Offshore safety (IMCA, ATEX) and FAA environments = ADC knows how to operate in regulated infrastructure spaces
 - **FuelTech/ECU background**: Embedded systems + real-time data = GPU compute and engine management share the same technical DNA
 

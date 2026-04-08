@@ -44,7 +44,7 @@
     },
     {
       "id": "ref_marlie_i",
-      "name": "MARLIE I",
+      "name": "MARLIE 1",
       "parish": "Lafayette",
       "gps": "30.21975N, 92.00645W",
       "status": "Command Center",
@@ -142,7 +142,7 @@
   "ranking_summary": [
     {"rank": 1, "name": "Willow Glen Terminal", "base": 94, "bonus": 11, "total": 105, "tier": "S"},
     {"rank": 2, "name": "Trappeys Cannery", "base": 84, "bonus": 21, "total": 105, "tier": "S"},
-    {"rank": 3, "name": "MARLIE I", "base": 89, "bonus": 8, "total": 97, "tier": "S"},
+    {"rank": 3, "name": "MARLIE 1", "base": 89, "bonus": 8, "total": 97, "tier": "S"},
     {"rank": 4, "name": "KLFT Airport Area", "base": 74, "bonus": 11, "total": 85, "tier": "A"}
   ]
 }

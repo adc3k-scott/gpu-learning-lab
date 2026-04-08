@@ -2,7 +2,7 @@
 
 > **Version**: GPU Operator v26.3.0 | Driver 580.126.20 | CUDA Toolkit 1.19.0
 > **Last Updated**: 2026-03-25
-> **Scope**: Willow Glen (SuperPOD), Trappeys (proof-of-concept), MARLIE I (edge), ADC 3K pods
+> **Scope**: Willow Glen (SuperPOD), Trappeys (proof-of-concept), MARLIE 1 (edge), ADC 3K pods
 
 ---
 
@@ -552,7 +552,7 @@ Validation init container `mofed-validation` confirms network drivers are functi
 ### ADC relevance
 - **Willow Glen (NVL72 + InfiniBand)**: GPUDirect RDMA is mandatory. DMA-BUF path with Network Operator managing Quantum switches.
 - **Trappeys**: GPUDirect RDMA for any multi-node training. Start with DMA-BUF.
-- **MARLIE I (edge)**: GPUDirect Storage for fast model loading from NVMe.
+- **MARLIE 1 (edge)**: GPUDirect Storage for fast model loading from NVMe.
 
 ---
 
@@ -868,11 +868,11 @@ kubectl label node <node-name> nvidia.com/gpu-driver-upgrade-state=upgrade-requi
 ```
 
 ### ADC production settings
-- `maxParallelUpgrades: 1` for Trappeys/MARLIE I (small fleet)
+- `maxParallelUpgrades: 1` for Trappeys/MARLIE 1 (small fleet)
 - `maxParallelUpgrades: 4` for Willow Glen (large fleet, keep 75%+ capacity)
 - Always `drain.enable: false` first — only enable if GPU pod eviction alone fails
 - Schedule driver upgrades during maintenance windows
-- Test new driver version on MARLIE I edge node first, then Trappeys, then Willow Glen
+- Test new driver version on MARLIE 1 edge node first, then Trappeys, then Willow Glen
 
 ---
 
@@ -952,7 +952,7 @@ NVIDIA Base Command Manager (BCM) is the fleet management layer that sits above 
 ### ADC deployment path
 1. Willow Glen gets BCM as the primary management plane (comes with DGX-Ready/NCP certification)
 2. BCM manages GPU Operator lifecycle across all Willow Glen nodes
-3. MARLIE I connects as a satellite cluster (BCM can manage remote sites)
+3. MARLIE 1 connects as a satellite cluster (BCM can manage remote sites)
 4. ADC 3K pods at customer sites managed via BCM's edge features
 5. Trappeys may use standalone GPU Operator (smaller scale, no BCM needed initially)
 
@@ -1066,7 +1066,7 @@ Not supported. Disable in BIOS.
 
 ## 17. ADC Site-Specific Deployment Matrix
 
-| Setting | Willow Glen | Trappeys | MARLIE I | ADC 3K Pod |
+| Setting | Willow Glen | Trappeys | MARLIE 1 | ADC Pure DC AI Cassette |
 |---------|------------|----------|----------|------------|
 | **Scale** | SuperPOD (NVL72 racks) | 36-84 NVL72 racks | Edge NVL72 | 1-4 racks |
 | **Driver mode** | Pre-installed (DGX OS) | Pre-installed | Pre-installed | Containerized |
@@ -1082,10 +1082,10 @@ Not supported. Disable in BIOS.
 | **NVLink fabric** | 72-GPU domain per rack | 72-GPU domain | Single rack | Single rack |
 
 ### Deployment order
-1. **MARLIE I** — smallest, Scott's war room. Install GPU Operator, validate monitoring, test MIG/time-slicing, run CUDA benchmarks. This is the staging ground.
+1. **MARLIE 1** — smallest, Scott's war room. Install GPU Operator, validate monitoring, test MIG/time-slicing, run CUDA benchmarks. This is the staging ground.
 2. **Trappeys** — proof of concept. Full GPU Operator + DCGM + Grafana. University partner access via MIG. First Solar power validation.
-3. **Willow Glen** — production SuperPOD. BCM manages GPU Operator. Full RDMA/GDS stack. Rolling upgrades tested on MARLIE I first.
-4. **ADC 3K Pods** — templated Helm values per customer. Air-gapped config for defense customers.
+3. **Willow Glen** — production SuperPOD. BCM manages GPU Operator. Full RDMA/GDS stack. Rolling upgrades tested on MARLIE 1 first.
+4. **ADC Pure DC AI Cassettes** — templated Helm values per customer. Air-gapped config for defense customers.
 
 ### Helm values template per site
 
@@ -1118,7 +1118,7 @@ nfd:
 ```
 
 ```bash
-# Deploy to MARLIE I
+# Deploy to MARLIE 1
 helm install gpu-operator \
   -n gpu-operator --create-namespace \
   nvidia/gpu-operator --version=v26.3.0 \

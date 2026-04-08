@@ -376,7 +376,7 @@ _PATTERNS: list[dict[str, Any]] = [
              "params": {"action": "health"}},
         ],
     },
-    # ── MARLIE I Notion sync ────────────────────────────────────────────
+    # ── MARLIE 1 Notion sync ────────────────────────────────────────────
     {
         "match": re.compile(
             r"\bmarlie\b.*(sync|push|notion|update|export)\b"
@@ -387,7 +387,7 @@ _PATTERNS: list[dict[str, Any]] = [
         ),
         "steps": lambda desc: [
             {"name": "marlie_sync_full", "skill": "marlie_notion", "assigned_role": "integration",
-             "description": "Sync full MARLIE I workbook to Notion",
+             "description": "Sync full MARLIE 1 workbook to Notion",
              "params": {"action": "sync_full"}},
         ],
     },
@@ -399,7 +399,7 @@ _PATTERNS: list[dict[str, Any]] = [
         ),
         "steps": lambda desc: [
             {"name": "marlie_status", "skill": "marlie_notion", "assigned_role": "integration",
-             "description": "Get MARLIE I Notion workbook status and URLs",
+             "description": "Get MARLIE 1 Notion workbook status and URLs",
              "params": {"action": "get_status"}},
         ],
     },
@@ -411,7 +411,7 @@ _PATTERNS: list[dict[str, Any]] = [
         ),
         "steps": lambda desc: [
             {"name": "marlie_append_note", "skill": "marlie_notion", "assigned_role": "integration",
-             "description": "Append a note to the MARLIE I Notion page",
+             "description": "Append a note to the MARLIE 1 Notion page",
              "params": {"action": "append_note", "text": desc}},
         ],
     },
@@ -424,7 +424,7 @@ _PATTERNS: list[dict[str, Any]] = [
         ),
         "steps": lambda desc: [
             {"name": "marlie_sync_section", "skill": "marlie_notion", "assigned_role": "integration",
-             "description": f"Sync MARLIE I section to Notion: {desc}",
+             "description": f"Sync MARLIE 1 section to Notion: {desc}",
              "params": {"action": "sync_section",
                         "section": next(
                             (s for s in ["thesis", "hardware", "site", "funding",
@@ -585,11 +585,11 @@ _SYSTEM_PROMPT = (
     "    action=append_blocks,    page_id=<uuid>, blocks=[<block_obj_or_plain_str>]\n"
     "    action=query_database,   database_id=<uuid>, filter={}, sorts=[], page_size=50\n"
     "\n"
-    "  marlie_notion (role: integration) -- MARLIE I Lafayette AI Factory Notion workbook:\n"
+    "  marlie_notion (role: integration) -- MARLIE 1 Lafayette AI Factory Notion workbook:\n"
     "    action=sync_full                              -- rebuild entire 8-section workbook\n"
     "    action=sync_section, section=<name>          -- push one section (thesis|hardware|site|funding|partners|credentials|vision|contact)\n"
-    "    action=get_status                            -- find MARLIE I pages in Notion, return URLs\n"
-    "    action=append_note, text=<str>              -- append timestamped note to root MARLIE I page\n"
+    "    action=get_status                            -- find MARLIE 1 pages in Notion, return URLs\n"
+    "    action=append_note, text=<str>              -- append timestamped note to root MARLIE 1 page\n"
     "\n"
     "  site_scout -- pipeline site intelligence (scripts/pipeline_scout.py):\n"
     "    Run as coder role with action=generate, prompt=<user request>, path=scripts/pipeline_scout.py\n"

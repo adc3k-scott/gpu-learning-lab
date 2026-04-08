@@ -13,7 +13,7 @@ Marc — Scott Tomsu, ADC founder in Lafayette LA. We're building 800V DC solar-
 **Follow-up after connect:**
 Marc — appreciate the connection. ADC is building Louisiana's first American-owned neocloud — token factory on NVIDIA hardware, Henry Hub natural gas at $0.027/kWh, 800V DC from day one. Our entire supply chain is US-manufactured: First Solar panels from New Iberia (30 miles), Caterpillar gensets from Louisiana Cat dealers, Eaton Beam Rubin DSX, Fibrebond containers from Minden LA.
 
-Three sites: Trappeys AI Factory (Lafayette, 2 MW solar, 112,500 sq ft), MARLIE I command center (owned, live), Willow Glen Terminal (St. Gabriel, 100+ MW former Entergy station).
+Three sites: Trappeys AI Factory (Lafayette, 2 MW solar, 112,500 sq ft), MARLIE 1 command center (owned, live), Willow Glen Terminal (St. Gabriel, 100+ MW former Entergy station).
 
 CERAWeek confirmed what we already designed — 800V DC, behind-the-meter, tokens-per-watt. We'd welcome a 15-minute call on how ADC fits the Louisiana piece of NVIDIA's 50-state plan.
 
@@ -30,7 +30,7 @@ Chad — Scott Tomsu, ADC founder in Lafayette LA. Building AI factories on Henr
 **Follow-up after connect:**
 Chad — ADC is a Louisiana-based neocloud building AI factories powered by behind-the-meter natural gas. We're 40 miles from Henry Hub with ATMOS Energy confirmed on our Lafayette sites. Our power hierarchy: solar offset → gas backbone → diesel emergency → grid sell-back only. We never buy from the grid.
 
-Williams' Power Innovation program is exactly what ADC needs at scale. We're at $5M seed now with MARLIE I already owned and Trappeys acquisition in progress. As we move to 30+ MW at Trappeys and 100+ MW at Willow Glen (former 2,200 MW Entergy station, St. Gabriel), behind-the-meter gas supply is the critical unlock.
+Williams' Power Innovation program is exactly what ADC needs at scale. We're at $5M seed now with MARLIE 1 already owned and Trappeys acquisition in progress. As we move to 30+ MW at Trappeys and 100+ MW at Willow Glen (former 2,200 MW Entergy station, St. Gabriel), behind-the-meter gas supply is the critical unlock.
 
 Would welcome a conversation about Louisiana site opportunities and how Williams fits into ADC's Phase 2 power plan.
 
@@ -46,7 +46,7 @@ Todd — Scott Tomsu, ADC founder. Building NVIDIA DSX AI factories in Louisiana
 **Follow-up after connect:**
 Todd — ADC specs Cat G3500 series as the backbone of our 4-layer power hierarchy at every site. Layer 2 carries the main AI compute load 24/7 — that's Cat. Layer 1 (solar) offsets it, Layer 3 (diesel) backs it up, Layer 4 (grid) is sell-back only.
 
-Our supply chain is built entirely on American manufacturers. Cat is in every site plan: Trappeys (Lafayette), MARLIE I (Lafayette), Willow Glen (St. Gabriel). Louisiana Cat dealer network is already identified. This isn't a future consideration — Cat is spec'd in the engineering package.
+Our supply chain is built entirely on American manufacturers. Cat is in every site plan: Trappeys (Lafayette), MARLIE 1 (Lafayette), Willow Glen (St. Gabriel). Louisiana Cat dealer network is already identified. This isn't a future consideration — Cat is spec'd in the engineering package.
 
 We're at $5M seed stage. Would welcome a conversation about Louisiana deployment support and Cat's AI infrastructure program.
 
@@ -65,7 +65,7 @@ JP — ADC has Eaton Beam Rubin DSX in the architecture on all three Louisiana s
 
 Dual power stack: Eaton handles facility power, Delta handles rack power. Both on every drawing.
 
-Phase 1A is MARLIE I (Lafayette, owned) — Phase 1C is Trappeys (112,500 sq ft, 2 MW solar, water tower cooling). We're at $5M seed stage and moving toward hardware procurement. Would welcome a conversation about Eaton's Louisiana support and lead times on DSX components.
+Phase 1A is MARLIE 1 (Lafayette, owned) — Phase 1C is Trappeys (112,500 sq ft, 2 MW solar, water tower cooling). We're at $5M seed stage and moving toward hardware procurement. Would welcome a conversation about Eaton's Louisiana support and lead times on DSX components.
 
 Scott Tomsu | scott@adc3k.com | adc3k.com
 
@@ -75,10 +75,10 @@ Scott Tomsu | scott@adc3k.com | adc3k.com
 *Contact: DCFlex@epri.com — launched Flex MOSAIC at CERAWeek March 23, 2026*
 
 **Connection request note (300 char max):**
-[Name] — Scott Tomsu, ADC in Lafayette LA. Building behind-the-meter AI factories with DSX Flex integration. Your micro AI factory work with NVIDIA + Prologis maps directly to our ADC 3K Pod. Interested in Flex MOSAIC certification for our Louisiana sites.
+[Name] — Scott Tomsu, ADC in Lafayette LA. Building behind-the-meter AI factories with DSX Flex integration. Your micro AI factory work with NVIDIA + Prologis maps directly to our ADC Pure DC AI Cassette. Interested in Flex MOSAIC certification for our Louisiana sites.
 
 **Follow-up after connect:**
-[Name] — ADC's ADC 3K Pod is a DSX-compliant facility module designed around the same micro AI factory concept EPRI is developing with NVIDIA and Prologis. Containerized, deployable, behind-the-meter gas or flare gas powered.
+[Name] — ADC's ADC Pure DC AI Cassette is a DSX-compliant facility module designed around the same micro AI factory concept EPRI is developing with NVIDIA and Prologis. Containerized, deployable, behind-the-meter gas or flare gas powered.
 
 Louisiana flares 1.8 BCF/year. We deploy ADC 3K pods at well sites — waste gas in, GPU-hours out, Flex MOSAIC certified. The regulatory tailwind is there: January 2024 Louisiana rule requires evaluation of alternative beneficial uses before flaring permits are issued. We're the beneficial use.
 
@@ -112,7 +112,7 @@ Secretary Bourgeois — Scott Tomsu, ADC founder in Lafayette. Louisiana-owned A
 **Follow-up after connect:**
 Secretary Bourgeois — ADC is the Louisiana answer to $50B in foreign and out-of-state AI infrastructure investment. Hut 8 (Canada), Nscale (UK), Amazon, Meta — every dollar of profit leaves the state. ADC's profit stays in Louisiana.
 
-Three sites: Trappeys AI Factory (Lafayette), MARLIE I command center (Lafayette, owned), Willow Glen Terminal (St. Gabriel, 100+ MW former Entergy station). American supply chain: First Solar panels from New Iberia (30 miles), Caterpillar from Louisiana Cat dealers, Fibrebond containers from Minden, Cajun Industries from New Iberia.
+Three sites: Trappeys AI Factory (Lafayette), MARLIE 1 command center (Lafayette, owned), Willow Glen Terminal (St. Gabriel, 100+ MW former Entergy station). American supply chain: First Solar panels from New Iberia (30 miles), Caterpillar from Louisiana Cat dealers, Fibrebond containers from Minden, Cajun Industries from New Iberia.
 
 We're pursuing ITEP (emerging industry classification — Kristin Johnson contact), Act 730, and PILOT. We'd welcome a briefing with your team and an introduction to the UL Lafayette partnership through LEDA.
 
@@ -165,10 +165,10 @@ Scott Tomsu | scott@adc3k.com | adc3k.com
 *Search LinkedIn for Cajun Industries business development or project development contacts*
 
 **Connection request note (300 char max):**
-[Name] — Scott Tomsu, ADC in Lafayette. We're building AI factory infrastructure in Louisiana — Trappeys Cannery (112,500 sq ft), MARLIE I command center, Willow Glen Terminal (100+ MW). Cajun Industries is in our vendor list for site construction and steel fabrication. Louisiana built, American made.
+[Name] — Scott Tomsu, ADC in Lafayette. We're building AI factory infrastructure in Louisiana — Trappeys Cannery (112,500 sq ft), MARLIE 1 command center, Willow Glen Terminal (100+ MW). Cajun Industries is in our vendor list for site construction and steel fabrication. Louisiana built, American made.
 
 **Follow-up after connect:**
-[Name] — ADC is building three AI factory sites in Louisiana. Trappeys is the core project — 112,500 sq ft historic cannery, 2 MW solar, water tower cooling, infrastructure yard. MARLIE I is our owned command center in Lafayette. Willow Glen Terminal in St. Gabriel is a former 2,200 MW Entergy station targeting 100+ MW.
+[Name] — ADC is building three AI factory sites in Louisiana. Trappeys is the core project — 112,500 sq ft historic cannery, 2 MW solar, water tower cooling, infrastructure yard. MARLIE 1 is our owned command center in Lafayette. Willow Glen Terminal in St. Gabriel is a former 2,200 MW Entergy station targeting 100+ MW.
 
 We want Louisiana contractors building Louisiana AI infrastructure. Cajun Industries is in our vendor matrix for site construction, structural steel, and fabrication work. Our timeline targets Trappeys acquisition this year with Phase 1 buildout following seed close.
 
@@ -246,7 +246,7 @@ Thank you for connecting. I founded ADC — Advantage Design & Construction — 
 Three sites in development:
 - Trappeys AI Factory (Lafayette) — 112,500 sq ft, 2 MW solar, proof of concept
 - Tiger Compute Campus at Willow Glen (St. Gabriel) — 100+ MW, Mississippi River cooling
-- MARLIE I Command Center (Lafayette) — 576 GPUs, backup NOC
+- MARLIE 1 Command Center (Lafayette) — 576 GPUs, backup NOC
 
 Everything validated at CERAWeek 2026 — 800V DC, behind-the-meter consensus, tokens-per-watt as the metric. We're American-owned with American-manufactured equipment throughout.
 

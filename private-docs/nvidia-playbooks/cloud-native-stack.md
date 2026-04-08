@@ -65,7 +65,7 @@ PHYSICAL HARDWARE (NVL72 racks, Delta power, Eaton distribution)
 ```
 
 ## What ADC Needs to Deploy
-1. Kubernetes cluster on every compute site (MARLIE I, Trappeys)
+1. Kubernetes cluster on every compute site (MARLIE 1, Trappeys)
 2. GPU Operator + Network Operator installed (automated)
 3. NIM Operator for inference microservice management
 4. Base Command Manager for cluster-level control
@@ -80,7 +80,7 @@ All of this software is either open source or included with NVIDIA AI Enterprise
 - Over 100 combinations of GPU, CPU, networking configurations
 - Pre-integration of ~80% of components at factory (deploy in <90 days vs 12 months)
 - 200+ ecosystem partners adopting MGX components
-- ADC 3K Pods use MGX-compatible components (Staubli UQD = "MGX UQD", 800V busbars, liquid cooling manifolds)
+- ADC Pure DC AI Cassettes use MGX-compatible components (Staubli UQD = "MGX UQD", 800V busbars, liquid cooling manifolds)
 - Partners: Supermicro, Lenovo, Gigabyte, ASUS, Cisco, MSI, Wistron, etc.
 
 ## MGX Key Specs

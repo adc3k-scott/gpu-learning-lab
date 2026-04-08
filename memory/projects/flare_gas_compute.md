@@ -4,7 +4,7 @@
 
 Louisiana flares and vents ~2-5 billion cubic feet (BCF) of natural gas annually. Oil operators burn this gas because pipeline infrastructure is too far, volumes are too small, or connection costs exceed the gas value. ADC can deploy containerized AI compute at flare sites, converting waste gas into GPU-hours. The pitch: "You're burning money. We take the gas, run AI compute, you stop paying penalties. Zero cost to you."
 
-This is Crusoe Energy's playbook — they scaled from zero to $10B valuation doing exactly this. ADC adapts it for Louisiana with three advantages: proximity to ADC facilities (Trappeys, MARLIE I, Willow Glen), bayou/river water for cooling, and existing relationships with Louisiana oil operators.
+This is Crusoe Energy's playbook — they scaled from zero to $10B valuation doing exactly this. ADC adapts it for Louisiana with three advantages: proximity to ADC facilities (Trappeys, MARLIE 1, Willow Glen), bayou/river water for cooling, and existing relationships with Louisiana oil operators.
 
 ---
 
@@ -58,7 +58,7 @@ Source: [EIA Louisiana Natural Gas Vented and Flared](https://www.eia.gov/dnav/n
 14. **Bienville Parish** — Haynesville activity.
 
 ### Why South Louisiana Parishes Matter for ADC
-- **Vermilion, Iberia, St. Martin, Acadia** — all within 30-60 miles of Trappeys and MARLIE I
+- **Vermilion, Iberia, St. Martin, Acadia** — all within 30-60 miles of Trappeys and MARLIE 1
 - **Lafourche, Terrebonne** — within 90 miles of Willow Glen
 - **Plaquemines** — near Willow Glen corridor
 - Every site has bayou/river water access for cooling
@@ -180,7 +180,7 @@ The **independents and smaller operators** are the real targets. Majors have the
 1. **Louisiana-based** — Crusoe operates mainly in North Dakota, Wyoming, Colorado, Texas. NO Louisiana presence.
 2. **Local relationships** — Scott knows Louisiana oil & gas operators. Crusoe is a Colorado company cold-calling.
 3. **Water cooling advantage** — Louisiana bayous and rivers everywhere. Crusoe's dry-state deployments need air cooling.
-4. **Backhaul to AI factory** — flare-site pods connect back to Trappeys/MARLIE I/Willow Glen via fiber or wireless. Crusoe has standalone cloud; ADC has an integrated network.
+4. **Backhaul to AI factory** — flare-site pods connect back to Trappeys/MARLIE 1/Willow Glen via fiber or wireless. Crusoe has standalone cloud; ADC has an integrated network.
 5. **DSX-compliant** — ADC builds to NVIDIA spec from day one. Crusoe started with Bitcoin miners.
 6. **State incentives** — Louisiana ITEP, Act 730, LED FastStart all apply to ADC's operations. Crusoe doesn't benefit from Louisiana programs.
 7. **Regulatory alignment** — January 2024 rule requires "alternative beneficial uses" evaluation. ADC IS the alternative beneficial use.
@@ -219,16 +219,16 @@ The **independents and smaller operators** are the real targets. Majors have the
 - **Margin**: 80%+ (free fuel + high GPU rates)
 
 ### Phase 1: Proof of Concept (1-2 Sites)
-1. Identify 2-3 flare sites within 30 miles of Trappeys/MARLIE I (Vermilion, Iberia, St. Martin parishes)
+1. Identify 2-3 flare sites within 30 miles of Trappeys/MARLIE 1 (Vermilion, Iberia, St. Martin parishes)
 2. Deploy 1 MW genset + 1 ADC 3K pod at each site
-3. Backhaul to MARLIE I over wireless/fiber
-4. Run inference workloads from Trappeys/MARLIE I overflow
+3. Backhaul to MARLIE 1 over wireless/fiber
+4. Run inference workloads from Trappeys/MARLIE 1 overflow
 5. Document emissions reduction for regulatory credit
 
 ### Phase 2: Regional Scale (5-10 Sites)
 1. Expand to Lafourche, Terrebonne, Cameron, Acadia parishes
 2. Deploy standardized genset+pod packages
-3. Manage fleet from MARLIE I as backup NOC
+3. Manage fleet from MARLIE 1 as backup NOC
 4. Begin carbon credit sales
 
 ### Phase 3: State Scale (20+ Sites)
@@ -276,7 +276,7 @@ The **independents and smaller operators** are the real targets. Majors have the
 | ADC Facility | GPS | Nearby Oil-Producing Parishes | Distance |
 |-------------|-----|-------------------------------|----------|
 | **Trappeys** | 30.21356N, 92.00163W | Vermilion, Iberia, St. Martin, Acadia, Lafayette | 10-40 mi |
-| **MARLIE I** | 30.21975N, 92.00645W | Same as Trappeys (half mile away) | 10-40 mi |
+| **MARLIE 1** | 30.21975N, 92.00645W | Same as Trappeys (half mile away) | 10-40 mi |
 | **Willow Glen** | 30.24700N, 91.09850W | Iberville, Ascension, St. James, Plaquemines (via river) | 20-80 mi |
 
 **Water cooling assets nearby**:
