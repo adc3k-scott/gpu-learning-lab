@@ -147,7 +147,7 @@ module.exports = {
       includes: [
         "Professional on-site installation (2-3 hours)",
         "Team training (30 minutes)",
-        "24/7 monitoring from MARLIE I",
+        "24/7 monitoring from MARLIE 1",
         "No long-term contract",
       ],
       message: "Payment processing is being set up. For now, call or email us to complete your order — we'll lock in your pricing.",

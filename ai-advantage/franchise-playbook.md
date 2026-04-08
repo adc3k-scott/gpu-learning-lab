@@ -16,11 +16,11 @@ Traditional IT vendors charge per-location as if each one is a brand new project
 
 ## Infrastructure: ADC Central Compute
 
-Franchisees connect to ADC's central compute at MARLIE I — not a third-party cloud. Each franchise territory gets a **Run:AI project** with a guaranteed GPU quota based on their location count and subscription tier.
+Franchisees connect to ADC's central compute at MARLIE 1 — not a third-party cloud. Each franchise territory gets a **Run:AI project** with a guaranteed GPU quota based on their location count and subscription tier.
 
 | What ADC Handles | What the Franchisee Handles |
 |------------------|---------------------------|
-| All GPU hardware (NVL72 at MARLIE I) | Sales and lead generation in their territory |
+| All GPU hardware (NVL72 at MARLIE 1) | Sales and lead generation in their territory |
 | NIM microservice deployment per customer | Customer discovery calls and installs |
 | Run:AI scheduling and GPU quotas | Staff training at client sites |
 | DCGM monitoring + Mission Control | Local relationship management |

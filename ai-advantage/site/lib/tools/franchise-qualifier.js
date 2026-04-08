@@ -119,7 +119,7 @@ module.exports = {
         `Clone deploy to ${locations - 1} additional locations (1 hour each)`,
         "Single dashboard shows all locations",
         "Each location manager sees only their site",
-        "Centralized monitoring from MARLIE I",
+        "Centralized monitoring from MARLIE 1",
       ],
 
       // The pitch

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADC 3K Pod — Deploy AI Anywhere</title>
-<meta name="description" content="ADC 3K Pod: 10 NVL72 racks, 720 GPUs, 1.3 MW, shipped in a standard 40-ft container. Deploy AI anywhere with power and cooling.">
+<title>ADC Pure DC AI Cassette — Deploy AI Anywhere</title>
+<meta name="description" content="ADC Pure DC AI Cassette: 10 NVL72 racks, 720 GPUs, 1.3 MW, shipped in a standard 40-ft container. Deploy AI anywhere with power and cooling.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -106,12 +106,12 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 .deploy-card p{font-size:12px;color:var(--text-dim);line-height:1.5}
 
 /* Footer */
-.pod-footer{max-width:1200px;margin:0 auto;padding:60px 40px;text-align:center;border-top:1px solid var(--border)}
-.pod-footer .logo{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--text-white);letter-spacing:2px;margin-bottom:12px}
-.pod-footer .logo span{color:var(--accent)}
-.pod-footer p{font-size:13px;color:var(--text-dim);margin-bottom:4px}
-.pod-footer a{color:var(--accent);text-decoration:none}
-.pod-footer a:hover{text-decoration:underline}
+.cassette-footer{max-width:1200px;margin:0 auto;padding:60px 40px;text-align:center;border-top:1px solid var(--border)}
+.cassette-footer .logo{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--text-white);letter-spacing:2px;margin-bottom:12px}
+.cassette-footer .logo span{color:var(--accent)}
+.cassette-footer p{font-size:13px;color:var(--text-dim);margin-bottom:4px}
+.cassette-footer a{color:var(--accent);text-decoration:none}
+.cassette-footer a:hover{text-decoration:underline}
 
 /* Responsive */
 @media(max-width:768px){
@@ -139,7 +139,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">ADC 3K Product</div>
-  <h1>ADC 3K Pod<br><span>Deploy AI Anywhere</span></h1>
+  <h1>ADC Pure DC AI Cassette<br><span>Deploy AI Anywhere</span></h1>
   <p class="hero-sub">10 NVL72 racks. 720 GPUs. 1.3 MW. Ships in a 40-ft container.</p>
   <div class="hero-stats">
     <div class="hero-stat">720 BLACKWELL GPUs</div>
@@ -219,8 +219,8 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
   <h2>Layout Blueprint</h2>
   <p class="sub">Three-view engineering drawing: top, side, and end cross-section. All dimensions verified against NVIDIA NVL72 specifications and standard 40-ft HC container geometry. Solar roof panel array shown in top view -- 320 sq ft of First Solar panels provide shade and power for all internal support systems.</p>
   <div class="blueprint-wrap">
-    <object data="/adc3k-pod/blueprints/adc3k-pod-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
-      <img src="/adc3k-pod/blueprints/adc3k-pod-layout.svg" alt="ADC 3K Pod Blueprint - Three View Layout">
+    <object data="/adc3k-cassette/blueprints/adc3k-cassette-layout.svg" type="image/svg+xml" style="width:100%;min-height:500px">
+      <img src="/adc3k-cassette/blueprints/adc3k-cassette-layout.svg" alt="ADC Pure DC AI Cassette Blueprint - Three View Layout">
     </object>
   </div>
 </section>
@@ -321,17 +321,17 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <section class="section">
   <div class="section-label">Power</div>
   <h2>Power Options</h2>
-  <p class="sub">Gas in. Tokens out. The pod runs on natural gas via Bloom SOFC — no grid, no inverter, no utility approval queue.</p>
+  <p class="sub">Gas in. Tokens out. The cassette runs on natural gas via Bloom SOFC — no grid, no inverter, no utility approval queue.</p>
   <div class="power-grid">
     <div class="power-card" style="border:1px solid rgba(0,232,122,0.3);border-top:3px solid var(--accent)">
       <div class="icon" style="color:var(--accent)">&#x26A1;</div>
       <h4>Bloom SOFC — Primary</h4>
-      <p>Natural gas → 800V DC direct. 54% fuel-to-electricity efficiency. No inverter, no rectifier losses. Quiet, no combustion exhaust, no standoff distance. One Bloom skid powers multiple pods.</p>
+      <p>Natural gas → 800V DC direct. 54% fuel-to-electricity efficiency. No inverter, no rectifier losses. Quiet, no combustion exhaust, no standoff distance. One Bloom skid powers multiple cassettes.</p>
     </div>
     <div class="power-card">
       <div class="icon" style="color:var(--accent)">&#x2600;</div>
       <h4>Solar Supplement</h4>
-      <p>~6 kW First Solar panels on every pod roof. DC-direct into the 800V bus. Powers internal support systems. Reduces fuel burn. Peak solar coincides with peak heat.</p>
+      <p>~6 kW First Solar panels on every cassette roof. DC-direct into the 800V bus. Powers internal support systems. Reduces fuel burn. Peak solar coincides with peak heat.</p>
     </div>
     <div class="power-card">
       <div class="icon" style="color:var(--blue)">&#x26A0;</div>
@@ -353,7 +353,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
   <div style="background:linear-gradient(135deg,rgba(0,232,122,0.08),rgba(59,158,255,0.06));border:1px solid var(--accent);border-radius:16px;padding:48px 40px;max-width:900px;margin:0 auto">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px">ZERO ON-SITE STAFF</div>
     <h2 style="font-size:32px;font-weight:700;color:var(--text-white);margin-bottom:16px">100% AI-Managed</h2>
-    <p style="font-size:16px;color:var(--text);line-height:1.7;max-width:650px;margin:0 auto">Mission Control AI monitors and manages every pod remotely. Thermal, power, network, workload -- all autonomous. Add a pod -- it joins the cluster. Remove a pod -- workloads redistribute. No technician required for daily operations.</p>
+    <p style="font-size:16px;color:var(--text);line-height:1.7;max-width:650px;margin:0 auto">Mission Control AI monitors and manages every cassette remotely. Thermal, power, network, workload -- all autonomous. Add a cassette -- it joins the cluster. Remove a cassette -- workloads redistribute. No technician required for daily operations.</p>
   </div>
 </section>
 
@@ -363,13 +363,13 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <section class="section">
   <div class="section-label">Operations Stack</div>
   <h2>From Rack to Revenue in 11 Steps</h2>
-  <p class="sub">Every ADC 3K Pod runs the complete NVIDIA software stack -- automated, production-ready, zero custom engineering.</p>
+  <p class="sub">Every ADC Pure DC AI Cassette runs the complete NVIDIA software stack -- automated, production-ready, zero custom engineering.</p>
 
   <div class="feature-grid" style="margin-bottom:32px">
     <div class="feature-card">
       <div class="tag">SCHEDULING</div>
       <h4>NVIDIA Run:AI</h4>
-      <p>Multi-tenant GPU scheduling with fair-share allocation. Each customer gets guaranteed GPU quota. RBAC across all pods and clusters.</p>
+      <p>Multi-tenant GPU scheduling with fair-share allocation. Each customer gets guaranteed GPU quota. RBAC across all cassettes and clusters.</p>
     </div>
     <div class="feature-card">
       <div class="tag">INFERENCE</div>
@@ -424,18 +424,18 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <!-- SECTION: EXPANDABLE NETWORK -->
 <section class="section">
   <div class="section-label">Scale</div>
-  <h2>One Pod is a Start. The Network is the Product.</h2>
-  <p class="sub">Every pod is a node. Add more. The network grows.</p>
+  <h2>One Cassette is a Start. The Network is the Product.</h2>
+  <p class="sub">Every cassette is a node. Add more. The network grows.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px">
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
       <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Expand in Any Direction</h3>
-      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Start with 1 pod (720 GPUs). Add pods as demand grows. North-south expansion adds pods in a row. East-west expansion adds rows. Scale from a single site to a campus without redesigning anything.</p>
-      <p style="font-size:14px;color:var(--text);line-height:1.7">Shared cooling, shared power, shared monitoring. One Bloom SOFC skid powers multiple pods. One Munters skid — fed by Bloom exhaust heat — conditions air for the entire array. Infrastructure scales with compute.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Start with 1 cassette (720 GPUs). Add cassettes as demand grows. North-south expansion adds cassettes in a row. East-west expansion adds rows. Scale from a single site to a campus without redesigning anything.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Shared cooling, shared power, shared monitoring. One Bloom SOFC skid powers multiple cassettes. One Munters skid — fed by Bloom exhaust heat — conditions air for the entire array. Infrastructure scales with compute.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px">
       <h3 style="font-size:18px;font-weight:700;color:var(--text-white);margin-bottom:12px">Self-Organizing Fleet</h3>
-      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Every pod auto-registers with Mission Control. AI manages the fleet. Workloads distribute automatically. Health monitoring, power balancing, thermal management -- all centralized, all autonomous.</p>
-      <p style="font-size:14px;color:var(--text);line-height:1.7">One pod is an AI factory. Ten pods is an AI campus. A hundred pods is a national inference network.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">Every cassette auto-registers with Mission Control. AI manages the fleet. Workloads distribute automatically. Health monitoring, power balancing, thermal management -- all centralized, all autonomous.</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">One cassette is an AI factory. Ten cassettes is an AI campus. A hundred cassettes is a national inference network.</p>
     </div>
   </div>
   <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 12px 12px 0;padding:24px 32px">
@@ -534,7 +534,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     </div>
     <div class="deploy-card">
       <h4>Universities</h4>
-      <p>GPU access for research and teaching. Zero to hero. Deploy a pod on campus, give every student and researcher access to real compute.</p>
+      <p>GPU access for research and teaching. Zero to hero. Deploy a cassette on campus, give every student and researcher access to real compute.</p>
     </div>
     <div class="deploy-card">
       <h4>Oil Fields</h4>
@@ -562,7 +562,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     </div>
   </div>
   <div style="background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:32px;margin-top:32px;text-align:center">
-    <p style="font-size:17px;color:var(--text-bright);line-height:1.8;max-width:800px;margin:0 auto">The robot age is coming. Autonomous cars, factory robots, AI diagnostics, drone networks -- they all need local inference. The cloud is too far away. The ADC 3K pod puts compute where it's needed. <strong style="color:var(--text-white)">Built in Louisiana. Deployed anywhere.</strong></p>
+    <p style="font-size:17px;color:var(--text-bright);line-height:1.8;max-width:800px;margin:0 auto">The robot age is coming. Autonomous cars, factory robots, AI diagnostics, drone networks -- they all need local inference. The cloud is too far away. The ADC 3K cassette puts compute where it's needed. <strong style="color:var(--text-white)">Built in Louisiana. Deployed anywhere.</strong></p>
   </div>
 </section>
 
@@ -579,10 +579,10 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
       <p style="font-size:15px;color:var(--text-bright);line-height:1.7">Oil operators across Louisiana flare natural gas they can't economically pipeline. That's <strong style="color:#ef4444">22 MW of continuous compute power</strong> being set on fire.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #f97316;border-radius:0 8px 8px 0;padding:20px 24px">
-      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">ADC deploys pods at flare sites with a Bloom SOFC skid plumbed directly to the flare header. Their waste gas becomes our fuel. They stop paying flaring penalties. We get free power — and the SOFC produces no combustion exhaust.</p>
+      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">ADC deploys cassettes at flare sites with a Bloom SOFC skid plumbed directly to the flare header. Their waste gas becomes our fuel. They stop paying flaring penalties. We get free power — and the SOFC produces no combustion exhaust.</p>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #ef4444;border-radius:0 8px 8px 0;padding:20px 24px">
-      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">Louisiana's January 2024 regulation requires operators to evaluate <strong style="color:#f97316">"alternative beneficial uses"</strong> before flaring. The ADC 3K pod IS that alternative.</p>
+      <p style="font-size:15px;color:var(--text-bright);line-height:1.7">Louisiana's January 2024 regulation requires operators to evaluate <strong style="color:#f97316">"alternative beneficial uses"</strong> before flaring. The ADC 3K cassette IS that alternative.</p>
     </div>
   </div>
 
@@ -672,7 +672,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     <div class="feature-card">
       <div class="tag">CERAWeek 2026</div>
       <h4>Prefab Micro AI Factories</h4>
-      <p>NVIDIA + EPRI + Prologis announced prefab micro AI factories (5-20 MW) at existing substation sites at CERAWeek 2026 -- the ADC 3K Pod is this concept, production-ready.</p>
+      <p>NVIDIA + EPRI + Prologis announced prefab micro AI factories (5-20 MW) at existing substation sites at CERAWeek 2026 -- the ADC Pure DC AI Cassette is this concept, production-ready.</p>
     </div>
     <div class="feature-card">
       <div class="tag">DSX Standard</div>
@@ -682,7 +682,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
     <div class="feature-card">
       <div class="tag">Behind the Meter</div>
       <h4>On-Site Power Generation</h4>
-      <p>Bloom SOFC converts natural gas to 800V DC direct — no inverter, no AC anywhere. First Solar panels on every pod roof for solar offset. CERAWeek 2026 consensus: behind the meter is not a choice, it's a necessity.</p>
+      <p>Bloom SOFC converts natural gas to 800V DC direct — no inverter, no AC anywhere. First Solar panels on every cassette roof for solar offset. CERAWeek 2026 consensus: behind the meter is not a choice, it's a necessity.</p>
     </div>
     <div class="feature-card">
       <div class="tag">American Made</div>
@@ -699,7 +699,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(6,10,16,0.94
 <div class="divider"></div>
 
 <!-- FOOTER -->
-<footer class="pod-footer">
+<footer class="cassette-footer">
   <div class="logo">ADC<span>3K</span></div>
   <p>Advantage Design &amp; Construction</p>
   <p><a href="https://adc3k.com">adc3k.com</a></p>

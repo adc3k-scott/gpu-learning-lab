@@ -151,7 +151,7 @@ TI showcased at GTC a complete 800V DC solution: only 2 conversion stages from 8
 
 Cisco expanded its Secure AI Factory with NVIDIA beyond large facilities to edge sites -- hospitals, warehouses, vehicles. This signals AI factory architecture is standardizing down to edge scale.
 
-**ADC RELEVANCE: MEDIUM** -- Relevant to MARLIE I edge compute and ADC 3K pod deployments. Cisco's edge AI factory security model could be a reference for ADC's edge node security architecture.
+**ADC RELEVANCE: MEDIUM** -- Relevant to MARLIE 1 edge compute and ADC 3K pod deployments. Cisco's edge AI factory security model could be a reference for ADC's edge node security architecture.
 
 ---
 
@@ -169,7 +169,7 @@ Comprehensive vendor-tested reference architecture for securing AI infrastructur
 
 NemoClaw is NVIDIA's open-source stack adding privacy/security controls to OpenClaw (the "OS for personal AI"). Early preview since March 16. Runs on DGX Station and DGX Spark. Installs OpenShell runtime in single command for always-on autonomous AI agents. Not production-ready yet.
 
-**ADC RELEVANCE: MEDIUM** -- OpenClaw/NemoClaw represents NVIDIA's vision for consumer/enterprise AI agents running on local hardware. If this takes off, it drives DGX Spark sales and edge compute demand. Could be a future workload for ADC's edge nodes and MARLIE I.
+**ADC RELEVANCE: MEDIUM** -- OpenClaw/NemoClaw represents NVIDIA's vision for consumer/enterprise AI agents running on local hardware. If this takes off, it drives DGX Spark sales and edge compute demand. Could be a future workload for ADC's edge nodes and MARLIE 1.
 
 ---
 

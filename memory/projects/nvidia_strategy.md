@@ -25,7 +25,7 @@ ADC builds exclusively on NVIDIA. No AMD, no Intel Gaudi, no custom ASICs. Every
   - NVLink 6 for intra-rack GPU interconnect
 - **Networking (Willow Glen)**: InfiniBand spine — NVIDIA Quantum switches
   - InfiniBand is the ONLY network fabric inside Willow Glen's compute fabric
-  - Management traffic (MARLIE I ↔ Willow Glen) runs on dedicated fiber, NOT InfiniBand
+  - Management traffic (MARLIE 1 ↔ Willow Glen) runs on dedicated fiber, NOT InfiniBand
 - **Management**: NVIDIA Base Command Manager — cluster orchestration, job scheduling, health monitoring
 - **Immersion (ADC 3K pods)**: EC-110 single-phase dielectric. Pod-level, not rack-level.
 

@@ -1,5 +1,5 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Electrical Single-Line Diagram
 G3512H generators -> Eaton Beam Rubin DSX -> 800V DC bus -> rack PDUs -> TI GaN / Infineon CoolGaN -> GPU
 """
@@ -47,7 +47,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill="#0a0b0f"))
 
     # -- TITLE BLOCK --
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("ELECTRICAL SINGLE-LINE DIAGRAM | 800V DC NATIVE | EATON BEAM RUBIN DSX | 1,040 kW IT LOAD",

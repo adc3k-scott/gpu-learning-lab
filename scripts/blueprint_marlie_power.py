@@ -1,8 +1,8 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Power Distribution Schematic
 4-Layer Hierarchy: Solar -> Gas -> Diesel -> Grid (backup, NOT sell-back)
-MARLIE I is DIFFERENT from Trappeys — grid is Layer 4 BACKUP, not sell-back
+MARLIE 1 is DIFFERENT from Trappeys — grid is Layer 4 BACKUP, not sell-back
 """
 import svgwrite
 
@@ -54,7 +54,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill="#0a0b0f"))
 
     # -- TITLE --
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("POWER DISTRIBUTION SCHEMATIC | FUEL TO CHIP | 4-LAYER POWER HIERARCHY | 1,040 kW IT",
@@ -247,7 +247,7 @@ def build():
     hy = 75
 
     dwg.add(dwg.rect((hx, hy), (590, 960), rx=8, fill="#111318", stroke="#1e2230", stroke_width=1))
-    dwg.add(dwg.text("4-LAYER POWER HIERARCHY — MARLIE I", insert=(hx + 295, hy + 20), text_anchor="middle",
+    dwg.add(dwg.text("4-LAYER POWER HIERARCHY — MARLIE 1", insert=(hx + 295, hy + 20), text_anchor="middle",
                       fill="#f0f2f5", font_size=12, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("(DIFFERENT from Trappeys — Grid is BACKUP here, not sell-back)",
                       insert=(hx + 295, hy + 35), text_anchor="middle",
@@ -324,11 +324,11 @@ def build():
     # KEY DIFFERENCE callout
     kd_y = ly + 10
     dwg.add(dwg.rect((hx + 15, kd_y), (560, 60), rx=6, fill="#1a0a0a", stroke="#ef4444", stroke_width=1.5))
-    dwg.add(dwg.text("KEY DIFFERENCE: MARLIE I vs TRAPPEYS/WILLOW GLEN", insert=(hx + 295, kd_y + 18),
+    dwg.add(dwg.text("KEY DIFFERENCE: MARLIE 1 vs TRAPPEYS/WILLOW GLEN", insert=(hx + 295, kd_y + 18),
                       text_anchor="middle", fill="#ef4444", font_size=10, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("Trappeys/Willow Glen: Grid = SELL-BACK only (Layer 4 revenue)",
                       insert=(hx + 30, kd_y + 35), fill="#fca5a5", font_size=8, font_family="Arial"))
-    dwg.add(dwg.text("MARLIE I: Grid = BACKUP power (Layer 4 safety net) — smaller facility, grid supports ops",
+    dwg.add(dwg.text("MARLIE 1: Grid = BACKUP power (Layer 4 safety net) — smaller facility, grid supports ops",
                       insert=(hx + 30, kd_y + 50), fill="#fca5a5", font_size=8, font_family="Arial"))
 
     # ================================================================

@@ -8,7 +8,7 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 ### Key Decisions
 
 **Pure DC AI Factory Cassette — CONCEPT LOCKED**
-- 1 cassette = 1 ADC 3K pod = 10 NVL72 racks = 1.3 MW IT load
+- 1 cassette = 1 ADC 3K cassette = 10 NVL72 racks = 1.3 MW IT load
 - Factory-built at Fibrebond (Eaton), Minden LA — 90 min from Lafayette
 - Site interface: 800V DC bus + cooling loop + fiber. Nothing else.
 - No AC conversion inside cassette. No inverters. No rectifiers. No air conditioning.
@@ -72,7 +72,7 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 ## SESSION SUMMARY — April 3, 2026 (CONTINUED — New Iberia 200 MW)
 
 ### New Iberia — Site Pivoted to 200 MW Hyperscaler AI Factory
-- **Decision:** Hwy 14 & US-90 New Iberia site (formerly pod factory Step 2) pivoted to 200 MW greenfield AI factory targeting hyperscaler customer. Pod factory Step 1 (Baton Rouge) carries manufacturing independently.
+- **Decision:** Hwy 14 & US-90 New Iberia site (formerly cassette factory Step 2) pivoted to 200 MW greenfield AI factory targeting hyperscaler customer. Cassette factory Step 1 (Baton Rouge) carries manufacturing independently.
 - **Rationale:** SNG mainline on property + hyperscaler demand at record levels. 200 MW can be sold before groundbreaking.
 - **Layout locked:** Three-zone rectangle. One long pass. ~480 ft × 180 ft. Zone A (Bloom, 40 ft) | Zone B (Compute, 100 ft) | Zone C (BESS, 40 ft). 1500V DC bus punches through fire-rated walls — ≤15 ft run to rack.
 - **Compute:** 1,538 NVL72 racks / 110,736 GPUs / 8.86 PB HBM / 38 Vera Rubin PODs
@@ -128,7 +128,7 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 - Fixed in `business-model/scenarios.md` — new Corporate Income Tax Rate section added
 
 ### OCP Whitepapers Reviewed
-- **ESUN** (Meta + Microsoft, Feb 2026): Open Ethernet standard for GPU scale-up fabric. Alternative to NVIDIA InfiniBand. Relevant if ADC deploys non-NVIDIA pods. Not relevant to current NVIDIA-primary build.
+- **ESUN** (Meta + Microsoft, Feb 2026): Open Ethernet standard for GPU scale-up fabric. Alternative to NVIDIA InfiniBand. Relevant if ADC deploys non-NVIDIA cassettes. Not relevant to current NVIDIA-primary build.
 - **Energy/Water/Carbon Guidelines** (OCP, March 2026): Validates ADC's dry cooler choice for Louisiana (hot/humid = no evaporative benefit). Confirms ADC's pure DC microgrid = best-in-class on every sustainability metric vs grid-connected competitors.
 
 ### Open Items Carried Forward
@@ -226,7 +226,7 @@ Option A — Docker Desktop (16GB RAM in settings):
 .\scripts\build-dsx-docker.ps1
 ```
 
-Option B — Native Linux (RunPod CPU pod $0.03/hr):
+Option B — Native Linux (RunPod CPU cassette $0.03/hr):
 ```
 git clone ... && ./repo.sh build && ./repo.sh package --container && docker push
 ```
@@ -241,9 +241,9 @@ https://build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories
 ---
 
 ## ROXY STATUS — LIVE
-- **Pod:** g5t4hxa9rjm7cm (RTX A6000, 48GB VRAM, 58GB RAM)
+- **Cassette:** g5t4hxa9rjm7cm (RTX A6000, 48GB VRAM, 58GB RAM)
 - **Model:** Qwen 3 8B fine-tuned v1 (118 examples), baked into weights
-- **VRAM:** 90% used — DO NOT train on this pod
+- **VRAM:** 90% used — DO NOT train on this cassette
 - **Cost:** $0.33/hr
 - **27 tools**, smart tool selector, session persistence, job manager
 - **DO NOT TOUCH THIS POD**
@@ -258,7 +258,7 @@ https://build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories
 6. **Electrical PE** — N+1 SST design, OCP coordination study.
 7. **Twilio 10DLC approval** — Submitted, waiting on carrier.
 8. **Stripe live mode** — Swap sk_test_ to sk_live_ when ready.
-9. **ROXY v2 training** — Separate pod. 334 examples ready.
+9. **ROXY v2 training** — Separate cassette. 334 examples ready.
 10. **Episode 3 production** — briefing ready.
 
 ---

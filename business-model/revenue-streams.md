@@ -70,8 +70,8 @@
 **Target buyers:** Other neoclouds, enterprise on-prem, edge deployment operators
 
 ### Unit Economics (NEEDS WORK)
-- Cost per pod: TBD (container + MEP + water loop + heat rejection)
-- Sale price per pod: TBD
+- Cost per cassette: TBD (container + MEP + water loop + heat rejection)
+- Sale price per cassette: TBD
 - Margin: TBD
 - Production capacity: Baton Rouge Terminal (Phase 1) + New Iberia automated (Phase 2)
 

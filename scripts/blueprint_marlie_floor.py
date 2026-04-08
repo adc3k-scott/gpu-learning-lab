@@ -1,5 +1,5 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Floor Plans: Floor 1 + Floor 2 Side by Side + Cross Section
 Building: 24 ft wide x 40 ft long, 2 identical floors
 Staircase: south end, 24 ft wide x 3 ft deep
@@ -318,7 +318,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill=BG))
 
     # ── TITLE BLOCK ──
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                      insert=(W / 2, 26), text_anchor="middle", fill="#f0f2f5",
                      font_size=16, font_family="Arial", font_weight="bold"))
 
@@ -416,13 +416,13 @@ def build():
         dwg.add(dwg.text(note, insert=(35, ny + i * 13), fill="#4b5563",
                          font_size=7.5, font_family="Arial"))
 
-    # ── MARLIE I vs TRAPPEYS comparison ──
+    # ── MARLIE 1 vs TRAPPEYS comparison ──
     cmp_y = ny + len(notes) * 13 + 15
     dwg.add(dwg.rect((35, cmp_y), (800, 40), rx=6, fill=ZONE_BG, stroke=BORDER))
-    dwg.add(dwg.text("MARLIE I vs TRAPPEYS:", insert=(50, cmp_y + 15), fill=ACCENT,
+    dwg.add(dwg.text("MARLIE 1 vs TRAPPEYS:", insert=(50, cmp_y + 15), fill=ACCENT,
                      font_size=9, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text(
-        f"MARLIE I = {BLDG_W_FT * BLDG_L_FT * 2:,} sq ft / {total_racks} racks / {total_gpus} GPUs  |  "
+        f"MARLIE 1 = {BLDG_W_FT * BLDG_L_FT * 2:,} sq ft / {total_racks} racks / {total_gpus} GPUs  |  "
         f"Trappeys = 112,500 sq ft / 36-84 racks / scalable SuperPOD deployment",
         insert=(50, cmp_y + 28), fill="#9ca3af", font_size=8, font_family="Arial"))
 

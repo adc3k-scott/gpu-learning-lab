@@ -1,4 +1,4 @@
-MARLIE I — Lafayette Infrastructure Partnership — ADC3K
+MARLIE 1 — Lafayette Infrastructure Partnership — ADC3K
 
   
     
@@ -21,7 +21,7 @@ MARLIE I — Lafayette Infrastructure Partnership — ADC3K
   
 
   
-    MARLIE I
+    MARLIE 1
 
   
 
@@ -779,7 +779,7 @@ Exterior heat rejection · adiabatic assist for Louisiana summer peaks >95°F
 
   
   
-    TRADITIONAL MODEL VS MARLIE I
+    TRADITIONAL MODEL VS MARLIE 1
 
     
       
@@ -800,7 +800,7 @@ Exterior heat rejection · adiabatic assist for Louisiana summer peaks >95°F
       
 
       
-        MARLIE I
+        MARLIE 1
 
         
           Site owned — today
@@ -871,7 +871,7 @@ Exterior heat rejection · adiabatic assist for Louisiana summer peaks >95°F
     
 
     
-      SCALING PATH — AFTER MARLIE I
+      SCALING PATH — AFTER MARLIE 1
 
       
         
@@ -1234,7 +1234,7 @@ power rates — USA
     
     
       
-        Future home of MARLIE I. Metal-clad industrial structure on owned land, built by Scott Tomsu 20 years ago. High ceilings, reinforced slab foundation, roll-up bay access for equipment delivery, frontage on SE Evangeline Thruway. Zero structural damage through multiple Gulf hurricanes. The bones of an AI factory — already standing.
+        Future home of MARLIE 1. Metal-clad industrial structure on owned land, built by Scott Tomsu 20 years ago. High ceilings, reinforced slab foundation, roll-up bay access for equipment delivery, frontage on SE Evangeline Thruway. Zero structural damage through multiple Gulf hurricanes. The bones of an AI factory — already standing.
       
 
     
@@ -1455,7 +1455,7 @@ power rates — USA
 
   
 
-  MARLIE I
+  MARLIE 1
 
   Mission Control — First 10 MW Deployment — Lafayette, Louisiana
 
@@ -1478,7 +1478,7 @@ power rates — USA
   
 
   
-    © 2026 ADVANTAGE DESIGN CONSTRUCTION — ADC3K · MARLIE I PROJECT · LAFAYETTE, LOUISIANA
+    © 2026 ADVANTAGE DESIGN CONSTRUCTION — ADC3K · MARLIE 1 PROJECT · LAFAYETTE, LOUISIANA
   
 
   CONFIDENTIAL — FOR PARTNER USE ONLY

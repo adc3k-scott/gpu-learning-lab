@@ -78,7 +78,7 @@ Full page list (all 200):
 - **Willow Glen**: /lsu, /power-lsu, /power-architecture, /blueprints, /renders-wg
 - **Trappeys (9 pages)**: /trappeys, /trappeys-campus, /trappeys-technology, /trappeys-university, /trappeys-responders, /trappeys-investors, /trappeys-plan, /trappeys-dsx-prep, /trappeys-presentation
 - **Trappeys Assets**: /trappeys-gallery, /renders-trappeys, /blueprints-trappeys, /renders-compare
-- **MARLIE I**: /blueprints-marlie
+- **MARLIE 1**: /blueprints-marlie
 - **Product**: /adc3k-pod, /adc3k-pod-spec
 - **Louisiana**: /terafab-louisiana, /lafayette
 - **Investor/Business**: /investor, /alumni-investors, /leadership

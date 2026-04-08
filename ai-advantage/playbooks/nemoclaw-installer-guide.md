@@ -1,16 +1,16 @@
 # Secure Agent Deployment Guide — ADC Self-Hosted Infrastructure
 
-**For AI Advantage installers.** This is how we deploy AI agents to client businesses safely using ADC's own compute at MARLIE I. Read this before your first install that uses an always-on agent.
+**For AI Advantage installers.** This is how we deploy AI agents to client businesses safely using ADC's own compute at MARLIE 1. Read this before your first install that uses an always-on agent.
 
 ---
 
 ## How It Works (Plain English)
 
-Every AI agent we deploy for a client runs on ADC's own NVL72 GPU hardware at MARLIE I in Lafayette. The client gets a sandboxed agent that connects back to our infrastructure for AI inference. No third-party cloud. No retail API fees.
+Every AI agent we deploy for a client runs on ADC's own NVL72 GPU hardware at MARLIE 1 in Lafayette. The client gets a sandboxed agent that connects back to our infrastructure for AI inference. No third-party cloud. No retail API fees.
 
 - The **AI agent** is the worker — it answers phones, drafts documents, tracks inventory, whatever the playbook says.
 - The **sandbox** is the locked room the worker operates in — it can only see what we allow, talk to who we allow, and touch the files we allow.
-- The **NIM microservice** on MARLIE I is the brain — it processes AI requests on our GPUs, isolated per customer via MIG partitioning.
+- The **NIM microservice** on MARLIE 1 is the brain — it processes AI requests on our GPUs, isolated per customer via MIG partitioning.
 
 Without sandboxing, an AI agent could theoretically access anything on the network, call any website, read any file. That's a liability nightmare, especially for medical, legal, and financial clients. Our deployment locks it down from the first boot.
 
@@ -22,7 +22,7 @@ Without sandboxing, an AI agent could theoretically access anything on the netwo
 |--------------------------|----------------------|
 | Agent could access client files it shouldn't | Filesystem locked — only `/sandbox` and `/tmp` are writable |
 | Agent could call random websites | Network policy — only approved endpoints allowed |
-| Agent could use any AI model (cost risk) | Inference routing — all AI traffic goes through ADC NIM endpoints at MARLIE I |
+| Agent could use any AI model (cost risk) | Inference routing — all AI traffic goes through ADC NIM endpoints at MARLIE 1 |
 | No visibility into what the agent is doing | Mission Control dashboard — we see every request, GPU utilization, and cost in real time |
 | Client worries about data leaving their building | DGX Spark/Mac Mini = on-prem. Cloud tier = ADC hardware in Louisiana, not a third-party cloud |
 | HIPAA/legal compliance concerns | Sandboxed execution with audit trail + MIG hardware isolation per customer |
@@ -47,10 +47,10 @@ Every sandbox has a YAML policy file that lists exactly which websites/services 
 - Nothing else
 
 ### Layer 3: Inference Routing (ADC NIM Endpoints)
-When the agent needs to "think" (process a request through the AI model), that request doesn't go to the internet. It routes through ADC's own compute at MARLIE I:
+When the agent needs to "think" (process a request through the AI model), that request doesn't go to the internet. It routes through ADC's own compute at MARLIE 1:
 
 ```
-Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE I NVL72) → Dynamo 1.0 → AI Model → Response back
+Client's Agent → Sandbox → ADC NIM Endpoint (MARLIE 1 NVL72) → Dynamo 1.0 → AI Model → Response back
 ```
 
 This means:
@@ -76,7 +76,7 @@ This means:
 These steps happen AFTER the hardware and basic software setup from the vertical playbook.
 
 **Step 1: Create Customer Project in Run:AI**
-From your laptop (connected to MARLIE I via VPN or on-network):
+From your laptop (connected to MARLIE 1 via VPN or on-network):
 ```bash
 # Create a Run:AI project for the customer with GPU quota
 runai project create <clientname> --gpu-quota 0.25 --namespace ai-advantage
@@ -100,7 +100,7 @@ spec:
     migProfile: "1g.10gb"
 EOF
 ```
-This deploys a dedicated NIM microservice on MARLIE I hardware with MIG isolation. The client's inference runs on a hardware-partitioned GPU slice.
+This deploys a dedicated NIM microservice on MARLIE 1 hardware with MIG isolation. The client's inference runs on a hardware-partitioned GPU slice.
 
 **Step 3: Install Client-Side Sandbox**
 On the client's device (Mac Mini, DGX Spark, or Starter Kit):
@@ -108,7 +108,7 @@ On the client's device (Mac Mini, DGX Spark, or Starter Kit):
 # Run the AI Advantage agent installer from USB drive
 ./aia-install.sh --client <clientname> --endpoint https://nim.marlie1.adc3k.com/<clientname>
 ```
-This installs the sandboxed agent and points inference to the customer's NIM endpoint on MARLIE I. Follow the prompts for:
+This installs the sandboxed agent and points inference to the customer's NIM endpoint on MARLIE 1. Follow the prompts for:
 - A sandbox name (use: `clientname-agent`, lowercase, hyphens only)
 - The AI Advantage inference credentials (from your installer kit, NOT an NVIDIA API key)
 
@@ -138,7 +138,7 @@ Open Mission Control dashboard (`http://marlie1.local:8000` or via VPN). Confirm
 - [ ] Monitoring shows no unexpected blocked requests
 - [ ] Client knows how to chat with their agent (TUI or Telegram)
 - [ ] You've noted any endpoints you approved (report back to AI Advantage)
-- [ ] Remote monitoring is configured (MARLIE I Mission Control shows the client's sandbox)
+- [ ] Remote monitoring is configured (MARLIE 1 Mission Control shows the client's sandbox)
 - [ ] NIM service healthy in Run:AI dashboard
 - [ ] DCGM metrics flowing for the customer's MIG partition
 
@@ -183,8 +183,8 @@ Open Mission Control dashboard (`http://marlie1.local:8000` or via VPN). Confirm
 | "OOM killer" during install on DGX Spark | Add 8 GB swap: `sudo fallocate -l 8G /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile` |
 | Sandbox shows "stopped" | Run `aia-sandbox <name> restart` to recreate |
 | Port conflict on client device | Find the process: `lsof -i :<port>`, kill it, retry |
-| Client's internet is slow | Consider switching to local inference (Nemotron Nano 30B on Mac Mini or DGX Spark) — sandbox still reports metrics to MARLIE I when connection recovers |
-| Inference requests timing out | Check NIM endpoint connectivity: `curl https://nim.marlie1.adc3k.com/<clientname>/health`. If MARLIE I is unreachable, check VPN/network. |
+| Client's internet is slow | Consider switching to local inference (Nemotron Nano 30B on Mac Mini or DGX Spark) — sandbox still reports metrics to MARLIE 1 when connection recovers |
+| Inference requests timing out | Check NIM endpoint connectivity: `curl https://nim.marlie1.adc3k.com/<clientname>/health`. If MARLIE 1 is unreachable, check VPN/network. |
 | DCGM metrics not showing | Verify MIG partition is active: `kubectl exec -n ai-advantage <pod> -- nvidia-smi` |
 | Can't access Mission Control | Verify VPN connection. Dashboard is at `http://marlie1.local:8000`. Not accessible from public internet. |
 
@@ -198,7 +198,7 @@ Open Mission Control dashboard (`http://marlie1.local:8000` or via VPN). Confirm
 4. **NEVER deploy without a vertical-specific policy.** The default policy is too open for production client use.
 5. **NEVER store client credentials on your laptop.** Inference credentials go in the sandbox config on the client's hardware, not yours.
 6. **NEVER modify Run:AI GPU quotas without Scott's approval.** Quotas are tied to subscription tiers and billing.
-7. **NEVER point a client's agent at a third-party cloud endpoint.** All inference goes through ADC's MARLIE I NIM endpoints. That's the whole point.
+7. **NEVER point a client's agent at a third-party cloud endpoint.** All inference goes through ADC's MARLIE 1 NIM endpoints. That's the whole point.
 
 ---
 

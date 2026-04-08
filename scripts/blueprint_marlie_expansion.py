@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate 5 SVG layout options for MARLIE I hybrid expansion plan."""
+"""Generate 5 SVG layout options for MARLIE 1 hybrid expansion plan."""
 
 import os
 
@@ -71,7 +71,7 @@ def svg_header(title, subtitle):
 <!-- Title Block -->
 <text x="40" y="40" class="title">{title}</text>
 <text x="40" y="58" class="subtitle">{subtitle}</text>
-<text x="40" y="74" class="subtitle">MARLIE I — 1201 SE Evangeline Thruway, Lafayette LA  |  0.60 acres (3 parcels)</text>
+<text x="40" y="74" class="subtitle">MARLIE 1 — 1201 SE Evangeline Thruway, Lafayette LA  |  0.60 acres (3 parcels)</text>
 """
 
 
@@ -119,7 +119,7 @@ def stats_box(x, y, racks, gpus, containers, mw, footprint_label):
 
 def legend(x, y):
     items = [
-        (BUILDING, "MARLIE I Building (8 racks)"),
+        (BUILDING, "MARLIE 1 Building (8 racks)"),
         (GROUND, "Ground Container (10 racks)"),
         (STACKED, "Stacked Container (10 racks)"),
         (GENERATOR, "Generator (Cat G3516J)"),

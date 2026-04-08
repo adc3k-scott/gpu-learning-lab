@@ -351,7 +351,7 @@ Known taxiway designations (from AirNav and SkyVector — FAA airport diagram re
 
 ## 12. ADC PROPERTY PROXIMITY
 
-### MARLIE I (30.21975 N, 92.00645 W)
+### MARLIE 1 (30.21975 N, 92.00645 W)
 
 | Field | Value |
 |-------|-------|
@@ -380,7 +380,7 @@ Known taxiway designations (from AirNav and SkyVector — FAA airport diagram re
 | Zone | Location | Rationale |
 |------|----------|-----------|
 | Dock Alpha | Near GA hangars / Signature FBO (north side) | Protected area, power/data available, away from primary runway |
-| Dock Bravo | MARLIE I rooftop or pad | Edge compute co-located, 1.31 nm from field |
+| Dock Bravo | MARLIE 1 rooftop or pad | Edge compute co-located, 1.31 nm from field |
 | Dock Charlie | Trappeys campus (infrastructure yard) | 0.88 nm from field, solar power, concrete pad |
 | Dock Delta | Near Runway 04L/22R midfield | GA runway side, shorter taxi/flight distances |
 
@@ -388,7 +388,7 @@ Known taxiway designations (from AirNav and SkyVector — FAA airport diagram re
 
 | Corridor | Route | Distance | Notes |
 |----------|-------|----------|-------|
-| KLFT -> MARLIE I | 312 deg true, 1.31 nm | Low altitude (200-400 ft AGL), Class C auth required |
+| KLFT -> MARLIE 1 | 312 deg true, 1.31 nm | Low altitude (200-400 ft AGL), Class C auth required |
 | KLFT -> Trappeys | 305 deg true, 0.88 nm | Short hop, within visual range of tower |
 | KLFT -> Pipeline corridor (south) | 180 deg true | Pipeline inspection runs toward Vermilion Parish |
 | KLFT -> I-10 corridor (north) | ~000 deg true, 3 nm | Infrastructure inspection, exits Class C surface at ~5 nm |

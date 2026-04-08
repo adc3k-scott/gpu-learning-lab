@@ -186,7 +186,7 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
       <tr><td class="field">In-Band Mgmt Switch</td><td class="value">Spectrum-4 SN5610</td><td class="note">64 &times; 800G Ethernet. Manages OS, provisioning, monitoring.</td></tr>
       <tr><td class="field">In-Band Switches</td><td class="value">1</td><td class="note">Single switch handles 8 racks in-band.</td></tr>
       <tr><td class="field">Out-of-Band Mgmt Switch</td><td class="value">SN2201</td><td class="note">48 &times; 1G + 4 &times; 100G. BMC/IPMI. Lights-out management.</td></tr>
-      <tr><td class="field">OOB Switches</td><td class="value">1</td><td class="note">Single switch. Connected to NOC (riverfront 2F) + MARLIE I backup.</td></tr>
+      <tr><td class="field">OOB Switches</td><td class="value">1</td><td class="note">Single switch. Connected to NOC (riverfront 2F) + MARLIE 1 backup.</td></tr>
 
       <tr class="group-header"><td colspan="3">Software Stack</td></tr>
       <tr><td class="field">Cluster Management</td><td class="value">Base Command Manager</td><td class="note">cmsh CLI. Provisioning, imaging, workload scheduling.</td></tr>
@@ -238,7 +238,7 @@ footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);fo
           │              <span class="highlight">MANAGEMENT</span>                                 │
           │  In-Band:  SN5610 (800G Eth)  &rarr;  BCM, DCGM, UFM       │
           │  Out-Band: SN2201 (1G Eth)    &rarr;  BMC/IPMI, lights-out  │
-          │  Uplink:   LUS Fiber          &rarr;  Internet, MARLIE I    │
+          │  Uplink:   LUS Fiber          &rarr;  Internet, MARLIE 1    │
           └────────────────────────────────────────────────────────┘
     </pre>
   </div>
@@ -433,7 +433,7 @@ That's 360 GPUs instead of 288<br>
 &bull; Screen 6: Security cameras (Metropolis)<br><br>
 <strong>Operator Stations:</strong><br>
 &bull; 2 workstations (Phase 3)<br>
-&bull; Remote access: MARLIE I backup NOC<br>
+&bull; Remote access: MARLIE 1 backup NOC<br>
 &bull; Alerts: PagerDuty/OpsGenie integration<br><br>
 <strong>NVIDIA Mission Control</strong><br>
 &bull; Single pane aggregating all above<br>

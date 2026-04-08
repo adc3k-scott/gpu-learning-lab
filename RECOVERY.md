@@ -134,7 +134,7 @@ Or just do it as part of the standard session close-out.
 
 ## Notion — Always Available Regardless of Local Machine
 
-Everything built in Notion (MARLIE I, ADC 3K, KLFT, Ground Zero, Site Acquisition Pipeline, Vendor Strategy, etc.) lives in the cloud. Even if Mission Control is offline, all project knowledge is accessible directly at notion.so from any browser or phone.
+Everything built in Notion (MARLIE 1, ADC 3K, KLFT, Ground Zero, Site Acquisition Pipeline, Vendor Strategy, etc.) lives in the cloud. Even if Mission Control is offline, all project knowledge is accessible directly at notion.so from any browser or phone.
 
 Mission Control HQ root: `31288f09-7e31-81a5-bf43-e2af16379346`
 

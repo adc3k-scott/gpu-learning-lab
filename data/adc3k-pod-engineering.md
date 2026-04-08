@@ -1,4 +1,4 @@
-# ADC 3K Pod Engineering Layout
+# ADC Pure DC AI Cassette Engineering Layout
 ## 40-ft High Cube ISO Container — 10x NVL72 Rack Configuration
 
 **Document**: ADC3K-ENG-001 Rev B
@@ -13,7 +13,7 @@
 | # | Item | Risk | Action |
 |---|------|------|--------|
 | 1 | **NVL72 height — HPE vs. Supermicro** | HPE spec (2,495 mm) leaves only 8 in overhead vs. 18 in for Supermicro (2,236 mm). If HPE height applies, cable routing is dangerously tight. | Get confirmed rack height from NVIDIA or OEM before ordering containers. |
-| 2 | **Vera Rubin power budget** | GB200 baseline = 130 kW/rack. Vera Rubin H2 2026 = two profiles (Max Q 190 kW / Max P 230 kW). At 230 kW, 10-rack pod hits 2.3 MW IT — power and cooling architecture may require redesign. | Get Vera Rubin thermal/power spec from NVIDIA. Lock rack count to GB200 until confirmed. |
+| 2 | **Vera Rubin power budget** | GB200 baseline = 130 kW/rack. Vera Rubin H2 2026 = two profiles (Max Q 190 kW / Max P 230 kW). At 230 kW, 10-rack cassette hits 2.3 MW IT — power and cooling architecture may require redesign. | Get Vera Rubin thermal/power spec from NVIDIA. Lock rack count to GB200 until confirmed. |
 
 ---
 
@@ -644,7 +644,7 @@ Humidity control: Munters HCD desiccant dehumidifier.
 | Camera | 2x IR cameras (entry end, CDU end) |
 | Vibration | Accelerometers on container frame (transport monitoring) |
 | Connection | All sensors to local controller (Jetson Orin Nano) |
-| Remote | 4G/5G + Starlink backup to MARLIE I NOC via Mission Control |
+| Remote | 4G/5G + Starlink backup to MARLIE 1 NOC via Mission Control |
 
 ---
 
@@ -986,7 +986,7 @@ No human needed. Ever. Unless something physically breaks.
 | Bandwidth utilization | Software | Capacity planning |
 | Mission Control heartbeat | Software | NOC connectivity |
 
-### 9.6 Total Sensor Count: ~65 sensors per pod
+### 9.6 Total Sensor Count: ~65 sensors per cassette
 
 ### 9.7 AI Autonomous Responses
 | Condition | AI Action |
@@ -1046,7 +1046,7 @@ No human needed. Ever. Unless something physically breaks.
 ## 11. EXTREME CO-DESIGN — CONFIGURABLE RACK POSITIONS
 
 ### 11.1 Design Philosophy
-The ADC 3K Pod is a configurable platform, not a fixed product. The container, power system (800V DC), cooling loop, access panels, solar roof, and AI monitoring are constant. The 10 rack positions are variable — configured per customer mission.
+The ADC Pure DC AI Cassette is a configurable platform, not a fixed product. The container, power system (800V DC), cooling loop, access panels, solar roof, and AI monitoring are constant. The 10 rack positions are variable — configured per customer mission.
 
 ### 11.2 Standard Configurations
 
@@ -1105,7 +1105,7 @@ Any combination of rack types in the 10 positions is possible. Customer specifie
 | **Certifications** | UL Listed, FM Approved, NFPA 2001, ISO 14520 |
 | **Residue** | None — safe for electronics, no cleanup |
 | **Conductivity** | Non-conductive (liquid and gas state) |
-| **Human safety** | Safe at design concentrations — but ADC 3K pods are unmanned, so this is bonus margin |
+| **Human safety** | Safe at design concentrations — but ADC 3K cassettes are unmanned, so this is bonus margin |
 | **Shelf life** | 60 months (TMC-1230 spec; Fike SF 1230 expected similar) |
 
 ### 12.2 Why Fike SF 1230 Over Alternatives
@@ -1128,13 +1128,13 @@ No significant cost change. FK-5-1-12 pricing from Fike/TMC is comparable to for
 
 - NVIDIA DSX reference design specifies fire suppression as a required subsystem but does not mandate a specific agent. Clean agent total flood or dry-pipe pre-action sprinklers are both acceptable.
 - ASHRAE does not mandate a specific agent either. NFPA 75 (IT equipment) and NFPA 76 (telecom) are the governing standards — both accept FK-5-1-12.
-- For the ADC 3K pod (unmanned, sealed container), clean agent total flood is the correct choice. Pre-action sprinklers introduce water risk to $2M+ of GPU hardware.
+- For the ADC 3K cassette (unmanned, sealed container), clean agent total flood is the correct choice. Pre-action sprinklers introduce water risk to $2M+ of GPU hardware.
 
 ### 12.6 Action Items
 
 - [x] Update Section 8 suppression spec from "Novec 1230" to "FK-5-1-12 via Fike SF 1230"
 - [x] Update Section 11.3 constants list
 - [x] Update BOM line item
-- [ ] Contact Fike sales for ADC 3K pod-specific quote (40-ft HC ISO container, ~70 m3 volume)
+- [ ] Contact Fike sales for ADC 3K cassette-specific quote (40-ft HC ISO container, ~70 m3 volume)
 - [ ] Confirm design concentration for FK-5-1-12 in sealed container (typically 5.3-5.9% by volume)
 - [ ] Verify cylinder count and placement within CDU zone footprint

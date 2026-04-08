@@ -40,7 +40,7 @@ Last updated: 2026-03-25
 - Employees: 700+ initially, 826+ by end 2026, avg ~$90K/year
 - Commissioned: 2025
 - Distance from Trappeys: 30 miles
-- Distance from MARLIE I: 30 miles
+- Distance from MARLIE 1: 30 miles
 
 ## Trappeys Installation
 - 3,731 panels = 2.05 MW across 4 rooftops

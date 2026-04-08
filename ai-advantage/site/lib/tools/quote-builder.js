@@ -131,7 +131,7 @@ module.exports = {
       no_contract: "No long-term contract required",
       includes_install: "Professional 2-3 hour on-site installation included",
       includes_training: "30-minute team training included",
-      includes_monitoring: "24/7 remote monitoring from MARLIE I facility",
+      includes_monitoring: "24/7 remote monitoring from MARLIE 1 facility",
     };
 
     if (rec.playbook) {

@@ -22,7 +22,7 @@ Last updated: 2026-03-25
 ## Why GTI for ADC
 - US-made = Buy American + TAA compliant (federal/state grant eligible)
 - ISO/CSC certified = crane + flatbed transport ready
-- Volume manufacturer = can scale with pod factory demand
+- Volume manufacturer = can scale with cassette factory demand
 
 ## Next Step
 RFQ for 40-ft High Cube — specify ISO corner castings, penetration locations, door config

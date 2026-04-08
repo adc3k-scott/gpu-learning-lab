@@ -19,7 +19,7 @@ Last updated: 2026-03-25
 - Right vendor for edge variants that need weight reduction (rigs, pilings, vessels)
 
 ## Use Case
-Not for standard ADC 3K pods. Target: offshore rig deployments, Atchafalaya wetland piling installs, vessel-mounted edge nodes.
+Not for standard ADC 3K cassettes. Target: offshore rig deployments, Atchafalaya wetland piling installs, vessel-mounted edge nodes.
 
 ## Next Step
-Evaluate for offshore/wetland pod variant once standard pod design is locked
+Evaluate for offshore/wetland cassette variant once standard cassette design is locked

@@ -2,7 +2,7 @@
 
 **AI Advantage pays installers to install. No cold calling. No prospecting quotas. Show up, follow the playbook, get paid.**
 
-> **Why commissions are generous:** All compute runs on ADC's own NVL72 hardware at MARLIE I. Token cost is ~$0.004/M (self-generated power at $0.027/kWh). With 95%+ margins on every subscription, there is no cloud compute bill eating into revenue. Monthly recurring revenue per customer flows through ADC's token metering — the spread between our cost and the subscription price funds everything, including installer commissions.
+> **Why commissions are generous:** All compute runs on ADC's own NVL72 hardware at MARLIE 1. Token cost is ~$0.004/M (self-generated power at $0.027/kWh). With 95%+ margins on every subscription, there is no cloud compute bill eating into revenue. Monthly recurring revenue per customer flows through ADC's token metering — the spread between our cost and the subscription price funds everything, including installer commissions.
 
 ---
 

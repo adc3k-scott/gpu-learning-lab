@@ -41,7 +41,7 @@ Scoring engine: agents/site_scout/scorer_v2.py
 |------|------|-------|-------|------|
 | Willow Glen Terminal | 94 | 11 | 105 | S |
 | Trappeys Cannery | 84 | 21 | 105 | S |
-| MARLIE I | 89 | 8 | 97 | S |
+| MARLIE 1 | 89 | 8 | 97 | S |
 | KLFT Airport | 74 | 11 | 85 | A |
 
 Trappeys and Willow Glen TIE at 105 total — different reasons:

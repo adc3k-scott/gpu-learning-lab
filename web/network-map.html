@@ -519,7 +519,7 @@
 const NODES = [
   {
     id: 'marlie',
-    name: 'MARLIE I',
+    name: 'MARLIE 1',
     subtitle: 'Lafayette AI Factory — HQ & NOC',
     location: '1201 SE Evangeline Thruway, Lafayette, LA',
     lat: 30.21975, lng: -92.00645,
@@ -528,7 +528,7 @@ const NODES = [
     badgeClass: 'badge-hq',
     public: {
       headline: 'The Brain of the Network',
-      description: 'MARLIE I is the central command and compute facility for the entire Louisiana AI Network. Every other node in the network connects back here. This is where the most powerful AI processing happens and where network operations are managed 24/7.',
+      description: 'MARLIE 1 is the central command and compute facility for the entire Louisiana AI Network. Every other node in the network connects back here. This is where the most powerful AI processing happens and where network operations are managed 24/7.',
       what_it_does: 'Provides AI compute power to businesses, hospitals, research institutions, and government agencies across the region. Runs the Mission Control platform that monitors the entire network.',
     },
     tech: {
@@ -567,13 +567,13 @@ const NODES = [
     public: {
       headline: 'First Edge AI Deployment Site',
       description: 'The historic Trappeys cannery site becomes the first location where ADC 3K containerized AI pods are deployed. The existing metal warehouse structures are ideal for drop-in AI compute containers — no major construction required.',
-      what_it_does: 'Extends AI compute capacity to this industrial site. Each pod operates independently but connects back to MARLIE I for management and monitoring.',
+      what_it_does: 'Extends AI compute capacity to this industrial site. Each pod operates independently but connects back to MARLIE 1 for management and monitoring.',
     },
     tech: {
       platform: 'ADC 3K — 40-ft ISO Containers',
       cooling: 'Full immersion — Engineered Fluids EC-110 dielectric',
       power: '480V 3-phase per pod + N+1 generator',
-      ops: 'Lights-out remote ops managed from MARLIE I NOC',
+      ops: 'Lights-out remote ops managed from MARLIE 1 NOC',
     },
     specs: [
       { val: 'ADC 3K', lbl: 'Pod Product' },
@@ -582,7 +582,7 @@ const NODES = [
       { val: '99.5%', lbl: 'SLA Target' },
     ],
     services: ['Edge AI Compute', 'Overflow Capacity', 'Industrial IoT Processing'],
-    connects: [{ name: 'MARLIE I NOC', color: '#00ff88' }],
+    connects: [{ name: 'MARLIE 1 NOC', color: '#00ff88' }],
   },
   {
     id: 'klft',
@@ -613,7 +613,7 @@ const NODES = [
     ],
     services: ['Drone First Response (DFR)', 'Search & Rescue', 'Infrastructure Inspection', 'Medical Logistics', 'Emergency Management'],
     connects: [
-      { name: 'MARLIE I NOC', color: '#00ff88' },
+      { name: 'MARLIE 1 NOC', color: '#00ff88' },
       { name: 'Lafayette Parish First Responders', color: '#f97316' },
       { name: 'Lafayette General Hospital', color: '#f97316' },
       { name: 'Lafayette Regional Airport Authority', color: '#f97316' },
@@ -646,7 +646,7 @@ const NODES = [
       { val: 'Gas + Solar', lbl: 'Energy' },
     ],
     services: ['AI Compute Expansion', 'Southern Louisiana Coverage', 'Agricultural AI', 'Energy Research'],
-    connects: [{ name: 'MARLIE I NOC', color: '#00ff88' }],
+    connects: [{ name: 'MARLIE 1 NOC', color: '#00ff88' }],
   },
   {
     id: 'airport',
@@ -675,7 +675,7 @@ const NODES = [
     ],
     services: ['Airport AI', 'KLFT Ground Station', 'Logistics Processing'],
     connects: [
-      { name: 'MARLIE I NOC', color: '#00ff88' },
+      { name: 'MARLIE 1 NOC', color: '#00ff88' },
       { name: 'KLFT 1.1', color: '#ffd700' },
     ],
   },
@@ -694,7 +694,7 @@ const NODES = [
       what_it_does: 'Brings AI compute and clean transportation infrastructure to the heart of Lafayette. High visibility serves as a public demonstration of what the network does for the city.',
     },
     tech: {
-      site_type: 'Type B — ADC 3K Pods + EV Charging',
+      site_type: 'Type B — ADC Pure DC AI Cassettes + EV Charging',
       building: 'Former hotel base structure',
       ev: 'DC fast charge + Level 2, utility substation aesthetic',
     },
@@ -705,7 +705,7 @@ const NODES = [
       { val: 'Urban Core', lbl: 'Visibility' },
     ],
     services: ['Urban AI Compute', 'EV Fast Charging', 'Community Hub', 'Public Demonstration'],
-    connects: [{ name: 'MARLIE I NOC', color: '#00ff88' }],
+    connects: [{ name: 'MARLIE 1 NOC', color: '#00ff88' }],
   },
   {
     id: 'newiberia',
@@ -723,17 +723,17 @@ const NODES = [
     },
     tech: {
       role: 'Renewable energy supplier + Site 2 ADC candidate',
-      distance: '~30 miles from MARLIE I',
+      distance: '~30 miles from MARLIE 1',
       energy: 'Solar generation — feeds network sustainability targets',
     },
     specs: [
-      { val: '~30 mi', lbl: 'From MARLIE I' },
+      { val: '~30 mi', lbl: 'From MARLIE 1' },
       { val: 'Solar', lbl: 'Energy Type' },
       { val: 'Site 2', lbl: 'ADC Candidate' },
       { val: 'Partner', lbl: 'Status' },
     ],
     services: ['Renewable Energy Supply', 'ADC 3K Deployment Site', 'Carbon Offset'],
-    connects: [{ name: 'MARLIE I — Energy Feed', color: '#00ff88' }],
+    connects: [{ name: 'MARLIE 1 — Energy Feed', color: '#00ff88' }],
   },
 ];
 
@@ -747,7 +747,7 @@ const COMMUNITY_NODES = [
 
 const ENERGY_NODES = [
   { name: 'LUS Fiber (Primary Grid)', lat: 30.210, lng: -92.032, icon: '⚡', note: 'Dual feed available — LUS + SLEMCO' },
-  { name: 'Henry Hub Gas Corridor', lat: 29.95, lng: -91.60, icon: '🔥', note: '40 miles from MARLIE I — lowest gas cost in US' },
+  { name: 'Henry Hub Gas Corridor', lat: 29.95, lng: -91.60, icon: '🔥', note: '40 miles from MARLIE 1 — lowest gas cost in US' },
   { name: 'Bloom Energy Fuel Cell', lat: 30.185, lng: -92.026, icon: '⚗', note: 'Continuous baseload ~300kW per unit, stackable' },
 ];
 
@@ -866,7 +866,7 @@ function drawCommunity() {
     m.addTo(map);
     communityMarkers.push(m);
 
-    // Line to MARLIE I
+    // Line to MARLIE 1
     const marlie = NODES.find(n => n.id === 'marlie');
     const line = L.polyline([[cn.lat, cn.lng], [marlie.lat, marlie.lng]], {
       color: '#f97316', weight: 1, opacity: 0.3, dashArray: '4, 8',

@@ -1,7 +1,7 @@
 // ROXY — ADC AI Factory Agent
 // Self-hosted inference on ADC's own GPU hardware
 // Tool-calling agent with playbook RAG, lead capture, quoting, and booking
-// Endpoint: RunPod (temporary) -> MARLIE I NVL72 (permanent)
+// Endpoint: RunPod (temporary) -> MARLIE 1 NVL72 (permanent)
 
 const { isRateLimited } = require("../lib/util/rate-limiter");
 const { run: runAgent } = require("../lib/agent/loop");

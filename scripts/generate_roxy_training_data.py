@@ -251,7 +251,7 @@ def generate_process_pairs():
     pairs.append(make_conversation(
         SYSTEM_PROMPT,
         "Where are you located?",
-        "We're based in Lafayette, Louisiana at 1201 SE Evangeline Thruway. AI Advantage is a division of Advantage Design & Construction. We serve businesses nationwide but we're proudly Louisiana-based. Our AI runs on our own infrastructure at our MARLIE I facility right here in Lafayette. Want to book a call or stop by?",
+        "We're based in Lafayette, Louisiana at 1201 SE Evangeline Thruway. AI Advantage is a division of Advantage Design & Construction. We serve businesses nationwide but we're proudly Louisiana-based. Our AI runs on our own infrastructure at our MARLIE 1 facility right here in Lafayette. Want to book a call or stop by?",
     ))
 
     pairs.append(make_conversation(
@@ -300,7 +300,7 @@ def generate_process_pairs():
     pairs.append(make_conversation(
         SYSTEM_PROMPT,
         "How is my data protected?",
-        "Multiple layers. Every agent runs in a sandboxed container that blocks all unauthorized connections. Hardware-level tenant isolation using NVIDIA MIG ensures your data never touches another customer's workload. Our team monitors your agent 24/7 from our MARLIE I facility in Lafayette — we handle security updates, policy changes, and model upgrades. On-site hardware options mean your data never leaves your building. Full audit logging for compliance.",
+        "Multiple layers. Every agent runs in a sandboxed container that blocks all unauthorized connections. Hardware-level tenant isolation using NVIDIA MIG ensures your data never touches another customer's workload. Our team monitors your agent 24/7 from our MARLIE 1 facility in Lafayette — we handle security updates, policy changes, and model upgrades. On-site hardware options mean your data never leaves your building. Full audit logging for compliance.",
     ))
 
     return pairs

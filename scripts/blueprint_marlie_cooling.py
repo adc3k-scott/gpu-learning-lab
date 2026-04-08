@@ -1,5 +1,5 @@
 """
-MARLIE I — Lafayette AI Factory & Command Center
+MARLIE 1 — Lafayette AI Factory & Command Center
 Cooling Flow Schematic
 CDUs per floor -> Facility loop -> Exterior dry coolers -> Return
 45C supply, no river, no water tower. Dry coolers only.
@@ -64,7 +64,7 @@ def build():
     dwg.add(dwg.rect((0, 0), (W, H), fill="#0a0b0f"))
 
     # -- TITLE BLOCK --
-    dwg.add(dwg.text("MARLIE I — LAFAYETTE AI FACTORY & COMMAND CENTER",
+    dwg.add(dwg.text("MARLIE 1 — LAFAYETTE AI FACTORY & COMMAND CENTER",
                       insert=(W / 2, 24), text_anchor="middle", fill="#f0f2f5",
                       font_size=16, font_family="Arial", font_weight="bold"))
     dwg.add(dwg.text("COOLING FLOW SCHEMATIC | DRY COOLERS ONLY | 2 CDU PAIRS | LIQUID-COOLED GPU RACKS",
@@ -258,11 +258,11 @@ def build():
     nr_x = 30
     nr_y = 410
     dwg.add(dwg.rect((nr_x, nr_y), (200, 100), rx=6, fill="#111318", stroke="#555", stroke_width=1))
-    dwg.add(dwg.text("MARLIE I vs TRAPPEYS", insert=(nr_x + 100, nr_y + 18),
+    dwg.add(dwg.text("MARLIE 1 vs TRAPPEYS", insert=(nr_x + 100, nr_y + 18),
                       text_anchor="middle", fill=ACCENT, font_size=10, font_family="Arial", font_weight="bold"))
 
     comparisons = [
-        "MARLIE I: Dry coolers only",
+        "MARLIE 1: Dry coolers only",
         "Trappeys: Water tower + dry coolers",
         "",
         "No water tower (not on site)",
@@ -351,7 +351,7 @@ def build():
     ny = 850
     notes = [
         "1. BAC TrilliumSeries adiabatic coolers on concrete pad — no water tower, no discharge permits, minimal water use",
-        "2. No water tower at MARLIE I — unlike Trappeys. BAC TrilliumSeries sized with margin for Louisiana summer peaks (~95F)",
+        "2. No water tower at MARLIE 1 — unlike Trappeys. BAC TrilliumSeries sized with margin for Louisiana summer peaks (~95F)",
         "3. NVIDIA NVL72 racks use direct liquid cooling with 45C (113F) hot water supply — no chillers needed in most conditions",
         "4. 2x CoolIT CHx200 row-level CDU pairs + Delta 140 kW In-Rack CDUs (4RU, NVL72 cert) per rack — Staubli UQD — N+1 redundancy",
         "5. Facility loop uses treated water/glycol mix, Munters HCD humidity control — isolated from IT rack cooling loops via CDUs",

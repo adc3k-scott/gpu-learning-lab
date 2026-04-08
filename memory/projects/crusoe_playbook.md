@@ -358,7 +358,7 @@ Louisiana's advantage is DIFFERENT from Crusoe's origin story:
 | Workforce | Imported to remote sites | 25 years of ROV/offshore tech workforce IN STATE |
 | University | None (built own training) | UL Lafayette (anchor tenant, R1 research, grants) + LSU |
 | Incentives | Colorado/Texas standard | ITEP ($8-16M), Act 730 (20-year sales tax exemption, $200M+), Historic Tax Credits (45-55%), LED FastStart (free training) |
-| Manufacturing | Built Spark Factory (352K sq ft, $200M) | First Solar factory 30 mi away (panels), Baton Rouge + New Iberia pod factory |
+| Manufacturing | Built Spark Factory (352K sq ft, $200M) | First Solar factory 30 mi away (panels), Baton Rouge + New Iberia cassette factory |
 | Certification | Proprietary (no NVIDIA cert) | NVIDIA DSX reference design, NCP certification path |
 | Grid advantage | Abilene = ERCOT (wind) | Willow Glen = sell BACK to grid (Layer 4), not dependent on it |
 
@@ -392,7 +392,7 @@ Louisiana's advantage is DIFFERENT from Crusoe's origin story:
 4. **Brownfield advantage** — Willow Glen (former 2,200 MW station) and Trappeys (existing buildings) = faster permitting, existing infrastructure.
 5. **University partnerships** — UL Lafayette, LSU = workforce, research, grants ($28-55M+ potential). Crusoe has none.
 6. **Incentive stack** — $200M+ in Louisiana tax incentives Crusoe can't access.
-7. **American manufacturing** — First Solar 30 mi away, pod factory in-state. Crusoe's supply chain is distributed.
+7. **American manufacturing** — First Solar 30 mi away, cassette factory in-state. Crusoe's supply chain is distributed.
 8. **Workforce** — 25 years of ROV/offshore/deepwater expertise already in Louisiana. Crusoe imports workers to remote sites.
 9. **Sell-back grid model** — Layer 4 power hierarchy sells excess to grid. Crusoe buys FROM grid at Abilene.
 10. **Newer hardware** — ADC deploys NVIDIA liquid-cooled NVL72 racks (latest gen). No legacy fleet to manage.

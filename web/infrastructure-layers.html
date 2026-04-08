@@ -387,10 +387,10 @@
         <div class="layer-num">Layer 3</div>
         <div class="layer-title">Edge AI Network — Distributed Pods</div>
       </div>
-      <div class="layer-desc">ADC 3K containerized compute pods deployed across Lafayette metro. 40-ft ISO containers. EC-110 full immersion cooling. Managed remotely from MARLIE I.</div>
+      <div class="layer-desc">ADC 3K containerized compute pods deployed across Lafayette metro. 40-ft ISO containers. EC-110 full immersion cooling. Managed remotely from MARLIE 1.</div>
       <div class="nodes">
         <div class="node active" onclick="showNode('marlie_pod', event)">
-          <div class="node-dot"></div>MARLIE I (Hub)<span class="node-status">— permitting</span>
+          <div class="node-dot"></div>MARLIE 1 (Hub)<span class="node-status">— permitting</span>
         </div>
         <div class="node planned" onclick="showNode('trappeys_pod', event)">
           <div class="node-dot"></div>Trappeys Cannery<span class="node-status">— planned</span>
@@ -416,7 +416,7 @@
     <div class="layer layer-2 inv-highlight city-highlight ul-highlight" onclick="showLayer('l2')" id="layer-l2">
       <div class="layer-header">
         <div class="layer-num">Layer 2</div>
-        <div class="layer-title">Core Compute — MARLIE I AI Factory</div>
+        <div class="layer-title">Core Compute — MARLIE 1 AI Factory</div>
       </div>
       <div class="layer-desc">1201 SE Evangeline Thruway, Lafayette LA. Flagship permanent AI factory. NVIDIA Vera Rubin NVL72 racks. CDU liquid cooling. Mission Control NOC. Network hub for all ADC 3K pods.</div>
       <div class="nodes">
@@ -619,7 +619,7 @@ const NODES = {
   },
   marlie_pod: {
     layer: 'Layer 3 — Edge AI Network',
-    title: 'MARLIE I — Network Hub',
+    title: 'MARLIE 1 — Network Hub',
     status: 'Active / Permitting',
     color: '#00ff88',
     gps: '30.21975 N, 92.00645 W',
@@ -706,11 +706,11 @@ const NODES = {
     status: 'Concept',
     color: '#64748b',
     gps: '30.21749 N, 92.00325 W',
-    desc: '1421 SE Evangeline Thruway. Former hotel base structure. Urban site close to MARLIE I.',
+    desc: '1421 SE Evangeline Thruway. Former hotel base structure. Urban site close to MARLIE 1.',
     details: [
       'Existing structure — potential reuse',
       'Urban location = municipal compute contracts',
-      'Close proximity to MARLIE I',
+      'Close proximity to MARLIE 1',
       'Rezoning or variance likely needed',
     ],
     stakeholders: [
@@ -729,7 +729,7 @@ const NODES = {
     details: [
       'Solar power = lower OpEx per pod',
       'Renewable energy + AI compute = grant-eligible',
-      'Remote site — managed from MARLIE I NOC',
+      'Remote site — managed from MARLIE 1 NOC',
     ],
     stakeholders: [
       { label: 'Iberia Parish', color: '#00ff88' },
@@ -747,7 +747,7 @@ const NODES = {
       'Vera Rubin = NVIDIA current generation (Blackwell deprecated)',
       'NVL72 = 72 GPUs per full rack system',
       'CDU liquid cooling — direct to chip',
-      'MARLIE I sized for multiple NVL72 racks',
+      'MARLIE 1 sized for multiple NVL72 racks',
       'Skydio X10 also runs NVIDIA — full stack coherence',
     ],
     stakeholders: [
@@ -761,7 +761,7 @@ const NODES = {
     title: 'Mission Control NOC',
     status: 'Active',
     color: '#00ff88',
-    desc: 'Network Operations Center at MARLIE I. FastAPI multi-agent platform. 6 agents live. Manages all ADC 3K pods, drone fleet, infrastructure monitoring.',
+    desc: 'Network Operations Center at MARLIE 1. FastAPI multi-agent platform. 6 agents live. Manages all ADC 3K pods, drone fleet, infrastructure monitoring.',
     details: [
       'FastAPI + SSE real-time dashboard',
       '6 agents: Orchestrator, RepoAnalyst, Coder, InfraManager, Integration, UI',
@@ -786,7 +786,7 @@ const NODES = {
       'City-owned = aligned incentives, faster negotiations',
       'Industrial rate structures available',
       'Grid capacity confirmation needed (Contact: LUS/SLEMCO)',
-      'Critical path for MARLIE I power delivery',
+      'Critical path for MARLIE 1 power delivery',
       'All Lafayette sites on LUS territory',
     ],
     stakeholders: [
@@ -823,7 +823,7 @@ const NODES = {
       'On-site generation — reduces peak grid demand',
       'Pairs with LUS grid — not a replacement',
       'Clean energy = federal grant eligibility',
-      'Part of MARLIE I infrastructure partners deck section',
+      'Part of MARLIE 1 infrastructure partners deck section',
     ],
     stakeholders: [
       { label: 'Investors', color: '#4da6ff' },
@@ -837,7 +837,7 @@ const AUDIENCE_BRIEFS = {
   investor: {
     color: '#f5a623',
     title: 'Investor View',
-    text: 'MARLIE I is the anchor asset. Every additional pod site adds revenue on top of existing infrastructure. The platform play: own the compute layer, own the airspace layer, own the city services contracts. First mover in a market nobody else is building.'
+    text: 'MARLIE 1 is the anchor asset. Every additional pod site adds revenue on top of existing infrastructure. The platform play: own the compute layer, own the airspace layer, own the city services contracts. First mover in a market nobody else is building.'
   },
   city: {
     color: '#00ff88',
