@@ -1,5 +1,50 @@
 # Mission Control — Project State
-Last updated: 2026-04-04 (end of session — Pure DC AI Factory deck updated, rack numbers corrected to Vera Rubin Max P)
+Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE I → MARLIE 1 global correction)
+
+---
+
+## SESSION SUMMARY — April 8, 2026 (Pure DC AI Factory Cassette — Fibrebond)
+
+### Key Decisions
+
+**Pure DC AI Factory Cassette — CONCEPT LOCKED**
+- 1 cassette = 1 ADC 3K pod = 10 NVL72 racks = 1.3 MW IT load
+- Factory-built at Fibrebond (Eaton), Minden LA — 90 min from Lafayette
+- Site interface: 800V DC bus + cooling loop + fiber. Nothing else.
+- No AC conversion inside cassette. No inverters. No rectifiers. No air conditioning.
+- Munters desiccant dehumidification — waste heat regenerated
+- Boyd CDU (Eaton) — 2,000 kW, N+1 pumps, factory-integrated
+- Eaton ORV3 sidecars — factory-mounted, ±400V DC to each rack
+- VESDA aspirating detection + Novec 1230 total flood suppression
+- Full sensor suite + NVIDIA Jetson AGX Orin BMS
+- NVIDIA InfiniBand fabric — factory-terminated and tested
+
+**Eaton/Fibrebond Strategy**
+- Eaton owns: Fibrebond (enclosure) + Boyd (cooling) + ORV3 sidecar (power distribution) — single vendor, single PO
+- Fibrebond can do steel modular AND concrete — both options available
+- MARLIE 1 = field-built proof of concept (GTI Fabrication container, manual assembly)
+- Locked spec handed to Fibrebond → factory production at scale in Minden
+- ADC = Fibrebond's first Pure DC AI Factory reference customer in Louisiana
+
+**MARLIE I → MARLIE 1 — GLOBAL CORRECTION**
+- 101 active files corrected via global sed replacement
+- Notion-backup and _archive excluded (auto-generated / historical)
+
+### Files Created/Updated This Session
+- `adc3k-deploy/vendors/fibrebond/cassette-spec.md` — full cassette specification
+- `adc3k-deploy/vendors/fibrebond/specs.md` — vendor overview
+- `adc3k-deploy/vendors/gti-fabrication/specs.md` — primary container source
+- `adc3k-deploy/vendors/sea-box/specs.md` — backup container source
+- `adc3k-deploy/vendors/cajun-industries/specs.md` — local New Iberia option
+- `adc3k-deploy/vendors/metal-shark/specs.md` — aluminum/offshore variant
+- `adc3k-deploy/vendors/container-fabricators.md` — DELETED (promoted to individual folders)
+
+### Open Items
+1. Fibrebond site visit — Scott driving to Minden to make contact
+2. JP Buzzell (Eaton VP, Global Data Center) — not responding, use Fibrebond direct visit as entry point
+3. GTI Fabrication RFQ — 40-ft HC for MARLIE 1 proof of concept
+4. Confirm Fibrebond: ISO corner castings + 1500V DC insulation rating + Boyd CDU factory-integrated?
+5. Contact form submitted to Fibrebond this session
 
 ---
 
@@ -155,7 +200,7 @@ Built full meeting cheat sheet for call with Mike Pulice (NVIDIA AEC Account Exe
 - Power vendor language = vendor-neutral. Ask NVIDIA who they see working in DSX deployments. Never name-drop Eaton as locked.
 - NCP exam: Scott sat for it at GTC, did NOT pass. All references updated. Never say passed.
 - Humidity/dehumidification: Munters desiccant top pick. Waste heat from racks regenerates desiccant wheel. Solar powers dehumidifiers during peak humidity hours. Run:ai controls full factory environment — not just GPU scheduling.
-- Logistics: I-10/I-49 + barge + rail. 28K sq ft concrete pad + receiving warehouse. Diesel bridge power. Texas supply chain = one drive. MARLIE I and Trappeys dug simultaneously.
+- Logistics: I-10/I-49 + barge + rail. 28K sq ft concrete pad + receiving warehouse. Diesel bridge power. Texas supply chain = one drive. MARLIE 1 and Trappeys dug simultaneously.
 - 800V DC MVSST topology confirmed: genset AC → MVSST → 800V DC bus ← solar strings ← battery. Rack PDU steps 800V → 48V (16:1, OCP ORV3 internal).
 
 **New memory files:**
@@ -235,7 +280,7 @@ https://build.nvidia.com/nvidia/omniverse-dsx-blueprint-for-ai-factories
 
 ## Raise
 - **REVISED: ~$55-60M** (up from $5M seed — Ornn partnership changes capital structure)
-- MARLIE I owned (collateral)
+- MARLIE 1 owned (collateral)
 - Trappeys ~$1M acquisition
 - 80% equipment financing via Ornn RVS on $180M rack CapEx
 - Master doc: business-model/MASTER-INVESTOR-PACKAGE.md (needs update to 10 MW numbers)
