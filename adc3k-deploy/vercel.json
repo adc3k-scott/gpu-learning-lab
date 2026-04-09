@@ -77,6 +77,8 @@
     { "source": "/card", "destination": "/card.html" },
     { "source": "/qr", "destination": "/qr.html" },
 
+    { "source": "/cassette", "destination": "/vendors/fibrebond/adc-cassette-engineering-package.html" },
+
     { "source": "/", "destination": "/adc3k-indexpage.html" },
     { "source": "/(.*)", "destination": "/adc3k-indexpage.html" }
   ]
