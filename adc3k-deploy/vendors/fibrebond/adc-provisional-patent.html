@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provisional Patent Application — Autonomous DC AI Compute Cassette</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; color: #111; background: #fff; }
+  .page { max-width: 750px; margin: 0 auto; padding: 60px 50px; }
+
+  .pto-header { border: 2px solid #111; padding: 16px 20px; margin-bottom: 28px; text-align: center; }
+  .pto-header .pto-title { font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .pto-header .pto-sub { font-size: 10pt; color: #333; }
+
+  .filing-block { border: 1px solid #aaa; padding: 16px 20px; margin-bottom: 28px; background: #fafafa; font-size: 10.5pt; line-height: 1.8; }
+  .filing-block .fb-title { font-size: 10pt; font-weight: bold; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+  .filing-row { display: flex; gap: 12px; margin-bottom: 4px; }
+  .filing-label { font-weight: bold; min-width: 140px; flex-shrink: 0; }
+  .filing-value { color: #333; }
+  .filing-line { border-bottom: 1px solid #888; min-width: 200px; display: inline-block; height: 16px; margin-left: 4px; }
+
+  h2 { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 28px 0 10px; letter-spacing: .3px; border-bottom: 1px solid #aaa; padding-bottom: 4px; }
+  h3 { font-size: 12pt; font-weight: bold; margin: 20px 0 8px; }
+  p { font-size: 11.5pt; line-height: 1.8; margin-bottom: 10px; text-align: justify; }
+  ol { margin: 8px 0 14px 28px; }
+  ol li { font-size: 11.5pt; line-height: 1.8; margin-bottom: 8px; text-align: justify; }
+  ul { margin: 8px 0 14px 28px; }
+  ul li { font-size: 11.5pt; line-height: 1.8; margin-bottom: 6px; }
+
+  .claim { margin-bottom: 16px; padding-left: 0; }
+  .claim-num { font-weight: bold; }
+  .claim-body { font-size: 11.5pt; line-height: 1.9; text-align: justify; }
+  .claim-body ol { margin-top: 8px; }
+
+  .abstract-box { border: 1px solid #aaa; padding: 16px 20px; margin: 20px 0; background: #fafafa; font-size: 11pt; line-height: 1.8; text-align: justify; }
+
+  .disclaimer { margin-top: 44px; padding-top: 14px; border-top: 1px solid #ccc; font-size: 9pt; color: #777; line-height: 1.6; }
+
+  .sig-block { margin-top: 40px; page-break-inside: avoid; }
+  .sig-cols { display: flex; gap: 60px; margin-top: 20px; }
+  .sig-col { flex: 1; }
+  .sig-line { border-bottom: 1px solid #333; margin-bottom: 5px; height: 32px; }
+  .sig-label { font-size: 9.5pt; color: #444; margin-bottom: 16px; }
+
+  @media print {
+    body { font-size: 11pt; }
+    .page { padding: 36px 32px; max-width: 100%; }
+    h2 { page-break-after: avoid; }
+    .claim { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="pto-header">
+  <div class="pto-title">Provisional Patent Application</div>
+  <div class="pto-sub">United States Patent and Trademark Office (USPTO) &nbsp;·&nbsp; 35 U.S.C. § 111(b)</div>
+</div>
+
+<div class="filing-block">
+  <div class="fb-title">Filing Information</div>
+  <div class="filing-row"><span class="filing-label">Title:</span><span class="filing-value">Autonomous DC AI Compute Cassette — Modular Factory-Tested AI Compute Enclosure with Pure DC Power Architecture and Four-Connection Site Interface</span></div>
+  <div class="filing-row"><span class="filing-label">Inventor(s):</span><span class="filing-value">Scott Tomsu, Lafayette, Louisiana, United States</span></div>
+  <div class="filing-row"><span class="filing-label">Correspondence:</span><span class="filing-value">scott@adc3k.com &nbsp;·&nbsp; (337) 780-1535</span></div>
+  <div class="filing-row"><span class="filing-label">Filing Date:</span><span class="filing-value"><span class="filing-line"></span></span></div>
+  <div class="filing-row"><span class="filing-label">Application No.:</span><span class="filing-value"><span class="filing-line"></span> (assigned by USPTO)</span></div>
+  <div class="filing-row"><span class="filing-label">Entity Status:</span><span class="filing-value">Small Entity / Micro Entity (to be confirmed at filing)</span></div>
+</div>
+
+<!-- ABSTRACT -->
+<h2>Abstract</h2>
+<div class="abstract-box">
+A modular, factory-tested artificial intelligence compute enclosure — referred to herein as an Autonomous DC AI Compute Cassette — and associated system architecture are disclosed. The cassette is a purpose-built steel enclosure in standard intermodal form factor housing a single row of high-density AI compute racks powered entirely by direct current (DC) with no alternating current (AC) conversion occurring within the enclosure. All electrical power, liquid cooling, fiber communications, and structural support are delivered through a standardized four-connection site interface, enabling deployment on any prepared site in 30 to 60 days. The cassette is assembled, wired, plumbed, tested, and accepted at a factory before shipment, eliminating field integration risk. The architecture is power-source agnostic: the cassette accepts any DC power source meeting its bus specification, including solid oxide fuel cells, photovoltaic arrays, battery energy storage systems, and medium-voltage AC grid sources paired with an upstream solid-state rectifier. The design eliminates internal walkable aisles through a top-hinged side access panel configuration, enabling NEC-compliant equipment access while maximizing compute density within the enclosure volume.
+</div>
+
+<!-- FIELD -->
+<h2>Field of the Invention</h2>
+<p>The present invention relates to modular data center infrastructure, and more particularly to a factory-assembled, factory-tested AI compute enclosure utilizing a pure direct current power distribution architecture, liquid-first thermal management, and a standardized four-connection site interface for rapid deployment at any prepared location.</p>
+
+<!-- BACKGROUND -->
+<h2>Background</h2>
+<p>Modern high-density AI compute infrastructure — particularly large-scale GPU clusters required for training and inference workloads — presents significant challenges in power delivery, thermal management, and deployment speed that existing data center architectures do not adequately address.</p>
+
+<p><strong>Power conversion losses.</strong> Conventional data center power chains convert energy multiple times between the utility source and the compute load: medium-voltage AC to low-voltage AC, low-voltage AC to DC at the power supply unit, and DC to lower DC voltages at point-of-load regulators. Each conversion stage introduces losses of 2–5%, compounding to total overhead of 8–15% or more before power reaches the processor. At GPU rack densities of 200 kW or greater, these losses represent substantial wasted energy and additional cooling load.</p>
+
+<p><strong>Thermal limitations at high rack density.</strong> Air-cooled data center designs cannot sustain full thermal design power (TDP) operation for GPU racks above approximately 100 kW per rack. At 200–230 kW per rack, air cooling cannot remove heat fast enough to prevent thermal throttling, which reduces GPU clock speeds and compute throughput below rated performance. Liquid cooling is required at these densities, but existing modular solutions do not fully integrate liquid cooling as a factory-assembled, tested subsystem.</p>
+
+<p><strong>Site integration complexity.</strong> Conventional data center construction requires 18–24 months from site selection to live compute, driven by utility interconnect permitting, building construction, mechanical and electrical rough-in, and equipment commissioning. This delay represents significant lost revenue for AI infrastructure operators.</p>
+
+<p><strong>Lack of a factory-tested modular unit.</strong> While modular data center concepts exist, no prior art known to the inventor discloses a fully integrated, factory-tested AI compute enclosure that: (a) operates entirely on DC power with no internal AC conversion; (b) accepts any power source meeting a DC bus specification, whether fuel cell, photovoltaic, battery storage, or grid-tied rectifier; (c) delivers all site connections through a single-face four-connection interface; (d) eliminates internal walkable aisles in favor of exterior access panels; and (e) carries a complete factory acceptance test protocol with a signed test report shipped with each unit.</p>
+
+<p>There exists a need for a modular AI compute enclosure that solves all of these problems simultaneously in a single factory-built product.</p>
+
+<!-- SUMMARY -->
+<h2>Summary of the Invention</h2>
+<p>The present invention provides an Autonomous DC AI Compute Cassette comprising a purpose-built modular steel enclosure in standard 40-foot high cube intermodal external dimensions, containing a single row of AI compute racks powered by an 800V DC overhead busbar distribution system, cooled by a liquid-first overhead header and flexible drop architecture, and connected to the site through a four-connection interface located at one end of the enclosure.</p>
+
+<p>Key aspects of the invention include:</p>
+<ol>
+  <li>A <strong>pure DC power architecture</strong> in which all electrical power within the enclosure is distributed as direct current, with no AC-to-DC or DC-to-AC conversion occurring inside the enclosure;</li>
+  <li>A <strong>four-connection site interface</strong> consolidating all site connections — DC power bus, liquid cooling supply and return, fiber communications, and structural pad — at a single external connection panel, enabling cassette deployment by completing four connections;</li>
+  <li>An <strong>overhead utility distribution architecture</strong> in which DC busbars, liquid cooling supply and return headers, smoke detection sampling tubes, and fire suppression distribution manifolds are all routed overhead along the full length of the rack row, with flexible drops connecting from overhead headers to each rack via drip-free quick-disconnect fittings;</li>
+  <li>A <strong>no-aisle access design</strong> in which the single-row rack layout is served by top-hinged side access panels rather than an internal walkable aisle, enabling NEC working space compliance while maximizing rack density per unit volume;</li>
+  <li>A <strong>power-source-agnostic DC bus interface</strong> accepting any power source capable of delivering DC at the bus specification, including solid oxide fuel cells, photovoltaic arrays with DC-DC conversion, battery energy storage systems, and medium-voltage AC grid sources with upstream solid-state rectification;</li>
+  <li>A <strong>factory acceptance test protocol</strong> requiring successful completion of a defined test sequence — including cooling loop pressure test, DC bus insulation resistance, ground fault protection, BMS sensor verification, smoke detection, leak detection, fire suppression check, enclosure integrity, network fabric, and power meter calibration — before shipment, with a signed test report accompanying each cassette.</li>
+</ol>
+
+<!-- DETAILED DESCRIPTION -->
+<h2>Detailed Description of Preferred Embodiments</h2>
+
+<h3>1. Enclosure</h3>
+<p>In a preferred embodiment, the cassette enclosure is a purpose-built steel structure with external dimensions conforming to the 40-foot High Cube ISO intermodal standard (approximately 40 feet × 8 feet × 9 feet 6 inches external). The enclosure is not a converted shipping container but a purpose-engineered structure built to ISO external dimensions to leverage standard crane lift equipment, flatbed and lowboy transport, and ISO corner casting anchor systems. ISO corner castings are provided at all four base and four top corners to enable crane placement and two-high vertical stacking on prepared pads.</p>
+
+<p>The structural floor is rated for the concentrated point loads of each AI compute rack — approximately 1,360 kg per rack distributed across four leveling feet per OCP Open Rack V3 specifications. Spray foam insulation of R-19 minimum is applied to the enclosure shell. The enclosure provides NEMA 3R minimum ingress protection against rain and wind-driven debris. The enclosure and its anchor system are designed to ASCE 7-22 wind loads for Risk Category III structures at 150 mph basic wind speed.</p>
+
+<h3>2. Single-Row Rack Layout and No-Aisle Access Design</h3>
+<p>A single row of AI compute racks is arranged running the full length of the enclosure interior. In the preferred embodiment, ten (10) racks of the OCP Open Rack V3 form factor are arranged in a single file from the mechanical bay at the left end to the external connection panel at the right end.</p>
+
+<p>A key inventive aspect is the elimination of an internal walkable aisle. In conventional modular data centers, racks are arranged in facing rows with a walkable aisle between them for technician access. This aisle consumes approximately 3–4 feet of enclosure width, reduces rack density, and requires the enclosure to be sized to accommodate human occupancy — adding HVAC, lighting, fire egress, and other overhead systems.</p>
+
+<p>In the present invention, service access is provided by eight (8) top-hinged side access panels, four on each long side of the enclosure, spanning the full length of the rack row. Each panel is hinged at the top and opens outward, providing full access to the rack face, overhead utility connections, and rear of rack from outside the enclosure. This design provides NEC 110.26 working space compliance for the DC voltage class of the equipment without requiring any technician to occupy an internal aisle. The access panels incorporate gasket seals to maintain positive pressure within the enclosure when closed.</p>
+
+<h3>3. Pure DC Power Architecture and Overhead Busbar</h3>
+<p>All electrical power within the cassette is distributed as direct current. In the preferred embodiment, the cassette operates at 800V DC nominal bus voltage with 1500V DC insulation rating throughout, conforming to the OCP Open Compute Project DC Facility (DCF) LVDC Power Distribution framework, Stage 1d configuration, in which the DC bus supplies AI compute racks directly.</p>
+
+<p>A copper overhead DC busbar, rated for 1500V insulation and sized per NEC 125% continuous load rule for the total facility draw of the cassette, runs the full length of the rack row overhead. Factory-installed tap points at each rack bay connect to rack-level DC power distribution units. The busbar is vibration-isolated from the enclosure structure. Grounding is implemented per TN-S or IT system configurations only, per OCP DCF LVDC specifications, to eliminate DC corrosion risks associated with TN-C or TT grounding.</p>
+
+<p>Solid-state circuit breakers (SSCBs) are employed for overcurrent protection, providing microsecond-level DC fault response. Ground fault protection is implemented per NEC Section 210.13(B) for disconnecting means rated 1,000A or greater. Arc flash labeling is applied at all access points per NFPA 70E.</p>
+
+<p>DC power is distributed to each AI compute rack through rack-level DC power distribution sidecars positioned adjacent to each rack group, stepping the bus voltage to the rack bus voltage required by the compute hardware.</p>
+
+<h3>4. Four-Connection Site Interface</h3>
+<p>All external connections to the cassette are consolidated at a single external connection panel located at one end of the enclosure. The four connections required from the site are:</p>
+<ol type="a">
+  <li><strong>DC power bus:</strong> A single DC bus connection at the rated bus voltage, current, and insulation specification. In the preferred embodiment: 800V DC, approximately 3,019A continuous load, 3,774A conductor nameplate (NEC 125%), 1500V insulation rated. The cassette accepts DC power from any source meeting this interface specification.</li>
+  <li><strong>Liquid cooling supply and return:</strong> A coolant supply connection at or below the specified supply temperature, and a coolant return connection. In the preferred embodiment: supply temperature ≤ 45°C, return temperature approximately 55–60°C, flow capacity approximately 1,300 liters per minute total. Drip-free quick-disconnect fittings at the cassette wall enable connection and disconnection without loop drainage.</li>
+  <li><strong>Fiber communications:</strong> Two single-mode OS2 fiber connections for AI fabric management and BMS telemetry to the site network operations center.</li>
+  <li><strong>Structural pad:</strong> A level, load-rated concrete pad with anchor bolt pattern per the cassette manufacturer's structural engineering specification, rated for the loaded cassette weight and designed for the applicable wind and seismic loads.</li>
+</ol>
+
+<p>This four-connection interface is a key inventive aspect. By reducing all site requirements to these four connections, the cassette can be placed on any prepared site — industrial, commercial, agricultural, offshore platform, or remote — and brought to operational status in 30 to 60 days from pad-ready, compared to 18–24 months for conventional data center construction.</p>
+
+<h3>5. Overhead Liquid Cooling Distribution and Liquid-First Architecture</h3>
+<p>In the preferred embodiment, liquid cooling is distributed overhead. A cold coolant supply header and a warm coolant return header run the full length of the rack row overhead, factory-installed and factory-pressure-tested before shipment. Flexible hose drops connect from the overhead headers to each rack via drip-free quick-disconnect fittings at each rack position, enabling individual rack removal without draining the cooling loop.</p>
+
+<p>A cooling distribution unit (CDU) is factory-mounted in the mechanical bay at one end of the enclosure. The CDU provides N+1 internal pump redundancy such that either pump independently carries the full cassette cooling load. The CDU primary loop circulates coolant through the overhead header and rack cooling circuits, while the CDU secondary loop connects to an external heat rejection system (dry cooler or adiabatic cooler) provided by the site.</p>
+
+<p>This liquid-first architecture removes greater than 80% of rack heat via direct-to-chip liquid cooling, with residual heat managed by hot-aisle containment within the enclosure. This enables sustained full TDP operation of high-density AI compute racks at 200–230 kW per rack without thermal throttling, a performance level unachievable with air-cooled designs at these densities.</p>
+
+<p>Rope-style leak detection sensors are routed throughout the enclosure per defined specifications, with zones covering the area under the CDU, along the rack row, and at all coolant penetration points. Leak alarms are wired to the edge controller BMS.</p>
+
+<h3>6. Power-Source-Agnostic DC Bus Interface</h3>
+<p>The cassette's DC bus interface is deliberately source-agnostic. Any power source capable of delivering DC at the bus specification can supply the cassette without modification to the cassette itself. Contemplated power sources include without limitation:</p>
+<ul>
+  <li>Solid oxide fuel cells (SOFC) generating DC electrochemically, with no inverter or rectifier required;</li>
+  <li>Molten carbonate fuel cells (MCFC) with DC output;</li>
+  <li>Photovoltaic solar arrays generating DC natively, with a DC-DC converter to match bus voltage;</li>
+  <li>Battery energy storage systems (BESS) discharging DC natively;</li>
+  <li>Medium-voltage AC grid sources paired with an upstream solid-state rectifier, converting AC to DC before the cassette bus connection — the cassette itself remains unchanged.</li>
+</ul>
+
+<p>This architecture future-proofs the cassette against changes in site power generation technology and enables deployment in geographies and use cases where grid power is unavailable, unreliable, or economically disadvantageous.</p>
+
+<h3>7. Environmental Control</h3>
+<p>In humid ambient environments such as the Gulf Coast of the United States (ambient relative humidity 75–80%), a desiccant dehumidification unit is factory-installed in the mechanical bay. In the preferred embodiment, a desiccant wheel unit is regenerated using waste heat from the cooling loop return at approximately 55–60°C, requiring no additional electrical draw for regeneration. Conditioned air at or below 50% relative humidity is supplied to the rack row under positive pressure, preventing unfiltered outside air ingestion and protecting electronics from condensation.</p>
+
+<h3>8. Fire Detection and Suppression</h3>
+<p>Aspirating smoke detection sampling tubes run overhead the full length of the enclosure, providing very early warning smoke detection. A total-flood clean agent fire suppression system is factory-installed with agent cylinders in the mechanical bay, agent distribution manifold overhead, and discharge nozzles covering the full enclosure volume. The suppression system is designed to discharge within 10 seconds and maintain suppression agent concentration for a minimum of 10 minutes per NFPA 2001. Enclosure integrity is verified by door fan pressure test at commissioning. Manual abort pull stations are provided at each access panel.</p>
+
+<h3>9. Edge Controller and BMS</h3>
+<p>An AI-capable edge controller is factory-installed and pre-wired to a complete sensor suite including temperature sensors at rack inlet, rack outlet, CDU supply, CDU return, and ambient; pressure transducers on the cooling loop; flow meters; relative humidity sensors; leak detection zones; smoke detection; door contacts on each access panel; and power meters at the DC bus input and each power distribution sidecar. The edge controller provides real-time sensor aggregation, cooling PID control, CDU pump N+1 failover, alarm management, and BMS telemetry to the site network operations center via fiber.</p>
+
+<h3>10. Factory Acceptance Test Protocol</h3>
+<p>A key inventive aspect is the requirement that every cassette successfully complete a defined factory acceptance test (FAT) sequence before shipment, with a signed FAT report accompanying the cassette. The FAT protocol includes at minimum: cooling loop hydrostatic pressure test; DC bus insulation resistance measurement at rated voltage per IEEE 43; ground fault protection relay trip verification; BMS sensor calibration verification across all channels; aspirating smoke detector functional test with test aerosol; leak detection zone continuity and alarm output verification; quick-disconnect fitting connection, disconnection, and flow test; fire suppression system inspection; enclosure integrity door fan test per NFPA 2001; access panel door contact cycling; network fabric port link verification; and power meter calibration against NIST-traceable reference. This FAT protocol transforms field commissioning from a multi-week integration process into a four-connection hookup, dramatically reducing time-to-compute on each deployed cassette.</p>
+
+<!-- CLAIMS -->
+<h2>Claims</h2>
+<p><em>Note: Provisional patent applications are not required to contain formal claims. The following representative claims are included to establish the scope of the invention for priority purposes and to support the subsequent non-provisional application.</em></p>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">1.</span> A modular AI compute enclosure comprising:
+<ol type="a">
+  <li>a purpose-built steel enclosure having external dimensions conforming to a standard 40-foot high cube intermodal form factor, the enclosure configured for crane placement, standard transport, and vertical stacking via ISO corner castings;</li>
+  <li>a single row of AI compute racks arranged in a linear configuration running the length of the enclosure interior;</li>
+  <li>a DC power distribution system comprising an overhead DC busbar running the full length of the rack row, with factory-installed tap points at each rack position, wherein all electrical power within the enclosure is distributed as direct current with no AC-to-DC conversion within the enclosure;</li>
+  <li>a liquid cooling distribution system comprising an overhead cold coolant supply header, an overhead warm coolant return header, and flexible drop connections from each header to each rack via drip-free quick-disconnect fittings;</li>
+  <li>a four-connection site interface located at a single external connection panel at one end of the enclosure, the four connections comprising a DC bus connection, a cooling supply and return connection, a fiber communications connection, and a structural pad connection; and</li>
+  <li>a plurality of top-hinged side access panels providing exterior service access to the rack row without an internal walkable aisle.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">2.</span> The modular AI compute enclosure of claim 1, wherein the DC bus connection of the four-connection site interface accepts DC power from any power source meeting the bus voltage, current, and insulation specification, including solid oxide fuel cells, photovoltaic arrays, battery energy storage systems, and medium-voltage AC grid sources paired with an upstream solid-state rectifier external to the enclosure.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">3.</span> The modular AI compute enclosure of claim 1, further comprising a cooling distribution unit factory-mounted within the enclosure having N+1 internal pump redundancy, wherein either pump independently carries the full enclosure cooling load.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">4.</span> The modular AI compute enclosure of claim 1, further comprising rope-style leak detection sensors routed in zones throughout the enclosure per a defined leak sensor specification, with alarm outputs wired to an edge controller.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">5.</span> The modular AI compute enclosure of claim 1, further comprising a desiccant dehumidification unit configured to use waste heat from the cooling loop return as its regeneration heat source, requiring no separate electrical heating element for desiccant regeneration.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">6.</span> The modular AI compute enclosure of claim 1, further comprising a total-flood clean agent fire suppression system and an aspirating smoke detection system, both factory-installed and factory-tested, wherein the fire suppression system is designed to achieve full agent discharge within 10 seconds and maintain suppression concentration for a minimum of 10 minutes.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">7.</span> The modular AI compute enclosure of claim 1, wherein the enclosure is shipped from a factory with a completed factory acceptance test report certifying successful completion of a defined test protocol including at minimum: cooling loop pressure test, DC bus insulation resistance measurement, ground fault protection verification, BMS sensor calibration, smoke detection functional test, leak detection continuity, fire suppression inspection, enclosure integrity pressure test, access panel contact verification, network fabric link test, and power meter calibration.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">8.</span> A method of deploying AI compute infrastructure comprising:
+<ol type="a">
+  <li>preparing a site comprising a level, load-rated concrete pad with a DC power bus stub, a liquid cooling loop stub, a fiber communications conduit, and anchor bolt pattern;</li>
+  <li>transporting to the site a factory-tested modular AI compute enclosure as described in claim 1;</li>
+  <li>placing the enclosure on the pad using crane equipment via ISO corner castings;</li>
+  <li>making four connections: connecting the DC bus, connecting the cooling supply and return, connecting the fiber communications, and securing the enclosure to the anchor bolts; and</li>
+  <li>powering on the enclosure and verifying operation via the edge controller BMS, without field wiring, field plumbing, or field integration of internal enclosure systems.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">9.</span> The method of claim 8, wherein the DC power bus stub is supplied by a solid oxide fuel cell generating DC power without inversion, such that no AC power is generated, transmitted, converted, or distributed at any point between the power generation source and the AI compute load.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">10.</span> A system comprising a plurality of modular AI compute enclosures as described in claim 1, arranged in an array on a prepared site, wherein each enclosure is connected to a shared DC power bus, a shared liquid cooling loop, and a shared fiber communications network, the shared DC power bus supplied by one or more DC power generation sources selected from the group consisting of solid oxide fuel cells, photovoltaic arrays, battery energy storage systems, and combinations thereof.</p>
+</div>
+
+<!-- SIGNATURE -->
+<div class="sig-block">
+<h2>Declaration</h2>
+<p>I hereby declare that I am the original inventor of the subject matter claimed herein, that I have reviewed and understand the contents of this provisional patent application, and that the information disclosed herein is accurate to the best of my knowledge.</p>
+<div class="sig-cols">
+  <div class="sig-col">
+    <div class="sig-line"></div>
+    <div class="sig-label">Signature of Inventor</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Printed Name: Scott Tomsu</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Date</div>
+  </div>
+  <div class="sig-col">
+    <div class="sig-line"></div>
+    <div class="sig-label">Residence: Lafayette, Louisiana, USA</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Citizenship: United States</div>
+  </div>
+</div>
+</div>
+
+<div class="disclaimer">
+  <strong>Filing Instructions:</strong> File this provisional application at USPTO.gov under "Patent Center" as a Provisional Application (37 C.F.R. § 1.53(c)). Required items: this specification, the cassette floor plan drawing (cassette-floorplan.svg), and the filing fee (currently $320 standard / $160 small entity / $80 micro entity). You have 12 months from the filing date to file the corresponding non-provisional application to claim this priority date. This document was prepared by the inventor for filing purposes. Review by a registered patent attorney or agent is strongly recommended prior to filing the non-provisional application.
+</div>
+
+</div>
+</body>
+</html>
