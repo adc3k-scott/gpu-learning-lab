@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "functions": {
+    "api/chat.js": {
+      "memory": 512,
+      "maxDuration": 30,
+      "includeFiles": "lib/**"
+    },
+    "api/phone.js": {
+      "memory": 512,
+      "maxDuration": 30,
+      "includeFiles": "lib/**"
+    },
+    "api/analytics.js": {
+      "maxDuration": 10
+    },
+    "api/stripe-webhook.js": {
+      "maxDuration": 15
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Options", "value": "nosniff" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
