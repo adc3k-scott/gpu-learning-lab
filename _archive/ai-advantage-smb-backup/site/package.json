@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "build:index": "node lib/rag/build-index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

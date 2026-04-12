@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Advantage — AI That Works For Your Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;
+  --text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;
+  --blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;
+  --cyan:#06b6d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;background:rgba(10,11,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-weight:800;font-size:18px;color:var(--bright);letter-spacing:-0.5px}
+.logo span{color:var(--blue)}
+nav ul{list-style:none;display:flex;gap:28px}
+nav a{color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+nav a:hover{color:var(--bright);text-decoration:none}
+.nav-cta{background:var(--blue);color:#000;padding:8px 20px;border-radius:6px;font-weight:700;font-size:12px}
+.nav-cta:hover{background:#5aafff;text-decoration:none}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;background:radial-gradient(ellipse at 50% 0%,rgba(59,158,255,0.08),transparent 60%)}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--bright);line-height:1.1;max-width:800px;letter-spacing:-1px}
+.hero h1 span{color:var(--blue)}
+.hero p{font-size:18px;color:var(--dim);max-width:600px;margin-top:20px;line-height:1.7}
+.hero-cta{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;justify-content:center}
+.btn{padding:14px 32px;border-radius:8px;font-weight:700;font-size:14px;border:none;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--blue);color:#000}.btn-primary:hover{background:#5aafff}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+
+/* SECTIONS */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:32px;font-weight:800;color:var(--bright);line-height:1.2;margin-bottom:16px}
+.section .sub{font-size:16px;color:var(--dim);max-width:700px;line-height:1.7;margin-bottom:40px}
+
+/* WHY NOW */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:32px}
+.why-card{background:var(--card);border:1px solid var(--border);padding:32px}
+.why-card .num{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:700;margin-bottom:8px}
+.why-card h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.why-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* 5 STEPS */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:32px}
+.step{background:var(--card);border:1px solid var(--border);padding:24px;text-align:center;position:relative}
+.step::after{content:'';position:absolute;right:-2px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:8px solid var(--border);border-top:8px solid transparent;border-bottom:8px solid transparent;z-index:1}
+.step:last-child::after{display:none}
+.step .snum{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:8px}
+.step h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.step .time{font-size:11px;color:var(--dim);margin-bottom:8px}
+.step p{font-size:12px;color:var(--dim);line-height:1.5}
+
+/* INDUSTRIES */
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:32px}
+.ind{background:var(--card);border:1px solid var(--border);padding:20px;transition:border-color .2s}
+.ind:hover{border-color:var(--blue)}
+.ind h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.ind p{font-size:11px;color:var(--dim);line-height:1.5}
+.ind .tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--green);font-weight:600;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+
+/* HARDWARE */
+.hw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:32px}
+.hw{background:var(--card);border:1px solid var(--border);padding:24px;text-align:center}
+.hw.popular{border-top:3px solid var(--blue)}
+.hw .tier{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);font-weight:600;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+.hw h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.hw .price{font-size:24px;font-weight:800;color:var(--green);margin:12px 0}
+.hw p{font-size:12px;color:var(--dim);line-height:1.5}
+.hw ul{list-style:none;text-align:left;margin-top:12px}
+.hw li{font-size:12px;color:var(--dim);padding:4px 0;border-bottom:1px solid var(--border)}
+.hw li::before{content:'+ ';color:var(--green);font-weight:700}
+
+/* SECURITY */
+.sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:32px}
+.sec-card{background:var(--card);border:1px solid var(--border);padding:24px}
+.sec-card h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.sec-card p{font-size:12px;color:var(--dim);line-height:1.6}
+
+/* CLIENT PORTAL PREVIEW */
+.portal-preview{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:32px}
+.portal-bar{background:var(--card);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.portal-bar .title{font-size:13px;font-weight:700;color:var(--bright)}
+.portal-bar .status{font-size:11px;color:var(--green);font-family:'IBM Plex Mono',monospace}
+.portal-body{padding:24px;display:grid;grid-template-columns:200px 1fr 300px;gap:16px;min-height:400px}
+.portal-sidebar{display:flex;flex-direction:column;gap:8px}
+.portal-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:left;cursor:pointer;transition:all .2s}
+.portal-btn:hover{border-color:var(--blue);background:rgba(59,158,255,0.06)}
+.portal-btn .label{font-size:12px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.portal-btn .desc{font-size:10px;color:var(--dim)}
+.portal-btn.active{border-color:var(--blue);background:rgba(59,158,255,0.08)}
+.portal-main{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;display:flex;flex-direction:column}
+.portal-main .file-header{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.file-list{flex:1}
+.file-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.file-row .fname{color:var(--bright)}.file-row .fmeta{color:var(--dim)}
+.portal-chat{background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--bright);display:flex;align-items:center;gap:8px}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.chat-body{flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.chat-msg{font-size:12px;line-height:1.5;padding:8px 12px;border-radius:8px;max-width:90%}
+.chat-msg.agent{background:rgba(59,158,255,0.1);color:var(--text);border:1px solid rgba(59,158,255,0.15)}
+.chat-msg.user{background:rgba(0,232,122,0.08);color:var(--text);border:1px solid rgba(0,232,122,0.12);align-self:flex-end}
+.chat-input{display:flex;border-top:1px solid var(--border);padding:8px}
+.chat-input input{flex:1;background:transparent;border:none;color:var(--bright);font-size:12px;padding:8px;outline:none;font-family:'Inter',sans-serif}
+.chat-input button{background:var(--blue);border:none;color:#000;padding:6px 14px;border-radius:6px;font-weight:700;font-size:11px;cursor:pointer}
+
+/* PRICING PREVIEW */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:32px}
+.price-card{background:var(--card);border:1px solid var(--border);padding:28px;text-align:center}
+.price-card.featured{border-top:3px solid var(--blue)}
+.price-card .ptier{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.price-card h3{font-size:18px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.price-card .pprice{font-size:32px;font-weight:800;color:var(--green);margin:16px 0 4px}
+.price-card .pper{font-size:11px;color:var(--dim);margin-bottom:16px}
+.price-card ul{list-style:none;text-align:left}
+.price-card li{font-size:12px;color:var(--dim);padding:6px 0;border-bottom:1px solid var(--border)}
+.price-card li::before{content:'+ ';color:var(--green);font-weight:700}
+
+/* CTA */
+.cta-section{text-align:center;padding:80px 24px;background:linear-gradient(180deg,transparent,rgba(59,158,255,0.04))}
+.cta-section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.cta-section p{font-size:16px;color:var(--dim);margin-bottom:32px}
+
+/* FAQ */
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;gap:16px}
+.faq-q h3{font-size:15px;font-weight:600;color:var(--bright);margin:0;line-height:1.4}
+.faq-q .faq-icon{font-size:20px;color:var(--dim);flex-shrink:0;transition:transform .2s;font-weight:300}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:20px}
+.faq-a p{font-size:13px;color:var(--dim);line-height:1.7}
+.faq-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.faq-cat{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.faq-cat:hover,.faq-cat.active{border-color:var(--blue);color:var(--blue);background:rgba(59,158,255,0.06)}
+.faq-ally-cta{margin-top:48px;text-align:center;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.faq-ally-cta h3{font-size:18px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.faq-ally-cta p{font-size:14px;color:var(--dim);margin-bottom:20px}
+
+/* FOOTER */
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .why-grid,.steps,.ind-grid,.hw-grid,.sec-grid,.price-grid{grid-template-columns:1fr 1fr}
+  .portal-body{grid-template-columns:1fr}
+  .portal-sidebar{flex-direction:row;flex-wrap:wrap}
+  .portal-chat{min-height:300px}
+  nav ul{display:none}
+}
+@media(max-width:600px){
+  .why-grid,.steps,.ind-grid,.hw-grid,.sec-grid,.price-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI <span>Advantage</span></div>
+  <div style="position:fixed;top:70px;right:24px;display:flex;align-items:center;gap:8px;z-index:99">
+    <span style="font-size:11px;color:var(--dim);letter-spacing:0.5px">Powered by</span>
+    <img src="/roxy-logo.jpg" alt="ROXY" style="height:50px;border-radius:4px">
+  </div>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#roxy">ROXY Platform</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Free Discovery Call</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <img src="/roxy-logo.jpg" alt="ROXY" style="height:270px;border-radius:6px">
+  </div>
+  <h1>Your <span>AI</span> employee.</h1>
+  <p>27 AI tools. Answers your phones. Captures leads. Runs your marketing. Takes payments. Built on our own GPU in Lafayette, Louisiana — no third-party cloud. Starting at $199/month.</p>
+  <div class="hero-cta">
+    <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a 15-Minute Call</button>
+    <button class="btn btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+  </div>
+</div>
+
+<!-- WHY NOW -->
+<div class="section" id="why">
+  <div class="section-label">Why Now</div>
+  <h2>AI just changed. Most people don't know it yet.</h2>
+  <p class="sub">ChatGPT was the beginning. But AI agents — systems that work independently, 24/7, without being asked — are the real revolution. And they're here now.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="num" style="color:var(--dim)">0</div>
+      <h3>Search Era (2000-2022)</h3>
+      <p>You typed a query, got links. No AI. No automation. Just web pages.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--dim)">1K</div>
+      <h3>Chatbot Era (2023-2024)</h3>
+      <p>Ask a question, get an answer. Impressive, but you still do all the work. One query at a time.</p>
+    </div>
+    <div class="why-card" style="border:1px solid var(--amber);background:rgba(255,165,0,0.04)">
+      <div class="num" style="color:var(--amber)">500K</div>
+      <h3 style="color:var(--amber)">Agentic Era (2025-2026) — We Are Here</h3>
+      <p>AI agents do multi-step work on their own. They answer your phones, manage your schedule, track your inventory, draft your documents — while you sleep. One task triggers dozens of AI decisions.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--green)">Millions</div>
+      <h3>Autonomous Era (2027+)</h3>
+      <p>AI systems running 24/7 with no human prompt. Every business will have 10-50 AI agents working around the clock. The businesses that start now will be years ahead.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how" style="border-top:1px solid var(--border)">
+  <div class="section-label">How It Works</div>
+  <h2>Five steps. One visit. Done.</h2>
+  <p class="sub">No learning curve. No tech skills. No ongoing maintenance on your end. We handle everything.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="snum">Step 1</div>
+      <h3>Discovery</h3>
+      <div class="time">15 minutes</div>
+      <p>Quick call. We learn your business, match you to a pre-built industry playbook.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 2</div>
+      <h3>Install</h3>
+      <div class="time">2-3 hours</div>
+      <p>We show up with everything. Set up hardware, install your AI agent, lock it down.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 3</div>
+      <h3>Training</h3>
+      <div class="time">30 minutes</div>
+      <p>We train your whole team before we leave. If you can text, you can use this.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 4</div>
+      <h3>Monitor</h3>
+      <div class="time">24/7</div>
+      <p>We monitor your agent remotely. Security, updates, optimization — all handled.</p>
+    </div>
+    <div class="step">
+      <div class="snum">Step 5</div>
+      <h3>Grow</h3>
+      <div class="time">Ongoing</div>
+      <p>Your agent gets smarter. We push updates. No disruption. No downtime.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ROXY PLATFORM -->
+<div class="section" id="roxy" style="border-top:1px solid var(--border)">
+  <div class="section-label">Meet ROXY</div>
+  <h2>Not a chatbot. A complete AI employee.</h2>
+  <p class="sub">ROXY is your AI agent with 27 tools. She answers your phones, captures leads, runs your marketing, takes payments, and manages your customers — 24/7, on hardware you own.</p>
+
+  <div class="why-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="why-card">
+      <div class="num" style="color:var(--green);font-size:24px">24/7</div>
+      <h3>Answers Your Phone</h3>
+      <p>Customers call, ROXY answers. Qualifies the lead, books the appointment, texts them a confirmation. You wake up to a full schedule.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--blue);font-size:24px">27</div>
+      <h3>AI-Powered Tools</h3>
+      <p>Lead capture, quoting, ROI calculator, ad copy, social posts, review management, email campaigns, payment processing — all built in.</p>
+    </div>
+    <div class="why-card">
+      <div class="num" style="color:var(--amber);font-size:24px">$0</div>
+      <h3>Third-Party AI Costs</h3>
+      <p>We don't use OpenAI, Google, or any third-party cloud. ROXY runs on our own GPU hardware in Lafayette, Louisiana. Your data never leaves American soil.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">Sales & Conversion</div>
+      <ul style="font-size:13px;color:var(--text);line-height:2;list-style:none;padding:0">
+        <li>Industry playbook search (17 verticals)</li>
+        <li>Instant quote builder with hardware recommendations</li>
+        <li>ROI calculator — shows exact dollar savings</li>
+        <li>Live demo generator — "day in the life" walkthrough</li>
+        <li>Stripe checkout — pay right in the chat</li>
+        <li>Franchise qualifier — volume pricing for multi-location</li>
+      </ul>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">Marketing Suite</div>
+      <ul style="font-size:13px;color:var(--text);line-height:2;list-style:none;padding:0">
+        <li>Facebook, Instagram & Google ad copy generator</li>
+        <li>Week of social media posts in 60 seconds</li>
+        <li>Google review response drafting</li>
+        <li>Automated review request after every job</li>
+        <li>Lead magnet creator (guides, checklists)</li>
+        <li>Email drip campaign builder</li>
+      </ul>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">CRM & Outreach</div>
+      <ul style="font-size:13px;color:var(--text);line-height:2;list-style:none;padding:0">
+        <li>Auto lead capture to CRM (segmented by industry)</li>
+        <li>Returning visitor recognition</li>
+        <li>Personalized follow-up emails</li>
+        <li>SMS text message follow-ups</li>
+        <li>Outbound phone calls to hot leads</li>
+        <li>Lead scoring — hot leads get called in 5 minutes</li>
+      </ul>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-size:11px;font-weight:700;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">Intelligence</div>
+      <ul style="font-size:13px;color:var(--text);line-height:2;list-style:none;padding:0">
+        <li>Competitor positioning (11 software tools mapped)</li>
+        <li>Local market analysis — your industry in your area</li>
+        <li>Business research on prospects</li>
+        <li>Pre-install onboarding (remote installs available)</li>
+        <li>Conversation analytics dashboard</li>
+        <li>Embeddable chat widget for your website</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;font-size:13px;color:var(--dim)">All tools run on ADC's own NVIDIA GPU infrastructure in Lafayette, Louisiana. American-owned. American-built.</div>
+</div>
+
+<!-- INDUSTRIES -->
+<div class="section" id="industries" style="border-top:1px solid var(--border)">
+  <div class="section-label">Industries</div>
+  <h2>Pre-built for 12 industries. Not a science project.</h2>
+  <p class="sub">We've already built the playbook for your business type. Our installer follows the same proven process every time. You're not our experiment — you're our next success.</p>
+
+  <div class="ind-grid">
+    <div class="ind"><div class="tag">Document Shop</div><h3>Law Firm</h3><p>Document Q&A, contract drafting, case file search. Attorney-client privilege stays on your device.</p></div>
+    <div class="ind"><div class="tag">Dispatch Shop</div><h3>Field Services</h3><p>AI phone, smart dispatch, field quoting. Plumbers, electricians, HVAC — one system for all.</p></div>
+    <div class="ind"><div class="tag">Appointment Shop</div><h3>Medical / Dental</h3><p>Insurance verification, clinical notes, auto-scheduling. HIPAA-compliant from day one.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Restaurant / Bar</h3><p>Real-time food cost tracking, auto-reorder, recipe costing. Know your margins tonight.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Auto Shop</h3><p>Photo-to-estimate, customer approval workflows, parts ordering. Close more jobs faster.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Real Estate</h3><p>Speed-to-lead response, instant listing descriptions, CRM automation. Never lose a lead to slow follow-up.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Construction / GC</h3><p>Change orders, draw schedules, daily logs, subcontractor coordination. Your project brain.</p></div>
+    <div class="ind"><div class="tag">Dispatch Shop</div><h3>Property Management</h3><p>AI maintenance dispatch, tenant portal, owner reporting. Per-door pricing available.</p></div>
+    <div class="ind"><div class="tag">Inventory Shop</div><h3>Retail Store</h3><p>Auto-reorder, margin analysis, inventory prediction. Stop stock-outs and overstocking.</p></div>
+    <div class="ind"><div class="tag">Document Shop</div><h3>Accounting / CPA</h3><p>Tax document AI intake, deadline tracking, client portal. Peak season handled.</p></div>
+    <div class="ind"><div class="tag">Appointment Shop</div><h3>Salon / Barber / Spa</h3><p>Automated rebooking, no-show follow-ups, client history. Your simplest install — biggest impact.</p></div>
+    <div class="ind"><div class="tag">Deal Shop</div><h3>Insurance Agency</h3><p>Multi-carrier quoting, renewal tracking, policy comparison. Speed kills in this business — be faster.</p></div>
+  </div>
+</div>
+
+<!-- CLIENT PORTAL -->
+<div class="section" id="portal" style="border-top:1px solid var(--border)">
+  <div class="section-label">Your Portal</div>
+  <h2>Simple. Visual. Talk to your agent like a person.</h2>
+  <p class="sub">No training manual. No tech skills. Big buttons, clean file system, and your AI agent ready to chat. Load your files when you're ready — your data stays private.</p>
+
+  <div class="portal-preview">
+    <div class="portal-bar">
+      <div class="title">AI Advantage Portal — Acme Field Services</div>
+      <div class="status">Agent Online</div>
+    </div>
+    <div class="portal-body">
+      <!-- Sidebar -->
+      <div class="portal-sidebar">
+        <div class="portal-btn active">
+          <div class="label">Load Files</div>
+          <div class="desc">Drop folders, photos, documents</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">File System</div>
+          <div class="desc">Browse your organized files</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Jobs Today</div>
+          <div class="desc">Scheduled dispatch board</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Reports</div>
+          <div class="desc">Revenue, jobs, performance</div>
+        </div>
+        <div class="portal-btn">
+          <div class="label">Settings</div>
+          <div class="desc">Account, team, integrations</div>
+        </div>
+      </div>
+
+      <!-- Main content area -->
+      <div class="portal-main">
+        <div class="file-header">Recent Files</div>
+        <div class="file-list">
+          <div class="file-row"><span class="fname">Invoice_March_2026.pdf</span><span class="fmeta">2.1 MB &middot; Today</span></div>
+          <div class="file-row"><span class="fname">Job_Photos_Hernandez/</span><span class="fmeta">47 files &middot; Yesterday</span></div>
+          <div class="file-row"><span class="fname">Estimate_Template_v3.docx</span><span class="fmeta">340 KB &middot; Mar 18</span></div>
+          <div class="file-row"><span class="fname">Vehicle_Inspection_03-15.jpg</span><span class="fmeta">4.8 MB &middot; Mar 15</span></div>
+          <div class="file-row"><span class="fname">QuickBooks_Export_Q1.csv</span><span class="fmeta">1.2 MB &middot; Mar 12</span></div>
+          <div class="file-row"><span class="fname">Customer_Photos/ <span style="color:var(--amber);font-size:10px">12 duplicates found</span></span><span class="fmeta">234 files</span></div>
+          <div class="file-row"><span class="fname">Old_Estimates_2024/</span><span class="fmeta">89 files &middot; Archived</span></div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(255,165,0,0.06);border:1px solid rgba(255,165,0,0.15);border-radius:6px;font-size:11px;color:var(--dim)">
+          <strong style="color:var(--amber)">Tip:</strong> Your agent found 12 duplicate photos in Customer_Photos. Say "clean up my photos" to review and remove them.
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="portal-chat">
+        <div class="chat-header"><div class="chat-dot"></div>Your AI Agent</div>
+        <div class="chat-body">
+          <div class="chat-msg agent">Good morning! You have 6 jobs scheduled today. The Hernandez job photos are uploaded and the estimate is ready for your review. Want me to send it to the customer?</div>
+          <div class="chat-msg user">Yeah send it. What's my schedule look like?</div>
+          <div class="chat-msg agent">Sent. Here's today: 8am Johnson (water heater), 10am Patel (AC tune-up), 12pm lunch, 1:30pm Garcia (leak repair), 3pm Williams (estimate), 4:30pm Rodriguez (follow-up). You're booked solid but no overlaps.</div>
+          <div class="chat-msg user">Can you clean up those duplicate photos?</div>
+          <div class="chat-msg agent">Found 12 duplicates in Customer_Photos (38 MB). I'll move them to a "Review" folder so you can check before I delete. Want me to do that now?</div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Ask your agent anything...">
+          <button>Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div class="section" id="security" style="border-top:1px solid var(--border)">
+  <div class="section-label">Security</div>
+  <h2>Your data stays yours. Period.</h2>
+  <p class="sub">Every AI agent runs inside a locked-down sandbox powered by NVIDIA NemoClaw. It can only access what we approve together. Nothing else gets through.</p>
+
+  <div class="sec-grid">
+    <div class="sec-card" style="border-top:3px solid var(--green)">
+      <h3>Sandboxed Execution</h3>
+      <p>Your agent runs in an isolated container. It cannot see anything outside its workspace — not your email, not your personal files, not your bank. Hardware-enforced isolation.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--blue)">
+      <h3>Network Policy</h3>
+      <p>Only approved connections allowed. If the agent tries to reach a website we didn't approve, it gets blocked instantly and our team is notified. You control the list.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--purple)">
+      <h3>Monitored 24/7</h3>
+      <p>Our team monitors every agent remotely. We handle security updates, policy changes, and model upgrades. You never touch anything technical.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--amber)">
+      <h3>Your Files, Your Pace</h3>
+      <p>Load files when you're ready. We set up the folders — you decide what goes in them. Your agent can help organize, find duplicates, and clean up storage.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--cyan)">
+      <h3>On-Site Option</h3>
+      <p>Choose our Mac Mini or DGX Spark plans and your data never leaves your building. The AI runs entirely on hardware sitting in your office.</p>
+    </div>
+    <div class="sec-card" style="border-top:3px solid var(--red)">
+      <h3>HIPAA / Legal Ready</h3>
+      <p>Medical and legal clients get compliance-grade lockdown. Full audit logging, strict filesystem isolation, no data leaves the device. Built for regulated industries.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HARDWARE -->
+<div class="section" style="border-top:1px solid var(--border)">
+  <div class="section-label">Hardware Options</div>
+  <h2>Four tiers. Pick what fits.</h2>
+  <p class="sub">Use your existing equipment, add our starter kit, or go all-in with on-site AI hardware. Same agent, same security, same monitoring — different horsepower.</p>
+
+  <div class="hw-grid">
+    <div class="hw">
+      <div class="tier">Tier 1</div>
+      <h3>Cloud Only</h3>
+      <div class="price">$0</div>
+      <p>Use your existing computer and internet. Agent runs on our cloud.</p>
+      <ul>
+        <li>No hardware purchase</li>
+        <li>Works on any modern device</li>
+        <li>Requires stable internet</li>
+        <li>Best for: small operations</li>
+      </ul>
+    </div>
+    <div class="hw">
+      <div class="tier">Tier 2</div>
+      <h3>Starter Kit</h3>
+      <div class="price">$1,200</div>
+      <p>Tablet, router, scanner — everything you need if your equipment is outdated.</p>
+      <ul>
+        <li>Pre-configured hardware</li>
+        <li>Dedicated WiFi network</li>
+        <li>Scanner for document shops</li>
+        <li>Best for: aging equipment</li>
+      </ul>
+    </div>
+    <div class="hw popular">
+      <div class="tier" style="color:var(--green)">Most Popular</div>
+      <h3>Mac Mini</h3>
+      <div class="price">$1,699</div>
+      <p>On-site AI. Silent. Fits on a shelf. Your data stays in your building.</p>
+      <ul>
+        <li>Local AI processing</li>
+        <li>Data never leaves your office</li>
+        <li>Silent, 40W, maintenance-free</li>
+        <li>Best for: privacy-aware businesses</li>
+      </ul>
+    </div>
+    <div class="hw">
+      <div class="tier">Tier 4</div>
+      <h3>DGX Spark</h3>
+      <div class="price">$5,499</div>
+      <p>NVIDIA AI supercomputer. For HIPAA, legal, and high-volume operations.</p>
+      <ul>
+        <li>Compliance-grade isolation</li>
+        <li>Full audit trail</li>
+        <li>Runs largest AI models locally</li>
+        <li>Best for: medical, legal, finance</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section" id="pricing" style="border-top:1px solid var(--border)">
+  <div class="section-label">Pricing</div>
+  <h2>Simple monthly subscription. No surprises.</h2>
+  <p class="sub">Hardware is a one-time cost. Everything else is included in your monthly subscription — agent, security, monitoring, updates, and support.</p>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="ptier">Basic</div>
+      <h3>Get Started</h3>
+      <div class="pprice">$199</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>Core AI features for your industry</li>
+        <li>1-2 users</li>
+        <li>Email support</li>
+        <li>24/7 remote monitoring</li>
+        <li>Monthly agent updates</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="ptier" style="color:var(--green)">Most Popular</div>
+      <h3>Pro</h3>
+      <div class="pprice">$699</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>All features + integrations</li>
+        <li>AI phone answering</li>
+        <li>5 users</li>
+        <li>Phone support</li>
+        <li>Priority monitoring</li>
+        <li>File organization tools</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="ptier">Enterprise</div>
+      <h3>Full Power</h3>
+      <div class="pprice">$1,299</div>
+      <div class="pper">per month</div>
+      <ul>
+        <li>Unlimited users</li>
+        <li>Multi-location support</li>
+        <li>Custom workflows</li>
+        <li>Priority phone support</li>
+        <li>Dedicated account manager</li>
+        <li>DGX Spark recommended</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" id="faq" style="border-top:1px solid var(--border)">
+  <div class="section-label">Questions &amp; Answers</div>
+  <h2>Everything you want to know. No runaround.</h2>
+  <p class="sub">We get these questions every day. Here are straight answers. If you don't see yours, ask ROXY — our AI assistant — in the chat bubble below.</p>
+
+  <div class="faq-cats">
+    <button class="faq-cat active" data-cat="all">All</button>
+    <button class="faq-cat" data-cat="basics">The Basics</button>
+    <button class="faq-cat" data-cat="equipment">Equipment</button>
+    <button class="faq-cat" data-cat="security">Security &amp; Privacy</button>
+    <button class="faq-cat" data-cat="cost">Cost &amp; Billing</button>
+    <button class="faq-cat" data-cat="support">Support &amp; Service</button>
+  </div>
+
+  <div class="faq-list">
+    <!-- BASICS -->
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>What exactly does AI Advantage do?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We install a dedicated AI agent at your business, configured specifically for your industry. It can answer phones, manage schedules, track inventory, draft documents, handle customer follow-ups — whatever your business needs. We set it up, train your team, and manage it remotely. You just use it.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>Is this like ChatGPT?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>ChatGPT is a general chatbot on a website. This is a dedicated AI agent built for your specific industry, running on secure hardware, monitored by professionals, and integrated into your actual business tools. It's the difference between googling a legal question and hiring a paralegal.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>How long does setup take?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>One visit. 2-3 hours. Our installer shows up with everything, sets up the hardware and software, configures it for your business, trains your team in 30 minutes, and verifies everything is running before they leave. You're using it the same day.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>Do I need to be tech-savvy to use this?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>If you can send a text message, you can use this. You talk to your AI agent in plain English — through a chat window, text message, or even a phone call. No menus, no training manuals, no learning curve. We train your whole team in 30 minutes before we leave.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="basics">
+      <div class="faq-q"><h3>What industries do you work with?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We have pre-built playbooks for 12 industries: law firms, medical/dental, field services (plumbing, HVAC, electrical), restaurants, auto shops, real estate, construction, property management, retail, accounting/CPA, salons/barbers, and insurance agencies. If your industry isn't listed, ask us — we can likely build a custom playbook.</p></div>
+    </div>
+
+    <!-- EQUIPMENT -->
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What equipment do I need?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>It depends on your plan. Cloud Only ($0 hardware) — just your existing computer and internet. Starter Kit ($1,200) — we bring a tablet, router, and scanner. Mac Mini ($1,699) — a small silent device that sits on your desk. DGX Spark ($5,499) — NVIDIA's AI supercomputer for compliance-heavy industries. Most businesses start with Cloud Only or Mac Mini.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>Do I need to buy new computers?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No. Our Cloud Only tier works with whatever you already have — laptop, desktop, tablet, even your phone. If your equipment is really outdated, our Starter Kit ($1,200) includes everything you'd need. But most businesses can start with what they've got.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What's the Mac Mini option and why would I want it?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>The Mac Mini is a small, silent computer (7 inches square) that sits on a desk or shelf. It runs your AI agent locally — meaning your data never leaves your building. It uses about 40 watts (less than a light bulb), requires zero maintenance, and gives you the fastest response times. It's our most popular option for businesses that care about privacy.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What internet speed do I need?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>For Cloud Only plans, any stable internet connection works — even basic broadband. For Mac Mini and DGX Spark plans, the AI runs locally on your device, so internet speed barely matters. We bring a backup hotspot to every install just in case your connection has issues.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>What if my internet goes down?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>If you're on a Mac Mini or DGX Spark plan, your AI agent keeps running — it's on your local device and doesn't need internet to think. Cloud-only plans need internet, but we set up automatic failover messaging so your customers still get a response even when you're offline.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="equipment">
+      <div class="faq-q"><h3>Where does the hardware actually go?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Wherever you want. The Mac Mini is 7 inches square — it fits on a desk, shelf, or in a closet. The DGX Spark is a bit larger but still desktop-sized. We connect it to your existing network with one ethernet cable, plug it in, and that's it. No server room needed. No special wiring.</p></div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Can the AI see my personal files, email, or bank account?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No. Your AI agent runs inside an isolated sandbox — think of it as a locked room. It can only see files in its own workspace. It cannot access your email, personal files, bank accounts, or anything else on your computer or network. We configure exactly what it can touch, together with you, during install.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Can you see my business data?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We monitor your agent's behavior — what it's connecting to, whether it's running properly, if anything looks unusual. We do not read your business data. On Mac Mini and DGX Spark plans, your data stays entirely on your hardware in your building. We can't see it even if we wanted to.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>Is this HIPAA compliant? What about law firms?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Yes. Medical and legal clients get compliance-grade security: strict filesystem isolation (patient data / case files never leave the device), full audit logging of every agent action, blocked access to cloud storage and email, and on-site hardware so nothing travels over the internet. We recommend DGX Spark for all HIPAA and attorney-privilege environments.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="security">
+      <div class="faq-q"><h3>What if the AI tries to do something it shouldn't?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Every network connection your agent makes is checked against an approved list. If it tries to reach a website or service we didn't approve, it gets blocked automatically and our team is notified immediately. We review every blocked request and take action if anything looks wrong. You're covered 24/7.</p></div>
+    </div>
+
+    <!-- COST -->
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>What does it actually cost per month?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Three plans: Basic at $199/month (core AI features, 1-2 users, email support), Pro at $699/month (all features, AI phone answering, 5 users, phone support — our most popular), and Enterprise at $1,299/month (unlimited users, multi-location, custom workflows, dedicated account manager). Hardware is a separate one-time purchase. No long-term contracts.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>Are there any hidden fees or long-term contracts?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>No and no. Your monthly subscription covers everything — the agent, security monitoring, updates, support, and model upgrades. Hardware is a one-time cost. No setup fees, no cancellation penalties, no surprise charges. If you cancel, we remove the agent and you keep your data. That's it.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="cost">
+      <div class="faq-q"><h3>Is the hardware a rental or do I own it?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>You own it. The Mac Mini, DGX Spark, Starter Kit — whatever you buy is yours. If you cancel your subscription, you keep the hardware. We remove our software, and the device is yours to repurpose however you want.</p></div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What happens after install? Do I manage this myself?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>You never manage anything technical. After install, we monitor your agent remotely 24/7. If something needs updating, we handle it. If the AI needs a model upgrade, we push it — no disruption, no downtime. You just use the agent. Think of it like a managed alarm system — you arm it and go to bed, we watch the cameras.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What if something breaks or the AI stops working?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>We catch most issues before you even notice — our monitoring detects problems in real time. If something does go down, Pro and Enterprise plans include phone support for immediate help. Basic plan has email support with fast response times. In most cases, we can fix issues remotely without visiting your location.</p></div>
+    </div>
+
+    <div class="faq-item" data-cat="support">
+      <div class="faq-q"><h3>What if I want to cancel?</h3><span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Cancel anytime — no penalties, no guilt trip. We remove the AI agent, return your systems to how they were, and your data stays yours. Hardware you purchased is yours to keep. We don't do lock-in. If we're not earning your business every month, that's on us.</p></div>
+    </div>
+  </div>
+
+  <div class="faq-ally-cta">
+    <h3>Don't see your question?</h3>
+    <p>Ask ROXY — our AI assistant. She knows everything about AI Advantage and can answer instantly.</p>
+    <button class="btn btn-primary" onclick="document.getElementById('ally-toggle').click()">Ask ROXY</button>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2>Ready to give your business an unfair advantage?</h2>
+  <p>15-minute discovery call. No pitch. We just learn about your business and tell you exactly what we'd install.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <a href="tel:+13374863149" class="btn btn-primary" style="text-decoration:none">(337) 486-3149</a>
+    <a href="mailto:contact@ai-advantage.info" class="btn btn-outline" style="text-decoration:none">contact@ai-advantage.info</a>
+  </div>
+  <p style="margin-top:20px;font-size:13px;color:var(--dim)">1201 SE Evangeline Thruway, Lafayette, LA 70501</p>
+  <p style="margin-top:4px;font-size:12px;color:var(--dim)">Serving businesses nationwide</p>
+</div>
+
+<footer>
+  AI Advantage &middot; A division of Advantage Design &amp; Construction<br>
+  <span style="font-size:10px;margin-top:4px;display:inline-block">1201 SE Evangeline Thruway, Lafayette, LA 70501 &middot; <a href="tel:+13374863149" style="color:var(--dim)">(337) 486-3149</a> &middot; <a href="mailto:contact@ai-advantage.info" style="color:var(--dim)">contact@ai-advantage.info</a></span><br>
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px">
+    <span style="color:var(--dim);font-size:12px">Powered by</span>
+    <img src="/roxy-logo.jpg" alt="ROXY" style="height:55px;border-radius:4px">
+  </div>
+  <div style="color:var(--dim);font-size:10px;margin-top:6px">27 AI tools on ADC's own NVIDIA GPU infrastructure in Lafayette, LA</div>
+</footer>
+
+<!-- FLOATING CHAT WIDGET -->
+<style>
+/* Chat Toggle Button */
+#ally-toggle{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(59,158,255,0.4);transition:transform .2s,box-shadow .2s}
+#ally-toggle:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(59,158,255,0.5)}
+#ally-toggle svg{width:28px;height:28px;fill:#000}
+
+/* Chat Panel */
+#ally-panel{position:fixed;bottom:92px;right:24px;width:350px;height:500px;background:var(--card);border:1px solid var(--border);border-radius:12px;z-index:9999;display:none;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
+#ally-panel.open{display:flex}
+
+#ally-panel .ally-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+#ally-panel .ally-header .ally-title{font-size:14px;font-weight:700;color:var(--bright);display:flex;align-items:center;gap:8px}
+#ally-panel .ally-header .ally-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+#ally-panel .ally-header .ally-close{background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+#ally-panel .ally-header .ally-close:hover{color:var(--bright)}
+
+#ally-messages{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+#ally-messages .ally-msg{font-size:13px;line-height:1.5;padding:10px 14px;border-radius:10px;max-width:88%;word-wrap:break-word;white-space:pre-wrap}
+#ally-messages .ally-msg.bot{background:rgba(59,158,255,0.1);color:var(--text);border:1px solid rgba(59,158,255,0.15);align-self:flex-start}
+#ally-messages .ally-msg.usr{background:rgba(0,232,122,0.08);color:var(--text);border:1px solid rgba(0,232,122,0.12);align-self:flex-end}
+#ally-messages .ally-typing{align-self:flex-start;padding:10px 14px;background:rgba(59,158,255,0.1);border:1px solid rgba(59,158,255,0.15);border-radius:10px;font-size:13px;color:var(--dim)}
+#ally-messages .ally-typing span{animation:allyBlink 1.4s infinite both}
+#ally-messages .ally-typing span:nth-child(2){animation-delay:.2s}
+#ally-messages .ally-typing span:nth-child(3){animation-delay:.4s}
+@keyframes allyBlink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+#ally-input-bar{display:flex;border-top:1px solid var(--border);padding:8px 10px;gap:8px;background:var(--surface)}
+#ally-input-bar input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--bright);font-size:13px;padding:10px 12px;outline:none;font-family:'Inter',sans-serif}
+#ally-input-bar input:focus{border-color:var(--blue)}
+#ally-input-bar input::placeholder{color:var(--dim)}
+#ally-input-bar button{background:var(--blue);border:none;color:#000;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap}
+#ally-input-bar button:hover{background:#5aafff}
+#ally-input-bar button:disabled{opacity:0.5;cursor:default}
+
+@media(max-width:600px){
+  #ally-panel{right:0;left:0;bottom:0;width:100%;height:100%;border-radius:0;bottom:0}
+  #ally-toggle{bottom:16px;right:16px}
+}
+</style>
+
+<button id="ally-toggle" aria-label="Open chat">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+</button>
+
+<div id="ally-panel">
+  <div class="ally-header">
+    <div class="ally-title"><div class="ally-dot"></div>ROXY &mdash; AI Advantage</div>
+    <button class="ally-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div id="ally-messages"></div>
+  <div id="ally-input-bar">
+    <input type="text" id="ally-input" placeholder="Ask ROXY anything..." maxlength="2000" autocomplete="off">
+    <button id="ally-send">Send</button>
+  </div>
+  <div style="padding:4px 14px 8px;font-size:9px;color:var(--dim);line-height:1.4;text-align:center">By sharing your phone number, you agree to receive texts from AI Advantage. Msg frequency varies. Std msg &amp; data rates apply. Reply STOP to opt out. Reply HELP for help. Your info will not be sold or shared.</div>
+</div>
+
+<script>
+/* FAQ accordion + category filter */
+(function(){
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement;
+      var wasOpen=item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open')});
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+  document.querySelectorAll('.faq-cat').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.faq-cat').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      var cat=btn.getAttribute('data-cat');
+      document.querySelectorAll('.faq-item').forEach(function(item){
+        if(cat==='all'||item.getAttribute('data-cat')===cat){
+          item.style.display='';
+        }else{
+          item.style.display='none';
+          item.classList.remove('open');
+        }
+      });
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  const toggle = document.getElementById('ally-toggle');
+  const panel = document.getElementById('ally-panel');
+  const closeBtn = panel.querySelector('.ally-close');
+  const messagesEl = document.getElementById('ally-messages');
+  const input = document.getElementById('ally-input');
+  const sendBtn = document.getElementById('ally-send');
+  let opened = false;
+  let sending = false;
+
+  // Conversation state — persists across sessions via localStorage
+  const STORAGE_KEY = 'roxy_session';
+  let stored = {};
+  try { stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+  // Reuse session ID if returning within 7 days
+  const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const sessionId = (stored.sessionId && stored.timestamp && (now - stored.timestamp < SESSION_TTL))
+    ? stored.sessionId
+    : 'roxy_' + now + '_' + Math.random().toString(36).slice(2, 8);
+
+  // Restore conversation history (last 10 messages) and context
+  const history = (stored.sessionId === sessionId && stored.history) ? stored.history.slice(-10) : [];
+  let sessionContext = (stored.sessionId === sessionId && stored.sessionContext) ? stored.sessionContext : {};
+
+  function saveSession() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        sessionId,
+        timestamp: Date.now(),
+        history: history.slice(-20),
+        sessionContext,
+      }));
+    } catch(e) {}
+  }
+
+  function addMsg(text, cls) {
+    const div = document.createElement('div');
+    div.className = 'ally-msg ' + cls;
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function addToolIndicator(tools) {
+    if (!tools || tools.length === 0) return;
+    const labels = {
+      'search_playbooks': 'Searched playbooks',
+      'capture_lead': 'Saved your info',
+      'build_quote': 'Built a quote',
+      'book_appointment': 'Generated booking link',
+      'get_contact_info': 'Looked up contact info',
+      'send_followup_email': 'Sent follow-up email',
+      'crm_lookup': 'Checked records',
+      'business_lookup': 'Researched your business',
+      'competitor_intel': 'Reviewed compatibility',
+      'calculate_roi': 'Calculated your ROI',
+      'send_sms': 'Sent you a text',
+      'log_conversation': 'Saved for follow-up',
+      'generate_payment_link': 'Created checkout link',
+      'franchise_qualifier': 'Built franchise quote',
+      'create_urgency_offer': 'Created special offer',
+      'generate_live_demo': 'Built your demo',
+      'local_market_intel': 'Analyzed your market',
+      'generate_ad_copy': 'Created your ads',
+      'respond_to_review': 'Drafted review response',
+      'generate_social_posts': 'Created social content',
+      'request_review': 'Created review request',
+      'generate_lead_magnet': 'Built lead magnet',
+      'build_email_campaign': 'Built email campaign',
+      'generate_widget': 'Created your widget',
+      'initiate_outbound_call': 'Calling you now',
+      'score_lead': 'Scored your profile',
+      'onboard_client': 'Created onboarding checklist',
+    };
+    const text = tools.map(t => labels[t] || t).join(' · ');
+    const div = document.createElement('div');
+    div.style.cssText = 'font-size:10px;color:var(--dim);padding:2px 14px;align-self:flex-start;font-family:monospace;letter-spacing:0.5px';
+    div.textContent = '⚡ ' + text;
+    messagesEl.appendChild(div);
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'ally-typing';
+    div.id = 'ally-typing-ind';
+    div.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('ally-typing-ind');
+    if (el) el.remove();
+  }
+
+  toggle.addEventListener('click', function() {
+    panel.classList.toggle('open');
+    if (!opened) {
+      opened = true;
+      // Restore previous conversation if returning visitor
+      if (history.length > 0 && sessionContext.visitorName) {
+        // Show last few messages from previous session
+        const recent = history.slice(-6);
+        for (const msg of recent) {
+          addMsg(msg.content, msg.role === 'user' ? 'usr' : 'bot');
+        }
+        addMsg("Welcome back" + (sessionContext.visitorName ? ", " + sessionContext.visitorName.split(' ')[0] : "") + "! I remember our conversation. What else can I help you with?", 'bot');
+      } else if (history.length > 0) {
+        const recent = history.slice(-4);
+        for (const msg of recent) {
+          addMsg(msg.content, msg.role === 'user' ? 'usr' : 'bot');
+        }
+        addMsg("Welcome back! Picking up where we left off. What can I help you with?", 'bot');
+      } else {
+        addMsg("Hey! I'm ROXY, your AI Advantage assistant. I can answer questions, look up industry-specific details, build you a quote, or book a discovery call \u2014 right here. What's on your mind?", 'bot');
+      }
+    }
+    if (panel.classList.contains('open')) {
+      input.focus();
+    }
+  });
+
+  closeBtn.addEventListener('click', function() {
+    panel.classList.remove('open');
+  });
+
+  async function send() {
+    const text = input.value.trim();
+    if (!text || sending) return;
+
+    addMsg(text, 'usr');
+    input.value = '';
+    sending = true;
+    sendBtn.disabled = true;
+    showTyping();
+
+    // Add to conversation history
+    history.push({ role: 'user', content: text });
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: history.slice(-20),
+          sessionId: sessionId,
+          sessionContext: sessionContext,
+        })
+      });
+      const data = await res.json();
+      hideTyping();
+
+      if (data.reply) {
+        // Update session context from server
+        if (data.sessionContext) {
+          sessionContext = data.sessionContext;
+        }
+        // Show tool usage indicator
+        addToolIndicator(data.toolsUsed);
+        // Show the reply
+        addMsg(data.reply, 'bot');
+        // Add to history for multi-turn
+        history.push({ role: 'assistant', content: data.reply });
+        // Persist session to localStorage
+        saveSession();
+      } else if (data.error) {
+        addMsg(data.error, 'bot');
+      } else {
+        addMsg("Sorry, something went wrong. Please try again.", 'bot');
+      }
+    } catch (err) {
+      hideTyping();
+      addMsg("Couldn't reach the server. Please check your connection and try again.", 'bot');
+    }
+
+    sending = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
+
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
