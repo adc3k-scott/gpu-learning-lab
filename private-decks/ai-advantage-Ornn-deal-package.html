@@ -882,22 +882,23 @@
     <div class="callout-sub">Lafayette's Gulf Coast summer conditions are the hardest humidity environment in the continental US. The POC site is not just a build location — it is a climate stress chamber. Every competitor in Oregon or Scandinavia leans on cold ambient air. This cassette needs none of it.</div>
   </div>
 
-  <div class="highlight-box" style="margin-top:3rem;">
-    <div class="highlight-box-title">Core Innovation — CHP Cascade Architecture</div>
-    <p style="font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem;">Combined Heat and Power cascade is the technology that makes PUE &le; 1.05 structurally achievable — not a design target. The Cat G3520K or Bloom Energy SOFC produces electricity for compute and simultaneously generates 1,372 kW of recoverable jacket water heat (99°C) and 1,128 kW of exhaust heat (397°C). Total system efficiency: 88.7%. That waste heat — instead of being rejected into the atmosphere — cascades into two systems that would otherwise draw from the electrical load:</p>
+  <div class="highlight-box" style="margin-top:3rem;padding:3.5rem;border:2px solid var(--gold);background:rgba(200,150,12,0.07);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Core Innovation</div>
+    <div style="font-size:2.8rem;font-weight:700;color:var(--text-hi);line-height:1.1;margin-bottom:2rem;">CHP Cascade<br>Architecture</div>
+    <p style="font-size:1.15rem;color:var(--text-mid);line-height:1.9;margin-bottom:2.5rem;">Combined Heat and Power cascade is the technology that makes PUE &le; 1.05 structurally achievable — not a design target. The Cat G3520K or Bloom Energy SOFC produces electricity for compute and simultaneously generates 1,372 kW of recoverable jacket water heat (99°C) and 1,128 kW of exhaust heat (397°C). Total system efficiency: 88.7%. That waste heat — instead of being rejected into the atmosphere — cascades into two systems that would otherwise draw from the electrical load:</p>
     <div class="grid-2">
-      <div class="grid-cell">
-        <div class="label" style="margin-bottom:0.75rem;">System 1 — Munters Desiccant Regeneration</div>
-        <div class="panel-title" style="margin-bottom:0.5rem;">Humidity Control Off the Power Bill</div>
-        <p class="panel-body">The Munters ICA desiccant rotor requires heat to regenerate — normally a significant electrical parasitic load. In the CHP cascade, exhaust heat from the genset or SOFC drives the regeneration cycle directly. The Munters draws nothing from the compute power budget. Dehumidification is thermodynamically free.</p>
+      <div class="grid-cell" style="padding:2rem;">
+        <div class="label" style="margin-bottom:1rem;font-size:0.75rem;">System 1 — Munters Desiccant Regeneration</div>
+        <div class="panel-title" style="margin-bottom:0.75rem;font-size:1.25rem;">Humidity Control Off the Power Bill</div>
+        <p class="panel-body" style="font-size:1rem;line-height:1.8;">The Munters ICA desiccant rotor requires heat to regenerate — normally a significant electrical parasitic load. In the CHP cascade, exhaust heat from the genset or SOFC drives the regeneration cycle directly. The Munters draws nothing from the compute power budget. Dehumidification is thermodynamically free.</p>
       </div>
-      <div class="grid-cell">
-        <div class="label" style="margin-bottom:0.75rem;">System 2 — CDU Secondary Cooling Loop</div>
-        <div class="panel-title" style="margin-bottom:0.5rem;">Chip-to-Chip Cooling Driven by Waste Heat</div>
-        <p class="panel-body">The CDU secondary loop — the circuit that carries heat directly away from the GPU chips — is driven by the CHP jacket water circuit. The thermal cascade does the pumping work that would otherwise require dedicated electrical infrastructure. Both parasitic loads eliminated. That is how the cassette achieves PUE &le; 1.05 in the worst humidity environment in the continental US.</p>
+      <div class="grid-cell" style="padding:2rem;">
+        <div class="label" style="margin-bottom:1rem;font-size:0.75rem;">System 2 — CDU Secondary Cooling Loop</div>
+        <div class="panel-title" style="margin-bottom:0.75rem;font-size:1.25rem;">Chip-to-Chip Cooling Driven by Waste Heat</div>
+        <p class="panel-body" style="font-size:1rem;line-height:1.8;">The CDU secondary loop — the circuit that carries heat directly away from the GPU chips — is driven by the CHP jacket water circuit. The thermal cascade does the pumping work that would otherwise require dedicated electrical infrastructure. Both parasitic loads eliminated. That is how the cassette achieves PUE &le; 1.05 in the worst humidity environment in the continental US.</p>
       </div>
     </div>
-    <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-top:1.5rem;">This architecture is power-source agnostic. Cat G3520K genset during POC phase. Bloom Energy SOFC at scale. FuelCell Energy MCFC as second qualified platform. The CHP cascade works identically regardless of heat source — the thermodynamic loop closes on waste heat, not on the fuel type that created it.</p>
+    <p style="font-size:0.95rem;color:var(--text-dim);line-height:1.8;margin-top:2rem;border-top:1px solid var(--border);padding-top:1.5rem;">Power-source agnostic. Cat G3520K genset during POC phase. Bloom Energy SOFC at scale. FuelCell Energy MCFC as second qualified platform. The CHP cascade works identically regardless of heat source — the thermodynamic loop closes on waste heat, not on the fuel type that created it.</p>
   </div>
 
   <div class="highlight-box">
