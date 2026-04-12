@@ -1183,8 +1183,8 @@
     </div>
   </div>
 
-  <div class="label" style="margin-bottom:1.5rem;">Infrastructure CapEx — 10-Rack 2.3 MW Cassette</div>
-  <table class="data-table" style="margin-bottom:3rem;">
+  <div class="label" style="margin-bottom:1.5rem;">Infrastructure CapEx — 10-Rack 2.3 MW Cassette (POC Phase)</div>
+  <table class="data-table" style="margin-bottom:1rem;">
     <thead>
       <tr>
         <th>Line Item</th>
@@ -1202,15 +1202,19 @@
       <tr><td class="td-highlight">Validation instrumentation + stress rig</td><td class="td-gold">$40,000</td><td class="td-gold">$93,000</td><td>Vaisala sensors, NI CompactDAQ, power analyzer, steam injection</td></tr>
       <tr><td class="td-highlight">BMS / sensor system</td><td class="td-gold">$30,000</td><td class="td-gold">$75,000</td><td>Jetson AGX Orin, 148-ch sensors, networking</td></tr>
       <tr><td class="td-highlight">Piping, cabling, integration</td><td class="td-gold">$100,000</td><td class="td-gold">$200,000</td><td>Facility plumbing, electrical, commissioning labor</td></tr>
-      <tr><td class="td-highlight">Contingency (20%)</td><td class="td-gold">$314,000</td><td class="td-gold">$694,000</td><td>Novel architecture in a new category warrants it</td></tr>
+      <tr style="border-top:1px solid var(--gold-dim);">
+        <td class="td-highlight">POC Power — Rental Generators</td><td class="td-gold">$200,000</td><td class="td-gold">$350,000</td><td>2× diesel rental sets (1.25 MW each = 2.5 MW). Aggreko / United Rentals / Sunbelt. 6-month POC window. Fuel not included. Replaced by permanent Cat G3520K natural gas units at Series A.</td>
+      </tr>
+      <tr><td class="td-highlight">Contingency (20%)</td><td class="td-gold">$334,000</td><td class="td-gold">$714,000</td><td>Novel architecture in a new category warrants it</td></tr>
       <tr style="background:rgba(200,150,12,0.05);">
         <td style="color:var(--white);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;">TOTAL INFRASTRUCTURE CAPEX</td>
-        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$1,884,000</td>
-        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$4,162,000</td>
-        <td style="color:var(--text-dim);font-size:0.72rem;">No GPUs, no container shell, no site power plant</td>
+        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$2,004,000</td>
+        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$4,282,000</td>
+        <td style="color:var(--text-dim);font-size:0.72rem;">No GPUs, no container shell</td>
       </tr>
     </tbody>
   </table>
+  <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:3rem;padding:1rem;border-left:2px solid var(--gold-dim);">POC power strategy: rental diesel generators bridge the validation phase. Permanent Cat G3520K natural gas gensets with full CHP heat recovery are engineered into the production design and funded at Series A. The POC validates liquid cooling, 800V DC architecture, BMS, and rack integration. CHP Cascade efficiency validation follows at Series A with permanent power plant installation.</p>
 
   <div class="label" style="margin-bottom:1.5rem;">Revenue Projections — Base Case</div>
   <table class="data-table" style="margin-bottom:3rem;">
