@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Advantage — Capital Partners Package</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8960C;
+    --gold-light: #E8B020;
+    --gold-dim: #7A5A08;
+    --black: #050505;
+    --dark: #0D0D0D;
+    --panel: #111111;
+    --border: #1E1E1E;
+    --border-bright: #2A2A2A;
+    --text: #D0CFC8;
+    --text-dim: #6B6960;
+    --text-mid: #9A9890;
+    --text-hi: #F0EFE8;
+    --red: #C84B2C;
+    --white: #F0EFE8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  .display { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.92; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-weight: 400; }
+  .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,5,5,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 52px;
+  }
+  .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 3px 10px; }
+
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 3rem 5rem; position: relative; overflow: hidden;
+  }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,150,12,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,150,12,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-glow { position: absolute; bottom: -200px; left: -100px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(200,150,12,0.07) 0%, transparent 65%); pointer-events: none; }
+  .hero-meta { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--white); }
+  .hero-divider { width: 1px; height: 32px; background: var(--border-bright); }
+  .hero-headline { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 5.5vw, 5rem); text-transform: uppercase; line-height: 0.88; letter-spacing: -0.02em; color: var(--white); position: relative; }
+  .hero-headline .accent { color: var(--gold); }
+  .hero-sub { margin-top: 2rem; font-size: 1.1rem; color: var(--text-mid); max-width: 640px; font-weight: 300; line-height: 1.7; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  section { padding: 6rem 3rem; border-top: 1px solid var(--border); }
+  .section-header { display: flex; align-items: flex-start; gap: 3rem; margin-bottom: 4rem; }
+  .section-number { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold-dim); padding-top: 6px; min-width: 60px; }
+  .section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2.8rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 0.92; color: var(--white); }
+  .section-subtitle { font-size: 1rem; color: var(--text-mid); margin-top: 1rem; max-width: 680px; font-weight: 300; line-height: 1.7; }
+
+  .stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); margin-bottom: 4rem; }
+  .stat-item { padding: 2rem; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 3.2rem; color: var(--gold); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+  .stat-note { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.5rem; }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); padding: 2rem; }
+  .panel-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--white); margin-bottom: 0.75rem; }
+  .panel-body { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); }
+  .grid-cell { background: var(--black); padding: 2rem; }
+
+  .stack-layer { display: grid; grid-template-columns: 80px 1fr; gap: 0; border-bottom: 1px solid var(--border); }
+  .stack-layer:last-child { border-bottom: none; }
+  .layer-num { padding: 2rem; border-right: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: center; padding-top: 2.2rem; }
+  .layer-num span { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold-dim); writing-mode: vertical-rl; text-transform: uppercase; }
+  .layer-content { padding: 2rem; }
+  .layer-role { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .layer-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.6rem; text-transform: uppercase; color: var(--white); margin-bottom: 0.75rem; }
+  .layer-body { font-size: 0.88rem; color: var(--text-mid); line-height: 1.75; max-width: 800px; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+  .data-table th { text-align: left; padding: 0.75rem 1rem; background: var(--panel); color: var(--gold); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-mid); vertical-align: top; }
+  .data-table tr:hover td { background: var(--panel); }
+  .data-table .td-highlight { color: var(--white); }
+  .data-table .td-gold { color: var(--gold); font-weight: 500; }
+
+  .comp-row { display: grid; grid-template-columns: 160px 1fr 120px 120px 200px; gap: 0; border-bottom: 1px solid var(--border); align-items: stretch; }
+  .comp-row.header { background: var(--panel); }
+  .comp-cell { padding: 1rem 1.2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .comp-cell:last-child { border-right: none; }
+  .comp-row.header .comp-cell { color: var(--gold); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .comp-row.adc { background: rgba(200,150,12,0.05); }
+  .comp-row.adc .comp-cell { color: var(--white); }
+
+  .incentive-block { display: grid; grid-template-columns: 1fr 140px; gap: 0; border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+  .incentive-block:first-child { border-top: 1px solid var(--border); }
+  .incentive-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; text-transform: uppercase; color: var(--white); letter-spacing: 0.04em; }
+  .incentive-note { font-size: 0.82rem; color: var(--text-dim); margin-top: 0.3rem; max-width: 700px; }
+  .incentive-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: var(--gold); text-align: right; line-height: 1; padding-left: 1rem; display: flex; align-items: center; justify-content: flex-end; }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border-bright); }
+  .timeline-item { position: relative; padding: 0 0 3rem 2.5rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -5px; top: 6px; width: 10px; height: 10px; background: var(--gold); }
+  .timeline-when { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .timeline-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.4rem; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  .timeline-body { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; max-width: 600px; }
+
+  .callout { border-left: 3px solid var(--gold); padding: 1.5rem 2rem; background: rgba(200,150,12,0.04); margin: 2rem 0; }
+  .callout-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.5rem; text-transform: uppercase; color: var(--white); line-height: 1.2; }
+  .callout-sub { font-size: 0.85rem; color: var(--text-mid); margin-top: 0.5rem; }
+
+  #contact { background: var(--panel); }
+  .contact-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); margin-top: 3rem; max-width: 520px; }
+  .contact-card { background: var(--black); padding: 2.5rem; }
+  .contact-role { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .contact-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.8rem; text-transform: uppercase; color: var(--white); margin-bottom: 1rem; }
+  .contact-line { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text-mid); margin-bottom: 0.4rem; }
+  .contact-line a { color: var(--text-mid); text-decoration: none; }
+  .contact-line a:hover { color: var(--gold); }
+
+  footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-text { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+
+  .rule { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  .highlight-box { border: 1px solid var(--gold-dim); padding: 2rem; background: rgba(200,150,12,0.03); margin: 2rem 0; }
+  .highlight-box-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .check-list li { display: flex; align-items: flex-start; gap: 1rem; font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; }
+  .check-list li::before { content: '▸'; color: var(--gold); font-size: 0.5rem; flex-shrink: 0; margin-top: 5px; }
+
+  .proceeds-item { display: grid; grid-template-columns: 200px 1fr 80px 120px; gap: 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .proceeds-item.header { background: var(--panel); }
+  .proceeds-cell { padding: 1rem 1.2rem; font-size: 0.82rem; border-right: 1px solid var(--border); }
+  .proceeds-cell:last-child { border-right: none; }
+  .proceeds-item.header .proceeds-cell { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+  .proceeds-bar-fill { height: 6px; background: var(--gold); margin-top: 6px; }
+
+  .footnote { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+  .fade-in-1 { animation-delay: 0.1s; }
+  .fade-in-2 { animation-delay: 0.25s; }
+  .fade-in-3 { animation-delay: 0.4s; }
+
+  .conf-banner { background: var(--gold); color: var(--black); text-align: center; padding: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 0 1.5rem 4rem; }
+    .stat-bar { grid-template-columns: 1fr 1fr; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .comp-row { grid-template-columns: 1fr 1fr; }
+    .proceeds-item { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .stat-bar { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .hero-headline { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="conf-banner">AI Advantage — Confidential Capital Partners Package — Not for Public Distribution</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">AI Advantage</div>
+  <ul class="nav-links">
+    <li><a href="#product">Product</a></li>
+    <li><a href="#partnership">Partnership</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#numbers">Numbers</a></li>
+    <li><a href="#path">Path</a></li>
+    <li><a href="#specs">Specs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-badge">Capital Partners</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <img src="../adc3k-deploy/marlie/photos/AI DC Cassette.jpg" alt="AI Advantage Pure DC AI Cassette" style="width:100%;height:100%;object-fit:cover;object-position:60% center;opacity:0.38;mask-image:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.15) 65%, black 100%);-webkit-mask-image:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.15) 65%, black 100%);">
+  </div>
+
+  <div class="hero-meta fade-in fade-in-1">
+    <div class="hero-meta-item">
+      <span class="label">Structure</span>
+      <span class="hero-meta-value mono">Seed / Strategic / Offtake</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="label">Location</span>
+      <span class="hero-meta-value mono">Lafayette, Louisiana</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="label">Date</span>
+      <span class="hero-meta-value mono">April 2026</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="label">First Deployment</span>
+      <span class="hero-meta-value mono">10 MW — MARLIE 1</span>
+    </div>
+  </div>
+
+  <h1 class="hero-headline fade-in fade-in-2">
+    <span class="accent">Autonomous</span><br>
+    AI Cassette
+  </h1>
+
+  <p class="hero-sub fade-in fade-in-3">
+    American-owned, NVIDIA-compliant compute infrastructure platform.
+    <strong>PUE &le; 1.05 at production scale. 800V DC native. Zero air conditioning. CHP waste-heat cascade eliminates all parasitic thermal loads from the electrical bus.</strong>
+    Modular. Containerized. Deployable anywhere natural gas, flare gas, or DC power exists — from Lafayette, Louisiana to a West Texas well pad.
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 01 — PRODUCT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="product">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <div>
+      <h2 class="section-title">The Pure DC<br>AI Cassette</h2>
+      <p class="section-subtitle">A 10-rack, 2.3 MW liquid-cooled AI compute cassette. NVL72-compatible. 800V DC native. Direct-to-chip cooling. Zero air conditioning. Built inside a 40-ft ISO High Cube container — no outside engineering firms, no PE consultants, no GC markup.</p>
+    </div>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-value">&le;1.05</div>
+      <div class="stat-label">PUE at Production Scale</div>
+      <div class="stat-note">With CHP cascade. Hyperscalers run 1.3+. Every watt not spent on cooling is compute.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">2.3MW</div>
+      <div class="stat-label">Compute Per Cassette</div>
+      <div class="stat-note">10 OCP ORV3 racks. 230 kW per rack. NVL72 Blackwell compatible.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">800V</div>
+      <div class="stat-label">DC Native Architecture</div>
+      <div class="stat-note">OCP LVDC Stage 1d compliant. Designed to spec from day one.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Air Conditioning Units</div>
+      <div class="stat-note">Desiccant-only humidity control. No chillers, no CRAHs, no compressors.</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:2rem;">
+    <div class="grid-cell">
+      <div class="label" style="margin-bottom:1rem;">Thermal Architecture</div>
+      <div class="panel-title" style="margin-bottom:0.75rem;">Boyd / Eaton CDU — One Unit. Full Load.</div>
+      <p class="panel-body">Boyd Thermal — acquired by Eaton for $9.5 billion, closed March 12, 2026 — supplies the ROL2300-48U40 row-level CDU: 2,300 kW capacity at 8°C ATD, N+1 redundant seal-less pumps, 30.6+ billion field hours with zero leaks. A single unit handles the entire 2.3 MW cassette load. Direct-to-chip cold plates. Blind-mate quick disconnects. Modbus/BACnet integrated.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="label" style="margin-bottom:1rem;">Humidity Control</div>
+      <div class="panel-title" style="margin-bottom:0.75rem;">Munters Desiccant — No AC. Anywhere.</div>
+      <p class="panel-body">Traditional facilities burn 30–50% of total power on cooling. This cassette targets less than 5%. The Munters ICA with RightDry technology uses waste heat from the CHP system — exhaust gas at 397°C — to regenerate the desiccant rotor. The thermodynamic loop closes on itself: CHP exhaust heat → Munters regeneration → dry air back into the cassette. No case study of desiccant-only liquid-cooled deployment exists. This is a new category.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-text">If it holds PUE &le; 1.05 in Lafayette in August at 95°F / 80% RH — it works anywhere on the planet.</div>
+    <div class="callout-sub">Lafayette's Gulf Coast summer conditions are the hardest humidity environment in the continental US. Every competitor in Oregon or Scandinavia leans on cold ambient air. This cassette needs none of it. Deploy it in Houston, the Permian Basin, the Middle East, or sub-Saharan Africa — the thermal architecture is climate-independent.</div>
+  </div>
+
+  <!-- CHP CASCADE -->
+  <div class="highlight-box" style="margin-top:3rem;padding:3.5rem;border:2px solid var(--gold);background:rgba(200,150,12,0.07);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Core Innovation</div>
+    <div style="font-size:2.8rem;font-weight:700;color:var(--text-hi);line-height:1.1;margin-bottom:2rem;">CHP Cascade<br>Architecture</div>
+    <p style="font-size:1.15rem;color:var(--text-mid);line-height:1.9;margin-bottom:2.5rem;">Combined Heat and Power cascade is the technology that makes PUE &le; 1.05 structurally achievable at production scale. The Cat G3520H natural gas genset (2,507 kW electrical) simultaneously generates ~1,372 kW of recoverable jacket water heat (99°C) and ~1,128 kW of exhaust heat (397°C). Total system efficiency: ~88.7%. That waste heat — instead of being rejected into the atmosphere — cascades into two systems that would otherwise draw from the electrical load:</p>
+    <div class="grid-2">
+      <div class="grid-cell" style="padding:2rem;">
+        <div class="label" style="margin-bottom:1rem;font-size:0.75rem;">System 1 — Munters Desiccant Regeneration</div>
+        <div class="panel-title" style="margin-bottom:0.75rem;font-size:1.25rem;">Humidity Control Off the Power Bill</div>
+        <p class="panel-body" style="font-size:1rem;line-height:1.8;">Exhaust heat (397°C) from the genset drives the Munters ICA desiccant regeneration cycle directly. The Munters draws nothing from the compute power budget. Dehumidification is thermodynamically free.</p>
+      </div>
+      <div class="grid-cell" style="padding:2rem;">
+        <div class="label" style="margin-bottom:1rem;font-size:0.75rem;">System 2 — LiBr Absorption Chiller</div>
+        <div class="panel-title" style="margin-bottom:0.75rem;font-size:1.25rem;">CDU Heat Rejection Driven by Waste Heat</div>
+        <p class="panel-body" style="font-size:1rem;line-height:1.8;">CHP jacket water (99°C) drives a lithium bromide absorption chiller that produces chilled water for the CDU secondary (heat rejection) loop. This eliminates the compressor-based cooling that would otherwise be required to reject 2.3 MW of GPU heat to ambient. No electrical chillers, no compressor parasitic load. Both parasitic loads eliminated.</p>
+      </div>
+    </div>
+    <p style="font-size:0.95rem;color:var(--text-dim);line-height:1.8;margin-top:2rem;border-top:1px solid var(--border);padding-top:1.5rem;">Power-source agnostic. Cat G3520H genset for initial deployment. Bloom Energy SOFC at scale. FuelCell Energy MCFC as second qualified platform. The CHP cascade works identically regardless of heat source — the thermodynamic loop closes on waste heat, not on the fuel type that created it.</p>
+  </div>
+
+  <!-- GPU UPGRADE PATH -->
+  <div class="highlight-box">
+    <div class="highlight-box-title">GPU Roadmap — Build Once, Upgrade Forever</div>
+    <p class="panel-body" style="margin-bottom:1rem;">The cassette container shell is sized for an 800 kW ceiling even when initial deployments run at lower density. NVIDIA's published GPU roadmap anchors the upgrade path:</p>
+    <div class="grid-3" style="margin-top:0;">
+      <div class="grid-cell" style="text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.3rem;color:var(--gold);text-transform:uppercase;">Vera Rubin</div>
+        <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.3rem;">2026 — Current architecture target</div>
+      </div>
+      <div class="grid-cell" style="text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.3rem;color:var(--gold);text-transform:uppercase;">Kyber NVL576</div>
+        <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.3rem;">Next generation — same rack form factor</div>
+      </div>
+      <div class="grid-cell" style="text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.3rem;color:var(--gold);text-transform:uppercase;">Feynman</div>
+        <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.3rem;">Future roadmap — OCP ORV3 compatible</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-dim);margin-top:1rem;">Container shell, CDU, power distribution, BMS, and desiccant system are generation-independent. GPU racks swap. The infrastructure persists. Depreciation risk is managed through the upgrade cycle — not through financial instruments.</p>
+  </div>
+
+  <div class="highlight-box">
+    <div class="highlight-box-title">Worst-Case Validation Protocol</div>
+    <ul class="check-list">
+      <li>Boyd Rack Emulators (2×, 250 kW each) — NVIDIA-collaborative thermal load simulators. Validate liquid cooling infrastructure before a single GPU is installed. Permanent test infrastructure.</li>
+      <li>Reference-grade instrumentation independent of BMS — Vaisala HMT370 + DMT152 dew point sensors at five cassette positions. NIST-traceable. Two independent measurement systems.</li>
+      <li>Atmospheric stress injection — Nortec or DriSteem industrial humidifier forces intake conditions to 100°F / 95% RH. More extreme than any recorded Lafayette weather event.</li>
+      <li>POC phase validates liquid cooling architecture, 800V DC power distribution, BMS integration. Full CHP Cascade PUE &le; 1.05 validation follows with permanent power plant installation.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 02 — PARTNERSHIP MODELS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="partnership">
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <div>
+      <h2 class="section-title">Three Ways<br>to the Table</h2>
+      <p class="section-subtitle">AI Advantage is not a single-path deal. The platform is designed to accept capital, capacity commitments, or strategic partnerships — from angel investors to hyperscalers. Every path leads to the same cassette, the same site, the same engineering.</p>
+    </div>
+  </div>
+
+  <div style="border: 1px solid var(--border); margin-bottom:3rem;">
+
+    <div class="stack-layer">
+      <div class="layer-num"><span>Path A</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Seed Investor</div>
+        <div class="layer-name">$5M Seed Round — Equity</div>
+        <p class="layer-body">Traditional seed equity. $5M raise. MARLIE 1 is owned collateral — real property, real asset, real security on day one. Louisiana Angel Tax Credit returns up to 35% on qualifying investments in Opportunity Zones.* First capital partner in gets preferred equity position on every future AI Advantage project. Ideal for accredited angel investors, family offices, hospital system endowments, and university foundations — investors who can also become anchor tenants for HIPAA-compliant on-premise compute or research GPU infrastructure.</p>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="layer-num"><span>Path B</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Anchor Tenant</div>
+        <div class="layer-name">Compute Offtake Agreement</div>
+        <p class="layer-body">A hyperscaler, enterprise, or sovereign entity signs a multi-year offtake agreement for compute capacity — reserving racks before the cassette is built. The offtake de-risks the build, accelerates the timeline, and makes the seed round easier to close. AI Advantage delivers capacity at a lower cost per MW than traditional data center construction, in a fraction of the time. A 2.3 MW cassette deploys in months, not years. For hyperscalers running out of capacity in Tier 1 markets, this is edge compute on demand — deployed where the power is, not where the permits are.</p>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="layer-num"><span>Path C</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Strategic Partner / JV</div>
+        <div class="layer-name">Equity + Platform Access</div>
+        <p class="layer-body">A strategic partner takes equity in AI Advantage and gets preferential access to the cassette platform for their own deployments. This is the path for hyperscalers, NVIDIA ecosystem partners, energy companies, or sovereign funds that want to own a position in the manufacturing platform itself — not just buy capacity from it. AI Advantage becomes their distributed deployment arm. The cassette is power-source agnostic, GPU-generation independent, and manufactured by Fibrebond in Minden, Louisiana. A strategic partner accelerates the production pipeline and gets first access to every unit off the line.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOUNDER -->
+  <div style="border: 1px solid var(--border); margin-bottom:3rem;">
+    <div class="stack-layer">
+      <div class="layer-num"><span>Founder</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Sponsor — Builder — Operator</div>
+        <div class="layer-name">Scott Tomsu</div>
+        <p class="layer-body">Louisiana-Licensed General Contractor, FAA Private Pilot, FAA Part 107, IMCA ROV Supervisor, Commercial Diver. 25-year veteran of the most demanding remote operations environments on the planet — deepwater robotics for ExxonMobil at 3,000+ meters depth in West Africa, Gulf of America, Brazil, Trinidad, Canada, and Equatorial Guinea. A full medical center with X-ray room built from the ground up. 80+ residential homes across Lafayette. Precision engineering under extreme conditions as a multi-time drag racing champion.<br><br>
+        This is not a tech pitch from a programmer. This is a hardware build from a constructor who has operated mission-critical systems his entire career. MARLIE 1 is owned. 22 US vendors are spec'd. 24 engineering blueprints are complete. The founder pulls the permits. The founder manages the build. No outside GC. No PE firm. No engineering markup.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARLIE 1 SITE -->
+  <div class="grid-3" style="margin-bottom:2rem;">
+    <div class="grid-cell">
+      <div class="label" style="margin-bottom:0.75rem;">POC Site — MARLIE 1</div>
+      <div class="panel-title">Owned Outright</div>
+      <p class="panel-body" style="margin-top:0.5rem;">1201 SE Evangeline Thruway, Lafayette, LA. No acquisition timeline. No lease risk. No landlord. Live collateral for equipment financing on day one.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="label" style="margin-bottom:0.75rem;">Capacity</div>
+      <div class="panel-title">5 MW — Two Cassettes</div>
+      <p class="panel-body" style="margin-top:0.5rem;">POC cassette occupies the ground floor. Mission Control NOC operates from the upper floor. Investors and partners walk in and observe the live cassette from above.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="label" style="margin-bottom:0.75rem;">Connectivity</div>
+      <div class="panel-title">Four Connections</div>
+      <p class="panel-body" style="margin-top:0.5rem;">ATMOS natural gas. LFT Fiber. LUS power. Exhaust. A 40-ft container, racks, and four site connections. The founder's GC license covers every permit in-house.</p>
+    </div>
+  </div>
+
+  <!-- ENERGY -->
+  <div class="callout">
+    <div class="callout-text">Behind the Meter. Cheapest Natural Gas in America.</div>
+    <div class="callout-sub">Henry Hub — the pricing benchmark for all North American natural gas — sits 40 miles from MARLIE 1 in Erath, Louisiana. Cat G3520H natural gas gensets (2,507 kW each) are the production power plant. Bloom Energy SOFC at scale. The cassette is power-source agnostic by design — it accepts 800V DC and does not care whether electrons came from gas, fuel cells, grid, or solar. First Solar Series 7 TR1 panels are manufactured 30 miles away in New Iberia, LA — qualifying for the full domestic content ITC bonus.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 03 — MARKET POSITION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="market">
+  <div class="section-header">
+    <div class="section-number">03</div>
+    <div>
+      <h2 class="section-title">The Gap<br>Nobody Has<br>Filled Yet</h2>
+      <p class="section-subtitle">$50 billion in AI infrastructure investment is flowing into Louisiana alone. All of it is campus-scale. All of it requires years of construction, utility negotiations, and grid interconnection. None of it is modular, containerized, or deployable at the edge. That gap is the market.</p>
+    </div>
+  </div>
+
+  <div style="border: 1px solid var(--border); margin-bottom: 3rem;">
+    <div class="comp-row header">
+      <div class="comp-cell">Model</div>
+      <div class="comp-cell">Deployment</div>
+      <div class="comp-cell">Timeline</div>
+      <div class="comp-cell">Power</div>
+      <div class="comp-cell">AI Advantage Advantage</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell" style="color:var(--text-mid);">Hyperscale Campus</div>
+      <div class="comp-cell" style="color:var(--text-mid);">500+ MW — single site</div>
+      <div class="comp-cell" style="color:var(--text-dim);">3–5 years</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Grid</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Fixed location. Utility-dependent. Cannot serve edge.</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell" style="color:var(--text-mid);">Traditional Colo</div>
+      <div class="comp-cell" style="color:var(--text-mid);">10–50 MW — urban</div>
+      <div class="comp-cell" style="color:var(--text-dim);">18–36 mo</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Grid</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Grid queue bottleneck. Not liquid-cooled. High PUE.</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell" style="color:var(--text-mid);">Neocloud (CoreWeave, etc.)</div>
+      <div class="comp-cell" style="color:var(--text-mid);">50–200 MW — leased</div>
+      <div class="comp-cell" style="color:var(--text-dim);">12–24 mo</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Grid</div>
+      <div class="comp-cell" style="color:var(--text-dim);">Leased shells. Grid-dependent. Not containerized.</div>
+    </div>
+    <div class="comp-row adc">
+      <div class="comp-cell">AI Advantage Cassette</div>
+      <div class="comp-cell">2.3 MW per unit — anywhere</div>
+      <div class="comp-cell" style="color:var(--gold);">6–9 mo</div>
+      <div class="comp-cell" style="color:var(--gold);">Any</div>
+      <div class="comp-cell" style="color:var(--gold);">Containerized. Behind-the-meter. PUE &le; 1.05. Edge-ready.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-text">Nobody builds 2.3 MW autonomous compute cassettes. That is the product.</div>
+    <div class="callout-sub">Hyperscalers build campuses. AI Advantage builds the units that go where campuses can't. Every oil field well pad, every offshore platform, every remote industrial site, every sovereign data-sovereignty requirement — anywhere that needs GPU compute but can't wait 3 years for grid interconnection and a building permit. The cassette plugs directly into existing natural gas infrastructure. Gas in, tokens out.</div>
+  </div>
+
+  <div style="margin-top: 3rem;">
+    <div class="label" style="margin-bottom:1.5rem;">The Category Is Validated — At Scale</div>
+    <div class="grid-4">
+      <div class="grid-cell">
+        <div class="label" style="margin-bottom:0.5rem;">CoreWeave</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--gold);margin-bottom:0.5rem;">$71B</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">NVIDIA-native neocloud. BMaaS + managed inference. NVIDIA strategic investor.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="label" style="margin-bottom:0.5rem;">Nebius</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--gold);margin-bottom:0.5rem;">$24B</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">"Token Factory" model. NVIDIA $2B stake. Spun out of Yandex.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="label" style="margin-bottom:0.5rem;">Crusoe Energy</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--gold);margin-bottom:0.5rem;">$10B+</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">Energy-first neocloud. Flare gas → tokens. <strong style="color:var(--text);">Same model as AI Advantage.</strong> $4.5M seed → $10B+ in 6 years.</p>
+      </div>
+      <div class="grid-cell">
+        <div class="label" style="margin-bottom:0.5rem;">Nscale</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--gold);margin-bottom:0.5rem;">$2B</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">UK-headquartered. $2B Series H. Microsoft LOI. No American-owned equivalent exists yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:3rem;">
+    <div class="callout-text">593,000 MCF/Month of Stranded Flare Gas. Within 30 Miles.</div>
+    <div class="callout-sub">Five O&G operators within 30 miles of Lafayette carry 593,000 MCF/month of stranded flare gas — currently being burned into the atmosphere. AI Advantage's cassette converts that waste stream into GPU compute at zero fuel cost. Every onshore well pad already has natural gas infrastructure on site. No grid connection. No building permit. No utility negotiation. Gas in, tokens out. Edge AI compute at oilfield and offshore sites is a massive underserved market, and AI Advantage is the only operator whose hardware was designed for exactly that environment from day one.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 04 — NUMBERS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="numbers">
+  <div class="section-header">
+    <div class="section-number">04</div>
+    <div>
+      <h2 class="section-title">The<br>Numbers</h2>
+      <p class="section-subtitle">Unit economics per MW. Infrastructure CapEx. Revenue projections. Louisiana's incentive stack. The math works at cassette scale and compounds at campus scale.</p>
+    </div>
+  </div>
+
+  <!-- UNIT ECONOMICS -->
+  <div class="label" style="margin-bottom:1.5rem;">Unit Economics — Per Cassette (2.3 MW)</div>
+  <div class="stat-bar" style="margin-bottom:3rem;">
+    <div class="stat-item">
+      <div class="stat-value">$2–4M</div>
+      <div class="stat-label">Infrastructure CapEx</div>
+      <div class="stat-note">Container, CDU, racks, power, BMS. No GPUs.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$4.8M</div>
+      <div class="stat-label">Revenue / MW / Year</div>
+      <div class="stat-note">Base case. ~$400K / rack / year at full utilization.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">6–9 mo</div>
+      <div class="stat-label">Deploy Time</div>
+      <div class="stat-note">Order to first tokens. No permits beyond GC license.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">80%+</div>
+      <div class="stat-label">EBITDA at Scale</div>
+      <div class="stat-note">At 10 MW+. CHP eliminates cooling OpEx.</div>
+    </div>
+  </div>
+
+  <!-- INFRASTRUCTURE CAPEX TABLE -->
+  <div class="label" style="margin-bottom:1.5rem;">Infrastructure CapEx — 10-Rack 2.3 MW Cassette (POC Phase)</div>
+  <table class="data-table" style="margin-bottom:1rem;">
+    <thead>
+      <tr><th>Line Item</th><th>Low Est.</th><th>High Est.</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-highlight">40-ft ISO High Cube container shell</td><td class="td-gold">$50,000</td><td class="td-gold">$50,000</td><td>Standard 40-ft ISO High Cube. POC vessel.</td></tr>
+      <tr><td class="td-highlight">Boyd/Eaton CDU system</td><td class="td-gold">$650,000</td><td class="td-gold">$1,300,000</td><td>1–2 ROL2300 row-level CDUs; cold plates, manifolds</td></tr>
+      <tr><td class="td-highlight">Munters desiccant system</td><td class="td-gold">$100,000</td><td class="td-gold">$200,000</td><td>ICA w/ RightDry + HX, ductwork, installation</td></tr>
+      <tr><td class="td-highlight">OCP ORV3 rack frames (&times;10)</td><td class="td-gold">$100,000</td><td class="td-gold">$250,000</td><td>Frames + busbars + rails + liquid manifolds</td></tr>
+      <tr><td class="td-highlight">800V DC power distribution</td><td class="td-gold">$300,000</td><td class="td-gold">$700,000</td><td>Delta In-Row Power, Eaton rectifier skid, switchgear, PDUs</td></tr>
+      <tr><td class="td-highlight">Boyd Rack Emulators (&times;2)</td><td class="td-gold">$150,000</td><td class="td-gold">$400,000</td><td>250 kW each — permanent test infrastructure</td></tr>
+      <tr><td class="td-highlight">Validation instrumentation + stress rig</td><td class="td-gold">$40,000</td><td class="td-gold">$93,000</td><td>Vaisala sensors, NI CompactDAQ, power analyzer, steam injection</td></tr>
+      <tr><td class="td-highlight">BMS / sensor system</td><td class="td-gold">$30,000</td><td class="td-gold">$75,000</td><td>Jetson AGX Orin, 148-ch sensors, networking</td></tr>
+      <tr><td class="td-highlight">Piping, cabling, integration</td><td class="td-gold">$100,000</td><td class="td-gold">$200,000</td><td>Facility plumbing, electrical, commissioning labor</td></tr>
+      <tr style="border-top:1px solid var(--gold-dim);">
+        <td class="td-highlight">POC Power — Rental Generators</td><td class="td-gold">$200,000</td><td class="td-gold">$350,000</td><td>Rental diesel for 6-month POC at partial rack load. Replaced by Cat G3520H w/ full CHP at production.</td></tr>
+      <tr><td class="td-highlight">Contingency (20%)</td><td class="td-gold">$334,000</td><td class="td-gold">$714,000</td><td>Novel architecture in a new category warrants it</td></tr>
+      <tr style="background:rgba(200,150,12,0.05);">
+        <td style="color:var(--white);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;">TOTAL INFRASTRUCTURE CAPEX</td>
+        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$2,054,000</td>
+        <td style="color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:500;">$4,332,000</td>
+        <td style="color:var(--text-dim);font-size:0.72rem;">No GPUs. Infrastructure only.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:3rem;padding:1rem;border-left:2px solid var(--gold-dim);">POC power strategy: rental diesel generators bridge the validation phase at partial rack load. Permanent Cat G3520H natural gas gensets with full CHP heat recovery (LiBr absorption chillers + Munters waste-heat regeneration) are engineered into the production design and funded at scale. The POC validates liquid cooling, 800V DC architecture, BMS, and rack integration. CHP Cascade PUE &le; 1.05 validation follows with permanent power plant installation.</p>
+
+  <!-- REVENUE PROJECTIONS -->
+  <div class="label" style="margin-bottom:1.5rem;">Revenue Projections — Base Case</div>
+  <table class="data-table" style="margin-bottom:3rem;">
+    <thead>
+      <tr><th>Phase</th><th>Capacity</th><th>Annual Revenue</th><th>EBITDA Margin</th><th>Revenue / MW</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-highlight">Phase 1A — First Racks</td><td>2.5 MW</td><td class="td-gold">$12M</td><td>32%</td><td style="color:var(--text-dim);">$4.8M/MW</td></tr>
+      <tr><td class="td-highlight">Phase 1C — MARLIE 1 Full</td><td>10 MW</td><td class="td-gold">$48M</td><td>80%</td><td style="color:var(--text-dim);">$4.8M/MW</td></tr>
+      <tr><td class="td-highlight">Phase 1 — Campus</td><td>50 MW</td><td class="td-gold">$200M</td><td>85%</td><td style="color:var(--text-dim);">$4.0M/MW</td></tr>
+      <tr><td class="td-highlight">Phase 2 — Campus Full Build</td><td>100+ MW</td><td class="td-gold">$600M</td><td>83%</td><td style="color:var(--text-dim);">$6.0M/MW</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box" style="margin-bottom:3rem;">
+    <div class="highlight-box-title">Implied Valuation — Base Year 3</div>
+    <p style="font-size:0.9rem;color:var(--text-mid);line-height:1.75;">Crusoe Energy's $4.5M seed in March 2019 is the closest comparable — nearly identical in size, with the same thesis (modular data centers with innovative power and cooling). Crusoe progressed to a $10B+ valuation by October 2025. Current AI infrastructure seed valuations run $15M–$25M post-money for a $5M raise, implying 20–33% dilution. AI Advantage's implied valuation at base Year 3: <strong style="color:var(--gold);">$2.4–$3.6B</strong>.</p>
+  </div>
+
+  <!-- INCENTIVE STACK -->
+  <hr class="rule">
+  <div class="label" style="margin-bottom:1.5rem;">Louisiana Incentive Stack — Cost Advantage No Other State Can Match</div>
+
+  <div style="margin-bottom:3rem;">
+    <div class="incentive-block">
+      <div>
+        <div class="incentive-name">Act 730 — Sales Tax Exemption</div>
+        <div class="incentive-note">State AND local sales/use tax exempt on all data center equipment. 20-year term. $40–80M in savings at Phase 2 scale. The single most valuable state incentive for hyperscale deployment.</div>
+      </div>
+      <div class="incentive-value">100%</div>
+    </div>
+
+    <div class="incentive-block">
+      <div>
+        <div class="incentive-name">ITEP — Industrial Tax Exemption</div>
+        <div class="incentive-note">80% property tax abatement for 10 years on manufacturing equipment and infrastructure. Containerized cassette assembly qualifies. File before construction begins. $8–16M savings Phase 1.</div>
+      </div>
+      <div class="incentive-value">80%</div>
+    </div>
+
+    <div class="incentive-block">
+      <div>
+        <div class="incentive-name">Louisiana Angel Tax Credit</div>
+        <div class="incentive-note">25% base credit; 35% for qualifying investments in Opportunity Zones. Per-investor caps apply ($720K/yr, $1.44M lifetime). Credits transferable. Program authorized through July 2026.*</div>
+      </div>
+      <div class="incentive-value">25–35%</div>
+    </div>
+
+    <div class="incentive-block">
+      <div>
+        <div class="incentive-name">R&D Tax Credit + Quality Jobs + LED FastStart</div>
+        <div class="incentive-note">Up to 30% on qualified research. 5–6% annual payroll rebate for 10 years. State-funded workforce training at no cost. These stack on top of Act 730 and ITEP.</div>
+      </div>
+      <div class="incentive-value">30%</div>
+    </div>
+  </div>
+
+  <div class="label" style="margin-bottom:1.5rem;">Federal Incentives</div>
+  <table class="data-table">
+    <thead><tr><th>Incentive</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="td-highlight">Solar ITC Base</td><td class="td-gold">30%</td><td>Direct credit against federal tax on solar CapEx</td></tr>
+      <tr><td class="td-highlight">+ Domestic Content Bonus</td><td class="td-gold">+10%</td><td>First Solar panels from New Iberia, LA — 30 miles from site</td></tr>
+      <tr><td class="td-highlight">+ Energy Community Bonus</td><td class="td-gold">+10%</td><td>Former fossil fuel site pathway</td></tr>
+      <tr style="background:rgba(200,150,12,0.05);"><td style="color:var(--white);font-weight:500;">Total Solar ITC Potential</td><td class="td-gold" style="color:var(--gold-light);font-weight:500;">Up to 50%</td><td>Half the solar CapEx returned as federal credit</td></tr>
+      <tr><td class="td-highlight">MACRS Depreciation</td><td class="td-gold">100% Yr 1</td><td>Solar equipment fully depreciated in year one</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footnote">*AITC: 25% base rate; 35% for investments in qualified Opportunity Zones. Per-investor caps apply per LED program rules. Credits are transferable. Annual program cap: $7.2M statewide. Confirm OZ eligibility for site address.</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 05 — PATH FORWARD -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="path">
+  <div class="section-header">
+    <div class="section-number">05</div>
+    <div>
+      <h2 class="section-title">Deployment<br>Timeline</h2>
+      <p class="section-subtitle">The engineering is done. The site is owned. The vendors are spec'd. The only variable is the capital partner or strategic partner that triggers the build.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-when">Now</div>
+        <div class="timeline-title">Capital or Strategic Close</div>
+        <div class="timeline-body">$5M seed, compute offtake, or strategic JV. MARLIE 1 is collateral. Founder engages Eaton Boyd Thermal immediately — CDU lead time is the critical path item.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Month 1–3</div>
+        <div class="timeline-title">MARLIE 1 Buildout</div>
+        <div class="timeline-body">Pour pad. Connect ATMOS gas, LFT Fiber, LUS power. First NVIDIA rack order. Licensed GC pulls all permits in-house.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Month 6–9</div>
+        <div class="timeline-title">First Tokens Flowing</div>
+        <div class="timeline-body">MARLIE 1 operational. First racks live. Worst-Case Validation Report complete. POC cassette validates — production moves to Fibrebond in Minden, Louisiana.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Year 2</div>
+        <div class="timeline-title">Full Capacity + Series A</div>
+        <div class="timeline-body">MARLIE 1 at 10 MW. $48M base case revenue. Permanent CHP power plant installed — PUE &le; 1.05 validated. Series A raise or strategic expansion.</div>
+      </div>
+      <div class="timeline-item" style="padding-bottom:0;">
+        <div class="timeline-when">Year 2+</div>
+        <div class="timeline-title">Manufacturing at Scale</div>
+        <div class="timeline-body">50–100+ MW. $200M–$600M revenue. NVIDIA reference site. Fibrebond cassette manufacturing. Flare gas deployments. $2.4–$3.6B implied valuation.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="label" style="margin-bottom:1.5rem;">What The First Partner Gets</div>
+      <ul class="check-list">
+        <li><strong style="color:var(--white);">Preferred position on all future AI Advantage deployments.</strong> Flare gas sites, pod manufacturing, campus builds. This is not a single-site bet — it is a manufacturing platform.</li>
+        <li><strong style="color:var(--white);">MARLIE 1 as collateral.</strong> Owned outright by the founder. Real property, real asset, real security on day one.</li>
+        <li><strong style="color:var(--white);">Up to 35% Louisiana Angel Tax Credit</strong> for qualifying seed investors in Opportunity Zones. Built-in return before AI Advantage earns a dollar.</li>
+        <li><strong style="color:var(--white);">Act 730 + ITEP + Federal ITC stack.</strong> 100% sales tax exempt. 80% property tax abatement. Up to 50% solar ITC. No other state offers this at seed stage.</li>
+        <li><strong style="color:var(--white);">Ground floor of a $2.4–$3.6B implied valuation at Year 3.</strong> CoreWeave, Nebius, Crusoe — all validate the multiple.</li>
+        <li><strong style="color:var(--white);">Worst-Case Validation Report.</strong> PUE &le; 1.05 proven under manufactured worst-case conditions. Not modeled. Tested.</li>
+      </ul>
+
+      <div class="callout" style="margin-top:2rem;">
+        <div class="callout-text">The category — zero-AC, liquid-first, 800V DC native, containerized AI compute — does not exist yet.</div>
+        <div class="callout-sub">AI Advantage is building it. The founder is not bidding to enter an existing market. He is creating the market.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 06 — SPECS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="specs">
+  <div class="section-header">
+    <div class="section-number">06</div>
+    <div>
+      <h2 class="section-title">Technical<br>Specification<br>Package</h2>
+      <p class="section-subtitle">Every claim in this deck is backed by a document. Engineering package, provisional patent, OCP standards compliance, third-party validation protocol. Available on request to qualified partners under NDA.</p>
+    </div>
+  </div>
+
+  <div style="border: 1px solid var(--border); margin-bottom: 3rem;">
+    <div class="stack-layer">
+      <div class="layer-num"><span>Doc 01</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Engineering Package</div>
+        <div class="layer-name">AI Advantage Autonomous DC Cassette — Full Spec</div>
+        <p class="layer-body">Produced with Fibrebond (Minden, Louisiana — US manufacturer). Complete 40-ft ISO High Cube cassette: mechanical layout, 800V DC power architecture, Boyd/Eaton CDU integration, Munters desiccant loop, OCP ORV3 rack configuration, BMS sensor map, liquid routing schematic, floor plan. 24 engineering drawings complete.</p>
+      </div>
+    </div>
+    <div class="stack-layer">
+      <div class="layer-num"><span>Doc 02</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Intellectual Property</div>
+        <div class="layer-name">Provisional Patent Application — US Filing</div>
+        <p class="layer-body">13 claims covering the core architecture: autonomous DC AI compute cassette with desiccant-only humidity control, 800V DC liquid-cooled rack configuration, heterogeneous compute (CPU+GPU+FPGA), vertical stacking, solar DC-direct integration, AI Factory Farm deployment model. Patent pending.</p>
+      </div>
+    </div>
+    <div class="stack-layer">
+      <div class="layer-num"><span>Doc 03</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Standards Compliance</div>
+        <div class="layer-name">OCP LVDC Standard v1.0 + ESS Whitepaper</div>
+        <p class="layer-body">155-page OCP LVDC standard governing Stage 1d 800V DC deployments. 64-page OCP ESS whitepaper covering DC-coupled BESS architecture, NFPA 855, NiZn chemistry. AI Advantage's power architecture was designed to these specs from day one. Compliance is architectural, not retrofitted.</p>
+      </div>
+    </div>
+    <div class="stack-layer">
+      <div class="layer-num"><span>Doc 04</span></div>
+      <div class="layer-content">
+        <div class="layer-role">Validation Protocol</div>
+        <div class="layer-name">Worst-Case Validation Report — Protocol</div>
+        <p class="layer-body">Boyd Rack Emulators + Vaisala NIST-traceable instrumentation + atmospheric stress injection to 100°F / 95% RH. Two independent measurement systems. Output: PUE proof under manufactured worst-case conditions. The most valuable document in the package.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-text">No engineering firm. No PE consultant. No markup. The founder built this.</div>
+    <div class="callout-sub">Scott Tomsu holds a Louisiana General Contractor license. Every permit is pulled in-house. Every drawing was produced by the founder with direct vendor engagement. The engineering package reflects exactly what will be built.</div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="highlight-box-title">CERAWeek 2026 — Architecture Confirmed by Industry</div>
+    <div class="grid-4" style="margin-top:0;">
+      <div style="padding:1rem 0;">
+        <div style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;margin-bottom:0.4rem;">800V DC Standard</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">Multiple major players confirmed. AI Advantage designed to spec from day one.</p>
+      </div>
+      <div style="padding:1rem 0;">
+        <div style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;margin-bottom:0.4rem;">Behind-the-Meter</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">On-site generation is now consensus. Grid dependency is a liability.</p>
+      </div>
+      <div style="padding:1rem 0;">
+        <div style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;margin-bottom:0.4rem;">Tokens/Watt</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">Not PUE. Not uptime. Tokens per watt is the metric.</p>
+      </div>
+      <div style="padding:1rem 0;">
+        <div style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;margin-bottom:0.4rem;">Micro AI Factories</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">Modular, phased deployment is the validated path.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 07 — CONTACT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="contact" style="padding:0;display:grid;grid-template-columns:1fr 1fr;min-height:560px;border-top:1px solid var(--border);">
+  <!-- LEFT — contact info -->
+  <div style="background:var(--panel);display:flex;align-items:center;padding:5rem 4rem;">
+    <div class="contact-card" style="background:transparent;padding:0;">
+      <div class="contact-role">Founder — Builder — Operator</div>
+      <div class="contact-name">Scott Tomsu</div>
+      <div class="contact-line" style="margin-top:1.25rem;">AI Advantage · Lafayette, Louisiana</div>
+      <div class="contact-line"><a href="tel:3377801535">(337) 780-1535</a></div>
+      <div class="contact-line"><a href="mailto:scott@adc3k.com">scott@adc3k.com</a></div>
+      <div class="contact-line"><a href="https://ai-advantage.info" target="_blank">ai-advantage.info</a></div>
+    </div>
+  </div>
+  <!-- RIGHT — MARLIE 1 photo, full opacity -->
+  <div style="overflow:hidden;">
+    <img src="../adc3k-deploy/marlie/photos/marlie-building.jpg" alt="MARLIE 1 — Lafayette, Louisiana" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-text">AI Advantage · Lafayette, Louisiana · April 2026</div>
+  <div class="footer-text">Confidential · Not for Public Distribution · All Projections Are Estimates Subject to Change</div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
+      }
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.section-header, .stat-bar, .callout, .highlight-box, .stack-layer, .grid-cell').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

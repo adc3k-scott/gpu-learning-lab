@@ -471,6 +471,387 @@ tr:last-child td { border-bottom: none; }
 </div>
 </div>
 
+<!-- COOLING P&ID -->
+<div class="section">
+<h2>Cassette Cooling P&amp;ID</h2>
+<div class="fp-wrap">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" style="background-color:white;font-family:Arial,sans-serif;width:100%;height:auto;">
+  <rect width="900" height="580" fill="white"/>
+
+  <!-- Title block -->
+  <rect x="0" y="0" width="900" height="52" fill="#1c2841"/>
+  <text x="450" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="white" letter-spacing="0.8">ADC PURE DC AI FACTORY — CASSETTE COOLING P&amp;ID</text>
+  <text x="450" y="38" text-anchor="middle" font-size="8.5" fill="#8ab" letter-spacing="0.3">Dual-loop liquid cooling schematic · Boyd CDU · BAC TrilliumSeries dry cooler · Munters desiccant · CONFIDENTIAL — ADC / Fibrebond · 2026-04-08</text>
+
+  <!-- Cassette enclosure boundary (dashed) -->
+  <rect x="18" y="60" width="656" height="258" fill="none" stroke="#aaa" stroke-width="1.2" stroke-dasharray="7,3"/>
+  <text x="22" y="74" font-size="10" font-weight="bold" fill="#555">40' cassette enclosure</text>
+
+  <!-- Supply line (blue, top) -->
+  <line x1="18" y1="100" x2="674" y2="100" stroke="#4a9ed4" stroke-width="3"/>
+  <text x="14" y="88" text-anchor="end" font-size="10" fill="#4a9ed4" font-weight="bold">Supply</text>
+  <text x="14" y="101" text-anchor="end" font-size="10" fill="#4a9ed4" font-weight="bold">≤ 45°C</text>
+
+  <!-- Return line (red, below supply) -->
+  <line x1="18" y1="155" x2="180" y2="155" stroke="#c0392b" stroke-width="3"/>
+  <line x1="300" y1="155" x2="674" y2="155" stroke="#c0392b" stroke-width="3"/>
+  <text x="14" y="149" text-anchor="end" font-size="10" fill="#c0392b" font-weight="bold">Return</text>
+  <text x="14" y="161" text-anchor="end" font-size="10" fill="#c0392b" font-weight="bold">55–60°C</text>
+
+  <!-- Staubli UQD label -->
+  <text x="430" y="132" text-anchor="middle" font-size="9" fill="#444">Staubli UQD hot-swap disconnects · ~130 LPM per rack</text>
+
+  <!-- 10 Rack boxes + vertical drops -->
+  <!-- R1 at x=305, then spacing ~37px each -->
+  <!-- Racks: R1=305, R2=342, R3=379, R4=416, R5=453, R6=490, R7=527, R8=564, R9=601, R10=638 -->
+  <!-- vertical supply drop -->
+  <line x1="313" y1="100" x2="313" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="350" y1="100" x2="350" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="387" y1="100" x2="387" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="424" y1="100" x2="424" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="461" y1="100" x2="461" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="498" y1="100" x2="498" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="535" y1="100" x2="535" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="572" y1="100" x2="572" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="609" y1="100" x2="609" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="646" y1="100" x2="646" y2="140" stroke="#4a9ed4" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- vertical return drop -->
+  <line x1="313" y1="155" x2="313" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="350" y1="155" x2="350" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="387" y1="155" x2="387" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="424" y1="155" x2="424" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="461" y1="155" x2="461" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="498" y1="155" x2="498" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="535" y1="155" x2="535" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="572" y1="155" x2="572" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="609" y1="155" x2="609" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="646" y1="155" x2="646" y2="195" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- Rack boxes -->
+  <rect x="295" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="332" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="369" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="406" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="443" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="480" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="517" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="554" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="591" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <rect x="628" y="140" width="28" height="55" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1.2" rx="2"/>
+  <!-- GPU label on R1 -->
+  <rect x="295" y="140" width="28" height="12" fill="#c0392b" rx="2"/>
+  <text x="309" y="150" text-anchor="middle" font-size="7.5" fill="white" font-weight="bold">GPU</text>
+  <!-- Rack labels -->
+  <text x="309" y="171" text-anchor="middle" font-size="8" fill="#333">R1</text>
+  <text x="346" y="171" text-anchor="middle" font-size="8" fill="#333">R2</text>
+  <text x="383" y="171" text-anchor="middle" font-size="8" fill="#333">R3</text>
+  <text x="420" y="171" text-anchor="middle" font-size="8" fill="#333">R4</text>
+  <text x="457" y="171" text-anchor="middle" font-size="8" fill="#333">R5</text>
+  <text x="494" y="171" text-anchor="middle" font-size="8" fill="#333">R6</text>
+  <text x="531" y="171" text-anchor="middle" font-size="8" fill="#333">R7</text>
+  <text x="568" y="171" text-anchor="middle" font-size="8" fill="#333">R8</text>
+  <text x="605" y="171" text-anchor="middle" font-size="8" fill="#333">R9</text>
+  <text x="642" y="171" text-anchor="middle" font-size="8" fill="#333">R10</text>
+  <!-- Rack row label -->
+  <text x="480" y="84" text-anchor="middle" font-size="9" fill="#333">Rack row — 10× NVIDIA NVL72 (Vera Rubin Max P) · 2,300 kW IT load</text>
+
+  <!-- Boyd CDU box -->
+  <rect x="60" y="130" width="120" height="70" fill="#d5ead5" stroke="#2e7d32" stroke-width="1.5" rx="4"/>
+  <text x="120" y="152" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">Boyd CDU</text>
+  <text x="120" y="166" text-anchor="middle" font-size="9" fill="#2e7d32">2,000 kW · N+1 pumps</text>
+  <text x="120" y="179" text-anchor="middle" font-size="9" fill="#2e7d32">Heat exchanger</text>
+  <!-- CDU to supply line (right side of CDU) -->
+  <line x1="180" y1="145" x2="295" y2="100" stroke="#4a9ed4" stroke-width="2"/>
+  <!-- CDU from return line -->
+  <line x1="180" y1="165" x2="295" y2="155" stroke="#c0392b" stroke-width="2"/>
+  <!-- Angle indicator / check valve -->
+  <text x="230" y="138" font-size="14" fill="#666">∠</text>
+
+  <!-- Primary loop label box -->
+  <rect x="690" y="105" width="160" height="58" fill="#eaf4fb" stroke="#4a9ed4" stroke-width="1" rx="3"/>
+  <text x="770" y="120" text-anchor="middle" font-size="9" font-weight="bold" fill="#2471a3">Primary loop</text>
+  <text x="770" y="133" text-anchor="middle" font-size="8.5" fill="#333">~1,300 LPM total · water-glycol</text>
+  <text x="770" y="145" text-anchor="middle" font-size="8.5" fill="#c0392b" font-weight="bold">&gt;80% heat removed at chip</text>
+  <line x1="674" y1="127" x2="690" y2="127" stroke="#4a9ed4" stroke-width="1.5"/>
+
+  <!-- BMS box -->
+  <rect x="730" y="175" width="120" height="40" fill="#ede7f6" stroke="#6a1b9a" stroke-width="1.5" rx="3"/>
+  <text x="790" y="191" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a148c">BMS</text>
+  <text x="790" y="207" text-anchor="middle" font-size="9" fill="#4a148c">Jetson AGX Orin</text>
+
+  <!-- TraceTek box -->
+  <rect x="560" y="220" width="95" height="28" fill="#fff3e0" stroke="#e65100" stroke-width="1.2" rx="3"/>
+  <text x="607" y="234" text-anchor="middle" font-size="9" fill="#e65100" font-weight="bold">TraceTek leak</text>
+  <line x1="607" y1="195" x2="607" y2="220" stroke="#e65100" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Secondary loop -->
+  <text x="730" y="240" font-size="9" fill="#c0392b" font-weight="bold">Secondary loop</text>
+  <text x="730" y="252" font-size="8.5" fill="#555">~1,840 kW capacity</text>
+  <text x="730" y="264" font-size="8.5" fill="#555">To site dry cooler</text>
+  <line x1="674" y1="155" x2="728" y2="235" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <!-- Waste heat label -->
+  <text x="80" y="230" font-size="9" fill="#777" font-style="italic">Waste heat</text>
+  <text x="80" y="242" font-size="9" fill="#777" font-style="italic">55–60°C</text>
+  <line x1="120" y1="200" x2="100" y2="225" stroke="#777" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Air inlet label -->
+  <text x="22" y="290" font-size="9" fill="#555">air ≤ 50% RH</text>
+  <text x="22" y="302" font-size="9" fill="#555">into cassette</text>
+  <line x1="70" y1="295" x2="110" y2="295" stroke="#555" stroke-width="1"/>
+
+  <!-- Cassette wall label -->
+  <text x="340" y="330" text-anchor="middle" font-size="8.5" fill="#666" font-style="italic">Cassette wall — Staubli UQD at external connection panel</text>
+  <line x1="18" y1="318" x2="674" y2="318" stroke="#999" stroke-width="1" stroke-dasharray="4,2"/>
+
+  <!-- Site-provided label -->
+  <text x="22" y="340" font-size="9" fill="#555" font-style="italic">Site-provided (external)</text>
+
+  <!-- Munters box -->
+  <rect x="60" y="350" width="160" height="78" fill="#fef9e7" stroke="#d4ac0d" stroke-width="1.5" rx="5"/>
+  <text x="140" y="368" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b7950b">Munters HCD/MCD</text>
+  <text x="140" y="383" text-anchor="middle" font-size="9" fill="#7d6608">Desiccant dehumidifier</text>
+  <text x="140" y="396" text-anchor="middle" font-size="9" fill="#7d6608">Regenerated by CDU</text>
+  <text x="140" y="409" text-anchor="middle" font-size="9" fill="#7d6608">return heat</text>
+  <!-- Munters connection to cassette -->
+  <line x1="140" y1="318" x2="140" y2="350" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <!-- BAC TrilliumSeries box -->
+  <rect x="440" y="350" width="200" height="78" fill="#e8f4fd" stroke="#2471a3" stroke-width="1.5" rx="5"/>
+  <text x="540" y="368" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1a5276">BAC TrilliumSeries</text>
+  <text x="540" y="383" text-anchor="middle" font-size="9" fill="#1a5276">Dry cooler / adiabatic assist</text>
+  <text x="540" y="396" text-anchor="middle" font-size="9" fill="#1a5276">Zero evaporative water</text>
+  <text x="540" y="409" text-anchor="middle" font-size="9" fill="#1a5276">(peak: adiabatic)</text>
+  <!-- BAC connection from secondary loop -->
+  <line x1="540" y1="318" x2="540" y2="350" stroke="#c0392b" stroke-width="1.5"/>
+
+  <!-- Fan symbols -->
+  <circle cx="490" cy="455" r="14" fill="none" stroke="#3a6ea8" stroke-width="1.5"/>
+  <line x1="490" y1="441" x2="490" y2="469" stroke="#3a6ea8" stroke-width="1"/>
+  <line x1="476" y1="455" x2="504" y2="455" stroke="#3a6ea8" stroke-width="1"/>
+  <circle cx="540" cy="455" r="14" fill="none" stroke="#3a6ea8" stroke-width="1.5"/>
+  <line x1="540" y1="441" x2="540" y2="469" stroke="#3a6ea8" stroke-width="1"/>
+  <line x1="526" y1="455" x2="554" y2="455" stroke="#3a6ea8" stroke-width="1"/>
+  <circle cx="590" cy="455" r="14" fill="none" stroke="#3a6ea8" stroke-width="1.5"/>
+  <line x1="590" y1="441" x2="590" y2="469" stroke="#3a6ea8" stroke-width="1"/>
+  <line x1="576" y1="455" x2="604" y2="455" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="540" y="483" text-anchor="middle" font-size="8.5" fill="#555">Ambient air rejection · 95°F design day</text>
+
+  <!-- Bottom status bar -->
+  <rect x="18" y="496" width="140" height="28" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="88" y="514" text-anchor="middle" font-size="10" font-weight="bold" fill="#1b5e20">PUE ≤ 1.05</text>
+  <rect x="168" y="496" width="160" height="28" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="248" y="514" text-anchor="middle" font-size="9" fill="#333">Zero water (normal ops)</text>
+  <rect x="338" y="496" width="180" height="28" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="428" y="514" text-anchor="middle" font-size="9" fill="#333">No cooling downtime (N+1)</text>
+  <rect x="528" y="496" width="100" height="28" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="578" y="514" text-anchor="middle" font-size="9" fill="#333">800V DC</text>
+
+  <!-- Legend -->
+  <line x1="20" y1="540" x2="45" y2="540" stroke="#4a9ed4" stroke-width="3"/>
+  <text x="50" y="544" font-size="8.5" fill="#333">Cold supply (≤ 45°C)</text>
+  <line x1="155" y1="540" x2="180" y2="540" stroke="#c0392b" stroke-width="3"/>
+  <text x="185" y="544" font-size="8.5" fill="#333">Warm return (55–60°C)</text>
+  <line x1="310" y1="540" x2="335" y2="540" stroke="#555" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="340" y="544" font-size="8.5" fill="#333">Conditioned air</text>
+  <line x1="430" y1="540" x2="455" y2="540" stroke="#777" stroke-width="2" stroke-dasharray="2,3"/>
+  <text x="460" y="544" font-size="8.5" fill="#333">Waste heat regen</text>
+
+  <!-- Confidential footer -->
+  <text x="450" y="565" text-anchor="middle" font-size="7.5" fill="#aaa" font-style="italic">CONFIDENTIAL — ADC / FIBREBOND ENGINEERING USE ONLY · scott@adc3k.com · (337) 780-1535</text>
+</svg>
+</div>
+</div>
+
+<!-- ELECTRICAL SINGLE-LINE -->
+<div class="section">
+<h2>Electrical Single-Line Diagram</h2>
+<div class="fp-wrap">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 740" style="background-color:white;font-family:Arial,sans-serif;width:100%;height:auto;">
+  <rect width="900" height="740" fill="white"/>
+
+  <!-- Title block -->
+  <rect x="0" y="0" width="900" height="52" fill="#1c2841"/>
+  <text x="450" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="white" letter-spacing="0.8">ADC PURE DC AI FACTORY — ELECTRICAL SINGLE-LINE DIAGRAM</text>
+  <text x="450" y="38" text-anchor="middle" font-size="8.5" fill="#8ab" letter-spacing="0.3">800V DC · OCP Stage 1d · Eaton power distribution · CONFIDENTIAL — ADC / Fibrebond · 2026-04-08</text>
+
+  <!-- Standards note -->
+  <text x="450" y="68" text-anchor="middle" font-size="8.5" fill="#555">800V DC · OCP Stage 1d · 1500V insulation rated · NEC / NFPA 70E / OCP DCF LVDC v1.0</text>
+
+  <!-- ===== External connection panel ===== -->
+  <rect x="300" y="78" width="200" height="40" fill="#d5f0e8" stroke="#1e8449" stroke-width="1.5" rx="4"/>
+  <text x="400" y="96" text-anchor="middle" font-size="10" font-weight="bold" fill="#145a32">External connection panel</text>
+  <text x="400" y="111" text-anchor="middle" font-size="8.5" fill="#1e8449">800V DC bus entry (right end)</text>
+  <!-- Site DC source label (right) -->
+  <text x="520" y="88" font-size="8.5" fill="#555">Site DC source</text>
+  <text x="520" y="100" font-size="8.5" fill="#555">(Bloom SOFC / BESS / solar)</text>
+  <line x1="500" y1="98" x2="518" y2="98" stroke="#999" stroke-width="1"/>
+
+  <!-- Busbar label -->
+  <text x="400" y="132" text-anchor="middle" font-size="8.5" fill="#333">800V DC copper busbar</text>
+  <text x="400" y="143" text-anchor="middle" font-size="8.5" fill="#333">3,774A nameplate · NEC 125%</text>
+  <line x1="400" y1="118" x2="400" y2="150" stroke="#1e8449" stroke-width="2"/>
+
+  <!-- ===== Main disconnect ===== -->
+  <rect x="310" y="150" width="180" height="36" fill="#fff" stroke="#444" stroke-width="1.5" rx="4"/>
+  <text x="400" y="166" text-anchor="middle" font-size="10" font-weight="bold" fill="#222">Main disconnect</text>
+  <text x="400" y="180" text-anchor="middle" font-size="8.5" fill="#555">≥ 1,000A · NEC 210.13(B)</text>
+  <!-- Right note -->
+  <text x="502" y="162" font-size="8.5" fill="#555">Lockout/tagout capable</text>
+  <text x="502" y="174" font-size="8.5" fill="#555">Arc flash labeled per NFPA 70E</text>
+  <line x1="490" y1="168" x2="500" y2="168" stroke="#999" stroke-width="1"/>
+  <line x1="400" y1="186" x2="400" y2="204" stroke="#444" stroke-width="2"/>
+
+  <!-- ===== SSCB ===== -->
+  <rect x="305" y="204" width="190" height="36" fill="#fde8e8" stroke="#c0392b" stroke-width="1.5" rx="4"/>
+  <text x="400" y="220" text-anchor="middle" font-size="10" font-weight="bold" fill="#922b21">SSCB overcurrent protection</text>
+  <text x="400" y="234" text-anchor="middle" font-size="8.5" fill="#c0392b">Microsecond DC fault response</text>
+  <!-- Right note -->
+  <text x="507" y="212" font-size="8.5" fill="#555">Supercapacitor fast-cycle</text>
+  <text x="507" y="224" font-size="8.5" fill="#555">backup in ORV3 sidecar</text>
+  <line x1="495" y1="218" x2="505" y2="218" stroke="#999" stroke-width="1"/>
+  <line x1="400" y1="240" x2="400" y2="258" stroke="#444" stroke-width="2"/>
+
+  <!-- ===== Ground fault relay ===== -->
+  <rect x="290" y="258" width="220" height="36" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" rx="4"/>
+  <text x="400" y="274" text-anchor="middle" font-size="10" font-weight="bold" fill="#1b5e20">Ground fault protection relay</text>
+  <text x="400" y="288" text-anchor="middle" font-size="8.5" fill="#2e7d32">NEC 210.13(B) · trip confirmed, reset verified</text>
+  <!-- Right note -->
+  <text x="522" y="266" font-size="8.5" fill="#555">TN-S or IT grounding</text>
+  <text x="522" y="278" font-size="8.5" fill="#555">No TN-C, no TT</text>
+  <line x1="510" y1="272" x2="520" y2="272" stroke="#999" stroke-width="1"/>
+  <line x1="400" y1="294" x2="400" y2="312" stroke="#444" stroke-width="2"/>
+
+  <!-- ===== PDU metering cabinet ===== -->
+  <rect x="305" y="312" width="190" height="36" fill="#e8eaf6" stroke="#3949ab" stroke-width="1.5" rx="4"/>
+  <text x="400" y="328" text-anchor="middle" font-size="10" font-weight="bold" fill="#283593">PDU metering cabinet</text>
+  <text x="400" y="342" text-anchor="middle" font-size="8.5" fill="#3949ab">NIST-traceable · ±1% calibrated</text>
+  <!-- Right note -->
+  <text x="507" y="320" font-size="8.5" fill="#555">Factory-installed</text>
+  <text x="507" y="332" font-size="8.5" fill="#555">in mechanical bay (left end)</text>
+  <line x1="495" y1="326" x2="505" y2="326" stroke="#999" stroke-width="1"/>
+  <line x1="400" y1="348" x2="400" y2="366" stroke="#444" stroke-width="2"/>
+
+  <!-- ===== Overhead busbar (horizontal) ===== -->
+  <line x1="120" y1="366" x2="700" y2="366" stroke="#b8860b" stroke-width="3"/>
+  <text x="400" y="360" text-anchor="middle" font-size="8.5" fill="#7d6608">800V DC overhead busbar · Full rack row length · ~3,774A</text>
+  <!-- Vertical drops from busbar to ORV3 boxes -->
+  <line x1="185" y1="366" x2="185" y2="390" stroke="#b8860b" stroke-width="2"/>
+  <line x1="400" y1="366" x2="400" y2="390" stroke="#b8860b" stroke-width="2"/>
+  <line x1="615" y1="366" x2="615" y2="390" stroke="#b8860b" stroke-width="2"/>
+
+  <!-- ===== ORV3-A ===== -->
+  <rect x="100" y="390" width="170" height="48" fill="#fef3e2" stroke="#e67e22" stroke-width="1.5" rx="4"/>
+  <text x="185" y="406" text-anchor="middle" font-size="10" font-weight="bold" fill="#884a00">Eaton ORV3-A</text>
+  <text x="185" y="420" text-anchor="middle" font-size="8.5" fill="#c0392b">800 kW rated</text>
+  <text x="185" y="433" text-anchor="middle" font-size="8.5" fill="#555">±400V DC to NVL72</text>
+  <!-- IT load label -->
+  <text x="185" y="452" text-anchor="middle" font-size="8.5" fill="#333">920 kW IT</text>
+  <line x1="185" y1="438" x2="185" y2="458" stroke="#444" stroke-width="1.5"/>
+
+  <!-- ===== ORV3-B ===== -->
+  <rect x="315" y="390" width="170" height="48" fill="#fef3e2" stroke="#e67e22" stroke-width="1.5" rx="4"/>
+  <text x="400" y="406" text-anchor="middle" font-size="10" font-weight="bold" fill="#884a00">Eaton ORV3-B</text>
+  <text x="400" y="420" text-anchor="middle" font-size="8.5" fill="#c0392b">800 kW rated</text>
+  <text x="400" y="433" text-anchor="middle" font-size="8.5" fill="#555">±400V DC to NVL72</text>
+  <text x="400" y="452" text-anchor="middle" font-size="8.5" fill="#333">920 kW IT</text>
+  <line x1="400" y1="438" x2="400" y2="458" stroke="#444" stroke-width="1.5"/>
+
+  <!-- ===== ORV3-C ===== -->
+  <rect x="530" y="390" width="170" height="48" fill="#fef3e2" stroke="#e67e22" stroke-width="1.5" rx="4"/>
+  <text x="615" y="406" text-anchor="middle" font-size="10" font-weight="bold" fill="#884a00">Eaton ORV3-C</text>
+  <text x="615" y="420" text-anchor="middle" font-size="8.5" fill="#c0392b">800 kW rated</text>
+  <text x="615" y="433" text-anchor="middle" font-size="8.5" fill="#555">IT + mech loads</text>
+  <text x="615" y="452" text-anchor="middle" font-size="8.5" fill="#333">460 kW + ~115 kW</text>
+  <line x1="615" y1="438" x2="615" y2="458" stroke="#444" stroke-width="1.5"/>
+
+  <!-- ===== Rack groups ===== -->
+  <!-- ORV3-A serves R1-R4 -->
+  <line x1="185" y1="458" x2="185" y2="470" stroke="#444" stroke-width="1.5"/>
+  <line x1="115" y1="470" x2="255" y2="470" stroke="#444" stroke-width="1.2"/>
+  <line x1="130" y1="470" x2="130" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="163" y1="470" x2="163" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="196" y1="470" x2="196" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="229" y1="470" x2="229" y2="480" stroke="#444" stroke-width="1"/>
+  <rect x="115" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="148" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="181" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="214" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <text x="130" y="494" text-anchor="middle" font-size="7.5" fill="#333">R1</text>
+  <text x="163" y="494" text-anchor="middle" font-size="7.5" fill="#333">R2</text>
+  <text x="196" y="494" text-anchor="middle" font-size="7.5" fill="#333">R3</text>
+  <text x="229" y="494" text-anchor="middle" font-size="7.5" fill="#333">R4</text>
+  <text x="185" y="516" text-anchor="middle" font-size="8" fill="#555">ORV3-A serves R1–R4</text>
+
+  <!-- ORV3-B serves R5-R8 -->
+  <line x1="400" y1="458" x2="400" y2="470" stroke="#444" stroke-width="1.5"/>
+  <line x1="330" y1="470" x2="470" y2="470" stroke="#444" stroke-width="1.2"/>
+  <line x1="345" y1="470" x2="345" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="378" y1="470" x2="378" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="411" y1="470" x2="411" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="444" y1="470" x2="444" y2="480" stroke="#444" stroke-width="1"/>
+  <rect x="330" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="363" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="396" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="429" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <text x="345" y="494" text-anchor="middle" font-size="7.5" fill="#333">R5</text>
+  <text x="378" y="494" text-anchor="middle" font-size="7.5" fill="#333">R6</text>
+  <text x="411" y="494" text-anchor="middle" font-size="7.5" fill="#333">R7</text>
+  <text x="444" y="494" text-anchor="middle" font-size="7.5" fill="#333">R8</text>
+  <text x="400" y="516" text-anchor="middle" font-size="8" fill="#555">ORV3-B serves R5–R8</text>
+
+  <!-- ORV3-C serves R9-R10 + mech -->
+  <line x1="615" y1="458" x2="615" y2="470" stroke="#444" stroke-width="1.5"/>
+  <line x1="555" y1="470" x2="700" y2="470" stroke="#444" stroke-width="1.2"/>
+  <line x1="568" y1="470" x2="568" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="601" y1="470" x2="601" y2="480" stroke="#444" stroke-width="1"/>
+  <line x1="660" y1="470" x2="660" y2="480" stroke="#444" stroke-width="1" stroke-dasharray="3,2"/>
+  <rect x="553" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="586" y="480" width="30" height="20" fill="#e8eff8" stroke="#3a6ea8" stroke-width="1" rx="2"/>
+  <rect x="645" y="480" width="40" height="20" fill="#fff3e0" stroke="#e67e22" stroke-width="1" rx="2"/>
+  <text x="568" y="494" text-anchor="middle" font-size="7.5" fill="#333">R9</text>
+  <text x="601" y="494" text-anchor="middle" font-size="7.5" fill="#333">R10</text>
+  <text x="665" y="494" text-anchor="middle" font-size="7.5" fill="#884a00">Mech</text>
+  <text x="615" y="516" text-anchor="middle" font-size="8" fill="#555">ORV3-C serves R9–R10 + mech</text>
+
+  <!-- NVIDIA Kyber note -->
+  <text x="400" y="535" text-anchor="middle" font-size="8.5" fill="#555" font-style="italic">NVIDIA Kyber power shelf: 800V → ±400V DC → 54V rack bus → point-of-load at GPU</text>
+
+  <!-- Summary boxes -->
+  <rect x="30" y="548" width="130" height="38" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="95" y="563" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">~2,415 kW</text>
+  <text x="95" y="578" text-anchor="middle" font-size="8.5" fill="#555">Total facility</text>
+
+  <rect x="170" y="548" width="130" height="38" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="235" y="563" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">~3,019A</text>
+  <text x="235" y="578" text-anchor="middle" font-size="8.5" fill="#555">@ 800V DC</text>
+
+  <rect x="310" y="548" width="170" height="38" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="395" y="563" text-anchor="middle" font-size="9" font-weight="bold" fill="#1b5e20">PUE ≤ 1.05</text>
+  <text x="395" y="578" text-anchor="middle" font-size="8.5" fill="#555">~115 kW overhead</text>
+
+  <rect x="490" y="548" width="130" height="38" fill="#f0f4f8" stroke="#aaa" stroke-width="1" rx="3"/>
+  <text x="555" y="563" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">3× ORV3</text>
+  <text x="555" y="578" text-anchor="middle" font-size="8.5" fill="#555">2,400 kW capacity</text>
+
+  <!-- Grounding note -->
+  <text x="400" y="605" text-anchor="middle" font-size="8" fill="#555">Grounding: OCP DCF LVDC v1.0 (TN-S or IT) · No TN-C, no TT · Arc flash per NFPA 70E · All Eaton equipment</text>
+
+  <!-- BMS box -->
+  <rect x="30" y="618" width="130" height="42" fill="#ede7f6" stroke="#6a1b9a" stroke-width="1.5" rx="3"/>
+  <text x="95" y="636" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a148c">BMS</text>
+  <text x="95" y="650" text-anchor="middle" font-size="8.5" fill="#4a148c">Jetson AGX Orin</text>
+  <line x1="160" y1="639" x2="230" y2="639" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Power meter note -->
+  <text x="235" y="628" font-size="8.5" fill="#555">Power meter channels: NIST-traceable, ±1% · all buses monitored</text>
+  <text x="235" y="642" font-size="8.5" fill="#555">Alerts: overcurrent, ground fault, thermal anomaly → auto-escalate to NOC</text>
+
+  <!-- Confidential footer -->
+  <text x="450" y="725" text-anchor="middle" font-size="7.5" fill="#aaa" font-style="italic">CONFIDENTIAL — ADC / FIBREBOND ENGINEERING USE ONLY · scott@adc3k.com · (337) 780-1535</text>
+</svg>
+</div>
+</div>
+
 <!-- DETAILED ENGINEERING SPEC -->
 <div class="section">
 <h2>Engineering Specification</h2>
