@@ -10,8 +10,10 @@ Last updated: 2026-03-25
 | G3512H | V-12 | 1,030 | 42% | 23-26K | $775K-1.08M |
 | G3516H | V-16 | 1,400 | 39-43% | 33-40K | $910K-1.33M |
 | G3516J | V-16 | 1,600 | 39-43% | 33-40K | $1.04-1.6M |
-| G3520H | V-20 | 2,250 | 40-44% | 48-60K | $1.35-2.0M |
-| G3520J | V-20 | 2,500 | 40-44% | 48-60K | $1.5-2.25M |
+| G3520H | V-20 | 2,507* | 40-44% | 48-60K | $1.35-2.0M |
+| G3520J | V-20 | 2,552* | 40-44% | 48-60K | $1.5-2.25M |
+
+*G3520H/J: 2,507/2,552 kW continuous confirmed — Cat Electric Power Ratings Guide 23rd Ed., March 2026. Prior spec (2,250/2,500) was from earlier catalog; use these numbers.
 
 ## G3600 Series (Large Power — Willow Glen Scale)
 

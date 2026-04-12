@@ -1,0 +1,855 @@
+ADC — Deal Package for Ornn Partners
+
+  
+Ornn Partner Network — Confidential Deal Package
+  
+Louisiana's
+American-Owned
+AI Factory
+  
+Advantage Design & Construction is building the physical layer of AI infrastructure in Louisiana — the only American-owned, NVIDIA-compliant token factory between Houston and Atlanta.
+  
+MARCH 2026  ·  $5M SEED ROUND  ·  LAFAYETTE, LOUISIANA
+
+  
+Section 01 — Deal Structure
+  
+The Capital Stack
+  
+Every layer of this deal is defined. Every role is filled or identified. Ornn sits at the critical position — the layer that connects world-class physical infrastructure to the capital that funds it.
+
+  
+
+    
+
+      
+
+        LAYER 01
+        
+Sponsor
+        
+Scott Tomsu / ADC
+      
+      
+
+        The only person in Louisiana who could build this. Scott Tomsu is a Licensed General Contractor, FAA Private Pilot, IMCA ROV Supervisor, Commercial Diver, and 25-year veteran of the most demanding remote operations environments on the planet — deepwater robotics in West Africa, Gulf of America, Brazil, Trinidad, Canada, and Equatorial Guinea. He ran ROV operations for ExxonMobil at 3,000+ meters depth. He built a full medical center with X-ray room from the ground up. He built 80+ residential homes across Lafayette. He managed precision engineering under extreme conditions as a multi-time drag racing champion.
+
+        This is not a tech pitch from a programmer. This is a construction project from a builder who has operated mission-critical systems his entire career. MARLIE I is already owned. 22 US vendors are spec'd. 24 engineering blueprints are complete. The permits get pulled in-house. The build gets managed in-house. The operations get run in-house. Nobody hires this out — because nobody else in this market has Scott Tomsu's combination of construction licenses, field operations experience, and deep Louisiana roots. ADC was born here. It is building out from here.
+      
+    
+
+    
+
+      
+
+        LAYER 02
+        
+Placement Agent
+        
+Ornn
+      
+      
+
+        The architect of the deal — and the most connected layer in the stack. Ornn built the world's first regulated compute derivatives exchange, now listed on Bloomberg. Their OCPI benchmark gives GPU hardware a live market price for the first time in history. Ornn's Residual Value Swap (RVS) insures GPU hardware against depreciation, taking lender advance rates from 50% to 70–80% on a $3.5M rack — transforming a hardware risk into a bankable asset.
+
+        Ornn brings the academic credibility and institutional network to open doors that money alone cannot. With deep ties to the institutional investment, university, and healthcare world, Ornn is uniquely positioned to broker introductions not just to capital partners — but to university leadership, hospital systems, and the research community that will become ADC's anchor tenants. Ornn structures the financing, connects the players, and earns a standard placement fee when capital closes.
+
+        Ornn does not just introduce ADC to investors. They introduce ADC to the right investors — and then help close the room.
+      
+    
+
+    
+
+      
+
+        LAYER 03
+        
+Capital Partner
+        
+The Check Writer
+      
+      
+
+        The most powerful seat at the table. The capital partner does not just fund ADC — they own a position in Louisiana's only American-built AI infrastructure platform. $5M seed. Louisiana Angel Tax Credit returns 35% on day one — a $1M check costs $650K after state credits. MARLIE I is owned collateral. Trappeys is the acquisition target.
+
+        ADC is actively seeking capital partners from the healthcare and university sectors — and not only because they write checks. A hospital system CIO or university foundation board member who invests in ADC becomes more than a financial partner — they become an anchor tenant. Their institution gets first access to HIPAA-compliant on-premise AI compute, research GPU infrastructure, and a seat at the table as Louisiana's AI factory is built around them. The investor and the customer are the same person. That is a deal structure no one else in this market is offering.
+
+        First capital partner in gets preferred equity position on every future ADC project — Willow Glen (100+ MW), flare gas deployments, pod manufacturing. This is the ground floor of a $500M+ infrastructure platform.
+      
+    
+
+    
+
+      
+
+        LAYER 04
+        
+Demand
+        
+Already Live
+      
+      
+
+        The customers are already here. 46 Louisiana universities registered at louisianaai.net. 70 school districts registered. City of Lafayette — MARLIE I, Trappeys, and KLFT airport are all in the city's AI infrastructure plan. Healthcare, first responders, state government. ROXY — ADC's self-hosted AI agent — is running on our own GPU right now. Call her: (337) 486-3149. The demand layer is not a projection. It's a pipeline with names, websites, and registered users.
+      
+    
+
+    
+
+      
+
+        LAYER 05
+        
+Energy
+        
+In Place
+      
+      
+
+        Cheapest power in America. First Solar manufacturing plant — New Iberia, LA, 30 miles from Trappeys. Series 7 TR1 panels coming off the line. Henry Hub natural gas hub — 40 miles away, 13 pipelines, global benchmark pricing, $0.027–$0.035/kWh on-site generation. Five O&G operators within 30 miles with 593,000 MCF/month of stranded flare gas — $0 fuel cost on containerized deployments. Crusoe Energy proved this model at $10B+ valuation. In Louisiana, the field is wide open.
+      
+    
+
+  
+
+  
+Section 02 — The Opportunity
+  
+$50 Billion Is Flowing Into Louisiana.
+None of It Is Louisiana-Owned.
+  
+Amazon, Meta, Hut 8, Nscale. Every dollar of AI infrastructure investment in Louisiana is controlled by foreign or out-of-state companies. Every dollar of profit leaves the state. ADC is the only American-owned, Louisiana-built operator in the pipeline.
+
+  
+
+    
+
+      
+Hut 8 — $12.5B River Bend
+      
+Canadian Bitcoin miner. Zero NVIDIA certifications. Land scandal. 75 promised jobs. Profit leaves Canada.
+    
+    
+
+      
+Nscale — $14.6B Monarch
+      
+London-headquartered. 730,000+ GPUs. Microsoft and OpenAI backing. Zero Louisiana presence. Zero Louisiana workforce.
+    
+    
+
+      
+Amazon / Meta — $20B+
+      
+Seattle and Menlo Park. Louisiana's land, Louisiana's power infrastructure, Louisiana's tax breaks. Zero locally-owned benefit.
+    
+    
+
+      
+ADC — Lafayette, Louisiana
+      
+American-owned. Louisiana-built. Every vendor US-manufactured. Every dollar of profit stays in Louisiana.
+    
+  
+
+  
+
+    
+CERAWeek 2026 Validated ADC's Entire Architecture
+    
+
+      
+
+        
+800V DC Confirmed
+        
+Multiple major players confirmed 800V DC is the standard. ADC designed to spec from day one.
+      
+      
+
+        
+Behind-the-Meter is Standard
+        
+On-site generation is now the consensus. Grid dependency is a liability.
+      
+      
+
+        
+Tokens-Per-Watt is the Metric
+        
+Not PUE. Not uptime. Tokens per watt. ADC's power model was built for exactly this.
+      
+      
+
+        
+Micro AI Factories Are Viable
+        
+ADC's phased model — starting at MARLIE I — is the validated path.
+      
+    
+  
+
+  
+Section 02b — Market Validation
+  
+Nscale Just Raised $2 Billion.
+There Is No American Version Yet.
+  
+Institutional capital at that scale does not fund one company and stop. It establishes a thesis. The investors who wrote that check are now looking for the next neocloud. ADC is the answer they have not found — American-owned, Louisiana energy costs, NVIDIA-native, operational today.
+
+  
+
+    
+
+      
+
+        THE SIGNAL
+        
+Nscale — $2B Series H
+        
+London, UK · 730,000+ GPUs
+      
+      
+
+        Nscale — a UK-headquartered neocloud — raised a $2 billion Series H. Their Monarch campus in West Virginia spans 8 GW of planned capacity. Microsoft and OpenAI are anchor customers.
+
+        What this proves: Institutional capital at scale has validated the neocloud model. GPU-first cloud infrastructure, powered by cheap energy, is the investment thesis of the decade. The largest funds in the world are writing billion-dollar checks for it.
+
+        What Nscale cannot offer: American ownership. American supply chain. Louisiana's incentive stack. Henry Hub gas at $0.027/kWh. First Solar panels from 30 miles away. A founder who has been here his entire career and holds three Louisiana contractor licenses. Nscale raised $2 billion and none of that money benefits Louisiana.
+      
+    
+
+    
+
+      
+
+        THE DEMAND
+        
+Microsoft Signed with a UK Company
+        
+Because There Was No American Option
+      
+      
+
+        Microsoft signed a letter of intent with Nscale for compute capacity. Not because Nscale was the best option — because there was no American-owned neocloud at scale to sign with instead.
+
+        Hyperscalers cannot wait for data center construction timelines. They go to neoclouds. Microsoft just proved it. Amazon, Google, and every major enterprise AI buyer will follow the same path. The question is not whether they will buy capacity from a neocloud — they already are. The question is whether that neocloud will be American-owned or foreign.
+
+        ADC is the American neocloud that does not exist yet at scale. That gap is exactly what this seed round closes.
+      
+    
+
+    
+
+      
+
+        ADC'S EDGE
+        
+Same Model. Better Position.
+        
+American · Louisiana · NVIDIA-Native
+      
+      
+
+        API: ADC runs the same OpenAI-compatible inference API Nscale uses. Any developer on Nscale can migrate to ADC by changing one line of code. Same tokens. Louisiana-owned.
+
+        Fine-tuning: Nscale lists fine-tuning as "coming soon." ADC's AI agent ROXY already runs on a fine-tuned model — 118 training examples, weights baked in, running on our own GPU today. ADC ships features Nscale promises.
+
+        Power cost: Nscale operates on European grid power. ADC operates on Henry Hub natural gas at $0.027–$0.035/kWh — the cheapest industrial energy in the world. Every token ADC produces costs less than every token Nscale produces.
+
+        Incentive stack: Nscale's investors get no state tax credits. ADC's first capital partner gets 35% back on day one — before ADC earns a dollar.
+      
+    
+
+  
+
+  
+
+    
+The Investor Thesis — Validated at Scale
+    
+
+      
+
+        
+CoreWeave — $71B
+        
+NVIDIA-native neocloud. BMaaS + managed inference. NVIDIA strategic investor.
+      
+      
+
+        
+Nebius — $24B
+        
+"Token Factory" model. NVIDIA $2B stake. Spun out of Yandex.
+      
+      
+
+        
+Crusoe — $10B+
+        
+Energy-first neocloud. Flare gas → tokens. NVIDIA Preferred Partner. Same model as ADC.
+      
+      
+
+        
+Nscale — $2B Series H
+        
+UK-headquartered. Microsoft LOI. 730K+ GPUs. Proves institutional demand for the model.
+      
+    
+    
+
+      Every one of these companies validated the neocloud thesis at a different scale. Not one of them is Louisiana-owned. Not one of them has Henry Hub gas, First Solar panels from 30 miles away, or a 35% Angel Tax Credit for their investors. ADC is raising $5M — pre-revenue — at the same stage Crusoe was before they proved the flare gas model. The playbook is written. The location is better. The incentives are unmatched.
+    
+  
+
+  
+Section 03 — What ADC Already Owns
+  
+This Is Not a Concept.
+It's a Construction Project.
+  
+The engineering is done. The vendors are spec'd. The sites are identified. The software is running. ADC is not asking for money to figure out what to build — ADC is asking for money to break ground on what is already fully designed.
+
+  
+
+    
+
+      
+MARLIE I — OWNED
+      
+1201 SE Evangeline Thruway, Lafayette. Scott owns this outright. Ready for deployment now. No acquisition, no lease, no negotiation. Serves as collateral for equipment financing. Site Score: 97 Tier S.
+    
+    
+
+      
+Trappeys Cannery — IDENTIFIED
+      
+112,500 sq ft across 4 buildings. Historic hot sauce and yam cannery. 2.05 MW solar capacity. Water tower cooling. Competing developer stalled 5 years — ~$1M acquisition. Site Score: 105 Tier S.
+    
+    
+
+      
+Engineering Package — COMPLETE
+      
+22 US vendors spec'd with primary and backup for every component. 24 engineering blueprints completed. Full BOM priced for Phase 1. 800V DC architecture designed end-to-end.
+    
+    
+
+      
+ROXY — LIVE NOW
+      
+ADC's AI agent runs on our own GPU hardware today. 27 tools. Self-hosted inference. Call her: (337) 486-3149. Proof that our software layer works today.
+    
+  
+
+  
+
+    
+The Site Intelligence Moat
+    
+Most investors back someone who still has to figure out where to build. ADC already has a scored database of every viable AI factory site in Louisiana — pipeline corridor sites and river corridor sites, catalogued, ranked, and ready.
+    
+
+      
+
+        
+16 Pipeline Corridor Sites
+        
+Scored across power access, fiber, water, zoning, vendor proximity, and pipeline distance.
+      
+      
+
+        
+15 River Corridor Sites
+        
+Mississippi River and Atchafalaya basin sites scored for cooling water access and industrial infrastructure.
+      
+      
+
+        
+Willow Glen — Score 94 Tier A
+        
+Former 2,200 MW Entergy station, St. Gabriel. 700 acres. 230kV substation on-site. Mississippi River cooling.
+      
+      
+
+        
+Already Home Base
+        
+25+ years of relationships, permits, and vendor network already in place. Not being built — already exists.
+      
+    
+  
+
+  
+Section 04 — The Numbers
+  
+What the Money Does
+  
+$5M seed. MARLIE I is owned collateral. Trappeys is the acquisition. First tokens flowing within 6–9 months of groundbreaking. The Louisiana Angel Tax Credit changes the math on day one.
+
+  
+
+    
+35%
+    
+Louisiana Angel Tax Credit — Day One.
+A $1M investment costs the capital partner $650,000 after state credits.
+A $5M investment costs $3,250,000. The return starts before ADC earns a dollar.
+  
+
+  
+The Louisiana Incentive Stack — Federal + State + Local
+  
+The tax incentive stack at ADC's sites is not a minor benefit — it is a structural financial advantage that changes the economics of every dollar invested. No other state offers this combination.
+
+  
+Federal Incentives
+  
+    
+
+Incentive
+Value
+Notes
+    
+      
+
+Solar Investment Tax Credit (ITC)
+30% base
+Direct credit against federal tax on solar CapEx
+      
+
++ Domestic Content Bonus
++10%
+First Solar panels from New Iberia, LA — 30 miles from site. Qualifies automatically.
+      
+
++ Energy Community Bonus
++10%
+Willow Glen is former fossil fuel site. Almost certain to qualify.
+      
+
+Total Solar ITC Potential
+Up to 50%
+Half the solar CapEx returned as federal credit. Must begin construction by July 2026.
+      
+
+Federal Historic Tax Credit
+20%
+20% of qualified rehab costs at Trappeys. Stacks with state credit.
+      
+
+MACRS Depreciation
+100% Year 1
+Solar equipment fully depreciated in year one. Accelerates investor benefit.
+    
+  
+
+  
+State of Louisiana
+  
+    
+
+Incentive
+Value
+Notes
+    
+      
+
+Louisiana Angel Tax Credit
+35% day one
+State credit on qualified investments. $1M invested = $650K net cost. No waiting.
+      
+
+ITEP — Industrial Tax Exemption
+80% abatement
+80% property tax abatement for 10 years. Mega-projects qualify for 93–100%. $8–16M savings Phase 1.
+      
+
+Act 730 — Sales Tax Exemption
+100% exempt
+State AND local sales/use tax on all equipment. 20-year term. Triggers at Phase 2.
+      
+
+State Historic Tax Credit
+25%
+Stacks on the 20% federal credit. Combined: 45% of every rehab dollar comes back.
+      
+
+Quality Jobs Program
+5–6% rebate
+Annual payroll rebate for 10 years on new qualifying jobs.
+      
+
+LED FastStart
+Free
+State-funded customized workforce training. No cost to ADC.
+    
+  
+
+  
+
+    
+Combined Incentive Impact by Phase
+    
+      
+
+Phase
+ITEP / PILOT
+Act 730
+Solar ITC
+Historic Credits
+Total Est. Savings
+      
+        
+
+Phase 1 — 12 MW
+$8–16M
+N/A
+$2–5M
+$5–12M
+$15–33M
+        
+
+Phase 2 — 50 MW
+$20–40M
+$40–80M
+$15–30M
+—
+$75–150M
+        
+
+Phase 3 — 100+ MW
+$40–80M
+$80–160M
+$30–60M
+—
+$150–300M
+      
+    
+  
+
+  
+Use of Proceeds — $5M Seed
+  
+    
+
+Use
+Amount
+What It Gets
+    
+      
+
+Trappeys Cannery Acquisition
+~$1M
+112,500 sq ft. 4 buildings. Solar-ready. Competing developer stalled 5 years.
+      
+
+MARLIE I — First Deployment
+~$2M
+First racks operational. Gas connection. Fiber. Power. Proof of concept live.
+      
+
+Equipment Deposits
+~$1M
+Cat genset deposit. Delta 660kW rack. Locks hardware allocation.
+      
+
+Operating Runway
+~$1M
+18 months ops. Scott + core team hire.
+    
+  
+
+  
+Revenue Projections — Base Case
+  
+    
+
+Phase
+Capacity
+Annual Revenue
+EBITDA Margin
+    
+      
+
+Phase 1A — First Racks
+3 MW
+$12M
+32%
+      
+
+Phase 1C — MARLIE I + Trappeys Full
+12 MW
+$48M
+80%
+      
+
+Phase 2 — Campus
+50 MW
+$200M
+85%
+      
+
+Phase 3 — Full Build
+100+ MW
+$600M
+83%
+    
+  
+
+  
+Neocloud Valuation Benchmarks
+  
+    
+
+Company
+Valuation
+Model
+Notes
+    
+      
+
+CoreWeave
+$71B
+BMaaS + managed inference
+NVIDIA strategic investor
+      
+
+Nebius
+$24B
+"Token Factory"
+NVIDIA $2B stake
+      
+
+Crusoe
+$10B+
+Energy-first (same as ADC)
+NVIDIA Preferred Partner
+      
+
+ADC (implied, base Year 3)
+$2.4–3.6B
+Token factory, energy-first
+Pre-revenue at $5M seed
+    
+  
+
+  
+Power Cost Advantage
+  
+    
+
+Source
+Cost/kWh
+ADC Advantage
+    
+      
+
+US industrial grid average
+$0.073
+—
+      
+
+ADC Phase 1 (on-site gas + solar)
+$0.058–0.068
+20–30% below grid
+      
+
+ADC at scale (100+ MW, CCGT)
+$0.040–0.050
+30–45% below grid
+      
+
+ADC flare gas deployments
+~$0.00
+$0 fuel cost — waste gas
+    
+  
+
+  
+Section 05 — Path Forward
+  
+The First Mover Wins This Market
+  
+There is no other Louisiana-owned AI infrastructure operator. The site intelligence is built. The engineering is done. The demand is registered. The only thing between here and groundbreaking is the capital partner.
+
+  
+
+    
+
+      
+Now
+      
+
+        
+Capital Partner Closes
+        
+$5M seed. Louisiana Angel Tax Credit locks in 35% return on day one. MARLIE I is collateral. Trappeys acquisition begins. Ornn structures the close.
+      
+    
+    
+
+      
+Month 1–3
+      
+
+        
+Trappeys Acquisition + MARLIE I Buildout
+        
+Purchase Trappeys Cannery. Pour pad at MARLIE I. Connect ATMOS gas, LFT Fiber, LUS power. First Cat genset deposit. First NVIDIA rack order. Licensed GC pulls all permits in-house.
+      
+    
+    
+
+      
+Month 6–9
+      
+
+        
+First Tokens Flowing
+        
+MARLIE I operational. First NVIDIA racks live. Dynamo inference OS deployed. First token revenue. Proof of concept becomes proof of revenue.
+      
+    
+    
+
+      
+Year 2
+      
+
+        
+Trappeys Full Build + Series A
+        
+Trappeys Building 2 operational. 12 MW capacity. $48M base case revenue. Series A raise — seed capital partner has preferred position. Willow Glen permitting begins.
+      
+    
+    
+
+      
+Year 3–5
+      
+
+        
+Louisiana's AI Factory at Scale
+        
+Willow Glen campus — 50–100+ MW, former 2,200 MW Entergy station. $200M–$600M revenue. NVIDIA reference site. Pod manufacturing. Flare gas deployments statewide.
+      
+    
+  
+
+  
+
+    
+First Capital Partner — What You Get
+    
+
+      
+
+        
+◆
+        
+35% Louisiana Angel Tax Credit on day one. A $1M check costs $650K. Built-in return before ADC earns a dollar.
+      
+      
+
+        
+◆
+        
+Preferred equity position on all future ADC projects. Willow Glen (100+ MW), flare gas deployments, pod manufacturing. This is not a single-site bet — it's a platform.
+      
+      
+
+        
+◆
+        
+MARLIE I as collateral. Owned outright by Scott Tomsu. Real property, real asset, real security.
+      
+      
+
+        
+◆
+        
+Historic Tax Credits at Trappeys — 45% of rehab costs returned. Federal + state stack. The building pays for part of its own restoration.
+      
+      
+
+        
+◆
+        
+GPU hardware protected by Ornn RVS. Residual Value Swap guarantees minimum resale price. Eliminates depreciation risk. Lenders advance 70–80% vs 50% without it.
+      
+      
+
+        
+◆
+        
+Ground floor of a $2.4–3.6B implied valuation at Year 3. CoreWeave, Nebius, Crusoe — all energy-first or NVIDIA-native neoclouds — validate the multiple. ADC is pre-revenue at seed.
+      
+    
+  
+
+  
+Contact
+  
+
+    
+
+      
+Scott Tomsu
+      
+Founder — Sponsor Layer
+      
+
+        Advantage Design & Construction
+
+        Lafayette, Louisiana
+
+        (337) 780-1535
+
+        scott@adc3k.com
+
+        adc3k.com
+      
+    
+    
+
+      
+Ornn
+      
+Placement Agent Layer
+      
+
+        Compute Derivatives Exchange
+
+        OCPI Benchmark · Bloomberg-Listed
+
+        Residual Value Swap (RVS)
+
+        ornn.com
+
+        Contact your Ornn representative for introductions.
+      
+    
+    
+
+      
+ROXY — Live Now
+      
+ADC AI Agent — Running on Our Own GPU
+      
+
+        Self-hosted AI agent proving ADC's GPU hardware runs production AI today. 27 tools. Call her now:
+
+        (337) 486-3149
+      
+    
+  
+
+  
+
+    CONFIDENTIAL — PREPARED FOR ORNN PARTNER NETWORK — MARCH 2026
+
+    NOT FOR PUBLIC DISTRIBUTION — ALL PROJECTIONS ARE ESTIMATES AND SUBJECT TO CHANGE
