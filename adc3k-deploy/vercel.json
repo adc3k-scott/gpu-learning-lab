@@ -15,9 +15,13 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/", "destination": "https://ai-advantage.info", "permanent": true }
+  ],
   "rewrites": [
 
     { "source": "/hub", "destination": "/hub.html" },
+    { "source": "/resume", "destination": "/Scott_Tomsu_Resume.html" },
 
     { "source": "/trappeys", "destination": "/trappeys-investors.html" },
     { "source": "/trappeys-blueprints", "destination": "/trappeys-blueprints.html" },

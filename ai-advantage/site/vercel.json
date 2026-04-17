@@ -34,6 +34,14 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/resume", "destination": "/resume.html" },
+    { "source": "/investors", "destination": "/investors.html" },
+    { "source": "/chp-prime-mover", "destination": "/chp-prime-mover.html" },
+    { "source": "/chp-block-diagram", "destination": "/chp-block-diagram.html" },
+    { "source": "/learn", "destination": "/learn.html" },
+    { "source": "/louisiana", "destination": "/louisiana.html" },
+    { "source": "/marlie", "destination": "/marlie.html" },
+    { "source": "/nvidia-course", "destination": "/nvidia-course.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

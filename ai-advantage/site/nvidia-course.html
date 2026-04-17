@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA AI Infrastructure Course — Getting Started Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #76b900;
+    --green-dim: #5a8e00;
+    --green-glow: rgba(118,185,0,0.18);
+    --bg: #0d0d0d;
+    --bg2: #141414;
+    --bg3: #1a1a1a;
+    --border: rgba(118,185,0,0.22);
+    --text: #e8e8e8;
+    --muted: #888;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 48px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 80% at 90% 50%, rgba(118,185,0,0.07) 0%, transparent 70%),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(118,185,0,0.04) 80px),
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(118,185,0,0.04) 80px);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-glow);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.05;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── STEPS ── */
+  .step-block {
+    margin-top: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .step-block:nth-child(1) { animation-delay: 0.1s; }
+  .step-block:nth-child(2) { animation-delay: 0.18s; }
+  .step-block:nth-child(3) { animation-delay: 0.26s; }
+  .step-block:nth-child(4) { animation-delay: 0.34s; }
+  .step-block:nth-child(5) { animation-delay: 0.42s; }
+  .step-block:nth-child(6) { animation-delay: 0.50s; }
+  .step-block:nth-child(7) { animation-delay: 0.58s; }
+  .step-block:nth-child(8) { animation-delay: 0.66s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 6px;
+    background: var(--green);
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    padding-top: 4px;
+  }
+  .step-body {
+    padding-left: 60px;
+  }
+  .step-body p {
+    color: #ccc;
+    margin-bottom: 14px;
+    font-size: 15.5px;
+  }
+
+  /* ── NUMBERED INSTRUCTIONS ── */
+  .instructions {
+    list-style: none;
+    counter-reset: inst;
+    margin: 16px 0;
+  }
+  .instructions li {
+    counter-increment: inst;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    font-size: 15.5px;
+    color: #ccc;
+  }
+  .instructions li::before {
+    content: counter(inst);
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    color: var(--green);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+
+  /* ── BULLET LIST ── */
+  .dot-list {
+    list-style: none;
+    margin: 12px 0;
+  }
+  .dot-list li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 9px;
+    font-size: 15.5px;
+    color: #ccc;
+  }
+  .dot-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 12px;
+    top: 3px;
+  }
+
+  /* ── NOTE BOX ── */
+  .note {
+    background: rgba(118,185,0,0.05);
+    border-left: 3px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14.5px;
+    color: #aaa;
+    font-style: italic;
+  }
+  .note strong { color: var(--green); font-style: normal; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+    margin: 48px 0 0;
+  }
+
+  /* ── SUB HEADING ── */
+  .sub-heading {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    margin: 24px 0 8px;
+  }
+
+  /* ── LINK ── */
+  a {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(118,185,0,0.3);
+    transition: border-color 0.2s;
+  }
+  a:hover { border-color: var(--green); }
+
+  /* ── COURSE SECTIONS TABLE ── */
+  .sections-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .sections-grid { grid-template-columns: 1fr; }
+  }
+  .section-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .section-card.done {
+    border-color: rgba(118,185,0,0.25);
+  }
+  .section-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: rgba(118,185,0,0.25);
+    line-height: 1;
+    margin-top: 2px;
+    min-width: 28px;
+  }
+  .section-info strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+  .section-info span {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  /* ── QUICK REFERENCE ── */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  @media (max-width: 600px) { .ref-grid { grid-template-columns: 1fr; } }
+  .ref-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .ref-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .ref-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--white);
+  }
+  .ref-value.green { color: var(--green); }
+
+  /* ── TIPS ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  @media (max-width: 600px) { .tips-grid { grid-template-columns: 1fr; } }
+  .tip-card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    color: #bbb;
+  }
+  .tip-icon {
+    font-size: 20px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  footer a { font-size: 13px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 40px 24px 36px; }
+    .container { padding: 0 24px 60px; }
+    .hero-stats { gap: 18px; }
+    .step-body { padding-left: 0; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">NVIDIA Academy — Free Course</div>
+    <h1><span>AI Infrastructure</span> and Operations<br>Fundamentals</h1>
+    <p class="hero-sub">Step-by-step guide to register, find, and complete this course — anyone can do it.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-val">FREE</span><span class="stat-label">No cost</span></div>
+      <div class="stat"><span class="stat-val">~2.5 hrs</span><span class="stat-label">Self-paced</span></div>
+      <div class="stat"><span class="stat-val">7</span><span class="stat-label">Sections</span></div>
+      <div class="stat"><span class="stat-val">Certificate</span><span class="stat-label">Issued by NVIDIA</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- WHAT IS THIS -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-title" style="font-size:22px; color:var(--muted); margin-bottom:12px;">What is this course?</div>
+      <p style="color:#ccc; font-size:15.5px; max-width:700px;">This is a <strong style="color:var(--white)">free, self-paced online course</strong> from NVIDIA that covers the fundamentals of AI infrastructure — GPUs, data centers, cloud computing, software ecosystems, and compute platforms. No prior technical background required. You'll finish with a genuine NVIDIA certificate and a solid foundation in how AI systems actually work.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Go to the NVIDIA Learning Platform</div>
+      </div>
+      <div class="step-body">
+        <p>Open any web browser and navigate to:</p>
+        <p style="font-family:'Barlow Condensed',sans-serif; font-size:22px; color:var(--green); margin:8px 0 16px;">
+          <a href="https://learn.nvidia.com" target="_blank">learn.nvidia.com</a>
+        </p>
+        <p>This is NVIDIA's official training hub. You can also find it by going to <a href="https://nvidia.com" target="_blank">nvidia.com</a> → Training → Self-Paced Courses, or just Google <em>"NVIDIA AI Infrastructure Fundamentals"</em>.</p>
+        <div class="note"><strong>Note:</strong> Chrome or Edge browser gives the smoothest video playback experience. The site works on mobile but a laptop or desktop is recommended.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Create a Free NVIDIA Account</div>
+      </div>
+      <div class="step-body">
+        <p>You need a free NVIDIA account to enroll. Here's exactly how to create one:</p>
+        <ol class="instructions">
+          <li>On the NVIDIA learning platform, click the <strong style="color:var(--white)">"Sign In"</strong> or <strong style="color:var(--white)">"Join"</strong> button in the top-right corner.</li>
+          <li>Click <strong style="color:var(--white)">"Create Account"</strong> — you'll be taken to NVIDIA's account registration page at <a href="https://learn.nvidia.com/join" target="_blank">learn.nvidia.com/join</a>.</li>
+          <li>Enter your <strong style="color:var(--white)">email address</strong> and click Continue.</li>
+          <li>Fill in your <strong style="color:var(--white)">first name, last name</strong>, and create a <strong style="color:var(--white)">password</strong> (at least 8 characters, include a number or symbol).</li>
+          <li>Check your email for a <strong style="color:var(--white)">verification message from NVIDIA</strong>. Click the link inside to confirm your account. <em>(Check spam if you don't see it within a few minutes.)</em></li>
+          <li>Once verified, sign back in with your email and password — you're in.</li>
+        </ol>
+        <div class="note"><strong>Already have an NVIDIA account?</strong> If you've ever registered on nvidia.com, GeForce Experience, or any other NVIDIA product, use those same credentials — no need to create a new account.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Find the Course</div>
+      </div>
+      <div class="step-body">
+        <p>Once signed in, find the course using any of these methods:</p>
+
+        <div class="sub-heading">Option A — Search</div>
+        <ol class="instructions">
+          <li>Click the <strong style="color:var(--white)">search icon</strong> or <strong style="color:var(--white)">"Find Training"</strong> in the top navigation.</li>
+          <li>Type: <strong style="color:var(--white)">AI Infrastructure and Operations Fundamentals</strong></li>
+          <li>Click the course when it appears in results.</li>
+        </ol>
+
+        <div class="sub-heading">Option B — Browse by Topic</div>
+        <ol class="instructions">
+          <li>Click <strong style="color:var(--white)">"Training By Topic"</strong> in the top navigation.</li>
+          <li>Select <strong style="color:var(--white)">"AI and Data Science"</strong> or <strong style="color:var(--white)">"AI Infrastructure"</strong>.</li>
+          <li>Scroll to find <strong style="color:var(--white)">AI Infrastructure and Operations Fundamentals</strong>.</li>
+        </ol>
+
+        <div class="sub-heading">Option C — Direct Link</div>
+        <p>Go straight to the NVIDIA training catalog: <a href="https://www.nvidia.com/en-us/training/" target="_blank">nvidia.com/en-us/training</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Enroll in the Course</div>
+      </div>
+      <div class="step-body">
+        <ol class="instructions">
+          <li>On the course page, you'll see the title, description, and a list of all modules.</li>
+          <li>Click the <strong style="color:var(--white)">"Enroll"</strong> or <strong style="color:var(--white)">"Start Course"</strong> button. No payment required — it's free.</li>
+          <li>The course is automatically added to your learning dashboard.</li>
+          <li>Click <strong style="color:var(--white)">"Start"</strong> to begin Module 1.</li>
+        </ol>
+        <div class="note"><strong>If you see a cost listed:</strong> Make sure you're signed into your account — free courses require a free login to unlock at no charge.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 — COURSE OVERVIEW -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Take the Course</div>
+      </div>
+      <div class="step-body">
+        <p>The course has 7 sections. Complete them at your own pace — stop and pick back up anytime. Each section has short videos followed by a quick knowledge check.</p>
+        <div class="sections-grid">
+          <div class="section-card">
+            <div class="section-num">1</div>
+            <div class="section-info"><strong>Introduction to AI</strong><span>Overview and context</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-num">2</div>
+            <div class="section-info"><strong>AI Hardware Overview</strong><span>Chips, memory, interconnects</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-num">3</div>
+            <div class="section-info"><strong>AI Model Training & Inference</strong><span>How AI learns and runs</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-num">4</div>
+            <div class="section-info"><strong>Accelerating AI with GPUs</strong><span>27 min — NVIDIA's core tech</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-num">5</div>
+            <div class="section-info"><strong>AI Software Ecosystems</strong><span>28 min — software that runs AI</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-num">6</div>
+            <div class="section-info"><strong>Data Center & Cloud Computing</strong><span>12 min — where AI lives</span></div>
+          </div>
+          <div class="section-card" style="grid-column: 1 / -1;">
+            <div class="section-num">7</div>
+            <div class="section-info"><strong>Compute Platforms for AI</strong><span>40 min — GPU systems, DPUs, multi-GPU setups, compute platforms</span></div>
+          </div>
+        </div>
+        <div class="note" style="margin-top:16px;"><strong>Progress is saved automatically.</strong> Close the browser, come back later — just sign in and click "My Learning" to continue where you left off.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 — CERTIFICATE -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Get Your Certificate</div>
+      </div>
+      <div class="step-body">
+        <ol class="instructions">
+          <li>Complete all video modules and pass all knowledge check quizzes.</li>
+          <li>After finishing the final section, your certificate is generated automatically.</li>
+          <li>Go to <strong style="color:var(--white)">"My Learning"</strong> in the top navigation and find the completed course.</li>
+          <li>Click <strong style="color:var(--white)">"View Certificate"</strong> or <strong style="color:var(--white)">"Download Certificate"</strong> to save or print it.</li>
+          <li>You can also share it directly to <strong style="color:var(--white)">LinkedIn</strong> straight from the certificate page.</li>
+        </ol>
+        <div class="note"><strong>Your certificate includes</strong> your name, the course title, completion date, and is officially issued by NVIDIA — a legitimate, recognized credential in the AI industry.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-title" style="font-size:22px; color:var(--muted); margin-bottom:16px;">Tips for Success</div>
+      <div class="tips-grid">
+        <div class="tip-card"><span class="tip-icon">💻</span>Use a laptop or desktop for the best experience. The course works on mobile but videos are easier to follow on a larger screen.</div>
+        <div class="tip-card"><span class="tip-icon">🌐</span>Chrome or Edge browser recommended for the smoothest video playback and quiz experience.</div>
+        <div class="tip-card"><span class="tip-icon">⏱️</span>Most people finish the full course in one sitting. Total runtime is about 2 to 2.5 hours including quizzes.</div>
+        <div class="tip-card"><span class="tip-icon">📝</span>Take notes as you go — there's a lot of useful terminology. Writing it down helps it stick.</div>
+        <div class="tip-card"><span class="tip-icon">🔰</span>Don't be intimidated if something seems technical. The course starts from the basics and builds gradually.</div>
+        <div class="tip-card"><span class="tip-icon">✅</span>A green checkmark appears next to each item you complete. Watch for them — they confirm your progress is being saved.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REF -->
+  <div class="step-block">
+    <div class="divider"></div>
+    <div style="margin-top:36px;">
+      <div class="step-title" style="font-size:22px; color:var(--muted); margin-bottom:16px;">Quick Reference</div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <div class="ref-label">Main Platform</div>
+          <div class="ref-value"><a href="https://learn.nvidia.com" target="_blank">learn.nvidia.com</a></div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-label">Create Account</div>
+          <div class="ref-value"><a href="https://learn.nvidia.com/join" target="_blank">learn.nvidia.com/join</a></div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-label">Course Name</div>
+          <div class="ref-value" style="font-size:15px; font-family:'Barlow',sans-serif; font-weight:600;">AI Infrastructure and Operations Fundamentals</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-label">Cost</div>
+          <div class="ref-value green">Free</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-label">Time to Complete</div>
+          <div class="ref-value">~2.5 Hours</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-label">Certificate</div>
+          <div class="ref-value green">Yes — Issued by NVIDIA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>NVIDIA Academy &nbsp;·&nbsp; <a href="https://learn.nvidia.com" target="_blank">learn.nvidia.com</a> &nbsp;·&nbsp; Prepared April 2026</p>
+</footer>
+
+</body>
+</html>

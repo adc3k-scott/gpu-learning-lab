@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Advantage — DOE LPO Pre-Application | Title XVII Section 1703</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #1A2E4A;
+    --blue: #1B4F8C;
+    --blue-light: #2D6DB5;
+    --gold: #B8860B;
+    --border: #C8C8C0;
+    --border-light: #E8E8E2;
+    --text: #1A1A18;
+    --text-mid: #4A4A44;
+    --text-dim: #7A7A70;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --red: #8B1A1A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 10.5pt;
+  }
+
+  /* — PRINT — */
+  @media print {
+    .no-print { display: none; }
+    body { background: white; font-size: 10pt; }
+    section { page-break-inside: avoid; }
+    .page-break { page-break-before: always; }
+    .cover { page-break-after: always; }
+  }
+
+  /* — COVER — */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem 5rem;
+    background: var(--navy);
+    color: var(--white);
+    position: relative;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cover-agency {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+  }
+
+  .cover-classification {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .cover-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 0;
+  }
+
+  .cover-program {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8A060;
+    margin-bottom: 2rem;
+  }
+
+  .cover-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 1.5rem;
+    max-width: 700px;
+  }
+
+  .cover-subtitle {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .cover-divider {
+    width: 60px;
+    height: 2px;
+    background: #B8A060;
+    margin-bottom: 3rem;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 3rem;
+    width: fit-content;
+  }
+
+  .cover-meta-item {}
+
+  .cover-meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+
+  .cover-meta-value {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: white;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 2rem;
+  }
+
+  .cover-contact {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.8;
+  }
+
+  .cover-confidential {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* — DOCUMENT BODY — */
+  .doc-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 5rem;
+  }
+
+  /* — TOC — */
+  .toc {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    margin-bottom: 5rem;
+  }
+
+  .toc-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.4rem 0;
+    border-bottom: 1px dotted var(--border-light);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+  }
+
+  .toc-item:last-child { border-bottom: none; }
+
+  .toc-item a { color: var(--blue); text-decoration: none; }
+  .toc-item a:hover { text-decoration: underline; }
+
+  .toc-section {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+  }
+
+  /* — SECTION HEADERS — */
+  .section-block {
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .section-block:last-child {
+    border-bottom: none;
+  }
+
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-heading {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-rule {
+    width: 40px;
+    height: 2px;
+    background: var(--blue);
+    margin: 1rem 0 2rem 0;
+  }
+
+  /* — BODY TEXT — */
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 600; color: var(--navy); }
+
+  /* — CALLOUT BOX — */
+  .callout {
+    background: var(--white);
+    border-left: 3px solid var(--blue);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+  }
+
+  .callout p { color: var(--text-mid); font-size: 0.95rem; margin: 0; }
+
+  .callout-gold {
+    background: #FDFAF0;
+    border-left: 3px solid var(--gold);
+  }
+
+  /* — TABLES — */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+  }
+
+  .data-table th {
+    background: var(--navy);
+    color: white;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-mid);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table tr:nth-child(even) td { background: rgba(0,0,0,0.015); }
+
+  .td-label { color: var(--text); font-weight: 500; }
+  .td-value { font-family: 'IBM Plex Mono', monospace; color: var(--navy); font-weight: 500; }
+  .td-total { color: var(--navy); font-weight: 600; font-family: 'IBM Plex Mono', monospace; background: rgba(27,79,140,0.05) !important; }
+
+  /* — STAT ROW — */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .stat-cell {
+    background: var(--white);
+    padding: 1.5rem 2rem;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+
+  .stat-note {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+
+  /* — LETTER BLOCK — */
+  .letter-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .letter-header {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .letter-address {
+    color: var(--text-mid);
+    margin-bottom: 1.5rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+  }
+
+  .letter-re {
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .letter-body p {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+  }
+
+  .letter-sig {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .letter-sig-name {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 0.9rem;
+  }
+
+  .letter-sig-title {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+
+  /* — PHASE TIMELINE — */
+  .timeline {
+    margin: 2rem 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    padding-top: 2px;
+  }
+
+  .timeline-content {}
+
+  .timeline-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+  }
+
+  .timeline-body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* — INCENTIVE TABLE — */
+  .incentive-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .incentive-cell {
+    background: var(--white);
+    padding: 1.5rem 2rem;
+  }
+
+  .incentive-name {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .incentive-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .incentive-note {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* — SECTION DIVIDER — */
+  .page-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: right;
+    margin-bottom: 4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  ul {
+    margin: 1rem 0 1.2rem 1.5rem;
+    color: var(--text-mid);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  li { margin-bottom: 0.3rem; }
+
+  li strong { color: var(--navy); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-agency">
+      U.S. Department of Energy<br>
+      Loan Programs Office<br>
+      Title XVII — Section 1703<br>
+      Pre-Application Package
+    </div>
+    <div class="cover-classification">Confidential — Not for Distribution</div>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-program">DOE LPO · Title XVII · Section 1703 · Innovative Energy Projects</div>
+    <div class="cover-title">AI Advantage<br>Pure DC AI Cassette<br>Pre-Application</div>
+    <div class="cover-divider"></div>
+    <div class="cover-subtitle">A 2.3 MW artificial intelligence compute facility achieving PUE ≤ 1.05 through Combined Heat and Power Cascade architecture — eliminating all compressor-based cooling from the electrical bus. Behind the meter. Behind the valve. Zero grid dependency.</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Applicant</div>
+        <div class="cover-meta-value">AI Advantage</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Site</div>
+        <div class="cover-meta-value">Lafayette, Louisiana</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Loan Request</div>
+        <div class="cover-meta-value">$25M – $30M</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Date</div>
+        <div class="cover-meta-value">April 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-contact">
+      Scott Tomsu, Founder &amp; CEO<br>
+      scott@adc3k.com<br>
+      (337) 780-1535<br>
+      ai-advantage.info
+    </div>
+    <div class="cover-confidential">
+      Prepared for submission to<br>
+      DOE Loan Programs Office<br>
+      Washington, DC 20585<br>
+      Not for public release
+    </div>
+  </div>
+</div>
+
+<!-- DOCUMENT BODY -->
+<div class="doc-body">
+
+  <div class="page-title">AI Advantage — DOE LPO Pre-Application · April 2026</div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <div class="toc-item"><a href="#s1">01 — Project Overview</a><span class="toc-section">Summary</span></div>
+    <div class="toc-item"><a href="#s2">02 — Innovative Technology Description</a><span class="toc-section">Section 1703 Eligibility</span></div>
+    <div class="toc-item"><a href="#s3">03 — Site Control</a><span class="toc-section">MARLIE I, Lafayette LA</span></div>
+    <div class="toc-item"><a href="#s4">04 — Applicant Credentials</a><span class="toc-section">Principal Biography</span></div>
+    <div class="toc-item"><a href="#s5">05 — Environmental Benefit Quantification</a><span class="toc-section">CO₂ Avoidance · Grid Reduction</span></div>
+    <div class="toc-item"><a href="#s6">06 — Project Costs</a><span class="toc-section">CapEx by Phase</span></div>
+    <div class="toc-item"><a href="#s7">07 — Revenue and Offtake Model</a><span class="toc-section">Customer Stack · MSA Path</span></div>
+    <div class="toc-item"><a href="#s8">08 — Financial Projections</a><span class="toc-section">Five-Year Pro Forma · DSCR</span></div>
+    <div class="toc-item"><a href="#s9">09 — Louisiana Incentive Stack</a><span class="toc-section">State + Federal</span></div>
+    <div class="toc-item"><a href="#s10">10 — Letters of Support</a><span class="toc-section">Governor · LED · Senate · House</span></div>
+  </div>
+
+  <!-- SECTION 1 — PROJECT OVERVIEW -->
+  <div class="section-block" id="s1">
+    <div class="section-tag">Section 01</div>
+    <div class="section-heading">Project Overview</div>
+    <div class="section-rule"></div>
+
+    <p>AI Advantage requests consideration from the Department of Energy Loan Programs Office under Title XVII Section 1703 for financing of the MARLIE I AI compute facility in Lafayette, Louisiana — the first deployment of the AI Advantage Pure DC AI Cassette and CHP Cascade Architecture.</p>
+
+    <p>The project solves a fundamental problem in artificial intelligence infrastructure: power and cooling inefficiency. The global AI compute industry operates at an average Power Usage Effectiveness (PUE) of 1.58, meaning that for every watt delivered to a GPU, 0.58 additional watts are consumed by cooling, power conversion, and facility overhead. In hot, humid climates like the Gulf Coast, this figure is typically higher. AI Advantage eliminates this overhead through a Combined Heat and Power Cascade that recovers engine waste heat to drive all facility cooling — achieving PUE ≤ 1.05 at full load in Lafayette, Louisiana in August.</p>
+
+    <p>The facility operates entirely behind the meter with no grid connection and behind the valve with no gas utility billing — natural gas from a wellhead or pipeline upstream of the meter is the sole energy input. Power distribution is 800V DC native, compliant with Open Compute Project Stage 1d. No AC conversion anywhere in the power path.</p>
+
+    <div class="stat-row">
+      <div class="stat-cell">
+        <div class="stat-label">Target PUE</div>
+        <div class="stat-value">≤ 1.05</div>
+        <div class="stat-note">vs. 1.58 industry average</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">Grid Draw</div>
+        <div class="stat-value">Zero</div>
+        <div class="stat-note">Behind-the-meter, behind-the-valve</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">CO₂ Reduction</div>
+        <div class="stat-value">60%</div>
+        <div class="stat-note">Per unit of compute vs. grid equivalent</div>
+      </div>
+    </div>
+
+    <p>The primary deployment site — MARLIE I — is a commercial facility in Lafayette, Louisiana owned by the applicant free of mortgage encumbrance. All 22 vendor partners are US-domiciled manufacturers. No overseas fabrication. The applicant holds a Louisiana General Contractor license and will personally manage the build.</p>
+
+    <p>This pre-application requests a DOE loan facility of <strong>$25,000,000 to $30,000,000</strong> to fund the transition from proof-of-concept cassette validation through MARLIE I full capacity at 10 MW IT load — the point at which the facility generates $48M in annual revenue at 80% EBITDA margin and debt service coverage exceeds 12x.</p>
+  </div>
+
+  <!-- SECTION 2 — TECHNOLOGY -->
+  <div class="section-block" id="s2">
+    <div class="section-tag">Section 02</div>
+    <div class="section-heading">Innovative Technology Description</div>
+    <div class="section-rule"></div>
+
+    <p><strong>Project Name:</strong> AI Advantage Pure DC AI Cassette — MARLIE I Demonstration Facility<br>
+    <strong>Location:</strong> Lafayette, Louisiana<br>
+    <strong>Technology Category:</strong> Combined Heat and Power / Advanced Energy Efficiency / AI Infrastructure</p>
+
+    <p>AI Advantage has engineered a 2.3 MW artificial intelligence compute cassette that achieves a Power Usage Effectiveness (PUE) of 1.05 or better under Gulf Coast summer conditions — 95°F ambient, 80% relative humidity — by eliminating all compressor-based cooling from the electrical bus entirely.</p>
+
+    <p>The core innovation is the <strong>CHP Cascade Architecture</strong>. A Caterpillar G3520H natural gas generator produces 2,507 kW of electrical output. Its exhaust gas, at 397°C, regenerates a Munters ICA desiccant rotor, which controls facility humidity without consuming a single watt of electricity. Its jacket water, at 99°C, drives a lithium bromide absorption chiller, which feeds the secondary loop of a Boyd/Eaton ROL2300-48U40 row-level CDU handling the full 2.3 MW cassette thermal load. The thermodynamic loop closes on itself. No compressors. No refrigerants. No cooling load on the electrical bus.</p>
+
+    <div class="callout">
+      <p><strong>CHP Cascade Flow:</strong> Cat G3520H exhaust (397°C) → Munters ICA desiccant regeneration → humidity controlled, zero electrical draw. Jacket water (99°C) → LiBr absorption chiller → Boyd/Eaton CDU secondary loop → direct-to-chip cooling. Power path: natural gas → 2,507 kW electricity → 800V DC bus → NVIDIA NVL72 racks. One fuel input. Three outputs. Zero grid.</p>
+    </div>
+
+    <p>The facility operates entirely behind the meter with no grid connection and behind the valve with no gas utility — wellhead or pipeline gas upstream of the meter is the sole energy input. Power distribution is 800V DC native, compliant with Open Compute Project Stage 1d, with no AC conversion anywhere in the power path. This eliminates inverter and rectifier losses and is natively compatible with NVIDIA's NVL72 GPU architecture.</p>
+
+    <p>The cassette is contained in a standard 40-ft ISO High Cube container, engineered, permitted, and built by the founder — a licensed Louisiana general contractor. All 22 vendor partners are US-domiciled manufacturers.</p>
+
+    <p><strong>No peer-reviewed case study exists for desiccant-only liquid-cooled AI compute deployment.</strong> AI Advantage is a new category. The technology is covered by a provisional patent across 13 claims filed by the applicant.</p>
+
+    <p>The system is power-source agnostic. The CHP Cascade operates identically whether the heat source is a Caterpillar G3520H natural gas genset (initial deployment), a Bloom Energy SOFC (scale deployment), or a FuelCell Energy MCFC (second qualified platform). The thermodynamic loop closes on waste heat, not on the fuel type that created it.</p>
+
+    <div class="callout callout-gold">
+      <p>Lafayette, Louisiana in August — 95°F, 80% relative humidity — is the hardest humidity environment in the continental United States for compute infrastructure. Every competing operator relies on cold ambient air: Oregon, Scandinavia, the Pacific Northwest. AI Advantage requires none of it. If PUE ≤ 1.05 holds in Lafayette in August, it holds anywhere on the planet.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 — SITE CONTROL -->
+  <div class="section-block" id="s3">
+    <div class="section-tag">Section 03</div>
+    <div class="section-heading">Site Control</div>
+    <div class="section-rule"></div>
+
+    <p><strong>Facility:</strong> MARLIE I<br>
+    <strong>Location:</strong> Lafayette, Louisiana<br>
+    <strong>GPS:</strong> 30.21975°N, 92.00645°W<br>
+    <strong>Status:</strong> Owned by applicant, free of mortgage encumbrance. Commercial facility. Fully permitted.</p>
+
+    <p>MARLIE I is the primary AI Advantage hub facility in Lafayette, Louisiana. The property is owned outright by the applicant and serves as both the proof-of-concept deployment site and the collateral basis for the seed capital raise. The facility has existing commercial power, gas, and fiber infrastructure. It is licensed and permitted for the proposed use.</p>
+
+    <p>Site documentation — including deed, survey, and permits — is available to DOE upon request as part of the full application process.</p>
+
+    <p><strong>Planned capacity at full build-out:</strong> 40 GPU positions / 2,880 GPUs / 10 MW IT load / 40 Bloom Energy SOFC units (N+1 configuration).</p>
+  </div>
+
+  <!-- SECTION 4 — CREDENTIALS -->
+  <div class="section-block" id="s4">
+    <div class="section-tag">Section 04</div>
+    <div class="section-heading">Applicant Credentials</div>
+    <div class="section-rule"></div>
+
+    <p><strong>Principal:</strong> Scott Tomsu, Founder and Chief Executive Officer, AI Advantage</p>
+
+    <p>Scott Tomsu holds a Louisiana General Contractor license and three additional Louisiana specialty contractor licenses. He has operated mission-critical systems for 25 years as a Remotely Operated Vehicle (ROV) Superintendent in the offshore oil and gas industry — a discipline in which equipment failure has immediate life-safety consequences and redundancy engineering is non-negotiable. He holds an FAA Private Pilot certificate and is a certified commercial diver.</p>
+
+    <p>MARLIE I, the primary demonstration site in Lafayette, Louisiana, is owned by the applicant free of mortgage encumbrance. It is a licensed, fully permitted commercial facility. The applicant personally designed, engineered, and will manage construction of the cassette — no outside general contractor, no engineering firm, no markup layer.</p>
+
+    <p>The applicant has completed and filed a provisional patent covering the CHP Cascade Architecture across 13 claims. A complete vendor package including engineering drawings, equipment specifications, and build schedule has been developed with 22 American manufacturing partners.</p>
+
+    <div class="callout">
+      <p>This is not a technology pitch from a programmer. This is a hardware build from a constructor who has operated mission-critical systems his entire career — offshore, underground, and in the air. The same discipline that governs ROV operations at 3,000 feet governs this build: redundancy is not optional, failure modes are planned, and the system either holds spec or it is not deployed.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 5 — ENVIRONMENTAL -->
+  <div class="section-block" id="s5">
+    <div class="section-tag">Section 05</div>
+    <div class="section-heading">Environmental Benefit Quantification</div>
+    <div class="section-rule"></div>
+
+    <p><strong>Methodology:</strong> Comparison of AI Advantage CHP Cascade against a conventional grid-connected AI compute facility serving an identical IT load at the same Lafayette, Louisiana location.</p>
+
+    <p><strong>Fuel utilization comparison:</strong></p>
+    <ul>
+      <li>Conventional grid gas power plant: ~35% electrical efficiency + 7% transmission loss = <strong>32.5% effective fuel utilization</strong></li>
+      <li>AI Advantage CHP on-site: 42% electrical + 38% recovered thermal = <strong>80% total fuel utilization</strong></li>
+    </ul>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Conventional Grid + Cooling</th><th>AI Advantage CHP Cascade</th><th>Reduction</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">CO₂ per kWh useful output</td><td>0.163 kg CO₂/kWh</td><td class="td-value">0.066 kg CO₂/kWh</td><td class="td-value">60%</td></tr>
+        <tr><td class="td-label">Fuel utilization rate</td><td>32.5%</td><td class="td-value">80%</td><td class="td-value">2.46× improvement</td></tr>
+        <tr><td class="td-label">Power Usage Effectiveness</td><td>1.58 (industry avg)</td><td class="td-value">≤ 1.05</td><td class="td-value">34% energy savings</td></tr>
+        <tr><td class="td-label">Grid draw (10 MW IT)</td><td>14,500 kW continuous</td><td class="td-value">0 kW</td><td class="td-value">100%</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>MARLIE I full site (10 MW IT load) — annual impact:</strong></p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Impact Metric</th><th>Value</th><th>Basis</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Grid kWh displaced annually</td><td class="td-value">127 million kWh/yr</td><td>14,500 kW × 8,760 hrs</td></tr>
+        <tr><td class="td-label">CO₂ avoided (gross)</td><td class="td-value">55,250 MT CO₂/yr</td><td>127M kWh × 0.435 kg/kWh (EIA Louisiana 2023)</td></tr>
+        <tr><td class="td-label">CO₂ from on-site gas (net)</td><td class="td-value">−33,200 MT CO₂/yr</td><td>Gas combustion at 80% CHP utilization</td></tr>
+        <tr><td class="td-label"><strong>Net CO₂ benefit</strong></td><td class="td-value"><strong>~22,000 MT CO₂/yr</strong></td><td>Net avoided vs. grid-equivalent operation</td></tr>
+        <tr><td class="td-label">Grid peak demand removed</td><td class="td-value">14.5 MW</td><td>Permanent load removed from LUS/SLEMCO territory</td></tr>
+        <tr><td class="td-label">Residential equivalent</td><td class="td-value">~12,000 homes</td><td>Louisiana average residential consumption</td></tr>
+      </tbody>
+    </table>
+
+    <p>MARLIE I draws zero watts from the Louisiana grid at any load level. At full 10 MW IT capacity, this represents 14.5 MW of peak demand permanently removed from the local utility service territory — without curtailment, without subsidies, and without grid interconnection agreements.</p>
+  </div>
+
+  <!-- SECTION 6 — CAPEX -->
+  <div class="section-block" id="s6">
+    <div class="section-tag">Section 06</div>
+    <div class="section-heading">Project Costs</div>
+    <div class="section-rule"></div>
+
+    <p><strong>Phase 0 — Proof of Concept / Single Cassette</strong> (Seed Capital — $5M raise)</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Line Item</th><th>Cost</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">40-ft ISO High Cube container</td><td class="td-value">$50,000</td><td>Standard container shell — POC vessel</td></tr>
+        <tr><td class="td-label">Boyd/Eaton CDU system</td><td class="td-value">$650,000</td><td>ROL2300-48U40 row-level CDU, cold plates, manifolds</td></tr>
+        <tr><td class="td-label">Munters desiccant system</td><td class="td-value">$100,000</td><td>ICA w/ RightDry + HX, ductwork, installation</td></tr>
+        <tr><td class="td-label">OCP ORV3 rack frames ×10</td><td class="td-value">$100,000</td><td>Frames, busbars, rails, liquid manifolds</td></tr>
+        <tr><td class="td-label">800V DC power distribution</td><td class="td-value">$300,000</td><td>Delta In-Row Power, Eaton rectifier skid, switchgear, PDUs</td></tr>
+        <tr><td class="td-label">Boyd Rack Emulators ×2</td><td class="td-value">$150,000</td><td>250 kW each — permanent test infrastructure</td></tr>
+        <tr><td class="td-label">Validation instrumentation</td><td class="td-value">$40,000</td><td>Vaisala sensors, NI CompactDAQ, power analyzer</td></tr>
+        <tr><td class="td-label">BMS / sensor system</td><td class="td-value">$30,000</td><td>Jetson AGX Orin, 148-channel sensors, networking</td></tr>
+        <tr><td class="td-label">Piping, cabling, integration</td><td class="td-value">$100,000</td><td>Facility plumbing, electrical, commissioning labor</td></tr>
+        <tr><td class="td-label">POC power — rental generators</td><td class="td-value">$200,000</td><td>Rental units for 6-month POC window. Replaced by permanent Cat G3520H at Series A.</td></tr>
+        <tr><td class="td-label">Contingency (20%)</td><td class="td-value">$334,000</td><td>Novel architecture in a new category warrants it</td></tr>
+        <tr style="background:rgba(27,79,140,0.06);">
+          <td class="td-total">TOTAL — Phase 0 POC</td>
+          <td class="td-total">$2,054,000</td>
+          <td style="color:var(--text-dim);font-size:0.8rem;">Single cassette, full validation infrastructure</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:2rem;"><strong>Phase 1A — First Revenue Cassettes (2.5 MW IT)</strong></p>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="td-label">2 production cassettes</td><td class="td-value">~$8,664,000</td><td>At Phase 0 build cost equivalent</td></tr>
+        <tr><td class="td-label">Permanent Cat G3520H + CHP integration</td><td class="td-value">~$1,500,000</td><td>Natural gas genset + exhaust / jacket water routing</td></tr>
+        <tr><td class="td-label">Site infrastructure, pad, fiber, BMS</td><td class="td-value">~$800,000</td><td>Civil, electrical, communications</td></tr>
+        <tr style="background:rgba(27,79,140,0.06);">
+          <td class="td-total">TOTAL — Phase 1A</td>
+          <td class="td-total">~$10,964,000</td>
+          <td style="color:var(--text-dim);font-size:0.8rem;">DOE loan deployment begins here</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:2rem;"><strong>Phase 1C — MARLIE I Full Build (10 MW IT)</strong></p>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="td-label">4 total production cassettes</td><td class="td-value">~$17,328,000</td><td>Full site IT capacity</td></tr>
+        <tr><td class="td-label">Permanent CHP power plant (Bloom SOFC N+1)</td><td class="td-value">~$10,000,000</td><td>40 Bloom Energy SOFC units, 800V DC native</td></tr>
+        <tr><td class="td-label">BESS bridge (LFP, 4-hr minimum)</td><td class="td-value">~$3,000,000</td><td>DC-coupled, Hitachi AMPS PCS</td></tr>
+        <tr><td class="td-label">Site completion — civil, MEP, controls</td><td class="td-value">~$2,000,000</td><td>Final build-out</td></tr>
+        <tr style="background:rgba(27,79,140,0.06);">
+          <td class="td-total">TOTAL — MARLIE I Full</td>
+          <td class="td-total">~$32,328,000</td>
+          <td style="color:var(--text-dim);font-size:0.8rem;">Full revenue capacity · DOE loan fully deployed</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-gold">
+      <p><strong>DOE Loan Request: $25,000,000 – $30,000,000.</strong> Seed equity ($5M) funds Phase 0 POC. DOE facility bridges Phase 1A first revenue through Phase 1C MARLIE I full capacity — the point at which EBITDA exceeds $38M annually and debt service coverage exceeds 12×.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 7 — REVENUE / OFFTAKE -->
+  <div class="section-block" id="s7">
+    <div class="section-tag">Section 07</div>
+    <div class="section-heading">Revenue and Offtake Model</div>
+    <div class="section-rule"></div>
+
+    <p>AI Advantage generates revenue through GPU compute time sold as AI inference and training capacity. Pricing ranges from $0.20/M tokens (commodity inference) to $150/M tokens (specialized enterprise models), with a blended margin across the customer stack exceeding 95% at scale.</p>
+
+    <p><strong>Revenue by phase:</strong></p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Phase</th><th>IT Capacity</th><th>Annual Revenue</th><th>EBITDA Margin</th><th>Annual EBITDA</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Phase 1A — First Racks</td><td>2.5 MW</td><td class="td-value">$12M</td><td>32%</td><td class="td-value">$3.8M</td></tr>
+        <tr><td class="td-label">Phase 1C — MARLIE I Full</td><td>10 MW</td><td class="td-value">$48M</td><td>80%</td><td class="td-value">$38.4M</td></tr>
+        <tr><td class="td-label">Phase 1 — Campus</td><td>50 MW</td><td class="td-value">$200M</td><td>85%</td><td class="td-value">$170M</td></tr>
+        <tr><td class="td-label">Phase 2 — Campus Full</td><td>100+ MW</td><td class="td-value">$600M</td><td>83%</td><td class="td-value">$498M</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Offtake path:</strong> AI Advantage's primary customer verticals are Louisiana hospitals, universities, and state agencies — creditworthy public and quasi-public entities capable of executing multi-year compute MSAs modeled on the CoreWeave/Meta structure validated by Moody's in March 2026 at A3 investment grade.</p>
+
+    <p>First-tier offtake targets: UL Lafayette, Ochsner Health System, Our Lady of the Lake Regional Medical Center, and Louisiana state agency procurement. A signed MSA with any of these constitutes the offtake foundation required for project finance drawdown.</p>
+
+    <p>The margin structure at MARLIE I full capacity (80% EBITDA) is sustainable because the primary cost variable — power — is fixed at a Henry Hub-indexed gas contract. There is no grid power purchase, no cooling electricity, and no utility rate exposure. Operating costs are predictable and inflation-resistant.</p>
+  </div>
+
+  <!-- SECTION 8 — FINANCIAL PROJECTIONS -->
+  <div class="section-block" id="s8">
+    <div class="section-tag">Section 08</div>
+    <div class="section-heading">Financial Projections — Five Year</div>
+    <div class="section-rule"></div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Year</th><th>Milestone</th><th>Revenue</th><th>EBITDA</th><th>Margin</th><th>DSCR*</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Year 0</td><td>Seed close · POC build</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td class="td-label">Year 1</td><td>POC validated · First racks live</td><td class="td-value">$12M</td><td class="td-value">$3.8M</td><td>32%</td><td>1.2×</td></tr>
+        <tr><td class="td-label">Year 2</td><td>MARLIE I full · Series A raise</td><td class="td-value">$48M</td><td class="td-value">$38.4M</td><td>80%</td><td class="td-value">12×+</td></tr>
+        <tr><td class="td-label">Year 3</td><td>Campus expansion begins</td><td class="td-value">$120M</td><td class="td-value">$96M</td><td>80%</td><td>—</td></tr>
+        <tr><td class="td-label">Year 4</td><td>50 MW operational</td><td class="td-value">$200M</td><td class="td-value">$170M</td><td>85%</td><td>—</td></tr>
+        <tr><td class="td-label">Year 5</td><td>Campus full / multi-site</td><td class="td-value">$600M</td><td class="td-value">$498M</td><td>83%</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:0.8rem;color:var(--text-dim);">* DSCR calculated against $25–30M DOE loan at 5% over 10 years (~$3.2M annual debt service). Year 2 EBITDA of $38.4M produces DSCR of 12×+.</p>
+
+    <div class="callout callout-gold">
+      <p><strong>Moody's assigned A3 (investment grade) to CoreWeave's $8.5B GPU infrastructure loan in March 2026 based on a DSCR of 1.26×.</strong> AI Advantage's projected Year 2 DSCR of 12×+ against the requested DOE facility reflects a structurally stronger credit position — driven by the elimination of power cost risk that Moody's identified as CoreWeave's primary downside scenario.</p>
+    </div>
+
+    <p><strong>Implied valuation at Year 3:</strong> $2.4B–$3.6B at 20–30× EBITDA, consistent with CoreWeave ($71B), Nebius ($24B), and Crusoe Energy ($10B+) — all energy-first or NVIDIA-native compute operators.</p>
+  </div>
+
+  <!-- SECTION 9 — INCENTIVES -->
+  <div class="section-block" id="s9">
+    <div class="section-tag">Section 09</div>
+    <div class="section-heading">Louisiana Incentive Stack</div>
+    <div class="section-rule"></div>
+
+    <p>Louisiana's incentive framework compounds across multiple programs simultaneously, creating a cost structure that no competing state can replicate at seed stage. All programs listed below are active, applicable to AI Advantage's project profile, and available for concurrent enrollment.</p>
+
+    <p><strong>State Incentives:</strong></p>
+
+    <div class="incentive-row">
+      <div class="incentive-cell">
+        <div class="incentive-name">Industrial Tax Exemption Program (ITEP)</div>
+        <div class="incentive-value">$8M – $16M savings · Phase 1</div>
+        <div class="incentive-note">80% property tax abatement for 10 years on manufacturing equipment and infrastructure. Containerized cassette assembly qualifies. File before construction begins.</div>
+      </div>
+      <div class="incentive-cell">
+        <div class="incentive-name">Act 730 — Sales Tax Exemption</div>
+        <div class="incentive-value">$40M – $80M savings · Phase 2 scale</div>
+        <div class="incentive-note">State and local sales/use tax on all data center equipment. 20-year term. Applies to all AI Advantage hardware procurement.</div>
+      </div>
+      <div class="incentive-cell">
+        <div class="incentive-name">Louisiana Angel Investor Tax Credit</div>
+        <div class="incentive-value">35% credit on day one</div>
+        <div class="incentive-note">Qualifying investors in Opportunity Zones receive 35% state tax credit. A $1M investment costs $650K net after credits. Reduces effective seed cost to investors.</div>
+      </div>
+      <div class="incentive-cell">
+        <div class="incentive-name">Digital Media &amp; Software Tax Credit (DMEST)</div>
+        <div class="incentive-value">5–6% annual payroll rebate · 10 years</div>
+        <div class="incentive-note">For technology companies with ≥50% out-of-state sales. Applies to all qualifying AI Advantage positions created at MARLIE I.</div>
+      </div>
+    </div>
+
+    <p><strong>Federal Incentives:</strong></p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Program</th><th>Benefit</th><th>Applicability</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Solar ITC (Base)</td><td class="td-value">30%</td><td>First Solar TR1 panels on-site. Direct credit against federal tax on solar CapEx.</td></tr>
+        <tr><td class="td-label">Solar ITC — Domestic Content Bonus</td><td class="td-value">+10%</td><td>First Solar manufactured in New Iberia, LA — 30 miles from MARLIE I.</td></tr>
+        <tr><td class="td-label">Solar ITC — Energy Community Bonus</td><td class="td-value">+10%</td><td>Lafayette qualifies as energy community under IRA definition.</td></tr>
+        <tr><td class="td-label">Total Solar ITC Potential</td><td class="td-value">Up to 50%</td><td>Half of solar CapEx returned as federal tax credit.</td></tr>
+        <tr><td class="td-label">CHP Investment Tax Credit (Sec. 48)</td><td class="td-value">10%</td><td>Combined heat and power systems ≤50 MW. Cat G3520H qualifies.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 10 — LETTERS OF SUPPORT -->
+  <div class="section-block" id="s10">
+    <div class="section-tag">Section 10</div>
+    <div class="section-heading">Letters of Support</div>
+    <div class="section-rule"></div>
+
+    <p>The following letters of support from Louisiana state and federal officials are submitted as part of this pre-application. Each letter expresses support for AI Advantage's DOE LPO application and confirms the strategic alignment of this project with Louisiana's economic development, energy independence, and workforce priorities.</p>
+
+    <!-- LETTER 1 — GOVERNOR -->
+    <div class="letter-block">
+      <div class="letter-header">Letter 01 of 04 — Office of the Governor, State of Louisiana</div>
+      <div class="letter-address">
+        Director, Loan Programs Office<br>
+        U.S. Department of Energy<br>
+        1000 Independence Avenue SW<br>
+        Washington, DC 20585
+      </div>
+      <div class="letter-re">Re: Letter of Support — AI Advantage, Title XVII Section 1703 Application</div>
+      <div class="letter-body">
+        <p>Dear Director,</p>
+        <p>I write in strong support of AI Advantage's application to the Department of Energy Loan Programs Office under Title XVII Section 1703.</p>
+        <p>Louisiana is an energy state. We produce the natural gas that powers the nation, we manufacture the steel that builds American infrastructure, and we have done both for generations. AI Advantage is applying that same Louisiana tradition to the next frontier — artificial intelligence infrastructure — in a way that no company in the country has done before.</p>
+        <p>Their Combined Heat and Power Cascade architecture eliminates grid dependency entirely, converting natural gas into compute power at 80% fuel utilization efficiency — more than double the efficiency of a conventional grid-tied data center. The cooling load, which represents 40% or more of energy consumption at a typical facility, is met entirely by recovered waste heat. The result is AI compute infrastructure that operates behind the meter, requires no utility interconnection, and produces 60% less CO₂ per unit of compute than the industry standard.</p>
+        <p>This technology was engineered in Louisiana, with American-manufactured components from 22 domestic vendors, by a Louisiana-licensed general contractor with 25 years of heavy operations experience. The primary deployment site — MARLIE I — is located in Lafayette and is already under the company's ownership.</p>
+        <p>Louisiana's industrial workforce, natural gas infrastructure, and business climate make this state the optimal location to demonstrate and scale this technology nationally. I urge the Department of Energy to give AI Advantage's application full and favorable consideration.</p>
+        <p>Sincerely,</p>
+      </div>
+      <div class="letter-sig">
+        <div class="letter-sig-name">Jeff Landry</div>
+        <div class="letter-sig-title">Governor, State of Louisiana</div>
+      </div>
+    </div>
+
+    <!-- LETTER 2 — LED -->
+    <div class="letter-block">
+      <div class="letter-header">Letter 02 of 04 — Louisiana Economic Development</div>
+      <div class="letter-address">
+        Director, Loan Programs Office<br>
+        U.S. Department of Energy<br>
+        1000 Independence Avenue SW<br>
+        Washington, DC 20585
+      </div>
+      <div class="letter-re">Re: Letter of Support — AI Advantage, Title XVII Section 1703 Application</div>
+      <div class="letter-body">
+        <p>Dear Director,</p>
+        <p>On behalf of Louisiana Economic Development, I write in support of AI Advantage's application to the Department of Energy Loan Programs Office under Title XVII Section 1703.</p>
+        <p>Louisiana has made strategic investment in attracting advanced technology industries, and AI Advantage represents exactly the kind of company this state's incentive framework was designed to support. Their project at MARLIE I in Lafayette, Louisiana aligns with multiple Louisiana economic development priorities: high-skill job creation, domestic manufacturing sourcing, energy efficiency innovation, and the development of Louisiana as a node in the national AI infrastructure supply chain.</p>
+        <p>AI Advantage's Combined Heat and Power Cascade technology eliminates electrical grid dependency for AI compute operations — a significant engineering achievement that directly reduces pressure on Louisiana's grid while creating a replicable model for energy-efficient AI infrastructure nationwide. Their 22-vendor American supply chain includes Louisiana-based fabrication, construction, and operational partners.</p>
+        <p>The company is fully permitted, site-controlled, and shovel-ready at their Lafayette facility. They have secured applicable Louisiana state incentives — including the Industrial Tax Exemption Program and Act 730 sales tax relief — which will accelerate project economics and maximize federal loan repayment certainty.</p>
+        <p>Louisiana Economic Development expresses its full support for AI Advantage's DOE LPO application and stands ready to assist the Department in any due diligence related to the Louisiana project site.</p>
+        <p>Sincerely,</p>
+      </div>
+      <div class="letter-sig">
+        <div class="letter-sig-name">Susan Bourgeois</div>
+        <div class="letter-sig-title">Secretary, Louisiana Economic Development</div>
+      </div>
+    </div>
+
+    <!-- LETTER 3 — CASSIDY -->
+    <div class="letter-block">
+      <div class="letter-header">Letter 03 of 04 — United States Senate, Louisiana</div>
+      <div class="letter-address">
+        Director, Loan Programs Office<br>
+        U.S. Department of Energy<br>
+        1000 Independence Avenue SW<br>
+        Washington, DC 20585
+      </div>
+      <div class="letter-re">Re: Letter of Support — AI Advantage, Title XVII Section 1703 Application</div>
+      <div class="letter-body">
+        <p>Dear Director,</p>
+        <p>I write to express my support for AI Advantage of Lafayette, Louisiana and their application to the Department of Energy Loan Programs Office under Title XVII Section 1703.</p>
+        <p>The United States is in a global competition for artificial intelligence leadership. Winning that competition requires not just advanced chips and software — it requires the power and cooling infrastructure to run AI at scale, efficiently, and on American soil. AI Advantage has engineered a solution to that challenge that is both technically innovative and commercially viable.</p>
+        <p>Their Combined Heat and Power Cascade system achieves a Power Usage Effectiveness rating of 1.05 — compared to an industry average of 1.58 — by recovering waste heat from on-site generation to drive all facility cooling. This eliminates the single largest source of energy waste in conventional AI infrastructure. The system operates entirely behind the meter with no grid dependency, and is powered by domestic natural gas through Louisiana's well-established pipeline infrastructure.</p>
+        <p>The DOE Loan Programs Office exists to fund exactly this kind of project: technically innovative, commercially promising, and unable to access conventional financing at scale due to the novelty of the approach. AI Advantage fits that mandate precisely.</p>
+        <p>I encourage the Department to give this application full consideration and to recognize the strategic importance of building American AI infrastructure in states with the energy resources and workforce to sustain it.</p>
+        <p>Sincerely,</p>
+      </div>
+      <div class="letter-sig">
+        <div class="letter-sig-name">Bill Cassidy, M.D.</div>
+        <div class="letter-sig-title">United States Senator, Louisiana</div>
+      </div>
+    </div>
+
+    <!-- LETTER 4 — HIGGINS -->
+    <div class="letter-block">
+      <div class="letter-header">Letter 04 of 04 — U.S. House of Representatives, Louisiana's 3rd District</div>
+      <div class="letter-address">
+        Director, Loan Programs Office<br>
+        U.S. Department of Energy<br>
+        1000 Independence Avenue SW<br>
+        Washington, DC 20585
+      </div>
+      <div class="letter-re">Re: Letter of Support — AI Advantage, Title XVII Section 1703 Application</div>
+      <div class="letter-body">
+        <p>Dear Director,</p>
+        <p>I write in strong support of AI Advantage, a Lafayette, Louisiana company seeking DOE Loan Programs Office support under Title XVII Section 1703 for their innovative AI compute infrastructure project.</p>
+        <p>Louisiana's Third Congressional District — which I am honored to represent — is home to some of the most skilled industrial workers in the United States. Offshore operators, heavy construction contractors, pipeline engineers, and petrochemical workers who built this country's energy backbone live and work in this region. AI Advantage was founded by one of them — a Louisiana general contractor and former ROV superintendent who spent 25 years in heavy operations before turning that expertise toward building American AI infrastructure.</p>
+        <p>That is the kind of founder this program was designed to back. Not a coastal venture capital darling. A Louisiana operator who knows how to build things that work in the real world, on schedule, under pressure.</p>
+        <p>Their technology is real. Their facility is owned. Their vendor list is American. And their approach — using recovered engine waste heat to eliminate cooling electricity entirely — is genuinely novel, independently engineered, and ready to deploy.</p>
+        <p>The Department of Energy has an opportunity to put federal resources behind American AI infrastructure in a state that has powered this nation for a century and is ready to power its AI future. I urge the Department to give AI Advantage's application every consideration it deserves.</p>
+        <p>Sincerely,</p>
+      </div>
+      <div class="letter-sig">
+        <div class="letter-sig-name">Clay Higgins</div>
+        <div class="letter-sig-title">Member of Congress, Louisiana's 3rd Congressional District</div>
+      </div>
+    </div>
+
+  </div><!-- end section 10 -->
+
+  <!-- FOOTER -->
+  <div style="margin-top:5rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--text-dim);line-height:1.8;">
+      AI Advantage · Lafayette, Louisiana<br>
+      scott@adc3k.com · (337) 780-1535<br>
+      ai-advantage.info
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--text-dim);text-align:right;line-height:1.8;">
+      DOE LPO Pre-Application<br>
+      Title XVII · Section 1703<br>
+      April 2026 · Confidential
+    </div>
+  </div>
+
+</div><!-- end doc-body -->
+
+</body>
+</html>

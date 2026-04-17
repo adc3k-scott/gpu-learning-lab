@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Louisiana — AI Advantage / ADC</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: #161616;
+  --bg-card-alt: #1a1a1a;
+  --bg-table-header: #1e1e1e;
+  --bg-table-row-alt: #131313;
+  --gold: #c8962a;
+  --gold-dim: #9a7420;
+  --gold-bright: #e8b84a;
+  --gold-glow: rgba(200,150,42,0.15);
+  --green: #4caf50;
+  --green-dim: rgba(76,175,80,0.12);
+  --blue: #2980b9;
+  --blue-dim: rgba(41,128,185,0.12);
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --purple: #9b59b6;
+  --purple-dim: rgba(155,89,182,0.12);
+  --red: #c0392b;
+  --text-primary: #e0ddd4;
+  --text-secondary: #8a8780;
+  --text-tertiary: #5a5850;
+  --border: #2a2a28;
+  --border-light: #333330;
+  --font-display: 'Oswald', sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(200,150,42,0.05) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(200,150,42,0.02) 40px, rgba(200,150,42,0.02) 41px);
+  pointer-events: none;
+}
+.hero-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-badge::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+.hero-body {
+  max-width: 680px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+.section-title span { color: var(--gold); }
+.section-body {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.85;
+  margin-bottom: 28px;
+  max-width: 780px;
+}
+.section-body strong { color: var(--text-primary); }
+
+/* ── STAT GRID ── */
+.stat-grid {
+  display: grid;
+  gap: 2px;
+  margin: 24px 0;
+}
+.stat-grid-2 { grid-template-columns: 1fr 1fr; }
+.stat-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.stat-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+.stat-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+.stat-card-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1.0;
+  margin-bottom: 6px;
+}
+.stat-card-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+.stat-card.gold .stat-card-value { color: var(--gold); }
+.stat-card.green .stat-card-value { color: var(--green); }
+.stat-card.amber .stat-card-value { color: var(--amber); }
+.stat-card.red .stat-card-value { color: var(--red); }
+
+/* ── INFO PANELS ── */
+.panel-grid {
+  display: grid;
+  gap: 2px;
+  margin: 20px 0;
+}
+.panel-grid-2 { grid-template-columns: 1fr 1fr; }
+.panel-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+}
+.panel-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.panel-badge.gold { color: var(--gold); background: var(--gold-glow); border: 1px solid rgba(200,150,42,0.3); }
+.panel-badge.green { color: var(--green); background: var(--green-dim); border: 1px solid rgba(76,175,80,0.3); }
+.panel-badge.blue { color: var(--blue); background: var(--blue-dim); border: 1px solid rgba(41,128,185,0.3); }
+.panel-badge.amber { color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(245,166,35,0.3); }
+.panel-badge.purple { color: var(--purple); background: var(--purple-dim); border: 1px solid rgba(155,89,182,0.3); }
+
+.panel h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.panel p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.panel p strong { color: var(--text-primary); }
+
+/* Border-top accent */
+.panel.accent-gold { border-top: 3px solid var(--gold); }
+.panel.accent-green { border-top: 3px solid var(--green); }
+.panel.accent-blue { border-top: 3px solid var(--blue); }
+.panel.accent-amber { border-top: 3px solid var(--amber); }
+.panel.accent-purple { border-top: 3px solid var(--purple); }
+
+/* ── CALLOUT BOX ── */
+.callout {
+  background: linear-gradient(135deg, rgba(200,150,42,0.07) 0%, rgba(200,150,42,0.02) 100%);
+  border: 1px solid var(--gold-dim);
+  border-radius: 4px;
+  padding: 28px 32px;
+  margin: 24px 0;
+}
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.callout p {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.85;
+}
+.callout p strong { color: var(--gold-bright); }
+
+/* ── INCENTIVE GROUPS ── */
+.incentive-group-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.incentive-group-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+}
+.incentive-group-label.federal { color: var(--blue); }
+.incentive-group-label.federal::before { background: var(--blue); }
+.incentive-group-label.state { color: var(--green); }
+.incentive-group-label.state::before { background: var(--green); }
+.incentive-group-label.local { color: var(--purple); }
+.incentive-group-label.local::before { background: var(--purple); }
+
+/* ── COUNTDOWN ── */
+.countdown-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin: 24px 0;
+}
+.countdown-card {
+  background: #1a0e0e;
+  border: 1px solid #3a2020;
+  padding: 24px;
+  text-align: center;
+}
+.countdown-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+}
+.countdown-timer {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.countdown-note {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* ── INDUSTRY GRID ── */
+.industry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  margin: 20px 0;
+}
+.industry-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.industry-card h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.industry-card p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── POWER STACK ── */
+.power-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin: 20px 0;
+}
+
+/* ── FOOTER ── */
+.report-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+  margin-top: 0;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+}
+.footer-legal {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.6;
+  text-align: right;
+}
+.footer-nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.footer-nav a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-nav a:hover { color: var(--gold); }
+
+@media (max-width: 700px) {
+  .container { padding: 0 20px; }
+  .hero h1 { font-size: 32px; }
+  .stat-grid-2, .stat-grid-3, .stat-grid-4,
+  .panel-grid-2, .panel-grid-3,
+  .power-grid, .countdown-grid,
+  .industry-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-legal { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div style="position:fixed;top:64px;left:16px;z-index:9999">
+  <a href="/" style="display:inline-flex;align-items:center;gap:8px;color:#e8e8e8;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;padding:8px 16px;border:1px solid #555;border-radius:3px;background:rgba(10,10,10,0.9)" onmouseover="this.style.background='#c9a84c';this.style.color='#000';this.style.borderColor='#c9a84c'" onmouseout="this.style.background='rgba(10,10,10,0.9)';this.style.color='#e8e8e8';this.style.borderColor='#555'">&#8592; Home</a>
+</div>
+
+<!-- ══════════════════════════════════════ HERO ══ -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">Strategic Advantage</div>
+    <h1>Why <span>Louisiana</span></h1>
+    <div class="hero-sub">Powered by geography. Priced at the source.</div>
+    <p class="hero-body">
+      Louisiana isn't just where AI Advantage operates — it's <em>why</em> AI Advantage operates. Industrial infrastructure, energy economics, geography, and a stacked incentive environment make it the best state in the country to build AI compute infrastructure. This page explains every advantage in plain terms.
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ SECTION 01 — POWER ══ -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">01 — Power Economics</div>
+    <div class="section-title">40 Miles from Henry Hub. <span>That Changes Everything.</span></div>
+    <p class="section-body">
+      Every natural gas contract in North America prices relative to <strong>Henry Hub in Erath, Louisiana</strong> — the global benchmark since 1990. Operators in Virginia or Texas pay Henry Hub price <em>plus</em> a basis differential for transport. <strong>We pay the benchmark price itself.</strong> Our basis differential is near zero.
+    </p>
+
+    <!-- Hub explanation -->
+    <div class="stat-grid stat-grid-2">
+      <div class="panel" style="background:#0d1a0d;border:1px solid #1a3a1a">
+        <div class="panel-badge green">Henry Hub — Erath, Louisiana</div>
+        <h3 style="color:var(--text-primary);font-size:16px;margin-top:8px">The pricing benchmark for every gas molecule in North America.</h3>
+        <p style="margin-top:10px">Interconnects <strong>13 pipelines</strong> — 9 interstate, 4 intrastate — with <strong>1.8 billion cubic feet/day</strong> throughput. Direct connections to salt dome storage caverns. The most interconnected gas hub on the planet. Global LNG contracts now index to Henry Hub.</p>
+      </div>
+      <div class="panel" style="background:#0d120d;border:1px solid #1a2a1a">
+        <div class="panel-badge gold">What "At The Source" Means</div>
+        <h3 style="color:var(--text-primary);font-size:16px;margin-top:8px">Everyone else pays transport. We don't.</h3>
+        <p style="margin-top:10px">Gas price anywhere = Henry Hub spot + basis differential + pipeline tariffs. Northeast operators pay <strong style="color:var(--amber)">$0.50–$2.00+/MMBtu</strong> on top of Henry Hub just for transport. South Louisiana basis differential: <strong style="color:var(--green)">near zero or negative</strong>. ADC sites sit on existing Atmos Energy infrastructure. Gas is already there.</p>
+      </div>
+    </div>
+
+    <!-- Cost comparison -->
+    <div class="stat-grid stat-grid-4" style="margin-top:2px">
+      <div class="stat-card green" style="background:#0d1a0d;border:1px solid #1a3a1a">
+        <div class="stat-card-label">ADC — Henry Hub</div>
+        <div class="stat-card-value">3–5¢</div>
+        <div class="stat-card-note">per kWh — behind the meter</div>
+      </div>
+      <div class="stat-card" style="background:var(--bg-card)">
+        <div class="stat-card-label">Texas — ERCOT Grid</div>
+        <div class="stat-card-value" style="color:var(--text-primary)">8¢</div>
+        <div class="stat-card-note">per kWh + spike risk</div>
+      </div>
+      <div class="stat-card amber" style="background:#1a1000;border:1px solid #3a2800">
+        <div class="stat-card-label">Virginia — Data Center Alley</div>
+        <div class="stat-card-value">10–12¢</div>
+        <div class="stat-card-note">rates up 20–30%</div>
+      </div>
+      <div class="stat-card red" style="background:#1a0a0a;border:1px solid #3a1515">
+        <div class="stat-card-label">California</div>
+        <div class="stat-card-value">27¢</div>
+        <div class="stat-card-note">commercial rate</div>
+      </div>
+    </div>
+
+    <!-- Pipeline stats -->
+    <div class="stat-grid stat-grid-4" style="margin-top:28px">
+      <div class="stat-card gold">
+        <div class="stat-card-label">Henry Hub Throughput</div>
+        <div class="stat-card-value" style="font-size:28px">1.8 <span style="font-size:16px">Bcf/d</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Interconnected Pipelines</div>
+        <div class="stat-card-value" style="color:var(--text-primary)">13</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-card-label">MARLIE 1 to Henry Hub</div>
+        <div class="stat-card-value" style="font-size:28px">40 <span style="font-size:16px">mi</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Price Benchmark History</div>
+        <div class="stat-card-value" style="color:var(--text-primary);font-size:28px">35 <span style="font-size:16px">yr</span></div>
+      </div>
+    </div>
+
+    <!-- The math -->
+    <div class="callout">
+      <div class="callout-label">The Math — Why This Matters at Scale</div>
+      <p>
+        A 2 MW AI facility running 24/7 consumes ~17,500 MWh per year. At <strong>$0.04/kWh</strong> (Henry Hub genset), that's <strong>$700K/year</strong> in energy cost. The same facility in Virginia at $0.11/kWh pays <strong style="color:var(--red)">$1.93M/year</strong>. That's a <strong>$1.2M annual energy advantage</strong> — recurring, compounding, and widening as grid rates climb. And unlike grid-dependent operators facing <strong>4+ year interconnection queues</strong>, on-site natural gas generation bypasses the grid queue entirely.
+      </p>
+    </div>
+
+    <!-- Power stack -->
+    <div class="section-label" style="margin-top:36px">On-Site Power Stack</div>
+    <div class="panel-grid panel-grid-2" style="margin-top:14px">
+      <div class="panel accent-green">
+        <div class="panel-badge green">Bloom SOFC</div>
+        <h3>Primary Generation</h3>
+        <p>Bloom SOFC converts natural gas to 800V DC direct. 54% electrical efficiency. No inverter, no rectifier, no AC anywhere. Atmos Energy supply at Henry Hub pricing — no utility middleman, no rate increases, no demand charges.</p>
+      </div>
+      <div class="panel accent-amber">
+        <div class="panel-badge amber">Cat G3520H</div>
+        <h3>Field &amp; Bridge Power</h3>
+        <p>Natural gas reciprocating genset (2,507 kW continuous) paired with an Eaton AC-DC rectifier skid that feeds the same 800V DC bus. Bridges Bloom allocation gaps. N+1 at any site. No diesel — same Atmos/Henry Hub gas supply.</p>
+      </div>
+      <div class="panel accent-gold">
+        <div class="panel-badge gold">First Solar</div>
+        <h3>Daytime Offset</h3>
+        <p>Rooftop solar panels manufactured in New Iberia, Louisiana — 30 miles from our sites. Reduces fuel burn during peak daylight hours. Supports ESG reporting for enterprise customers. DC-direct integration at 97% efficiency.</p>
+      </div>
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">LFP BESS</div>
+        <h3>DC-Coupled Bridge</h3>
+        <p>DC-coupled LFP battery (4-hour minimum, Hitachi AMPS PCS) provides instant failover during any source transition. Zero perceived downtime to hosted workloads. Millisecond-class response.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ SECTION 02 — INCENTIVES ══ -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">02 — Government Incentive Stack</div>
+    <div class="section-title">Federal, State, and Local — <span>Stacked in Our Favor.</span></div>
+    <p class="section-body">
+      Louisiana has the most AI-infrastructure-friendly incentive environment in the country. These aren't theoretical — they are active programs with proven precedent, and ADC qualifies for multiple layers simultaneously. These programs stack: the same project can access federal, state, and local incentives concurrently.
+    </p>
+
+    <!-- FEDERAL -->
+    <div class="incentive-group-label federal">Federal Programs</div>
+    <div class="panel-grid panel-grid-2">
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">OBBBA — Signed July 4, 2025</div>
+        <h3>100% Bonus Depreciation</h3>
+        <p>Full immediate expensing of all GPU servers, networking hardware, cooling systems, and tangible property with class life of 20 years or less. <strong>Permanent. No application required.</strong> Retroactive to property acquired after January 19, 2025. First time Congress has made 100% bonus depreciation permanent.</p>
+      </div>
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">Opportunity Zones 2.0</div>
+        <h3>Tax-Free Capital Gains</h3>
+        <p>MARLIE 1 sits in a <strong>designated Opportunity Zone tract</strong> on the Evangeline Thruway corridor. Capital gains invested through Qualified Opportunity Funds are tax-deferred; gains held 10+ years are <strong style="color:var(--green)">tax-free</strong>. OBBBA made this permanent and added a 30% rural step-up bonus.</p>
+      </div>
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">New Markets Tax Credits</div>
+        <h3>39% Credit Over 7 Years</h3>
+        <p>Equity investments channeled through Community Development Entities into low-income census tracts earn a <strong>39% federal tax credit</strong> claimed over 7 years. OBBBA permanently extended the program with a 20% increase in rural allocations. OZ tracts overlap — double-stack eligible.</p>
+      </div>
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">IRA Solar + Battery ITC</div>
+        <h3>30% Investment Tax Credit</h3>
+        <p>30% federal credit on solar and battery storage installations. <strong style="color:var(--amber)">Construction must begin before July 4, 2026</strong> — OBBBA phases out clean energy credits after that date. Narrow window. ADC's solar/battery installations are positioned to qualify.</p>
+      </div>
+    </div>
+    <div class="panel-grid panel-grid-2">
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">CHIPS Act</div>
+        <h3>Domestic AI Infrastructure</h3>
+        <p>$50 billion in federal funding for domestic semiconductor and AI infrastructure. ADC's 100% US hardware supply chain (NVIDIA Texas manufacturing, Vertiv Ohio cooling) positions it for FEOC-clean federal procurement channels and EDA Tech Hub designation.</p>
+      </div>
+      <div class="panel accent-blue">
+        <div class="panel-badge blue">BEAD Broadband</div>
+        <h3>$1.355 Billion to Louisiana</h3>
+        <p>Louisiana received <strong>$1.355B</strong> in BEAD broadband funding — 8th largest allocation in the nation. First state approved (November 2025). ADC as an anchor fiber customer strengthens LUS Fiber's case for BEAD-funded backhaul expansion along the Evangeline corridor.</p>
+      </div>
+    </div>
+
+    <!-- STATE -->
+    <div class="incentive-group-label state">State of Louisiana</div>
+    <div class="panel-grid panel-grid-2">
+      <div class="panel accent-green">
+        <div class="panel-badge green">Quality Jobs Rebate</div>
+        <h3>6% Payroll Rebate — 10 Years</h3>
+        <p>Up to <strong>6% rebate on annual gross payroll</strong> for 10 years, plus a 1.5% project facility expense rebate on total capital investment. Software is an eligible industry. Only 5 new jobs required for companies with 50 or fewer employees. Active program through LED.</p>
+      </div>
+      <div class="panel accent-green">
+        <div class="panel-badge green">Act 730 — Digital Infrastructure</div>
+        <h3>20-Year Tax Exemption</h3>
+        <p>State and local sales/use tax exemption on AI factory equipment — servers, cooling, cabling, construction materials, modular units. <strong>20-year initial term, 10-year renewal.</strong> Enacted 2024 (HB 827). Requires $200M capital investment and 50 permanent jobs at full buildout.</p>
+      </div>
+      <div class="panel accent-green">
+        <div class="panel-badge green">Restoration Tax Abatement</div>
+        <h3>10-Year Property Tax Abatement</h3>
+        <p>Up to <strong>10-year abatement of property taxes</strong> on renovations to existing commercial structures in development districts or Opportunity Zones. Directly applicable to the Trappeys Cannery conversion. File before construction starts.</p>
+      </div>
+      <div class="panel accent-green">
+        <div class="panel-badge green">Enterprise Zone</div>
+        <h3>$3,500/Job + Sales Tax Rebate</h3>
+        <p>One-time credit of <strong>$3,500 per net new job</strong> plus rebate of state sales/use taxes on qualifying equipment OR a 1.5% refundable investment tax credit. Minimum 5 permanent net new jobs within 24 months. 50% of hires from targeted groups.</p>
+      </div>
+      <div class="panel accent-green">
+        <div class="panel-badge amber">Angel Investor Tax Credit</div>
+        <h3>25–35% Credit on Investment</h3>
+        <p><strong>25% tax credit</strong> on investments in LED-certified Louisiana businesses. Increased to <strong style="color:var(--green)">35%</strong> in qualifying parishes. Up to $720K per business per year. Eligible sectors include technology and energy. <strong style="color:var(--amber)">Expires June 30, 2026</strong> — first-come, first-served.</p>
+      </div>
+      <div class="panel accent-green">
+        <div class="panel-badge green">R&amp;D Tax Credit</div>
+        <h3>Up to 30% on R&amp;D Spend</h3>
+        <p><strong>30% credit</strong> for companies with fewer than 50 employees on qualified R&amp;D expenditures in Louisiana. Also 30% on SBIR/STTR grants. $12M annual statewide cap. FY 2025-2026 credits are fully issued — next allocation opens July 1, 2026.</p>
+      </div>
+    </div>
+    <!-- ITEP — full width -->
+    <div class="panel accent-green" style="margin-top:2px">
+      <div class="panel-badge green">ITEP — Industrial Tax Exemption</div>
+      <h3>Up to $8–16M in Tax Savings</h3>
+      <p>Louisiana's Industrial Tax Exemption Program exempts <strong>80% of ad valorem taxes</strong> on qualifying manufacturing and industrial property for 10 years. ADC is pre-qualifying with LED as an emerging technology industry. <strong>Estimated project savings: $8–16M.</strong> Requires Governor's Office of Economic Development approval. File before construction starts.</p>
+    </div>
+
+    <!-- LOCAL -->
+    <div class="incentive-group-label local">Local &amp; Parish Level</div>
+    <div class="panel-grid panel-grid-3">
+      <div class="panel accent-purple">
+        <div class="panel-badge purple">PILOT Agreements</div>
+        <h3>10–40 Year Tax Reduction</h3>
+        <p>Payment-in-lieu-of-taxes through parish Industrial Development Boards. Property titled to the IDB becomes exempt from ad valorem taxes. Precedent set: Hut 8 / West Feliciana Parish — 30-year PILOT, $2.5B AI facility, $90M/year parish revenue.</p>
+      </div>
+      <div class="panel accent-purple">
+        <div class="panel-badge purple">LEDA</div>
+        <h3>Site Selection + Incentive Access</h3>
+        <p>Lafayette Economic Development Authority provides site selection assistance, tax incentive counseling, and workforce development advisory. LEDA serves as the local conduit for state programs (Quality Jobs, ITEP, Enterprise Zone) and facilitates IDB/PILOT structures.</p>
+      </div>
+      <div class="panel accent-purple">
+        <div class="panel-badge purple">IDB Revenue Bonds</div>
+        <h3>Tax-Exempt Financing</h3>
+        <p>Tax-exempt revenue bonds issued through Lafayette Parish IDB. Louisiana Public Facilities Authority has issued over <strong>$12.65 billion</strong> in private activity bonds. 90–120 day process. Requires State Bond Commission and LED approval.</p>
+      </div>
+    </div>
+
+    <!-- Stack summary -->
+    <div class="callout" style="margin-top:24px">
+      <div class="callout-label">Why This Stack Matters</div>
+      <p>
+        These programs <strong>stack</strong>. An AI factory in a Louisiana Opportunity Zone can simultaneously access 100% bonus depreciation (federal), Opportunity Zone tax-free gains (federal), New Markets Tax Credits (federal), Quality Jobs payroll rebates (state), ITEP property tax exemption (state), PILOT property tax reduction (local), and IDB tax-exempt financing (local) — all on the same project. <strong>No other state in the country offers this combination at this cost of power.</strong>
+      </p>
+    </div>
+
+    <!-- Countdown clocks -->
+    <div class="countdown-grid">
+      <div class="countdown-card">
+        <div class="countdown-label">Angel Investor Tax Credit — 25–35% on Investment</div>
+        <div class="countdown-timer" id="countdown-angel">--d --h --m --s</div>
+        <div class="countdown-note">Expires June 30, 2026 — first-come, first-served</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-label">IRA Solar + Battery ITC — 30% Federal Credit</div>
+        <div class="countdown-timer" id="countdown-solar">--d --h --m --s</div>
+        <div class="countdown-note">Construction must begin before July 4, 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ SECTION 03 — INDUSTRIES ══ -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">03 — Industries We Serve</div>
+    <div class="section-title">Gulf Coast Industries Need AI Compute, <span>Locally.</span></div>
+    <p class="section-body">
+      The Gulf Coast produces energy, food, chemicals, and goods that flow to the entire country. Every one of those industries now runs on data — and the AI tools they need require local compute they can trust. Louisiana is not a flyover market. It is a production market.
+    </p>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <h4>Oil &amp; Gas</h4>
+        <p>Seismic processing, pipeline monitoring, drilling optimization, predictive maintenance. Existing industry, new data demands.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Petrochemical</h4>
+        <p>Process optimization, safety monitoring, environmental compliance, digital twin simulation across the Chemical Corridor.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Agriculture</h4>
+        <p>Precision farming, yield prediction, autonomous equipment, crop disease detection across Acadiana's farm belt.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Ports &amp; Logistics</h4>
+        <p>Container tracking, autonomous port operations, supply chain AI, vessel routing. New Orleans/Baton Rouge corridor.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Defense</h4>
+        <p>Sovereign compute requirements. No cloud. On-premise AI for classified and sensitive operations in the Gulf region.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Healthcare</h4>
+        <p>Medical imaging AI, patient data on sovereign infrastructure, clinical decision support — HIPAA-compliant on-site compute.</p>
+      </div>
+      <div class="industry-card">
+        <h4>First Responders</h4>
+        <p>Real-time AI for 911 dispatch, incident command, and emergency management — locally processed, zero cloud latency.</p>
+      </div>
+      <div class="industry-card">
+        <h4>University Research</h4>
+        <p>LSU, UL Lafayette, Tulane — GPU compute for research that currently waits months for national lab access.</p>
+      </div>
+      <div class="industry-card">
+        <h4>Energy Trading</h4>
+        <p>Commodity algorithms requiring low-latency Gulf Coast compute. Millisecond-sensitive financial operations near Henry Hub.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ CTA ══ -->
+<div class="section" style="border-bottom:none;padding-bottom:80px">
+  <div class="container" style="text-align:center">
+    <div class="section-label" style="justify-content:center;display:flex">Learn More</div>
+    <div class="section-title" style="max-width:560px;margin:0 auto 20px">Want to See the Full Engineering Stack?</div>
+    <p style="color:var(--text-secondary);font-size:14px;max-width:520px;margin:0 auto 32px;line-height:1.8">
+      The CHP Prime Mover analysis breaks down exactly how natural gas converts to cold GPU racks — Cat G3520K vs Bloom Energy SOFC, cooling tons, efficiency numbers, and capital cost comparison.
+    </p>
+    <a href="/chp-prime-mover" style="display:inline-block;font-family:var(--font-display);font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--bg-primary);background:var(--gold);padding:14px 40px;text-decoration:none;border-radius:2px;transition:background 0.2s" onmouseover="this.style.background='var(--gold-bright)'" onmouseout="this.style.background='var(--gold)'">CHP Prime Mover Analysis &rarr;</a>
+    <span style="display:inline-block;margin-left:16px">
+      <a href="/" style="display:inline-block;font-family:var(--font-display);font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--gold);border:1px solid var(--gold-dim);padding:14px 40px;text-decoration:none;border-radius:2px" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gold-dim)'">Back to Home &rarr;</a>
+    </span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ FOOTER ══ -->
+<div class="report-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="logo-text">AI Advantage</div>
+        <div class="footer-nav">
+          <a href="/">Home</a>
+          <a href="/learn">Learn</a>
+          <a href="/chp-prime-mover">CHP Analysis</a>
+          <a href="/investors">Investors</a>
+          <a href="/resume">Resume</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        Scott Tomsu — Lafayette, Louisiana<br>
+        scott@adc3k.com &nbsp;&middot;&nbsp; (337) 780-1535
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateCountdown(elementId, targetDate) {
+  function tick() {
+    const now = new Date();
+    const diff = targetDate - now;
+    if (diff <= 0) {
+      document.getElementById(elementId).textContent = 'EXPIRED';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById(elementId).textContent =
+      String(d).padStart(2,'0') + 'd ' +
+      String(h).padStart(2,'0') + 'h ' +
+      String(m).padStart(2,'0') + 'm ' +
+      String(s).padStart(2,'0') + 's';
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+updateCountdown('countdown-angel', new Date('2026-06-30T23:59:59'));
+updateCountdown('countdown-solar', new Date('2026-07-04T23:59:59'));
+</script>
+
+</body>
+</html>

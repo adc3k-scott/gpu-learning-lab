@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn How AI Factories Work | AI Advantage</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Code+Pro:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-alt: #161616;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.12);
+  --gold-border: rgba(201,168,76,0.3);
+  --green: #4caf50;
+  --green-dim: rgba(76,175,80,0.10);
+  --amber: #e8a020;
+  --amber-dim: rgba(232,160,32,0.10);
+  --blue: #2980b9;
+  --red: #c0392b;
+  --text-primary: #e0ddd4;
+  --text-secondary: #8a8780;
+  --text-tertiary: #5a5850;
+  --border: #2a2a28;
+  --border-light: #333330;
+  --font-display: 'Oswald', sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(12px);
+}
+.nav-home {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  margin-right: 12px;
+}
+.nav-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-btn:hover, .nav-btn.active { color: var(--gold); background: var(--gold-dim); }
+.nav-btn--gold { color: var(--gold); border: 1px solid var(--gold-border); }
+
+/* ── LAYOUT ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-badge::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); }
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1.0;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.75;
+}
+
+/* ── SECTION ── */
+.section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+.section:last-of-type { border-bottom: none; }
+.sec-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+.sec-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  margin-bottom: 22px;
+  line-height: 1.1;
+}
+.sec-title span { color: var(--gold); }
+
+/* ── BODY TEXT ── */
+p.bd {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 14px;
+  max-width: 820px;
+}
+p.bd strong { color: var(--text-primary); }
+.hl { color: var(--green); font-weight: 600; }
+.hg { color: var(--gold); font-weight: 600; }
+.hr { color: var(--red); font-weight: 600; }
+.ha { color: var(--blue); font-weight: 600; }
+
+/* ── CALLOUT BOX ── */
+.callout {
+  background: linear-gradient(135deg, var(--gold-dim) 0%, transparent 100%);
+  border: 1px solid var(--gold-border);
+  border-left: 3px solid var(--gold);
+  border-radius: 3px;
+  padding: 22px 26px;
+  margin: 22px 0;
+}
+.callout-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.callout p {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.85;
+}
+.callout p strong { color: var(--gold); }
+.callout.green { border-color: rgba(76,175,80,0.4); border-left-color: var(--green); background: var(--green-dim); }
+.callout.green .callout-label { color: var(--green); }
+.callout.green p strong { color: var(--green); }
+
+/* ── TWO/THREE-COL BOXES ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 26px 0; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin: 26px 0; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin: 26px 0; }
+.box {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  padding: 22px;
+}
+.box-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.box-tag.gold { color: var(--gold); }
+.box-tag.green { color: var(--green); }
+.box-tag.amber { color: var(--amber); }
+.box-tag.blue { color: var(--blue); }
+.box-tag.red { color: var(--red); }
+.box-tag.yellow { color: #f5c518; }
+.box h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.box p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.box p strong { color: var(--text-primary); }
+
+/* top-accent borders */
+.box.t-gold { border-top: 2px solid var(--gold); }
+.box.t-green { border-top: 2px solid var(--green); }
+.box.t-amber { border-top: 2px solid var(--amber); }
+.box.t-red { border-top: 2px solid var(--red); }
+.box.t-yellow { border-top: 2px solid #f5c518; }
+.box.t-blue { border-top: 2px solid var(--blue); }
+
+/* ── BIG NUMBERS ── */
+.big-num { font-family: var(--font-display); font-weight: 700; font-size: 42px; line-height: 1.1; margin-bottom: 4px; }
+.big-num.gold { color: var(--gold); }
+.big-num.green { color: var(--green); }
+.big-num.amber { color: var(--amber); }
+.big-num.red { color: var(--red); }
+
+/* ── STAT BLOCKS ── */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 26px 0;
+}
+.stat-item {
+  padding: 22px 16px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-val { font-family: var(--font-display); font-weight: 700; font-size: 32px; color: var(--text-primary); }
+.stat-lbl { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ── COMPARISON TABLE ── */
+.comp-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+.comp-table th {
+  background: #1a1a18;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+.comp-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  vertical-align: top;
+}
+.comp-table td:first-child { font-family: var(--font-body); color: var(--text-secondary); }
+.comp-table tr:nth-child(even) td { background: #0d0d0b; }
+.win-cat { color: #f5c518; font-weight: 600; }
+.win-bloom { color: var(--green); font-weight: 600; }
+.win-gold { color: var(--gold); font-weight: 600; }
+.lose { color: var(--red); }
+
+/* ── FAQ ── */
+.faq { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; overflow: hidden; }
+.faq-q { padding: 16px 20px; font-size: 15px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.faq-q:hover { background: rgba(255,255,255,0.02); }
+.faq-q::after { content: '+'; font-family: var(--font-mono); font-size: 20px; color: var(--gold); transition: transform 0.2s; flex-shrink: 0; margin-left: 12px; }
+.faq.open .faq-q::after { transform: rotate(45deg); }
+.faq-a { padding: 0 20px 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.8; display: none; }
+.faq.open .faq-a { display: block; }
+
+/* ── CTA ── */
+.cta-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 40px; text-align: center; margin: 48px 0 0; }
+.cta-block h3 { font-family: var(--font-display); font-weight: 700; font-size: 26px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
+.cta-block p { font-size: 14px; color: var(--text-secondary); max-width: 520px; margin: 0 auto 22px; line-height: 1.75; }
+.btn-gold { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: #000; background: var(--gold); padding: 14px 36px; border-radius: 3px; text-decoration: none; transition: background 0.2s; }
+.btn-gold:hover { background: #e0be60; }
+.btn-outline { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border); padding: 10px 24px; border-radius: 3px; text-decoration: none; margin-left: 10px; transition: background 0.2s; }
+.btn-outline:hover { background: var(--gold-dim); }
+
+/* ── FOOTER ── */
+.footer { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; margin-top: 48px; }
+.footer .logo { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.footer p { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.5px; }
+.footer a { color: var(--text-secondary); text-decoration: none; }
+.footer a:hover { color: var(--gold); }
+
+/* ── NOTE STRIP ── */
+.note { padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 3px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin: 18px 0; }
+.note strong { color: var(--amber); }
+
+/* ── VS BLOCK ── */
+.vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 26px 0; }
+.vs-block { background: var(--bg-card-alt); border: 1px solid var(--border); padding: 26px; }
+.vs-block.old { border-top: 2px solid var(--red); }
+.vs-block.new { border-top: 2px solid var(--green); }
+.vs-tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.vs-tag.old { color: var(--red); }
+.vs-tag.new { color: var(--green); }
+.vs-block h3 { font-family: var(--font-display); font-weight: 600; font-size: 20px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
+.vs-block p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+@media (max-width: 760px) {
+  .container { padding: 0 18px; }
+  .hero h1 { font-size: 36px; }
+  .g2, .g3, .g4, .stat-strip, .vs-grid { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .site-nav { padding: 0 14px; }
+  .nav-btn { font-size: 10px; padding: 5px 8px; }
+  .btn-outline { margin-left: 0; margin-top: 8px; display: block; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div style="position:fixed;top:64px;left:16px;z-index:9999">
+  <a href="/" style="display:inline-flex;align-items:center;gap:8px;color:#e8e8e8;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;padding:8px 16px;border:1px solid #555;border-radius:3px;background:rgba(10,10,10,0.9)" onmouseover="this.style.background='#c9a84c';this.style.color='#000';this.style.borderColor='#c9a84c'" onmouseout="this.style.background='rgba(10,10,10,0.9)';this.style.color='#e8e8e8';this.style.borderColor='#555'">&#8592; Home</a>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav">
+  <a href="/" class="nav-home">AI Advantage</a>
+  <a href="/chp-prime-mover" target="_blank" class="nav-btn">CHP Analysis</a>
+  <a href="/chp-block-diagram" target="_blank" class="nav-btn">Block Diagram</a>
+  <a href="/investors" target="_blank" class="nav-btn">Investors</a>
+  <a href="/resume" target="_blank" class="nav-btn">Resume</a>
+  <a href="/learn" class="nav-btn active">Learn</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">Plain-Language Education</div>
+    <h1>How AI Factories <span>Work</span></h1>
+    <p class="hero-sub">You've heard the term. Nobody explained it. This page walks through everything — what an AI factory is, what's inside one, why power and cooling are the hardest problems, and why the technology choices we made are different from everyone else. No engineering degree required.</p>
+  </div>
+</div>
+
+<!-- ═══ 01 — CPU vs GPU ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">01</div>
+    <div class="sec-title">Why Old Data Centers <span>Can't Do What We Do</span></div>
+    <p class="bd">For 30 years, data centers were built around <span class="hr">CPUs</span> — the main chip inside your laptop. A CPU is really smart. It handles complex tasks, one at a time, very fast. It's like one expert working alone.</p>
+    <p class="bd">AI doesn't work that way. Training an AI model requires millions of simple math problems happening <em>at the same time</em>. That's what a <span class="hl">GPU</span> does. A GPU has thousands of cores running in parallel. It's like having an army instead of one expert.</p>
+    <p class="bd">That switch from CPU to GPU changes everything about the building the computers live in. A CPU rack uses about 15 kilowatts. A GPU rack uses 40 to 200+ kilowatts. That's not a bigger version of the same thing — it's a completely different machine with completely different power, cooling, and networking requirements.</p>
+
+    <div class="g2">
+      <div class="box t-red">
+        <div class="box-tag red">Old Data Centers — CPU Era</div>
+        <div class="big-num amber" style="font-size:30px;">~15 kW per rack</div>
+        <p>Designed for the internet. One task at a time. Air cooled. Works fine for web pages, email, and databases. <strong>Try to run AI on it and you're fighting the building.</strong> The power wasn't designed for it. The cooling wasn't designed for it. The network wasn't designed for it.</p>
+      </div>
+      <div class="box t-green">
+        <div class="box-tag green">AI Factories — GPU Era</div>
+        <div class="big-num green" style="font-size:30px;">40–200+ kW per rack</div>
+        <p>Built for AI from day one. Thousands of cores working at the same time. Liquid cooled. NVIDIA-integrated. Every piece — power, cooling, networking — designed together. <strong>No retrofits. No band-aids. Purpose-built.</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 02 — WHAT IS AN AI FACTORY ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">02</div>
+    <div class="sec-title">What Is an <span>AI Factory?</span></div>
+    <p class="bd">An AI factory is a building — or a set of containers — filled with powerful computers that run 24 hours a day, 7 days a week. Those computers do work that keeps the modern world running.</p>
+    <p class="bd">Every time you open your phone, check your bank account, stream a movie, use GPS, ask ChatGPT something, or pay with a card — your request travels to a server in an AI factory, gets processed in milliseconds, and comes back to you. You never see it. It's always there.</p>
+    <div class="callout">
+      <div class="callout-label">The Best Analogy</div>
+      <p>Think of it like a power plant — but for information. A power plant burns fuel and turns it into electricity that flows to every home. An AI factory <strong>takes electricity and turns it into computing power</strong> that flows to every device. Without power plants, no lights. Without AI factories, no internet, no AI, no digital economy.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03 — WHAT'S INSIDE ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">03</div>
+    <div class="sec-title">Four Things Every <span>AI Factory Needs</span></div>
+    <p class="bd">No matter the size — a shipping container or a 200-acre campus — every AI factory needs the same four things.</p>
+    <div class="g4" style="grid-template-columns:repeat(2,1fr)">
+      <div class="box t-gold">
+        <div class="box-tag gold">01</div>
+        <h3>Servers</h3>
+        <p>Rows of computers stacked in metal cabinets called racks. Each rack holds multiple GPU servers. Each server holds multiple GPU chips. This is where the actual work happens.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">02</div>
+        <h3>Power</h3>
+        <p>Massive electricity. A single GPU rack can draw as much power as 10 to 15 homes. A 10-megawatt AI factory draws as much as a small town. Power is the first problem you have to solve.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">03</div>
+        <h3>Cooling</h3>
+        <p>Without cooling, servers overheat and shut down in minutes. This is the hardest engineering problem in the industry right now. More on this below — it matters more than most people realize.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">04</div>
+        <h3>Network</h3>
+        <p>Fiber optic cables connecting servers to each other and to the internet. Data moves at the speed of light. The network inside an AI factory is more complex than most people expect.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 04 — WHY THEY MATTER ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">04</div>
+    <div class="sec-title">Everything Digital <span>Runs on AI Factories</span></div>
+    <p class="bd">This is not an exaggeration. Pick any part of your day and there's an AI factory behind it.</p>
+    <div class="g4">
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">📱</div>
+        <h3 style="font-size:14px">Your Phone</h3>
+        <p style="font-size:12px">iCloud, Google, Maps, every app on your screen</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🏦</div>
+        <h3 style="font-size:14px">Banking</h3>
+        <p style="font-size:12px">Every card swipe, Venmo transfer, ATM withdrawal</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🏥</div>
+        <h3 style="font-size:14px">Healthcare</h3>
+        <p style="font-size:12px">Medical records, telemedicine, imaging analysis</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🛢️</div>
+        <h3 style="font-size:14px">Oil &amp; Gas</h3>
+        <p style="font-size:12px">Seismic data, pipeline monitoring, drilling decisions</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🤖</div>
+        <h3 style="font-size:14px">AI</h3>
+        <p style="font-size:12px">Every ChatGPT query runs inside an AI factory</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">📺</div>
+        <h3 style="font-size:14px">Streaming</h3>
+        <p style="font-size:12px">Netflix, YouTube, Spotify — all AI factory powered</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🚗</div>
+        <h3 style="font-size:14px">Vehicles</h3>
+        <p style="font-size:12px">GPS, connected cars, autonomous driving systems</p>
+      </div>
+      <div class="box" style="text-align:center;border-top:2px solid var(--gold)">
+        <div style="font-size:28px;margin-bottom:8px">🏛️</div>
+        <h3 style="font-size:14px">Government</h3>
+        <p style="font-size:12px">Military systems, Social Security, 911 dispatch</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 05 — THE HEAT PROBLEM ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">05</div>
+    <div class="sec-title">The #1 Problem <span>Is Heat</span></div>
+    <p class="bd">A single AI chip generates as much heat as a kitchen toaster. Now put 10,000 of them in a building. That's a serious problem.</p>
+    <p class="bd">Old data centers used big air conditioners — massive fans and chiller systems blasting cold air through raised floors and hot aisles. That worked when chips used 15 kW per rack. It doesn't work when chips use 200 kW per rack. <span class="hr">Air simply can't move heat away fast enough.</span> And even when it can, the air conditioning itself eats up 30 to 50 percent of the facility's total power budget. You're spending a third of your electricity bill just keeping the computers cool.</p>
+    <p class="bd"><span class="hl">NVIDIA's solution: liquid cooling built into every rack.</span> Hot water at 45°C runs directly through the rack and pulls heat straight off the chips. It's far more efficient than air. It installs in about 2 hours. And it supports racks that air cooling could never handle.</p>
+
+    <div class="g2">
+      <div class="box t-red" style="text-align:center">
+        <div class="box-tag red">Air Cooled — Industry Average</div>
+        <div class="big-num red">1.4 PUE</div>
+        <p>That means for every 1 kilowatt of computing you do, you spend 0.4 kilowatts just on cooling. <strong>29% of your electric bill goes to cooling, not computing.</strong> Max about 30 kW per rack. Can't support next-generation hardware.</p>
+      </div>
+      <div class="box t-green" style="text-align:center">
+        <div class="box-tag green">NVIDIA Liquid Cooled — Our Facilities</div>
+        <div class="big-num green">1.02 PUE</div>
+        <p>Only 2% overhead. <strong>98% of your electricity goes to actual computing.</strong> Supports 200+ kW per rack. Works with every generation of GPU hardware, now and in the future. The difference at scale is millions of dollars per year.</p>
+      </div>
+    </div>
+    <p class="bd" style="margin-top:8px">PUE stands for Power Usage Effectiveness. It's the standard measure of how efficient a facility is. Lower is better. 1.0 would be perfect — every watt goes to computing, none to overhead. The industry average is 1.3 to 1.5. We run at 1.02. Every point of difference is money that either goes to profit or gets passed to customers as lower pricing.</p>
+  </div>
+</div>
+
+<!-- ═══ 06 — OLD WAY vs NEW WAY ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">06</div>
+    <div class="sec-title">The Old Way vs <span>The New Way</span></div>
+    <p class="bd">The AI factory industry is in the middle of a huge shift in how these facilities get built.</p>
+    <div class="vs-grid">
+      <div class="vs-block old">
+        <div class="vs-tag old">Traditional</div>
+        <h3>The Old Way</h3>
+        <p>Giant warehouse-sized buildings. Custom engineering every time. 18 to 36 months to build. $500 million or more. Air cooled. You have to be in Virginia, Phoenix, or a handful of big markets. Communities get stuck with the power bill and the noise.</p>
+      </div>
+      <div class="vs-block new">
+        <div class="vs-tag new">AI Factory Module</div>
+        <h3>The New Way</h3>
+        <p>NVIDIA-standard racks inside a manufactured module. Liquid cooled. Built in Louisiana. Truck-deliverable. Drop it on a concrete pad, connect power and fiber, and it's operational in weeks — not years. <strong>This is what we build.</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 07 — HARDWARE GENERATIONS ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">07</div>
+    <div class="sec-title">New Hardware Doesn't Just Go Faster — <span>It Goes Smarter</span></div>
+    <p class="bd">Here's something most people don't know: newer AI chips aren't just faster. They do dramatically more work per watt of electricity. This changes the economics of the whole business.</p>
+    <p class="bd">If you build a facility with last year's chips, you're paying for electricity to do 1 unit of work. Our current hardware does 4 units of work for a similar power bill. Next year's hardware — which drops right into our same facilities — does 13 units. Competitors building with old hardware today will be paying a permanent tax on every calculation they run.</p>
+    <div class="g3">
+      <div class="box t-amber">
+        <div class="box-tag amber">2022 — Legacy</div>
+        <div class="big-num amber">1x</div>
+        <h3>Hopper H100</h3>
+        <p>700 watts per chip. Air cooled. 80 GB memory. This chip launched the AI boom. But facilities built around it are <strong>already at a competitive disadvantage</strong> — the cooling and power weren't designed for what came next.</p>
+      </div>
+      <div class="box t-green">
+        <div class="box-tag green">2025–2026 — Current</div>
+        <div class="big-num green">4x</div>
+        <h3>Blackwell Ultra B300</h3>
+        <p>1,400 watts per chip — more power, but <strong>4x more useful work per watt.</strong> 288 GB memory. Requires liquid cooling. This is what we deploy today. More chips doing more work on the same power budget.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">Late 2026 — Next</div>
+        <div class="big-num gold">13x</div>
+        <h3>Vera Rubin R100</h3>
+        <p><strong>13x more efficient</strong> than the chips people are installing right now. Our facilities are designed to accept Rubin as a direct upgrade — same racks, same cooling, same power. <strong>Build once, upgrade for a decade.</strong></p>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-label">Plain English</div>
+      <p>Buying an H100-based facility right now is like buying a gas guzzler the year the electric car came out. It'll run. But you'll pay for it every month. Our facilities are built to accept the next chip generation as a drop-in. The infrastructure investment doesn't go stale.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 08 — OUR POWER STRATEGY ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">08</div>
+    <div class="sec-title">Our Power Strategy — <span>Three Layers</span></div>
+    <p class="bd">Most AI factories plug directly into the electrical grid. When the grid gets stressed — and it will, as AI factories multiply everywhere — their costs go up and reliability goes down. We do it differently.</p>
+
+    <div class="g3">
+      <div class="box t-green">
+        <div class="box-tag green">Layer 1 — Primary</div>
+        <h3>Natural Gas + Solar + Battery</h3>
+        <p>Our main power comes from on-site generation — natural gas engines and fuel cells — backed by solar panels and battery storage. Louisiana sits on top of some of the cheapest natural gas in the world (Henry Hub pricing is set 40 miles from our main site). We generate our own power at wholesale cost. <strong>We're not buying electricity at retail. We're making it.</strong></p>
+      </div>
+      <div class="box t-amber">
+        <div class="box-tag amber">Layer 2 — Backup</div>
+        <h3>Electrical Grid</h3>
+        <p>The grid is our backup, not our plan. We can pull from it if needed. But we don't depend on it. This means we're not competing with homes and businesses for electricity. <strong>We don't drive up anyone's power bill.</strong> The grid is a safety net — one we rarely need.</p>
+      </div>
+      <div class="box t-red">
+        <div class="box-tag red">Layer 3 — Emergency</div>
+        <h3>Diesel Generators</h3>
+        <p>If the gas pipeline goes down <em>and</em> the grid goes down at the same time — like Hurricane Ida, when both were out for weeks — diesel keeps us running. It doesn't depend on pipelines or transmission lines. Just fuel in a tank. <strong>That's the Ida lesson: have something that depends on nothing but what's on your property.</strong></p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Why This Matters to Louisiana</div>
+      <p>AI factories are coming to Louisiana whether anyone likes it or not. The question is whether they drain the grid and raise your power bill — or whether they generate their own power, use the cheapest gas in the country, and treat the grid as a last resort. <strong>We chose the second path.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 09 — THREE TYPES OF ON-SITE POWER ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">09</div>
+    <div class="sec-title">Three Types of <span>On-Site Power</span></div>
+    <p class="bd">When people hear "on-site generator" they picture a diesel unit — fuel tank, engine, done. That's one option, and it's the weakest one. There are two more types that work completely differently. Understanding the difference between them explains our entire power architecture.</p>
+
+    <div class="g3">
+      <div class="box t-amber">
+        <div class="box-tag amber">Type 1 — Emergency Backup Only</div>
+        <h3>Diesel Generator</h3>
+        <p>Burns petroleum diesel. Starts in seconds. Simple to maintain. Those are the advantages — and they stop there.</p>
+        <p style="margin-top:10px">Diesel is expensive per kilowatt-hour. You need a large fuel tank on-site. It creates emissions. And here's the big one: <strong>diesel generators waste all their heat.</strong> The exhaust goes straight up the stack and disappears. There's no way to capture it and use it for anything. That's called "no CHP capability" — we'll explain CHP in a moment.</p>
+        <p style="margin-top:10px"><strong>Our role for diesel: Layer 3 emergency only.</strong> It keeps us running when gas and grid both fail. That's all it does.</p>
+      </div>
+      <div class="box t-yellow">
+        <div class="box-tag yellow">Type 2 — CHP Primary Power</div>
+        <h3>Natural Gas Engine — Cat G3520K</h3>
+        <p>Same basic idea as a diesel — a big piston engine. But it burns <strong>natural gas</strong> instead of diesel. This is a 20-cylinder engine about the size of a shipping container. It makes 2.5 megawatts of electricity per unit.</p>
+        <p style="margin-top:10px">Here's where it gets interesting: the engine runs hot. The jacket water (engine coolant) and the exhaust together produce <strong>an enormous amount of heat that can be captured.</strong> Route that heat through a piece of equipment called an absorption chiller and you get free cooling for your GPU racks — without spending any extra electricity on it.</p>
+        <p style="margin-top:10px">That's CHP — Combined Heat and Power. One fuel input, two useful outputs: electricity and free cooling. <strong>Our role: CHP primary power for edge sites and bridge deployments.</strong></p>
+      </div>
+      <div class="box t-green">
+        <div class="box-tag green">Type 3 — Clean Primary Power</div>
+        <h3>Solid Oxide Fuel Cell — Bloom Energy</h3>
+        <p>This one surprises most people. <strong>A fuel cell is not an engine. There's no combustion.</strong> Natural gas goes in, electricity comes out — through a chemical process, not burning. Think of it like a battery that never runs out as long as it has gas.</p>
+        <p style="margin-top:10px">Bloom Energy makes these in 325-kilowatt modules. They're quiet. Almost no moving parts. Near-zero emissions — no smoke, no NOx, nothing visible. And they're more electrically efficient than the gas engine: 54% of the fuel becomes electricity, vs 45.8% for the Cat engine.</p>
+        <p style="margin-top:10px">The trade-off: less heat output than the gas engine, so less free cooling from CHP. <strong>Our role: primary DC power at main sites where Bloom modules are available.</strong></p>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>What to compare</th>
+          <th>Diesel Generator</th>
+          <th>Cat G3520K (Gas Engine)</th>
+          <th>Bloom SOFC (Fuel Cell)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fuel type</td>
+          <td>Petroleum diesel</td>
+          <td class="win-cat">Natural gas</td>
+          <td class="win-bloom">Gas / biogas / hydrogen</td>
+        </tr>
+        <tr>
+          <td>How it makes electricity</td>
+          <td>Burns diesel, spins generator</td>
+          <td>Burns gas, spins generator</td>
+          <td class="win-bloom">Chemical reaction — no burning</td>
+        </tr>
+        <tr>
+          <td>Electrical efficiency</td>
+          <td class="lose">30–35%</td>
+          <td>45.8%</td>
+          <td class="win-bloom">54%</td>
+        </tr>
+        <tr>
+          <td>Free cooling possible (CHP)?</td>
+          <td class="lose">No — all heat wasted</td>
+          <td class="win-cat">Yes — ~995 tons at 5 MW</td>
+          <td>Yes — ~690 tons at 5 MW</td>
+        </tr>
+        <tr>
+          <td>Emissions</td>
+          <td class="lose">High — diesel smoke</td>
+          <td>Some NOx — needs permit</td>
+          <td class="win-bloom">Near zero — no visible exhaust</td>
+        </tr>
+        <tr>
+          <td>Maintenance</td>
+          <td>Moderate</td>
+          <td>High — oil, plugs, overhauls</td>
+          <td class="win-bloom">Low — almost no moving parts</td>
+        </tr>
+        <tr>
+          <td>Cost to build (per kilowatt)</td>
+          <td class="win-cat">~$500–700</td>
+          <td class="win-cat">~$800–1,000</td>
+          <td class="lose">$3,000–5,000</td>
+        </tr>
+        <tr>
+          <td>How fast it responds to load changes</td>
+          <td class="win-cat">Seconds</td>
+          <td class="win-cat">Seconds</td>
+          <td class="lose">Slow — ceramic cells can crack from rapid changes</td>
+        </tr>
+        <tr>
+          <td>Our role</td>
+          <td>Layer 3 emergency only</td>
+          <td class="win-cat">CHP primary / edge sites</td>
+          <td class="win-bloom">Clean primary DC power</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 10 — WHAT IS CHP ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">10</div>
+    <div class="sec-title">Combined Heat &amp; Power — <span>Burning Fuel Once to Do Two Jobs</span></div>
+    <p class="bd">Here's a fact about generators that most people never think about: a standard generator only converts about half the fuel's energy into electricity. The other half leaves as heat through the exhaust pipe. It just disappears into the air. Every dollar of gas you buy — half of it is wasted.</p>
+    <p class="bd"><span class="hl">CHP captures that wasted heat and puts it to work.</span></p>
+    <p class="bd">In an AI factory, cooling is one of the biggest operating expenses. GPU racks run incredibly hot. Traditional facilities use electric chillers — machines that consume a large amount of electricity to make cold water that cools the servers. So you're burning gas to make electricity, then spending that electricity on cooling. You're paying for cooling twice.</p>
+    <p class="bd">With CHP, the engine's hot exhaust and coolant heat get routed into a different kind of chiller — called an <span class="hg">absorption chiller</span>. An absorption chiller uses <em>heat</em> instead of electricity to make cold water. The exhaust that was going up the stack now cools your GPU racks instead. You paid for gas to make electricity — the cooling comes along for the ride, for free.</p>
+
+    <div class="vs-grid">
+      <div class="vs-block old">
+        <div class="vs-tag old">Without CHP — How Most Facilities Work</div>
+        <h3>Pay for Cooling Twice</h3>
+        <p>Burn gas → make electricity → spend that electricity running chillers → cool the racks. The exhaust heat goes up the stack and disappears. <strong>You bought that energy. You just threw it away.</strong> This is how the vast majority of AI factories operate today.</p>
+      </div>
+      <div class="vs-block new">
+        <div class="vs-tag new">With CHP — The ADC Approach</div>
+        <h3>Cooling Comes Free</h3>
+        <p>Burn gas → make electricity → capture exhaust heat → run absorption chillers → cool the racks. Same fuel. Same electricity output. <strong>The cooling is now a free byproduct of power you were already generating.</strong> One dollar of gas does the work that used to cost two.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">What Is an Absorption Chiller?</div>
+      <p>A regular chiller uses a compressor and electricity — like your home air conditioner, just much bigger. An absorption chiller uses <strong>heat as its energy source instead of electricity.</strong> Lithium bromide salt is the working fluid. When you pump heat into it, it produces cold water. No compressor. No electrical draw. It turns waste heat into useful cooling. For an AI factory running a CHP gas engine, this means 5,000 kilowatts of recovered engine heat can produce nearly <strong>1,000 tons of free cooling</strong> — enough for hundreds of GPU racks.</p>
+    </div>
+
+    <p class="bd">Here's how the numbers compare at a 5-megawatt scale — the size of a typical site:</p>
+    <div class="g2">
+      <div class="box t-yellow" style="text-align:center">
+        <div class="box-tag yellow">Cat G3520K Gas Engine — 5 MW</div>
+        <div class="big-num gold">~995 tons</div>
+        <p style="font-size:13px;margin-top:6px">of free cooling from recovered heat</p>
+        <p style="font-size:12px;color:var(--text-tertiary);margin-top:10px">5,000 kW of recovered heat (jacket water + exhaust) runs through absorption chillers. Zero electricity spent on cooling. The thermal output of a gas engine in CHP mode is its superpower.</p>
+      </div>
+      <div class="box t-green" style="text-align:center">
+        <div class="box-tag green">Bloom Energy Fuel Cell — 5 MW</div>
+        <div class="big-num green">~690 tons</div>
+        <p style="font-size:13px;margin-top:6px">of free cooling from recovered heat</p>
+        <p style="font-size:12px;color:var(--text-tertiary);margin-top:10px">3,467 kW of recovered heat. Still significant — but 305 tons less than the Cat engine. The fuel cell wins on electrical efficiency. The gas engine wins on heat output for cooling. We use each where it wins best.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Bottom Line</div>
+      <p>At 5 megawatts, the Cat gas engine delivers <strong>44% more free cooling</strong> than the Bloom fuel cell through CHP. The fuel cell produces electricity more efficiently (54% vs 45.8%). Rather than treating this as "pick one," our architecture does both — Bloom where clean primary power matters most, Cat where maximum heat-driven cooling is the priority. Diesel handles one thing only: emergency backup when everything else fails.</p>
+    </div>
+
+    <p class="bd" style="margin-top:8px">For the full engineering analysis — every calculation, every number, the full pros and cons comparison, and the weighted decision matrix — see the <a href="/chp-prime-mover" style="color:var(--gold)">CHP Prime Mover report</a>.</p>
+  </div>
+</div>
+
+<!-- ═══ 11 — EDGE AI ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">11</div>
+    <div class="sec-title">What Does <span>"Edge" Mean?</span></div>
+    <p class="bd">Most AI computing today is concentrated in a few places — Northern Virginia, Phoenix, a handful of big markets. Your data travels over a thousand miles to get processed, then travels back. That works for most things. It doesn't work for everything.</p>
+    <p class="bd"><span class="hl">Edge AI factories</span> put computing power closer to where the work actually happens — right near the factory floor, the oil field, the hospital, the port. When a drilling rig needs AI-powered analysis of seismic data, it doesn't want to wait for a round trip to Virginia. It needs computing nearby.</p>
+    <div class="callout">
+      <div class="callout-label">Analogy</div>
+      <p>Think of it like electricity. Power plants generate electricity in large quantities, but you need substations near your neighborhood to deliver it at usable voltage. <strong>Edge AI factories are the substations of the digital world</strong> — they bring computing power closer to where it's needed, instead of forcing everything to route through one distant hub.</p>
+    </div>
+    <p class="bd">The Gulf Coast is an ideal location for edge AI. Oil and gas, petrochemical plants, ports, energy companies — all of them need high-performance computing nearby. Putting AI factories in Louisiana instead of Virginia cuts latency, improves reliability, and keeps economic value in the state.</p>
+  </div>
+</div>
+
+<!-- ═══ 12 — FOUR NETWORKS ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">12</div>
+    <div class="sec-title">The Four Networks <span>Inside an AI Factory</span></div>
+    <p class="bd">Most people think an AI factory is just a room full of computers with cables running to the internet. It's not. A real AI factory runs four completely separate networks at the same time, each doing a different job.</p>
+
+    <div class="g2">
+      <div class="box t-gold">
+        <div class="box-tag gold">Network 1</div>
+        <h3>The Fast Lane — Compute Network</h3>
+        <p>This is how GPUs talk to each other. When you're training an AI model, thousands of GPU cores need to share data with each other constantly, at extreme speed. This network carries the heaviest load and needs to be the fastest. The technology used is called <strong>InfiniBand</strong> — purpose-built for this kind of traffic. Nothing else comes close for AI workloads.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">Network 2</div>
+        <h3>The Data Pipeline — Storage Network</h3>
+        <p>This moves training data and model files between storage arrays and GPUs. Think of it as the supply line. If data doesn't arrive fast enough, the GPUs sit idle waiting for it. <strong>A starved GPU is a wasted GPU.</strong> This network needs high throughput — it typically runs on high-speed Ethernet or a dedicated storage fabric.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">Network 3</div>
+        <h3>The Control Room — In-Band Management</h3>
+        <p>This is the software control layer. Monitoring, updates, job scheduling, performance data — all the "run the fleet" operations happen here. When AI orchestration software assigns a workload to a set of GPUs, <strong>this is the network it uses to give the orders.</strong> Runs on standard Ethernet.</p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">Network 4</div>
+        <h3>The Emergency Line — Out-of-Band Management</h3>
+        <p>This is completely separate from everything else. It gives hardware-level access to every machine — even if the server's operating system has crashed and won't respond. Power cycling a server remotely, accessing the BIOS, controlling a machine that's completely frozen. <strong>It's like having a physical hand on every server in the building, from anywhere in the world.</strong> Kept separate for security.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-label">Why This Matters</div>
+      <p>Every AI factory module we build has all four networks designed in from day one. That's what "purpose-built" actually means. Not just servers and power — the <strong>entire network fabric</strong> is engineered together so every piece works with every other piece, not bolted on after the fact.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 13 — INFINIBAND vs ETHERNET ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">13</div>
+    <div class="sec-title">InfiniBand vs Ethernet — <span>Two Types of Connection</span></div>
+    <p class="bd"><span class="hl">Ethernet</span> is the networking technology you already know. It connects your laptop to the router. It's everywhere. Reliable, universal, and constantly getting faster. Been around since the 1980s.</p>
+    <p class="bd"><span class="hg">InfiniBand</span> is different. It was built specifically for supercomputers and AI. It has much higher bandwidth and much lower latency than Ethernet. When thousands of GPU cores need to stay in sync with each other — sending and receiving data every microsecond — InfiniBand is what makes that possible.</p>
+    <div class="g2">
+      <div class="box t-amber">
+        <div class="box-tag amber">Ethernet — The Universal Standard</div>
+        <h3>Good for most things</h3>
+        <p>Storage access, management traffic, monitoring, internet connectivity, serving results to customers. Most of what happens in an AI factory runs on Ethernet. Fast, cheap, and proven for 40+ years. <strong>Not the right tool for GPU-to-GPU compute traffic at scale.</strong></p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">InfiniBand — Built for AI</div>
+        <h3>The compute backbone</h3>
+        <p>GPU-to-GPU communication during training and large-scale inference. When thousands of GPUs need to synchronize in microseconds, nothing else is fast enough. <strong>Non-negotiable for serious AI workloads at scale.</strong> NVIDIA's DGX SuperPOD — the gold standard reference design — uses InfiniBand for the compute fabric. So do we.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-label">Our Approach</div>
+      <p>We use both. InfiniBand for the compute fabric — GPU to GPU. Ethernet for everything else — storage, management, client traffic. This is the same split NVIDIA uses in their own reference design, <strong>because it's the right tool for each job.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 14 — MODULAR NETWORKING ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">14</div>
+    <div class="sec-title">Why Modular Changes <span>Everything</span></div>
+    <p class="bd">The old way to build more AI capacity: build another giant facility. That takes years and hundreds of millions of dollars. The new way: manufacture more modules and place them wherever power and cooling exist.</p>
+    <p class="bd">Each AI factory module we build is a self-contained compute node with all four networks built in. Connect it to the InfiniBand spine — the central network backbone — and it joins the fabric. The software controls everything from central operations. Adding capacity means adding modules, not building buildings.</p>
+
+    <div class="g2">
+      <div class="box t-green">
+        <div class="box-tag green">Scale Up — Add More to a Site</div>
+        <h3>North-South Growth</h3>
+        <p>Add more pods to an existing site. Each pod plugs into the spine as a new node. Capacity grows without rebuilding anything. <strong>Like adding cars to a train — the track is already there.</strong></p>
+      </div>
+      <div class="box t-gold">
+        <div class="box-tag gold">Scale Out — Add New Locations</div>
+        <h3>East-West Growth</h3>
+        <p>Add new sites across Louisiana and the Gulf Coast. Each site connects back through fiber. The fabric gets wider — more geography, more customers, more edge locations. <strong>The network follows the pods.</strong></p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The Advantage</div>
+      <p>A fixed mega-facility can only grow by building more mega-facilities. We grow by dropping modules on concrete pads — or pilings over water, or a barge in the Gulf — wherever power and fiber exist. The software manages the whole fleet. <strong>More flexibility than any traditional AI factory has ever had.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FAQ ═══ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-num">FAQ</div>
+    <div class="sec-title">Common <span>Questions</span></div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is this like a bitcoin mining operation?</div>
+      <div class="faq-a">No. Bitcoin mining uses specialized hardware for one single purpose — solving a specific math problem over and over. AI factories house general-purpose GPU servers — the same technology powering ChatGPT, cancer detection software, autonomous vehicles, and defense systems. The hardware is far more sophisticated. The applications create real economic value across every industry. Completely different things.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How loud is it?</div>
+      <div class="faq-a">Remarkably quiet. NVIDIA's integrated liquid cooling eliminates the need for loud server fans inside the racks. The outdoor dry coolers that reject heat from the facility produce sound similar to commercial HVAC — about what you'd hear standing next to a large air conditioner. Traditional air-cooled AI factories are much louder. Liquid cooling is quieter and more efficient.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much water does it use?</div>
+      <div class="faq-a">Zero. The AI factory module uses dry coolers — like a car radiator — instead of evaporative cooling towers. Traditional AI factories can consume millions of gallons of water per year for cooling. Our facilities use none. The liquid in the cooling system is a closed loop — it circulates and rejects heat to the outside air through the dry cooler fins, no water evaporated.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much power does a single module need?</div>
+      <div class="faq-a">A standard module is in the 3-megawatt class — roughly equivalent to 2,000 to 2,500 homes. It requires a medium-voltage power connection, either from a generator set or a utility feed. Sites can start at lower capacity and scale up to full power as additional racks come online.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it survive a hurricane?</div>
+      <div class="faq-a">The AI factory module is built inside an ISO shipping container — one of the most structurally rugged enclosures ever designed. They were built to survive ocean crossings in storms. Our 3-layer power architecture was specifically designed around the Hurricane Ida lesson: Louisiana's gas pipeline infrastructure survived Ida intact. The power grid did not. So gas is Layer 1 and diesel (which depends on nothing but on-site fuel) is Layer 3. Both layers function independently of the grid.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Who controls the data?</div>
+      <div class="faq-a">You do. Unlike cloud services — where your data lives on someone else's hardware in a location you can't control — an AI factory module is a privately owned asset at your location. Data never leaves unless you send it. This is critical for oil and gas, healthcare, defense, and government customers where data sovereignty isn't optional.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it require a building permit?</div>
+      <div class="faq-a">In most jurisdictions, the module is classified as equipment rather than a building. Equipment placement typically requires utility permits and site approval, but not traditional building permits — which dramatically speeds up deployment. Requirements vary by parish. We handle the permitting process for every deployment.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What is a "ton of cooling" and why does it matter?</div>
+      <div class="faq-a">A "ton" of cooling (technically a refrigeration ton, or RT) is a unit that measures how much heat a cooling system can remove. One RT removes about 3.5 kilowatts of heat. When we say the Cat gas engine in CHP mode provides ~995 RT of free cooling, that means it removes the equivalent of about 3,500 kilowatts of heat from the building — without spending any electricity to do it. At a 5-megawatt site, that's a major portion of the total cooling load covered by waste heat that would otherwise have gone out the exhaust stack.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's the difference between the Bloom fuel cell and the Cat gas engine in simple terms?</div>
+      <div class="faq-a">Think of the Cat engine like a very big, very efficient car engine running on natural gas. It burns the gas, spins a generator, and makes electricity. But because it burns fuel, it gets hot — and that heat can be captured and used to cool the building for free. The Bloom fuel cell doesn't burn anything. It converts gas to electricity through chemistry, like a battery. It's cleaner, quieter, and more electrically efficient. But because there's no combustion, there's less waste heat to capture for cooling. Both have a place in our architecture.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<div class="section" style="border-bottom:none;padding-bottom:0">
+  <div class="container">
+    <div class="cta-block">
+      <h3>Ready for the <span style="color:var(--gold)">Engineering Detail?</span></h3>
+      <p>The full CHP Prime Mover analysis documents every calculation — thermal balance, fuel cost tables, weighted decision matrix, and all derivations. Cat G3520K vs Bloom Energy SOFC, head to head at 5 MW scale.</p>
+      <a href="/chp-prime-mover" class="btn-gold">Read the Full Analysis</a>
+      <a href="/chp-block-diagram" class="btn-outline">Block Diagram</a>
+    </div>
+
+    <div style="margin-top:32px;text-align:center">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:14px">Questions about the infrastructure or investment opportunity?</p>
+      <a href="mailto:scott@adc3k.com" style="font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:1px;color:var(--gold);text-decoration:none;text-transform:uppercase">scott@adc3k.com</a>
+      <span style="color:var(--text-tertiary);margin:0 12px">&middot;</span>
+      <a href="tel:+13377801535" style="font-family:var(--font-mono);font-size:13px;color:var(--text-secondary);text-decoration:none">(337) 780-1535</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <div class="container">
+    <div class="logo">AI Advantage</div>
+    <p>
+      <a href="/">Home</a> &nbsp;&middot;&nbsp;
+      <a href="/chp-prime-mover">CHP Analysis</a> &nbsp;&middot;&nbsp;
+      <a href="/chp-block-diagram">Block Diagram</a> &nbsp;&middot;&nbsp;
+      <a href="/investors">Investors</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:scott@adc3k.com">scott@adc3k.com</a>
+    </p>
+  </div>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('back-top');
+  if (btn) { if (window.scrollY > 500) btn.style.display = 'flex'; else btn.style.display = 'none'; }
+});
+</script>
+
+</body>
+</html>
