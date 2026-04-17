@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHP Block Diagram — MARLIE 1 Power Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a0a;
+    color: #e8e8e8;
+    font-family: 'Oswald', sans-serif;
+    min-height: 100vh;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap');
+
+  /* Back button */
+  .back-btn {
+    position: fixed;
+    top: 64px;
+    left: 16px;
+    z-index: 999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #e8e8e8;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 8px 16px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background: rgba(10,10,10,0.9);
+    transition: all .2s;
+  }
+  .back-btn:hover {
+    background: #c9a84c;
+    color: #000;
+    border-color: #c9a84c;
+  }
+
+  /* Header */
+  .page-header {
+    padding: 48px 40px 32px;
+    border-bottom: 1px solid #1e1e1e;
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #c9a84c;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .page-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #f0ede6;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .page-sub {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Diagram container */
+  .diagram-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 24px 64px;
+  }
+  .diagram-wrap img {
+    max-width: 100%;
+    width: 900px;
+    height: auto;
+    display: block;
+    border: 1px solid #2a2a2a;
+    border-radius: 4px;
+  }
+
+  /* Caption */
+  .caption {
+    text-align: center;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #555;
+    text-transform: uppercase;
+    padding: 0 24px 48px;
+  }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 80px 20px 24px; }
+    .page-title { font-size: 22px; }
+    .diagram-wrap { padding: 24px 12px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="/" class="back-btn">&#8592; Home</a>
+
+<div class="page-header">
+  <div class="eyebrow">Power Architecture — MARLIE 1</div>
+  <div class="page-title">CHP Block Diagram</div>
+  <div class="page-sub">Combined Heat &amp; Power — Natural Gas to 800V DC</div>
+</div>
+
+<div class="diagram-wrap">
+  <img src="/chp-block-diagram.jpg" alt="CHP Block Diagram — Combined Heat and Power Architecture for MARLIE 1" />
+</div>
+
+<div class="caption">ADC — MARLIE 1 — CHP Cascade Architecture — Lafayette, Louisiana</div>
+
+</body>
+</html>

@@ -433,6 +433,62 @@ body{background:var(--bg);color:var(--text)}
 
   <div class="ana" style="margin-top:16px"><p><strong>Why this matters to you:</strong> AI factories are coming to Louisiana whether you like it or not. The question is whether they're built by companies that drain the grid and drive up your power bill — or by a Louisiana company that generates its own power, uses the cheapest fuel in the country, and treats the grid as a backup. We chose the second path. Your power bill stays where it is.</p></div>
 
+  <div class="sn" style="margin-top:36px">08B — THREE TYPES OF ON-SITE POWER</div>
+  <h2 class="sh">Diesel, gas engine, and fuel cell are not the same thing.</h2>
+  <p class="bd">When people hear "on-site generator" they picture a diesel unit — fuel tank, engine, done. That's one option. There are two more that work fundamentally differently, and the difference between them determines whether you get free cooling or an electric bill for it. Understanding the three types explains why our architecture is built the way it is.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Type 1 — Emergency Only</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Diesel Generator</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Burns petroleum diesel. Starts in seconds. Simple. That's where the advantages end. Diesel is expensive, requires on-site fuel storage, emits NOx and particulates, and has <strong style="color:var(--amber)">no CHP capability</strong> — all the heat goes up the exhaust pipe as waste. ADC role: <strong style="color:var(--text-bright)">Layer 3 emergency only.</strong> If gas and grid both fail — Hurricane Ida scenario — diesel keeps us running. It does not generate primary power and it does not cool anything.</p>
+    </div>
+    <div style="background:#130d0a;border:1px solid #3a2515;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">Type 2 — CHP Engine</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Natural Gas Engine — Cat G3520K</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Same concept as diesel — a piston engine — but burns <strong style="color:var(--text-bright)">natural gas</strong>, not diesel. V20, 2.5 MW per unit. 45.8% electrical efficiency. <strong style="color:var(--green)">Critical advantage: massive thermal output.</strong> The engine jacket water and exhaust together produce 2,500 kW of recoverable heat per unit. That heat drives absorption chillers that cool GPU racks — without consuming any electrical output. One fuel in, two useful outputs: electricity and free cooling. This is CHP — Combined Heat and Power. ADC role: <strong style="color:var(--text-bright)">CHP primary for edge sites and bridge power.</strong></p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">Type 3 — Clean Primary</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:10px">Solid Oxide Fuel Cell — Bloom Energy</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Not an engine. No combustion. A fuel cell converts natural gas to electricity through electrochemistry — like a battery that never runs down as long as it has gas. <strong style="color:var(--green)">54% electrical efficiency vs 45.8% for the Cat engine.</strong> Near-zero emissions — no NOx, no particulates. Virtually no moving parts. Modular 325 kW blocks that can be added incrementally. Can run on natural gas, biogas, or hydrogen blends. Trade-off: less recoverable heat than the gas engine, so less heat-driven cooling. ADC role: <strong style="color:var(--text-bright)">primary DC power at main sites where Bloom supply is secured.</strong></p>
+    </div>
+  </div>
+
+  <div class="sn" style="margin-top:36px">08C — COMBINED HEAT AND POWER (CHP)</div>
+  <h2 class="sh">Burning fuel once to do two jobs — electricity and free cooling.</h2>
+  <p class="bd">A conventional generator burns natural gas and converts <span class="hr">roughly 45–54% into electricity</span>. The remaining 45–55% becomes heat that exits through the exhaust — wasted. <span class="hl">CHP captures that waste heat and puts it to work.</span></p>
+  <p class="bd">In an AI factory, the #1 operating cost after power itself is <span class="ha">cooling</span>. GPU racks run at 40–200+ kW each. Traditional facilities use electric chillers: they generate electricity and then spend more of that electricity on cooling. That's paying twice for the same function.</p>
+  <p class="bd">With CHP, the engine's exhaust and jacket water heat drive <span class="hl">absorption chillers</span> — machines that use heat, not electricity, to produce chilled water. One dollar of gas generates power <em>and</em> cools the racks simultaneously. The cooling becomes a byproduct of the power generation.</p>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:3px">
+    <div style="background:#130a0a;border:1px solid #3a1515;padding:24px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:10px">Without CHP</div>
+      <div style="font-size:20px;font-weight:800;color:var(--amber);margin-bottom:8px">Gas &rarr; Electricity &rarr; Cooling</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Burn gas to make electricity. Then burn that electricity running electric chillers. You're paying for cooling twice — once in fuel, once in electrical load. Exhaust heat goes up the stack unused. <strong style="color:var(--amber)">Traditional AI factories operate this way.</strong></p>
+    </div>
+    <div style="background:#0a130a;border:1px solid #153a15;padding:24px;text-align:center">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px">With CHP — The ADC Approach</div>
+      <div style="font-size:20px;font-weight:800;color:var(--green);margin-bottom:8px">Gas &rarr; Electricity + Free Cooling</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.7;margin:0">Burn gas to make electricity. Capture exhaust heat and route it through absorption chillers. Heat that would have gone up the stack now cools the GPU racks — at no additional electrical cost. <strong style="color:var(--green)">Same fuel input. Two useful outputs.</strong></p>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Cat G3520K CHP — 5 MW scale</div>
+      <div style="font-size:32px;font-weight:700;color:var(--text-white)">~995 <span style="font-size:14px;color:var(--green);font-weight:600">RT free cooling</span></div>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.6">5,000 kW recovered heat drives absorption chillers at zero electrical cost. Roughly equivalent to cooling 500+ high-density GPU racks with no power consumption. That's the thermal advantage of a reciprocating gas engine.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Bloom Energy SOFC — 5 MW scale</div>
+      <div style="font-size:32px;font-weight:700;color:var(--text-white)">~690 <span style="font-size:14px;color:var(--green);font-weight:600">RT free cooling</span></div>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.6">3,467 kW recovered heat — still significant, but 305 RT less than the Cat engine. Bloom wins on electrical efficiency (54% vs 45.8%). Cat wins on thermal output for cooling. Our architecture deploys each where it performs best.</p>
+    </div>
+  </div>
+
+  <div class="ana" style="margin-top:16px"><p><strong>The bottom line:</strong> At 5 MW, the Cat G3520K delivers 44% more recoverable heat than the Bloom SOFC — translating to 305 additional refrigeration tons of free absorption cooling. Bloom generates electricity more efficiently (54% vs 45.8%) and runs cleaner. Our architecture uses both technologies where each one wins: Bloom for clean primary DC power where supply is available, Cat for maximum CHP thermal output at edge and bridge sites. Diesel handles only one job: it keeps the facility running when everything else fails.</p></div>
+
   <div class="sn" style="margin-top:36px">09 — COOLING EFFICIENCY</div>
   <h2 class="sh">Where 30-50% of everyone else's electricity goes to waste.</h2>
   <p class="bd">Traditional AI factories use air conditioning to keep servers cool. They build elaborate <span class="hr">hot aisles, cold aisles, blanking plates, raised floors, and giant CRAC units</span> — all to push air past electronics. Even with all that effort, air cooling consumes <span class="hr">30-50% of the total power bill</span> just keeping the temperature down.</p>
@@ -567,7 +623,7 @@ body{background:var(--bg);color:var(--text)}
     <div class="eyebrow green">Ask Us Anything</div>
     <h2 class="sh" style="margin-top:8px">Still have questions?</h2>
     <p class="bd" style="margin-bottom:20px">Type your question below. Whether it's about the technology, the business, or how this affects your community — we'll get back to you.</p>
-    <form action="https://formsubmit.co/info@louisianaai.net" method="POST" style="display:grid;gap:12px">
+    <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:grid;gap:12px">
       <input type="hidden" name="_subject" value="Louisiana AI Initiative Question">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="box">
@@ -581,14 +637,14 @@ body{background:var(--bg);color:var(--text)}
   <div class="callout" style="margin-top:40px">
     <h3>Ready to go deeper?</h3>
     <p>Get in touch and tell us who you are. We'll route you to the right conversation — investor materials, deployment inquiry, vendor partnership, or city engagement.</p>
-    <a class="cta" href="https://louisianaai.net" style="text-decoration:none;display:inline-block">GET INVOLVED &rarr;</a>
+    <a class="cta" href="https://adc3k.com" style="text-decoration:none;display:inline-block">GET INVOLVED &rarr;</a>
   </div>
 </div>
 </div>
 
 <!-- CONNECT -->
 </div>
-<div style="text-align:center;padding:40px 24px;border-top:1px solid var(--border)"><p style="font-size:14px;color:var(--text-dim)"><strong style="color:var(--text-bright)">Louisiana's AI Infrastructure Initiative</strong></p><p style="font-size:12px;color:var(--text-dim);margin-top:8px">(337) 780-1535 | info@louisianaai.net | <a href="https://louisianaai.net" style="color:var(--accent)">louisianaai.net</a></p></div>
+<div style="text-align:center;padding:40px 24px;border-top:1px solid var(--border)"><p style="font-size:14px;color:var(--text-dim)"><strong style="color:var(--text-bright)">Louisiana's AI Infrastructure Initiative</strong></p><p style="font-size:12px;color:var(--text-dim);margin-top:8px">(337) 780-1535 | scott@adc3k.com | <a href="https://adc3k.com" style="color:var(--accent)">adc3k.com</a></p></div>
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:&quot;smooth&quot;})">&uarr;</button>
 <script>
 window.addEventListener("scroll", function() {
@@ -598,23 +654,5 @@ window.addEventListener("scroll", function() {
 });
 </script>
 
-<script>
-document.querySelectorAll('form').forEach(function(form) {
-  form.addEventListener('submit', function(e) {
-    var data = {};
-    var fields = new FormData(form);
-    fields.forEach(function(value, key) {
-      if (!key.startsWith('_')) data[key] = value;
-    });
-    data.pipeline = 'contact';
-    data.source = 'adc3k.com/learn';
-    fetch('https://louisianaai.net/api/brevo-sync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }).catch(function() {});
-  });
-});
-</script>
 </body>
 </html>
