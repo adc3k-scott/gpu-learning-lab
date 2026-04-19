@@ -1,6 +1,6 @@
 # Cassette — DOCUMENT SET
 
-**As of:** 2026-04-19 (updated with MASS-001)
+**As of:** 2026-04-19 (Rev 2.0 issued on BOM-001, ECP-001, INT-001)
 **Owner:** Scott Tomsu · scott@adc3k.com · Lafayette, Louisiana
 
 This is the authoritative document set for the Cassette
@@ -20,6 +20,18 @@ The interface contract. Defines exactly what crosses the Cassette's external bou
 ### Cassette-BOM-001 Rev 1.0 — Bill of Materials
 
 The procurement document. Complete parts list for one Cassette, organized by subsystem. Includes vendor recommendations, onshore/offshore variant flags, and critical-path long-lead items. No pricing included — this supports RFQ, not budget. Use this to drive procurement packages and vendor RFQs.
+
+### Cassette-FIRE-001 Rev 1.0 — Fire Suppression Engineering
+
+NFPA 2001 engineering basis for the Novec 1230 total flood system. Calculates required agent (72 kg), evaluates cylinder sizing, verifies hold time, sizes the over-pressure vent, and defines the full detection-to-discharge interlock sequence. **Key finding: BOM cylinders are 4× oversized — 297.8 kg available vs 72 kg required. Correction reduces cassette mass by ~275 kg.**
+
+### Cassette-ELEC-001 Rev 1.0 — Electrical Single-Line Diagram & Distribution Specification
+
+The electrical engineering document. Covers all four power systems (800 V DC primary, 415 V AC alternate, 480 V AC auxiliary, 24 V DC life-safety), full conductor sizing, protective device coordination, fault current analysis, IMD architecture, and grounding. **Key findings: main DC feed requires laminated bus bar (not cable); DC busway must be upgraded to 4,000 A to support CPX upgrade path; AC alternate path has two BOM errors requiring correction.**
+
+### Cassette-COOL-001 Rev 1.0 — Cooling Hydraulic Model
+
+Primary loop hydraulics (PG25 glycol, CDU to racks), CDU selection verification, CHW secondary loop at ECP, and in-rack coupling analysis. **Key findings: (1) 2,100 LPM primary flow is correct for NVL72 but insufficient for CPX — need 2,350 LPM; (2) CHx2000 is 10.6% over nameplate at CPX full load; (3) ECP-001 CHW flow spec of 1,800 LPM is undersized — results in 20.3 °C return vs. 18 °C limit, corrected to 2,200 LPM; (4) ECP DN100 Victaulic connector undersized at corrected flow, upgrade to DN150; (5) UQD-16 in-rack coupling requires 7 parallel per rack, recommend upgrade to UQD-25.**
 
 ### Cassette-MASS-001 Rev 1.0 — Mass Statement & Weight Budget
 

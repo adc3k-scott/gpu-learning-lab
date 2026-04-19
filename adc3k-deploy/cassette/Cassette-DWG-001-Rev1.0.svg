@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="1225px" version="1.1" width="1800px"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:ev="http://www.w3.org/2001/xml-events"
+  xmlns:xlink="http://www.w3.org/1999/xlink"><defs/>
+
+<!-- Background and border -->
+<rect fill="#0a0b0f" height="1225" width="1800" x="0" y="0"/>
+<rect fill="none" height="1213" stroke="#00a855" stroke-width="1" width="1788" x="6" y="6"/>
+
+<!-- DOCUMENT HEADER -->
+<text fill="#00e87a" font-family="monospace" font-size="14px" font-weight="bold" x="14" y="26">ADC CASSETTE — INTERIOR LAYOUT · Cassette-DWG-001 Rev 1.0 · 2026-04-19 · CONFIDENTIAL</text>
+<text fill="#555555" font-family="monospace" font-size="8px" x="14" y="40">40 ft HC ISO · Sealed · Unmanned · Stackable · 15× Vera Rubin NVL72 · 936 GPUs · 1,585–2,105 kW IT · 800 V DC primary</text>
+
+<!-- ============================================================ -->
+<!-- VIEW 1 — TOP VIEW (BIRD'S EYE)                               -->
+<!-- Container interior: x=140–1640 (1500px=12,032mm), y=74–274  -->
+<!-- Scale: 1500/12032 = 0.12467 px/mm                            -->
+<!-- ============================================================ -->
+<text fill="#00e87a" font-family="monospace" font-size="10px" font-weight="bold" x="14" y="56">VIEW 1 — TOP VIEW (BIRD'S EYE)</text>
+
+<!-- Container outline -->
+<rect fill="none" height="200" stroke="#00e87a" stroke-width="2" width="1500" x="140" y="74"/>
+
+<!-- Zone dividers: ELEC zone end x=290, CDU zone start x=1453 -->
+<line stroke="#444" stroke-dasharray="4,3" stroke-width="1" x1="290" x2="290" y1="74" y2="274"/>
+<line stroke="#444" stroke-dasharray="4,3" stroke-width="1" x1="1453" x2="1453" y1="74" y2="274"/>
+
+<!-- Zone labels above container -->
+<text fill="#aaa" font-family="monospace" font-size="7px" text-anchor="middle" x="215" y="67">ELEC ECP ZONE</text>
+<text fill="#aaa" font-family="monospace" font-size="7px" text-anchor="middle" x="215" y="74">1,200 mm</text>
+<text fill="#aaa" font-family="monospace" font-size="7px" text-anchor="middle" x="871" y="67">RACK ZONE — 15 RACKS — 9,332 mm</text>
+<text fill="#aaa" font-family="monospace" font-size="7px" text-anchor="middle" x="1546" y="67">CDU ECP ZONE</text>
+<text fill="#aaa" font-family="monospace" font-size="7px" text-anchor="middle" x="1546" y="74">1,500 mm</text>
+
+<!-- ELEC end label and equipment box -->
+<text fill="#e0e0e0" font-family="monospace" font-size="7px" text-anchor="middle" x="215" y="84">ELEC END →</text>
+<rect fill="#cc3333" fill-opacity="0.12" height="90" stroke="#ff4444" stroke-width="0.8" width="86" x="153" y="129"/>
+<text fill="#ff4444" font-family="monospace" font-size="6px" text-anchor="middle" x="196" y="142">MAIN DISC</text>
+<text fill="#ff4444" font-family="monospace" font-size="6px" text-anchor="middle" x="196" y="152">IMD / SPD</text>
+<text fill="#ff4444" font-family="monospace" font-size="6px" text-anchor="middle" x="196" y="162">METER</text>
+<text fill="#ff4444" font-family="monospace" font-size="6px" text-anchor="middle" x="196" y="172">24 V UPS</text>
+<text fill="#ff4444" font-family="monospace" font-size="6px" text-anchor="middle" x="196" y="182">JETSON×2</text>
+
+<!-- CDU end equipment box -->
+<rect fill="#0077b6" fill-opacity="0.18" height="140" stroke="#00b4d8" stroke-width="1" width="148" x="1462" y="104"/>
+<text fill="#00b4d8" font-family="monospace" font-size="9px" font-weight="bold" text-anchor="middle" x="1536" y="122">CoolIT CHx2000</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="134">2,000 kW · N+1 pumps</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="144">PG25 primary 2,100 LPM</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="154">CHW secondary 2,200 LPM</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="164">45°C supply / 57°C return</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="174">750 × 1,200 mm footprint</text>
+<text fill="#555" font-family="monospace" font-size="7px" text-anchor="middle" x="1536" y="216">fiber patch panel above</text>
+
+<!-- 800V DC Busway (red line, floor-level Side A) -->
+<line stroke="#ff4444" stroke-width="2.5" x1="290" x2="1453" y1="261" y2="261"/>
+<text fill="#ff4444" font-family="monospace" font-size="5px" x="340" y="259">800 V DC BUSWAY · 4,000 A · laminated copper · floor tray Side A</text>
+
+<!-- Manifold supply (blue dashed, Side B) -->
+<line stroke="#00b4d8" stroke-dasharray="6,3" stroke-width="1.5" x1="1453" x2="290" y1="86" y2="86"/>
+<text fill="#00b4d8" font-family="monospace" font-size="5px" text-anchor="end" x="1448" y="85">SUPPLY 45°C  DN125 PG25  →</text>
+<!-- Manifold return (orange dashed) -->
+<line stroke="#ff7700" stroke-dasharray="6,3" stroke-width="1.5" x1="290" x2="1453" y1="91" y2="91"/>
+<text fill="#ff7700" font-family="monospace" font-size="5px" x="296" y="90">← RETURN 57°C</text>
+
+<!-- RACKS R1–R13 (Compute · green) — x = 292.75 + (i-1)×77.5, y=123–225, w=72, h=102 -->
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="292.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="328.75" y="176">R1</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="370.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="406.25" y="176">R2</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="447.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="483.75" y="176">R3</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="525.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="561.25" y="176">R4</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="602.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="638.75" y="176">R5</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="680.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="716.25" y="176">R6</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="757.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="793.75" y="176">R7</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="835.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="871.25" y="176">R8</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="912.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="948.75" y="176">R9</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="990.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1026.25" y="176">R10</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="1067.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1103.75" y="176">R11</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="1145.25" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1181.25" y="176">R12</text>
+<rect fill="#00a855" fill-opacity="0.25" height="102" stroke="#00e87a" stroke-width="1.5" width="72" x="1222.75" y="123"/>
+<text fill="#00e87a" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1258.75" y="176">R13</text>
+
+<!-- R14 InfiniBand (blue) -->
+<rect fill="#0077b6" fill-opacity="0.30" height="102" stroke="#00b4d8" stroke-width="1.5" width="72" x="1300.25" y="123"/>
+<text fill="#00b4d8" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1336.25" y="171">R14</text>
+<text fill="#00b4d8" font-family="monospace" font-size="5px" text-anchor="middle" x="1336.25" y="181">IB</text>
+
+<!-- R15 Storage/Mgmt (purple) -->
+<rect fill="#8833cc" fill-opacity="0.30" height="102" stroke="#b44aff" stroke-width="1.5" width="72" x="1377.75" y="123"/>
+<text fill="#b44aff" font-family="monospace" font-size="7px" font-weight="bold" text-anchor="middle" x="1413.75" y="171">R15</text>
+<text fill="#b44aff" font-family="monospace" font-size="5px" text-anchor="middle" x="1413.75" y="181">STR</text>
+
+<!-- Access panels Side A (top wall, y=68 to y=74) — centers: 404,591,778,965,1152,1339; width 112 -->
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="348" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="404" y="66">AP-1A</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="535" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="591" y="66">AP-2A</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="722" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="778" y="66">AP-3A</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="909" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="965" y="66">AP-4A</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="1096" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="1152" y="66">AP-5A</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="1283" y="68"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="1339" y="66">AP-6A</text>
+
+<!-- Access panels Side B (bottom wall, y=274 to y=280) -->
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="348" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="404" y="288">AP-7B</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="535" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="591" y="288">AP-8B</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="722" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="778" y="288">AP-9B</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="909" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="965" y="288">AP-10B</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="1096" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="1152" y="288">AP-11B</text>
+<rect fill="#ffd60a" fill-opacity="0.7" height="6" stroke="#ffd60a" stroke-width="0.5" width="112" x="1283" y="274"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" text-anchor="middle" x="1339" y="288">AP-12B</text>
+
+<!-- Dimension: total interior length -->
+<line stroke="#555" stroke-width="0.5" x1="140" x2="1640" y1="300" y2="300"/>
+<line stroke="#555" stroke-width="0.5" x1="140" x2="140" y1="296" y2="304"/>
+<line stroke="#555" stroke-width="0.5" x1="1640" x2="1640" y1="296" y2="304"/>
+<text fill="#ccc" font-family="monospace" font-size="9px" text-anchor="middle" x="890" y="314">12,032 mm  (39'-5")  Interior Length</text>
+
+<!-- Dimension: container width (right side) -->
+<line stroke="#555" stroke-width="0.5" x1="1656" x2="1656" y1="74" y2="274"/>
+<line stroke="#555" stroke-width="0.5" x1="1652" x2="1660" y1="74" y2="74"/>
+<line stroke="#555" stroke-width="0.5" x1="1652" x2="1660" y1="274" y2="274"/>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="1660" y="177">2,352 mm</text>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="1662" y="188">(7'-8")</text>
+
+<!-- ============================================================ -->
+<!-- VIEW 2 — LONG SIDE ELEVATION                                 -->
+<!-- Container: x=140–1640, y=348–588 (240px = 2,698mm)          -->
+<!-- ============================================================ -->
+<text fill="#00e87a" font-family="monospace" font-size="10px" font-weight="bold" x="14" y="337">VIEW 2 — LONG SIDE ELEVATION (Side A)   Interior height: 2,698 mm (8'-10")   Rack: 2,299 mm (88")</text>
+
+<rect fill="none" height="240" stroke="#00e87a" stroke-width="2" width="1500" x="140" y="348"/>
+<line stroke="#888" stroke-width="1" x1="140" x2="1640" y1="588" y2="588"/>
+
+<!-- Zone dividers same x -->
+<line stroke="#444" stroke-dasharray="4,3" stroke-width="1" x1="290" x2="290" y1="348" y2="588"/>
+<line stroke="#444" stroke-dasharray="4,3" stroke-width="1" x1="1453" x2="1453" y1="348" y2="588"/>
+
+<!-- Racks side elevation: y=384–588 (204px), same x as top view -->
+<!-- R1-R13 compute (green) -->
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="292.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="328.75" y="489">R1</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="370.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="406.25" y="489">R2</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="447.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="483.75" y="489">R3</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="525.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="561.25" y="489">R4</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="602.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="638.75" y="489">R5</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="680.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="716.25" y="489">R6</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="757.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="793.75" y="489">R7</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="835.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="871.25" y="489">R8</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="912.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="948.75" y="489">R9</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="990.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1026.25" y="489">R10</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="1067.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1103.75" y="489">R11</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="1145.25" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1181.25" y="489">R12</text>
+<rect fill="#00a855" fill-opacity="0.20" height="204" stroke="#00e87a" stroke-width="1.2" width="72" x="1222.75" y="384"/>
+<text fill="#00e87a" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1258.75" y="489">R13</text>
+<!-- R14 IB (blue) -->
+<rect fill="#0077b6" fill-opacity="0.22" height="204" stroke="#00b4d8" stroke-width="1.2" width="72" x="1300.25" y="384"/>
+<text fill="#00b4d8" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1336.25" y="489">R14</text>
+<!-- R15 storage (purple) -->
+<rect fill="#8833cc" fill-opacity="0.22" height="204" stroke="#b44aff" stroke-width="1.2" width="72" x="1377.75" y="384"/>
+<text fill="#b44aff" font-family="monospace" font-size="6px" font-weight="bold" text-anchor="middle" x="1413.75" y="489">R15</text>
+
+<!-- Access panels on Side A — 6 panels, 900×2000mm = 112×179px, centered vertically y=379–557 -->
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="348" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="404" y="376">AP-1A</text>
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="535" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="591" y="376">AP-2A</text>
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="722" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="778" y="376">AP-3A</text>
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="909" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="965" y="376">AP-4A</text>
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="1096" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="1152" y="376">AP-5A</text>
+<rect fill="#ffd60a" fill-opacity="0.10" height="179" stroke="#ffd60a" stroke-dasharray="3,2" stroke-width="1" width="112" x="1283" y="379"/>
+<text fill="#ffd60a" font-family="monospace" font-size="7px" text-anchor="middle" x="1339" y="376">AP-6A</text>
+
+<!-- Overhead clearance bracket -->
+<line stroke="#333" stroke-width="0.5" x1="1668" x2="1668" y1="348" y2="384"/>
+<line stroke="#333" stroke-width="0.5" x1="1664" x2="1672" y1="348" y2="348"/>
+<line stroke="#333" stroke-width="0.5" x1="1664" x2="1672" y1="384" y2="384"/>
+<text fill="#555" font-family="monospace" font-size="7px" x="1672" y="369">399 mm</text>
+
+<!-- Container height dimension -->
+<line stroke="#555" stroke-width="0.5" x1="102" x2="102" y1="348" y2="588"/>
+<line stroke="#555" stroke-width="0.5" x1="98" x2="106" y1="348" y2="348"/>
+<line stroke="#555" stroke-width="0.5" x1="98" x2="106" y1="588" y2="588"/>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="52" y="471">2,698 mm</text>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="58" y="482">(8'-10")</text>
+
+<!-- Rack height bracket -->
+<line stroke="#333" stroke-width="0.4" x1="118" x2="118" y1="384" y2="588"/>
+<line stroke="#333" stroke-width="0.4" x1="115" x2="121" y1="384" y2="384"/>
+<line stroke="#333" stroke-width="0.4" x1="115" x2="121" y1="588" y2="588"/>
+<text fill="#555" font-family="monospace" font-size="7px" x="62" y="492">88" rack</text>
+
+<!-- ============================================================ -->
+<!-- VIEW 3 — END CROSS-SECTION                                   -->
+<!-- Container x=200–560 (360px=2,352mm), y=632–1052 (420px)     -->
+<!-- Scale: 360/2352 = 0.153 px/mm                                -->
+<!-- ============================================================ -->
+<text fill="#00e87a" font-family="monospace" font-size="10px" font-weight="bold" x="14" y="620">VIEW 3 — END CROSS-SECTION (looking from ELEC end toward CDU)   Interior: 2,352 × 2,698 mm</text>
+
+<rect fill="none" height="420" stroke="#00e87a" stroke-width="2" width="360" x="200" y="632"/>
+<line stroke="#777" stroke-width="1.5" x1="200" x2="560" y1="1052" y2="1052"/>
+
+<!-- Rack cross-section: 1200mm deep × 2299mm tall = 184×352px -->
+<!-- Wall clearance: 576mm = 88px · x=288–472, y=700–1052 -->
+<rect fill="#00a855" fill-opacity="0.20" height="352" stroke="#00e87a" stroke-width="1.5" width="184" x="288" y="700"/>
+<text fill="#00e87a" font-family="monospace" font-size="8px" font-weight="bold" text-anchor="middle" x="380" y="874">VERA RUBIN</text>
+<text fill="#00e87a" font-family="monospace" font-size="7px" text-anchor="middle" x="380" y="886">NVL72</text>
+<text fill="#555" font-family="monospace" font-size="6px" text-anchor="middle" x="380" y="898">600 × 1,200 × 2,299 mm</text>
+<text fill="#555" font-family="monospace" font-size="6px" text-anchor="middle" x="380" y="908">~1,500 kg loaded</text>
+
+<!-- Cold plate fittings (floor level of rack) -->
+<circle cx="310" cy="1038" fill="#00b4d8" fill-opacity="0.7" r="6" stroke="#00b4d8" stroke-width="1"/>
+<text fill="#fff" font-family="monospace" font-size="5px" text-anchor="middle" x="310" y="1040">S</text>
+<circle cx="330" cy="1038" fill="#ff4444" fill-opacity="0.7" r="6" stroke="#ff4444" stroke-width="1"/>
+<text fill="#fff" font-family="monospace" font-size="5px" text-anchor="middle" x="330" y="1040">R</text>
+<text fill="#555" font-family="monospace" font-size="5px" x="342" y="1041">cold plate</text>
+
+<!-- Power tray Side A (left floor): 400mm = 61px wide -->
+<rect fill="#ff8c00" fill-opacity="0.30" height="22" stroke="#ff8c00" stroke-width="1" width="61" x="200" y="1030"/>
+<text fill="#ff8c00" font-family="monospace" font-size="5px" text-anchor="middle" x="230" y="1044">PWR TRAY</text>
+<text fill="#ff8c00" font-family="monospace" font-size="5px" text-anchor="middle" x="230" y="1050">400 mm</text>
+
+<!-- Manifold trench Side B (right floor): 450mm = 69px wide -->
+<rect fill="#00b4d8" fill-opacity="0.15" height="22" stroke="#00b4d8" stroke-width="1" width="69" x="491" y="1030"/>
+<text fill="#00b4d8" font-family="monospace" font-size="5px" text-anchor="middle" x="525" y="1044">MANIFOLD</text>
+<text fill="#00b4d8" font-family="monospace" font-size="5px" text-anchor="middle" x="525" y="1050">450 mm</text>
+
+<!-- Access panel on Side A (left wall): 2000mm = 306px tall, centered y=683–989 -->
+<rect fill="#ffd60a" fill-opacity="0.35" height="306" stroke="#ffd60a" stroke-width="1.5" width="8" x="200" y="683"/>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" x="148" y="834">ACCESS</text>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" x="148" y="843">PANEL</text>
+<text fill="#ffd60a" font-family="monospace" font-size="6px" x="145" y="852">900×2,000</text>
+<line stroke="#ffd60a" stroke-dasharray="2,2" stroke-width="0.5" x1="198" x2="168" y1="836" y2="836"/>
+
+<!-- Access panel on Side B (right wall): same height -->
+<rect fill="#ffd60a" fill-opacity="0.35" height="306" stroke="#ffd60a" stroke-width="1.5" width="8" x="552" y="683"/>
+
+<!-- Dimension: total width 2352mm -->
+<line stroke="#555" stroke-width="0.5" x1="200" x2="560" y1="1066" y2="1066"/>
+<line stroke="#555" stroke-width="0.5" x1="200" x2="200" y1="1062" y2="1070"/>
+<line stroke="#555" stroke-width="0.5" x1="560" x2="560" y1="1062" y2="1070"/>
+<text fill="#ccc" font-family="monospace" font-size="8px" text-anchor="middle" x="380" y="1080">2,352 mm  (7'-8")</text>
+
+<!-- Breakdown: 576+1200+576 -->
+<line stroke="#333" stroke-width="0.4" x1="200" x2="288" y1="1086" y2="1086"/>
+<text fill="#555" font-family="monospace" font-size="6px" text-anchor="middle" x="244" y="1084">576 mm</text>
+<line stroke="#333" stroke-width="0.4" x1="288" x2="472" y1="1086" y2="1086"/>
+<text fill="#555" font-family="monospace" font-size="6px" text-anchor="middle" x="380" y="1084">1,200 mm</text>
+<line stroke="#333" stroke-width="0.4" x1="472" x2="560" y1="1086" y2="1086"/>
+<text fill="#555" font-family="monospace" font-size="6px" text-anchor="middle" x="516" y="1084">576 mm</text>
+
+<!-- Dimension: height 2698mm -->
+<line stroke="#555" stroke-width="0.5" x1="576" x2="576" y1="632" y2="1052"/>
+<line stroke="#555" stroke-width="0.5" x1="572" x2="580" y1="632" y2="632"/>
+<line stroke="#555" stroke-width="0.5" x1="572" x2="580" y1="1052" y2="1052"/>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="580" y="845">2,698 mm</text>
+<text fill="#ccc" font-family="monospace" font-size="8px" x="582" y="856">(8'-10")</text>
+<!-- Rack height bracket -->
+<line stroke="#333" stroke-width="0.4" x1="592" x2="592" y1="700" y2="1052"/>
+<text fill="#555" font-family="monospace" font-size="6px" x="595" y="880">2,299 mm</text>
+<text fill="#555" font-family="monospace" font-size="6px" x="597" y="889">(88")</text>
+<!-- Overhead bracket -->
+<line stroke="#333" stroke-width="0.4" x1="606" x2="606" y1="632" y2="700"/>
+<text fill="#555" font-family="monospace" font-size="6px" x="608" y="670">399 mm</text>
+
+<!-- ============================================================ -->
+<!-- LEGEND + KEY PARAMETERS (right side of drawing)              -->
+<!-- ============================================================ -->
+<text fill="#00e87a" font-family="monospace" font-size="10px" font-weight="bold" x="650" y="648">LEGEND</text>
+
+<rect fill="#00a855" fill-opacity="0.50" height="10" width="12" x="650" y="655"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="664">R1–R13  Vera Rubin NVL72 Compute  120 kW each  ~1,500 kg</text>
+
+<rect fill="#0077b6" fill-opacity="0.50" height="10" width="12" x="650" y="670"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="679">R14  Quantum-X800 InfiniBand spine  15 kW  ~800 kg</text>
+
+<rect fill="#8833cc" fill-opacity="0.50" height="10" width="12" x="650" y="685"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="694">R15  Storage + Management (BlueField-4 / NVMe)  10 kW  ~900 kg</text>
+
+<rect fill="#ffd60a" fill-opacity="0.70" height="8" width="12" x="650" y="700"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="707">Access panels · 12 total (AP-1A–AP-12B) · 900×2,000 mm · 1,500 mm pitch</text>
+
+<line stroke="#ff4444" stroke-width="2.5" x1="650" x2="662" y1="718" y2="718"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="721">800 V DC Busway · 4,000 A laminated copper · floor tray · Side A</text>
+
+<line stroke="#00b4d8" stroke-dasharray="5,3" stroke-width="1.5" x1="650" x2="662" y1="733" y2="733"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="736">Manifold supply · DN125 PG25 · 45°C · 2,100 LPM · Side B</text>
+
+<line stroke="#ff7700" stroke-dasharray="5,3" stroke-width="1.5" x1="650" x2="662" y1="748" y2="748"/>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="666" y="751">Manifold return · DN125 PG25 · 57°C · 2,100 LPM · Side B</text>
+
+<text fill="#00e87a" font-family="monospace" font-size="10px" font-weight="bold" x="650" y="775">KEY PARAMETERS</text>
+
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="791">Container</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="791">40 ft HC ISO, CSC-plated, new-build</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="803">Interior dims</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="803">12,032 × 2,352 × 2,698 mm</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="815">Rack count</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="815">15  (13 compute · 1 InfiniBand · 1 storage/mgmt)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="827">GPU count</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="827">936 Rubin GPUs (13 racks × 72)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="839">IT load</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="839">1,585 kW (NVL72)  ·  2,105 kW (CPX upgrade)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="851">Facility load</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="851">1,677 kW (NVL72)  ·  2,212 kW (CPX)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="863">Power input</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="863">800 V DC primary (ungrounded IT)  ·  415 V AC alternate</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="875">DC busway</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="875">4,000 A laminated copper (3,200 A cont. @ NEC 80%)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="887">Per-rack power</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="887">Delta 110 kW shelf in-rack · 200 A branch · no sidecar</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="899">CDU</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="899">CoolIT CHx2000 · 2,000 kW · PG25 · 2,100 LPM · N+1</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="911">Cold plate loop</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="911">Supply 45°C  ·  Return 55–60°C  ·  DN125 manifold headers</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="923">CHW at ECP</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="923">7–12°C in  ·  ≤18°C out  ·  2,200 LPM  ·  DN150 Victaulic</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="935">Fire suppression</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="935">Ansul Novec 1230 · 72 kg · 5.85% v/v  +  VESDA-E VEU</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="947">Dehumidification</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="947">Munters HCD-600 · external skid · CDU ECP</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="959">BMS</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="959">NVIDIA Jetson AGX Orin · N+1 · Redfish / Modbus / BACnet</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="971">Operating weight</text>
+<text fill="#ff4444" font-family="monospace" font-size="8px" x="760" y="971">30,085–31,565 kg  (ISO limit 30,480 kg)  WEIGHT-CRITICAL — M-01</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="983">Access panels</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="983">12 panels · 6 per long side · 900×2,000 mm · bolt-sealed · IP54/IP66</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="995">Rack slot pitch</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="995">622 mm (600 mm rack + ~22 mm seismic gap)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="1007">Wall clearance</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="1007">576 mm each long side (manifold · cable · service reach)</text>
+<text fill="#777" font-family="monospace" font-size="8px" x="650" y="1019">Variants</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="8px" x="760" y="1019">Onshore (Lafayette)  +  Offshore marine — same pod, marine deltas</text>
+
+<!-- ECP summary -->
+<text fill="#00e87a" font-family="monospace" font-size="9px" font-weight="bold" x="650" y="1042">ECP INTERFACES</text>
+<text fill="#ccc" font-family="monospace" font-size="8px" font-weight="bold" x="650" y="1055">ELEC ECP (R1 end)</text>
+<text fill="#777" font-family="monospace" font-size="7px" x="650" y="1065">  800 V DC · Stäubli CombiTac 2500 (2,500 A) · 415 V AC alt · BMS fiber OS2 · E-stop MIL-DTL-5015</text>
+<text fill="#ccc" font-family="monospace" font-size="8px" font-weight="bold" x="1030" y="1055">CDU ECP (R15 end)</text>
+<text fill="#777" font-family="monospace" font-size="7px" x="1030" y="1065">  CHW DN150 Victaulic · InfiniBand MPO-24 × 3 · Munters 200mm duct · CDU IEC 60309 60A</text>
+
+<!-- ============================================================ -->
+<!-- TITLE BLOCK                                                   -->
+<!-- ============================================================ -->
+<line stroke="#00a855" stroke-width="1.5" x1="14" x2="1786" y1="1082" y2="1082"/>
+
+<text fill="#00e87a" font-family="monospace" font-size="20px" font-weight="bold" x="30" y="1108">ADC CASSETTE</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="11px" x="30" y="1124">15× NVIDIA Vera Rubin NVL72 · 936 GPUs · 40-ft HC ISO · Sealed Autonomous AI Compute Module</text>
+<text fill="#ff4444" font-family="monospace" font-size="9px" font-weight="bold" x="30" y="1138">PRELIMINARY — NOT FOR CONSTRUCTION — CONFIDENTIAL</text>
+<text fill="#555" font-family="monospace" font-size="8px" x="30" y="1152">Scott Tomsu · ADC / Advantage Design &amp; Construction · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana</text>
+
+<text fill="#e0e0e0" font-family="monospace" font-size="10px" x="1180" y="1100">Document:  Cassette-DWG-001</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="10px" x="1180" y="1114">Revision:   1.0</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="10px" x="1180" y="1128">Date:       2026-04-19</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="10px" x="1180" y="1142">Scale:      NOT TO SCALE</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="10px" x="1180" y="1156">Drawn:      Mission Control</text>
+
+<text fill="#00e87a" font-family="monospace" font-size="32px" font-weight="bold" x="1530" y="1118">ADC</text>
+<text fill="#e0e0e0" font-family="monospace" font-size="32px" font-weight="bold" x="1628" y="1118">3K</text>
+
+</svg>

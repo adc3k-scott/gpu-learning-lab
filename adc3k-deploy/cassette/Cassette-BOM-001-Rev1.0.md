@@ -1,7 +1,7 @@
 # Cassette — BILL OF MATERIALS
 
 **Document:** Cassette-BOM-001
-**Revision:** 1.0
+**Revision:** 2.0
 **Date:** 2026-04-19
 **Classification:** CONFIDENTIAL
 **Companion to:** 
@@ -11,6 +11,7 @@
 | Rev | Date       | Description                                                 |
 |-----|------------|-------------------------------------------------------------|
 | 1.0 | 2026-04-19 | Initial release — companion to          |
+| 2.0 | 2026-04-19 | Corrections from ELEC-001, FIRE-001, COOL-001: DC busway 2,500→4,000 A; primary manifolds DN100→DN125; UQD-16→UQD-25 (86 units); Novec cylinders right-sized; ECP CHW DN100→DN150; main DC input bus bar |
 
 **Prepared by:** Scott Tomsu · CEO / Chief Engineer
 scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
@@ -119,11 +120,11 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 | CoolIT touchscreen kit (integral)              | 1   | CoolIT Systems       | 10" front-face                     |
 | PG25 coolant fill (initial + 10% spare)        | ~500 L | Dowfrost or equivalent | Inhibited propylene glycol     |
 | Stainless primary supply manifold, 4" Sch 40S  | ~1 m | Local fab / Swagelok | CDU to supply trench transition    |
-| Stainless supply manifold, 100 mm (4"), 304L   | ~9 m | Victaulic or Swagelok | Floor trench, insulated           |
-| Stainless return manifold, 100 mm (4"), 304L   | ~9 m | Victaulic or Swagelok | Floor trench, insulated           |
-| Per-rack supply drop, 1" stainless              | 15  | Local fab            | 1" × ~500 mm each                  |
-| Per-rack return drop, 1" stainless              | 15  | Local fab            | 1" × ~500 mm each                  |
-| Stäubli UQD-16 blind-mate disconnect            | 30  | Stäubli              | 15 supply + 15 return              |
+| Stainless supply manifold, 125 mm (5"), 304L   | ~9 m | Victaulic or Swagelok | Floor trench, insulated; DN100 undersized at CPX flow (COOL-001 §5) |
+| Stainless return manifold, 125 mm (5"), 304L   | ~9 m | Victaulic or Swagelok | Floor trench, insulated           |
+| Per-rack supply drop, 1¼" (DN32) stainless      | 15  | Local fab            | DN32 × ~500 mm each (COOL-001 §5) |
+| Per-rack return drop, 1¼" (DN32) stainless      | 15  | Local fab            | DN32 × ~500 mm each (COOL-001 §5) |
+| Stäubli UQD-25 blind-mate disconnect            | 86  | Stäubli              | 43 supply + 43 return; UQD-16 requires 7/rack = impractical (COOL-001 §6) |
 | Per-rack isolation valve (1" ball, lockable)    | 30  | Apollo or Watts      | Supply + return, lockout-capable   |
 | Manifold air bleed valves                       | 8   | Apollo or Watts      | 1/2" brass, manual                 |
 | Manifold drain valves                           | 3   | Apollo or Watts      | 1" ball, to sump                   |
@@ -161,7 +162,7 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 | Xtralis VESDA-E VEU-A00 aspirating unit        | 1   | Honeywell / Xtralis  | 18-port sampling                   |
 | VESDA sampling pipe network (CPVC, 25 mm)      | 1 lot | Xtralis            | ~40 m distributed                  |
 | VESDA sampling ports (holes)                   | 18  | Drilled per spec     | 2.2 mm diameter                    |
-| Ansul Novec 1230 cylinder, 180 L, 25 bar       | 2   | Johnson Controls (Ansul) | Clean agent [LONG LEAD]        |
+| Ansul Novec 1230 cylinder — right-size per FIRE-001 | TBD | Johnson Controls (Ansul) | 72 kg agent required; 2× 180 L = 4× oversized (~275 kg excess mass); specify correct size per FIRE-001 §4 [LONG LEAD] |
 | Novec discharge nozzles (360°)                 | 8   | Johnson Controls (Ansul) | Ceiling-distributed            |
 | Novec discharge piping (copper or SS)          | 1 lot | Johnson Controls   | Per NFPA 2001                      |
 | Novec control panel                            | 1   | Johnson Controls     | Fire alarm control unit            |
@@ -206,7 +207,7 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 | Maintenance UPS, 24 V DC / 2 kWh (LiFePO4)     | 1   | Victron or Battle Born | With integrated charger        |
 | Life-safety DC panel, 24 V DC distribution     | 1   | Blue Sea Systems or similar | Marine-grade             |
 | Per-rack DC breaker, 250 A frame, 200 A trip   | 15  | ABB SACE or Schneider | Class L or equivalent            |
-| DC busway, 2,500 A, 800 V DC rated             | 1 lot (~15 m) | Starline or similar | Floor-mount ladder               |
+| DC busway, 4,000 A, 800 V DC rated             | 1 lot (~15 m) | Starline or similar | 4,000 A for CPX upgrade path (ELEC-001); floor-mount ladder |
 | Busway taps (per rack)                         | 15  | Same as busway       | Bolted compression                 |
 | Grounding bar (50 mm² capacity)                | 1   | Burndy or Erico      | Bolted to frame                    |
 | CDU power panel (480 V AC 3-ph, 60 A)          | 1   | Eaton or Siemens     | Subpanel at CDU end                |
@@ -308,7 +309,7 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 
 | Item                                           | Qty | Vendor / Source      | Notes                              |
 |------------------------------------------------|-----|----------------------|------------------------------------|
-| Victaulic Style 77, 4" grooved coupling        | 2   | Victaulic            | CHW supply + return                |
+| Victaulic Style 77, 6" (DN150) grooved coupling | 2   | Victaulic            | CHW supply + return; DN100 exceeds 3.0 m/s at 2,200 LPM (COOL-001 §8) |
 | 200 mm flanged duct collars (4-bolt)           | 2   | Local fab            | Munters supply + return            |
 | MPO-24 bulkhead (IB uplink + downlink + redundant) | 3 | Corning PRETIUM     | Single-mode OS2                    |
 | Neutrik NE8FDX RJ-45 sealed (OOB A + B)        | 2   | Neutrik              | Cat6A shielded, IP67               |
@@ -337,7 +338,7 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 
 | Cable Type                                     | Length (m) | Vendor / Source     |
 |------------------------------------------------|------------|---------------------|
-| 800 V DC primary, 2× 70 mm² XHHW-2             | ~10        | Southwire or General Cable |
+| 800 V DC primary — laminated bus bar (2× 70 mm² cable = ~265 A rated, inadequate for 1,981 A — ELEC-001 §4) | ~1.5 m | Custom fab — Eaton/ABB/Schneider |
 | 415 V AC primary, 4× 120 mm² + 50 mm² gnd [ALT] | ~10       | Southwire or General Cable |
 | Per-rack DC branch cable, 2× 70 mm²            | ~30 (15 × 2 m) | Southwire       |
 | 480 V AC CDU power feed, 4× 10 mm²             | ~6         | Southwire           |
@@ -410,7 +411,7 @@ Items requiring earliest procurement action (ordered by lead time):
 | Bender iso-PV1685 IMD                          | 10 weeks       | HIGH        |
 | Ansul Novec 1230 cylinders (180 L)             | 10–12 weeks    | HIGH        |
 | Munters HCD-600                                | 8–12 weeks     | HIGH        |
-| Stäubli UQD-16 (30 units)                      | 8 weeks        | MEDIUM      |
+| Stäubli UQD-25 (86 units — revised per COOL-001) | 8 weeks       | MEDIUM      |
 | VESDA-E VEU                                    | 6–8 weeks      | MEDIUM      |
 | Victaulic Style 77 couplings                   | 4 weeks        | LOW         |
 
@@ -442,6 +443,6 @@ Items requiring earliest procurement action (ordered by lead time):
 
 ---
 
-**Cassette — Bill of Materials · Cassette-BOM-001 · Rev 1.0 · 2026-04-19**
+**Cassette — Bill of Materials · Cassette-BOM-001 · Rev 2.0 · 2026-04-19**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**

@@ -1,7 +1,7 @@
 # Cassette — EXTERNAL CONNECTION PANEL (ECP) INTERFACE CONTROL DOCUMENT
 
 **Document:** Cassette-ECP-001
-**Revision:** 1.0
+**Revision:** 2.0
 **Date:** 2026-04-19
 **Classification:** CONFIDENTIAL
 **Companion to:** 
@@ -11,6 +11,7 @@
 | Rev | Date       | Description                                                       |
 |-----|------------|-------------------------------------------------------------------|
 | 1.0 | 2026-04-19 | Initial release —                |
+| 2.0 | 2026-04-19 | CHW interface corrected: 1,800→2,200 LPM, ΔT 5→11 °C, DN100→DN150 Victaulic at CDU ECP (Cassette-COOL-001 §8) |
 
 **Prepared by:** Scott Tomsu · CEO / Chief Engineer
 scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
@@ -151,8 +152,8 @@ All penetrations at the CDU ECP, in physical order:
 
 | # | Service                         | Connector / Interface                     | Rating            | Qty |
 |---|----------------------------------|-------------------------------------------|-------------------|-----|
-| 1 | CHW supply inlet                 | 4" (DN100) Victaulic grooved, Style 77   | 250 psi, 120 °C  | 1   |
-| 2 | CHW return outlet                | 4" (DN100) Victaulic grooved, Style 77   | 250 psi, 120 °C  | 1   |
+| 1 | CHW supply inlet                 | 6" (DN150) Victaulic grooved, Style 77   | 250 psi, 120 °C  | 1   |
+| 2 | CHW return outlet                | 6" (DN150) Victaulic grooved, Style 77   | 250 psi, 120 °C  | 1   |
 | 3 | Munters process air supply (dry) | 200 mm insulated flanged duct, 4-bolt    | Sealed, vapor barrier | 1   |
 | 4 | Munters process air return (wet) | 200 mm insulated flanged duct, 4-bolt    | Sealed           | 1   |
 | 5 | InfiniBand compute uplink        | MPO-24 bulkhead, single-mode OS2         | IP54 (onshore) / IP66 (offshore) | 1 assembly |
@@ -269,13 +270,13 @@ AC vs DC input is selected at commissioning (§19). Both sets of ECP connectors 
 | Fluid                        | Treated water (platform-side)   | Treated water           |
 | Supply temperature           | 7–12 °C (design 10 °C) | —                       |
 | Return temperature           | —                      | 12–18 °C (design 15 °C) |
-| ΔT design                    | 5 °C                   | —                       |
-| ΔT operating range           | 3–8 °C                 | —                       |
-| Flow (design)                | 1,800 LPM              | 1,800 LPM               |
-| Flow (operating range)       | 1,500–2,000 LPM        | matched                 |
+| ΔT design                    | 11 °C                  | —                       |
+| ΔT operating range           | 8–14 °C                | —                       |
+| Flow (design)                | 2,200 LPM              | 2,200 LPM               |
+| Flow (operating range)       | 1,800–2,500 LPM        | matched                 |
 | Pressure at ECP              | 150–350 kPa            | 150–350 kPa             |
 | Max pressure                 | 600 kPa burst          | 600 kPa burst           |
-| Connector                    | 4" (DN100) Victaulic Style 77 grooved | same   |
+| Connector                    | 6" (DN150) Victaulic Style 77 grooved | same   |
 | Pipe material                | 304L or 316L stainless | same                    |
 
 ### Water Quality Requirements (Platform Responsibility)
@@ -619,7 +620,7 @@ Authoritative vendor products for each connector type. Equivalents acceptable on
 | 415 V AC main                | Cam-Lok E1016 series (Marinco / Hubbell)    |
 | DC-current blind-mate (internal) | Stäubli CombiTac 400 (rack feeds)       |
 | UQD (fluid disconnect)       | Stäubli UQD-16                              |
-| CHW Victaulic                | Victaulic Style 77, 4" grooved, ductile iron |
+| CHW Victaulic                | Victaulic Style 77, 6" (DN150) grooved, ductile iron |
 | MPO fiber bulkhead           | Corning PRETIUM EDGE or Panduit FlexPlus    |
 | Single-mode LC/APC           | Corning or Panduit OptiCam                  |
 | Cat6A RJ-45 sealed           | Neutrik NE8FDX or Switchcraft EHRJ45P       |
@@ -640,7 +641,7 @@ Minimum cable specifications. Higher ratings acceptable.
 |----------------------------|-----------------------------------------|
 | 800 V DC main              | 2× 70 mm² UL 44 XHHW-2, 2 kV rated      |
 | 415 V AC main              | 4× 120 mm² UL 44 XHHW-2 + 50 mm² ground |
-| CHW piping                 | 4" 304L stainless, ASME B31.3           |
+| CHW piping                 | 6" (DN150) 304L stainless, ASME B31.3   |
 | Munters duct               | 200 mm 304 stainless w/ 25 mm CCF       |
 | MPO fiber trunk            | OS2 SMF, OFNR or OFNP riser             |
 | Cat6A OOB                  | Shielded (F/UTP or S/FTP), 600 V plenum |
@@ -725,10 +726,11 @@ Changes to this ICD require written agreement between pod vendor and platform ow
 | Rev | Date       | Category | Description                                                      |
 |-----|------------|----------|------------------------------------------------------------------|
 | 1.0 | 2026-04-19 | Initial  | First release             |
+| 2.0 | 2026-04-19 | C (breaking) | CHW: 1,800→2,200 LPM, ΔT 5→11 °C, DN100→DN150 Victaulic (Cassette-COOL-001 §8) |
 
 ---
 
 **Cassette — External Connection Panel Interface Control Document**
-**Cassette-ECP-001 · Rev 1.0 · 2026-04-19**
+**Cassette-ECP-001 · Rev 2.0 · 2026-04-19**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**
