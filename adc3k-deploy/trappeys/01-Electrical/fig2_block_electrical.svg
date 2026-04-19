@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Arial, sans-serif">
+  <style>
+    .title { font-size: 18px; font-weight: 600; }
+    .subtitle { font-size: 12px; fill: #555; }
+    .label { font-size: 12px; font-weight: 500; }
+    .value { font-size: 11px; fill: #333; }
+    .section { font-size: 13px; font-weight: 600; fill: #0C447C; }
+    .box { stroke: #333; stroke-width: 0.5; fill: #F1EFE8; }
+    .box-gen { stroke: #333; stroke-width: 0.5; fill: #F5C4B3; }
+    .box-mv { stroke: #333; stroke-width: 0.5; fill: #FAC775; }
+    .box-lv { stroke: #333; stroke-width: 0.5; fill: #FAC775; fill-opacity: 0.5; }
+    .box-rack { stroke: #333; stroke-width: 0.5; fill: #CECBF6; }
+    .box-dc { stroke: #333; stroke-width: 0.5; fill: #B5D4F4; }
+    .box-bess { stroke: #333; stroke-width: 0.5; fill: #C0DD97; }
+    .box-solar { stroke: #333; stroke-width: 0.5; fill: #FAC775; fill-opacity: 0.7; }
+    .box-cassette { stroke: #333; stroke-width: 0.5; fill: #9FE1CB; }
+    .wire-mv { stroke: #BA7517; stroke-width: 2; fill: none; }
+    .wire-lv { stroke: #534AB7; stroke-width: 1.5; fill: none; }
+    .wire-dc { stroke: #0F6E56; stroke-width: 2.5; fill: none; }
+    .bus { stroke: #333; stroke-width: 3; fill: none; }
+  </style>
+
+  <text x="450" y="24" text-anchor="middle" class="title">Figure 2 — Single Stage 1 block electrical (Rev 0.2)</text>
+  <text x="450" y="42" text-anchor="middle" class="subtitle">11 blocks replicated identically. 9.66 MW cassette facility + BESS + solar on 800 VDC busway.</text>
+
+  <!-- Tier 1: Gensets -->
+  <text x="60" y="80" class="section">Generation</text>
+  <rect x="40" y="90" width="130" height="60" class="box-gen"/>
+  <text x="105" y="110" text-anchor="middle" class="label">Cat CG260-16 #1</text>
+  <text x="105" y="125" text-anchor="middle" class="value">4,000 ekW, 13.8 kV</text>
+  <text x="105" y="142" text-anchor="middle" class="value">61.5% anchor / 80.5% N-1</text>
+
+  <rect x="180" y="90" width="130" height="60" class="box-gen"/>
+  <text x="245" y="110" text-anchor="middle" class="label">Cat CG260-16 #2</text>
+  <text x="245" y="125" text-anchor="middle" class="value">4,000 ekW, 13.8 kV</text>
+  <text x="245" y="142" text-anchor="middle" class="value">Cat ECS isochronous</text>
+
+  <rect x="320" y="90" width="130" height="60" class="box-gen"/>
+  <text x="385" y="110" text-anchor="middle" class="label">Cat CG260-16 #3</text>
+  <text x="385" y="125" text-anchor="middle" class="value">4,000 ekW, 13.8 kV</text>
+  <text x="385" y="142" text-anchor="middle" class="value">3-of-4 carry load</text>
+
+  <rect x="460" y="90" width="130" height="60" class="box-gen"/>
+  <text x="525" y="110" text-anchor="middle" class="label">Cat CG260-16 #4</text>
+  <text x="525" y="125" text-anchor="middle" class="value">4,000 ekW, 13.8 kV</text>
+  <text x="525" y="142" text-anchor="middle" class="value">N+1 standby</text>
+
+  <!-- Genset feeders -->
+  <path d="M 105 150 L 105 175" class="wire-mv"/>
+  <path d="M 245 150 L 245 175" class="wire-mv"/>
+  <path d="M 385 150 L 385 175" class="wire-mv"/>
+  <path d="M 525 150 L 525 175" class="wire-mv"/>
+
+  <!-- MV bus -->
+  <line x1="40" y1="180" x2="720" y2="180" class="bus"/>
+  <text x="740" y="185" class="label">13.8 kV MV bus</text>
+
+  <rect x="40" y="195" width="220" height="40" class="box-mv"/>
+  <text x="150" y="215" text-anchor="middle" class="label">Arc-resistant switchgear</text>
+  <text x="150" y="230" text-anchor="middle" class="value">87B bus diff • UFLS 59.5/59.2/58.9</text>
+
+  <rect x="280" y="195" width="220" height="40" class="box-mv"/>
+  <text x="390" y="215" text-anchor="middle" class="label">Per-genset protection</text>
+  <text x="390" y="230" text-anchor="middle" class="value">87G • 32 • 40 • 46 • 51V • 64G</text>
+
+  <!-- Step-down transformer -->
+  <path d="M 380 235 L 380 265" class="wire-mv"/>
+  <rect x="300" y="265" width="160" height="50" class="box-mv"/>
+  <text x="380" y="285" text-anchor="middle" class="label">Step-down transformer</text>
+  <text x="380" y="300" text-anchor="middle" class="value">13.8 kV Δ → 480Y/277 V, 15 MVA, Dyn11</text>
+
+  <path d="M 380 315 L 380 340" class="wire-lv"/>
+
+  <!-- 480V switchboard -->
+  <text x="60" y="355" class="section">480 VAC tier</text>
+  <rect x="100" y="340" width="560" height="34" class="box-lv"/>
+  <text x="380" y="362" text-anchor="middle" class="label">480 VAC main switchboard — solid gnd wye, 52M LSIG, 50G residual</text>
+
+  <!-- Rack row -->
+  <text x="60" y="395" class="section">AC-DC conversion (Rev 0.2: 5 racks/cassette preferred)</text>
+  <rect x="80" y="405" width="110" height="44" class="box-rack"/>
+  <text x="135" y="423" text-anchor="middle" class="label">5× Delta 660 kW</text>
+  <text x="135" y="440" text-anchor="middle" class="value">cassette 1 (73% load)</text>
+
+  <rect x="200" y="405" width="110" height="44" class="box-rack"/>
+  <text x="255" y="423" text-anchor="middle" class="label">5× Delta 660 kW</text>
+  <text x="255" y="440" text-anchor="middle" class="value">cassette 2</text>
+
+  <rect x="320" y="405" width="110" height="44" class="box-rack"/>
+  <text x="375" y="423" text-anchor="middle" class="label">5× Delta 660 kW</text>
+  <text x="375" y="440" text-anchor="middle" class="value">cassette 3</text>
+
+  <rect x="440" y="405" width="110" height="44" class="box-rack"/>
+  <text x="495" y="423" text-anchor="middle" class="label">5× Delta 660 kW</text>
+  <text x="495" y="440" text-anchor="middle" class="value">cassette 4</text>
+
+  <text x="560" y="427" class="value">20 racks total /</text>
+  <text x="560" y="441" class="value">block = 13.2 MW</text>
+
+  <!-- LV feeds to racks -->
+  <path d="M 135 374 L 135 405" class="wire-lv"/>
+  <path d="M 255 374 L 255 405" class="wire-lv"/>
+  <path d="M 375 374 L 375 405" class="wire-lv"/>
+  <path d="M 495 374 L 495 405" class="wire-lv"/>
+
+  <!-- DC output lines -->
+  <path d="M 135 449 L 135 470" class="wire-dc"/>
+  <path d="M 255 449 L 255 470" class="wire-dc"/>
+  <path d="M 375 449 L 375 470" class="wire-dc"/>
+  <path d="M 495 449 L 495 470" class="wire-dc"/>
+
+  <!-- 800 VDC busway -->
+  <line x1="40" y1="475" x2="860" y2="475" class="bus" stroke="#0F6E56"/>
+  <text x="45" y="493" class="label" fill="#0F6E56">800 VDC common busway (17,000 A spec — cassettes + BESS + solar)</text>
+
+  <!-- Tap-offs -->
+  <!-- Cassettes -->
+  <path d="M 135 475 L 135 505" class="wire-dc"/>
+  <path d="M 255 475 L 255 505" class="wire-dc"/>
+  <path d="M 375 475 L 375 505" class="wire-dc"/>
+  <path d="M 495 475 L 495 505" class="wire-dc"/>
+
+  <rect x="80" y="505" width="110" height="54" class="box-cassette"/>
+  <text x="135" y="525" text-anchor="middle" class="label">Cassette #1</text>
+  <text x="135" y="540" text-anchor="middle" class="value">2,415 kW facility</text>
+  <text x="135" y="554" text-anchor="middle" class="value">720 GPU, Staubli</text>
+
+  <rect x="200" y="505" width="110" height="54" class="box-cassette"/>
+  <text x="255" y="525" text-anchor="middle" class="label">Cassette #2</text>
+  <text x="255" y="540" text-anchor="middle" class="value">2,415 kW</text>
+
+  <rect x="320" y="505" width="110" height="54" class="box-cassette"/>
+  <text x="375" y="525" text-anchor="middle" class="label">Cassette #3</text>
+  <text x="375" y="540" text-anchor="middle" class="value">2,415 kW</text>
+
+  <rect x="440" y="505" width="110" height="54" class="box-cassette"/>
+  <text x="495" y="525" text-anchor="middle" class="label">Cassette #4</text>
+  <text x="495" y="540" text-anchor="middle" class="value">2,415 kW</text>
+
+  <!-- BESS tap -->
+  <path d="M 600 475 L 600 505" class="wire-dc"/>
+  <rect x="575" y="505" width="110" height="54" class="box-bess"/>
+  <text x="630" y="525" text-anchor="middle" class="label">BESS (LFP)</text>
+  <text x="630" y="540" text-anchor="middle" class="value">3.6 MWh / 2 MW</text>
+  <text x="630" y="554" text-anchor="middle" class="value">via SiC DC-DC</text>
+
+  <!-- Solar tap -->
+  <path d="M 760 475 L 760 505" class="wire-dc"/>
+  <rect x="700" y="505" width="130" height="54" class="box-solar"/>
+  <text x="765" y="525" text-anchor="middle" class="label">Solar share</text>
+  <text x="765" y="540" text-anchor="middle" class="value">~186 kW nominal</text>
+  <text x="765" y="554" text-anchor="middle" class="value">1,500V→800V buck</text>
+
+  <!-- Footnote -->
+  <line x1="40" y1="580" x2="860" y2="580" stroke="#999" stroke-width="0.3"/>
+  <text x="60" y="598" class="subtitle">Block total: 4× cassettes = 9.66 MW + BESS + solar. 11× identical blocks = 101.2 MW Stage 1.</text>
+  <text x="60" y="612" class="subtitle">MV bus (orange) • 480 VAC feeders (violet) • 800 VDC busway (teal). SSCB + blocking diode at every DC source tie.</text>
+</svg>

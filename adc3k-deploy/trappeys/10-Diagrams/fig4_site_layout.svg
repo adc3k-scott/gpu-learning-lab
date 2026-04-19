@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Arial, sans-serif">
+  <style>
+    .title { font-size: 18px; font-weight: 600; }
+    .subtitle { font-size: 12px; fill: #555; }
+    .label { font-size: 12px; font-weight: 500; }
+    .label-lg { font-size: 13px; font-weight: 600; fill: #0C447C; }
+    .value { font-size: 10.5px; fill: #333; }
+    .dim { font-size: 10px; fill: #999; font-style: italic; }
+    .note { font-size: 11px; fill: #A32D2D; font-weight: 500; }
+    .historic { stroke: #885500; stroke-width: 1; fill: #FAC775; fill-opacity: 0.6; }
+    .slab { stroke: #333; stroke-width: 1; fill: #D3D1C7; fill-opacity: 0.5; }
+    .yard { stroke: #333; stroke-width: 1; fill: #C0DD97; fill-opacity: 0.4; }
+    .compute { stroke: #333; stroke-width: 1; fill: #B5D4F4; fill-opacity: 0.7; }
+    .river { fill: #9FE1CB; }
+    .equip { stroke: #333; stroke-width: 0.5; fill: #FFFFFF; fill-opacity: 0.9; }
+    .equip-red { stroke: #791F1F; stroke-width: 0.8; fill: #F7C1C1; fill-opacity: 0.6; }
+  </style>
+
+  <text x="450" y="24" text-anchor="middle" class="title">Figure 4 — Site layout, 22-acre Trappey's cannery (SITING-001 C1 gate)</text>
+  <text x="450" y="42" text-anchor="middle" class="subtitle">Schematic packing check. North at top. Vermilion River along south edge.</text>
+
+  <!-- Compass -->
+  <g transform="translate(820,70)">
+    <circle cx="0" cy="0" r="22" fill="white" stroke="#666" stroke-width="0.5"/>
+    <path d="M 0 -18 L 4 0 L 0 -4 L -4 0 Z" fill="#333"/>
+    <text x="0" y="-26" text-anchor="middle" class="value" font-weight="600">N</text>
+  </g>
+
+  <!-- North road boundary -->
+  <line x1="40" y1="65" x2="770" y2="65" stroke="#666" stroke-width="0.5"/>
+  <text x="400" y="60" text-anchor="middle" class="value" fill="#666">— Pinhook Road / north boundary —</text>
+
+  <!-- B1/B2 Historic buildings -->
+  <rect x="50" y="80" width="200" height="110" class="historic"/>
+  <text x="150" y="100" text-anchor="middle" class="label">B1 — Historic</text>
+  <text x="150" y="115" text-anchor="middle" class="value">NOC / partner hub</text>
+  <text x="150" y="129" text-anchor="middle" class="value">Rooftop solar 1.0 MW</text>
+  <text x="150" y="170" text-anchor="middle" class="label">B2 — Historic</text>
+  <text x="150" y="184" text-anchor="middle" class="value">(part of B1/B2 twin)</text>
+
+  <!-- B3 compute hall -->
+  <rect x="270" y="80" width="230" height="150" class="compute"/>
+  <text x="385" y="110" text-anchor="middle" class="label">B3 — compute hall</text>
+  <text x="385" y="128" text-anchor="middle" class="value">20 cassettes</text>
+  <text x="385" y="144" text-anchor="middle" class="value">46 MW IT</text>
+  <text x="385" y="160" text-anchor="middle" class="value">5 blocks</text>
+  <text x="385" y="200" text-anchor="middle" class="dim">~30k sq ft</text>
+
+  <!-- B4 compute hall -->
+  <rect x="520" y="80" width="250" height="150" class="compute"/>
+  <text x="645" y="110" text-anchor="middle" class="label">B4 — compute hall</text>
+  <text x="645" y="128" text-anchor="middle" class="value">24 cassettes</text>
+  <text x="645" y="144" text-anchor="middle" class="value">55.2 MW IT</text>
+  <text x="645" y="160" text-anchor="middle" class="value">6 blocks</text>
+  <text x="645" y="200" text-anchor="middle" class="dim">~36k sq ft</text>
+
+  <!-- Rear slab -->
+  <rect x="50" y="260" width="720" height="180" class="slab"/>
+  <text x="70" y="280" class="label-lg">Rear slab — 42,000 sq ft</text>
+  <text x="70" y="294" class="value">Genset installation + BESS</text>
+
+  <!-- Gensets on rear slab - 44 units in rows -->
+  <g id="gensets">
+    <!-- Row 1: 11 gensets -->
+    <rect x="80" y="305" width="55" height="20" class="equip"/><text x="107" y="318" text-anchor="middle" class="value">G1</text>
+    <rect x="145" y="305" width="55" height="20" class="equip"/><text x="172" y="318" text-anchor="middle" class="value">G2</text>
+    <rect x="210" y="305" width="55" height="20" class="equip"/><text x="237" y="318" text-anchor="middle" class="value">G3</text>
+    <rect x="275" y="305" width="55" height="20" class="equip"/><text x="302" y="318" text-anchor="middle" class="value">G4</text>
+    <rect x="340" y="305" width="55" height="20" class="equip"/><text x="367" y="318" text-anchor="middle" class="value">G5</text>
+    <rect x="405" y="305" width="55" height="20" class="equip"/><text x="432" y="318" text-anchor="middle" class="value">G6</text>
+    <rect x="470" y="305" width="55" height="20" class="equip"/><text x="497" y="318" text-anchor="middle" class="value">G7</text>
+    <rect x="535" y="305" width="55" height="20" class="equip"/><text x="562" y="318" text-anchor="middle" class="value">G8</text>
+    <rect x="600" y="305" width="55" height="20" class="equip"/><text x="627" y="318" text-anchor="middle" class="value">G9</text>
+    <rect x="665" y="305" width="55" height="20" class="equip"/><text x="692" y="318" text-anchor="middle" class="value">G10</text>
+    <!-- Row 2: 11 gensets -->
+    <rect x="80" y="335" width="55" height="20" class="equip"/><text x="107" y="348" text-anchor="middle" class="value">G11</text>
+    <rect x="145" y="335" width="55" height="20" class="equip"/><text x="172" y="348" text-anchor="middle" class="value">G12</text>
+    <rect x="210" y="335" width="55" height="20" class="equip"/><text x="237" y="348" text-anchor="middle" class="value">G13</text>
+    <rect x="275" y="335" width="55" height="20" class="equip"/><text x="302" y="348" text-anchor="middle" class="value">G14</text>
+    <rect x="340" y="335" width="55" height="20" class="equip"/><text x="367" y="348" text-anchor="middle" class="value">G15</text>
+    <rect x="405" y="335" width="55" height="20" class="equip"/><text x="432" y="348" text-anchor="middle" class="value">G16</text>
+    <rect x="470" y="335" width="55" height="20" class="equip"/><text x="497" y="348" text-anchor="middle" class="value">G17</text>
+    <rect x="535" y="335" width="55" height="20" class="equip"/><text x="562" y="348" text-anchor="middle" class="value">G18</text>
+    <rect x="600" y="335" width="55" height="20" class="equip"/><text x="627" y="348" text-anchor="middle" class="value">G19</text>
+    <rect x="665" y="335" width="55" height="20" class="equip"/><text x="692" y="348" text-anchor="middle" class="value">G20</text>
+    <!-- BESS containers row -->
+    <rect x="80" y="370" width="140" height="28" class="equip-red"/><text x="150" y="387" text-anchor="middle" class="value">BESS blocks 1-3</text>
+    <rect x="235" y="370" width="140" height="28" class="equip-red"/><text x="305" y="387" text-anchor="middle" class="value">BESS blocks 4-6</text>
+    <rect x="390" y="370" width="140" height="28" class="equip-red"/><text x="460" y="387" text-anchor="middle" class="value">BESS blocks 7-9</text>
+    <rect x="545" y="370" width="175" height="28" class="equip-red"/><text x="632" y="387" text-anchor="middle" class="value">BESS blocks 10-11 + JW rad</text>
+  </g>
+
+  <text x="400" y="420" text-anchor="middle" class="note">⚠ Rear slab @ 42k sq ft is tight for 44 gensets + BESS at standard spacing (~75k sq ft typical)</text>
+  <text x="400" y="434" text-anchor="middle" class="note">SITING-001 (C1) — aggressive packing study required: close genset spacing, BESS gantry, trenched aux</text>
+
+  <!-- Infrastructure yard -->
+  <rect x="50" y="455" width="450" height="120" class="yard"/>
+  <text x="70" y="475" class="label-lg">Infrastructure yard — 28,000 sq ft</text>
+  <text x="70" y="489" class="value">Cooling + SCR + switchgear</text>
+
+  <!-- Cooling towers (now smaller in Rev 0.2) -->
+  <rect x="80" y="500" width="60" height="60" class="equip"/>
+  <text x="110" y="525" text-anchor="middle" class="value">CT-1</text>
+  <text x="110" y="540" text-anchor="middle" class="dim">7k RT</text>
+  <rect x="150" y="500" width="60" height="60" class="equip"/>
+  <text x="180" y="525" text-anchor="middle" class="value">CT-2</text>
+  <text x="180" y="540" text-anchor="middle" class="dim">7k RT</text>
+  <rect x="220" y="500" width="60" height="60" class="equip"/>
+  <text x="250" y="525" text-anchor="middle" class="value">CT-3 N+1</text>
+
+  <!-- Absorption chiller + SCR -->
+  <rect x="300" y="500" width="85" height="28" class="equip"/>
+  <text x="342" y="518" text-anchor="middle" class="value">Abs chiller 33 MW</text>
+  <rect x="300" y="532" width="85" height="28" class="equip"/>
+  <text x="342" y="550" text-anchor="middle" class="value">CO cat + SCR</text>
+
+  <rect x="395" y="500" width="95" height="60" class="equip"/>
+  <text x="443" y="525" text-anchor="middle" class="value">Xfmr farm</text>
+  <text x="443" y="540" text-anchor="middle" class="value">11× 15 MVA</text>
+  <text x="443" y="555" text-anchor="middle" class="dim">MV switchgear</text>
+
+  <text x="275" y="585" text-anchor="middle" class="value" fill="#27500A">✓ Yard closes comfortably under Option A (tower reduced 70%)</text>
+
+  <!-- Adiabatic dry cooler for Boyd (separate) -->
+  <rect x="520" y="455" width="250" height="60" class="equip"/>
+  <text x="645" y="478" text-anchor="middle" class="label">Boyd adiabatic dry cooler</text>
+  <text x="645" y="494" text-anchor="middle" class="value">81 MW GPU heat rejection</text>
+  <text x="645" y="509" text-anchor="middle" class="dim">Physically separate from cooling tower field</text>
+
+  <rect x="520" y="525" width="250" height="50" class="equip"/>
+  <text x="645" y="548" text-anchor="middle" class="label">Gas plant + metering</text>
+  <text x="645" y="563" text-anchor="middle" class="value">40,300 Nm³/hr firm capacity</text>
+
+  <!-- River at bottom -->
+  <rect x="40" y="585" width="820" height="25" class="river"/>
+  <text x="450" y="602" text-anchor="middle" class="value" fill="#04342C">~~~ Vermilion River (eliminated as heat sink; intake for makeup is a separate permit path) ~~~</text>
+</svg>

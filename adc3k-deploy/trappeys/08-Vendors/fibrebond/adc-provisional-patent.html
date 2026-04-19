@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provisional Patent Application — Autonomous DC AI Compute Cassette System</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; color: #111; background: #fff; }
+  .page { max-width: 750px; margin: 0 auto; padding: 60px 50px; }
+
+  .pto-header { border: 2px solid #111; padding: 16px 20px; margin-bottom: 28px; text-align: center; }
+  .pto-header .pto-title { font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .pto-header .pto-sub { font-size: 10pt; color: #333; }
+
+  .filing-block { border: 1px solid #aaa; padding: 16px 20px; margin-bottom: 28px; background: #fafafa; font-size: 10.5pt; line-height: 1.8; }
+  .filing-block .fb-title { font-size: 10pt; font-weight: bold; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+  .filing-row { display: flex; gap: 12px; margin-bottom: 4px; }
+  .filing-label { font-weight: bold; min-width: 140px; flex-shrink: 0; }
+  .filing-value { color: #333; }
+  .filing-line { border-bottom: 1px solid #888; min-width: 200px; display: inline-block; height: 16px; margin-left: 4px; }
+
+  h2 { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 28px 0 10px; letter-spacing: .3px; border-bottom: 1px solid #aaa; padding-bottom: 4px; }
+  h3 { font-size: 12pt; font-weight: bold; margin: 20px 0 8px; }
+  p { font-size: 11.5pt; line-height: 1.8; margin-bottom: 10px; text-align: justify; }
+  ol { margin: 8px 0 14px 28px; }
+  ol li { font-size: 11.5pt; line-height: 1.8; margin-bottom: 8px; text-align: justify; }
+  ul { margin: 8px 0 14px 28px; }
+  ul li { font-size: 11.5pt; line-height: 1.8; margin-bottom: 6px; }
+
+  .claim { margin-bottom: 16px; }
+  .claim-num { font-weight: bold; }
+  .claim-body { font-size: 11.5pt; line-height: 1.9; text-align: justify; }
+  .claim-body ol { margin-top: 8px; }
+
+  .abstract-box { border: 1px solid #aaa; padding: 16px 20px; margin: 20px 0; background: #fafafa; font-size: 11pt; line-height: 1.8; text-align: justify; }
+
+  .disclaimer { margin-top: 44px; padding-top: 14px; border-top: 1px solid #ccc; font-size: 9pt; color: #777; line-height: 1.6; }
+
+  .sig-block { margin-top: 40px; page-break-inside: avoid; }
+  .sig-cols { display: flex; gap: 60px; margin-top: 20px; }
+  .sig-col { flex: 1; }
+  .sig-line { border-bottom: 1px solid #333; margin-bottom: 5px; height: 32px; }
+  .sig-label { font-size: 9.5pt; color: #444; margin-bottom: 16px; }
+
+  @media print {
+    body { font-size: 11pt; }
+    .page { padding: 36px 32px; max-width: 100%; }
+    h2 { page-break-after: avoid; }
+    .claim { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="pto-header">
+  <div class="pto-title">Provisional Patent Application</div>
+  <div class="pto-sub">United States Patent and Trademark Office (USPTO) &nbsp;·&nbsp; 35 U.S.C. § 111(b)</div>
+</div>
+
+<div class="filing-block">
+  <div class="fb-title">Filing Information</div>
+  <div class="filing-row"><span class="filing-label">Title:</span><span class="filing-value">Autonomous DC AI Compute Cassette System — Modular, Autonomously Controlled, Scalable AI Compute Infrastructure with Pure DC Architecture, Heterogeneous Configuration, and Four-Connection Site Interface</span></div>
+  <div class="filing-row"><span class="filing-label">Inventor(s):</span><span class="filing-value">Scott Tomsu, Lafayette, Louisiana, United States</span></div>
+  <div class="filing-row"><span class="filing-label">Correspondence:</span><span class="filing-value">scott@adc3k.com &nbsp;·&nbsp; (337) 780-1535</span></div>
+  <div class="filing-row"><span class="filing-label">Filing Date:</span><span class="filing-value"><span class="filing-line"></span></span></div>
+  <div class="filing-row"><span class="filing-label">Application No.:</span><span class="filing-value"><span class="filing-line"></span> (assigned by USPTO)</span></div>
+  <div class="filing-row"><span class="filing-label">Entity Status:</span><span class="filing-value">Small Entity / Micro Entity (to be confirmed at filing)</span></div>
+</div>
+
+<!-- ABSTRACT -->
+<h2>Abstract</h2>
+<div class="abstract-box">
+An Autonomous DC AI Compute Cassette and associated system architecture are disclosed. Each cassette is a purpose-built steel enclosure in standard intermodal form factor housing a single row of high-density AI compute racks powered entirely by direct current with no AC conversion within the enclosure. An AI-capable edge controller autonomously manages all thermal, power, and operational functions within each cassette without requiring on-site human personnel for routine operations. Cassettes are designed as modular building blocks: they share a common DC bus infrastructure layer, a common liquid cooling loop, and a common fiber communications backbone, enabling infinite horizontal scaling by connecting additional cassettes to the shared infrastructure. Each cassette may be configured with a different compute profile — GPU-dense, memory-dense, or CPU-optimized — while maintaining identical external interface specifications, allowing heterogeneous arrays optimized for mixed workloads. Cassettes may be stacked two-high on prepared pads, halving the ground footprint required for a given compute capacity. No comfort air conditioning, occupancy lighting, or human access provisions are included within the enclosure — the design is optimized purely for electronics, eliminating the overhead systems that degrade power usage effectiveness in conventionally occupied facilities. The system accepts DC power from any source meeting the bus specification, including photovoltaic solar arrays, solid oxide fuel cells, battery energy storage systems, and grid-tied rectifiers, enabling deployment at any location with available power — including remote sites co-located with solar farms, industrial facilities with waste gas, or off-grid locations. Arrays of cassettes operating on a shared DC bus, cooling loop, and InfiniBand fabric constitute an AI Factory Farm: a fully autonomous, remotely monitored, infinitely scalable AI compute deployment.
+</div>
+
+<!-- FIELD -->
+<h2>Field of the Invention</h2>
+<p>The present invention relates to modular AI compute infrastructure, and more particularly to a system of autonomously controlled, factory-assembled, factory-tested AI compute enclosures utilizing a pure direct current power distribution architecture, heterogeneous compute configuration, AI-driven operational control, modular scalability via a shared DC bus infrastructure layer, and a standardized four-connection site interface enabling rapid deployment at any prepared location including remote and off-grid sites.</p>
+
+<!-- BACKGROUND -->
+<h2>Background</h2>
+<p>The rapid growth of artificial intelligence workloads has created demand for AI compute infrastructure that is simultaneously high-density, energy-efficient, rapidly deployable, remotely operable, and geographically flexible. Existing approaches fail to satisfy all of these requirements for the following reasons.</p>
+
+<p><strong>Power conversion losses.</strong> Conventional data center power chains convert energy multiple times between source and load: medium-voltage AC to low-voltage AC, low-voltage AC to DC at the power supply unit, and DC to lower voltages at point-of-load. Each stage introduces 2–5% losses, compounding to 8–15% or more of total energy wasted before reaching the processor. At GPU densities of 200 kW or greater per rack, these losses are economically and thermally significant.</p>
+
+<p><strong>Human occupancy overhead.</strong> Conventional data centers and modular data center designs include internal walkable aisles, comfort HVAC systems, occupancy lighting, fire egress provisions, and ADA-compliant access — all sized for human occupation. These systems consume floor space, add structural load, require maintenance, and degrade power usage effectiveness. For AI compute infrastructure where no personnel need to occupy the interior during normal operations, this overhead is entirely unnecessary.</p>
+
+<p><strong>Static, homogeneous rack configurations.</strong> Existing modular designs specify a single compute configuration. As AI workload requirements evolve — shifting between training-dominant (GPU-dense), inference-dominant (memory-dense), and orchestration-dominant (CPU-heavy) profiles — operators are forced to replace entire infrastructure units rather than substituting cassettes with different internal configurations on a shared infrastructure backbone.</p>
+
+<p><strong>Geographic inflexibility.</strong> Conventional data centers require proximity to utility grid interconnect, limiting deployment to locations served by existing electrical infrastructure. This excludes a large class of high-value deployment scenarios: co-location adjacent to solar farms in regions with abundant irradiance but limited grid access, industrial facilities with waste gas or flared gas available as fuel, remote resource extraction sites, and maritime or offshore platforms.</p>
+
+<p><strong>Manual operations dependency.</strong> Conventional data center operations require on-site personnel for monitoring, fault response, cooling adjustments, and routine maintenance. This requirement increases operating cost, limits deployment to locations with available technical workforce, and introduces response latency in fault scenarios.</p>
+
+<p><strong>Absence of a scalable building-block architecture.</strong> No prior art known to the inventor discloses a modular AI compute system in which identical cassette units connect to a shared DC bus infrastructure layer, shared cooling loop, and shared compute fabric, enabling the operator to scale compute capacity incrementally by adding cassettes without modifying existing infrastructure — analogous to adding nodes to a distributed computing cluster.</p>
+
+<!-- SUMMARY -->
+<h2>Summary of the Invention</h2>
+<p>The present invention provides an Autonomous DC AI Compute Cassette and an AI Factory Farm system comprising a plurality of such cassettes. The invention addresses all identified deficiencies of the prior art through the following key aspects:</p>
+<ol>
+  <li><strong>Pure DC architecture</strong> — no AC conversion within any cassette; all power distributed as DC from bus entry to compute load;</li>
+  <li><strong>Autonomous AI operational control</strong> — an AI-capable edge controller within each cassette performs real-time predictive thermal management, autonomous fault isolation, workload-aware power optimization, and remote telemetry without requiring on-site personnel;</li>
+  <li><strong>Heterogeneous cassette configurations</strong> — the same external enclosure and interface specification accommodates GPU-dense, memory-dense, and CPU-optimized internal configurations, enabling mixed-workload arrays on shared infrastructure;</li>
+  <li><strong>Two-high vertical stacking</strong> — cassettes are structurally certified for two-high stacking, halving ground footprint for a given compute capacity;</li>
+  <li><strong>No human occupancy design class</strong> — comfort HVAC, occupancy lighting, walkable aisles, and human egress provisions are eliminated; the enclosure is optimized purely for electronics;</li>
+  <li><strong>DC bus as shared infrastructure layer</strong> — cassettes connect to a site-level DC bus backbone that is designed for incremental cassette addition without modification to existing cassettes or infrastructure;</li>
+  <li><strong>Infinite horizontal scalability</strong> — cassettes operate as modular building blocks; compute capacity scales by adding cassettes to shared infrastructure;</li>
+  <li><strong>Power-source-agnostic interface</strong> — the cassette accepts DC from any source: photovoltaic solar, solid oxide fuel cells, battery storage, or grid-tied rectifier;</li>
+  <li><strong>Remote and off-grid deployability</strong> — the four-connection site interface and DC bus architecture enable deployment at solar farms, industrial sites, remote locations, and off-grid environments without utility interconnect;</li>
+  <li><strong>AI Factory Farm</strong> — arrays of cassettes on shared DC bus, cooling loop, and InfiniBand fabric constitute a fully autonomous AI compute farm deployable at any scale from single cassette to multi-hundred-megawatt installations;</li>
+  <li><strong>Factory acceptance test protocol</strong> — every cassette ships with a completed, signed factory test report.</li>
+</ol>
+
+<!-- DETAILED DESCRIPTION -->
+<h2>Detailed Description of Preferred Embodiments</h2>
+
+<h3>1. Enclosure and Physical Form Factor</h3>
+<p>In a preferred embodiment, each cassette enclosure is a purpose-built steel structure with external dimensions conforming to the 40-foot High Cube ISO intermodal standard (approximately 40 feet × 8 feet × 9 feet 6 inches external). The enclosure is purpose-engineered to ISO external dimensions — not a converted shipping container — to leverage standard crane lift equipment, flatbed and lowboy transport, and ISO corner casting anchor systems. ISO corner castings at all eight corners enable crane placement, standard transport, and two-high vertical stacking.</p>
+
+<p>The structural floor is rated for AI compute rack concentrated point loads per OCP Open Rack V3 specifications. Spray foam insulation of R-19 minimum is applied to the enclosure shell. The enclosure provides NEMA 3R minimum ingress protection. The enclosure and anchor system are designed to ASCE 7-22 wind loads for Risk Category III at 150 mph basic wind speed, enabling deployment in hurricane-zone and high-wind environments.</p>
+
+<h3>2. No Human Occupancy Design Class</h3>
+<p>A fundamental design principle of the invention is that no provision for human occupancy within the enclosure during normal operations is required or included. This design class eliminates: comfort air conditioning and heating systems sized for human thermal comfort; occupancy lighting; internal walkable aisles; fire egress doors and exit signage; ADA-compliant access provisions; and any other infrastructure element whose purpose is to accommodate a person inside the enclosure.</p>
+
+<p>All routine operational functions — monitoring, fault detection, cooling control, power management, and remote diagnostics — are performed autonomously by the AI edge controller. All physical service access required for maintenance is provided by exterior access panels, described in Section 4. The elimination of human occupancy provisions reduces enclosure cost, eliminates HVAC overhead loads that degrade PUE, simplifies fire suppression design (total-flood clean agent is viable in an unoccupied enclosure without requiring personnel egress time), and enables a narrower, higher-density enclosure than conventional occupied designs.</p>
+
+<h3>3. Single-Row Rack Layout</h3>
+<p>A single row of AI compute racks is arranged in a linear configuration running the full length of the enclosure interior. In a preferred embodiment, ten racks of the OCP Open Rack V3 form factor are arranged in single file from the mechanical bay at one end to the external connection panel at the other end. A mechanical bay at one end of the enclosure houses the cooling distribution unit, power distribution unit, desiccant dehumidification unit, network spine switch, fire suppression cylinders, and AI edge controller. All site connections terminate at an external connection panel at the opposite end.</p>
+
+<h3>4. Exterior Access Panel Design — No-Aisle Service</h3>
+<p>Service access to the rack row is provided by top-hinged side access panels — in a preferred embodiment, eight panels total, four on each long side of the enclosure — spanning the full length of the rack row. Each panel is hinged at the top and opens outward, providing full access to the rack face, overhead utility connections, and rear of rack from outside the enclosure. This design provides NEC 110.26 working space compliance for the DC voltage class without an internal walkable aisle. Panels incorporate gasket seals maintaining positive pressure within the enclosure when closed.</p>
+
+<h3>5. Pure DC Power Architecture and Overhead Busbar</h3>
+<p>All electrical power within each cassette is distributed as direct current. In a preferred embodiment, the cassette operates at 800V DC nominal bus voltage with 1500V DC insulation rating throughout, conforming to the OCP DCF LVDC Stage 1d configuration. A copper overhead DC busbar, rated 1500V insulation and sized per NEC 125% continuous load rule, runs the full rack row length overhead with factory-installed tap points at each rack bay. Grounding is implemented per TN-S or IT system configurations per OCP DCF LVDC specifications. Solid-state circuit breakers provide microsecond DC fault response. Ground fault protection is implemented per NEC Section 210.13(B). Arc flash labeling is applied per NFPA 70E.</p>
+
+<h3>6. DC Bus as Shared Infrastructure Layer — Scalability Architecture</h3>
+<p>A key inventive aspect of the system is the design of the site-level DC bus as a shared infrastructure layer to which cassettes connect as modular building blocks. The site DC bus is a continuous conductor system, rated 1500V insulation throughout, running from the DC power generation zone to a cassette tie-in point array. Each cassette connects to the site DC bus through a single DC bus stub connection at its external connection panel.</p>
+
+<p>The site DC bus is designed and sized to accept additional cassette connections without modification to existing cassettes or to cassettes already operating on the bus. When additional compute capacity is required, the operator: (a) prepares an additional pad with a DC bus stub, cooling loop stub, and fiber conduit; (b) connects an additional cassette; and (c) powers on. No rewiring, no reconfiguration of existing cassettes, and no interruption to operating cassettes is required. This building-block scalability — analogous to adding nodes to a distributed computing cluster — is a defining characteristic of the invention.</p>
+
+<p>In the preferred embodiment, a single site DC bus supports up to 87 cassettes at 200 MW total IT load in a single array, with additional arrays supportable through bus segmentation and inter-array DC tie switches.</p>
+
+<h3>7. Heterogeneous Cassette Configurations</h3>
+<p>While each cassette presents an identical external interface specification — the same DC bus connection, the same cooling supply and return, the same fiber connections, and the same physical footprint — the internal rack configuration may vary across cassette units within the same array. Contemplated internal configurations include without limitation:</p>
+<ul>
+  <li><strong>GPU-dense configuration:</strong> Racks loaded with high-density GPU compute nodes optimized for AI training workloads requiring maximum floating-point throughput;</li>
+  <li><strong>Memory-dense configuration:</strong> Racks configured with high-memory compute nodes optimized for large-model inference workloads requiring maximum HBM or DRAM capacity per cassette;</li>
+  <li><strong>CPU-optimized configuration:</strong> Racks configured with high-core-count CPU nodes for orchestration, preprocessing, post-processing, and data pipeline workloads;</li>
+  <li><strong>Mixed configuration:</strong> Racks within a single cassette combining compute types to support hybrid workloads;</li>
+  <li><strong>Storage-dense configuration:</strong> Racks configured with high-capacity NVMe or persistent memory storage for AI dataset management and checkpoint storage.</li>
+</ul>
+<p>Because all cassette configurations present the same external interface, an operator may compose an AI Factory Farm array from cassettes of different internal types — for example, four GPU-dense cassettes, two memory-dense cassettes, and one CPU-optimized cassette — all operating on the same DC bus, cooling loop, and InfiniBand fabric as a unified logical compute cluster. As workload requirements evolve, individual cassettes may be substituted with a different configuration type by disconnecting one cassette and connecting another at the same pad position, without affecting any other cassette in the array.</p>
+
+<h3>8. Two-High Vertical Stacking</h3>
+<p>Cassettes are structurally certified for two-high vertical stacking on prepared pads. In a stacked configuration, two cassettes occupy the same ground footprint as a single cassette, doubling the compute density per unit of ground area. This stacking capability is significant for deployment scenarios where land area is constrained, including urban edge deployments, rooftop installations on industrial buildings, and dense array configurations where maximizing compute per acre is a primary design objective.</p>
+
+<p>In a preferred stacked embodiment, the upper cassette connects to the same DC bus stub, cooling loop stub, and fiber conduit as the lower cassette through a short vertical stub riser, with all connections made at the external connection panel face. The stacked pair operates as two independent cassette units sharing a common pad position, each with its own AI edge controller, its own FAT record, and its own connection to the site bus. A four-wide cassette array in unstacked configuration becomes a two-wide array of stacked pairs with identical compute capacity, reducing the site footprint by 50%.</p>
+
+<h3>9. Autonomous AI Operational Control</h3>
+<p>Each cassette includes an AI-capable edge controller — in a preferred embodiment, an NVIDIA Jetson AGX Orin or equivalent — that performs autonomous operational management of all cassette functions without requiring on-site personnel for routine operations. The edge controller capabilities include:</p>
+<ul>
+  <li><strong>Predictive thermal management:</strong> The edge controller monitors GPU utilization telemetry from the compute racks in real time and pre-conditions cooling — increasing pump speed, adjusting supply temperature setpoints — before thermal events occur, rather than reacting after temperature thresholds are exceeded. This workload-aware predictive control maintains GPU performance at sustained TDP without throttling events;</li>
+  <li><strong>Autonomous fault isolation:</strong> Upon detection of a cooling leak, power anomaly, smoke event, or sensor out-of-range condition, the edge controller executes a pre-programmed isolation sequence — isolating the affected circuit, activating backup systems, and alerting the remote NOC — without waiting for human operator intervention;</li>
+  <li><strong>Power shaping:</strong> The edge controller communicates with the site power management system to shape cassette power draw in response to available generation capacity, BESS state of charge, and grid conditions, maximizing utilization of available DC power while protecting against bus undervoltage events;</li>
+  <li><strong>CDU pump N+1 failover:</strong> The edge controller monitors primary pump performance continuously and executes automatic failover to the redundant pump without operator intervention upon pump degradation or failure;</li>
+  <li><strong>Remote telemetry and Mission Control integration:</strong> All sensor data, operational state, alarm history, and performance metrics are streamed continuously to a remote Network Operations Center via fiber, enabling a single remote operations team to monitor and manage an array of cassettes without on-site presence;</li>
+  <li><strong>Self-optimization:</strong> Over time, the edge controller builds operational models of each cassette's thermal and power behavior under different workload profiles, enabling increasingly precise predictive control with accumulated operating history.</li>
+</ul>
+
+<h3>10. Cassette-to-Cassette InfiniBand Compute Fabric</h3>
+<p>Within each cassette, AI compute racks are interconnected by a high-speed InfiniBand fabric managed by a spine switch factory-mounted in the mechanical bay. In a preferred embodiment, NVIDIA InfiniBand NDR (400 Gb/s per port) or successor technology is used as the intra-cassette compute fabric, with the spine switch bay dimensioned to accommodate future higher-bandwidth switch form factors without enclosure modification.</p>
+
+<p>Cassette-to-cassette compute fabric connections are made at the external connection panel, using passive copper connections for adjacent cassettes (up to 2 meters) or active optical connections for non-adjacent cassettes, without requiring additional infrastructure beyond the cable itself. This design enables an array of cassettes to function as a single logical InfiniBand cluster — a unified AI compute fabric spanning all cassettes in the array — at the same network latency and bandwidth characteristics as a conventionally rack-mounted cluster of equivalent size.</p>
+
+<h3>11. Liquid-First Cooling Architecture and Overhead Distribution</h3>
+<p>Each cassette employs a liquid-first thermal architecture in which direct-to-chip liquid cooling removes greater than 80% of rack heat before air management is involved. A cold coolant supply header and warm coolant return header run overhead the full length of the rack row, factory-installed and pressure-tested. Flexible hose drops with drip-free quick-disconnect fittings connect from overhead headers to each rack, enabling individual rack service without loop drainage.</p>
+
+<p>A cooling distribution unit with N+1 internal pump redundancy is factory-mounted in the mechanical bay. The CDU secondary loop connects to an external heat rejection system — dry cooler or adiabatic cooler — at the cassette wall. In humid climates, a desiccant dehumidification unit regenerated by CDU return waste heat conditions incoming air to or below 50% relative humidity. Rope-style leak detection sensors run in zones throughout the enclosure per OCP specification, with all alarm outputs wired to the AI edge controller.</p>
+
+<h3>12. Power-Source-Agnostic DC Bus Interface and Remote / Off-Grid Deployment</h3>
+<p>The cassette's DC bus interface accepts any power source capable of delivering DC at the bus specification. This source-agnostic design enables a class of deployment scenarios not addressable by conventional data center infrastructure:</p>
+<ul>
+  <li><strong>Solar farm co-location:</strong> Photovoltaic solar arrays generate DC natively at voltages up to 1500V. A DC-DC converter steps photovoltaic string voltage to the cassette bus voltage. No inverter, no transformer, no utility interconnect is required. A cassette array co-located at a solar farm receives DC power directly from the panels, operates as a behind-the-meter load, and exports compute capacity rather than electrons — generating revenue from the solar resource without grid interconnect permitting. In regions with high solar irradiance and abundant land — including desert southwest United States, Gulf Coast, and equatorial regions globally — this deployment model enables AI compute farms at locations where grid interconnect would require years of permitting and millions in transmission infrastructure investment;</li>
+  <li><strong>Fuel cell co-location:</strong> Solid oxide fuel cells generate DC electrochemically from natural gas, biogas, hydrogen, or other fuels. A cassette array co-located with fuel cells receives DC directly, with no inverter or rectifier in the power chain;</li>
+  <li><strong>Battery storage co-location:</strong> Battery energy storage systems discharge DC natively. Cassettes co-located with BESS operate during periods of peak solar or wind generation, storing excess generation in the BESS and consuming it during low-generation periods;</li>
+  <li><strong>Grid-tied deployment:</strong> At sites with medium-voltage AC grid access, an upstream solid-state rectifier converts MV AC to the cassette bus voltage. The cassette itself is unchanged; the rectifier is external to the cassette. This enables the same cassette design to operate at grid-connected sites without modification.</li>
+</ul>
+
+<h3>13. AI Factory Farm — Scalable Array Architecture</h3>
+<p>A plurality of cassettes connected to shared DC bus infrastructure, a shared liquid cooling loop, and a shared InfiniBand compute fabric constitutes an AI Factory Farm: a fully autonomous, remotely managed AI compute deployment of arbitrary scale. The AI Factory Farm is characterized by:</p>
+<ul>
+  <li><strong>Incremental scaling:</strong> Compute capacity scales by adding cassettes to the shared infrastructure. Each additional cassette requires only a pad, a DC bus stub, a cooling loop stub, and a fiber connection. No modification to existing cassettes or infrastructure is required;</li>
+  <li><strong>Heterogeneous composition:</strong> The array may comprise cassettes of different internal configurations — GPU-dense, memory-dense, CPU-optimized — operating as a unified logical compute cluster on shared infrastructure;</li>
+  <li><strong>Zero on-site staffing for routine operations:</strong> All cassettes in the array are autonomously managed by their individual edge controllers and monitored by a remote NOC via fiber. No on-site personnel are required during normal operations;</li>
+  <li><strong>Geographic flexibility:</strong> AI Factory Farms may be deployed at solar farms, fuel cell sites, industrial facilities, or any location meeting the four-connection site interface specification — including remote locations, agricultural land adjacent to utility-scale solar, and international sites without mature grid infrastructure;</li>
+  <li><strong>Footprint optimization via stacking:</strong> Two-high stacked cassette pairs reduce land consumption by 50% for a given compute capacity, enabling high-density AI Factory Farm deployments on constrained sites.</li>
+</ul>
+<p>In a preferred embodiment, an AI Factory Farm at utility scale comprises 87 cassettes on a shared DC bus delivering 200 MW of IT load, operating entirely from behind-the-meter DC power generation with no grid interconnect, managed autonomously from a remote NOC with no on-site staff required for routine operations.</p>
+
+<h3>14. Fire Detection, Suppression, and Enclosure Integrity</h3>
+<p>Aspirating smoke detection tubes run overhead the full enclosure length for very early warning smoke detection. A total-flood clean agent fire suppression system — enabled by the no-human-occupancy design — is factory-installed with cylinders in the mechanical bay, an overhead distribution manifold, and discharge nozzles covering the full enclosure volume. The suppression system discharges within 10 seconds and maintains suppression concentration for a minimum of 10 minutes per NFPA 2001. Enclosure integrity is verified by door fan pressure test at commissioning. Manual abort pull stations are provided at each access panel.</p>
+
+<h3>15. Factory Acceptance Test Protocol</h3>
+<p>Every cassette completes a defined factory acceptance test sequence before shipment. The FAT protocol includes at minimum: cooling loop hydrostatic pressure test; DC bus insulation resistance measurement at rated voltage per IEEE 43; ground fault protection relay trip verification; BMS and AI edge controller sensor calibration verification across all channels; aspirating smoke detector functional test; leak detection zone continuity and alarm output verification; quick-disconnect fitting connection, disconnection, and flow test; fire suppression system inspection; enclosure integrity door fan test per NFPA 2001; access panel door contact cycling; InfiniBand network fabric port link verification; and power meter calibration against NIST-traceable reference. A signed FAT report accompanies every cassette. This protocol transforms site commissioning from multi-week field integration into a four-connection hookup, enabling cassette arrays to reach operational status 30 to 60 days from pad-ready.</p>
+
+<!-- CLAIMS -->
+<h2>Claims</h2>
+<p><em>Note: Provisional patent applications are not required to contain formal claims. The following representative claims are included to establish the scope of the invention for priority purposes and to support the subsequent non-provisional application.</em></p>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">1.</span> A modular AI compute enclosure comprising:
+<ol type="a">
+  <li>a purpose-built steel enclosure having external dimensions conforming to a standard 40-foot high cube intermodal form factor, the enclosure configured for crane placement, standard transport, and two-high vertical stacking via ISO corner castings;</li>
+  <li>a single row of AI compute racks arranged in a linear configuration running the length of the enclosure interior, without any internal walkable aisle;</li>
+  <li>a DC power distribution system comprising an overhead DC busbar running the full length of the rack row, wherein all electrical power within the enclosure is distributed as direct current with no AC-to-DC conversion occurring within the enclosure;</li>
+  <li>a liquid cooling distribution system comprising an overhead cold coolant supply header, an overhead warm coolant return header, and flexible drop connections with drip-free quick-disconnect fittings at each rack position;</li>
+  <li>an AI-capable edge controller configured to autonomously perform predictive thermal management, fault isolation, power shaping, and pump failover without requiring on-site personnel;</li>
+  <li>a four-connection site interface at a single external connection panel consolidating all site connections comprising a DC bus connection, a liquid cooling supply and return connection, a fiber communications connection, and a structural pad connection; and</li>
+  <li>a plurality of top-hinged side access panels providing exterior service access to the rack row.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">2.</span> The modular AI compute enclosure of claim 1, wherein the enclosure is designed for operation without any human occupancy provisions, including without limitation: comfort air conditioning or heating systems, occupancy lighting, internal walkable aisles, or human fire egress provisions.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">3.</span> The modular AI compute enclosure of claim 1, wherein the DC bus connection of the four-connection site interface accepts DC power from any source meeting the bus voltage, current, and insulation specification, the power source selected from the group consisting of: photovoltaic solar arrays with DC-DC conversion, solid oxide fuel cells, molten carbonate fuel cells, battery energy storage systems, and medium-voltage AC grid sources paired with an upstream solid-state rectifier external to the enclosure, wherein the enclosure itself remains unchanged regardless of which power source is used.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">4.</span> The modular AI compute enclosure of claim 1, wherein the AI-capable edge controller is configured to receive workload utilization telemetry from the AI compute racks and, based on the received telemetry, predictively adjust cooling system parameters before thermal thresholds are reached, such that sustained full thermal design power operation of the compute racks is maintained without thermal throttling events.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">5.</span> A scalable AI compute system comprising a plurality of modular AI compute enclosures as described in claim 1, wherein:
+<ol type="a">
+  <li>each enclosure is connected to a shared site-level DC bus infrastructure layer through its DC bus connection;</li>
+  <li>the site-level DC bus is designed to accept connection of additional enclosures without modification to the bus or to any enclosure already connected to the bus;</li>
+  <li>each enclosure is connected to a shared liquid cooling loop through its cooling supply and return connections; and</li>
+  <li>each enclosure is connected to a shared high-speed compute fabric through its fiber communications connection;</li>
+  <li>wherein additional compute capacity is added to the system by connecting additional enclosures to the shared DC bus, cooling loop, and compute fabric at prepared pad positions without interrupting operation of existing enclosures.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">6.</span> The scalable AI compute system of claim 5, wherein at least two enclosures in the plurality have different internal AI compute rack configurations selected from: GPU-dense configuration, memory-dense configuration, CPU-optimized configuration, and storage-dense configuration, all enclosures presenting an identical external interface specification to the shared DC bus, cooling loop, and compute fabric.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">7.</span> The scalable AI compute system of claim 5, wherein at least two enclosures are arranged in a two-high vertical stack on a single prepared pad, the stacked pair presenting a ground footprint equal to that of a single enclosure while providing the compute capacity of two enclosures.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">8.</span> The scalable AI compute system of claim 5, wherein the shared DC bus is supplied by a photovoltaic solar array co-located at the same site, and wherein DC power flows directly from the photovoltaic array through a DC-DC converter to the shared DC bus without AC inversion, without utility grid interconnect, and without any AC power flowing at any point between the solar array and the AI compute load.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">9.</span> An AI Factory Farm comprising:
+<ol type="a">
+  <li>a plurality of modular AI compute enclosures as described in claim 1, arranged in an array on prepared pads;</li>
+  <li>a shared DC bus infrastructure layer connecting all enclosures in the array to one or more DC power generation sources;</li>
+  <li>a shared liquid cooling loop connecting all enclosures in the array to one or more external heat rejection systems;</li>
+  <li>a shared high-speed InfiniBand compute fabric connecting all enclosures in the array as a unified logical AI compute cluster; and</li>
+  <li>a remote network operations center receiving continuous telemetry from the AI edge controller of each enclosure, enabling monitoring and management of the entire array without on-site personnel during normal operations.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">10.</span> The AI Factory Farm of claim 9, wherein the one or more DC power generation sources comprise a utility-scale photovoltaic solar array co-located at the same site as the array of enclosures, the solar array generating DC power delivered to the shared DC bus without utility grid interconnect, enabling deployment of the AI Factory Farm at any location with sufficient solar irradiance regardless of proximity to existing electrical grid infrastructure.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">11.</span> A method of deploying an AI Factory Farm comprising:
+<ol type="a">
+  <li>installing a site-level DC bus infrastructure layer, a shared liquid cooling loop, and a fiber communications backbone at a prepared site;</li>
+  <li>connecting one or more DC power generation sources to the site-level DC bus;</li>
+  <li>placing a first modular AI compute enclosure as described in claim 1 on a first prepared pad;</li>
+  <li>making four connections to the first enclosure: connecting the DC bus stub, connecting the cooling supply and return, connecting the fiber, and anchoring the enclosure to the pad;</li>
+  <li>powering on the first enclosure and verifying autonomous operation via the AI edge controller;</li>
+  <li>scaling compute capacity incrementally by repeating steps (c) through (e) for each additional enclosure, without modifying the site DC bus, cooling loop, fiber backbone, or any previously installed enclosure.</li>
+</ol>
+</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">12.</span> The method of claim 11, wherein at least two enclosures placed in the AI Factory Farm have different internal AI compute rack configurations, and wherein the AI Factory Farm operates the enclosures as a unified heterogeneous AI compute cluster on the shared InfiniBand fabric.</p>
+</div>
+
+<div class="claim">
+<p class="claim-body"><span class="claim-num">13.</span> A modular AI compute enclosure as described in claim 1, wherein the enclosure is shipped from a factory with a completed factory acceptance test report certifying successful completion of a defined test protocol including at minimum: cooling loop pressure test, DC bus insulation resistance measurement, ground fault protection verification, AI edge controller sensor calibration, smoke detection functional test, leak detection continuity, fire suppression system inspection, enclosure integrity pressure test, access panel contact verification, InfiniBand network fabric link test, and power meter calibration.</p>
+</div>
+
+<!-- DECLARATION / SIGNATURE -->
+<div class="sig-block">
+<h2>Declaration</h2>
+<p>I hereby declare that I am the original inventor of the subject matter claimed herein, that I have reviewed and understand the contents of this provisional patent application, and that the information disclosed herein is accurate to the best of my knowledge and belief.</p>
+<div class="sig-cols">
+  <div class="sig-col">
+    <div class="sig-line"></div>
+    <div class="sig-label">Signature of Inventor</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Printed Name: Scott Tomsu</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Date</div>
+  </div>
+  <div class="sig-col">
+    <div class="sig-line"></div>
+    <div class="sig-label">Residence: Lafayette, Louisiana, USA</div>
+    <div class="sig-line"></div>
+    <div class="sig-label">Citizenship: United States</div>
+  </div>
+</div>
+</div>
+
+<div class="disclaimer">
+  <strong>Filing Instructions:</strong> File this provisional application at USPTO.gov → Patent Center → Provisional Application (37 C.F.R. § 1.53(c)). Required: this specification + cassette floor plan drawing + filing fee ($80 micro entity / $160 small entity / $320 standard). You have 12 months from the filing date to file the corresponding non-provisional application claiming this priority date. This document was prepared by the inventor. Review by a registered patent attorney or agent is strongly recommended prior to filing the non-provisional application. &nbsp;·&nbsp; scott@adc3k.com &nbsp;·&nbsp; (337) 780-1535
+</div>
+
+</div>
+</body>
+</html>
