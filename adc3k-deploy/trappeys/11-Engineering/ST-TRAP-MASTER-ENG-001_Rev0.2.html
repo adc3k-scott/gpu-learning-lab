@@ -1,0 +1,3365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ST-TRAP-MASTER-ENG-001 Rev 0.2 ��� Master Engineering Package</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body { font-family: Helvetica, Arial, sans-serif; font-size: 10pt; line-height: 1.4; max-width: 100%; }
+h1 { font-size: 18pt; color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 4pt; margin-top: 14pt;}
+h2 { font-size: 14pt; color: #0C447C; margin-top: 18pt; border-bottom: 1px solid #ccc; padding-bottom: 2pt;}
+h3 { font-size: 12pt; color: #185FA5; margin-top: 12pt;}
+h4 { font-size: 11pt; color: #333; margin-top: 10pt;}
+table { border-collapse: collapse; width: 100%; margin: 8pt 0; font-size: 9pt; page-break-inside: avoid;}
+th { background: #E6F1FB; color: #0C447C; padding: 4pt 6pt; text-align: left; border: 0.5pt solid #999;}
+td { padding: 3pt 6pt; border: 0.5pt solid #ccc; vertical-align: top;}
+tr:nth-child(even) { background: #F8F8F6; }
+code { background: #F1EFE8; padding: 1pt 3pt; font-size: 9pt; border-radius: 2pt;}
+pre { background: #F1EFE8; padding: 8pt; font-size: 8.5pt; overflow-x: auto; border-left: 3px solid #378ADD; page-break-inside: avoid;}
+pre code { background: transparent; padding: 0; }
+img { max-width: 100%; height: auto; display: block; margin: 10pt auto; page-break-inside: avoid; }
+blockquote { border-left: 3px solid #BA7517; padding-left: 10pt; color: #555; margin: 8pt 0;}
+del { color: #999; }
+hr { border: none; border-top: 1px solid #ccc; margin: 14pt 0;}
+ul, ol { margin: 6pt 0; }
+li { margin: 2pt 0; }
+#TOC { background: #F8F8F6; padding: 10pt 20pt; border-radius: 4pt; page-break-after: always; }
+#TOC ul { list-style-type: none; padding-left: 12pt; }
+#TOC a { text-decoration: none; color: #185FA5; }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ST-TRAP-MASTER-ENG-001 Rev 0.2 ��� Master Engineering
+Package</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#st-trap-master-eng-001-master-engineering-package-rev-0.2" id="toc-st-trap-master-eng-001-master-engineering-package-rev-0.2">ST-TRAP-MASTER-ENG-001
+— Master Engineering Package — Rev 0.2</a>
+<ul>
+<li><a href="#rev-0.2-changelog" id="toc-rev-0.2-changelog">Rev 0.2
+Changelog</a></li>
+<li><a href="#executive-summary" id="toc-executive-summary">1. Executive
+Summary</a></li>
+<li><a href="#site-project-basis" id="toc-site-project-basis">2. Site
+&amp; Project Basis</a></li>
+<li><a href="#power-architecture" id="toc-power-architecture">3. Power
+Architecture</a></li>
+<li><a href="#bess-architecture" id="toc-bess-architecture">4. BESS
+Architecture</a></li>
+<li><a href="#solar-integration" id="toc-solar-integration">5. Solar
+Integration</a></li>
+<li><a href="#thermal-architecture" id="toc-thermal-architecture">6.
+Thermal Architecture</a></li>
+<li><a href="#chp-cascade" id="toc-chp-cascade">7. CHP Cascade</a></li>
+<li><a href="#cooling-tower-field" id="toc-cooling-tower-field">8.
+Cooling Tower Field</a></li>
+<li><a href="#open-engineering-items-master-list" id="toc-open-engineering-items-master-list">9. Open Engineering Items —
+Master List</a></li>
+<li><a href="#document-register" id="toc-document-register">10. Document
+Register</a></li>
+<li><a href="#critical-path-to-construction-package" id="toc-critical-path-to-construction-package">11. Critical Path to
+Construction Package</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="st-trap-master-eng-001-master-engineering-package-rev-0.2">ST-TRAP-MASTER-ENG-001
+— Master Engineering Package — Rev 0.2</h1>
+<p><strong>Document:</strong> Master Engineering Package — Trappey’s AI
+Center <strong>Project:</strong> Trappey’s AI Center — 22-acre historic
+cannery site, Vermilion River, Lafayette, Louisiana
+<strong>Revision:</strong> 0.2 — thermal load census correction;
+architecture pivot to Option A (dump) <strong>Date:</strong> 2026-04-18
+<strong>Owner:</strong> Scott Tomsu <strong>Status:</strong> Working
+draft — internal use only <strong>Authority:</strong> BOD-001 Rev 0.4
+governs all locked values. This document consolidates the current state
+of downstream engineering documents; all value changes flow through
+BOD-001. Rev 0.2 changes flagged here trigger BOD-001 Rev 0.5.</p>
+<p>L = Locked · W = Working · O = Open</p>
+<hr />
+<h2 id="rev-0.2-changelog">Rev 0.2 Changelog</h2>
+<p>Rev 0.1 → Rev 0.2 changes, all sourced from thermal load census (this
+document §6.8) and cross-system arithmetic verification:</p>
+<ol type="1">
+<li><strong>Thermal — absorption chiller load corrected (§6, §7,
+§8).</strong> Rev 0.1 stated 107.3 MW absorption load (= IT + facility
+aux). This double-counted the 80.96 MW Boyd CDU GPU warm-water heat that
+is rejected via a separate adiabatic dry cooler. Census-corrected
+working value: <strong>33 MW absorption load</strong>. All downstream
+tower / water / capex numbers revised proportionally (tower duty 241 MW
+→ 57 MW; water 2,476 GPM → 750 GPM; footprint 20,000 sq ft → 6,100 sq
+ft).</li>
+<li><strong>Thermal — architecture pivoted to Option A (§6.2).</strong>
+With 33 MW absorption load, CHP cascade has ~77 MW of orphaned drive
+heat. Working basis is now <strong>Option A: minimum absorption sized
+for actual load + exhaust bypass + JW radiator for remainder</strong>.
+Option B (absorb everything, eliminate dry cooler) and Option C (two
+absorption systems) retained as contingencies gating on CHP utilization
+incentive eligibility.</li>
+<li><strong>Electrical — N-1 philosophy clarified (§3.2, §3.7).</strong>
+At N-1, surviving 3 gensets carry 80.5% vs stated 55–75% dispatch
+envelope. Added “N-1 contingency envelope” spec of 55–85% to bracket the
+transient; flagged as confirmation item for Cat CSA.</li>
+<li><strong>Electrical — CO emissions major-source flag added (§3.2,
+§9.1).</strong> Title V major source designation nearly certain without
+CO oxidation catalyst. New C1 item E-31 “CO control strategy”
+added.</li>
+<li><strong>Electrical — in-row rack loading flagged (§3.1,
+§3.3).</strong> 16 racks/block = 91.5% steady-state loading on Delta 660
+kW units. E-24/E-25 RFQ scope expanded to specify 5 racks/cassette (73%
+loading) as preferred, with 4 as fallback.</li>
+<li><strong>Electrical — fuel rate label corrected (§3.2).</strong>
+“2,200 Nm³/hr per block full load” was actually at 61.5% anchor. Full
+load = ~3,660 Nm³/hr/block; ~40,300 Nm³/hr campus. Gas supply Step 17
+revised to contract firm pipeline capacity for full-load
+contingency.</li>
+<li><strong>Electrical — block DC busway ampacity clarified
+(§3.1).</strong> 12,075 A was cassette-only. Peak with simultaneous BESS
+injection 14,500–17,000 A. Busway specification updated.</li>
+<li><strong>Electrical — transformer protection clarification
+(§3.4).</strong> <code>87T primary + 87T secondary</code> replaced with
+single <code>87T overall differential</code> — standard protection
+practice for a two-winding transformer.</li>
+<li><strong>Solar — Voc temp coefficient cited explicitly (§5.1,
+§5.2).</strong> Updated cold-limit analysis to Louisiana record low
+(−12°C, 1989) with Voc coef −0.28%/°C. Margin still comfortable.</li>
+<li><strong>Siting — SITING-001 elevated to C1 (§9.1).</strong> Rear
+slab 42,000 sq ft and infrastructure yard 28,000 sq ft both undersized
+against standard packing. Revised 33 MW thermal load significantly
+relaxes the yard constraint; rear slab constraint remains.</li>
+<li><strong>Water — WATER-SRC and BLOWDOWN elevated to C1
+(§9.1).</strong> 33 MW cooling reduces annual makeup to ~395 MG/year,
+which brings municipal supply back into viability. Permit pathway still
+material.</li>
+</ol>
+<hr />
+<h2 id="executive-summary">1. Executive Summary</h2>
+<p>Trappey’s AI Center is a <strong>101.2 MW IT load AI compute
+facility</strong> on a 22-acre historic cannery site on the Vermilion
+River in Lafayette, Louisiana. The site hosts 12 nationally registered
+historic structures. Four principal buildings (B1–B4) are under active
+engineering; supporting infrastructure sits on a 42,000 sq ft rear slab
+and 28,000 sq ft infrastructure yard.</p>
+<p>The facility is a <strong>behind-the-meter permanent electrical
+island from day one</strong> — no utility grid import or export in
+base-case operation, no LUS interconnect provisioning. Power is
+generated on-site by 44 × Cat CG260-16 natural gas gensets (4,000 ekW
+each) organized into 11 electrically independent blocks, each with a
+per-block 13.8 kV → 480 VAC step-down transformer feeding Delta 660 kW
+in-row power racks that rectify to a single 800 VDC common busway per
+block. BESS (LFP, DC-coupled) and solar (First Solar Series 7 CdTe,
+DC-coupled via buck) attach to the same 800 VDC bus. No AC anywhere
+downstream of the in-row racks. No anti-islanding. No sell-back to LUS
+modeled.</p>
+<p><strong>Stage 1 / Full Build:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Stage 1</th>
+<th>Full Build</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IT load</td>
+<td>101.2 MW</td>
+<td>202.4 MW</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Cassettes</td>
+<td>44</td>
+<td>88</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Gensets (Cat CG260-16)</td>
+<td>44</td>
+<td>88</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Blocks</td>
+<td>11</td>
+<td>22</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>GPUs (NVIDIA Vera Rubin, 720/cassette)</td>
+<td>31,680</td>
+<td>63,360</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Per-cassette IT</td>
+<td>2,300 kW</td>
+<td>2,300 kW</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Per-cassette facility</td>
+<td>2,415 kW</td>
+<td>2,415 kW</td>
+<td>L</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNTIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiPgogIDxzdHlsZT4KICAgIC50aXRsZSB7IGZvbnQtc2l6ZTogMThweDsgZm9udC13ZWlnaHQ6IDYwMDsgfQogICAgLnN1YnRpdGxlIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNTU1OyB9CiAgICAubGFiZWwgeyBmb250LXNpemU6IDExcHg7IGZvbnQtd2VpZ2h0OiA1MDA7IH0KICAgIC52YWx1ZSB7IGZvbnQtc2l6ZTogMTFweDsgZmlsbDogIzMzMzsgfQogICAgLm5vZGUgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyB9CiAgICAuZmxvdy1lbGVjIHsgZmlsbDogIzM3OEFERDsgZmlsbC1vcGFjaXR5OiAwLjU1OyB9CiAgICAuZmxvdy1oZWF0IHsgZmlsbDogI0Q4NUEzMDsgZmlsbC1vcGFjaXR5OiAwLjQ1OyB9CiAgICAuZmxvdy1jb29sIHsgZmlsbDogIzFEOUU3NTsgZmlsbC1vcGFjaXR5OiAwLjQ1OyB9CiAgICAuZmxvdy1kdW1wIHsgZmlsbDogIzg4ODc4MDsgZmlsbC1vcGFjaXR5OiAwLjQ7IH0KICAgIC5mbG93LWdwdSB7IGZpbGw6ICNFRjlGMjc7IGZpbGwtb3BhY2l0eTogMC41OyB9CiAgPC9zdHlsZT4KCiAgPHRleHQgeD0iNDUwIiB5PSIyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5GaWd1cmUgMSDigJQgU3RhZ2UgMSBlbmVyZ3kgZmxvdyAoT3B0aW9uIEEsIDYxLjUlIGFuY2hvcik8L3RleHQ+CiAgPHRleHQgeD0iNDUwIiB5PSI0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj5BbGwgdmFsdWVzIGtXLiA0NMOXIENhdCBDRzI2MC0xNiDihpIgZWxlY3RyaWNhbCArIHJlY292ZXJlZCBoZWF0ICsgcmVqZWN0ZWQgaGVhdDwvdGV4dD4KCiAgPCEtLSBTb3VyY2U6IEZ1ZWwgaW5wdXQgLS0+CiAgPHJlY3QgeD0iMjAiIHk9IjEwMCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIzNDAiIGNsYXNzPSJub2RlIiBmaWxsPSIjRkFDNzc1Ii8+CiAgPHRleHQgeD0iODAiIHk9IjEyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5GdWVsIGlucHV0PC90ZXh0PgogIDx0ZXh0IHg9IjgwIiB5PSIxMzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+fjI0NyBNVyBMSFY8L3RleHQ+CiAgPHRleHQgeD0iODAiIHk9IjE1MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj4oMTAwJSBsb2FkKTwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMTc1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkF0IDYxLjUlIGFuY2hvcjo8L3RleHQ+CiAgPHRleHQgeD0iODAiIHk9IjE5MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5+MTUyIE1XIExIVjwvdGV4dD4KICA8dGV4dCB4PSI4MCIgeT0iMjA3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ic3VidGl0bGUiPn4xNiw1MDAgTm3Csy9ocjwvdGV4dD4KCiAgPCEtLSBUaWVyIDI6IEdlbnNldCBzcGxpdCAtLT4KICA8cmVjdCB4PSIyMDAiIHk9IjEwMCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI3MCIgY2xhc3M9Im5vZGUgZmxvdy1lbGVjIi8+CiAgPHRleHQgeD0iMjgwIiB5PSIxMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+RWxlY3RyaWNhbDwvdGV4dD4KICA8dGV4dCB4PSIyODAiIHk9IjEzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4xMDgsMjQwIGtXICg3MSUpPC90ZXh0PgogIDx0ZXh0IHg9IjI4MCIgeT0iMTU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ic3VidGl0bGUiPnRvIElUICsgYXV4ICsgY29vbGluZzwvdGV4dD4KCiAgPHJlY3QgeD0iMjAwIiB5PSIxODUiIHdpZHRoPSIxNjAiIGhlaWdodD0iNzAiIGNsYXNzPSJub2RlIGZsb3ctaGVhdCIvPgogIDx0ZXh0IHg9IjI4MCIgeT0iMjA3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkV4aGF1c3QgaGVhdDwvdGV4dD4KICA8dGV4dCB4PSIyODAiIHk9IjIyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj40Nyw4NzIga1c8L3RleHQ+CiAgPHRleHQgeD0iMjgwIiB5PSIyMzkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJzdWJ0aXRsZSI+fjQwMMKwQywgdG8gSFJVICsgYnlwYXNzPC90ZXh0PgoKICA8cmVjdCB4PSIyMDAiIHk9IjI3MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI3MCIgY2xhc3M9Im5vZGUgZmxvdy1oZWF0Ii8+CiAgPHRleHQgeD0iMjgwIiB5PSIyOTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+SmFja2V0IHdhdGVyPC90ZXh0PgogIDx0ZXh0IHg9IjI4MCIgeT0iMzA4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjU4LDIxMiBrVzwvdGV4dD4KICA8dGV4dCB4PSIyODAiIHk9IjMyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj5+OTnCsEMsIHRvIEpXIHJhZGlhdG9yPC90ZXh0PgoKICA8cmVjdCB4PSIyMDAiIHk9IjM1NSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI0NCIgY2xhc3M9Im5vZGUiIGZpbGw9IiNEM0QxQzciLz4KICA8dGV4dCB4PSIyODAiIHk9IjM3NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5SYWRpYXRpb24gKyBsb3NzZXM8L3RleHQ+CiAgPHRleHQgeD0iMjgwIiB5PSIzOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+fjQzIE1XPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvciBmdWVsIOKGkiBnZW5zZXQgLS0+CiAgPHBhdGggZD0iTSAxNDAgMTMwIFEgMTcwIDEzNSAyMDAgMTM1IiBmaWxsPSJub25lIiBzdHJva2U9IiNCQTc1MTciIHN0cm9rZS13aWR0aD0iMSIvPgogIDxwYXRoIGQ9Ik0gMTQwIDM1MCBRIDE3MCAzNzAgMjAwIDM4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQkE3NTE3IiBzdHJva2Utd2lkdGg9IjEiLz4KCiAgPCEtLSBUaWVyIDM6IEVsZWN0cmljYWwgZGlzcG9zaXRpb25zIC0tPgogIDxyZWN0IHg9IjQ0MCIgeT0iNzAiIHdpZHRoPSIxNjAiIGhlaWdodD0iNDQiIGNsYXNzPSJub2RlIGZsb3ctZWxlYyIvPgogIDx0ZXh0IHg9IjUyMCIgeT0iODkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+SVQgbG9hZCAoQm95ZCBwYXRoKTwvdGV4dD4KICA8dGV4dCB4PSI1MjAiIHk9IjEwNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4xMDEsMjAwIGtXPC90ZXh0PgoKICA8cmVjdCB4PSI0NDAiIHk9IjEyNCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI0MCIgY2xhc3M9Im5vZGUgZmxvdy1lbGVjIi8+CiAgPHRleHQgeD0iNTIwIiB5PSIxNDEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+RmFjaWxpdHkgYXV4PC90ZXh0PgogIDx0ZXh0IHg9IjUyMCIgeT0iMTU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPn42LDEwMCBrVzwvdGV4dD4KCiAgPHJlY3QgeD0iNDQwIiB5PSIxNzQiIHdpZHRoPSIxNjAiIGhlaWdodD0iMzAiIGNsYXNzPSJub2RlIGZsb3ctZWxlYyIvPgogIDx0ZXh0IHg9IjUyMCIgeT0iMTk0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkNvb2xpbmcgTUNDIH4xLDQ3NSBrVzwvdGV4dD4KCiAgPCEtLSBFeGhhdXN0IHNwbGl0cyAtLT4KICA8cmVjdCB4PSI0NDAiIHk9IjIxNSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIzNCIgY2xhc3M9Im5vZGUgZmxvdy1oZWF0Ii8+CiAgPHRleHQgeD0iNTIwIiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+TXVudGVycyBzbGlwPC90ZXh0PgogIDx0ZXh0IHg9IjUyMCIgeT0iMjQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjUsNTAwIGtXIChMb2NrZWQpPC90ZXh0PgoKICA8cmVjdCB4PSI0NDAiIHk9IjI1NCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIzNCIgY2xhc3M9Im5vZGUgZmxvdy1jb29sIi8+CiAgPHRleHQgeD0iNTIwIiB5PSIyNjkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+SFJVIGRyaXZlPC90ZXh0PgogIDx0ZXh0IHg9IjUyMCIgeT0iMjg0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPn4yNCwwMDAga1c8L3RleHQ+CgogIDxyZWN0IHg9IjQ0MCIgeT0iMjkzIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjMwIiBjbGFzcz0ibm9kZSBmbG93LWR1bXAiLz4KICA8dGV4dCB4PSI1MjAiIHk9IjMxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5FeGhhdXN0IGJ5cGFzcyB+MTgsNDAwIGtXPC90ZXh0PgoKICA8IS0tIEpXIGRpc3Bvc2l0aW9uIC0tPgogIDxyZWN0IHg9IjQ0MCIgeT0iMzQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjM0IiBjbGFzcz0ibm9kZSBmbG93LWR1bXAiLz4KICA8dGV4dCB4PSI1MjAiIHk9IjM1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5KVyByYWRpYXRvcjwvdGV4dD4KICA8dGV4dCB4PSI1MjAiIHk9IjM3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5+NTgsMjAwIGtXIChkdW1wZWQpPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvcnMgZnJvbSB0aWVyIDIgdG8gdGllciAzIC0tPgogIDxwYXRoIGQ9Ik0gMzYwIDExNSBMIDQ0MCA5MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzc4QUREIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDxwYXRoIGQ9Ik0gMzYwIDEzNSBMIDQ0MCAxNDQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM3OEFERCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cGF0aCBkPSJNIDM2MCAxNTUgTCA0NDAgMTg5IiBmaWxsPSJub25lIiBzdHJva2U9IiMzNzhBREQiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxwYXRoIGQ9Ik0gMzYwIDIwMCBMIDQ0MCAyMzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0Q4NUEzMCIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8cGF0aCBkPSJNIDM2MCAyMjAgTCA0NDAgMjcxIiBmaWxsPSJub25lIiBzdHJva2U9IiNEODVBMzAiIHN0cm9rZS13aWR0aD0iMi41Ii8+CiAgPHBhdGggZD0iTSAzNjAgMjQwIEwgNDQwIDMwOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRDg1QTMwIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNIDM2MCAzMDUgTCA0NDAgMzU3IiBmaWxsPSJub25lIiBzdHJva2U9IiNEODVBMzAiIHN0cm9rZS13aWR0aD0iMyIvPgoKICA8IS0tIFRpZXIgNDogRmluYWwgcmVqZWN0aW9uIC0tPgogIDxyZWN0IHg9IjY4MCIgeT0iNjUiIHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiIGNsYXNzPSJub2RlIGZsb3ctZ3B1Ii8+CiAgPHRleHQgeD0iNzgwIiB5PSI4NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5Cb3lkIENEVSDihpIgZHJ5IGNvb2xlcjwvdGV4dD4KICA8dGV4dCB4PSI3ODAiIHk9IjEwMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj44MCw5NjAga1cgKExvY2tlZCBDLTE3KTwvdGV4dD4KICA8dGV4dCB4PSI3ODAiIHk9IjExNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj44MSUgb2YgSVQgaGVhdCwgYWlyLXNpZGUgJmFtcDsgR1BVPC90ZXh0PgoKICA8cmVjdCB4PSI2ODAiIHk9IjEzNSIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI2MCIgY2xhc3M9Im5vZGUgZmxvdy1jb29sIi8+CiAgPHRleHQgeD0iNzgwIiB5PSIxNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+QWJzb3JwdGlvbiBjaGlsbGVyPC90ZXh0PgogIDx0ZXh0IHg9Ijc4MCIgeT0iMTcxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjMzIE1XIGNvb2xpbmcgcHJvZHVjZWQ8L3RleHQ+CiAgPHRleHQgeD0iNzgwIiB5PSIxODciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJzdWJ0aXRsZSI+Q09QIDEuNDAg4oCiIGNlbnN1cy1zaXplZDwvdGV4dD4KCiAgPHJlY3QgeD0iNjgwIiB5PSIyMDUiIHdpZHRoPSIyMDAiIGhlaWdodD0iNTAiIGNsYXNzPSJub2RlIGZsb3ctY29vbCIvPgogIDx0ZXh0IHg9Ijc4MCIgeT0iMjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkNvb2xpbmcgdG93ZXIgZmllbGQ8L3RleHQ+CiAgPHRleHQgeD0iNzgwIiB5PSIyNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NTcgTVcgcmVqZWN0ZWQgKG5vbWluYWwpPC90ZXh0PgoKICA8cmVjdCB4PSI2ODAiIHk9IjI2NSIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI0MCIgY2xhc3M9Im5vZGUgZmxvdy1kdW1wIi8+CiAgPHRleHQgeD0iNzgwIiB5PSIyODQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+U3RhY2s8L3RleHQ+CiAgPHRleHQgeD0iNzgwIiB5PSIyOTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+YnlwYXNzICsgSFJVIHRhaWw8L3RleHQ+CgogIDxyZWN0IHg9IjY4MCIgeT0iMzE1IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjQwIiBjbGFzcz0ibm9kZSBmbG93LWR1bXAiLz4KICA8dGV4dCB4PSI3ODAiIHk9IjMzNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5KVyByYWRpYXRvciAoYXRtb3NwaGVyZSk8L3RleHQ+CiAgPHRleHQgeD0iNzgwIiB5PSIzNTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+fjU4IE1XPC90ZXh0PgoKICA8IS0tIENvbm5lY3RvcnMgdGllciAzIOKGkiB0aWVyIDQgLS0+CiAgPHBhdGggZD0iTSA2MDAgOTIgTCA2ODAgOTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0VGOUYyNyIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPHBhdGggZD0iTSA2MDAgMjcxIEwgNjgwIDE2NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUQ5RTc1IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNIDY4MCAxNjUgTCA2ODAgMjI1IEwgNzgwIDIyNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUQ5RTc1IiBzdHJva2Utd2lkdGg9IjAiLz4KICA8cGF0aCBkPSJNIDYwMCAyMzIgTCA2ODAgMjgyIiBmaWxsPSJub25lIiBzdHJva2U9IiM4ODg3ODAiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxwYXRoIGQ9Ik0gNjAwIDMwOCBMIDY4MCAyODUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODc4MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHBhdGggZD0iTSA2MDAgMzU3IEwgNjgwIDMzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjODg4NzgwIiBzdHJva2Utd2lkdGg9IjMiLz4KCiAgPCEtLSBGb290bm90ZSAtLT4KICA8bGluZSB4MT0iNDAiIHkxPSI0NTUiIHgyPSI4NjAiIHkyPSI0NTUiIHN0cm9rZT0iIzk5OSIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICA8dGV4dCB4PSI0NTAiIHk9IjQ3NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj5DSFAgdXRpbGl6YXRpb24gPSAoTXVudGVycyA1LjUgKyBIUlUgMjQuMCkgLyBXYXN0ZSBoZWF0IDEwNiA9IDI3LjglPC90ZXh0PgogIDx0ZXh0IHg9IjQ1MCIgeT0iNDkxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ic3VidGl0bGUiPk9wdGlvbnMgQi9DIHJlbWFpbiB2aWFibGUgY29udGluZ2VuY2llcyBpZiBDSFAtdXRpbGl6YXRpb24gaW5jZW50aXZlcyBqdXN0aWZ5IH4kNDhNLzIweXIgY29zdCBkZWx0YSAowqc2LjIpPC90ZXh0PgogIDx0ZXh0IHg9IjQ1MCIgeT0iNTA3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ic3VidGl0bGUiPkZsb3cgd2lkdGhzIGluZGljYXRpdmUsIG5vdCBzdHJpY3RseSBwcm9wb3J0aW9uYWwgdG8gbWFnbml0dWRlPC90ZXh0Pgo8L3N2Zz4K" alt="Figure 1 — Stage 1 energy flow, Option A, 61.5% anchor" />
+<figcaption aria-hidden="true">Figure 1 — Stage 1 energy flow, Option A,
+61.5% anchor</figcaption>
+</figure>
+<p><strong>Thermal architecture</strong> is a CHP cascade sized for
+<strong>33 MW absorption cooling load</strong> (census-corrected from
+Rev 0.1’s 107 MW double-count — see §6.8). Genset exhaust drives Broad
+BH double-effect LiBr absorption chiller for chilled-water facility
+loads (Munters process air post-desiccant, NOC, offices, cassette
+air-side heat, electrical room HVAC). Munters HCD/MCD desiccant
+dehumidification per cassette draws 125 kW exhaust slip-stream (5.5 MW
+Stage 1, Locked T-12). <strong>Working basis is Option A — minimum
+absorption sized for actual load; exhaust bypass + JW radiator reject
+the ~77 MW of orphaned waste heat.</strong> Options B (absorb
+everything, eliminate dry cooler) and C (two-chiller) retained as
+contingencies gating on CHP incentive eligibility. Vermilion River
+remains eliminated as heat sink. Boyd CDU GPU warm water is an isolated
+loop rejecting to a separate adiabatic dry cooler (~81 MW).</p>
+<p><strong>Why this approach:</strong> BTM permanent island removes the
+primary reliability dependency on LUS and eliminates interconnect
+schedule risk. 11-block replicated Marlie-pattern architecture contains
+blast radius to one block and enables phased construction with
+standardized procurement. CHP cascade eliminates the mechanical-chiller
+plant for facility cooling (absorption driven by genset waste heat), and
+Boyd CDU handles GPU heat on a dedicated dry-cooler loop. DC-coupled
+BESS + DC-coupled solar + DC rectification on one 800 VDC bus per block
+matches OCP Stage 1d / NVIDIA DSX reference architecture. Zero utility
+dependency is the thesis.</p>
+<hr />
+<h2 id="site-project-basis">2. Site &amp; Project Basis</h2>
+<p>Source: BOD-001 Rev 0.4.</p>
+<figure>
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiPgogIDxzdHlsZT4KICAgIC50aXRsZSB7IGZvbnQtc2l6ZTogMThweDsgZm9udC13ZWlnaHQ6IDYwMDsgfQogICAgLnN1YnRpdGxlIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNTU1OyB9CiAgICAubGFiZWwgeyBmb250LXNpemU6IDEycHg7IGZvbnQtd2VpZ2h0OiA1MDA7IH0KICAgIC5sYWJlbC1sZyB7IGZvbnQtc2l6ZTogMTNweDsgZm9udC13ZWlnaHQ6IDYwMDsgZmlsbDogIzBDNDQ3QzsgfQogICAgLnZhbHVlIHsgZm9udC1zaXplOiAxMC41cHg7IGZpbGw6ICMzMzM7IH0KICAgIC5kaW0geyBmb250LXNpemU6IDEwcHg7IGZpbGw6ICM5OTk7IGZvbnQtc3R5bGU6IGl0YWxpYzsgfQogICAgLm5vdGUgeyBmb250LXNpemU6IDExcHg7IGZpbGw6ICNBMzJEMkQ7IGZvbnQtd2VpZ2h0OiA1MDA7IH0KICAgIC5oaXN0b3JpYyB7IHN0cm9rZTogIzg4NTUwMDsgc3Ryb2tlLXdpZHRoOiAxOyBmaWxsOiAjRkFDNzc1OyBmaWxsLW9wYWNpdHk6IDAuNjsgfQogICAgLnNsYWIgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMTsgZmlsbDogI0QzRDFDNzsgZmlsbC1vcGFjaXR5OiAwLjU7IH0KICAgIC55YXJkIHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDE7IGZpbGw6ICNDMEREOTc7IGZpbGwtb3BhY2l0eTogMC40OyB9CiAgICAuY29tcHV0ZSB7IHN0cm9rZTogIzMzMzsgc3Ryb2tlLXdpZHRoOiAxOyBmaWxsOiAjQjVENEY0OyBmaWxsLW9wYWNpdHk6IDAuNzsgfQogICAgLnJpdmVyIHsgZmlsbDogIzlGRTFDQjsgfQogICAgLmVxdWlwIHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDAuNTsgZmlsbDogI0ZGRkZGRjsgZmlsbC1vcGFjaXR5OiAwLjk7IH0KICAgIC5lcXVpcC1yZWQgeyBzdHJva2U6ICM3OTFGMUY7IHN0cm9rZS13aWR0aDogMC44OyBmaWxsOiAjRjdDMUMxOyBmaWxsLW9wYWNpdHk6IDAuNjsgfQogIDwvc3R5bGU+CgogIDx0ZXh0IHg9IjQ1MCIgeT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ0aXRsZSI+RmlndXJlIDQg4oCUIFNpdGUgbGF5b3V0LCAyMi1hY3JlIFRyYXBwZXkncyBjYW5uZXJ5IChTSVRJTkctMDAxIEMxIGdhdGUpPC90ZXh0PgogIDx0ZXh0IHg9IjQ1MCIgeT0iNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJzdWJ0aXRsZSI+U2NoZW1hdGljIHBhY2tpbmcgY2hlY2suIE5vcnRoIGF0IHRvcC4gVmVybWlsaW9uIFJpdmVyIGFsb25nIHNvdXRoIGVkZ2UuPC90ZXh0PgoKICA8IS0tIENvbXBhc3MgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODIwLDcwKSI+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iMjIiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgICA8cGF0aCBkPSJNIDAgLTE4IEwgNCAwIEwgMCAtNCBMIC00IDAgWiIgZmlsbD0iIzMzMyIvPgogICAgPHRleHQgeD0iMCIgeT0iLTI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiIGZvbnQtd2VpZ2h0PSI2MDAiPk48L3RleHQ+CiAgPC9nPgoKICA8IS0tIE5vcnRoIHJvYWQgYm91bmRhcnkgLS0+CiAgPGxpbmUgeDE9IjQwIiB5MT0iNjUiIHgyPSI3NzAiIHkyPSI2NSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuNSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSIgZmlsbD0iIzY2NiI+4oCUIFBpbmhvb2sgUm9hZCAvIG5vcnRoIGJvdW5kYXJ5IOKAlDwvdGV4dD4KCiAgPCEtLSBCMS9CMiBIaXN0b3JpYyBidWlsZGluZ3MgLS0+CiAgPHJlY3QgeD0iNTAiIHk9IjgwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjExMCIgY2xhc3M9Imhpc3RvcmljIi8+CiAgPHRleHQgeD0iMTUwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+QjEg4oCUIEhpc3RvcmljPC90ZXh0PgogIDx0ZXh0IHg9IjE1MCIgeT0iMTE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPk5PQyAvIHBhcnRuZXIgaHViPC90ZXh0PgogIDx0ZXh0IHg9IjE1MCIgeT0iMTI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPlJvb2Z0b3Agc29sYXIgMS4wIE1XPC90ZXh0PgogIDx0ZXh0IHg9IjE1MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkIyIOKAlCBIaXN0b3JpYzwvdGV4dD4KICA8dGV4dCB4PSIxNTAiIHk9IjE4NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4ocGFydCBvZiBCMS9CMiB0d2luKTwvdGV4dD4KCiAgPCEtLSBCMyBjb21wdXRlIGhhbGwgLS0+CiAgPHJlY3QgeD0iMjcwIiB5PSI4MCIgd2lkdGg9IjIzMCIgaGVpZ2h0PSIxNTAiIGNsYXNzPSJjb21wdXRlIi8+CiAgPHRleHQgeD0iMzg1IiB5PSIxMTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+QjMg4oCUIGNvbXB1dGUgaGFsbDwvdGV4dD4KICA8dGV4dCB4PSIzODUiIHk9IjEyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4yMCBjYXNzZXR0ZXM8L3RleHQ+CiAgPHRleHQgeD0iMzg1IiB5PSIxNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NDYgTVcgSVQ8L3RleHQ+CiAgPHRleHQgeD0iMzg1IiB5PSIxNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NSBibG9ja3M8L3RleHQ+CiAgPHRleHQgeD0iMzg1IiB5PSIyMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJkaW0iPn4zMGsgc3EgZnQ8L3RleHQ+CgogIDwhLS0gQjQgY29tcHV0ZSBoYWxsIC0tPgogIDxyZWN0IHg9IjUyMCIgeT0iODAiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTUwIiBjbGFzcz0iY29tcHV0ZSIvPgogIDx0ZXh0IHg9IjY0NSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkI0IOKAlCBjb21wdXRlIGhhbGw8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxMjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+MjQgY2Fzc2V0dGVzPC90ZXh0PgogIDx0ZXh0IHg9IjY0NSIgeT0iMTQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjU1LjIgTVcgSVQ8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NiBibG9ja3M8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIyMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJkaW0iPn4zNmsgc3EgZnQ8L3RleHQ+CgogIDwhLS0gUmVhciBzbGFiIC0tPgogIDxyZWN0IHg9IjUwIiB5PSIyNjAiIHdpZHRoPSI3MjAiIGhlaWdodD0iMTgwIiBjbGFzcz0ic2xhYiIvPgogIDx0ZXh0IHg9IjcwIiB5PSIyODAiIGNsYXNzPSJsYWJlbC1sZyI+UmVhciBzbGFiIOKAlCA0MiwwMDAgc3EgZnQ8L3RleHQ+CiAgPHRleHQgeD0iNzAiIHk9IjI5NCIgY2xhc3M9InZhbHVlIj5HZW5zZXQgaW5zdGFsbGF0aW9uICsgQkVTUzwvdGV4dD4KCiAgPCEtLSBHZW5zZXRzIG9uIHJlYXIgc2xhYiAtIDQ0IHVuaXRzIGluIHJvd3MgLS0+CiAgPGcgaWQ9ImdlbnNldHMiPgogICAgPCEtLSBSb3cgMTogMTEgZ2Vuc2V0cyAtLT4KICAgIDxyZWN0IHg9IjgwIiB5PSIzMDUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMTA3IiB5PSIzMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE8L3RleHQ+CiAgICA8cmVjdCB4PSIxNDUiIHk9IjMwNSIgd2lkdGg9IjU1IiBoZWlnaHQ9IjIwIiBjbGFzcz0iZXF1aXAiLz48dGV4dCB4PSIxNzIiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5HMjwvdGV4dD4KICAgIDxyZWN0IHg9IjIxMCIgeT0iMzA1IiB3aWR0aD0iNTUiIGhlaWdodD0iMjAiIGNsYXNzPSJlcXVpcCIvPjx0ZXh0IHg9IjIzNyIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkczPC90ZXh0PgogICAgPHJlY3QgeD0iMjc1IiB5PSIzMDUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMzAyIiB5PSIzMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzQ8L3RleHQ+CiAgICA8cmVjdCB4PSIzNDAiIHk9IjMwNSIgd2lkdGg9IjU1IiBoZWlnaHQ9IjIwIiBjbGFzcz0iZXF1aXAiLz48dGV4dCB4PSIzNjciIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5HNTwvdGV4dD4KICAgIDxyZWN0IHg9IjQwNSIgeT0iMzA1IiB3aWR0aD0iNTUiIGhlaWdodD0iMjAiIGNsYXNzPSJlcXVpcCIvPjx0ZXh0IHg9IjQzMiIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkc2PC90ZXh0PgogICAgPHJlY3QgeD0iNDcwIiB5PSIzMDUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNDk3IiB5PSIzMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+Rzc8L3RleHQ+CiAgICA8cmVjdCB4PSI1MzUiIHk9IjMwNSIgd2lkdGg9IjU1IiBoZWlnaHQ9IjIwIiBjbGFzcz0iZXF1aXAiLz48dGV4dCB4PSI1NjIiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5HODwvdGV4dD4KICAgIDxyZWN0IHg9IjYwMCIgeT0iMzA1IiB3aWR0aD0iNTUiIGhlaWdodD0iMjAiIGNsYXNzPSJlcXVpcCIvPjx0ZXh0IHg9IjYyNyIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkc5PC90ZXh0PgogICAgPHJlY3QgeD0iNjY1IiB5PSIzMDUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNjkyIiB5PSIzMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzEwPC90ZXh0PgogICAgPCEtLSBSb3cgMjogMTEgZ2Vuc2V0cyAtLT4KICAgIDxyZWN0IHg9IjgwIiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMTA3IiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzExPC90ZXh0PgogICAgPHJlY3QgeD0iMTQ1IiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMTcyIiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzEyPC90ZXh0PgogICAgPHJlY3QgeD0iMjEwIiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMjM3IiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzEzPC90ZXh0PgogICAgPHJlY3QgeD0iMjc1IiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMzAyIiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE0PC90ZXh0PgogICAgPHJlY3QgeD0iMzQwIiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iMzY3IiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE1PC90ZXh0PgogICAgPHJlY3QgeD0iNDA1IiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNDMyIiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE2PC90ZXh0PgogICAgPHJlY3QgeD0iNDcwIiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNDk3IiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE3PC90ZXh0PgogICAgPHJlY3QgeD0iNTM1IiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNTYyIiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE4PC90ZXh0PgogICAgPHJlY3QgeD0iNjAwIiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNjI3IiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzE5PC90ZXh0PgogICAgPHJlY3QgeD0iNjY1IiB5PSIzMzUiIHdpZHRoPSI1NSIgaGVpZ2h0PSIyMCIgY2xhc3M9ImVxdWlwIi8+PHRleHQgeD0iNjkyIiB5PSIzNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RzIwPC90ZXh0PgogICAgPCEtLSBCRVNTIGNvbnRhaW5lcnMgcm93IC0tPgogICAgPHJlY3QgeD0iODAiIHk9IjM3MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIyOCIgY2xhc3M9ImVxdWlwLXJlZCIvPjx0ZXh0IHg9IjE1MCIgeT0iMzg3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkJFU1MgYmxvY2tzIDEtMzwvdGV4dD4KICAgIDxyZWN0IHg9IjIzNSIgeT0iMzcwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjI4IiBjbGFzcz0iZXF1aXAtcmVkIi8+PHRleHQgeD0iMzA1IiB5PSIzODciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+QkVTUyBibG9ja3MgNC02PC90ZXh0PgogICAgPHJlY3QgeD0iMzkwIiB5PSIzNzAiIHdpZHRoPSIxNDAiIGhlaWdodD0iMjgiIGNsYXNzPSJlcXVpcC1yZWQiLz48dGV4dCB4PSI0NjAiIHk9IjM4NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5CRVNTIGJsb2NrcyA3LTk8L3RleHQ+CiAgICA8cmVjdCB4PSI1NDUiIHk9IjM3MCIgd2lkdGg9IjE3NSIgaGVpZ2h0PSIyOCIgY2xhc3M9ImVxdWlwLXJlZCIvPjx0ZXh0IHg9IjYzMiIgeT0iMzg3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkJFU1MgYmxvY2tzIDEwLTExICsgSlcgcmFkPC90ZXh0PgogIDwvZz4KCiAgPHRleHQgeD0iNDAwIiB5PSI0MjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJub3RlIj7imqAgUmVhciBzbGFiIEAgNDJrIHNxIGZ0IGlzIHRpZ2h0IGZvciA0NCBnZW5zZXRzICsgQkVTUyBhdCBzdGFuZGFyZCBzcGFjaW5nICh+NzVrIHNxIGZ0IHR5cGljYWwpPC90ZXh0PgogIDx0ZXh0IHg9IjQwMCIgeT0iNDM0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibm90ZSI+U0lUSU5HLTAwMSAoQzEpIOKAlCBhZ2dyZXNzaXZlIHBhY2tpbmcgc3R1ZHkgcmVxdWlyZWQ6IGNsb3NlIGdlbnNldCBzcGFjaW5nLCBCRVNTIGdhbnRyeSwgdHJlbmNoZWQgYXV4PC90ZXh0PgoKICA8IS0tIEluZnJhc3RydWN0dXJlIHlhcmQgLS0+CiAgPHJlY3QgeD0iNTAiIHk9IjQ1NSIgd2lkdGg9IjQ1MCIgaGVpZ2h0PSIxMjAiIGNsYXNzPSJ5YXJkIi8+CiAgPHRleHQgeD0iNzAiIHk9IjQ3NSIgY2xhc3M9ImxhYmVsLWxnIj5JbmZyYXN0cnVjdHVyZSB5YXJkIOKAlCAyOCwwMDAgc3EgZnQ8L3RleHQ+CiAgPHRleHQgeD0iNzAiIHk9IjQ4OSIgY2xhc3M9InZhbHVlIj5Db29saW5nICsgU0NSICsgc3dpdGNoZ2VhcjwvdGV4dD4KCiAgPCEtLSBDb29saW5nIHRvd2VycyAobm93IHNtYWxsZXIgaW4gUmV2IDAuMikgLS0+CiAgPHJlY3QgeD0iODAiIHk9IjUwMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iZXF1aXAiLz4KICA8dGV4dCB4PSIxMTAiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5DVC0xPC90ZXh0PgogIDx0ZXh0IHg9IjExMCIgeT0iNTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iZGltIj43ayBSVDwvdGV4dD4KICA8cmVjdCB4PSIxNTAiIHk9IjUwMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iZXF1aXAiLz4KICA8dGV4dCB4PSIxODAiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5DVC0yPC90ZXh0PgogIDx0ZXh0IHg9IjE4MCIgeT0iNTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iZGltIj43ayBSVDwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjUwMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iZXF1aXAiLz4KICA8dGV4dCB4PSIyNTAiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5DVC0zIE4rMTwvdGV4dD4KCiAgPCEtLSBBYnNvcnB0aW9uIGNoaWxsZXIgKyBTQ1IgLS0+CiAgPHJlY3QgeD0iMzAwIiB5PSI1MDAiIHdpZHRoPSI4NSIgaGVpZ2h0PSIyOCIgY2xhc3M9ImVxdWlwIi8+CiAgPHRleHQgeD0iMzQyIiB5PSI1MTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+QWJzIGNoaWxsZXIgMzMgTVc8L3RleHQ+CiAgPHJlY3QgeD0iMzAwIiB5PSI1MzIiIHdpZHRoPSI4NSIgaGVpZ2h0PSIyOCIgY2xhc3M9ImVxdWlwIi8+CiAgPHRleHQgeD0iMzQyIiB5PSI1NTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+Q08gY2F0ICsgU0NSPC90ZXh0PgoKICA8cmVjdCB4PSIzOTUiIHk9IjUwMCIgd2lkdGg9Ijk1IiBoZWlnaHQ9IjYwIiBjbGFzcz0iZXF1aXAiLz4KICA8dGV4dCB4PSI0NDMiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5YZm1yIGZhcm08L3RleHQ+CiAgPHRleHQgeD0iNDQzIiB5PSI1NDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+MTHDlyAxNSBNVkE8L3RleHQ+CiAgPHRleHQgeD0iNDQzIiB5PSI1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJkaW0iPk1WIHN3aXRjaGdlYXI8L3RleHQ+CgogIDx0ZXh0IHg9IjI3NSIgeT0iNTg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiIGZpbGw9IiMyNzUwMEEiPuKckyBZYXJkIGNsb3NlcyBjb21mb3J0YWJseSB1bmRlciBPcHRpb24gQSAodG93ZXIgcmVkdWNlZCA3MCUpPC90ZXh0PgoKICA8IS0tIEFkaWFiYXRpYyBkcnkgY29vbGVyIGZvciBCb3lkIChzZXBhcmF0ZSkgLS0+CiAgPHJlY3QgeD0iNTIwIiB5PSI0NTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iNjAiIGNsYXNzPSJlcXVpcCIvPgogIDx0ZXh0IHg9IjY0NSIgeT0iNDc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkJveWQgYWRpYWJhdGljIGRyeSBjb29sZXI8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSI0OTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+ODEgTVcgR1BVIGhlYXQgcmVqZWN0aW9uPC90ZXh0PgogIDx0ZXh0IHg9IjY0NSIgeT0iNTA5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iZGltIj5QaHlzaWNhbGx5IHNlcGFyYXRlIGZyb20gY29vbGluZyB0b3dlciBmaWVsZDwvdGV4dD4KCiAgPHJlY3QgeD0iNTIwIiB5PSI1MjUiIHdpZHRoPSIyNTAiIGhlaWdodD0iNTAiIGNsYXNzPSJlcXVpcCIvPgogIDx0ZXh0IHg9IjY0NSIgeT0iNTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkdhcyBwbGFudCArIG1ldGVyaW5nPC90ZXh0PgogIDx0ZXh0IHg9IjY0NSIgeT0iNTYzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjQwLDMwMCBObcKzL2hyIGZpcm0gY2FwYWNpdHk8L3RleHQ+CgogIDwhLS0gUml2ZXIgYXQgYm90dG9tIC0tPgogIDxyZWN0IHg9IjQwIiB5PSI1ODUiIHdpZHRoPSI4MjAiIGhlaWdodD0iMjUiIGNsYXNzPSJyaXZlciIvPgogIDx0ZXh0IHg9IjQ1MCIgeT0iNjAyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiIGZpbGw9IiMwNDM0MkMiPn5+fiBWZXJtaWxpb24gUml2ZXIgKGVsaW1pbmF0ZWQgYXMgaGVhdCBzaW5rOyBpbnRha2UgZm9yIG1ha2V1cCBpcyBhIHNlcGFyYXRlIHBlcm1pdCBwYXRoKSB+fn48L3RleHQ+Cjwvc3ZnPgo=" alt="Figure 4 — Site layout, 22-acre Trappey’s cannery (SITING-001 C1 gate)" />
+<figcaption aria-hidden="true">Figure 4 — Site layout, 22-acre Trappey’s
+cannery (SITING-001 C1 gate)</figcaption>
+</figure>
+<h3 id="locked-project-level-parameters">2.1 Locked project-level
+parameters</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P-01</td>
+<td>Site</td>
+<td>22-acre Trappey’s Cannery, Vermilion River, Lafayette, LA</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>P-02</td>
+<td>Historic structures</td>
+<td>12 nationally registered</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>P-03</td>
+<td>Stage 1 IT load</td>
+<td>101.2 MW (44 × 2,300 kW)</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>P-04</td>
+<td>Stage 1 cassette count</td>
+<td>44</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>P-05</td>
+<td>Full Build IT load</td>
+<td>202.4 MW (88 × 2,300 kW)</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>P-06</td>
+<td>Full Build cassette count</td>
+<td>88</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>P-07</td>
+<td>GPU target Stage 1</td>
+<td>31,680 NVIDIA Vera Rubin</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>P-09</td>
+<td>Revenue model</td>
+<td>Colocation only, base case</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>P-10</td>
+<td>Sell-back to LUS</td>
+<td>Excluded from base case; future optionality only</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>E-01</td>
+<td>Operating mode</td>
+<td>Behind-the-meter permanent island, day one</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>E-07</td>
+<td>Campus electrical topology</td>
+<td>Replicated Marlie-pattern blocks; 800 VDC bus per block; no MV
+ring</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>B-01/B-02</td>
+<td>Building 1/2 role</td>
+<td>Historic restoration — NOC / partner hub / rooftop solar</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>B-03</td>
+<td>Building 3 role</td>
+<td>Compute hall — 20 cassettes</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>B-04</td>
+<td>Building 4 role</td>
+<td>Compute hall — 24 cassettes</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>B-05</td>
+<td>Rear slab</td>
+<td>42,000 sq ft — genset installation + BESS</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>B-06</td>
+<td>Infrastructure yard</td>
+<td>28,000 sq ft — cooling and SCR</td>
+<td>L</td>
+</tr>
+</tbody>
+</table>
+<h3 id="decision-ledger-domain-status-summary">2.2 Decision Ledger —
+domain status summary</h3>
+<p>Per BOD-001 §E–N. L = Locked, W = Working, O = Open. Total entries
+per domain and the representative open items gating each.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Locked</th>
+<th>Working</th>
+<th>Open</th>
+<th>Representative open item</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>P — Project-level</strong></td>
+<td>9</td>
+<td>1</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><strong>R — Regulatory / incentive</strong></td>
+<td>6</td>
+<td>2</td>
+<td>2</td>
+<td>R-05 / R-06 SHPO Parts 1 &amp; 2</td>
+</tr>
+<tr class="odd">
+<td><strong>C — Cassette platform</strong></td>
+<td>24</td>
+<td>0</td>
+<td>1</td>
+<td>C-25 Immersion fluid vendor (deferred)</td>
+</tr>
+<tr class="even">
+<td><strong>E — Electrical</strong></td>
+<td>10</td>
+<td>13</td>
+<td>1</td>
+<td>E-23 Inter-block tie topology</td>
+</tr>
+<tr class="odd">
+<td><strong>T — Thermal</strong></td>
+<td>7</td>
+<td>2</td>
+<td>4</td>
+<td>T-03 Chiller type B/C; T-05 tower type; T-08 heat balance; T-11 Boyd
+CDU CHW compat</td>
+</tr>
+<tr class="even">
+<td><strong>B — Structural / buildings</strong></td>
+<td>6</td>
+<td>0</td>
+<td>1</td>
+<td>B-07 Structural assessments not commissioned</td>
+</tr>
+<tr class="odd">
+<td><strong>A — Operations &amp; AI control</strong></td>
+<td>5</td>
+<td>1</td>
+<td>3</td>
+<td>A-05 AI model; A-06 Human-in-loop; A-07 Cybersecurity framework</td>
+</tr>
+<tr class="even">
+<td><strong>S — Solar (E-14 through E-17)</strong></td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>(E-22 DC-DC buck RFQ tracked under E)</td>
+</tr>
+<tr class="odd">
+<td><strong>N — Naming / communication</strong></td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Domain shorthand in BOD-001: P project, R regulatory, C cassette, E
+electrical, T thermal, B buildings, A AI/ops, N naming. The S domain is
+covered inside E (E-14 solar array L, E-15 1500 VDC string L, E-16 2.05
+MW capacity L, E-17 DC-coupled path L).</p>
+<hr />
+<h2 id="power-architecture">3. Power Architecture</h2>
+<p>Source: ST-TRAP-ELEC-001 Rev 1.2.</p>
+<h3 id="block-structure-one-block-top-down">3.1 Block structure (one
+block, top-down)</h3>
+<p>Each of the 11 Stage 1 blocks is structurally identical to a 5 MW
+Marlie block except for the prime mover. Within one block:</p>
+<ol type="1">
+<li><strong>4 × Cat CG260-16</strong> gas gensets, 4,000 ekW each at 60
+Hz / 900 rpm, paralleled on 13.8 kV block MV bus via Cat ECS isochronous
+sharing. 3-of-4 carry load; 4th is N+1.</li>
+<li><strong>Block MV bus</strong> — 13.8 kV arc-resistant switchgear,
+87B bus differential, three-stage UFLS (59.5 / 59.2 / 58.9 Hz).</li>
+<li><strong>Block step-down transformer</strong> — 13.8 kV Δ → 480Y/277
+V, ~15 MVA, Dyn11, dry-type / cast-resin, Z≈6%. One per block; only
+topological addition vs Marlie (which generates at 480 V directly).</li>
+<li><strong>480 VAC main switchboard</strong> — solidly grounded wye
+secondary, 50G residual ground sensing, LSIG main trip unit.</li>
+<li><strong>16 × Delta 660 kW in-row power racks</strong> (4 per
+cassette base spec) — AC-DC conversion, BBU + PCS, 98% efficiency,
+touch-safe 800 VDC output. <strong>Steady-state loading 91.5% of rated
+at 2,415 kW cassette facility draw</strong> — E-24/E-25 RFQ scope
+expanded (Rev 0.2) to specify 5 racks/cassette (73% loading, full rack
+N-1 tolerance) as preferred configuration, with 4 as fallback.</li>
+<li><strong>Block 800 VDC common busway</strong> — copper.
+<strong>Cassette-only current ~12,075 A at 9.66 MW cassette draw; peak
+instantaneous including simultaneous BESS injection (2 MW continuous / 4
+MW peak) 14,575–17,075 A. Busway and SSCB ampacity shall be sized to
+17,000 A minimum.</strong> Single DC bus per block carries rack outputs
++ BESS + solar + 4 cassette umbilicals.</li>
+<li><strong>4 cassette umbilicals</strong> — load-break contactor + SSCB
+→ 800 VDC cable → Staubli hot-swap disconnect at cassette (~3,000 A at
+2,415 kW).</li>
+</ol>
+<p>11 electrically independent blocks. No inter-block MV ring. No
+inter-block 800 VDC tie (E-23 deferred). Shared services (gas header,
+water plant, NOC, security, AMCL) span the campus but do not carry power
+between blocks.</p>
+<figure>
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiPgogIDxzdHlsZT4KICAgIC50aXRsZSB7IGZvbnQtc2l6ZTogMThweDsgZm9udC13ZWlnaHQ6IDYwMDsgfQogICAgLnN1YnRpdGxlIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNTU1OyB9CiAgICAubGFiZWwgeyBmb250LXNpemU6IDEycHg7IGZvbnQtd2VpZ2h0OiA1MDA7IH0KICAgIC52YWx1ZSB7IGZvbnQtc2l6ZTogMTFweDsgZmlsbDogIzMzMzsgfQogICAgLnNlY3Rpb24geyBmb250LXNpemU6IDEzcHg7IGZvbnQtd2VpZ2h0OiA2MDA7IGZpbGw6ICMwQzQ0N0M7IH0KICAgIC5ib3ggeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjRjFFRkU4OyB9CiAgICAuYm94LWdlbiB7IHN0cm9rZTogIzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjU7IGZpbGw6ICNGNUM0QjM7IH0KICAgIC5ib3gtbXYgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjRkFDNzc1OyB9CiAgICAuYm94LWx2IHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDAuNTsgZmlsbDogI0ZBQzc3NTsgZmlsbC1vcGFjaXR5OiAwLjU7IH0KICAgIC5ib3gtcmFjayB7IHN0cm9rZTogIzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjU7IGZpbGw6ICNDRUNCRjY7IH0KICAgIC5ib3gtZGMgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjQjVENEY0OyB9CiAgICAuYm94LWJlc3MgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjQzBERDk3OyB9CiAgICAuYm94LXNvbGFyIHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDAuNTsgZmlsbDogI0ZBQzc3NTsgZmlsbC1vcGFjaXR5OiAwLjc7IH0KICAgIC5ib3gtY2Fzc2V0dGUgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjOUZFMUNCOyB9CiAgICAud2lyZS1tdiB7IHN0cm9rZTogI0JBNzUxNzsgc3Ryb2tlLXdpZHRoOiAyOyBmaWxsOiBub25lOyB9CiAgICAud2lyZS1sdiB7IHN0cm9rZTogIzUzNEFCNzsgc3Ryb2tlLXdpZHRoOiAxLjU7IGZpbGw6IG5vbmU7IH0KICAgIC53aXJlLWRjIHsgc3Ryb2tlOiAjMEY2RTU2OyBzdHJva2Utd2lkdGg6IDIuNTsgZmlsbDogbm9uZTsgfQogICAgLmJ1cyB7IHN0cm9rZTogIzMzMzsgc3Ryb2tlLXdpZHRoOiAzOyBmaWxsOiBub25lOyB9CiAgPC9zdHlsZT4KCiAgPHRleHQgeD0iNDUwIiB5PSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5GaWd1cmUgMiDigJQgU2luZ2xlIFN0YWdlIDEgYmxvY2sgZWxlY3RyaWNhbCAoUmV2IDAuMik8L3RleHQ+CiAgPHRleHQgeD0iNDUwIiB5PSI0MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InN1YnRpdGxlIj4xMSBibG9ja3MgcmVwbGljYXRlZCBpZGVudGljYWxseS4gOS42NiBNVyBjYXNzZXR0ZSBmYWNpbGl0eSArIEJFU1MgKyBzb2xhciBvbiA4MDAgVkRDIGJ1c3dheS48L3RleHQ+CgogIDwhLS0gVGllciAxOiBHZW5zZXRzIC0tPgogIDx0ZXh0IHg9IjYwIiB5PSI4MCIgY2xhc3M9InNlY3Rpb24iPkdlbmVyYXRpb248L3RleHQ+CiAgPHJlY3QgeD0iNDAiIHk9IjkwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iYm94LWdlbiIvPgogIDx0ZXh0IHg9IjEwNSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkNhdCBDRzI2MC0xNiAjMTwvdGV4dD4KICA8dGV4dCB4PSIxMDUiIHk9IjEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj40LDAwMCBla1csIDEzLjgga1Y8L3RleHQ+CiAgPHRleHQgeD0iMTA1IiB5PSIxNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NjEuNSUgYW5jaG9yIC8gODAuNSUgTi0xPC90ZXh0PgoKICA8cmVjdCB4PSIxODAiIHk9IjkwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iYm94LWdlbiIvPgogIDx0ZXh0IHg9IjI0NSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkNhdCBDRzI2MC0xNiAjMjwvdGV4dD4KICA8dGV4dCB4PSIyNDUiIHk9IjEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj40LDAwMCBla1csIDEzLjgga1Y8L3RleHQ+CiAgPHRleHQgeD0iMjQ1IiB5PSIxNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+Q2F0IEVDUyBpc29jaHJvbm91czwvdGV4dD4KCiAgPHJlY3QgeD0iMzIwIiB5PSI5MCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSI2MCIgY2xhc3M9ImJveC1nZW4iLz4KICA8dGV4dCB4PSIzODUiIHk9IjExMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5DYXQgQ0cyNjAtMTYgIzM8L3RleHQ+CiAgPHRleHQgeD0iMzg1IiB5PSIxMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NCwwMDAgZWtXLCAxMy44IGtWPC90ZXh0PgogIDx0ZXh0IHg9IjM4NSIgeT0iMTQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjMtb2YtNCBjYXJyeSBsb2FkPC90ZXh0PgoKICA8cmVjdCB4PSI0NjAiIHk9IjkwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iYm94LWdlbiIvPgogIDx0ZXh0IHg9IjUyNSIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkNhdCBDRzI2MC0xNiAjNDwvdGV4dD4KICA8dGV4dCB4PSI1MjUiIHk9IjEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj40LDAwMCBla1csIDEzLjgga1Y8L3RleHQ+CiAgPHRleHQgeD0iNTI1IiB5PSIxNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+TisxIHN0YW5kYnk8L3RleHQ+CgogIDwhLS0gR2Vuc2V0IGZlZWRlcnMgLS0+CiAgPHBhdGggZD0iTSAxMDUgMTUwIEwgMTA1IDE3NSIgY2xhc3M9IndpcmUtbXYiLz4KICA8cGF0aCBkPSJNIDI0NSAxNTAgTCAyNDUgMTc1IiBjbGFzcz0id2lyZS1tdiIvPgogIDxwYXRoIGQ9Ik0gMzg1IDE1MCBMIDM4NSAxNzUiIGNsYXNzPSJ3aXJlLW12Ii8+CiAgPHBhdGggZD0iTSA1MjUgMTUwIEwgNTI1IDE3NSIgY2xhc3M9IndpcmUtbXYiLz4KCiAgPCEtLSBNViBidXMgLS0+CiAgPGxpbmUgeDE9IjQwIiB5MT0iMTgwIiB4Mj0iNzIwIiB5Mj0iMTgwIiBjbGFzcz0iYnVzIi8+CiAgPHRleHQgeD0iNzQwIiB5PSIxODUiIGNsYXNzPSJsYWJlbCI+MTMuOCBrViBNViBidXM8L3RleHQ+CgogIDxyZWN0IHg9IjQwIiB5PSIxOTUiIHdpZHRoPSIyMjAiIGhlaWdodD0iNDAiIGNsYXNzPSJib3gtbXYiLz4KICA8dGV4dCB4PSIxNTAiIHk9IjIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5BcmMtcmVzaXN0YW50IHN3aXRjaGdlYXI8L3RleHQ+CiAgPHRleHQgeD0iMTUwIiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+ODdCIGJ1cyBkaWZmIOKAoiBVRkxTIDU5LjUvNTkuMi81OC45PC90ZXh0PgoKICA8cmVjdCB4PSIyODAiIHk9IjE5NSIgd2lkdGg9IjIyMCIgaGVpZ2h0PSI0MCIgY2xhc3M9ImJveC1tdiIvPgogIDx0ZXh0IHg9IjM5MCIgeT0iMjE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPlBlci1nZW5zZXQgcHJvdGVjdGlvbjwvdGV4dD4KICA8dGV4dCB4PSIzOTAiIHk9IjIzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj44N0cg4oCiIDMyIOKAoiA0MCDigKIgNDYg4oCiIDUxViDigKIgNjRHPC90ZXh0PgoKICA8IS0tIFN0ZXAtZG93biB0cmFuc2Zvcm1lciAtLT4KICA8cGF0aCBkPSJNIDM4MCAyMzUgTCAzODAgMjY1IiBjbGFzcz0id2lyZS1tdiIvPgogIDxyZWN0IHg9IjMwMCIgeT0iMjY1IiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjUwIiBjbGFzcz0iYm94LW12Ii8+CiAgPHRleHQgeD0iMzgwIiB5PSIyODUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+U3RlcC1kb3duIHRyYW5zZm9ybWVyPC90ZXh0PgogIDx0ZXh0IHg9IjM4MCIgeT0iMzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjEzLjgga1YgzpQg4oaSIDQ4MFkvMjc3IFYsIDE1IE1WQSwgRHluMTE8L3RleHQ+CgogIDxwYXRoIGQ9Ik0gMzgwIDMxNSBMIDM4MCAzNDAiIGNsYXNzPSJ3aXJlLWx2Ii8+CgogIDwhLS0gNDgwViBzd2l0Y2hib2FyZCAtLT4KICA8dGV4dCB4PSI2MCIgeT0iMzU1IiBjbGFzcz0ic2VjdGlvbiI+NDgwIFZBQyB0aWVyPC90ZXh0PgogIDxyZWN0IHg9IjEwMCIgeT0iMzQwIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjM0IiBjbGFzcz0iYm94LWx2Ii8+CiAgPHRleHQgeD0iMzgwIiB5PSIzNjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+NDgwIFZBQyBtYWluIHN3aXRjaGJvYXJkIOKAlCBzb2xpZCBnbmQgd3llLCA1Mk0gTFNJRywgNTBHIHJlc2lkdWFsPC90ZXh0PgoKICA8IS0tIFJhY2sgcm93IC0tPgogIDx0ZXh0IHg9IjYwIiB5PSIzOTUiIGNsYXNzPSJzZWN0aW9uIj5BQy1EQyBjb252ZXJzaW9uIChSZXYgMC4yOiA1IHJhY2tzL2Nhc3NldHRlIHByZWZlcnJlZCk8L3RleHQ+CiAgPHJlY3QgeD0iODAiIHk9IjQwNSIgd2lkdGg9IjExMCIgaGVpZ2h0PSI0NCIgY2xhc3M9ImJveC1yYWNrIi8+CiAgPHRleHQgeD0iMTM1IiB5PSI0MjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+NcOXIERlbHRhIDY2MCBrVzwvdGV4dD4KICA8dGV4dCB4PSIxMzUiIHk9IjQ0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5jYXNzZXR0ZSAxICg3MyUgbG9hZCk8L3RleHQ+CgogIDxyZWN0IHg9IjIwMCIgeT0iNDA1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjQ0IiBjbGFzcz0iYm94LXJhY2siLz4KICA8dGV4dCB4PSIyNTUiIHk9IjQyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj41w5cgRGVsdGEgNjYwIGtXPC90ZXh0PgogIDx0ZXh0IHg9IjI1NSIgeT0iNDQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPmNhc3NldHRlIDI8L3RleHQ+CgogIDxyZWN0IHg9IjMyMCIgeT0iNDA1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjQ0IiBjbGFzcz0iYm94LXJhY2siLz4KICA8dGV4dCB4PSIzNzUiIHk9IjQyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj41w5cgRGVsdGEgNjYwIGtXPC90ZXh0PgogIDx0ZXh0IHg9IjM3NSIgeT0iNDQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPmNhc3NldHRlIDM8L3RleHQ+CgogIDxyZWN0IHg9IjQ0MCIgeT0iNDA1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjQ0IiBjbGFzcz0iYm94LXJhY2siLz4KICA8dGV4dCB4PSI0OTUiIHk9IjQyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj41w5cgRGVsdGEgNjYwIGtXPC90ZXh0PgogIDx0ZXh0IHg9IjQ5NSIgeT0iNDQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPmNhc3NldHRlIDQ8L3RleHQ+CgogIDx0ZXh0IHg9IjU2MCIgeT0iNDI3IiBjbGFzcz0idmFsdWUiPjIwIHJhY2tzIHRvdGFsIC88L3RleHQ+CiAgPHRleHQgeD0iNTYwIiB5PSI0NDEiIGNsYXNzPSJ2YWx1ZSI+YmxvY2sgPSAxMy4yIE1XPC90ZXh0PgoKICA8IS0tIExWIGZlZWRzIHRvIHJhY2tzIC0tPgogIDxwYXRoIGQ9Ik0gMTM1IDM3NCBMIDEzNSA0MDUiIGNsYXNzPSJ3aXJlLWx2Ii8+CiAgPHBhdGggZD0iTSAyNTUgMzc0IEwgMjU1IDQwNSIgY2xhc3M9IndpcmUtbHYiLz4KICA8cGF0aCBkPSJNIDM3NSAzNzQgTCAzNzUgNDA1IiBjbGFzcz0id2lyZS1sdiIvPgogIDxwYXRoIGQ9Ik0gNDk1IDM3NCBMIDQ5NSA0MDUiIGNsYXNzPSJ3aXJlLWx2Ii8+CgogIDwhLS0gREMgb3V0cHV0IGxpbmVzIC0tPgogIDxwYXRoIGQ9Ik0gMTM1IDQ0OSBMIDEzNSA0NzAiIGNsYXNzPSJ3aXJlLWRjIi8+CiAgPHBhdGggZD0iTSAyNTUgNDQ5IEwgMjU1IDQ3MCIgY2xhc3M9IndpcmUtZGMiLz4KICA8cGF0aCBkPSJNIDM3NSA0NDkgTCAzNzUgNDcwIiBjbGFzcz0id2lyZS1kYyIvPgogIDxwYXRoIGQ9Ik0gNDk1IDQ0OSBMIDQ5NSA0NzAiIGNsYXNzPSJ3aXJlLWRjIi8+CgogIDwhLS0gODAwIFZEQyBidXN3YXkgLS0+CiAgPGxpbmUgeDE9IjQwIiB5MT0iNDc1IiB4Mj0iODYwIiB5Mj0iNDc1IiBjbGFzcz0iYnVzIiBzdHJva2U9IiMwRjZFNTYiLz4KICA8dGV4dCB4PSI0NSIgeT0iNDkzIiBjbGFzcz0ibGFiZWwiIGZpbGw9IiMwRjZFNTYiPjgwMCBWREMgY29tbW9uIGJ1c3dheSAoMTcsMDAwIEEgc3BlYyDigJQgY2Fzc2V0dGVzICsgQkVTUyArIHNvbGFyKTwvdGV4dD4KCiAgPCEtLSBUYXAtb2ZmcyAtLT4KICA8IS0tIENhc3NldHRlcyAtLT4KICA8cGF0aCBkPSJNIDEzNSA0NzUgTCAxMzUgNTA1IiBjbGFzcz0id2lyZS1kYyIvPgogIDxwYXRoIGQ9Ik0gMjU1IDQ3NSBMIDI1NSA1MDUiIGNsYXNzPSJ3aXJlLWRjIi8+CiAgPHBhdGggZD0iTSAzNzUgNDc1IEwgMzc1IDUwNSIgY2xhc3M9IndpcmUtZGMiLz4KICA8cGF0aCBkPSJNIDQ5NSA0NzUgTCA0OTUgNTA1IiBjbGFzcz0id2lyZS1kYyIvPgoKICA8cmVjdCB4PSI4MCIgeT0iNTA1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjU0IiBjbGFzcz0iYm94LWNhc3NldHRlIi8+CiAgPHRleHQgeD0iMTM1IiB5PSI1MjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+Q2Fzc2V0dGUgIzE8L3RleHQ+CiAgPHRleHQgeD0iMTM1IiB5PSI1NDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+Miw0MTUga1cgZmFjaWxpdHk8L3RleHQ+CiAgPHRleHQgeD0iMTM1IiB5PSI1NTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NzIwIEdQVSwgU3RhdWJsaTwvdGV4dD4KCiAgPHJlY3QgeD0iMjAwIiB5PSI1MDUiIHdpZHRoPSIxMTAiIGhlaWdodD0iNTQiIGNsYXNzPSJib3gtY2Fzc2V0dGUiLz4KICA8dGV4dCB4PSIyNTUiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5DYXNzZXR0ZSAjMjwvdGV4dD4KICA8dGV4dCB4PSIyNTUiIHk9IjU0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4yLDQxNSBrVzwvdGV4dD4KCiAgPHJlY3QgeD0iMzIwIiB5PSI1MDUiIHdpZHRoPSIxMTAiIGhlaWdodD0iNTQiIGNsYXNzPSJib3gtY2Fzc2V0dGUiLz4KICA8dGV4dCB4PSIzNzUiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5DYXNzZXR0ZSAjMzwvdGV4dD4KICA8dGV4dCB4PSIzNzUiIHk9IjU0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4yLDQxNSBrVzwvdGV4dD4KCiAgPHJlY3QgeD0iNDQwIiB5PSI1MDUiIHdpZHRoPSIxMTAiIGhlaWdodD0iNTQiIGNsYXNzPSJib3gtY2Fzc2V0dGUiLz4KICA8dGV4dCB4PSI0OTUiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5DYXNzZXR0ZSAjNDwvdGV4dD4KICA8dGV4dCB4PSI0OTUiIHk9IjU0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4yLDQxNSBrVzwvdGV4dD4KCiAgPCEtLSBCRVNTIHRhcCAtLT4KICA8cGF0aCBkPSJNIDYwMCA0NzUgTCA2MDAgNTA1IiBjbGFzcz0id2lyZS1kYyIvPgogIDxyZWN0IHg9IjU3NSIgeT0iNTA1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9IjU0IiBjbGFzcz0iYm94LWJlc3MiLz4KICA8dGV4dCB4PSI2MzAiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5CRVNTIChMRlApPC90ZXh0PgogIDx0ZXh0IHg9IjYzMCIgeT0iNTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjMuNiBNV2ggLyAyIE1XPC90ZXh0PgogIDx0ZXh0IHg9IjYzMCIgeT0iNTU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPnZpYSBTaUMgREMtREM8L3RleHQ+CgogIDwhLS0gU29sYXIgdGFwIC0tPgogIDxwYXRoIGQ9Ik0gNzYwIDQ3NSBMIDc2MCA1MDUiIGNsYXNzPSJ3aXJlLWRjIi8+CiAgPHJlY3QgeD0iNzAwIiB5PSI1MDUiIHdpZHRoPSIxMzAiIGhlaWdodD0iNTQiIGNsYXNzPSJib3gtc29sYXIiLz4KICA8dGV4dCB4PSI3NjUiIHk9IjUyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5Tb2xhciBzaGFyZTwvdGV4dD4KICA8dGV4dCB4PSI3NjUiIHk9IjU0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5+MTg2IGtXIG5vbWluYWw8L3RleHQ+CiAgPHRleHQgeD0iNzY1IiB5PSI1NTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+MSw1MDBW4oaSODAwViBidWNrPC90ZXh0PgoKICA8IS0tIEZvb3Rub3RlIC0tPgogIDxsaW5lIHgxPSI0MCIgeTE9IjU4MCIgeDI9Ijg2MCIgeTI9IjU4MCIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogIDx0ZXh0IHg9IjYwIiB5PSI1OTgiIGNsYXNzPSJzdWJ0aXRsZSI+QmxvY2sgdG90YWw6IDTDlyBjYXNzZXR0ZXMgPSA5LjY2IE1XICsgQkVTUyArIHNvbGFyLiAxMcOXIGlkZW50aWNhbCBibG9ja3MgPSAxMDEuMiBNVyBTdGFnZSAxLjwvdGV4dD4KICA8dGV4dCB4PSI2MCIgeT0iNjEyIiBjbGFzcz0ic3VidGl0bGUiPk1WIGJ1cyAob3JhbmdlKSDigKIgNDgwIFZBQyBmZWVkZXJzICh2aW9sZXQpIOKAoiA4MDAgVkRDIGJ1c3dheSAodGVhbCkuIFNTQ0IgKyBibG9ja2luZyBkaW9kZSBhdCBldmVyeSBEQyBzb3VyY2UgdGllLjwvdGV4dD4KPC9zdmc+Cg==" alt="Figure 2 — Single Stage 1 block electrical topology (Rev 0.2)" />
+<figcaption aria-hidden="true">Figure 2 — Single Stage 1 block
+electrical topology (Rev 0.2)</figcaption>
+</figure>
+<h3 id="genset-specification-cat-cg260-16">3.2 Genset specification —
+Cat CG260-16</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rated output</td>
+<td>4,000 ekW continuous, 60 Hz, 900 rpm</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Electrical efficiency</td>
+<td>43.8% (LHV, at 100% load — part-load derate pending Cat CSA)</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Thermal efficiency</td>
+<td>42.4% (LHV to 120°C)</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Total efficiency</td>
+<td>86.2%</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Design anchor loading</td>
+<td>61.5% (2,460 ekW per genset)</td>
+<td>W — pending Cat CSA</td>
+</tr>
+<tr class="even">
+<td>AI dispatch envelope (steady-state)</td>
+<td>55–75%; 63–65% expected average</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td><strong>N-1 contingency envelope (Rev 0.2)</strong></td>
+<td><strong>55–85% — surviving 3 gensets per block carry 80.5% during
+single-genset trip</strong></td>
+<td>W — Cat CSA to confirm acceptable duration</td>
+</tr>
+<tr class="even">
+<td>MV voltage</td>
+<td>13.8 kV</td>
+<td>W — Cat CSA to confirm</td>
+</tr>
+<tr class="odd">
+<td>Fuel — at 61.5% anchor loading</td>
+<td>~2,200 Nm³/hr per block; ~24,000 Nm³/hr Stage 1 campus</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td><strong>Fuel — at 100% load contingency (Rev 0.2)</strong></td>
+<td><strong>~3,660 Nm³/hr per block; ~40,300 Nm³/hr Stage 1
+campus</strong></td>
+<td>W — firm pipeline capacity basis</td>
+</tr>
+<tr class="odd">
+<td>Emissions — NOx</td>
+<td>&lt;250 mg/Nm³ at 5% O₂</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td><strong>Emissions — CO (Rev 0.2)</strong></td>
+<td>Uncontrolled CO ~500–650 mg/Nm³ typical for CG260; <strong>Title V
+Major Source threshold (100 tpy) likely exceeded even with 90% oxidation
+catalyst. CO control strategy required — see E-31.</strong></td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen blending</td>
+<td>25% blend capable at same continuous rating</td>
+<td>L (future optionality)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Prime mover rule:</strong> CG260-16 for Trappey’s and 100+ MW
+deployments; Cat G3520K for Marlie 1 and ≤10 MW platforms. Not
+substitutable.</p>
+<h3 id="five-feeder-categories-e-29-per-block">3.3 Five feeder
+categories (E-29, per block)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feeder</th>
+<th>Load</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16 × Delta 660 kW in-row power racks</td>
+<td>~10.6 MVA</td>
+<td>Dominant feeder — 4 racks × 4 cassettes</td>
+</tr>
+<tr class="even">
+<td>Cooling plant MCC</td>
+<td>~135 kW</td>
+<td>VFD-driven (per-block average; campus cooling MCC ~1,475 kW total
+under Rev 0.2 — likely centralized — see §8.6)</td>
+</tr>
+<tr class="odd">
+<td>BESS auxiliary</td>
+<td>~80 kW</td>
+<td>Battery HVAC, BMS, fire system</td>
+</tr>
+<tr class="even">
+<td>Solar DC-DC buck auxiliary</td>
+<td>~10 kW</td>
+<td>Controls, HVAC</td>
+</tr>
+<tr class="odd">
+<td>Facility ancillary</td>
+<td>~200 kW</td>
+<td>SCADA, NOC, site lighting, fire/life safety</td>
+</tr>
+</tbody>
+</table>
+<h3 id="protection-island-only-dc-dominated">3.4 Protection
+(island-only, DC-dominated)</h3>
+<ul>
+<li><strong>Per-genset (E-26):</strong> 87G differential, 32 reverse
+power, 40 loss of field, 46 negative sequence, 47 phase sequence, 59/27
+over/under-voltage, 64G stator ground, 78 out-of-step, 51V
+voltage-restrained overcurrent.</li>
+<li><strong>Block bus:</strong> 87B bus differential, 51N neutral
+ground.</li>
+<li><strong>Transformer (E-27):</strong> 87T overall differential, 49T
+thermal (RTD), 63 pressure/gas, 51 time overcurrent on both primary and
+secondary, 50/51G ground overcurrent on secondary.</li>
+<li><strong>LV secondary (E-28):</strong> solidly grounded wye, 52M with
+LSIG, 50G residual ground sensing.</li>
+<li><strong>UFLS:</strong> three-stage at block MV inlet — 59.5 / 59.2 /
+58.9 Hz.</li>
+<li><strong>DC side:</strong> SSCB at every source tie (each in-row rack
+output, BESS tie, solar tie), blocking diodes to prevent reverse flow,
+load-break contactors at each cassette umbilical.</li>
+</ul>
+<p>No anti-islanding. No external sync. No reverse-power coordination
+with utility.</p>
+<h3 id="cassette-internal-topology-e-30-locked">3.5 Cassette internal
+topology (E-30, Locked)</h3>
+<p>Staubli hot-swap disconnect → cassette 800 VDC overhead busbar → two
+branches: - <strong>Main DC distribution:</strong> 3 × Eaton ORV3 PDUs +
+NVIDIA Kyber PDUs → 10 × OCP ORV3 racks with NVL72 trays → 720 Vera
+Rubin GPUs per cassette, 230 kW/rack, 2,300 kW cassette IT. -
+<strong>Auxiliary DC-DC:</strong> Boyd CDU pumps (2,000 kW water-glycol
+primary loop, N+1), Munters HCD/MCD blowers, Jetson AGX Orin BMS (148
+sensor channels).</p>
+<h3 id="amcl-five-tier-control-a-09-working">3.6 AMCL five-tier control
+(A-09, Working)</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tier</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L0 field devices</td>
+<td>Cat ECS governors, protection IEDs, VFDs, Jetson Orin BMS, RTDs,
+CTs/PTs</td>
+</tr>
+<tr class="even">
+<td>L1 block PLC</td>
+<td>Paralleling, UFLS, DC-DC setpoints (BESS + solar buck), MPPT, trip
+schemes, safety interlocks. Deterministic; cannot be overridden from
+higher tiers</td>
+</tr>
+<tr class="odd">
+<td>L2 plant SCADA</td>
+<td>Historian, OPC-UA backbone, cassette BMS aggregation (148 × 44 ≈
+6,500 cassette points)</td>
+</tr>
+<tr class="even">
+<td>L3 AMCL dispatch (AI)</td>
+<td>Cross-block optimization, gas/load/thermal coupling, BESS
+orchestration, solar recapture</td>
+</tr>
+<tr class="odd">
+<td>L4 HMI + operator override</td>
+<td>IEC 62443 segmentation, OT/IT isolation, incident response</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI failure mode:</strong> last-known-good deterministic
+control. Gensets hold setpoint, BESS DC-DC holds mode, VFDs hold speed.
+Governors and protection autonomous. Operators take manual dispatch
+until AI restored.</p>
+<h3 id="full-build-vs-stage-1">3.7 Full Build vs Stage 1</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Stage 1 (11 blocks)</th>
+<th>Full Build (22 blocks)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cassette IT</td>
+<td>101.2 MW</td>
+<td>202.4 MW</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Cassette facility</td>
+<td>106.3 MW (44 × 2,415 kW)</td>
+<td>212.5 MW</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Generation at 61.5% design anchor</td>
+<td>108.24 MW (9,840 kW/block × 11)</td>
+<td>216.5 MW</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Generation at 63–65% operational</td>
+<td>~110.9–114.4 MW</td>
+<td>~221.8–228.8 MW</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Block cassette facility load</td>
+<td>9.66 MW</td>
+<td>9.66 MW</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Non-cassette ancillary (Rev 0.2 revised)</td>
+<td>~3–4 MW</td>
+<td>~6–8 MW</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td><strong>Total Stage 1 site load (Rev 0.2)</strong></td>
+<td><strong>~109.3–110.3 MW</strong></td>
+<td>—</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<p>Rev 0.2 margin update: with cooling MCC reduced from ~4.8 MW to ~1.5
+MW (§8.6), total site load drops by ~3.3 MW vs Rev 0.1 figure. 63%
+genset dispatch (110.9 MW) now closes the site load balance with ~0.6 MW
+net headroom; 65% dispatch (114.4 MW) provides ~4 MW comfortable
+operating margin. Design anchor 61.5% is retained for Cat longevity
+discussions but requires cooling MCC parasitic reduction (which Rev 0.2
+delivers) to close.</p>
+<p><strong>N-1 genset contingency (Rev 0.2 added):</strong> At N-1 per
+block, the 3 surviving gensets carry 9,660 kW / 12,000 kW = 80.5%. This
+is above the 55–75% steady-state dispatch envelope but within the 55–85%
+N-1 contingency envelope. Cat CSA to confirm (a) acceptable duration at
+80% loading before TBO impact, and (b) governor response envelope during
+the transient ramp from 61.5% to 80.5%. If Cat CSA returns unfavorable,
+fallback is 5-genset-per-block architecture (5:4) — capex impact ~$8M
+Stage 1 (11 × ~$750K per additional genset + aux). Decision gate is Step
+1 Cat CSA.</p>
+<h3 id="single-biggest-technical-risk">3.8 Single biggest technical
+risk</h3>
+<p>CG260-16 governor response in island-mode 24/7 at variable loading
+under AI dispatch, paired with block-level DC-coupled BESS via
+bidirectional DC-DC converter. Cat CSA engagement is the most important
+external validation. If governor data returns unfavorable: add 5th
+genset per block (5:4 instead of 4:4) or oversize BESS. Both
+engineerable; neither preferred.</p>
+<hr />
+<h2 id="bess-architecture">4. BESS Architecture</h2>
+<p>Source: ST-TRAP-BESS-001 Rev 0.1 + ST-TRAP-BESS-RFQ-001 Rev 0.1.</p>
+<h3 id="role-stabilizer-not-backup">4.1 Role — stabilizer, not
+backup</h3>
+<p>BESS is <strong>always active on the 800 VDC bus</strong>, running
+continuously in charge/discharge under AMCL L1 (deterministic) and L3
+(AI) control. Four operating functions, priority order:</p>
+<ol type="1">
+<li><strong>Transient buffer</strong> — sub-second response to genset
+governor lag via SiC bidirectional DC-DC (µs–ms response).</li>
+<li><strong>Contingency support</strong> — single-genset trip, partial
+gas curtailment, full gas-loss graceful shutdown.</li>
+<li><strong>Solar clip-recapture</strong> — absorbs First Solar
+overproduction that would otherwise require MPPT throttling.</li>
+<li><strong>Load shifting</strong> — flattens genset loading within
+55–75% AI dispatch envelope.</li>
+</ol>
+<p>BESS is <strong>not</strong> the primary voltage-forming source on
+the 800 VDC bus (in-row power rack rectifiers regulate bus voltage). Not
+a replacement for in-row BBU + PCS (which handles sub-100 ms GPU
+swings). Two storage layers run in parallel.</p>
+<h3 id="sizing-and-power-rating">4.2 Sizing and power rating</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Per block</th>
+<th>Stage 1 facility (11 blocks)</th>
+<th>Full Build (22 blocks)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Energy — working midpoint</td>
+<td>3.6 MWh</td>
+<td>~39.6 MWh</td>
+<td>~79.2 MWh</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Energy — envelope</td>
+<td>3.0–5.0 MWh</td>
+<td>33–55 MWh</td>
+<td>66–110 MWh</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Continuous power</td>
+<td>~2 MW</td>
+<td>~22 MW</td>
+<td>~44 MW</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Peak power (10 s min)</td>
+<td>~4 MW</td>
+<td>~44 MW</td>
+<td>~88 MW</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Allocation math:</strong> 40 MWh ÷ 11 blocks = 3.636 MWh →
+3.6 MWh working midpoint.</p>
+<h3 id="contingency-scenarios-per-block">4.3 Contingency scenarios (per
+block)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Trigger</th>
+<th>Energy</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Single genset trip</td>
+<td>1 of 4 CG260-16 trips; remaining 3 ramp</td>
+<td>~1–2 MWh</td>
+<td>Seconds to minutes</td>
+</tr>
+<tr class="even">
+<td>Partial gas curtailment</td>
+<td>Gas supply pressure drop; L3 orders derate</td>
+<td>~2–3 MWh</td>
+<td>Minutes — graceful ramp-down</td>
+</tr>
+<tr class="odd">
+<td>Full gas-loss graceful shutdown</td>
+<td>Total gas interruption to block</td>
+<td>~3–4 MWh</td>
+<td>15–20 min GPU checkpoint + cassette cooldown</td>
+</tr>
+</tbody>
+</table>
+<p>Full gas-loss scenario sets the 3 MWh floor. BESS is not sized for
+extended hold — gas supply continuity is the primary reliability
+path.</p>
+<h3 id="chemistry-and-coupling">4.4 Chemistry and coupling</h3>
+<ul>
+<li><strong>LFP (LiFePO4)</strong> — lowest thermal runaway risk,
+3,000–6,000 cycles at 80% DOD, wider temperature tolerance, cleaner NFPA
+855 AHJ path. NMC / NCA eliminated.</li>
+<li><strong>DC-coupled</strong> — battery pack output 1,100–1,500 VDC →
+SiC bidirectional DC-DC → SSCB → blocking diode → 800 VDC block
+bus.</li>
+<li><strong>DC-DC converter spec:</strong> SiC switching, 1,100–1,500
+VDC input, 800 VDC ±1% regulated output, 2 MW continuous / 4 MW
+10-second peak, ≥97% efficiency, galvanic isolation required, Modbus TCP
+(dispatch) + IEC 61850 GOOSE (fast protection) to L1 block PLC.</li>
+</ul>
+<h3 id="vendor-shortlist-bess-rfq-001-11">4.5 Vendor shortlist
+(BESS-RFQ-001 §11)</h3>
+<p>Engagement order:</p>
+<ol type="1">
+<li><strong>Fluence Energy — preferred.</strong> Gridstack Pro 4.9–5.6
+MWh per 20-ft, AESC HC-L530A LFP cell, up to 1,500 VDC. <strong>Only
+vendor on shortlist that explicitly confirmed island / off-grid
+operation.</strong> UL 9540A confirmed June 2025 large-scale fire tests
+(CSA Group, Safe Laboratories NC); NFPA 855 (2026) documentation in
+preparation. Arlington VA, +1 703 682 2700. Portfolio framing required:
+typical Fluence engagement is 100 MWh+ — lead with ~100+ containers
+across ADC Louisiana sites (Trappeys + MARLIE I + Willow Glen + New
+Iberia).</li>
+<li><strong>LG Energy Solution Vertech</strong> — JF2 DC LINK, 5.11 MWh,
+1,134–1,499 VDC, UL 9540A confirmed. Manufactured Holland, Michigan —
+<strong>strongest domestic content story for ITC</strong>. Flag: 23-ft
+width (non-standard ISO) — confirm pad logistics and crane requirements
+before selection.</li>
+<li><strong>Saft (TotalEnergies)</strong> — Intensium Flex 3.4 / 4.3 /
+5.1 MWh, 20-ft ISO, up to 1,500 VDC. TotalEnergies parent understands
+natural gas BTM. DC-version UL 9540A listing started late 2025 — verify
+before AHJ submittal. Saft US Cockeysville MD, +1 410 771 3200.</li>
+<li><strong>Hitachi Energy AMPS</strong> — engaged in parallel on DC-DC
+layer regardless of BESS container selection. Input validated at 1,550
+VDC. Ask for battery partner list. Fallback if no BESS vendor integrates
+compliant DC-DC natively.</li>
+</ol>
+<p><strong>Hold — CATL:</strong> EnerC+ 4.07 MWh / TENER 6.25 MWh, UL
+9540A confirmed on EnerC+. Hold pending Section 301 tariff clarity and
+ITC domestic content implications.</p>
+<p><strong>Eliminated:</strong> POWIN (bankrupt May 2025), Wärtsilä
+Quantum3 (AC block — integrated inverter defeats 800 VDC architecture),
+Samsung SDI SBB 1.5 (NCA chemistry).</p>
+<h3 id="island-mode-requirement">4.6 Island-mode requirement</h3>
+<p>Behind-the-meter permanent island operation is a
+<strong>disqualifying condition</strong> in the RFQ — explicit written
+vendor confirmation of island / off-grid operation is required. Implied
+confirmation is not sufficient. Fluence is the only shortlist vendor
+with this confirmation today.</p>
+<h3 id="key-open-items">4.7 Key open items</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ref</th>
+<th>Item</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E-10</td>
+<td>Per-block sizing validation against CG260-16 governor ramp data</td>
+<td>C1 — pending Cat CSA</td>
+</tr>
+<tr class="even">
+<td>E-12</td>
+<td>Bidirectional DC-DC converter vendor selection — integrated or
+separate</td>
+<td>C1 — pending BESS RFQ</td>
+</tr>
+<tr class="odd">
+<td>E-13</td>
+<td>BESS container vendor selection (Fluence / LG / Saft)</td>
+<td>C1 — pending BESS RFQ</td>
+</tr>
+<tr class="even">
+<td>NFPA 855 AHJ</td>
+<td>Lafayette Parish interpretation</td>
+<td>C1 — AHJ pre-application</td>
+</tr>
+<tr class="odd">
+<td>PHYS</td>
+<td>Rear slab NFPA 855 setback study</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>ITC</td>
+<td>Domestic content per vendor</td>
+<td>C2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="solar-integration">5. Solar Integration</h2>
+<p>Source: ST-TRAP-SOLAR-001 Rev 0.1.</p>
+<h3 id="panel-and-array">5.1 Panel and array</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Panel</td>
+<td>First Solar FS-7550A-TR1 (CdTe thin-film)</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Panel count</td>
+<td>3,731</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Total DC capacity</td>
+<td>2.05 MW</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Location</td>
+<td>Building B1 and B2 rooftops</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>STC power per panel</td>
+<td>550 W</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Vmp / Imp</td>
+<td>190.4 V / 2.89 A</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Voc / Isc</td>
+<td>228.8 V / 3.08 A</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Temperature coefficient (Pmax)</td>
+<td>−0.32%/°C</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Max system voltage</td>
+<td>1,500 VDC</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Product warranty / linear performance</td>
+<td>12 yr / 30 yr (98% Y1, 0.3%/yr degradation, &gt;89% Y30)</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>String configuration</td>
+<td>5 panels in series</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Complete strings</td>
+<td>746</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Panel count check:</strong> 746 strings × 5 panels × 550 W =
+2,051.5 kW ≈ 2.05 MW. ✓</p>
+<p><strong>CdTe Louisiana advantage:</strong> ~+2% hot climate, ~+4%
+humid climate, salt-air certified (IEC 61701), immune to LID / LeTID,
+immune to hurricane cell cracking. <strong>~+6% cumulative 30-year
+advantage over silicon</strong> in Louisiana.</p>
+<h3 id="string-voltage-analysis-confirms-800v-mpp-across-louisiana-temperature-range">5.2
+String voltage analysis — confirms &gt;800V MPP across Louisiana
+temperature range</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Cell temp</th>
+<th>String MPP</th>
+<th>String Voc</th>
+<th>1,500V limit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STC reference</td>
+<td>25°C</td>
+<td>952V</td>
+<td>1,144V</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>Summer peak</td>
+<td>45°C</td>
+<td><strong>~891V</strong></td>
+<td>&lt;952V</td>
+<td>✓ above 800V</td>
+</tr>
+<tr class="odd">
+<td>Winter cold</td>
+<td>5°C</td>
+<td><strong>~1,013V</strong></td>
+<td>~1,208V</td>
+<td>✓ within</td>
+</tr>
+<tr class="even">
+<td>Extreme cold (design)</td>
+<td>−5°C</td>
+<td>~1,074V</td>
+<td>~1,240V</td>
+<td>✓ within</td>
+</tr>
+<tr class="odd">
+<td><strong>Lafayette record low (1989 — Rev 0.2)</strong></td>
+<td>−12°C</td>
+<td>~1,095V</td>
+<td>~1,263V</td>
+<td>✓ 237V margin (16%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Voc temp coefficient (Rev 0.2):</strong> Cold-limit analysis
+uses First Solar FS-7550A Voc temp coef of −0.28%/°C (per datasheet).
+Rev 0.1 implicitly used the Pmax coefficient (−0.32%/°C) which
+overstated Voc expansion. NEC 690.7 binding calc uses Voc coef × (T_min
+− 25°C) applied to STC Voc — at Lafayette record low −12°C, string Voc =
+5 × 228.8 × (1 + 0.0028 × 37) = 1,263 V. 237 V margin to the 1,500 V
+system limit is comfortable. String MPP stays above 800V across the full
+Louisiana temperature range. Total array current at MPP = 2,155 A at
+~952V.</p>
+<h3 id="dc-dc-buck-converter-e-22-open">5.3 DC-DC buck converter (E-22
+open)</h3>
+<p>Interface between 1,500 VDC string field and 800 VDC bus. Performs
+voltage step-down, MPPT, and bus interface simultaneously.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Input voltage range (MPPT)</td>
+<td>800–1,500 VDC</td>
+</tr>
+<tr class="even">
+<td>Output voltage</td>
+<td>800 VDC ±1% regulated</td>
+</tr>
+<tr class="odd">
+<td>Total rated power</td>
+<td>2.05 MW</td>
+</tr>
+<tr class="even">
+<td>Efficiency</td>
+<td>≥97% at rated</td>
+</tr>
+<tr class="odd">
+<td>Switching</td>
+<td>SiC preferred</td>
+</tr>
+<tr class="even">
+<td>Configuration</td>
+<td><strong>4-unit preferred</strong> — one per roof section,
+independent MPPT per section, ~512 kW per unit</td>
+</tr>
+<tr class="odd">
+<td>Isolation</td>
+<td>Required, or confirm ground-fault detection if non-isolated</td>
+</tr>
+<tr class="even">
+<td>Protection</td>
+<td>Input/output OV, OC, arc-fault, GFDI</td>
+</tr>
+<tr class="odd">
+<td>Comms</td>
+<td>Modbus TCP to L1 block PLC</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vendor shortlist (E-22):</strong> - <strong>Delta Electronics
+— preferred</strong> (single-vendor alignment with E-24 in-row power
+racks) - SMA Solar Technology (Core1, Sunny Highpower) - ABB (TRIO
+series DC-DC) - Ampt (per-string optimizer alternative architecture)</p>
+<h3 id="bus-interface">5.4 Bus interface</h3>
+<p>Strings → combiner boxes + DC disconnects → DC-DC buck (1,500→800 V,
+MPPT) → SSCB → blocking diode → 800 VDC block bus.</p>
+<p>Solar physically ties to blocks nearest B1/B2 (nominal ~186 kW per
+block on paper but actual allocation is routing-dependent; non-adjacent
+blocks carry zero solar in base case). Inter-block solar distribution is
+a SLD-001 decision (E-23 tie coupling).</p>
+<h3 id="energy-production-and-operating-role">5.5 Energy production and
+operating role</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Louisiana specific yield</td>
+<td>~1,750 kWh/kWp</td>
+<td>W — industry average; yield study required</td>
+</tr>
+<tr class="even">
+<td>Estimated annual production</td>
+<td>~3,588 MWh/year</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Year 30 production (&gt;89%)</td>
+<td>~3,193 MWh</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Campus annual generation at 108.24 MW × 8,760 h × CF 0.90</td>
+<td>~853,000 MWh</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Solar offset fraction (annual)</td>
+<td>~0.42%</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Peak midday production (clear, 22°C)</td>
+<td>~1.85 MW</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Peak instantaneous offset</td>
+<td>~1.7%</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<p>Solar is <strong>subordinate and supplemental</strong>. Displaces
+genset fuel burn at margin; charges BESS during clip events; extends
+engine TBO intervals. <strong>Does not reduce genset count, BESS sizing,
+or create net-zero claim.</strong> Never shuts down gensets for solar —
+gensets hold minimum loading for frequency stability.</p>
+<h3 id="itc-basis">5.6 ITC basis</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Federal Solar ITC base</td>
+<td>30%</td>
+<td>IRC §48E</td>
+</tr>
+<tr class="even">
+<td>Domestic content adder</td>
+<td>+10% → 40% total</td>
+<td>First Solar US-manufactured Perrysburg OH + New Iberia LA; confirm
+with tax counsel</td>
+</tr>
+<tr class="odd">
+<td>Estimated module cost</td>
+<td>$575K–$720K</td>
+<td>$0.28–0.35/W market rate</td>
+</tr>
+<tr class="even">
+<td>Estimated total solar CapEx</td>
+<td>$2.5M–$3.5M</td>
+<td>Modules + DC-DC + mounting + wiring + structural</td>
+</tr>
+<tr class="odd">
+<td>ITC at 30%</td>
+<td>$750K–$1.05M</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ITC at 40% (domestic content)</td>
+<td>$1.0M–$1.4M</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>New Iberia factory is 30 miles from site — expedited delivery
+potential. Reference-architecture narrative: first DC-direct 1,500V
+solar to 800V AI factory bus anywhere; First Solar made in Louisiana
+powering Louisiana’s anchor AI factory.</p>
+<h3 id="key-open-items-1">5.7 Key open items</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ref</th>
+<th>Item</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E-22</td>
+<td>DC-DC buck converter vendor RFQ (Delta preferred, 4-unit)</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>B-07</td>
+<td>Structural assessment B1/B2 — rooftop loading ~143,700–148,100
+kg</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>YIELD</td>
+<td>Bankable energy yield study (P50/P90)</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>ITC-DC</td>
+<td>Domestic content determination vs IRS requirements</td>
+<td>C2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="thermal-architecture">6. Thermal Architecture</h2>
+<p>Source: ST-TRAP-THERMAL-BASIS Rev 0.4 (Rev 0.5 pending to absorb this
+correction).</p>
+<h3 id="architecture-summary">6.1 Architecture summary</h3>
+<p><strong>CHP cascade (Locked, T-01):</strong> genset exhaust drives a
+Broad BH double-effect LiBr absorption chiller sized for <strong>33 MW
+actual campus absorption load</strong> (see §6.8 census). Chiller
+produces chilled water for facility cold distribution (Munters process
+air post-desiccant, NOC, offices, cassette air-side heat,
+transformer/switchgear rooms). Absorption condenser + absorber circuit
+rejects through cooling tower field. Boyd CDU GPU warm water loop is a
+physically and thermally separated circuit rejecting through a dedicated
+adiabatic dry cooler. <strong>Orphaned drive heat (~77 MW) is dumped via
+exhaust bypass on the HRU and a dedicated jacket water radiator</strong>
+— Option A working basis.</p>
+<h3 id="working-basis-option-a-dump-and-retained-contingencies">6.2
+Working basis: Option A (dump) — and retained contingencies</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Option A — minimum absorption, dump excess</strong></td>
+<td>33 MW double-effect absorption chiller driven by exhaust HRU sized
+for ~24 MW drive heat. Remaining exhaust bypassed around HRU. Full
+jacket water (~58 MW) rejected via dedicated radiator since JW is not
+needed for the smaller absorption array.</td>
+<td><strong>Working basis</strong></td>
+</tr>
+<tr class="even">
+<td>Option B — absorb everything</td>
+<td>Scale absorption to 114 MW (33 MW CHW + 81 MW Boyd replacement).
+Eliminates Boyd adiabatic dry cooler. Uses essentially all CHP drive
+heat (~82% utilization). Requires ~200 MW tower field.</td>
+<td>Contingency — CHP utilization / incentive story</td>
+</tr>
+<tr class="odd">
+<td>Option C — two absorption systems</td>
+<td>Double-effect for 33 MW CHW load (exhaust-driven) + single-effect
+for 81 MW Boyd loop (JW-driven). Eliminates Boyd dry cooler. ~100% CHP
+utilization. Requires ~250 MW tower field.</td>
+<td>Contingency — best CHP narrative</td>
+</tr>
+<tr class="even">
+<td>Option D — smaller HRU variant</td>
+<td>Same as A but with even smaller HRU; more heat to stack.
+Economically similar to A; mechanically simpler.</td>
+<td>Contingency — if HRU backpressure becomes binding</td>
+</tr>
+<tr class="odd">
+<td><del>Option B (Rev 0.1 meaning) — double-effect hot-water 107
+MW</del></td>
+<td>Superseded — 107 MW load was incorrect (double-counted Boyd GPU
+heat).</td>
+<td>Superseded</td>
+</tr>
+<tr class="even">
+<td><del>Option A (Rev 0.1 meaning) — single-stage
+direct-fired</del></td>
+<td>Eliminated — architecturally incompatible with CHP cascade.</td>
+<td>Eliminated</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Architecture decision gating:</strong> Option A is the
+working basis because 20-year total cost (capex + parasitic + water) is
+lowest by ~$48M vs Option B and ~$50M vs Option C. Options B/C re-enter
+consideration only if (a) a federal or state CHP utilization incentive
+makes the ~82–100% utilization story worth ~$48M, or (b) the Cat CSA
+returns exhaust parameters that make exhaust bypass mechanically
+awkward.</p>
+<p><strong>TB-5 resolution (Rev 0.1 framing of Option B vs C):</strong>
+superseded by the Option A pivot. The Cat CSA exhaust temperature
+question remains important but is no longer gating architecture — only
+HRU sizing and bypass design.</p>
+<h3 id="munters-desiccant-deduction-t-12-locked-unchanged">6.3 Munters
+desiccant deduction (T-12, Locked — unchanged)</h3>
+<p>Each cassette houses one Munters HCD/MCD unit drawing 125 kW exhaust
+slip-stream for desiccant regeneration. Louisiana wet-bulb (28°C ASHRAE
+0.4%) and 75–80% RH annual average make desiccant dehumidification
+<strong>an architectural constraint, not a feature option</strong>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Munters per cassette</td>
+<td>125 kW</td>
+<td>L (T-12)</td>
+</tr>
+<tr class="even">
+<td>Stage 1 deduction (44 cassettes)</td>
+<td>5,500 kW</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Full Build deduction (88 cassettes)</td>
+<td>11,000 kW</td>
+<td>L (T-13)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cooling-tower-role-primary-heat-rejection-for-absorption-chiller-reduced-duty">6.4
+Cooling tower role — primary heat rejection for absorption chiller
+(reduced duty)</h3>
+<p><strong>Vermilion River is eliminated as heat sink.</strong> Two
+disqualifying conditions unchanged from Rev 0.1:</p>
+<ol type="1">
+<li><strong>Tidal influence</strong> — bidirectional flow at Lafayette;
+during reversal events effective mixing volume for regulated thermal
+discharge drops to near-zero or reverses.</li>
+<li><strong>Ambient water temperature</strong> — Gulf Coast surface
+water peaks at 30–33°C (86–91°F) in summer, exceeding Broad’s 29°C rated
+condenser water inlet. River cannot provide meaningful ΔT for heat
+rejection during peak cooling demand months.</li>
+</ol>
+<p><strong>Consequence unchanged:</strong> ST-TRAP-RIVER-001 cancelled.
+LPDES thermal discharge permit not required. BOD T-04 (“residual
+rejection”), T-06 (“Vermilion River supplemental”), and R-03 require
+update at next BOD revision.</p>
+<p><strong>Tower duty now much smaller:</strong> Under Option A the
+tower field handles only absorption condenser + absorber rejection at
+~57 MW nominal (vs 184 MW under Rev 0.1). See §8 for revised sizing.</p>
+<p><strong>Water tower nomenclature clarification (unchanged):</strong>
+the historic water tower on site (pressurized storage tank from original
+cannery operation) is currently inoperable and under consideration for
+restoration as a site landmark. It has <strong>no role in the thermal
+system</strong>.</p>
+<h3 id="boyd-cdu-gpu-warm-water-loop-isolated-unchanged">6.5 Boyd CDU
+GPU warm water loop — isolated (unchanged)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Supply to GPU</td>
+<td>≤45°C</td>
+<td>L (BOD C-03)</td>
+</tr>
+<tr class="even">
+<td>Return from GPU</td>
+<td>~50–55°C</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Heat rejection path</td>
+<td>Separate adiabatic dry cooler (not cooling towers)</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Per-cassette heat</td>
+<td>1,840 kW (C-17)</td>
+<td>L</td>
+</tr>
+<tr class="odd">
+<td>Stage 1 total</td>
+<td>~80,960 kW</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Thermal isolation</td>
+<td>No shared basin, header, or piping with absorption chiller condenser
+circuit</td>
+<td>L</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Capture ratio confirmation — open (T-14, new):</strong> Boyd
+locked 1,840 kW/cassette against 2,300 kW per-cassette IT implies 80%
+liquid capture. The remaining ~460 kW/cassette (20,240 kW Stage 1) is
+assumed to be air-side heat rejected via rear-door HX or room-level
+chilled water — this is the single largest line in the absorption load
+census (§6.8). Confirmation via Boyd application engineering call
+required. If Boyd actually captures 100% of cassette IT, absorption load
+drops from 33 MW to ~13 MW and Option A economics get more
+favorable.</p>
+<h3 id="chw-compatibility-t-11-open-unchanged">6.6 CHW compatibility
+(T-11 open — unchanged)</h3>
+<p>T-11 confirms whether any Boyd CDU sub-loop requires 7–12°C chilled
+water input. If Boyd CDU supply is a closed warm-water loop with no tie
+to the 7°C chiller, T-11 resolves by separation. Priority C1 — gates
+cooling loop mechanical design. Resolution path: Boyd CDU application
+engineering call (combine with T-14).</p>
+<h3 id="key-open-items-2">6.7 Key open items</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ref</th>
+<th>Item</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T-14</td>
+<td>Boyd capture ratio confirmation (80% vs 100% vs other)</td>
+<td>C1 — new Rev 0.2</td>
+</tr>
+<tr class="even">
+<td>T-03</td>
+<td>Chiller type selection in BOD ledger (locks on Option A
+double-effect)</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>T-08</td>
+<td>CHP heat balance — revised for Option A with dump paths sized</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>T-11</td>
+<td>Boyd CDU CHW supply compatibility</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>Cat CSA</td>
+<td>CG260-16 exhaust temperature, mass flow, part-load curves</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>HRU-RFQ</td>
+<td>Exhaust HRU vendor RFQ — now sized for ~24 MW drive heat (was ~42
+MW)</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>COND-WB</td>
+<td>Broad chiller app eng confirmation at 30–31°C condenser water
+inlet</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>JW-RAD</td>
+<td>Jacket water radiator vendor + sizing RFQ (new under Option A)</td>
+<td>C1 — new Rev 0.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="thermal-load-census-stage-1-61.5-anchor-rev-0.2-new">6.8 Thermal
+Load Census — Stage 1, 61.5% anchor (Rev 0.2, new)</h3>
+<p>Every identified heat source on the campus, classified by rejection
+circuit:</p>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 25%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Heat source</th>
+<th style="text-align: right;">kW</th>
+<th>Temp grade</th>
+<th>Rejection circuit</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU liquid cooling (Boyd CDU × 44)</td>
+<td style="text-align: right;">80,960</td>
+<td>Med (45–55°C)</td>
+<td>Dry cooler</td>
+<td>L C-17</td>
+</tr>
+<tr class="even">
+<td>Cassette air-side heat (20% of IT × 44)</td>
+<td style="text-align: right;">20,240</td>
+<td>Low (room)</td>
+<td>Absorption CHW</td>
+<td>Derived 1,840/2,300 — <strong>T-14 gates</strong></td>
+</tr>
+<tr class="odd">
+<td>Cassette aux — Munters blowers + CDU pumps (× 44)</td>
+<td style="text-align: right;">5,060</td>
+<td>Low</td>
+<td>Absorption CHW</td>
+<td>115 kW/cassette aux</td>
+</tr>
+<tr class="even">
+<td>Delta in-row rack losses (704 racks)</td>
+<td style="text-align: right;">2,160</td>
+<td>Low</td>
+<td>Absorption CHW</td>
+<td>2% of 106 MW facility</td>
+</tr>
+<tr class="odd">
+<td>Munters process-air cooling (after desiccant)</td>
+<td style="text-align: right;">2,000</td>
+<td>Low (7°C)</td>
+<td>Absorption CHW</td>
+<td>Est 220,000 CFM sensible</td>
+</tr>
+<tr class="even">
+<td>Block step-down transformers (11 × 15 MVA)</td>
+<td style="text-align: right;">1,540</td>
+<td>Low</td>
+<td>Absorption CHW</td>
+<td>1% FL losses</td>
+</tr>
+<tr class="odd">
+<td>NOC + offices + partner hub (B1/B2) HVAC</td>
+<td style="text-align: right;">1,500</td>
+<td>Low (7°C)</td>
+<td>Absorption CHW</td>
+<td>Est</td>
+</tr>
+<tr class="even">
+<td>BESS converter losses + enclosure HVAC</td>
+<td style="text-align: right;">660</td>
+<td>Low</td>
+<td>Packaged DX</td>
+<td>3% × 2 MW × 11</td>
+</tr>
+<tr class="odd">
+<td>MV switchgear + LV switchboard</td>
+<td style="text-align: right;">550</td>
+<td>Low</td>
+<td>Absorption CHW</td>
+<td>50 kW/block × 11</td>
+</tr>
+<tr class="even">
+<td>Electrical room envelope gain (Louisiana summer)</td>
+<td style="text-align: right;">110</td>
+<td>Low</td>
+<td>Absorption CHW</td>
+<td>10 kW/block × 11</td>
+</tr>
+<tr class="odd">
+<td>Solar DC-DC buck losses (peak)</td>
+<td style="text-align: right;">61</td>
+<td>Low</td>
+<td>Packaged DX</td>
+<td>3% of 2.05 MW</td>
+</tr>
+<tr class="even">
+<td><strong>TOTAL</strong></td>
+<td style="text-align: right;"><strong>94,841</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rolls up to:</strong></p>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 40%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rejection circuit</th>
+<th style="text-align: right;">Load</th>
+<th>Equipment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Boyd dry cooler</td>
+<td style="text-align: right;">80,960 kW</td>
+<td>Adiabatic dry cooler (separate, existing architecture)</td>
+</tr>
+<tr class="even">
+<td><strong>Absorption CHW loop</strong></td>
+<td style="text-align: right;"><strong>33,160 kW</strong></td>
+<td><strong>Broad BH double-effect, cooling tower condenser
+reject</strong></td>
+</tr>
+<tr class="odd">
+<td>Packaged DX</td>
+<td style="text-align: right;">721 kW</td>
+<td>Self-contained units in enclosures</td>
+</tr>
+<tr class="even">
+<td><strong>Total campus cooling</strong></td>
+<td style="text-align: right;"><strong>94,841 kW</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Rev 0.1 stated 107,300 kW absorption load. This figure was = IT
+(101,200 kW) + facility aux (~6,100 kW). The 80,960 kW of Boyd-captured
+GPU heat was double-counted: once as part of IT load driving absorption
+demand, and separately as dry cooler load. Since Boyd rejects
+independently to its own adiabatic dry cooler (§6.5, Locked C-17
+architecture), it must not appear in absorption demand. Corrected value:
+<strong>33 MW (3.2× overstatement factor in Rev 0.1).</strong></p>
+<p><strong>Uncertainty band:</strong> - <strong>13 MW (lower)</strong>
+if Boyd captures 100% of cassette IT (T-14 returns 100% ratio) -
+<strong>33 MW (midpoint, working)</strong> if Boyd captures 80% and
+air-side lands on CHW - <strong>45 MW (upper)</strong> if Munters
+process-air and NOC loads are bigger than estimated</p>
+<p>All three cases are well below the 107 MW Rev 0.1 figure. Option A
+architecture is robust across the band.</p>
+<hr />
+<h2 id="chp-cascade">7. CHP Cascade</h2>
+<p>Source: ST-TRAP-CHP-SCHEMATIC-001 Rev 0.2 (pending — absorbs Rev 0.2
+load census). Working basis <strong>Option A</strong>.</p>
+<figure>
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjIwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiPgogIDxzdHlsZT4KICAgIC50aXRsZSB7IGZvbnQtc2l6ZTogMThweDsgZm9udC13ZWlnaHQ6IDYwMDsgfQogICAgLnN1YnRpdGxlIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNTU1OyB9CiAgICAubGFiZWwgeyBmb250LXNpemU6IDEycHg7IGZvbnQtd2VpZ2h0OiA1MDA7IH0KICAgIC52YWx1ZSB7IGZvbnQtc2l6ZTogMTFweDsgZmlsbDogIzMzMzsgfQogICAgLnNlY3Rpb24geyBmb250LXNpemU6IDEzcHg7IGZvbnQtd2VpZ2h0OiA2MDA7IH0KICAgIC5ib3gtZ2VuIHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDAuNTsgZmlsbDogI0Y1QzRCMzsgfQogICAgLmJveC1ob3QgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjRkFDNzc1OyB9CiAgICAuYm94LWNvbGQgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjQjVENEY0OyB9CiAgICAuYm94LXRvd2VyIHsgc3Ryb2tlOiAjMzMzOyBzdHJva2Utd2lkdGg6IDAuNTsgZmlsbDogIzlGRTFDQjsgfQogICAgLmJveC1kcnkgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjQzBERDk3OyB9CiAgICAuYm94LWR1bXAgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjRDNEMUM3OyB9CiAgICAuYm94LW11bnRlcnMgeyBzdHJva2U6ICMzMzM7IHN0cm9rZS13aWR0aDogMC41OyBmaWxsOiAjRjRDMEQxOyB9CiAgICAucGlwZS1ob3QgeyBzdHJva2U6ICNEODVBMzA7IHN0cm9rZS13aWR0aDogMi41OyBmaWxsOiBub25lOyB9CiAgICAucGlwZS1jaHcgeyBzdHJva2U6ICMzNzhBREQ7IHN0cm9rZS13aWR0aDogMi41OyBmaWxsOiBub25lOyB9CiAgICAucGlwZS1jdyB7IHN0cm9rZTogIzFEOUU3NTsgc3Ryb2tlLXdpZHRoOiAyLjU7IGZpbGw6IG5vbmU7IH0KICAgIC5waXBlLWR1bXAgeyBzdHJva2U6ICM4ODg3ODA7IHN0cm9rZS13aWR0aDogMS41OyBmaWxsOiBub25lOyBzdHJva2UtZGFzaGFycmF5OiA0IDM7IH0KICAgIC5kaXZpZGVyIHsgc3Ryb2tlOiAjOTk5OyBzdHJva2Utd2lkdGg6IDAuMzsgc3Ryb2tlLWRhc2hhcnJheTogMiAyOyB9CiAgPC9zdHlsZT4KCiAgPHRleHQgeD0iNDUwIiB5PSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5GaWd1cmUgMyDigJQgVGhlcm1hbCBjYXNjYWRlIChPcHRpb24gQSB3b3JraW5nIGJhc2lzLCBSZXYgMC4yKTwvdGV4dD4KICA8dGV4dCB4PSI0NTAiIHk9IjQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ic3VidGl0bGUiPlRocmVlIGlzb2xhdGVkIHJlamVjdGlvbiBjaXJjdWl0cy4gQ2FtcHVzIGFic29ycHRpb24gbG9hZCAzMyBNVyAoY2Vuc3VzLXNpemVkKS4gT3JwaGFuZWQgNzcgTVcgZHVtcGVkLjwvdGV4dD4KCiAgPCEtLSBTb3VyY2UgLS0+CiAgPHJlY3QgeD0iNDAiIHk9Ijc1IiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjgwIiBjbGFzcz0iYm94LWdlbiIvPgogIDx0ZXh0IHg9IjEzMCIgeT0iOTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+NDTDlyBDYXQgQ0cyNjAtMTY8L3RleHQ+CiAgPHRleHQgeD0iMTMwIiB5PSIxMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+RWxlY3RyaWNhbDogMTA4LDI0MCBrVzwvdGV4dD4KICA8dGV4dCB4PSIxMzAiIHk9IjEzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5FeGhhdXN0OiA0Nyw4NzIga1cgQCB+NDAwwrBDPC90ZXh0PgogIDx0ZXh0IHg9IjEzMCIgeT0iMTQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkpXOiA1OCwyMTIga1cgQCDiiaQ5OcKwQzwvdGV4dD4KCiAgPCEtLSBFeGhhdXN0IG1hbmlmb2xkIGJyYW5jaCAtLT4KICA8cGF0aCBkPSJNIDIyMCAxMDUgTCAyNjUgMTA1IiBjbGFzcz0icGlwZS1ob3QiIG1hcmtlci1lbmQ9InVybCgjYXJyLWhvdCkiLz4KICA8dGV4dCB4PSIyNDIiIHk9Ijk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPmV4aGF1c3Q8L3RleHQ+CgogIDxyZWN0IHg9IjI3MCIgeT0iODAiIHdpZHRoPSIxNDAiIGhlaWdodD0iNTAiIGNsYXNzPSJib3gtaG90Ii8+CiAgPHRleHQgeD0iMzQwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+RXhoYXVzdCBtYW5pZm9sZDwvdGV4dD4KICA8dGV4dCB4PSIzNDAiIHk9IjExNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4zLXdheSBzcGxpdCArIGJ5cGFzcyBkYW1wZXI8L3RleHQ+CgogIDwhLS0gTXVudGVycyBzbGlwLXN0cmVhbSAtLT4KICA8cGF0aCBkPSJNIDM0MCAxMzAgTCAzNDAgMTY1IiBjbGFzcz0icGlwZS1ob3QiLz4KICA8cmVjdCB4PSIyNzAiIHk9IjE3MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0NCIgY2xhc3M9ImJveC1tdW50ZXJzIi8+CiAgPHRleHQgeD0iMzQwIiB5PSIxODgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+TXVudGVycyBkZXNpY2NhbnQ8L3RleHQ+CiAgPHRleHQgeD0iMzQwIiB5PSIyMDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+NSw1MDAga1cgc2xpcCAoTCBULTEyKTwvdGV4dD4KCiAgPCEtLSBIUlUgLS0+CiAgPHBhdGggZD0iTSA0MTAgMTA1IEwgNDcwIDEwNSIgY2xhc3M9InBpcGUtaG90IiBtYXJrZXItZW5kPSJ1cmwoI2Fyci1ob3QpIi8+CiAgPHRleHQgeD0iNDQwIiB5PSI5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4yNCwwMDAga1c8L3RleHQ+CiAgPHJlY3QgeD0iNDc1IiB5PSI4MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI1MCIgY2xhc3M9ImJveC1ob3QiLz4KICA8dGV4dCB4PSI1NDUiIHk9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5FeGhhdXN0IEhSVTwvdGV4dD4KICA8dGV4dCB4PSI1NDUiIHk9IjExNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5+MjQgTVcsIDE4MMKwQyBIVyBvdXQ8L3RleHQ+CgogIDwhLS0gQnlwYXNzIGJyYW5jaCAtLT4KICA8cGF0aCBkPSJNIDM0MCA4MCBMIDM0MCA1MCBMIDc4MCA1MCBMIDc4MCAyMzAiIGNsYXNzPSJwaXBlLWR1bXAiIG1hcmtlci1lbmQ9InVybCgjYXJyLWR1bXApIi8+CiAgPHRleHQgeD0iNTUwIiB5PSI0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIiBmaWxsPSIjNTU1Ij5leGhhdXN0IGJ5cGFzcyB+MTgsNDAwIGtXPC90ZXh0PgoKICA8IS0tIEhvdCB3YXRlciBsb29wIOKGkiBhYnNvcnB0aW9uIGNoaWxsZXIgLS0+CiAgPHBhdGggZD0iTSA1NDUgMTMwIEwgNTQ1IDE3MCIgY2xhc3M9InBpcGUtaG90Ii8+CiAgPHRleHQgeD0iNTc1IiB5PSIxNTUiIGNsYXNzPSJ2YWx1ZSI+MTgwwrBDIEhXPC90ZXh0PgogIDxyZWN0IHg9IjQ3NSIgeT0iMTc1IiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iYm94LWNvbGQiLz4KICA8dGV4dCB4PSI1NDUiIHk9IjE5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5Ccm9hZCBCSCBjaGlsbGVyPC90ZXh0PgogIDx0ZXh0IHg9IjU0NSIgeT0iMjEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjMzIE1XIGNvb2xpbmcgQCBDT1AgMS40MDwvdGV4dD4KICA8dGV4dCB4PSI1NDUiIHk9IjIyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj42LjfCsEMgQ0hXIHN1cHBseTwvdGV4dD4KCiAgPCEtLSBDSFcgdG8gZmFjaWxpdHkgbG9hZHMgLS0+CiAgPHBhdGggZD0iTSA2MTUgMjA1IEwgNzAwIDIwNSBMIDcwMCAxNzAiIGNsYXNzPSJwaXBlLWNodyIgbWFya2VyLWVuZD0idXJsKCNhcnItY2h3KSIvPgogIDx0ZXh0IHg9IjY2MCIgeT0iMTk4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjYuN8KwQyBDSFc8L3RleHQ+CgogIDxyZWN0IHg9IjYzMCIgeT0iMTEwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjYwIiBjbGFzcz0iYm94LWNvbGQiLz4KICA8dGV4dCB4PSI3MDUiIHk9IjEzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5GYWNpbGl0eSBDSFcgbG9hZHM8L3RleHQ+CiAgPHRleHQgeD0iNzA1IiB5PSIxNDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+TXVudGVycyBwcm9jZXNzIDIuMCBNVzwvdGV4dD4KICA8dGV4dCB4PSI3MDUiIHk9IjE2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5DYXNzZXR0ZSBhaXIgMjAuMiBNVzwvdGV4dD4KCiAgPHJlY3QgeD0iNzk1IiB5PSIxMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgY2xhc3M9ImJveC1jb2xkIi8+CiAgPHRleHQgeD0iODM1IiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+Tk9DIDEuNTwvdGV4dD4KICA8dGV4dCB4PSI4MzUiIHk9IjE0NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5YZm1yIDEuNTwvdGV4dD4KICA8dGV4dCB4PSI4MzUiIHk9IjE2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5NQ0MgMC42PC90ZXh0PgogIDx0ZXh0IHg9IjgzNSIgeT0iMTc1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiIGZpbGw9IiMwQzQ0N0MiPs6jIH4yNSBNVzwvdGV4dD4KCiAgPCEtLSBDb25kZW5zZXIgd2F0ZXIgdG8gdG93ZXIgLS0+CiAgPHBhdGggZD0iTSA1NDUgMjM1IEwgNTQ1IDI2NSIgY2xhc3M9InBpcGUtY3ciIG1hcmtlci1lbmQ9InVybCgjYXJyLWN3KSIvPgogIDx0ZXh0IHg9IjU4MCIgeT0iMjUzIiBjbGFzcz0idmFsdWUiPjM3wrBDIENXIHJldHVybjwvdGV4dD4KCiAgPHJlY3QgeD0iNDQwIiB5PSIyNzAiIHdpZHRoPSIyMTAiIGhlaWdodD0iNzAiIGNsYXNzPSJib3gtdG93ZXIiLz4KICA8dGV4dCB4PSI1NDUiIHk9IjI5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5Db29saW5nIHRvd2VyIGZpZWxkPC90ZXh0PgogIDx0ZXh0IHg9IjU0NSIgeT0iMzA2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjU3IE1XIG5vbWluYWwgLyA3NCBNVyBkZXNpZ248L3RleHQ+CiAgPHRleHQgeD0iNTQ1IiB5PSIzMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+fjIxLDAwMCBSVCwgfjYsMTAwIHNxIGZ0PC90ZXh0PgogIDx0ZXh0IHg9IjU0NSIgeT0iMzM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjc1NSBHUE0gbWFrZXVwPC90ZXh0PgoKICA8cGF0aCBkPSJNIDQ0MCAzMDUgTCAzODAgMzA1IEwgMzgwIDIxMCBMIDQ3NSAyMTAiIGNsYXNzPSJwaXBlLWN3IiBzdHJva2UtZGFzaGFycmF5PSIzIDIiLz4KICA8dGV4dCB4PSI0MTAiIHk9IjI1OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIiBmaWxsPSIjNTU1Ij4zMcKwQyBDVzwvdGV4dD4KICA8dGV4dCB4PSI0MTAiIHk9IjI3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIiBmaWxsPSIjNTU1Ij5zdXBwbHk8L3RleHQ+CgogIDwhLS0gRGl2aWRlciAtLT4KICA8bGluZSB4MT0iNDAiIHkxPSIzNzAiIHgyPSI4NjAiIHkyPSIzNzAiIGNsYXNzPSJkaXZpZGVyIi8+CiAgPHRleHQgeD0iNDUwIiB5PSIzODgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJzZWN0aW9uIj7ilIDilIAgIFBhcmFsbGVsIGlzb2xhdGVkIGNpcmN1aXRzIChubyB0aGVybWFsIGNyb3NzLWNvbnRhbWluYXRpb24pICDilIDilIA8L3RleHQ+CgogIDwhLS0gSlcgcmFkaWF0b3IgKGR1bXAgcGF0aCkgLS0+CiAgPHJlY3QgeD0iNDAiIHk9IjQwNSIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI3MCIgY2xhc3M9ImJveC1kdW1wIi8+CiAgPHRleHQgeD0iMTQwIiB5PSI0MjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+SlcgcmFkaWF0b3IgKE9wdGlvbiBBKTwvdGV4dD4KICA8dGV4dCB4PSIxNDAiIHk9IjQ0MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5+NTggTVcgcmVqZWN0ZWQ8L3RleHQ+CiAgPHRleHQgeD0iMTQwIiB5PSI0NTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+YXRtb3NwaGVyZSDigJQgZW5naW5lLTwvdGV4dD4KICA8dGV4dCB4PSIxNDAiIHk9IjQ3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5zdGFuZGFyZCBwYWNrYWdlPC90ZXh0PgoKICA8cGF0aCBkPSJNIDEzMCAxNTUgTCAxMzAgMTgwIEwgNDAgMTgwIEwgNDAgNDA1IiBjbGFzcz0icGlwZS1kdW1wIiBtYXJrZXItZW5kPSJ1cmwoI2Fyci1kdW1wKSIvPgogIDx0ZXh0IHg9IjUwIiB5PSIyODIiIGNsYXNzPSJ2YWx1ZSIgZmlsbD0iIzU1NSI+Slc8L3RleHQ+CiAgPHRleHQgeD0iNTAiIHk9IjI5NiIgY2xhc3M9InZhbHVlIiBmaWxsPSIjNTU1Ij5yZXR1cm48L3RleHQ+CgogIDwhLS0gQm95ZCBDRFUgbG9vcCAtLT4KICA8cmVjdCB4PSIyOTAiIHk9IjQwNSIgd2lkdGg9IjI4MCIgaGVpZ2h0PSI3MCIgY2xhc3M9ImJveC1kcnkiLz4KICA8dGV4dCB4PSI0MzAiIHk9IjQyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5Cb3lkIENEVSDihpIgYWRpYWJhdGljIGRyeSBjb29sZXI8L3RleHQ+CiAgPHRleHQgeD0iNDMwIiB5PSI0NDEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+ODAsOTYwIGtXIChMb2NrZWQgQy0xNyk8L3RleHQ+CiAgPHRleHQgeD0iNDMwIiB5PSI0NTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+R1BVIGxpcXVpZCBjb29saW5nIOKAlCA0NcKwQyBzdXBwbHkgLyA1NcKwQyByZXR1cm48L3RleHQ+CiAgPHRleHQgeD0iNDMwIiB5PSI0NzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+U2VwYXJhdGUgZnJvbSBhYnNvcnB0aW9uIGNpcmN1aXQ8L3RleHQ+CgogIDwhLS0gUGFja2FnZWQgRFggLS0+CiAgPHJlY3QgeD0iNjIwIiB5PSI0MDUiIHdpZHRoPSIyNDAiIGhlaWdodD0iNzAiIGNsYXNzPSJib3gtZHVtcCIvPgogIDx0ZXh0IHg9Ijc0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPlBhY2thZ2VkIERYIChzZWxmLWNvbnRhaW5lZCk8L3RleHQ+CiAgPHRleHQgeD0iNzQwIiB5PSI0NDEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+QkVTUyBlbmNsb3N1cmVzIDY2MCBrVzwvdGV4dD4KICA8dGV4dCB4PSI3NDAiIHk9IjQ1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5Tb2xhciBEQy1EQyA2MSBrVyBwZWFrPC90ZXh0PgogIDx0ZXh0IHg9Ijc0MCIgeT0iNDcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPn43MjAga1cgdG90YWw8L3RleHQ+CgogIDwhLS0gU3RhY2sgLS0+CiAgPHJlY3QgeD0iNzMwIiB5PSIyNDAiIHdpZHRoPSIxMzAiIGhlaWdodD0iNTAiIGNsYXNzPSJib3gtZHVtcCIvPgogIDx0ZXh0IHg9Ijc5NSIgeT0iMjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPlN0YWNrPC90ZXh0PgogIDx0ZXh0IHg9Ijc5NSIgeT0iMjc2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPkhSVSB0YWlsICsgYnlwYXNzPC90ZXh0PgoKICA8IS0tIFN1bW1hcnkgYm94IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI1MTAiIHdpZHRoPSI4MjAiIGhlaWdodD0iODAiIGZpbGw9IiNGMUVGRTgiIHN0cm9rZT0iIzk5OSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICA8dGV4dCB4PSI2MCIgeT0iNTMwIiBjbGFzcz0ic2VjdGlvbiIgZmlsbD0iIzBDNDQ3QyI+U3VtbWFyeSDigJQgT3B0aW9uIEEgdGhlcm1hbCBidWRnZXQ8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjU1MCIgY2xhc3M9InZhbHVlIj7igKIgQWJzb3JwdGlvbiBjaGlsbGVyIHNpemU6IDMzIE1XIChjZW5zdXMtY29ycmVjdGVkIGZyb20gUmV2IDAuMSAxMDcgTVcgZG91YmxlLWNvdW50IOKAlCBzZWUgwqc2LjgpPC90ZXh0PgogIDx0ZXh0IHg9IjYwIiB5PSI1NjUiIGNsYXNzPSJ2YWx1ZSI+4oCiIENIUCB1dGlsaXphdGlvbjogfjI4JSAoTXVudGVycyA1LjUgKyBIUlUgZHJpdmUgMjQgPSAyOS41IE1XIG9mIDEwNiBNVyB3YXN0ZSBoZWF0IHJlY292ZXJlZCk8L3RleHQ+CiAgPHRleHQgeD0iNjAiIHk9IjU4MCIgY2xhc3M9InZhbHVlIj7igKIgT3JwaGFuZWQgaGVhdCAofjc3IE1XKTogZXhoYXVzdCBieXBhc3MgKyBKVyByYWRpYXRvci4gQ29udGluZ2VuY2llcyBCL0MgcmV0YWluZWQgaWYgQ0hQIGluY2VudGl2ZXMganVzdGlmeSB+JDQ4TS8yMHlyIGNvc3QgZGVsdGE8L3RleHQ+CgogIDxkZWZzPgogICAgPG1hcmtlciBpZD0iYXJyLWhvdCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI4IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIHoiIGZpbGw9IiNEODVBMzAiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0iYXJyLWNodyIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI4IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIHoiIGZpbGw9IiMzNzhBREQiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0iYXJyLWN3IiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjgiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0byI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgeiIgZmlsbD0iIzFEOUU3NSIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJhcnItZHVtcCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI4IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIHoiIGZpbGw9IiM4ODg3ODAiLz4KICAgIDwvbWFya2VyPgogIDwvZGVmcz4KPC9zdmc+Cg==" alt="Figure 3 — Thermal cascade, Option A working basis (Rev 0.2)" />
+<figcaption aria-hidden="true">Figure 3 — Thermal cascade, Option A
+working basis (Rev 0.2)</figcaption>
+</figure>
+<h3 id="end-to-end-chain-option-a-revised-for-33-mw-absorption-load">7.1
+End-to-end chain — Option A (revised for 33 MW absorption load)</h3>
+<pre><code>44 × Cat CG260-16 (61.5% loading)
+  · Electrical output: 108,240 kW (W)
+  · Waste heat total: ~106,084 kW (W) — pending Cat CSA part-load derate
+  · Exhaust: ~47,872 kW at 372–420°C est. (W)
+  · Jacket water: ~58,212 kW at ≤99°C outlet (W)
+    ↓
+Exhaust header splits (three ways — Option A):
+  · → Munters slip-stream (5,500 kW, L T-12) → desiccant regen → cassettes ≤50% RH
+  · → Exhaust HRU (plate-fin; ~24,000 kW) → 180°C hot water → Broad BH chiller
+  · → Exhaust BYPASS (~18,372 kW) → direct to stack
+       (new under Option A — bypass valve on HRU inlet)
+    ↓
+Jacket water: primarily to dedicated RADIATOR (~58 MW)
+  (new under Option A — not cascaded to absorption)
+  Small JW side-stream available as contingency boost to hot water header
+    ↓
+Absorption drive header ~24,000 kW (W; HRU only, no JW)
+    ↓
+Broad BH two-stage LiBr double-effect chiller (sized for ~33 MW cooling)
+  · Rated COP 1.50; operating COP 1.40 (part-load derate)
+  · Chilled water 6.7°C supply / 13.7°C return → facility cold distribution
+      (Munters process air, cassette air-side, NOC, offices, electrical rooms)
+  · Absorption cooling produced: ~33,600 kW (matches census load within margin)
+  · Condenser + absorber out: 37°C
+    ↓
+Condenser water circuit (~34,800 GPM max, VFD pumps N+1)
+    ↓
+Cooling tower field (wet mechanical draft, T-05 open; SPX/Marley · BAC · Evapco)
+  · Design WB 28°C ASHRAE 0.4% (L)
+  · Nominal duty 57,171 kW (57.2 MW) / 16,260 RT (W)
+  · Design duty (30% margin) 74,300 kW (74.3 MW) / 21,130 RT (W)
+  · Supply ≤31°C at 28°C WB, 3°C approach (W; COND-WB open)
+    ↓
+Atmosphere (evaporation + sensible)
+
+PARALLEL CIRCUITS (unchanged):
+  · Boyd CDU × 44 → adiabatic dry cooler (~81 MW, Locked C-17)
+  · Packaged DX on BESS / solar DC-DC enclosures (~720 kW, trivial)</code></pre>
+<h3 id="heat-balance-summary-stage-1-campus-option-a-61.5-load-rev-0.2">7.2
+Heat Balance Summary — Stage 1 Campus, Option A, 61.5% Load (Rev
+0.2)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stream</th>
+<th>kW</th>
+<th>Status</th>
+<th>Disposition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electrical generation (44 gensets)</td>
+<td>108,240</td>
+<td>W</td>
+<td>IT + facility + aux</td>
+</tr>
+<tr class="even">
+<td>IT load (44 cassettes)</td>
+<td>101,200</td>
+<td>L</td>
+<td>GPU compute</td>
+</tr>
+<tr class="odd">
+<td>Facility aux (NOC, offices, controls)</td>
+<td>~6,100</td>
+<td>W</td>
+<td>Facility load</td>
+</tr>
+<tr class="even">
+<td><strong>Total waste heat — exhaust + JW</strong></td>
+<td><strong>~106,084</strong></td>
+<td><strong>W</strong></td>
+<td>→ see split below</td>
+</tr>
+<tr class="odd">
+<td>Munters slip-stream (T-12 LOCKED)</td>
+<td>5,500</td>
+<td>L</td>
+<td>→ desiccant regen (unchanged)</td>
+</tr>
+<tr class="even">
+<td>Exhaust HRU extraction (sized for 33 MW CHW)</td>
+<td>~24,000</td>
+<td>W</td>
+<td>→ Broad BH drive</td>
+</tr>
+<tr class="odd">
+<td><strong>Exhaust BYPASS (direct to stack) — new</strong></td>
+<td><strong>~18,372</strong></td>
+<td><strong>W</strong></td>
+<td><strong>→ stack, higher temp</strong></td>
+</tr>
+<tr class="even">
+<td>Jacket water to radiator — new</td>
+<td>~58,212</td>
+<td>W</td>
+<td>→ atmosphere via engine-style radiator</td>
+</tr>
+<tr class="odd">
+<td>Absorption COP (Option A, operating)</td>
+<td>1.40</td>
+<td>W</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Absorption cooling produced</td>
+<td>~33,600</td>
+<td>W</td>
+<td>Matches campus CHW demand (§6.8)</td>
+</tr>
+<tr class="odd">
+<td>Campus CHW demand (census)</td>
+<td>~33,160</td>
+<td>W</td>
+<td>Per §6.8</td>
+</tr>
+<tr class="even">
+<td><strong>Condenser + absorber rejection — nominal</strong></td>
+<td><strong>~57,171</strong></td>
+<td><strong>W</strong></td>
+<td>→ cooling towers (74% reduction vs Rev 0.1)</td>
+</tr>
+<tr class="odd">
+<td><strong>Condenser + absorber rejection — design (30%
+margin)</strong></td>
+<td><strong>~74,300</strong></td>
+<td><strong>W</strong></td>
+<td>→ cooling towers (design sizing)</td>
+</tr>
+<tr class="even">
+<td>GPU warm water (Boyd CDU)</td>
+<td>~80,960</td>
+<td>L (C-17)</td>
+<td>→ adiabatic dry cooler (separate, unchanged)</td>
+</tr>
+<tr class="odd">
+<td>Stack exhaust (after HRU extraction + bypass)</td>
+<td>TBD</td>
+<td>O</td>
+<td>→ atmosphere via stack</td>
+</tr>
+<tr class="even">
+<td>Cooling tower makeup water</td>
+<td>~750 GPM</td>
+<td>W</td>
+<td>→ evaporation + blowdown</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key finding (Rev 0.2):</strong> all campus CHW demand met by
+absorption cooling alone under Option A with ~24 MW exhaust drive. ~77
+MW of waste heat (18.4 MW exhaust bypass + 58.2 MW JW radiator — minus
+any JW contingency flow to absorption) leaves via stack and dedicated
+radiator rather than cascading to absorption. <strong>Effective CHP
+utilization under Option A: ~27%</strong> (5.5 Munters + 24 HRU drive =
+29.5 MW of 106 MW waste heat recovered). The remainder is dumped via
+standard genset cooling paths.</p>
+<p><strong>CHP utilization framing:</strong> this is lower than Rev
+0.1’s implied 86% but is the honest operating point. Option A eliminates
+the mechanical chiller plant entirely via absorption cooling on genset
+waste heat — still the correct CHP differentiation vs grid + electric
+chillers, but not a “fully utilized cascade” story.</p>
+<h3 id="option-a-bypass-design-new-under-rev-0.2">7.3 Option A bypass
+design (new under Rev 0.2)</h3>
+<p>The HRU now has an exhaust bypass damper on the inlet (not present in
+Rev 0.1 architecture). Bypass design parameters:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HRU duty (nominal)</td>
+<td>~24 MW exhaust heat extracted</td>
+<td>Drives 33 MW absorption at COP 1.40</td>
+</tr>
+<tr class="even">
+<td>HRU duty (turndown)</td>
+<td>~10 MW</td>
+<td>Shoulder seasons, reduced IT load</td>
+</tr>
+<tr class="odd">
+<td>Bypass damper sizing</td>
+<td>~50% of exhaust mass flow at full bypass</td>
+<td>Total exhaust / HRU duty ratio</td>
+</tr>
+<tr class="even">
+<td>Bypass return</td>
+<td>Manifold upstream of stack</td>
+<td>Common stack serves HRU outlet + bypass</td>
+</tr>
+<tr class="odd">
+<td>Controls</td>
+<td>Absorption chiller discharge temperature feedback</td>
+<td>Modulate bypass to maintain CHW supply</td>
+</tr>
+<tr class="even">
+<td>Backpressure budget (Cat limit 6.7 kPa)</td>
+<td>HRU adds 2.0–2.5 kPa (reduced from Rev 0.1 because smaller HRU).
+With oxidation catalyst + Munters tee + stack + bypass damper: total
+3.8–5.1 kPa with 1.6–2.9 kPa margin (24–43%)</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<h3 id="component-status-rev-0.2">7.4 Component status (Rev 0.2)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat CG260-16 genset</td>
+<td>L (count, rating); W (61.5% loading, voltage option)</td>
+<td>Cat CSA pending</td>
+</tr>
+<tr class="even">
+<td>Munters slip-stream 5.5 MW</td>
+<td>L (T-12)</td>
+<td>Locked per BOD — unchanged</td>
+</tr>
+<tr class="odd">
+<td>Exhaust HRU (~24 MW — reduced from 42 MW)</td>
+<td>O (vendor)</td>
+<td>Cain / E-Tech / Rentech — RFQ required</td>
+</tr>
+<tr class="even">
+<td><strong>Exhaust bypass damper — new</strong></td>
+<td>O</td>
+<td>RFQ with HRU package</td>
+</tr>
+<tr class="odd">
+<td><strong>Jacket water radiator — new</strong></td>
+<td>O (vendor)</td>
+<td>Engine-standard package; Cat preferred or aftermarket</td>
+</tr>
+<tr class="even">
+<td>Broad BH double-effect chiller (33 MW)</td>
+<td>W</td>
+<td>Size reduced ~75% from Rev 0.1</td>
+</tr>
+<tr class="odd">
+<td>Condenser water circuit (~34,800 GPM)</td>
+<td>W</td>
+<td>Flow, temps, COND-WB pending</td>
+</tr>
+<tr class="even">
+<td>Cooling tower field (57 MW nominal)</td>
+<td>W (type, T-05 open)</td>
+<td>Wet mechanical draft recommended basis</td>
+</tr>
+<tr class="odd">
+<td>Boyd CDU + adiabatic dry cooler</td>
+<td>L (Boyd CDU per C-03); O (dry cooler vendor)</td>
+<td>Unchanged from Rev 0.1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cooling-tower-field">8. Cooling Tower Field</h2>
+<p>Source: ST-TRAP-COOLING-TOWER-001 Rev 0.2 (pending — Rev 0.1
+reflected 241 MW tower duty; Rev 0.2 reflects 57 MW nominal under Option
+A).</p>
+<h3 id="system-boundary-unchanged">8.1 System boundary (unchanged)</h3>
+<p>The cooling tower field serves <strong>one circuit
+exclusively</strong>: the absorption chiller condenser + absorber
+cooling water loop. <strong>Continuous full-load duty</strong>, not
+peak-day supplement.</p>
+<p><strong>Not served:</strong> Boyd CDU GPU warm water (separate
+adiabatic dry cooler; ~81 MW from 44 × 1,840 kW). Thermal
+cross-contamination prevented — separate circuits, separate equipment,
+no shared basin or header.</p>
+<h3 id="thermal-duty-revised-for-option-a">8.2 Thermal duty — revised
+for Option A</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Nominal duty (33 MW absorption load)</strong></td>
+<td><strong>~57,171 kW / 57.2 MW / 16,260 RT</strong></td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td><strong>Design duty (30% margin over nominal)</strong></td>
+<td><strong>~74,300 kW / 74.3 MW / 21,130 RT</strong></td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Turndown ratio (min load / design)</td>
+<td>~25%</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<p>Nominal duty = absorption chiller at census load with COP 1.40
+(cooling 33 MW + drive heat 24 MW = 57 MW rejected). Design duty applies
+30% margin for (a) T-14 uncertainty on Boyd capture ratio, (b) Cat CSA
+part-load derate surprises, and (c) redundancy / future expansion
+headroom.</p>
+<p><strong>Compared to Rev 0.1 (241 MW max / 184 MW nominal): 69–76%
+reduction in tower sizing.</strong> The 30% margin above nominal is
+generous and allows Option A to absorb partial shifts toward Option B
+without re-tenderring the tower field if incentive eligibility later
+favors higher CHP utilization.</p>
+<h3 id="condenser-water-circuit-revised">8.3 Condenser water circuit
+(revised)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Supply (tower outlet → chiller inlet)</td>
+<td>≤29°C rated; ≤31°C derating case</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Return (chiller outlet → tower inlet)</td>
+<td>37°C</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Temperature range (ΔT)</td>
+<td>8°C (14.4°F)</td>
+<td>W</td>
+</tr>
+<tr class="even">
+<td>Circulating flow — nominal duty (57 MW)</td>
+<td>~1,700 L/s / ~27,100 GPM</td>
+<td>W</td>
+</tr>
+<tr class="odd">
+<td>Circulating flow — design duty (74 MW)</td>
+<td>~2,220 L/s / ~35,200 GPM</td>
+<td>W</td>
+</tr>
+</tbody>
+</table>
+<h3 id="approach-temperature-gap-cond-wb-open-unchanged-analysis">8.4
+Approach temperature gap — COND-WB open (unchanged analysis)</h3>
+<p>At ASHRAE 0.4% Lafayette wet-bulb (28°C): - Broad BH rated condenser
+inlet: <strong>29°C</strong> → required tower approach 1°C (not
+achievable economically with commercial mechanical-draft towers) -
+Standard 3°C approach: <strong>31°C</strong> condenser water supply →
+<strong>2°C above Broad rated inlet</strong> - Standard 5°C approach:
+33°C → 4°C above rated</p>
+<p><strong>Not a project-stopper.</strong> Absorption chillers operate
+above rated CW temperature with predictable capacity / COP derating
+(expected 3–5% at 2°C above rated). The 30% design margin on tower duty
+absorbs the derating without impact to CHW reliability.</p>
+<p><strong>COND-WB resolution (unchanged procedure):</strong> 1. Broad /
+Thermax application engineering confirms operating envelope at 30–31°C
+CW inlet. 2. RFQ specifies supply ≤31°C at 28°C WB, 3°C approach as
+binding performance point. 3. Broad confirmation is pre-award condition
+on chiller RFQ. 4. If Broad imposes stricter CW limit: re-evaluate for
+≤2°C approach (larger tower, higher capex) vs alternative chiller vendor
+with higher rated CW tolerance.</p>
+<h3 id="water-consumption-wet-tower-design-duty">8.5 Water consumption
+(wet tower, design duty)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Evaporation rate (design duty)</td>
+<td>~505 GPM</td>
+<td>~1.44% of circulation at 14.4°F range</td>
+</tr>
+<tr class="even">
+<td>Cycles of concentration (design)</td>
+<td>3.0</td>
+<td>Industry standard municipal water</td>
+</tr>
+<tr class="odd">
+<td>Blowdown rate</td>
+<td>~250 GPM</td>
+<td>Evaporation / (COC − 1)</td>
+</tr>
+<tr class="even">
+<td>Drift loss</td>
+<td>&lt;0.5 GPM</td>
+<td>0.001% with eliminators</td>
+</tr>
+<tr class="odd">
+<td><strong>Total makeup — design duty</strong></td>
+<td><strong>~755 GPM (~1.09 MGD)</strong></td>
+<td>Sum</td>
+</tr>
+<tr class="even">
+<td>Total makeup — nominal duty</td>
+<td>~580 GPM (~0.84 MGD)</td>
+<td>Scaled</td>
+</tr>
+<tr class="odd">
+<td><strong>Annual makeup — nominal</strong></td>
+<td><strong>~395 MG/year</strong></td>
+<td>Continuous duty</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Water story much cleaner under Option A:</strong> annual
+makeup drops from ~1,300 MG/year (Rev 0.1) to ~395 MG/year. Municipal
+supply is now viable without straining Lafayette’s system (&lt;1% of
+municipal avg). LDEQ permit exposure on intake is lower threshold.
+WATER-SRC remains C1 but is no longer project-critical sizing risk.</p>
+<h3 id="electrical-cooling-plant-mcc-revised">8.6 Electrical — cooling
+plant MCC (revised)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Working Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tower fan motors (all cells)</td>
+<td>~915 kW (1–1.5% of 74 MW rejected)</td>
+</tr>
+<tr class="even">
+<td>Condenser water pumps</td>
+<td>~500 kW (2,220 L/s, ~15–20 m head, 75% eff)</td>
+</tr>
+<tr class="odd">
+<td>Makeup, blowdown, chemical dosing, sump</td>
+<td>~60 kW</td>
+</tr>
+<tr class="even">
+<td><strong>Total cooling tower MCC (campus)</strong></td>
+<td><strong>~1,475 kW</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note on BOD E-29:</strong> E-29 allocated ~600 kW per block ×
+11 = 6,600 kW campus for cooling plant. Rev 0.2 revised figure is ~1,475
+kW — a 3,325 kW reduction. Per-block allocation: 134 kW/block average if
+distributed, or (more likely) single centralized campus switchboard at
+~1,500 kW fed from the Power Hall. Architectural decision open for
+SLD-001.</p>
+<p><strong>Consequence for electrical balance:</strong> the 3.3 MW
+parasitic reduction meaningfully helps close the §3.7 margin problem
+where 61.5% anchor couldn’t cover full site load including cooling MCC.
+Under Rev 0.2, 63% genset dispatch now covers total site load with ~3 MW
+net headroom vs −4 MW under Rev 0.1 sizing.</p>
+<h3 id="tower-type-t-05-open-unchanged-framing-simpler-decision">8.7
+Tower type (T-05 open — unchanged framing, simpler decision)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Fit</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Wet mechanical draft</strong></td>
+<td><strong>Recommended basis</strong></td>
+<td>Lowest capex; best approach to wet-bulb; ~755 GPM makeup easily
+sourced municipally; standard Legionella management</td>
+</tr>
+<tr class="even">
+<td>Hybrid dry/wet</td>
+<td>Contingency</td>
+<td>1.5–2× wet capex; 30–50% annual water reduction; less compelling at
+reduced water draw</td>
+</tr>
+<tr class="odd">
+<td>Adiabatic</td>
+<td>Not recommended</td>
+<td>Highest capex; peak-day limited by 35°C dry-bulb (not wet-bulb)</td>
+</tr>
+<tr class="even">
+<td>Full dry</td>
+<td>Rejected</td>
+<td>Cannot maintain ≤31°C CW at 35°C design dry-bulb at economic
+scale</td>
+</tr>
+</tbody>
+</table>
+<h3 id="siting-28000-sq-ft-yard-no-longer-flagged">8.8 Siting — 28,000
+sq ft yard no longer flagged</h3>
+<p>Reference tower sizing at 21,000 RT design duty: SPX/Marley NC or BAC
+Series 3000 counterflow at 10,000 RT occupies ~60 × 30 ft. For 21,130 RT
+total: - 2 units + N+1 spare (3 cells total) - <strong>Estimated field
+footprint ~6,100 sq ft</strong> (reduced from 20,000 sq ft in Rev 0.1) -
+Infrastructure yard (28,000 sq ft) now has ~22,000 sq ft remaining for
+SCR + transformers + MV switchgear + service access</p>
+<p><strong>Yard packing now closes comfortably.</strong> The rear slab
+overflow flagged in Rev 0.1 is no longer required for tower positioning.
+Rear slab remains flagged for genset + BESS packing (see §9.1
+SITING-001).</p>
+<h3 id="vendor-shortlist-unchanged">8.9 Vendor shortlist
+(unchanged)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Vendor</th>
+<th>Key Products</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SPX / Marley</td>
+<td>NC counterflow, FXV fluid cooler, Ultracool hybrid</td>
+<td>Widest RT range; US-manufactured</td>
+</tr>
+<tr class="even">
+<td>BAC (Baltimore Aircoil)</td>
+<td>Series 3000 counterflow, ICC, Hybrid Cooler</td>
+<td>Strong CHP + industrial experience</td>
+</tr>
+<tr class="odd">
+<td>Evapco</td>
+<td>AT, UT; hybrid AMC; LSTA low-profile</td>
+<td>US-manufactured; DOE pump efficiency compliant</td>
+</tr>
+<tr class="even">
+<td>Brentwood Industries</td>
+<td>PVC fill media — component supplier</td>
+<td>Not a packaged tower vendor</td>
+</tr>
+</tbody>
+</table>
+<p>RFQ anchor conditions pending T-05 decision and COND-WB close.
+Updated RT is a much more vendor-comfortable size.</p>
+<hr />
+<h2 id="open-engineering-items-master-list">9. Open Engineering Items —
+Master List</h2>
+<p>Consolidated across all documents. Priority: <strong>C1 = must close,
+critical path</strong> (blocks construction package or procurement);
+<strong>C2 = desirable, not blocking construction</strong>.</p>
+<h3 id="items-blocking-rfq-procurement-must-close-before-vendor-award">9.1
+Items blocking RFQ / procurement (must close before vendor award)</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Description</th>
+<th>Blocking What</th>
+<th>Source Doc</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><del>TB-5</del></td>
+<td><del>Absorption chiller Option B vs C</del></td>
+<td><strong>Superseded by Rev 0.2 Option A pivot</strong></td>
+<td>THERMAL-BASIS §7</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><strong>T-14 (new Rev 0.2)</strong></td>
+<td><strong>Boyd CDU capture ratio — 80% vs 100% — confirmation via Boyd
+app eng</strong></td>
+<td><strong>Absorption chiller final sizing (13 MW vs 33 MW vs 45 MW
+band)</strong></td>
+<td>THERMAL-BASIS §6.5, §6.8</td>
+<td><strong>C1</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>E-31 (new Rev 0.2)</strong></td>
+<td><strong>CO control strategy — oxidation catalyst selection +
+expected emissions; Title V Major Source acknowledgment</strong></td>
+<td><strong>LDEQ Title V pre-app; BOD Rev 0.5 locks</strong></td>
+<td>ELEC-001 §3.2; LDEQ Title V</td>
+<td><strong>C1</strong></td>
+</tr>
+<tr class="even">
+<td><strong>JW-RAD (new Rev 0.2)</strong></td>
+<td><strong>Jacket water radiator sizing + vendor RFQ (Option A requires
+~58 MW JW radiator — new scope vs Rev 0.1)</strong></td>
+<td><strong>CHP cascade mechanical design; ELEC-001 aux
+feeders</strong></td>
+<td>CHP-SCHEMATIC §7.1</td>
+<td><strong>C1</strong></td>
+</tr>
+<tr class="odd">
+<td>Cat CSA</td>
+<td>CG260-16 exhaust temp, mass flow, part-load heat rejection curves at
+61.5% load; N-1 governor response envelope; CO emissions at anchor
+loading</td>
+<td>T-08 heat balance; E-5/E-6 voltage and governor confirmation; E-31
+CO</td>
+<td>THERMAL-BASIS §11; ELEC-001 §15; BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>HRU-RFQ</td>
+<td>Exhaust HRU vendor RFQ (Cain / E-Tech / Rentech) — <strong>resized
+to ~24 MW drive (Rev 0.2) with bypass damper</strong></td>
+<td>Option A exhaust cascade lock</td>
+<td>THERMAL-BASIS §11</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>COND-WB</td>
+<td>Broad chiller app eng confirmation — condenser water inlet at
+30–31°C</td>
+<td>Cooling tower CW supply spec; chiller RFQ pre-award</td>
+<td>COOLING-TOWER-001 §8.4; THERMAL-BASIS §11</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>T-05</td>
+<td>Cooling tower type selection (wet / hybrid / adiabatic)</td>
+<td>Tower RFQ</td>
+<td>COOLING-TOWER-001 §8.7; BOD-001 T-05</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>T-08</td>
+<td>CHP heat balance final values — <strong>revised for Option A with
+dump paths (exhaust bypass + JW radiator)</strong></td>
+<td>Cooling tower sizing lock; ELEC-001 cooling MCC feeder</td>
+<td>THERMAL-BASIS §11</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>T-11</td>
+<td>Boyd CDU CHW supply 7–12°C compatibility</td>
+<td>Cooling loop mechanical design</td>
+<td>THERMAL-BASIS §8; BOD-001 T-11</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>E-10</td>
+<td>Per-block BESS sizing validation (3.6 MWh working, 3–5 MWh
+envelope)</td>
+<td>BESS RFQ vendor award</td>
+<td>BESS-001 §13; ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>E-12</td>
+<td>Bidirectional DC-DC converter vendor selection</td>
+<td>BESS RFQ</td>
+<td>BESS-001 §13</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>E-13</td>
+<td>BESS container vendor selection (Fluence / LG / Saft)</td>
+<td>BESS RFQ close</td>
+<td>BESS-001 §13</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>NFPA 855 AHJ</td>
+<td>Lafayette Parish AHJ NFPA 855 (2026) interpretation</td>
+<td>BESS AHJ submittal; setback lock</td>
+<td>BESS-001 §13; BESS-RFQ-001 §13</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>E-24 / E-25</td>
+<td>Delta 660 kW rack RFQ; <strong>4 vs 5 per cassette (5 now preferred
+per Rev 0.2 — 73% loading, rack N-1 tolerance)</strong>; lead times at
+10 and 100+ quantities</td>
+<td>In-row rack procurement</td>
+<td>ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>E-8</td>
+<td>Block step-down transformer (13.8 kV → 480 V, ~15 MVA) RFQ</td>
+<td>Transformer procurement</td>
+<td>ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>E-11</td>
+<td>Block MV switchgear vendor RFQ</td>
+<td>MV switchgear procurement</td>
+<td>ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>E-22</td>
+<td>Solar DC-DC buck converter vendor RFQ (Delta preferred, 4-unit)</td>
+<td>Solar procurement</td>
+<td>SOLAR-001 §12</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td><strong>SITING-001 (elevated Rev 0.2)</strong></td>
+<td><strong>Rear slab + infrastructure yard packing study — 42,000 sq ft
+rear slab undersized for 44 gensets + BESS at standard spacing; yard now
+OK under reduced tower footprint</strong></td>
+<td><strong>Genset + BESS layout; construction sequence</strong></td>
+<td>COOLING-TOWER-001 §8.8</td>
+<td><strong>C1 (was C2)</strong></td>
+</tr>
+<tr class="even">
+<td><strong>WATER-SRC (elevated Rev 0.2)</strong></td>
+<td><strong>Makeup water source decision — municipal vs well vs
+Vermilion intake (easier at 395 MG/year vs 1,300 MG/year Rev
+0.1)</strong></td>
+<td><strong>LPDES pre-app; water permit pathway</strong></td>
+<td>COOLING-TOWER-001 §8.5</td>
+<td><strong>C1 (was C2)</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>BLOWDOWN (elevated Rev 0.2)</strong></td>
+<td><strong>Blowdown disposal (POTW / Vermilion intake / evaporation
+pond)</strong></td>
+<td><strong>LPDES pre-app</strong></td>
+<td>COOLING-TOWER-001 §8.5</td>
+<td><strong>C1 (was C2)</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="items-blocking-construction-downstream-documents">9.2 Items
+blocking construction / downstream documents</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Description</th>
+<th>Blocking What</th>
+<th>Source Doc</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SLD-001</td>
+<td>Formal single-line diagram</td>
+<td>Construction package gate</td>
+<td>README; ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>PROT-001</td>
+<td>Protection coordination study</td>
+<td>Construction package gate; CT ratios, pickup settings, coord
+intervals</td>
+<td>README; ELEC-001 §15; BESS-001 §13</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>E-9</td>
+<td>Protection coord across AC-DC boundary per block</td>
+<td>PROT-001</td>
+<td>ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>E-14</td>
+<td>Bus interconnect topology between blocks (E-23 tied vs
+independent)</td>
+<td>ELEC-001 §9 advance; SLD-001 routing</td>
+<td>README; ELEC-001 §15</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>SHPO R-05 / R-06</td>
+<td>Historic Tax Credit Part 1 / Part 2 filing</td>
+<td>HTC financing (45% stack)</td>
+<td>README; BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>LDEQ LPDES</td>
+<td>Pre-application (cooling tower blowdown only; river discharge
+cancelled)</td>
+<td>Thermal/water design lock</td>
+<td>BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>LDEQ Title V</td>
+<td>Air permit pre-application for 44 gensets</td>
+<td>Air emissions design lock</td>
+<td>BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>LA ITEP</td>
+<td>Filing before any construction</td>
+<td>Construction kickoff</td>
+<td>BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="odd">
+<td>Gas supply lock</td>
+<td>Pipeline interconnect, metering, contingency storage</td>
+<td>Block 1 energization</td>
+<td>BOD-001 §M</td>
+<td>C1</td>
+</tr>
+<tr class="even">
+<td>NVIDIA allocation</td>
+<td>Vera Rubin GPU allocation</td>
+<td>Stage 1 GPU count P-07 lock</td>
+<td>BOD-001 §M</td>
+<td>C1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c2-items-desirable-not-blocking-construction-award">9.3 C2 items
+(desirable, not blocking construction award)</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Description</th>
+<th>Blocking What</th>
+<th>Source Doc</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BOD-UPD</td>
+<td>BOD T-04, T-06, R-03 update — river eliminated; towers primary</td>
+<td>BOD next revision</td>
+<td>COOLING-TOWER-001 §2</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>CRYST-MIN</td>
+<td>Minimum CW supply temp to chiller (LiBr crystallization floor)</td>
+<td>Tower control constraint</td>
+<td>COOLING-TOWER-001 §11</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>NOISE-VIS</td>
+<td>Tower height, plume drift, fan noise — parish + SHPO</td>
+<td>Tower submittal</td>
+<td>COOLING-TOWER-001 §11</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>B-07</td>
+<td>Structural assessments B1–B4</td>
+<td>Rooftop solar loading; interior retrofit</td>
+<td>BOD-001 B-07; SOLAR-001 §4</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>LAYOUT</td>
+<td>Solar rooftop layout design — panel placement, walkways, HVAC
+clearances</td>
+<td>Solar installation</td>
+<td>SOLAR-001 §12</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>YIELD</td>
+<td>Bankable energy yield study (P50/P90)</td>
+<td>Solar financial model</td>
+<td>SOLAR-001 §12</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>ITC-DC</td>
+<td>First Solar domestic content vs IRS requirements</td>
+<td>Solar ITC basis confirmation</td>
+<td>SOLAR-001 §12</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>MPPT</td>
+<td>Multi-MPPT configuration — independent zones per roof</td>
+<td>Solar DC-DC design</td>
+<td>SOLAR-001 §12</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>ITC (BESS)</td>
+<td>Domestic content verification — Saft (France) vs LG (Holland
+MI)</td>
+<td>BESS ITC basis</td>
+<td>BESS-001 §13</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>HITACHI</td>
+<td>Hitachi AMPS compatibility with shortlisted BESS packs</td>
+<td>DC-DC vendor selection</td>
+<td>BESS-001 §13</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>PHYS (BESS)</td>
+<td>Rear slab NFPA 855 setback study (now subsumed under SITING-001
+C1)</td>
+<td>BESS container positions</td>
+<td>BESS-001 §13; BESS-RFQ-001 §13</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>LG 23-ft</td>
+<td>LG ES Vertech JF2 23-ft width logistics</td>
+<td>LG selection feasibility</td>
+<td>BESS-RFQ-001 §13</td>
+<td>C2</td>
+</tr>
+<tr class="odd">
+<td>A-05 / A-06 / A-07</td>
+<td>AI model vendor; human-in-loop policy; cybersecurity framework (NIST
+CSF / IEC 62443)</td>
+<td>Ops design</td>
+<td>BOD-001 §I</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>C-25</td>
+<td>Immersion fluid vendor (GRC vs Submer — deferred, future rev)</td>
+<td>Cassette future revision</td>
+<td>BOD-001 C-25</td>
+<td>C3</td>
+</tr>
+<tr class="odd">
+<td>Parish PILOT</td>
+<td>Negotiation (below $200M threshold, pursued vs HB 827)</td>
+<td>Tax structure</td>
+<td>BOD-001 §M</td>
+<td>C2</td>
+</tr>
+<tr class="even">
+<td>CATL</td>
+<td>Section 301 tariff + ITC eligibility</td>
+<td>CATL re-entry consideration</td>
+<td>BESS-001 §13</td>
+<td>C3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rev 0.2 elevations to C1 (see §9.1):</strong> SITING-001,
+WATER-SRC, BLOWDOWN.</p>
+<hr />
+<h2 id="document-register">10. Document Register</h2>
+<h3 id="issued-documents-current-revisions">10.1 Issued documents
+(current revisions)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Doc #</th>
+<th>File</th>
+<th>Rev</th>
+<th>Date</th>
+<th>Status</th>
+<th>Supersedes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ST-TRAP-BOD-001</td>
+<td>00-Basis/TRAP-BOD-001_Rev0.4.md</td>
+<td>0.4</td>
+<td>2026-04-17</td>
+<td>Working draft — canonical</td>
+<td>Rev 0.3 (MV-ring architecture removed)</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-THERMAL-BASIS</td>
+<td>00-Basis/ST-TRAP-THERMAL-BASIS_Rev0.4.md</td>
+<td>0.4</td>
+<td>2026-04-18</td>
+<td>Working draft — first issue</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-ELEC-001</td>
+<td>01-Electrical/Trap-ELEC-001_Rev1.2.md</td>
+<td>1.2</td>
+<td>2026-04-17</td>
+<td>Working draft</td>
+<td>Rev 1.1 (ARCHDIAG refinements rolled in)</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-ARCHDIAG-001 (MD)</td>
+<td>03-Architecture/ST-TRAP-ARCHDIAG-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-17</td>
+<td>Working draft — six-diagram SLD</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-ARCHDIAG-001 (PDF)</td>
+<td>03-Architecture/ST-TRAP-ARCHDIAG-001_Rev0.1-1.pdf</td>
+<td>0.1</td>
+<td>2026-04-17</td>
+<td>Working draft</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-ARCHDIAG-001 (DOCX)</td>
+<td>03-Architecture/ST-TRAP-ARCHDIAG-001_Rev0.1(1).docx</td>
+<td>0.1</td>
+<td>2026-04-17</td>
+<td>Working draft</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-BESS-001</td>
+<td>02-Bess/TRAP-BESS-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-17</td>
+<td>Working draft — first issue</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-BESS-ARCHDIAG-001</td>
+<td>02-Bess/ST-TRAP-BESS-ARCHDIAG-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-17</td>
+<td>Working draft — five Mermaid diagrams</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-BESS-RFQ-001</td>
+<td>02-Bess/ST-TRAP-BESS-RFQ-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-18</td>
+<td>Working draft — ready for vendor distribution</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-CHP-SCHEMATIC-001</td>
+<td>07-Thermal/ST-TRAP-CHP-SCHEMATIC-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-18</td>
+<td>Working draft — visual companion</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-COOLING-TOWER-001</td>
+<td>07-Thermal/ST-TRAP-COOLING-TOWER-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-18</td>
+<td>Working draft — first issue</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-SOLAR-001</td>
+<td>09-Solar/ST-TRAP-SOLAR-001_Rev0.1.md</td>
+<td>0.1</td>
+<td>2026-04-18</td>
+<td>Working draft — first issue</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>ST-TRAP-MASTER-ENG-001</td>
+<td>ST-TRAP-MASTER-ENG-001_Rev0.2.md (this doc)</td>
+<td>0.2</td>
+<td>2026-04-18</td>
+<td>Working draft — thermal load census correction; Option A pivot</td>
+<td>Rev 0.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pending-blocked-documents">10.2 Pending / blocked documents</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Doc #</th>
+<th>Description</th>
+<th>Gate Conditions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ST-TRAP-SLD-001</td>
+<td>Formal single-line diagram (inherits ARCHDIAG-001 + ELEC-001)</td>
+<td>ELEC-001 Rev 1.3+ (Cat CSA close), E-14 inter-block tie decision,
+BESS vendor lock, solar DC-DC lock</td>
+</tr>
+<tr class="even">
+<td>ST-TRAP-PROT-001</td>
+<td>Protection coordination study</td>
+<td>SLD-001 draft; CT ratios, pickup settings, coord intervals; BESS
+DC-side coordination settings</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cancelled-documents">10.3 Cancelled documents</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Doc #</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ST-TRAP-RIVER-001</td>
+<td>Cancelled. Vermilion River eliminated as heat sink per THERMAL-BASIS
+§9.1 (tidal reversal + Gulf Coast summer ambient 30–33°C &gt; Broad 29°C
+rated CW inlet). LPDES thermal discharge item removed.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="critical-path-to-construction-package">11. Critical Path to
+Construction Package</h2>
+<p>The construction package gate is <strong>SLD-001 + PROT-001</strong>.
+The following milestone sequence is required to reach that gate.
+<strong>Rev 0.2 pivoted thermal architecture from TB-5 (Option B vs C)
+to Option A (working basis) — critical path sequence rewritten
+accordingly.</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Milestone</th>
+<th>Depends On</th>
+<th>Unblocks</th>
+<th>Target Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>Cat CSA engagement</strong> — CG260-16 exhaust temp, mass
+flow, part-load heat rejection curves at 61.5%, N-1 governor response at
+80.5%, voltage option confirmation, CO emissions at anchor loading</td>
+<td>None (engagement in hand)</td>
+<td>HRU sizing refinement; T-08 heat balance final; E-5/E-6 voltage +
+governor; E-31 CO baseline; THERMAL-BASIS Rev 0.5; ELEC-001 Rev 1.3</td>
+<td>Scott / Cat</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>Boyd app eng call — T-14</strong> (Rev 0.2 new) — confirm
+capture ratio (80% vs 100% vs other); resolve T-11 CHW compatibility in
+same call</td>
+<td>None (engagement-ready)</td>
+<td>Absorption chiller final sizing (13 / 33 / 45 MW band); T-11
+resolution; chiller RFQ scope lock</td>
+<td>Scott / Boyd</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>Broad / Thermax app eng — COND-WB</strong></td>
+<td>Preliminary Cat exhaust data (Step 1); T-14 sizing confirmation
+(Step 2)</td>
+<td>Condenser water inlet envelope at 30–31°C; cooling tower RFQ binding
+spec lock; chiller RFQ pre-award</td>
+<td>Scott / Broad / Thermax</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>T-05 cooling tower type decision</strong> — wet / hybrid /
+adiabatic (simpler decision under reduced 57 MW duty)</td>
+<td>Water cost analysis + LPDES blowdown disposal review</td>
+<td>Cooling tower RFQ issue to SPX/Marley / BAC / Evapco;
+COOLING-TOWER-001 Rev 0.3</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><strong>HRU vendor RFQ + award (Rev 0.2 — Option A sizing)</strong>
+— Cain / E-Tech / Rentech; <strong>~24 MW duty with exhaust bypass
+damper</strong>; backpressure binding ≤6.7 kPa Cat</td>
+<td>T-14 (Step 2) closing sizing; Cat exhaust mass flow confirmed (Step
+1)</td>
+<td>Exhaust cascade lock; CHP-SCHEMATIC-001 Rev 0.3</td>
+<td>Scott</td>
+</tr>
+<tr class="even">
+<td>5B</td>
+<td><strong>JW radiator vendor RFQ + award (Rev 0.2 new)</strong> — ~58
+MW jacket water radiator; Cat-preferred aftermarket or engine-standard
+package</td>
+<td>Cat CSA JW temp + flow (Step 1); Option A confirmed</td>
+<td>JW rejection path lock; CHP-SCHEMATIC-001 Rev 0.3</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td><strong>Absorption chiller vendor RFQ + award</strong> — Broad BH
+double-effect, sized for 13 / 33 / 45 MW per T-14 band (Rev 0.2: scope
+defaults to 33 MW midpoint with design margin)</td>
+<td>T-14 (Step 2); HRU award (Step 5); COND-WB confirmation (Step
+3)</td>
+<td>Chiller selection lock; THERMAL-BASIS Rev 0.6</td>
+<td>Scott</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td><strong>Cooling tower vendor RFQ + award</strong> — ~21,000 RT
+design duty (reduced from 68,000 RT Rev 0.1)</td>
+<td>T-05 (Step 4); T-08 heat balance; COND-WB confirmation (Step 3);
+SITING-001 study</td>
+<td>Tower field procurement; COOLING-TOWER-001 Rev 1.0</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td><strong>BESS vendor engagement + RFQ award</strong> — Fluence
+(preferred) → LG ES Vertech → Saft; Hitachi AMPS in parallel on DC-DC
+layer</td>
+<td>BESS-RFQ-001 Rev 0.1 distribution (done); Cat governor preliminary
+data (Step 1 subset)</td>
+<td>BESS container selection (E-13); DC-DC converter selection (E-12);
+per-block sizing lock (E-10); BESS-001 Rev 0.3</td>
+<td>Scott</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td><strong>First Solar engagement + DC-DC buck RFQ (E-22)</strong> —
+Delta preferred, 4-unit configuration; First Solar pricing via New
+Iberia factory proximity</td>
+<td>SOLAR-001 Rev 0.1 (done); multi-year offtake portfolio framing</td>
+<td>DC-DC vendor lock; SOLAR-001 Rev 0.2; solar module purchase
+order</td>
+<td>Scott / First Solar / Delta</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td><strong>Delta in-row rack RFQ (E-24 / E-25)</strong> — Rev 0.2
+preferred config: <strong>5 racks/cassette (20/block)</strong> with N-1
+tolerance; 4 racks/cassette as fallback; 10-unit and 100+ unit lead
+times</td>
+<td>None (procurement-ready today)</td>
+<td>In-row rack procurement; ELEC-001 Rev 1.4</td>
+<td>Scott / Delta</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td><strong>Block MV switchgear + step-down transformer RFQs (E-8,
+E-11)</strong></td>
+<td>ELEC-001 Rev 1.3 (Cat voltage confirmed — Step 1)</td>
+<td>MV switchgear + transformer procurement</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td><strong>CO oxidation catalyst vendor RFQ (E-31 — Rev 0.2
+new)</strong> — size for 44 CG260-16 gensets; &gt;90% CO destruction;
+NOx-compatible (non-SCR) or co-deployed with SCR</td>
+<td>Cat CSA emissions data (Step 1)</td>
+<td>Title V air permit path; BOD Rev 0.6</td>
+<td>Scott / catalyst vendor</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td><strong>BOD-001 Rev 0.5 trigger</strong> — Rev 0.2 thermal
+architecture (Option A) + Munters slip-stream + Cat CSA data applied;
+updates T-03, T-04, T-06, T-08, R-03, F-section</td>
+<td>T-14 (Step 2); T-08 close; Cat CSA data (Step 1)</td>
+<td>Downstream documents re-cite BOD Rev 0.5</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td><strong>SHPO Part 1 filing (R-05)</strong></td>
+<td>—</td>
+<td>Historic review initiated; HTC 45% stack preserved</td>
+<td>Scott / SHPO</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td><strong>LDEQ LPDES pre-application</strong> — cooling tower blowdown
+only; reduced volume (~395 MG/year vs 1,300 MG/year Rev 0.1)</td>
+<td>T-05 (Step 4); BLOWDOWN path decision; WATER-SRC decision</td>
+<td>Water / thermal design lock; BOD-001 Rev 0.7</td>
+<td>Scott / LDEQ</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td><strong>LDEQ Title V pre-application</strong> — 44-genset air
+emissions, <strong>CO control strategy included (Rev 0.2)</strong></td>
+<td>Cat CSA emissions data (Step 1); CO catalyst RFQ (Step 12)</td>
+<td>Air emissions design lock</td>
+<td>Scott / LDEQ</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td><strong>LA ITEP filing</strong> — before any construction</td>
+<td>BOD Rev 0.5+</td>
+<td>Construction kickoff</td>
+<td>Scott / LED</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td><strong>Gas supply lock</strong> — pipeline interconnect, metering,
+contingency storage; <strong>contracted capacity sized for 100% load
+contingency (~40,300 Nm³/hr campus, Rev 0.2)</strong></td>
+<td>Gas utility engagement</td>
+<td>Block 1 energization</td>
+<td>Scott / gas utility</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td><strong>NFPA 855 AHJ pre-application (Lafayette
+Parish)</strong></td>
+<td>BESS vendor compliance docs (Step 8); rear slab layout
+(SITING-001)</td>
+<td>BESS setback study; PHYS layout lock</td>
+<td>Scott / AHJ</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td><strong>SITING-001 packing study (Rev 0.2 — elevated to C1)</strong>
+— rear slab 42,000 sq ft genset + BESS packing; infrastructure yard
+28,000 sq ft verification (now relaxed under reduced tower
+footprint)</td>
+<td>—</td>
+<td>Construction sequencing; genset + BESS layout locked; BESS NFPA 855
+setbacks (Step 19)</td>
+<td>Scott / layout engineer</td>
+</tr>
+<tr class="even">
+<td>21</td>
+<td><strong>Structural assessments B1–B4 (B-07)</strong></td>
+<td>—</td>
+<td>Rooftop solar loading lock; interior retrofit scope; HTC Part 2
+inputs</td>
+<td>Scott / structural engineer</td>
+</tr>
+<tr class="odd">
+<td>22</td>
+<td><strong>E-14 inter-block tie decision</strong> (11 independent vs
+tied at aux point)</td>
+<td>Contingency analysis; BESS sizing (Step 8)</td>
+<td>ELEC-001 §9 advance; SLD-001 routing</td>
+<td>Scott</td>
+</tr>
+<tr class="even">
+<td>23</td>
+<td><strong>SLD-001 draft</strong> — formal single-line inheriting
+ARCHDIAG-001 + ELEC-001</td>
+<td>Steps 1, 8, 9, 10, 11, 22 closed</td>
+<td>PROT-001 input</td>
+<td>Scott</td>
+</tr>
+<tr class="odd">
+<td>24</td>
+<td><strong>PROT-001 draft</strong> — protection coordination study with
+CT ratios, pickup settings, coord intervals, AC-DC boundary
+coordination</td>
+<td>SLD-001 (Step 23)</td>
+<td><strong>Construction package gate</strong></td>
+<td>Scott / protection engineer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bod-001-revision-trigger-summary-rev-0.2-updated">11.1 BOD-001
+revision trigger summary (Rev 0.2 updated)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>BOD Rev</th>
+<th>Trigger</th>
+<th>Approximate sequence step</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.4 (current)</td>
+<td>E-24 through E-30, A-09 added from ARCHDIAG-001</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><strong>0.5 (Rev 0.2 target)</strong></td>
+<td><strong>Thermal architecture Option A lock; thermal load census;
+T-04/T-06/R-03 updates; CHP heat balance; Munters slip-stream; Cat CSA
+preliminary data; CO strategy line-item</strong></td>
+<td><strong>After Step 1 (Cat CSA) + Step 2 (T-14 Boyd) + Step 12 (CO
+catalyst RFQ issued)</strong></td>
+</tr>
+<tr class="odd">
+<td>0.6</td>
+<td>Cat CSA validation complete; updates E-05, E-06, E-08; CO emissions
+locked</td>
+<td>After Step 1 fully closed + Step 11 + Step 12</td>
+</tr>
+<tr class="even">
+<td>0.7</td>
+<td>LDEQ LPDES pre-application returns; updates B-section and
+G-section</td>
+<td>After Step 15</td>
+</tr>
+<tr class="odd">
+<td>0.8</td>
+<td>SHPO Part 1 filing; updates R-05 and HTC constraints</td>
+<td>After Step 14</td>
+</tr>
+<tr class="even">
+<td>1.0</td>
+<td>All C1 external dependencies locked; ready for circulation</td>
+<td>After Steps 1–24 closed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="construction-package-gate">11.2 Construction package gate</h3>
+<p>SLD-001 Rev 1.0 + PROT-001 Rev 1.0 paired with THERMAL-BASIS Rev 1.0,
+COOLING-TOWER-001 Rev 1.0, BESS-001 Rev 1.0, SOLAR-001 Rev 1.0,
+CHP-SCHEMATIC-001 Rev 1.0, and BOD-001 Rev 1.0. All C1 items per §9.1
+and §9.2 closed.</p>
+<h3 id="rev-0.2-pivot-summary">11.3 Rev 0.2 pivot summary</h3>
+<p>The thermal architecture pivot from Rev 0.1 (Option B, 107 MW
+absorption load, 241 MW tower duty) to Rev 0.2 (Option A, 33 MW
+absorption load, 74 MW tower duty) removes three items from the critical
+path and adds two:</p>
+<p><strong>Removed from critical path:</strong> - TB-5 Option B vs C
+decision (superseded — Option A is working basis) - Large HRU (~42 MW)
+RFQ scope - Large cooling tower RFQ scope (68,640 RT)</p>
+<p><strong>Added to critical path:</strong> - T-14 Boyd capture ratio
+confirmation (Step 2 — gates absorption sizing) - JW radiator vendor RFQ
+(Step 5B — new rejection path under Option A)</p>
+<p><strong>Retained but resized:</strong> - HRU RFQ (~24 MW, down from
+~42 MW) - Cooling tower RFQ (~21,130 RT, down from 68,640 RT) -
+Absorption chiller RFQ (33 MW, down from 107 MW equivalent)</p>
+<p>Net effect: schedule compression (fewer architectural decisions gated
+on Cat CSA) and capex reduction (~$48M over 20 years vs Option B per
+§6.2). The trade-off is lower stated CHP utilization (~27% vs ~86%) —
+narrative and incentive implications covered in §6.2 contingency
+framing.</p>
+<hr />
+<p><strong>End of ST-TRAP-MASTER-ENG-001 Rev 0.2.</strong></p>
+</body>
+</html>

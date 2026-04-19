@@ -1,4 +1,4 @@
-# Trappeys Cannery — Solar AI Factory (THE CORE PROJECT)
+# Trappeys Cannery — 200MW Solar - Natural Gas Compute Campus (THE CORE PROJECT)
 Last updated: 2026-03-20
 
 ## What It Is
@@ -21,7 +21,7 @@ Last updated: 2026-03-20
 - 1941-45: WWII — produced 12 MILLION pounds of candied yams for Allied forces
 - 1968: Peak operations — 350-600 workers, 10M+ cans/year, global distribution
 - 1992: Cannery closes after 62 years
-- 2026: Reborn as NVIDIA DSX solar AI factory
+- 2026: Reborn  200mw Solar - Natural compute campus
 
 ## 4-Layer Power Hierarchy (LOCKED)
 1. Solar — Primary offset. 1,830 First Solar Series 7 panels (~1 MW)
@@ -35,7 +35,7 @@ Last updated: 2026-03-20
 - DSX reference design compliance
 - Dynamo 1.0 inference OS (7x performance)
 - Token Factory model — sell optimized tokens, not GPU hours
-- Water tower = thermal mass for heat rejection
+- 800vdc Archtecture
 
 ## Tax Incentives
 - ITEP: 80% property tax abatement, 10 years (MUST file before groundbreaking)

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Arial, sans-serif">
+  <style>
+    .title { font-size: 18px; font-weight: 600; }
+    .subtitle { font-size: 12px; fill: #555; }
+    .label { font-size: 12px; font-weight: 500; }
+    .value { font-size: 11px; fill: #333; }
+    .section { font-size: 13px; font-weight: 600; }
+    .box-gen { stroke: #333; stroke-width: 0.5; fill: #F5C4B3; }
+    .box-hot { stroke: #333; stroke-width: 0.5; fill: #FAC775; }
+    .box-cold { stroke: #333; stroke-width: 0.5; fill: #B5D4F4; }
+    .box-tower { stroke: #333; stroke-width: 0.5; fill: #9FE1CB; }
+    .box-dry { stroke: #333; stroke-width: 0.5; fill: #C0DD97; }
+    .box-dump { stroke: #333; stroke-width: 0.5; fill: #D3D1C7; }
+    .box-munters { stroke: #333; stroke-width: 0.5; fill: #F4C0D1; }
+    .pipe-hot { stroke: #D85A30; stroke-width: 2.5; fill: none; }
+    .pipe-chw { stroke: #378ADD; stroke-width: 2.5; fill: none; }
+    .pipe-cw { stroke: #1D9E75; stroke-width: 2.5; fill: none; }
+    .pipe-dump { stroke: #888780; stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
+    .divider { stroke: #999; stroke-width: 0.3; stroke-dasharray: 2 2; }
+  </style>
+
+  <text x="450" y="24" text-anchor="middle" class="title">Figure 3 — Thermal cascade (Option A working basis, Rev 0.2)</text>
+  <text x="450" y="42" text-anchor="middle" class="subtitle">Three isolated rejection circuits. Campus absorption load 33 MW (census-sized). Orphaned 77 MW dumped.</text>
+
+  <!-- Source -->
+  <rect x="40" y="75" width="180" height="80" class="box-gen"/>
+  <text x="130" y="98" text-anchor="middle" class="label">44× Cat CG260-16</text>
+  <text x="130" y="115" text-anchor="middle" class="value">Electrical: 108,240 kW</text>
+  <text x="130" y="130" text-anchor="middle" class="value">Exhaust: 47,872 kW @ ~400°C</text>
+  <text x="130" y="145" text-anchor="middle" class="value">JW: 58,212 kW @ ≤99°C</text>
+
+  <!-- Exhaust manifold branch -->
+  <path d="M 220 105 L 265 105" class="pipe-hot" marker-end="url(#arr-hot)"/>
+  <text x="242" y="96" text-anchor="middle" class="value">exhaust</text>
+
+  <rect x="270" y="80" width="140" height="50" class="box-hot"/>
+  <text x="340" y="100" text-anchor="middle" class="label">Exhaust manifold</text>
+  <text x="340" y="116" text-anchor="middle" class="value">3-way split + bypass damper</text>
+
+  <!-- Munters slip-stream -->
+  <path d="M 340 130 L 340 165" class="pipe-hot"/>
+  <rect x="270" y="170" width="140" height="44" class="box-munters"/>
+  <text x="340" y="188" text-anchor="middle" class="label">Munters desiccant</text>
+  <text x="340" y="204" text-anchor="middle" class="value">5,500 kW slip (L T-12)</text>
+
+  <!-- HRU -->
+  <path d="M 410 105 L 470 105" class="pipe-hot" marker-end="url(#arr-hot)"/>
+  <text x="440" y="96" text-anchor="middle" class="value">24,000 kW</text>
+  <rect x="475" y="80" width="140" height="50" class="box-hot"/>
+  <text x="545" y="100" text-anchor="middle" class="label">Exhaust HRU</text>
+  <text x="545" y="116" text-anchor="middle" class="value">~24 MW, 180°C HW out</text>
+
+  <!-- Bypass branch -->
+  <path d="M 340 80 L 340 50 L 780 50 L 780 230" class="pipe-dump" marker-end="url(#arr-dump)"/>
+  <text x="550" y="44" text-anchor="middle" class="value" fill="#555">exhaust bypass ~18,400 kW</text>
+
+  <!-- Hot water loop → absorption chiller -->
+  <path d="M 545 130 L 545 170" class="pipe-hot"/>
+  <text x="575" y="155" class="value">180°C HW</text>
+  <rect x="475" y="175" width="140" height="60" class="box-cold"/>
+  <text x="545" y="196" text-anchor="middle" class="label">Broad BH chiller</text>
+  <text x="545" y="212" text-anchor="middle" class="value">33 MW cooling @ COP 1.40</text>
+  <text x="545" y="228" text-anchor="middle" class="value">6.7°C CHW supply</text>
+
+  <!-- CHW to facility loads -->
+  <path d="M 615 205 L 700 205 L 700 170" class="pipe-chw" marker-end="url(#arr-chw)"/>
+  <text x="660" y="198" text-anchor="middle" class="value">6.7°C CHW</text>
+
+  <rect x="630" y="110" width="150" height="60" class="box-cold"/>
+  <text x="705" y="130" text-anchor="middle" class="label">Facility CHW loads</text>
+  <text x="705" y="146" text-anchor="middle" class="value">Munters process 2.0 MW</text>
+  <text x="705" y="160" text-anchor="middle" class="value">Cassette air 20.2 MW</text>
+
+  <rect x="795" y="110" width="80" height="60" class="box-cold"/>
+  <text x="835" y="130" text-anchor="middle" class="value">NOC 1.5</text>
+  <text x="835" y="146" text-anchor="middle" class="value">Xfmr 1.5</text>
+  <text x="835" y="160" text-anchor="middle" class="value">MCC 0.6</text>
+  <text x="835" y="175" text-anchor="middle" class="value" fill="#0C447C">Σ ~25 MW</text>
+
+  <!-- Condenser water to tower -->
+  <path d="M 545 235 L 545 265" class="pipe-cw" marker-end="url(#arr-cw)"/>
+  <text x="580" y="253" class="value">37°C CW return</text>
+
+  <rect x="440" y="270" width="210" height="70" class="box-tower"/>
+  <text x="545" y="290" text-anchor="middle" class="label">Cooling tower field</text>
+  <text x="545" y="306" text-anchor="middle" class="value">57 MW nominal / 74 MW design</text>
+  <text x="545" y="322" text-anchor="middle" class="value">~21,000 RT, ~6,100 sq ft</text>
+  <text x="545" y="336" text-anchor="middle" class="value">755 GPM makeup</text>
+
+  <path d="M 440 305 L 380 305 L 380 210 L 475 210" class="pipe-cw" stroke-dasharray="3 2"/>
+  <text x="410" y="258" text-anchor="middle" class="value" fill="#555">31°C CW</text>
+  <text x="410" y="272" text-anchor="middle" class="value" fill="#555">supply</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="370" x2="860" y2="370" class="divider"/>
+  <text x="450" y="388" text-anchor="middle" class="section">──  Parallel isolated circuits (no thermal cross-contamination)  ──</text>
+
+  <!-- JW radiator (dump path) -->
+  <rect x="40" y="405" width="200" height="70" class="box-dump"/>
+  <text x="140" y="425" text-anchor="middle" class="label">JW radiator (Option A)</text>
+  <text x="140" y="441" text-anchor="middle" class="value">~58 MW rejected</text>
+  <text x="140" y="457" text-anchor="middle" class="value">atmosphere — engine-</text>
+  <text x="140" y="470" text-anchor="middle" class="value">standard package</text>
+
+  <path d="M 130 155 L 130 180 L 40 180 L 40 405" class="pipe-dump" marker-end="url(#arr-dump)"/>
+  <text x="50" y="282" class="value" fill="#555">JW</text>
+  <text x="50" y="296" class="value" fill="#555">return</text>
+
+  <!-- Boyd CDU loop -->
+  <rect x="290" y="405" width="280" height="70" class="box-dry"/>
+  <text x="430" y="425" text-anchor="middle" class="label">Boyd CDU → adiabatic dry cooler</text>
+  <text x="430" y="441" text-anchor="middle" class="value">80,960 kW (Locked C-17)</text>
+  <text x="430" y="457" text-anchor="middle" class="value">GPU liquid cooling — 45°C supply / 55°C return</text>
+  <text x="430" y="470" text-anchor="middle" class="value">Separate from absorption circuit</text>
+
+  <!-- Packaged DX -->
+  <rect x="620" y="405" width="240" height="70" class="box-dump"/>
+  <text x="740" y="425" text-anchor="middle" class="label">Packaged DX (self-contained)</text>
+  <text x="740" y="441" text-anchor="middle" class="value">BESS enclosures 660 kW</text>
+  <text x="740" y="457" text-anchor="middle" class="value">Solar DC-DC 61 kW peak</text>
+  <text x="740" y="470" text-anchor="middle" class="value">~720 kW total</text>
+
+  <!-- Stack -->
+  <rect x="730" y="240" width="130" height="50" class="box-dump"/>
+  <text x="795" y="260" text-anchor="middle" class="label">Stack</text>
+  <text x="795" y="276" text-anchor="middle" class="value">HRU tail + bypass</text>
+
+  <!-- Summary box -->
+  <rect x="40" y="510" width="820" height="80" fill="#F1EFE8" stroke="#999" stroke-width="0.5"/>
+  <text x="60" y="530" class="section" fill="#0C447C">Summary — Option A thermal budget</text>
+  <text x="60" y="550" class="value">• Absorption chiller size: 33 MW (census-corrected from Rev 0.1 107 MW double-count — see §6.8)</text>
+  <text x="60" y="565" class="value">• CHP utilization: ~28% (Munters 5.5 + HRU drive 24 = 29.5 MW of 106 MW waste heat recovered)</text>
+  <text x="60" y="580" class="value">• Orphaned heat (~77 MW): exhaust bypass + JW radiator. Contingencies B/C retained if CHP incentives justify ~$48M/20yr cost delta</text>
+
+  <defs>
+    <marker id="arr-hot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D85A30"/>
+    </marker>
+    <marker id="arr-chw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#378ADD"/>
+    </marker>
+    <marker id="arr-cw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1D9E75"/>
+    </marker>
+    <marker id="arr-dump" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888780"/>
+    </marker>
+  </defs>
+</svg>
