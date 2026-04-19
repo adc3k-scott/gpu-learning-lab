@@ -1,7 +1,7 @@
 # Cassette — INTERIOR DESIGN SPECIFICATION
 
 **Document:** Cassette-Interior-001
-**Revision:** 1.0
+**Revision:** 2.0
 **Date:** 2026-04-19
 **Classification:** CONFIDENTIAL
 **Status:** 
@@ -12,7 +12,8 @@ Onshore (Lafayette) + Offshore (Marine) Variants
 
 | Rev | Date       | Description                                                             |
 |-----|------------|-------------------------------------------------------------------------|
-| 1.0 | 2026-04-12 | Initial release | 
+| 1.0 | 2026-04-12 | Initial release |
+| 2.0 | 2026-04-19 | CHW 1,800→2,200 LPM, ΔT 5→11 °C, DN100→DN150 ECP pipe, DN100→DN125 primary manifolds, UQD-16→UQD-25, DC busway 2,500→4,000 A, Novec right-size noted (ELEC-001 / FIRE-001 / COOL-001) |
 
 
 **Prepared by:** Scott Tomsu · CEO / Chief Engineer
@@ -322,7 +323,7 @@ Houses the primary-to-secondary coolant distribution unit:
 |-------------------------------------|-------------------------------------------|
 | CoolIT CHx2000 CDU                  | 2,000 kW capacity, 750 × 1,200 mm footprint |
 | Primary flow (PG25 glycol)          | 2,100 LPM nominal                         |
-| Secondary flow (CHW)                | 1,800 LPM nominal at 40 psi ext ΔP        |
+| Secondary flow (CHW)                | 2,200 LPM nominal (revised per COOL-001)  |
 | Approach temperature                | 5 °C design                               |
 | Pumps                               | Hot-swappable, N+1 redundancy             |
 | Filtration                          | 25 μm redundant                           |
@@ -334,7 +335,7 @@ Houses the primary-to-secondary coolant distribution unit:
 | Network rack R14 connection        | Fiber pigtails from R14 to patch panel   |
 | Storage rack R15 connection        | Ethernet + fiber to ECP via OOB tray     |
 
-**Why CHx2000, not CHx1500:** 15-rack pod at NVL144 CPX tier draws ~2.2 MW, which would overload a 1.5 MW CDU. CHx2000 sits comfortably with margin. At NVL72 tier (~1.7 MW), CHx2000 runs at ~85% utilization — well within the published performance envelope.
+**Why CHx2000, not CHx1500:** 15-rack pod at NVL72 tier draws ~1.7 MW; CHx2000 runs at ~84% utilization — within published envelope. **COOL-001 finding:** CHx2000 is at 110.6% of nameplate at full CPX load (2,212 kW). CPX upgrade requires a second CDU or facility-side cooling augmentation — see COOL-001 open item CO-04.
 
 ---
 
@@ -409,8 +410,8 @@ Two ECP zones — one at each short end — provide the sole physical interface 
 
 | Service                       | Specification                              |
 |-------------------------------|--------------------------------------------|
-| CHW supply (secondary in)     | 4" Victaulic grooved, PG25 or treated water, 7–12 °C, 1,800 LPM |
-| CHW return (secondary out)    | 4" Victaulic grooved, 12–18 °C             |
+| CHW supply (secondary in)     | 6" (DN150) Victaulic grooved, treated water, 7–12 °C, 2,200 LPM |
+| CHW return (secondary out)    | 6" (DN150) Victaulic grooved, 12–18 °C     |
 | Munters process air in (dry)  | 200 mm insulated duct from external Munters skid |
 | Munters process air out (wet) | 200 mm duct to external Munters skid       |
 | InfiniBand compute uplink     | 24× single-mode fiber OS2, MPO-24          |
@@ -485,9 +486,9 @@ Cross-section (not to scale):
 | Parameter                    | Value                                    |
 |------------------------------|------------------------------------------|
 | Trench material              | Stainless 316L, 450 mm wide × 150 mm deep, welded to floor plate |
-| Supply manifold              | 100 mm (4") stainless, insulated         |
-| Return manifold              | 100 mm (4") stainless, insulated         |
-| Per-rack drops               | 15 × Stäubli UQD-16 blind-mate, both supply and return |
+| Supply manifold              | 125 mm (5") stainless, insulated (COOL-001 §5: DN100 undersized at CPX) |
+| Return manifold              | 125 mm (5") stainless, insulated         |
+| Per-rack drops               | 15 × Stäubli UQD-25 blind-mate, 3/rack/side = 86 total (COOL-001 §6) |
 | Per-drop isolation valve     | 1" ball valve, lockout-capable           |
 | Air bleed points             | 1 at each manifold end, 3 distributed along length |
 | Drain ports                  | 1 at lowest point, gravity to floor sump |
@@ -538,7 +539,7 @@ Total overhead mass: ~150 kg distributed across 12 m length = 12.5 kg/m linear. 
 | Footprint                        | 750 × 1,200 mm (single-rack footprint)   |
 | Height                           | Compatible with Oberon envelope          |
 | Primary flow (to cold plates)    | 2,100 LPM                                |
-| Secondary flow (facility CHW)    | 1,800 LPM at 40 psi external ΔP          |
+| Secondary flow (facility CHW)    | 2,200 LPM (revised per COOL-001)         |
 | Primary coolant                  | PG25 (25% propylene glycol)              |
 | Secondary coolant                | Treated water (facility)                 |
 | Pump redundancy                  | N+1, hot-swappable                       |
@@ -554,8 +555,8 @@ Total overhead mass: ~150 kg distributed across 12 m length = 12.5 kg/m linear. 
 
 - Supply: 7–12 °C at ECP
 - Return: 12–18 °C at ECP
-- ΔT design: 5 °C (pod receives 10 °C water, returns 15 °C water under full load)
-- Flow: 1,800 LPM nominal, matched by facility-side pumping
+- ΔT design: 11 °C (pod receives 7 °C water, returns 18 °C at full NVL72 load — COOL-001)
+- Flow: 2,200 LPM nominal, matched by facility-side pumping (revised per COOL-001)
 
 ### Primary-Side (to Racks)
 
@@ -572,10 +573,10 @@ Total overhead mass: ~150 kg distributed across 12 m length = 12.5 kg/m linear. 
 | Segment                          | Description                              |
 |----------------------------------|------------------------------------------|
 | CDU → supply manifold            | 4" stainless, insulated, 1 × 2,100 LPM   |
-| Supply manifold (floor trench)   | 100 mm stainless, horizontal, length of rack zone |
-| Per-rack supply drop             | 1" stainless, Stäubli UQD-16 blind-mate  |
-| Per-rack return drop             | 1" stainless, Stäubli UQD-16 blind-mate  |
-| Return manifold (floor trench)   | 100 mm stainless                         |
+| Supply manifold (floor trench)   | 125 mm stainless, horizontal, length of rack zone |
+| Per-rack supply drop             | 1¼" (DN32) stainless, Stäubli UQD-25     |
+| Per-rack return drop             | 1¼" (DN32) stainless, Stäubli UQD-25     |
+| Return manifold (floor trench)   | 125 mm stainless                         |
 | Return manifold → CDU            | 4" stainless, insulated                  |
 
 ### Flow Per Rack
@@ -722,7 +723,7 @@ The Munters HCD-600 sits on an external skid adjacent to (onshore) or deck-mount
 | Agent                        | 3M Novec 1230 (FK-5-1-12)                 |
 | Design concentration         | 5.85 % v/v                                |
 | Hold time                    | 10 minutes per NFPA 2001                  |
-| Cylinder bank                | 2 × 180 L at 25 bar, located ELEC end |
+| Cylinder bank                | Right-size per FIRE-001: 72 kg agent required; 2× 180 L = 4× oversized (~275 kg excess mass) |
 | Cylinder weight (each)       | ~190 kg                                   |
 | Cylinder mounting            | Stainless bracket welded to frame, offshore-grade marine bracket |
 | Discharge nozzles            | 8 (distributed along ceiling, 360° coverage) |
@@ -1211,7 +1212,7 @@ For annual checks without breaking seal:
 | Bender iso-PV1685 IMD                   | 1   |
 | Revenue meter                           | 1   |
 | Maintenance UPS, 2 kWh                  | 1   |
-| Power busway, 800 V DC 2,500 A          | 1 lot |
+| Power busway, 800 V DC 4,000 A          | 1 lot |
 | Per-rack DC breaker, 250 A              | 15  |
 | Cable tray (aluminum ladder)            | 1 lot |
 | Ground bar                              | 1   |
@@ -1221,8 +1222,8 @@ For annual checks without breaking seal:
 
 | Item                                    | Qty |
 |-----------------------------------------|-----|
-| Stainless manifold, 100 mm (floor trench) | 2 × 9 m |
-| Stäubli UQD-16 blind-mate              | 30 (15 supply + 15 return) |
+| Stainless manifold, 125 mm (floor trench) | 2 × 9 m |
+| Stäubli UQD-25 blind-mate              | 86 (43 supply + 43 return) |
 | Isolation valves (per rack)             | 30 |
 | Air bleed points                        | 8 |
 | Drain ports                             | 3 |
@@ -1310,6 +1311,6 @@ For annual checks without breaking seal:
 
 ---
 
-**Cassette — Interior Design Specification · Cassette-Interior-001 · 2026-04-19**
+**Cassette — Interior Design Specification · Cassette-Interior-001 · Rev 2.0 · 2026-04-19**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**
