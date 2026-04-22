@@ -1,7 +1,7 @@
 # Cassette — EXTERNAL CONNECTION PANEL (ECP) INTERFACE CONTROL DOCUMENT
 
 **Document:** Cassette-ECP-001
-**Revision:** 1.1
+**Revision:** 1.2
 **Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
 
@@ -119,7 +119,7 @@ All penetrations at the ELEC ECP, in physical order from top to bottom of the pa
 |  3 | Cellular antenna feed                | N-type connector, 50 Ω                             | IP66, marine rated        | 1        |
 |  4 | BMS fiber uplink (primary)           | LC/APC duplex, single-mode OS2                     | IP66 w/ EMI gland         | 2 fibers |
 |  5 | BMS fiber uplink (redundant)         | LC/APC duplex, single-mode OS2                     | IP66 w/ EMI gland         | 2 fibers |
-|  6 | 480 V AC 3-phase primary input       | Bus duct entry fitting, TBD per open item E-01     | 4,179 A/phase [LONG LEAD] | 1 set    |
+|  6 | 480 V AC 3-phase primary input       | Eaton Pow-R-Way III wall entry fitting — 6,000 A, 600 V AC, UL 857; ECP panel cutout ≈ 400 × 280 mm with mounting flange; IP54 onshore / IP66 weatherproof housing offshore; catalog bus duct adapter to Magnum DS line stabs (E-01 closed) | 4,179 A/phase operating, 6,000 A rated [LONG LEAD] | 1 set    |
 |  7 | Maintenance AC access (L1/L2/L3/N/G) | Cam-Lok E1016 series — maintenance only, not primary feed | IP67, 400 A          | 5        |
 |  8 | Chassis ground / bond                | 50 mm² bond stud, M12 stainless                    | 10,000 A fault            | 1        |
 |  9 | Emergency stop (hardwire IN)         | MIL-DTL-5015 6-pin connector, 24 V DC dry          | IP67                      | 1        |
@@ -216,12 +216,12 @@ The Cassette accepts 480 V AC 3-phase at the ELEC ECP. No DC voltage appears at 
 | AC primary current (operating CPX) | ~2,025 A/phase                                           |
 | NEC 125% rating (installed basis)  | 5,224 A minimum — 6,000 A main disconnect specified      |
 | Fault current withstand            | Per main disconnect rating (Eaton Magnum DS / Siemens WL / ABB Emax2) |
-| ECP connection method              | Bus duct entry fitting — TBD per open item E-01          |
-| Internal pod landing               | 6,000 A 3-phase motor-operated main disconnect           |
+| ECP connection method              | Eaton Pow-R-Way III wall entry fitting — 6,000 A, 600 V AC, UL 857; cutout ≈ 400 × 280 mm; IP54 onshore / IP66 offshore (E-01 closed) |
+| Internal pod landing               | Eaton Magnum DS, 6,000 A, 480 V AC, UL 1066 — motor-operated (MODS), shunt trip 24 V DC (E-02 closed) |
 
-### Open Item E-01 — Bus Duct ECP Connector
+### E-01 Closed — Bus Duct ECP Connector
 
-At 4,179 A/phase, standard Cam-Lok connectors (400 A rated) are inadequate as a primary feed (would require 11 per phase). The primary AC entry at the ELEC ECP requires a bus duct coupling product capable of 4,179 A/phase continuous at 480 V AC. Product selection is pending platform coordination. See ELEC-001 open item E-01.
+Down-selected 2026-04-22: Eaton Pow-R-Way III wall entry fitting, 6,000 A rated, 600 V AC, UL 857. ECP panel cutout approximately 400 × 280 mm with mounting flange. IP54 standard; IP66 weatherproof housing for offshore variant. Mates to Eaton Magnum DS line-side bus stabs via Eaton catalog bus duct adapter — no custom coupling required. Exact product code (Pow-R-Way IIIx or extended-rating equivalent at 6,000 A) to be confirmed with Eaton engineering before fabrication PO. Standard Cam-Lok connectors (400 A each) confirmed impractical at 4,179 A/phase — 11 per phase required; not used as primary feed. See ELEC-001 §18.
 
 ### What the Cassette Guarantees
 
@@ -301,7 +301,7 @@ The Cassette contains no internal CDU unit. It is a sealed PG25 appliance. PG25 
 
 ### QD Connector Protocol
 
-QBH-150 dry-break QDs (Stäubli or Parker Snap-tite 75 DN150 — see open item IN-01) lock by quarter-turn. Connection procedure:
+QBH-150 dry-break QDs (Stäubli — IN-01 closed; Parker Snap-tite 75 DN150 removed as qualified alternate) lock by quarter-turn. Connection procedure:
 
 1. Verify both halves de-pressurized (< 0.5 bar)
 2. Clean face seals with lint-free cloth
@@ -654,9 +654,9 @@ Authoritative vendor products for each connector type. Equivalents acceptable on
 
 | Function                            | Vendor Product Reference                               |
 |-------------------------------------|--------------------------------------------------------|
-| 480 V AC primary (bus duct)         | TBD — per open item E-01 (bus duct coupling, 4,179 A/phase) |
+| 480 V AC primary (bus duct)         | Eaton Pow-R-Way III wall entry fitting — 6,000 A, 600 V AC, UL 857 (E-01 closed) |
 | 480 V AC maintenance (Cam-Lok)      | Cam-Lok E1016 series (Marinco / Hubbell) — maintenance only |
-| PG25 primary QD (CDU ECP)          | Stäubli QBH-150 DN150 dry-break (Parker Snap-tite 75 DN150 qualified alternate — see IN-01) |
+| PG25 primary QD (CDU ECP)          | Stäubli QBH-150 DN150 dry-break — confirmed primary (IN-01 closed). Parker Snap-tite 75 DN150 removed as qualified alternate — poppet-valve design, not dry-break; spills ~2–5 mL on disconnect. Emergency alternate only, requires dry-break verification before any use. Offshore alt: Tema DryBreak DB-150 (MODU/subsea only). |
 | MPO fiber bulkhead                  | Corning PRETIUM EDGE or Panduit FlexPlus               |
 | Single-mode LC/APC                  | Corning or Panduit OptiCam                             |
 | Cat6A RJ-45 sealed                  | Neutrik NE8FDX or Switchcraft EHRJ45P                  |
@@ -771,9 +771,9 @@ Changes to this ICD require written agreement between pod vendor and platform ow
 
 | ID    | Section | Description                                          | Status  |
 |-------|---------|------------------------------------------------------|---------|
-| E-01  | §3, §5  | 480 V AC ECP primary connector — bus duct coupling product selection at 4,179 A/phase | Open |
-| E-02  | §5      | 480 V AC main disconnect product selection (Eaton Magnum DS / Siemens WL / ABB Emax2) | Open |
-| IN-01 | §4, §7  | PG25 QD selection — Stäubli QBH-150 DN150 vs Parker Snap-tite 75 DN150; both under evaluation | Open |
+| E-01  | §3, §5  | 480 V AC ECP primary connector — **CLOSED 2026-04-22.** Eaton Pow-R-Way III wall entry fitting, 6,000 A, 600 V AC, UL 857. Cutout ≈ 400 × 280 mm. Confirm product code with Eaton before fabrication PO. See §5 and ELEC-001 §18. | Closed |
+| E-02  | §5      | 480 V AC main disconnect — **CLOSED 2026-04-22.** Eaton Magnum DS, 6,000 A, UL 1066, motor-operated (MODS), shunt trip 24 V DC. See ELEC-001 §18 and BOM-001 §9. | Closed |
+| IN-01 | §4, §7  | PG25 QD selection — **CLOSED 2026-04-22.** Stäubli QBH-150 DN150 confirmed primary. Parker Snap-tite 75 removed as qualified alternate — poppet valve, not dry-break. See §7 and BOM-001 §5.2. | Closed |
 | MO-03 | §9      | Munters DSS Pro model confirmation, airflow, FW coil ΔP, CHP regen interface | Open |
 | C-01  | §7      | PG25 flow confirmation for 9-compute-rack config — COOL-001 pending | Open |
 

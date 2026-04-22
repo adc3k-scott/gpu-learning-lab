@@ -1,7 +1,7 @@
 # Cassette — BILL OF MATERIALS
 
 **Document:** Cassette-BOM-001
-**Revision:** 1.2
+**Revision:** 1.3
 **Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
 **Companion to:** Cassette-INT-001 · Cassette-ECP-001 · Cassette-COOL-001 · Cassette-ELEC-001 · Cassette-FIRE-001 · Cassette-MASS-001
@@ -135,7 +135,7 @@ scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 |------------------------------------------------|-----|----------------------|------------------------------------|
 | QD mounting plate, 316L stainless, 300×600×20 mm | 1 | Local fab          | TIG-welded to interior bulkhead per ECP-001 §7 |
 | Stäubli QBH-150 DN150 PG25 QD (primary)        | 2   | Stäubli              | 1 supply + 1 return; dry-break, pipe-class [LONG LEAD] |
-| Parker Snap-tite 75 Series DN150 (alternate)   | —   | Parker               | Qualified alternate if Stäubli unavailable |
+| Parker Snap-tite 75 Series DN150               | —   | Parker               | **Removed as qualified alternate.** Poppet-valve design — not flat-face dry-break; ~2–5 mL spill on disconnect is incompatible with sealed Cassette TraceTek environment. Emergency alternate only — requires dry-break verification before any use. IN-01 closed. |
 | Tema DryBreak DB-150 (offshore alternative)    | —   | Tema                 | Subsea/MODU deployments only       |
 | QD plate FKM gaskets (offshore) / EPDM (onshore) | 2  | Parker/Stäubli OEM  | Sealing face                       |
 | PG25 fill/top-off port assembly                | 1   | Swagelok             | 1/2" NPT ball valve + blind cap on QD plate |
@@ -236,7 +236,7 @@ Supplied with Cassette, installed on-site.
 
 | Item                                           | Qty | Vendor / Source      | Notes                              |
 |------------------------------------------------|-----|----------------------|------------------------------------|
-| 480 V AC main disconnect, 6,000 A, 3-phase, motor-operated | 1 | Eaton Magnum DS / Siemens WL / ABB Emax2 | NEC 125% of 4,179 A/phase = 5,224 A; lockable, shunt trip [LONG LEAD] |
+| 480 V AC main disconnect, 6,000 A, 3-phase, motor-operated (MODS) | 1 | **Eaton Magnum DS**, UL 1066 | 6,000 A, 480 V AC; NEC 125% of 4,179 A/phase = 5,224 A; shunt trip 24 V DC (life-safety bus, hardwired E-stop); motor operator powered from 480 V AC maintenance circuit; MPS relay (LSIG + Modbus to BMS). Qualified alt: Siemens WL. E-02 closed. [LONG LEAD] |
 | AC feeder breaker, 1,200 A, 480 V AC 3-phase   | 5   | Eaton or Siemens     | One per Delta in-row rack (R11–R15); NEC 125% of 836 A/phase |
 | Surge protection device (SPD)                  | 1   | Phoenix Contact or nVent | Type 1 SPD, 200 kA, 480 V AC     |
 | Bender iso-PV1685 IMD                          | 1   | Bender               | Ungrounded 800 V DC monitoring (internal bus) [LONG LEAD] |
@@ -333,7 +333,7 @@ Supplied with Cassette, installed on-site.
 
 | Item                                           | Qty | Vendor / Source      | Notes                              |
 |------------------------------------------------|-----|----------------------|------------------------------------|
-| 480 V AC primary connection (bus duct coupling) | TBD | Eaton / ABB / Schneider | 4,179 A/phase 3-phase; bus duct specification pending open item E-01 |
+| Eaton Pow-R-Way III wall entry fitting | 1 | **Eaton** | 6,000 A, 600 V AC, UL 857; ECP panel cutout ≈ 400 × 280 mm with mounting flange; IP54 onshore / IP66 weatherproof offshore; Eaton catalog bus duct adapter to Magnum DS line stabs. Confirm product code (Pow-R-Way IIIx or extended-rating) with Eaton engineering before fabrication PO. E-01 closed. [LONG LEAD] |
 | Cam-Lok E1016 series (L1/L2/L3/N/G)           | 5   | Marinco / Hubbell    | Low-current maintenance access only — not primary feed |
 | MIL-DTL-5015 6-pin circular (E-stop IN + OUT)  | 2   | Amphenol or Souriau  | 24 V DC dry contact                |
 | N-type bulkhead connectors                     | 3   | Amphenol             | GPS + Starlink + cellular          |

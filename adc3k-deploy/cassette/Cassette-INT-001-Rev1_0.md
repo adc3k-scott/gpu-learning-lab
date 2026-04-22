@@ -1,7 +1,7 @@
 # Cassette — INTERIOR DESIGN SPECIFICATION
 
 **Document:** Cassette-INT-001
-**Revision:** 1.2
+**Revision:** 1.3
 **Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
 **Status:** Released
@@ -253,7 +253,7 @@ See ELEC-001 for full one-line diagram and sizing calculations.
 | Heavy equipment          | None — all rotating equipment is external |
 | Service interval         | None — no consumables inside          |
 | Personnel access         | Not required during field life        |
-| ECP connections          | 2× DN150 PG25 QD (Stäubli QBH-150 or Parker Snap-tite 75) |
+| ECP connections          | 2× DN150 PG25 QD (Stäubli QBH-150 — IN-01 closed) |
 
 ### Panel Access to Service End Zone
 
@@ -663,9 +663,9 @@ Margin allocation:
 
 | ID    | Priority | Description                                                                 | Owner  |
 |-------|----------|-----------------------------------------------------------------------------|--------|
-| E-01  | P-1      | ECP AC connector for 480 V AC 3-phase, 4,179 A/phase — bus duct coupling specification and product selection (gates ECP-001 and ELEC-001 §7) | ADC engineering |
-| E-02  | P-1      | 480 V AC main disconnect product selection (Eaton Magnum DS / Siemens WL / ABB Emax2 at 6,000 A) | ADC engineering |
-| IN-01 | P-1      | Stäubli QBH-150 vs Parker Snap-tite 75 selection for PG25 QDs (gates BOM-001 and CDUSKID-001 §14) | ADC engineering |
+| E-01  | ~~P-1~~ → P-0 → **CLOSED 2026-04-22** | ECP AC connector — down-selected: Eaton Pow-R-Way III wall entry fitting, 6,000 A, 600 V AC, UL 857. See ELEC-001 §18, ECP-001 §5. | ADC engineering |
+| E-02  | ~~P-1~~ → P-0 → **CLOSED 2026-04-22** | 480 V AC main disconnect — down-selected: Eaton Magnum DS, 6,000 A, UL 1066, motor-operated, shunt trip 24 V DC. See ELEC-001 §18, BOM-001 §9. | ADC engineering |
+| IN-01 | P-1 → **CLOSED 2026-04-22** | PG25 QD selection — Stäubli QBH-150 DN150 confirmed primary. Parker Snap-tite 75 removed as qualified alternate (poppet valve — not dry-break). See ECP-001 §7, BOM-001 §5.2. | ADC engineering |
 | IN-02 | P-1      | Service End Zone detailed layout drawings — R10 control rack, QD plate, manifold termination | ADC engineering |
 | IN-03 | P-1      | Panel P-6 access frequency <2×/year operationally acceptable — confirm with operations | ADC operations |
 | IN-04 | P-1      | Sealed pressure-vessel commissioning workflow — qualify welders, X-ray vendor, vacuum decay test equipment | ADC engineering |
