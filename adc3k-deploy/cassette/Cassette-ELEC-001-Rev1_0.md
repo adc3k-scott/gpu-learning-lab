@@ -1,7 +1,7 @@
 # Cassette — ELECTRICAL SINGLE-LINE DIAGRAM & DISTRIBUTION SPECIFICATION
 
 **Document:** Cassette-ELEC-001
-**Revision:** 1.2
+**Revision:** 1.3
 **Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
 **Companion to:** Cassette-INT-001 · Cassette-ECP-001 · Cassette-BOM-001 · Cassette-MASS-001 · Cassette-COOL-001
@@ -483,9 +483,12 @@ TIER 1 (upstream, platform side):
   Clearing time: < 50 ms
 
 TIER 2 (AC main disconnect, ELEC end):
-  480 V AC 3-ph main disconnect, 6,000 A, motor-operated
-  Fault interrupt: per manufacturer rating
-  Clearing time: < 100 ms on E-stop
+  Eaton Magnum DS, 6,000 A, 480 V AC 3-ph, motor-operated (MODS), UL 1066
+  Shunt trip: 24 V DC from life-safety bus — hardwired E-stop path (independent of motor operator)
+  Motor operator: powered from 480 V AC maintenance circuit
+  Protection relay: MPS unit (LSIG, Modbus RTU to BMS)
+  Fault interrupt: per Magnum DS SCCR — confirm with E-07 Delta fault current data
+  Clearing time: < 100 ms on shunt trip / E-stop
 ```
 
 ### Hierarchy — 800 V DC Internal
@@ -671,6 +674,8 @@ Summary of key findings and decisions that drove the final specifications.
 | ECP primary connector | Stäubli CombiTac 2500 (DC) | **High-current AC — see E-01** | 4,179 A per phase at 480 V AC requires bus duct or custom connector bank. Standard Cam-Lok insufficient. |
 | DC branch conductor (R1–R9) | 2× 70 mm² per polarity, 200 A trip | **2× 95 mm² per polarity, 250 A trip** | 2× 70 mm² at NVL72 (150 A) leaves only 6% margin at NVL144 CPX (200 A vs 212 A NEC 80% limit). Sealed unmanned pod cannot be rewired in field. Sized to CPX tier maximum to eliminate rewiring constraint. Consistent with installed-capacity sizing philosophy applied to all upstream equipment. |
 | OCP row power compliance | Not assessed | **COMPLIANT ✓** | OCP Next-Generation ML Infrastructure Design Principles v0.5.0 requires ≥ 1 MW per row (2026 tier) and ≥ 2.4 MW per row (2028+ tier). Cassette facility load: 1,145 kW (NVL72) to 1,526 kW (CPX). A single Cassette meets the 2026 minimum. Multiple Cassettes per row (where applicable) scale proportionally. 2028+ 2.4 MW minimum requires two CPX-tier Cassettes per row or platform-level aggregation. |
+| E-01 bus duct ECP connector | TBD — bus duct product open | **Eaton Pow-R-Way III (6,000 A, 600 V AC, UL 857) — E-01 CLOSED** | Eaton Pow-R-Way III wall entry fitting confirmed primary. ECP panel cutout ≈ 400 × 280 mm with mounting flange. IP54 standard; IP66 weatherproof housing for offshore variant. Product code at 6,000 A (Pow-R-Way IIIx or extended-rating equivalent) confirmed at detailed design — Eaton engineering contact required before fabrication. Directly mates to Eaton Magnum DS line-side bus stabs via Eaton catalog bus duct adapter — no custom coupling. Qualified alternate: Siemens SIVACON 8PS paired with Siemens WL (longer NA lead time on SIVACON 8PS). ABB removed from active consideration. |
+| E-02 main disconnect product | Eaton Magnum DS / Siemens WL / ABB Emax2 (three candidates) | **Eaton Magnum DS, 6,000 A, 480 V AC, UL 1066 — E-02 CLOSED** | Single-vendor pairing with E-01 Pow-R-Way III eliminates bus duct coupling adapter. Motor operator (MODS) powered from 480 V AC maintenance circuit — not from life-safety bus. Shunt trip 24 V DC from life-safety bus: hardwired E-stop path, independent of motor operator power. MPS protection relay: LSIG, Modbus RTU to BMS. Qualified alternate: Siemens WL + SIVACON 8PS (paired). ABB Emax2 removed from active consideration. |
 
 ---
 
@@ -678,8 +683,8 @@ Summary of key findings and decisions that drove the final specifications.
 
 | ID | Item | Priority | Blocks |
 |----|------|----------|--------|
-| E-01 | Specify ECP high-current 480 V AC 3-ph connector for 4,179 A per phase — evaluate bus duct coupling, Anderson SB series, or parallel Cam-Lok bank. Coordinate with platform distribution design. | P-0 | ECP fabrication, AC main feed |
-| E-02 | Confirm AC main disconnect product: 6,000 A, 480 V AC 3-ph, motor-operated, UL listed. Evaluate Eaton Magnum DS, Siemens WL, ABB Emax2. | P-0 | AC main disconnect procurement |
+| E-01 | **CLOSED 2026-04-22.** Down-selected: Eaton Pow-R-Way III wall entry fitting, 6,000 A, 600 V AC, UL 857. ECP panel cutout ≈ 400 × 280 mm. Confirm exact product code (Pow-R-Way IIIx or extended-rating) with Eaton engineering before fabrication PO. See §18 and ECP-001 §5. | ~~P-0~~ CLOSED | ECP fabrication unblocked |
+| E-02 | **CLOSED 2026-04-22.** Down-selected: Eaton Magnum DS, 6,000 A, 480 V AC, UL 1066. Motor-operated (MODS), shunt trip 24 V DC, MPS relay. Paired with E-01 Pow-R-Way III. See §18 and BOM-001 §9. | ~~P-0~~ CLOSED | AC main disconnect procurement unblocked |
 | E-03 | *Withdrawn — see Rev 1.0 decision ledger.* | — | — |
 | E-04 | Obtain 800 V DC test certificates for branch breakers (250 A frame / 250 A trip, ≥ 25 kA ICU at 800 V DC) before procurement. Confirm Delta fault current data per E-07 before releasing PO. | P-0 | Branch circuit compliance |
 | E-05 | *Withdrawn — see Rev 1.0 decision ledger.* | — | — |
