@@ -481,6 +481,6 @@ Items requiring earliest procurement action (ordered by lead time):
 
 ---
 
-**Cassette — Bill of Materials · Cassette-BOM-001 · Rev 1.2 · 2026-04-22**
+**Cassette — Bill of Materials · Cassette-BOM-001 · Rev 1.3 · 2026-04-22**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**

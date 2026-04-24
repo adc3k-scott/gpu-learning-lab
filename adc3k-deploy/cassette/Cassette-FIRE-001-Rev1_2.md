@@ -1,545 +1,742 @@
-# Cassette — FIRE SUPPRESSION ENGINEERING
+# Cassette-FIRE-001 — Cassette Fire Suppression Specification — Rev 1.2
 
-**Document:** Cassette-FIRE-001
+**Document ID:** Cassette-FIRE-001
 **Revision:** 1.2
-**Date:** 2026-04-20
+**Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
-**Companion to:** Cassette-INT-001 Rev 3.0 · Cassette-BOM-001 Rev 3.0 · Cassette-MASS-001 Rev 3.0 · Cassette-SIS-001 Rev 1.1
-
-**Purpose:** NFPA 2001 engineering basis for the Novec 1230 total flood system. Calculates required agent quantity, evaluates cylinder sizing, verifies hold time, sizes the over-pressure vent, defines the VESDA detection-to-discharge sequence, and identifies a significant BOM over-specification that drives unnecessary weight and cost.
-
-| Rev | Date       | Description                                           |
-|-----|------------|-------------------------------------------------------|
-| 1.0 | 2026-04-19 | Initial release                                       |
-| 1.1 | 2026-04-19 | §12 cylinder right-sizing correction adopted in BOM Rev 2.1 and INT Rev 2.1; mass impact resolved in MASS Rev 2.0. Analysis preserved; resolution annotated inline. |
-| **1.2** | **2026-04-20** | **Companion documents updated to Rev 3.0 baseline. Interior volume reconfirmed: 76.4 m³ unchanged by CDU removal (CDU occupied floor area, not displaced Novec-protected volume — see INT-001 Rev 3.0 §3). Agent quantity and hold time calculations remain valid. VESDA sampling port count unchanged (8). Safety interlock with Cassette-SIS-001 Rev 1.1 noted. No hardware changes.** |
-
-**Applicable Standards:**
-- NFPA 2001 (2022): Standard on Clean Agent Fire Extinguishing Systems
-- NFPA 72 (2022): National Fire Alarm and Signaling Code
-- ISO 14520-1: Gaseous fire-extinguishing systems — Part 1 (international reference)
-
-**Prepared by:** Scott Tomsu · CEO / Chief Engineer
-scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
+**Supersedes:** Rev 1.1 (deleted) — full clean rebuild
+**Companion documents:** Cassette-CTRL-001 · Cassette-ELEC-001 · Cassette-BOM-001 · Cassette-COOL-001
+**Prepared by:** Scott Tomsu · CEO / Chief Engineer · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 
 ---
 
-## TABLE OF CONTENTS
+## Revision log
 
-- §1  System Description
-- §2  Protected Volume
-- §3  Agent Quantity Calculation (NFPA 2001)
-- §4  Hold Time Analysis
-- §5  Cylinder Sizing — Current BOM vs Required
-- §6  Nozzle Count & Distribution
-- §7  Over-Pressure Vent Sizing
-- §8  VESDA Detection Sequence
-- §9  Discharge Interlock Sequence
-- §10 Post-Discharge Ventilation
-- §11 Offline Variant — Offshore Marine
-- §12 Key Findings & BOM Corrections
-- §13 Open Items
+| Rev | Date | Author | Summary |
+|---|---|---|---|
+| 1.0 | 2026-01-xx | Scott Tomsu | First issue. Agent selection and high-level sequence only. |
+| 1.1 | 2026-02-xx | Scott Tomsu | Withdrawn and deleted — inconsistent BMS interface definition vs. emerging CTRL-001. |
+| **1.2** | **2026-04-22** | **Scott Tomsu** | **Full rebuild as the authoritative source for fire suppression and BMS fire interface. Novec 1230 locked as agent. Cross-zone 2-of-N detection locked. 30 s pre-discharge abort locked. Ansul listed clean agent panel is primary release authority — BMS is monitor, not release controller. Terminal-level definition of 3 DI + 2 DO interface to BMS. Munters hardwired interlock locked as separate path, not BMS-mediated. Agent quantity engineering estimate provided (~66 kg at 5.85%); final sizing flagged FIRE-01 for Ansul system designer.** |
 
 ---
 
-## §1  SYSTEM DESCRIPTION
+## 1. Scope
 
-### Type
-Total flood Novec 1230 (FK-5-1-12) clean agent system per NFPA 2001.
+This document is the authoritative specification for the Novec 1230 clean-agent fire suppression system installed in one ADC 3K Cassette (40 ft High-Cube ISO container). It defines the agent, design basis, detection scheme, control panel, interlocks, cylinder storage, personnel safety protocol, inspection cadence, and the terminal-level BMS interface.
 
-### Hazard Classification
-Class C (energized electrical equipment — 936 Rubin GPUs, 15 Oberon racks, Delta power shelves, 800 V DC busway). Class A combustibles present (acoustic foam, PU insulation, cable jacketing). System designed for Class A/B/C combined hazard.
+**This document is the authority on everything FIRE-001.** When CTRL-001 Rev 1.2 says "per FIRE-001," this document is what that reference resolves to. §8 of this document is the definitive source for the 3 DI + 2 DO contacts between the fire panel and the BMS; CTRL-001 §3.2 and §4.6 point here.
 
-### Design Concentration
-5.85% v/v. Basis: minimum extinguishing concentration for heptane (Class B design fuel per NFPA 2001) is 4.2%; 5.85% applies a 39.3% safety factor appropriate for electronics with mixed-fuel combustibles (plastics, insulation, PCBs). NFPA NOAEL for Novec 1230: 10% v/v. Design concentration is below NOAEL. Note: the Cassette is **unmanned** — personnel exposure limits do not govern design concentration.
+**In scope:**
 
-### Hold Time
-10 minutes per NFPA 2001 §6.3.1. Cassette is sealed to pressure decay ≤ 100 Pa in 5 minutes (onshore) and ≤ 50 Pa in 5 minutes (offshore) per INT-001 §27. Hold time analysis in §4 confirms the enclosure tightness is more than adequate.
+- Agent selection, design concentration, and NFPA 2001 compliance posture
+- Protected space definition — 40 ft HC Cassette internal volume and enclosure integrity
+- System design basis — agent quantity calculation, discharge time, cylinder configuration
+- Detection — detector type, zone count, cross-zone logic, placement
+- Ansul listed clean-agent control panel — release authority, power, manual and abort stations
+- BMS interface — 3 DI + 2 DO terminal-level definition
+- Interlocks — Munters hardwired shutdown, ELEC-001 ventilation kill, MIV closure via BMS
+- Cylinder storage and pressure monitoring
+- Personnel safety — pre-discharge alarm, egress, re-entry, MSDS reference
+- Factory and site commissioning for the fire system and its BMS handshake
+- Inspection and maintenance cadence per NFPA 2001 Chapter 7
 
-### Discharge Type
-Single-shot total flood. Agent discharges from ceiling nozzles distributed along the rack zone. Both cylinders discharge simultaneously (not staged). N+1 is achieved by the second cylinder, not a sequential backup discharge — see §5.
+**Out of scope — deferred to companion documents:**
 
----
-
-## §2  PROTECTED VOLUME
-
-### Interior Dimensions (from INT-001 §2)
-
-| Dimension | Value |
-|-----------|-------|
-| Interior length | 12,032 mm |
-| Interior width | 2,352 mm |
-| Interior height | 2,698 mm |
-
-### Gross Enclosure Volume
-
-V = 12.032 × 2.352 × 2.698 = **76.35 m³**
-
-### Volume Deductions
-
-NFPA 2001 §5.4.1.1 permits deduction of permanently fixed, air-tight, non-communicating equipment volumes. The following is the deduction analysis:
-
-| Item | Justification | Deduction |
-|------|---------------|-----------|
-| Compute racks R1–R13 (13 × Oberon) | Open rack format — cooling airflow paths, tray slots, connector voids. Agent penetrates freely. No deduction. | 0 m³ |
-| R14 InfiniBand rack | Same rationale | 0 m³ |
-| R15 Storage/mgmt rack | Same rationale | 0 m³ |
-| CoolIT CHx2000 CDU | Sealed liquid-side, but external surfaces and electronics bay are open. No deduction. | 0 m³ |
-| Floor manifold trench (SS, fluid-filled) | Sealed — no agent access. Deductible. | −0.61 m³ * |
-| DC busway (copper, enclosed) | Solid metal — agent cannot enter. Deductible. | −0.16 m³ ** |
-| Novec cylinders themselves (in ELEC zone) | Solid steel cylinders. | −0.07 m³ |
-
-*Floor trench: 450 mm wide × 9 m × 150 mm deep × 2 sides = 1.215 m³ gross. But ~50% is fluid-filled manifold pipe. Net deduction = 0.61 m³.
-**Busway: 400 mm × 200 mm cross-section × 15 m × ~13% packing = ~0.16 m³.
-
-**Total deductible volume: 0.84 m³**
-**Net protected volume: V = 76.35 − 0.84 = 75.51 m³**
-
-**For this calculation, use V = 76.35 m³ (gross).** The deductions are minor (1.1%) and the conservative value gives more agent. Agent quantity is not cost-sensitive enough to justify the accounting complexity of deductions.
+- BMS application logic consuming the FIRE-DI inputs — CTRL-001 §6.2 (FIRE-TRIGGERED / FIRE-FAULT alarms) and §6.3 (safe-state sequence step 6)
+- 480 V AC ventilation interlock circuit build and shunt-trip wiring — ELEC-001 (this document states the interface requirement; ELEC-001 implements it)
+- PG25 coolant loop isolation (MIVs) on fire event — COOL-001 §8 (Belimo DN125) and CTRL-001 §7.2 (BMS closure command)
+- Network monitoring of fire-event alarm records — CYBER-001 §11 (platform SIEM rule set)
+- Site-perimeter fire response, fire-water supply outside the Cassette, and parish AHJ coordination beyond the Cassette envelope — facility-level fire plan
 
 ---
 
-## §3  AGENT QUANTITY CALCULATION
+## 2. Governing standards and authority having jurisdiction
 
-### NFPA 2001 Formula (§5.4.1.1)
+### 2.1 Primary standards
 
-```
-W = (V / S) × [C / (100 − C)]
-```
+| Standard | Scope | Edition |
+|---|---|---|
+| **NFPA 2001** | Clean Agent Fire Extinguishing Systems — design, installation, acceptance | 2022 edition (or latest AHJ-accepted) |
+| **NFPA 72** | National Fire Alarm and Signaling Code — detection and alarm | 2022 edition |
+| **NFPA 70 (NEC)** | Electrical installation for the fire panel, detectors, and interface loops | 2023 edition |
+| **UL 2166** | Standard for Halocarbon Clean Agent Extinguishing System Units — system-level listing | Current |
+| **UL 268** | Smoke Detectors for Fire Alarm Systems — detector listing | 7th edition |
+| **UL 864** | Control Units and Accessories for Fire Alarm Systems — panel listing | 10th edition |
+| **ISO 14520-5** | Gaseous fire-extinguishing systems — Novec 1230 (FK-5-1-12) — physical properties and design data | Current (informational / design basis) |
+| **FM 3500** | Class Number 3500 — Releasing Devices for Fire Protection Service — where FM-listed components are substituted | Current |
 
-Where:
-- W = mass of agent required (kg)
-- V = protected volume (m³) = **76.35 m³**
-- S = specific volume of agent vapor at minimum design temperature (m³/kg)
-- C = design concentration (% v/v) = **5.85%**
+### 2.2 Authority having jurisdiction
 
-### Specific Volume S for Novec 1230
+- **Primary AHJ:** Lafayette Parish Fire Marshal (onshore site)
+- **State:** Louisiana State Fire Marshal's office for industrial occupancy review
+- **Federal:** 40 CFR Part 82 (EPA SNAP) — Novec 1230 is SNAP-approved for total flooding in occupied spaces; no phase-out schedule
+- **Offshore variant AHJ:** USCG / ABS classification society for marine deployments (not covered in this revision — offshore posture uses the same agent and same design concentration but with marine-hazardous-area listed components; separate submittal)
 
-Per Chemours / 3M design guide (empirical fit, more accurate than ideal gas):
+### 2.3 Listing and acceptance posture
 
-```
-S = 0.0664 + 0.000274 × T  (m³/kg, T in °C)
-```
-
-| Design temperature | S (m³/kg) | Notes |
-|-------------------|-----------|-------|
-| 0°C (arctic / cold deploy) | 0.0664 | Minimum possible S |
-| **20°C (standard NFPA minimum)** | **0.07188** | **Use this — most conservative indoor** |
-| 25°C | 0.07328 | |
-| 45°C (max inside cassette at full load) | 0.07878 | |
-
-**Design temperature: 20°C (conservatively low — more agent required at lower temperature)**
-
-S = 0.0664 + (0.000274 × 20) = **0.07188 m³/kg**
-
-### Agent Quantity
-
-```
-W = (76.35 / 0.07188) × [5.85 / (100 − 5.85)]
-W = 1,062.0 × [5.85 / 94.15]
-W = 1,062.0 × 0.06213
-W = 65.98 kg
-```
-
-**Required agent: 66 kg (rounded up for conservatism)**
-
-### Verification — Achieved Concentration
-
-Back-solving with W = 66 kg:
-
-```
-C = W / (W + V/S) × 100
-C = 66 / (66 + 1,062.0) × 100
-C = 66 / 1,128.0 × 100
-C = 5.85%  ✓
-```
-
-### Sensitivity to Temperature
-
-| Min Design Temp | S (m³/kg) | Required W (kg) |
-|-----------------|-----------|-----------------|
-| 0°C | 0.0664 | 72.0 |
-| 20°C | 0.07188 | 66.0 |
-| 45°C | 0.07878 | 60.2 |
-
-Design is based on 20°C. At 0°C (extreme cold deploy), required agent increases to 72 kg. Cylinder selection must accommodate the 0°C case for offshore / arctic variant.
-
-**Design agent quantity: 72 kg (0°C minimum temperature, covers all deployment environments)**
+- Cylinder, valve, piping, nozzle, and control panel shipped and installed as a **single UL 2166-listed system** from the Ansul Sapphire product line (or equivalent UL 2166-listed alternative — **FIRE-10** covers substitution procedure).
+- System design signed and sealed by an Ansul-authorized clean-agent designer (NICET Level III minimum in fire alarm systems or equivalent).
+- Installation by Ansul-authorized distributor.
+- Acceptance testing witnessed by the AHJ before Cassette is placed into production.
 
 ---
 
-## §4  HOLD TIME ANALYSIS
+## 3. Protected space
 
-NFPA 2001 §6.3.1 requires ≥ 5.85% concentration maintained for a minimum 10 minutes after discharge.
+### 3.1 Container dimensions and volume
 
-### Enclosure Leakage Rate
+| Parameter | Value | Basis |
+|---|---|---|
+| Container type | 40 ft High-Cube ISO | BOM-001 §1 |
+| External length | 12.192 m (40 ft) | ISO 668 |
+| External width | 2.438 m (8 ft) | ISO 668 |
+| External height (HC) | 2.896 m (9 ft 6 in) | ISO 668 |
+| Internal length | ~12.03 m | After wall thickness |
+| Internal width | ~2.35 m | After wall thickness |
+| Internal height | ~2.70 m | After floor and roof liner |
+| **Gross internal volume** | **~76.3 m³** | L × W × H |
+| **Net protected volume (design)** | **~76.0 m³** | Gross minus negligible solid displacement; conservative choice — NFPA 2001 does not require subtracting rack / equipment volume from V in the agent-quantity formula |
+| Design reference temperature | 20 °C | §4.3 |
 
-INT-001 §27 specifies pressure decay test: ≤ 100 Pa in 5 min (onshore), ≤ 50 Pa in 5 min (offshore).
+The 76 m³ number is used consistently through §5 (agent quantity), §6 (detector placement density), and §7 (discharge time profile).
 
-Leakage rate Q_L from pressure decay:
+### 3.2 Construction type
+
+- Corten steel ISO container — inherently fire-resistive structural envelope
+- Interior insulation: closed-cell spray foam on walls and ceiling (per BOM-001 enclosure spec); insulation is Class A rated and does not contribute significant fuel load
+- Floor: steel plate over marine plywood subfloor; no raised access floor
+- No false ceiling — nozzle sweep unobstructed from ceiling plane
+
+### 3.3 Heat load and fire load context
+
+| Source | Heat / fuel load | Fire risk |
+|---|---|---|
+| 9 × NVIDIA NVL72 / CPX compute racks | ~2.07 MW aggregate electrical | Primary risk: lithium-ion cell thermal runaway from battery backup inside racks, cable/insulation fault, PSU fault |
+| 5 × Delta in-row power cabinets | AC-DC conversion + BBU | Primary risk: BBU battery fault, SCR / capacitor fault |
+| 1 × control rack (BMS ECP, networking, mgmt switch) | Low | Primary risk: PSU fault |
+| PG25 liquid loop | Propylene glycol / water mix | Non-flammable at operating concentration; not an ignition source |
+| Munters DSS Pro | Air-handling, desiccant rotor | Not a significant fuel load itself; can worsen a fire by supplying airflow (addressed by interlock §9.1) |
+
+Combustible loading is dominated by electrical insulation, printed-circuit substrates, and internal rack plastics. Liquid fuel is not present. The fire class posture is **Class A (ordinary combustibles, primarily electrical) with Class C energized-equipment characteristics**. Class B liquid-fire scenario is not a design case.
+
+### 3.4 Openings inventory — enclosure integrity for NFPA 2001
+
+For Novec 1230 to hold design concentration for the NFPA 2001-required 10-minute retention period, the enclosure must be demonstrably tight. The following openings must be sealed, gasketed, or equipped with fire-alarm-triggered closure:
+
+| Opening | Status | Mitigation |
+|---|---|---|
+| Personnel entry door (1 × side) | Gasketed ISO door; closes tight | Door position sensor DI (wired to BMS) — alarm if open when panel armed |
+| QBH-150 coolant QD plate penetration (supply + return) | Seal at penetration | Boot seal and fire-rated caulk around QD body |
+| Power penetrations (ELEC-001 feeders) | Multi-cable transits (MCT blocks) with fire-rated seals | Per ELEC-001 |
+| Fiber / copper data penetrations | MCT blocks with fire-rated seals | Per CTRL-001 §2.4 panel build |
+| Munters supply/return ducts (if ducted to exterior — not in base design) | Fire/smoke damper actuated by fire panel alarm contact | Only if Munters is externally ducted; base design recirculates |
+| ECP panel door | Interior panel, does not breach Cassette envelope | N/A |
+| Roof / wall HVAC penetrations | None in base design | If added, require fire damper per above |
+| Weep / drain penetrations | Labyrinth weep or internal trap | Seal or trap per NFPA 2001 enclosure integrity |
+
+**Enclosure integrity test:** a door-fan (blower door) integrity test per NFPA 2001 Annex C is required at factory acceptance and at site commissioning. Target: equivalent leakage area ≤ 0.4% of gross floor area for a 10-min retention at design concentration with the container floor as the leak pressure boundary. **FIRE-02** captures the acceptance criteria and the vendor.
+
+---
+
+## 4. Agent selection
+
+### 4.1 Locked: Novec 1230 (FK-5-1-12)
+
+Novec 1230 is the locked agent. Not FM-200 (HFC-227ea). Not CO₂. Not Halon 1301 (banned). Not inert gas (IG-100, IG-541 — cylinder-bank footprint excessive for the container space available).
+
+| Criterion | Novec 1230 | FM-200 (HFC-227ea) | CO₂ | Halon 1301 |
+|---|---|---|---|---|
+| NOAEL | 10 % | 9 % | N/A — kills by O₂ displacement | 5 % |
+| Design concentration, Class A/C (NFPA 2001) | ≥ 5.85 % | ≥ 7.0 % | ≥ 34 % | ≥ 5 % |
+| Safety margin (NOAEL — design) | 4.15 % | 2.0 % | — | 0 % |
+| Occupied-space rated | Yes | Yes (tight) | No — lethal | No (phased out) |
+| ODP | 0 | 0 | 0 | 10 |
+| GWP (100-yr) | 1 | 3,220 | 1 | 7,140 |
+| EPA SNAP status | Listed, no phase-out | Listed, under review | Listed with restrictions | Banned for new installs |
+| Residue on electronics | None | None | None | None |
+| Boiling point | 49 °C (liquid at room temp) | −17 °C | −78 °C (sublimes) | −58 °C |
+| Storage pressure | 25 bar (superpressurized with N₂) | 25 bar | 50+ bar | 25 bar |
+| Cylinder footprint per kg agent | Best | Comparable | ~10× larger | Comparable |
+
+**Decision and rationale:** Novec 1230 selected. Occupied-space safety margin is the primary driver (4.15 % NOAEL headroom vs FM-200's 2.0 %), GWP 1 aligns with platform environmental posture, no ODP, no residue on electronics. Locked in Rev 1.2; not open.
+
+### 4.2 NFPA 2001 design concentration
+
+NFPA 2001 Table B.5.1.1 (2022 edition, extracted): for Novec 1230 (FK-5-1-12) protecting Class A surface fires and Class C electronics, the minimum design concentration is **5.85 % by volume at 20 °C**. The higher Class B heptane cup-burner minimum is 4.5 %; the Class A minimum of 5.85 % governs here.
+
+**Design concentration selected: 5.85 % (minimum).** The system may be specified by the Ansul designer at a modest margin above this (typical practice 6.0–6.25 %) to account for installation tolerances; final concentration is set at **FIRE-03** at system sizing lock.
+
+### 4.3 NOAEL / LOAEL safety margins at design concentration
+
+- NOAEL (No Observed Adverse Effect Level) for Novec 1230: **10 %**
+- LOAEL (Lowest Observed Adverse Effect Level): > 10 % (no LOAEL observed in testing up to 10 %)
+- Design concentration: **5.85 %** — margin to NOAEL is **4.15 percentage points** — the largest margin of any commercial clean agent for Class A protection
+
+Result: spaces may be occupied at design concentration for up to 5 minutes per NFPA 2001 without exceeding NOAEL exposure, **but the pre-discharge alarm and abort procedure (§11) still require personnel to egress within 30 s**. The occupied-space margin is a safety backstop, not a permit to stay in the space.
+
+### 4.4 Agent storage conditions
+
+| Condition | Value |
+|---|---|
+| Cylinder storage temperature range (NFPA 2001) | 0 °C to 54 °C |
+| Design point (this Cassette) | 20 °C nominal; expect 15–30 °C actual (ECP area of Cassette, conditioned) |
+| Superpressurization | Nitrogen to 25 bar at 20 °C |
+| Cylinder material | Seamless steel or composite, stamped and labeled per DOT / TC / ISO |
+| Hydrostatic test | Per §13 — 12-year interval |
+
+### 4.5 Incompatibilities
+
+- Novec 1230 decomposes at temperatures > ~500 °C to produce **hydrogen fluoride (HF)**. This is addressed under §11 (personnel safety) and §9 (no internal ventilation running during discharge).
+- Not compatible with alkali metals (sodium, potassium) — not present in the Cassette.
+- No known adverse interactions with PG25 coolant (spill scenario inside Cassette does not produce dangerous byproducts with Novec 1230 vapor).
+
+---
+
+## 5. System design basis
+
+### 5.1 Agent quantity calculation
+
+Per NFPA 2001 Annex B (2022 edition), the minimum agent mass is:
 
 ```
-Q_L = V × ΔP / (P_atm × t)
+W = (V / S) × (C / (100 - C))
+
+where
+  W = agent mass (kg)
+  V = protected volume (m³) = 76.0
+  S = specific vapor volume of Novec 1230 (m³/kg) at design minimum temperature
+    S = k1 + k2 × T
+    k1 = 0.0664 m³/kg
+    k2 = 0.0002741 m³/kg/°C
+    T  = 20 °C
+    S  = 0.0664 + 0.0002741 × 20 = 0.07188 m³/kg
+  C = design concentration (% v/v) = 5.85
 ```
 
-| Variant | ΔP limit | Time | Q_L (m³/s) | Q_L (ACH) |
-|---------|----------|------|------------|-----------|
-| Onshore | 100 Pa | 300 s | 76.35 × 100 / (101,325 × 300) = **0.000251 m³/s** | 0.012 ACH |
-| Offshore | 50 Pa | 300 s | 76.35 × 50 / (101,325 × 300) = **0.000126 m³/s** | 0.006 ACH |
-
-### Hold Time Calculation
-
-Concentration decay with leakage, assuming agent loss proportional to leakage:
+Substituting:
 
 ```
-C(t) = C_initial × exp(−Q_L × t / V)
+W = (76.0 / 0.07188) × (5.85 / 94.15)
+W = 1,057.3 × 0.06214
+W ≈ 65.7 kg at 5.85 %
 ```
 
-Required: C(600 s) ≥ 5.85% with C_initial = 5.85%
+At common margin concentrations:
 
-| Variant | At t = 600 s | Margin |
-|---------|--------------|--------|
-| Onshore | 5.85% × exp(−0.000251 × 600 / 76.35) = 5.85% × exp(−0.00197) = **5.84%** | −0.01% |
-| Offshore | 5.85% × exp(−0.000126 × 600 / 76.35) = 5.85% × exp(−0.00099) = **5.84%** | −0.01% |
+| C | W (kg) |
+|---|---:|
+| 5.85 % (NFPA min) | 65.7 |
+| 6.00 % | 67.5 |
+| 6.25 % | 70.5 |
+| 6.70 % (typical fail-safe margin) | 75.9 |
 
-### Interpretation
+**Engineering estimate: ~66–76 kg Novec 1230.** Final sizing by the Ansul clean-agent designer is **FIRE-01**; this estimate is the RFQ anchor.
 
-The cassette enclosure is **extremely tight** (ACH = 0.006–0.012). At 10 minutes, concentration drops by less than 0.01% — essentially no decay. The enclosure sealing specification is more than adequate for the 10-minute hold time.
+### 5.2 Discharge time
 
-**No additional agent overcharge is required for hold time.** The 66 kg (design: 72 kg for 0°C) quantity is sufficient for both the discharge concentration AND the full 10-minute hold.
+NFPA 2001 §5.7.2 requires clean-agent discharge to achieve ≥ 95 % of design concentration within **10 s** for halocarbon agents. For W = 66 kg, average discharge rate is ~6.6 kg/s — well within typical Ansul Sapphire nozzle capacity (single-zone total-flooding nozzles rated to 20+ kg/s).
 
-**Implication:** The over-pressure vent (§7) closes after 15 seconds per INT-001 §17. After closure, the Cassette is again sealed. The concentration holds at essentially the discharge value for the entire 10-minute hold period. ✓
+### 5.3 Cylinder configuration
 
----
+| Parameter | Value |
+|---|---|
+| Agent quantity basis | ~66–76 kg (§5.1) |
+| Fill density (NFPA 2001 max) | 1.41 kg/L |
+| Cylinder volume required | 66 / 1.41 = 46.8 L minimum |
+| **Primary cylinder — preferred configuration** | **1 × 52 L Ansul Sapphire cylinder (or equivalent UL 2166-listed)** |
+| Cylinder mounting | Vertical, chain-braced to Cassette sidewall in the ELEC end, upstream of the ECP panel |
+| Cylinder valve | Pneumatically actuated release valve (N₂ pilot from solenoid on panel command) |
+| Piping | Schedule 40 black steel, threaded or grooved; pipe network sized by Ansul designer at FIRE-01 |
+| Nozzle count and placement | Single central ceiling nozzle for 76 m³ volume is within Ansul coverage envelope; final nozzle count and aim per hydraulic calc at FIRE-01 |
 
-## §5  CYLINDER SIZING — CURRENT BOM vs REQUIRED
+### 5.4 Reserve cylinder — position
 
-### Current BOM Specification
+**No reserve cylinder in Rev 1.2.** A reserve cylinder (second 52 L cylinder, switched automatically if the primary fails to discharge or re-ignites after discharge) is considered and explicitly excluded for the following reasons:
 
-Per BOM §7 and INT-001 §17:
-- **2 × Ansul Novec 1230 cylinder, 180 L water volume, 25 bar supercharged nitrogen**
-- "Cylinder weight (each): ~190 kg"
+1. NFPA 2001 does not require a reserve for a single protected enclosure unless the hazard is classified as continuous-occupancy-critical and the AHJ has required it. Lafayette Parish does not require it for an ISO-container datacenter module.
+2. The BMS + CDU + MIV + ELEC-001 shunt-trip combination removes ignition energy (480 V AC dropped, workload off, coolant isolated) within seconds of FIRE-TRIGGERED, dramatically reducing re-ignition likelihood.
+3. The Cassette is a replaceable unit. Loss-of-cassette is a platform-scope operational event, not a life-safety event, once occupants are out.
+4. Cylinder footprint and weight inside the Cassette are real constraints; a second 52 L cylinder consumes ECP-area floor space that is better used for spares and maintenance access.
 
-Fill mass calculation:
-- Ansul Novec 1230 fill density at 25 bar supercharge: **0.827 kg/L** (Ansul design guide)
-- Agent per cylinder: 180 L × 0.827 kg/L = **148.9 kg**
-- Total agent in 2 cylinders: **297.8 kg**
-
-### Required vs Available
-
-| | Value |
-|--|-------|
-| Required agent (0°C worst case) | 72 kg |
-| Available agent (2 × 180 L, both discharge) | **297.8 kg** |
-| Ratio | **4.14×** over-specification |
-| Achieved concentration at 297.8 kg discharge | **21.9% v/v** |
-| NFPA NOAEL (unmanned — not a constraint) | 10% |
-| Excess agent mass over requirement | **225.8 kg** |
-
-### Consequences of Over-Specification
-
-1. **Weight:** 2 × 190 kg (cylinder + agent) = 380 kg total. Correctly sized cylinders would be 2 × ~60 kg = 120 kg. **Penalty: ~260 kg of unnecessary mass** — directly worsens the weight compliance issue identified in Cassette-MASS-001.
-
-2. **Post-discharge recovery:** Novec 1230 is expensive (~$25–35/kg). 297.8 kg of agent per discharge event vs 72 kg. Unnecessary cost at each event.
-
-3. **Discharge time:** Larger agent mass through 8 fixed nozzles takes longer to discharge. NFPA 2001 §5.4.3.1 requires design concentration achieved within 10 seconds. Discharging 297.8 kg through 8 nozzles in 10 seconds requires a nozzle flow rate of ~37.2 kg/s — this is high and requires verification. At 72 kg in 10 seconds: 9 kg/s total, 1.125 kg/s per nozzle — achievable with standard Ansul nozzles at 25 bar. The oversized cylinders may actually make the 10-second discharge requirement harder to meet.
-
-4. **ELEC end zone crowding:** 180 L cylinders are physically large. Properly sized 50–75 kg fill cylinders are standard small-to-medium units.
-
-### Correctly Sized Cylinder Selection
-
-Required agent: **72 kg** (at 0°C, covering all variants)
-
-Standard Ansul (Johnson Controls) Novec 1230 cylinder fill sizes closest to 72 kg:
-- **75 lb (34 kg)** — too small alone
-- **150 lb (68 kg)** — marginally small (68 < 72 kg)
-- **200 lb (90.7 kg)** — adequate with 26% margin ✓
-- **Two × 100 lb (2 × 45.4 kg = 90.8 kg)** — adequate if both discharge simultaneously ✓
-
-### Recommendation
-
-**Replace 2 × 180 L cylinders with 2 × 200 lb (90.7 kg fill) cylinders, both discharging simultaneously.**
-
-| Configuration | Agent available | vs Requirement | Mass saved vs current BOM |
-|---------------|----------------|----------------|---------------------------|
-| Current: 2 × 180 L (148.9 kg each) | 297.8 kg | 4.14× | — |
-| **Recommended: 2 × 200 lb (90.7 kg each)** | **181.4 kg** | **2.52×** | **~230 kg** |
-| Minimum compliant: 2 × 100 lb (45.4 kg each) | 90.8 kg | 1.26× | ~300 kg |
-
-The 2 × 200 lb configuration:
-- Both cylinders discharge simultaneously into the enclosure (not staged backup)
-- 181.4 kg achieves 16.0% v/v — still above design at 5.85%, providing margin for any enclosure seal degradation
-- Cylinder weight per unit: ~35 kg each (200 lb fill + cylinder tare ~10 kg). Total: ~70 kg vs 380 kg current
-- Standard Ansul catalog item, readily available
-
-**BOM Rev 2.0: Change §7 cylinders from 180 L, 25 bar to 200 lb (90.7 kg) Ansul Novec 1230, standard supercharge.**
+If the platform operator later classifies the Cassette hazard as requiring reserve, **FIRE-04** covers adding a reserve bank without redesigning the primary system.
 
 ---
 
-## §6  NOZZLE COUNT & DISTRIBUTION
+## 6. Detection
 
-### Current Specification
-INT-001 §17: 8 ceiling-mounted 360° nozzles distributed along the rack zone.
+### 6.1 Detector type
 
-### Coverage Analysis
+**Photoelectric smoke detectors, UL 268-listed, addressable, intelligent.** Chosen over ionization detectors for:
 
-| Parameter | Value | Notes |
-|-----------|-------|-------|
-| Enclosure length | 12,032 mm | |
-| Number of nozzles | 8 | Per INT-001 |
-| Nozzle pitch | 12,032 / 8 = 1,504 mm | |
-| Enclosure width | 2,352 mm | |
-| Nozzle centerline to wall | 1,176 mm | |
-| 360° nozzle throw radius at 25 bar | 2,000–3,000 mm typical | Ansul catalog; confirm for selected orifice |
-| 1,504 mm pitch — within throw radius? | 1,504 mm < 2,000 mm | **✓ — overlapping coverage** |
-| 1,176 mm to wall — within throw radius? | 1,176 mm < 2,000 mm | **✓ — wall coverage adequate** |
+- Better early response to smoldering Class A / Class C fires (PCB substrate smoldering, cable insulation) that dominate the Cassette fire risk
+- Lower nuisance-alarm rate in high-airflow environments
 
-8 nozzles at 1,504 mm pitch provides overlapping 360° coverage across the full 12.032 m × 2.352 m ceiling plane.
+Optional — high-sensitivity air-sampling (VESDA-style) is considered as an upgrade (**FIRE-05**) but not base Rev 1.2. The photoelectric array is sufficient for NFPA 2001 and NFPA 72 compliance at SL-equivalent facility risk classification.
 
-### Discharge Rate per Nozzle
+### 6.2 Zone layout in the 40 ft HC container
 
-For the **recommended** 2 × 200 lb (181.4 kg total) configuration at 10-second discharge:
-- Total mass flow: 181.4 kg / 10 s = 18.14 kg/s total
-- Per nozzle: 18.14 / 8 = **2.27 kg/s per nozzle**
+Two independent detection zones. Cross-zone 2-of-N logic: both zones must detect before the system advances past pre-alarm to pre-discharge countdown.
 
-For the **current BOM** 2 × 180 L (297.8 kg) at 10-second discharge:
-- Per nozzle: 297.8 / (8 × 10) = **3.73 kg/s per nozzle**
+| Zone | Coverage | Detectors | Placement |
+|---|---|---|---|
+| **Zone A — Compute end** | Racks 1–7 (compute + networking) and immediate plenum | 3 × photoelectric | Ceiling-mounted, spaced ~3.0 m along the container centerline above the hot aisle |
+| **Zone B — ELEC + Control end** | Racks 8–15 (5 Delta power cabinets, control rack, ECP area), Munters plenum | 3 × photoelectric | Ceiling-mounted, spaced ~3.0 m along the container centerline over the power end |
 
-Both are within the operating range of Ansul 360° nozzles at 25 bar (typical: 0.5–5 kg/s depending on orifice). However, the exact orifice size must be confirmed by Ansul hydraulic design software (ANSUL CHECKFIRE or equivalent).
+6 detectors total. Spacing is within NFPA 72 Chapter 17 guidance for smooth ceilings at ≤ 3 m height in high-airflow environments (the reduced spacing vs the nominal 9 m detector spacing accounts for the forced-airflow environment — Munters supply and rack fans will dilute smoke more than in an unmoved air space).
 
-**Nozzle count of 8 is appropriate for the enclosure geometry.** Exact orifice sizing requires Ansul hydraulic calculation. See §13 open item F-01.
+**Cross-zone logic:**
 
-### End Zone Coverage
+- Single-detector alarm on either zone — **pre-alarm** (audible horn + strobe inside; FIRE-DI-1 NOT asserted yet; Level-1 state)
+- Any detector on the second zone also alarms — **confirmed alarm, pre-discharge countdown begins** (FIRE-DI-1 asserts here — see §8.2)
+- Manual release station activation — bypasses cross-zone; treated as confirmed alarm immediately
 
-The 8 nozzles are described as distributed along the rack zone (9,000 mm). The ELEC end zone (1,200 mm) and CDU end zone (1,500 mm) would then be outside the nozzle run.
+### 6.3 Detector placement — high-density compute considerations
 
-NFPA 2001 requires the agent to protect the entire enclosure. The Novec 1230 vapor, once discharged, will diffuse throughout the sealed enclosure. Because Novec 1230 vapor is heavier than air at room temperature (molecular weight 316 vs air 29), there is some stratification risk.
+- **Hot aisle / cold aisle orientation:** in the Cassette the aisles are perpendicular to the container long axis; detectors run down the centerline above the hot aisle where rising thermal plume brings smoke to the ceiling first
+- **Munters airflow:** Munters DSS Pro supply throw is directional; detectors are placed at least 1.5 m from Munters supply registers per NFPA 72 to avoid supply-air dilution
+- **Rack-top thermal layer:** in dense compute the rack top may run 10–15 °C above ambient; ceiling detectors are rated for the elevated ambient (operating range includes up to 38 °C per UL 268 with optional high-temp variants)
+- **No raised floor in the base design:** no under-floor detection required; if a future revision adds a raised floor or a cable tray plenum, **FIRE-06** covers sub-floor detection
+- **In-rack smoke detection (optional, future):** VESDA-style aspirating detection sampling inside each rack is considered as an upgrade (**FIRE-05**), providing even earlier detection for PCB smoldering before smoke reaches the ceiling. Not in Rev 1.2.
 
-**Action F-02:** Confirm that 2 nozzles (one at each end of the rack row) provide adequate coverage into the ELEC and CDU end zones. If not, add one nozzle at each end zone (total 10 nozzles). Ansul hydraulic calculation governs.
-
----
-
-## §7  OVER-PRESSURE VENT SIZING
-
-### Specification (INT-001 §17)
-250 × 250 mm powered damper, ceiling-mounted, opens during discharge window, closes after 15 seconds.
-
-### NFPA 2001 Annex B — Peak Pressure Analysis
-
-Agent vapor injection rate during discharge:
-
-For the **recommended** 2 × 200 lb system (18.14 kg/s mass flow):
-- Volumetric flow of Novec 1230 vapor at 20°C: 18.14 kg/s × 0.07188 m³/kg = **1.304 m³/s**
-
-For the **current BOM** (29.78 kg/s mass flow):
-- Volumetric flow: 29.78 × 0.07188 = **2.141 m³/s**
-
-### Vent Flow Capacity
-
-Vent area: 0.25 × 0.25 = **0.0625 m²**
-
-Peak pressure to drive the injection volumetric flow through the vent (orifice flow equation, C_d = 0.61, ρ_air = 1.2 kg/m³):
+### 6.4 Alarm and discharge sequence
 
 ```
-Q = C_d × A × √(2ΔP / ρ)
-ΔP = (Q / (C_d × A))² × ρ / 2
+t = 0 s     First-zone detector alarms
+              · Panel enters PRE-ALARM state
+              · Audible horn + strobe active inside Cassette
+              · FIRE-DI-2 (ARM) remains normal (still armed)
+              · FIRE-DI-1 NOT asserted
+              · Platform NOC receives pre-alarm event via BMS FIRE-FAULT?  No — pre-alarm is a separate event.
+                   Rev 1.2 decision: pre-alarm is NOT published as a BMS alarm because it is not a
+                   confirmed event. A separate FIRE-PRE-ALARM DI could be added in a future revision
+                   (FIRE-07) but is not base Rev 1.2.
+
+t = T_x    Second-zone detector alarms  (T_x occurs whenever cross-zone confirms)
+              · Panel enters CONFIRMED ALARM state
+              · FIRE-DI-1 asserts (NC contact opens) — BMS sees FIRE-TRIGGERED CRITICAL
+              · Pre-discharge countdown begins: 30 s
+              · Panel commands Munters shutdown via the hardwired NC interlock (§9.1)
+              · Panel commands ELEC-001 ventilation shutdown (§9.2)
+              · BMS in parallel executes safe-state: close MIV-S and MIV-R, stop CDU pumps,
+                de-energize workload-enable (CTRL-001 §6.3)
+
+t = T_x + 30 s  Unless abort asserted:
+              · Solenoid on cylinder valve energizes
+              · Agent discharges; ≥ 95 % of design concentration in ≤ 10 s
+              · Panel latches in DISCHARGED state; manual reset required
 ```
 
-| System | Q (m³/s) | ΔP (Pa) | ΔP (kPa) | Container limit |
-|--------|----------|---------|----------|-----------------|
-| **Recommended 2 × 200 lb** | **1.304** | **(1,304/0.038125)² × 0.6 = 780 Pa** | **0.78** | ✓ << 50 kPa |
-| Current BOM 2 × 180 L | 2.141 | (2,141/0.038125)² × 0.6 = 2,098 Pa | 2.10 | ✓ << 50 kPa |
-
-*Note: 0.038125 = 0.61 × 0.0625*
-
-Both configurations produce peak internal pressures well below the ISO container structural limit (estimated ≥ 50 kPa for modified container). The 250 × 250 mm vent is **adequately sized for both configurations.** ✓
-
-### Damper Control Requirements
-
-The powered damper must open **before agent discharge begins** — not simultaneously. Control sequence:
-1. VESDA Fire 2 + pre-discharge timer expires → open damper first (< 2 seconds)
-2. Damper open-confirmed signal → release Novec cylinders
-3. Discharge complete (10 s) → hold damper open for 5 more seconds (total ~15 s)
-4. Close damper — enclosure returns to sealed state for 10-minute hold
-
-If damper fails to open (power loss, mechanical fault):
-- Peak pressure for recommended system: 0.78 kPa → acceptable structural load even without vent relief
-- Peak pressure for current BOM: 2.10 kPa → still structurally acceptable
-- BMS must log damper position failure as a fault but must not inhibit discharge — fire suppression takes priority over vent confirmation
+If the **abort station** is pressed during the 30 s countdown (§7.3), discharge is inhibited but the alarm state is maintained. Release of the abort button after the countdown expires re-arms discharge, unless the panel is manually reset.
 
 ---
 
-## §8  VESDA DETECTION SEQUENCE
+## 7. Control panel
 
-### Xtralis VESDA-E VEU-A00 — Alarm Levels
+### 7.1 Panel selection
 
-Per Xtralis design guide for electronics/clean rooms:
+- **Ansul Autopulse IQ-636 clean-agent releasing panel** (or equivalent UL 864 / UL 2166-listed releasing panel in the Ansul Sapphire product family)
+- Panel mounted inside the Cassette at the ELEC end, on the wall adjacent to the ECP panel, at operator eye height
+- Panel has local annunciator LEDs and backlit display showing: POWER, ARMED, PRE-ALARM, CONFIRMED ALARM, DISCHARGED, INHIBIT, FAULT, BATTERY LOW
 
-| Level | Detector Reading | Meaning | Response |
-|-------|-----------------|---------|----------|
-| Alert | 0.005% obs/m | Trace combustion products — incipient fire | BMS alarm, increase poll rate, notify SCADA |
-| Action | 0.02% obs/m | Active smoldering — fire developing | BMS alarm, workload pause, dispatch crew |
-| Fire 1 | 0.05% obs/m | Active flaming possible | Pre-discharge alarm (strobe + horn, 30 sec), E-stop to racks |
-| Fire 2 | 0.20% obs/m | Confirmed fire | Release sequence initiated after 30-second hold |
+### 7.2 Power source
 
-### Sampling Network (18 Points)
+- Primary: 120 V AC from a dedicated ELEC-001 panel breaker, fed upstream of the main AC shunt-trip that the ELEC-001 E-stop and this document's §9.2 interlock command (the panel must **not** be killed by its own discharge interlock)
+- Secondary: internal sealed lead-acid battery sized per NFPA 72 for 24 h supervisory + 15 min alarm load
+- Tertiary (not required by code for 120 VAC systems but used here): 24 VDC life-safety UPS loop feed to the **BMS interface circuit only** — the panel itself runs on its own AC + battery posture; only the 3 DI + 2 DO loop between the fire panel terminal strip and the BMS ECP panel uses CTRL-001 §2.5 F10 24 VDC (2 W budgeted there)
 
-| Zone | Sample Points | Priority |
-|------|--------------|----------|
-| Per-rack (above each rack) | 15 | High — fire most likely inside racks |
-| Delta power shelf cluster (×2) | 2 | High — power conversion = ignition risk |
-| Ceiling reference | 1 | Medium — general volume |
+Loss of 120 V AC primary triggers a panel FAULT (asserts FIRE-DI-3 to BMS) and the battery carries the panel for 24 h. The panel continues to detect and respond to fire throughout the battery hold-up period.
 
-Sampling velocity and hole sizing per Xtralis guidelines: 2.2 mm diameter holes, spacing per airflow model. Ansul-Xtralis hydraulic verification required — see §13 F-03.
+### 7.3 Stations
 
-### VESDA Fault Handling
+| Station | Type | Location | Function |
+|---|---|---|---|
+| **Manual release** | Break-glass key-operated release station, UL-listed | Inside Cassette, adjacent to personnel door, at 1.4 m AFF | Activating this station bypasses cross-zone detection; immediately advances to confirmed alarm + countdown. Used by personnel discovering a fire. |
+| **Abort-1 (interior)** | Maintained-contact mushroom pushbutton, green, clearly labeled "ABORT" | Inside Cassette, on the wall immediately next to the personnel door (so a person exiting can hit it on the way out) | Pressed and held — inhibits agent discharge during countdown. Countdown pauses while held. Release of button during countdown resumes the countdown from where it paused. |
+| **Abort-2 (exterior)** | Same type as Abort-1 | Exterior wall of Cassette, adjacent to door, at 1.2 m AFF | Same function as Abort-1. Allows a responder outside to inhibit discharge without entering. |
+| **Reset** | Key-operated, with Ansul service key | Behind panel door | Clears latched alarm states after event response. Reset is never remote. |
 
-If VESDA unit loses power or airflow: BMS switches to cross-zone thermal backup (rack temperature sensors). If rack supply/return ΔT exceeds 35°C (thermal runaway signature), BMS initiates Fire 1 equivalent response. This is not NFPA 2001 primary detection but provides degraded-mode protection.
+Abort does **not** reset the system. Abort inhibits the solenoid for as long as the button is held. When the button is released, the countdown logic proceeds. If the alarm condition still satisfies cross-zone confirmation, the system will re-enter countdown and discharge. Abort is for responder judgment during the 30 s window, not a permanent disable.
+
+### 7.4 Panel annunciator at the exterior
+
+In addition to the interior panel display, a **remote annunciator** mounted on the exterior door frame provides outside visibility of panel state without opening the Cassette. Indicator lamps only:
+
+- POWER (green, steady)
+- ARMED (green, steady)
+- PRE-ALARM (amber, flashing)
+- DISCHARGED (red, steady)
+- FAULT (amber, steady)
+
+The remote annunciator does not carry abort or reset functions; those are on the exterior at Abort-2 and at the service key only.
 
 ---
 
-## §9  DISCHARGE INTERLOCK SEQUENCE
+## 8. BMS interface — authoritative terminal-level definition
 
-Complete sequence from Fire 2 detection to post-discharge recovery:
+This section is the source of truth. CTRL-001 §3.2 and §4.6 reference this definition.
+
+### 8.1 Interface summary
+
+Five dry-contact signals between the Ansul panel's interface terminal strip and the BMS ECP panel:
+
+- **3 DI** (fire panel → BMS): FIRE-DI-1 (FIRE-TRIGGERED), FIRE-DI-2 (FIRE-ARM), FIRE-DI-3 (FIRE-FAULT)
+- **2 DO** (BMS → fire panel): DO-FIRE-ARM (maintenance inhibit), DO-FIRE-RELEASE (remote release)
+
+All five are dry contacts on the panel side. All five are interrogated by the BMS 24 VDC F10 circuit (CTRL-001 §2.5). The interface is **fail-safe NC** throughout — the normal, alarm-free, powered state for every DI is contact closed with loop current; every fault condition opens the contact and drops the loop.
+
+### 8.2 FIRE-DI-1 — FIRE-TRIGGERED
+
+| Attribute | Value |
+|---|---|
+| BMS tag | FIRE-DI |
+| Panel terminal | Ansul panel alarm output terminals (factory-standard "AUX ALARM" or "ALARM OUT" contact set) |
+| Contact type | **Normally Closed** dry contact |
+| Normal state (no alarm) | Contact closed — loop current flowing — BMS sees logical 0 (not-alarm) |
+| Asserted state | Contact opens the instant the panel enters **CONFIRMED ALARM** state (cross-zone satisfied or manual release activated) — this is the **start** of the 30 s pre-discharge countdown, not the moment of actual agent discharge |
+| Loop | 24 VDC from BMS, ~4 mA steady-state interrogation, shielded twisted pair |
+| Wiring | Pair from panel terminals to BMS AI/DI input module in ECP; shield grounded single-point at BMS panel |
+| Fail-safe posture | Cable cut, panel power failure, or loop open — BMS sees FIRE-TRIGGERED (safe failure toward alarm) |
+| Debounce in BMS | 0 s (per CTRL-001 §6.2 TTA) — immediate CRITICAL |
+| BMS response | FIRE-TRIGGERED CRITICAL — safe-state per CTRL-001 §6.3 (MIV close, pump stop, workload off, arm fire via DO-FIRE-ARM de-energize) |
+
+**Position on what FIRE-DI-1 captures:** FIRE-DI-1 asserts at **CONFIRMED ALARM** (start of 30 s countdown), **not** at actual agent discharge. Rationale: the BMS must begin MIV closure, workload drain, and coolant pump shutdown at the earliest confirmed event so those actions complete **before** discharge, not concurrent with it. Waiting for actual discharge to signal the BMS would mean MIVs close while agent is flooding — too late. This is locked.
+
+A second DI reflecting actual discharge (FIRE-DI-DISCHARGED) is considered and excluded from Rev 1.2 — the BMS does not need a separate actual-discharge signal because the safe-state response is the same in both cases and the platform NOC can reconstruct actual discharge from panel logs during incident response. Covered under **FIRE-07** if later required.
+
+### 8.3 FIRE-DI-2 — FIRE-ARM
+
+| Attribute | Value |
+|---|---|
+| BMS tag | FIRE-ARM (one of the three channels in CTRL-001 §3.2 FIRE-DI × 3) |
+| Panel terminal | Ansul panel "SYSTEM ARMED" or "INHIBIT STATE" contact |
+| Contact type | **Normally Closed** dry contact |
+| Normal state (system armed, ready to discharge) | Contact closed — BMS sees logical 0 (armed / OK) |
+| Asserted state (system inhibited or in maintenance mode — not ready to discharge) | Contact open |
+| Loop | Same 24 VDC loop scheme as FIRE-DI-1 |
+| Fail-safe posture | Loss of loop — BMS sees INHIBITED (panel treated as not-ready — WARN to NOC, not CRITICAL — the system being inhibited is a maintenance-window condition, not a fire event) |
+| BMS response | Publishes panel-arm state as a monitored tag; does not auto-trigger safe-state on inhibit. A WARN is raised if INHIBITED state persists > 24 h outside a scheduled maintenance window |
+
+### 8.4 FIRE-DI-3 — FIRE-FAULT
+
+| Attribute | Value |
+|---|---|
+| BMS tag | FIRE-FAULT (one of the three channels in CTRL-001 §3.2 FIRE-DI × 3) |
+| Panel terminal | Ansul panel "TROUBLE" or "SUPERVISORY FAULT" contact |
+| Contact type | **Normally Closed** dry contact |
+| Normal state (no fault) | Closed — loop current — BMS sees logical 0 (no fault) |
+| Asserted state (any panel fault: detector trouble, cylinder low pressure, battery low, loss of AC > battery threshold, communication fault, ground fault) | Open |
+| Loop | Same scheme as FIRE-DI-1 |
+| Fail-safe posture | Loss of loop — BMS sees FAULT (safe failure toward ALARM notification) |
+| BMS response | FIRE-FAULT ALARM per CTRL-001 §6.2 — SCADA alert; on-site response required |
+
+### 8.5 DO-FIRE-ARM — BMS maintenance-inhibit output to panel
+
+**Locked position: this DO is a maintenance-inhibit relay driving the panel's INHIBIT input. DO energized = INHIBIT ACTIVE (panel will not discharge — safe for personnel entry). DO de-energized = INHIBIT REMOVED (panel armed and ready).**
+
+| Attribute | Value |
+|---|---|
+| BMS tag | FIRE-ARM-DO (in CTRL-001 §3.2 DO totals) |
+| Direction | BMS → fire panel |
+| Relay type | DPDT interposing relay, 24 VDC coil, gold-plated contacts, Din-rail mount in BMS ECP panel |
+| Panel input | Ansul panel dedicated "REMOTE INHIBIT" terminal pair (or "MAINTENANCE MODE IN") |
+| Coil power | BMS DO module, fed from CTRL-001 §2.5 F10 24 VDC |
+| DO **energized** behavior | Interposing relay contacts CLOSE across the panel's remote-inhibit terminals — panel enters INHIBIT state — detection still functions, alarms still annunciate locally, but discharge solenoid is inhibited and agent will not release |
+| DO **de-energized** behavior | Interposing relay contacts OPEN — inhibit released — panel is armed and ready to discharge on confirmed alarm |
+| Power-loss behavior | DO is de-energized on any BMS power loss or BMS failure — panel is armed by default. **Fail-safe toward arming, not toward inhibit.** This is the intent — if the BMS dies, we want the panel armed, not inhibited. |
+| Watchdog behavior | Safe-state relay (CTRL-001 §2.2) drops — DO driver de-energizes — panel armed |
+| BMS application usage | During normal operation: DO de-energized (panel armed). During maintenance windows when a person is inside the Cassette: DO energized (panel inhibited). On safe-state entry per CTRL-001 §6.3 step 6: DO explicitly de-energized (panel armed) — even if it was energized a moment before. |
+
+**Handshake interaction with FIRE-DI-2:** when the BMS energizes DO-FIRE-ARM (inhibit active), FIRE-DI-2 should open (panel reports inhibited) within 1 s. The BMS verifies this round-trip; mismatch > 10 s generates a WARN. When the BMS de-energizes DO-FIRE-ARM, FIRE-DI-2 should close (panel reports armed) within 1 s. Same mismatch monitoring.
+
+### 8.6 DO-FIRE-RELEASE — BMS remote-release output to panel
+
+**Locked position: this DO is a remote-release contact wired to the panel's manual-release input. BMS may assert it only if FIRE-DI-1 has been continuously asserted > 60 s AND FIRE-DI-3 is not active AND a specific platform-NOC-authenticated OPC-UA command has been issued. This is a belt-and-suspenders backup for a panel that has confirmed alarm but failed to discharge — it does not bypass the Ansul panel release logic.**
+
+| Attribute | Value |
+|---|---|
+| BMS tag | FIRE-RELEASE-DO (in CTRL-001 §3.2 DO totals) |
+| Direction | BMS → fire panel |
+| Relay type | DPDT interposing relay, 24 VDC coil, gold-plated contacts |
+| Panel input | Ansul panel "REMOTE MANUAL RELEASE" terminal pair (same electrical input as the interior manual release station; momentary closure = treat as manual pull-station activation) |
+| Coil power | BMS DO module, F10 24 VDC |
+| DO energized behavior | Relay momentarily closes (≥ 500 ms pulse) across the panel's remote-release terminals — panel treats as manual release command — advances to confirmed alarm + countdown if not already — discharges after 30 s abort window |
+| Default state | De-energized. Always. |
+| Conditions for BMS to assert DO-FIRE-RELEASE | **All four must be true simultaneously:**<br>(1) FIRE-DI-1 has been continuously asserted for > 60 s<br>(2) FIRE-DI-3 is NOT active<br>(3) Platform NOC has issued a specific `fire-remote-release-request` authenticated OPC-UA command with the Cassette serial and a signed confirmation token<br>(4) DO-FIRE-ARM is de-energized (i.e., panel is not in maintenance inhibit) |
+| Why the 60 s gate | If the Ansul panel were going to discharge on its own, it would have done so by t = confirmed + 30 s. At 60 s after confirmation the BMS infers a probable panel-side failure of the release solenoid path. Only then does remote release make sense. |
+| Why platform NOC gate | Discharging agent is a consequential action. It must not be under fully autonomous BMS control. A human-in-loop decision from NOC, authenticated via OPC-UA per CYBER-001 §6.3 platform role, is required. |
+| Logging | Every assertion logged to /var/log/bms/alarms.jsonl at CRITICAL level, forwarded to historian, and included in mandatory post-event report |
+
+**NFPA 2001 compliance condition on remote release:** NFPA 2001 §4.3.3 permits electrical remote-manual-release provided the remote-release means is clearly identified and protected against inadvertent operation. Wiring DO-FIRE-RELEASE to a relay that requires the four-condition gate above satisfies "protected against inadvertent operation." Acceptance by the AHJ is at **FIRE-08**.
+
+### 8.7 Interface loop power and wiring summary
+
+| Attribute | Value |
+|---|---|
+| Loop supply | 24 VDC from BMS ECP panel bus (CTRL-001 §2.5 F10), 2 W budget |
+| Loop current (all three DI, steady state) | ~12 mA total (~4 mA × 3 DI) |
+| DO coil current (each) | ~50 mA when energized |
+| Total steady-state (DIs live, DO-FIRE-ARM de-energized at normal operation) | ~12 mA at 24 V — 0.3 W |
+| Peak (maintenance inhibit active, DO-FIRE-ARM energized) | ~62 mA at 24 V — 1.5 W |
+| **All within the 2 W F10 budget in CTRL-001 §2.5** | ✓ |
+| Cable type | 4-pair overall-shielded instrumentation cable, 18 AWG, in separate conduit from 480 V AC |
+| Terminations | Numbered terminal blocks at both ends per ECP-001 wiring practice; tag per CTRL-001 §3.2 |
+
+---
+
+## 9. Interlocks
+
+### 9.1 Munters DSS Pro — hardwired NC interlock, not BMS-mediated
+
+**Locked position: a Normally Closed dry contact from the Ansul panel's discharge alarm output is wired in series with the Munters DSS Pro run circuit. When the panel enters CONFIRMED ALARM (or pre-discharge or discharge — the contact operates at confirmed alarm, same point as FIRE-DI-1), the contact OPENS and the Munters run circuit breaks. Munters stops within its own internal response time (< 2 s). The BMS plays no role in this interlock. The BMS Munters run/stop DO (CTRL-001 §6.3 step 5 "Munters continues running during safe-state") is wired in parallel with the fire interlock NC contact, not in place of it.**
 
 ```
-T = 0 s       VESDA Fire 2 alarm received by Novec control panel
-              (Two-zone confirmation or single-zone at 0.20% obs/m)
+Munters DSS Pro run circuit (schematic):
 
-T = 0–2 s     BMS asserts: open over-pressure vent damper
-              BMS asserts: E-stop to all Delta power shelves (workload down)
-              BMS asserts: close CoolIT CDU manifold isolation valves
-              BMS notifies platform SCADA (cannot inhibit)
-              BMS activates exterior strobe + horn at both ECPs
+   +24V ──[BMS Munters Run DO, NO]──┬── Munters run coil
+                                    │
+   +24V ──[Fire panel NC alarm contact]──┘
+         (opens on CONFIRMED ALARM — BMS has no role)
 
-T = 2 s       Verify: vent damper open-confirmed
-              If damper fails to confirm: log fault, proceed regardless
-
-T = 2–32 s    Pre-discharge alarm period (30 seconds)
-              Abort available: key-switch at either ECP cancels discharge
-              If abort activated: log event, hold all interlocks, notify
-
-T = 32 s      Release Novec 1230 cylinders (both simultaneously)
-              Expected discharge complete: T = 32 + 10 = 42 s
-
-T = 47 s      Close over-pressure vent damper (15 s after discharge start)
-              Enclosure now sealed — hold time begins
-
-T = 47–647 s  10-minute hold period
-              BMS monitors concentration via indirect indicators (no direct sensor)
-              No personnel entry permitted
-              Exterior strobe remains active throughout hold
-
-T = 647 s     Hold complete
-              BMS: active alert for enclosure entry
-              Cassette remains locked until gas concentration measured
-              Recharge / recovery per §10
-
+Logic: Munters runs iff (BMS Munters DO energized) AND (fire NC contact still closed).
+       When fire event occurs, the NC contact opens — Munters stops immediately,
+       regardless of what the BMS DO is doing.
 ```
 
-### Critical Interlock: Power-Off Before Discharge
+**Why this architecture:**
 
-All Delta power shelves must be commanded OFF before Novec discharges. Energized equipment at discharge creates arc-flash risk from Novec vapor ionization (Novec 1230 is electrically non-conductive but displaces oxygen, and high-current arcs during power-off transition with agent present is a risk). The E-stop to all shelves at T=0 handles this.
+- The BMS's CTRL-001 §6.3 step 5 rule "Munters continues running during safe-state (needed for humidity control during cool-down)" applies to non-fire safe-state events (e.g., coolant leak, TraceTek wet, CDU loss). In those events, Munters should keep humidity under control while cassettes cool down.
+- But during a **fire** event, Munters running would defeat the Novec 1230 flooding — agent concentration would drop below 5.85 % within seconds of discharge because Munters is pushing conditioned air through the enclosure.
+- The resolution is not to have the BMS conditionally decide which safe-state it is in and act accordingly — that is slow, software-dependent, and reversible by a bug. The resolution is to make the fire-vs-Munters interlock **physical, in the wiring, independent of the BMS**.
+- The NC contact from the fire panel and the BMS DO are logical AND. Fire panel asserts — NC opens — Munters off regardless of BMS state. BMS can keep its Munters DO energized the whole time without contradicting the fire interlock.
 
-The 800 V DC main disconnect also receives an E-stop signal from the Novec control panel (hardwired, not BMS-mediated — fail-safe). If BMS is offline, the main disconnect still opens on Fire 2.
+**This architecture is locked in Rev 1.2 and not open to CTRL-001 or BMS-software-side changes.**
 
-### Abort Station
+The fire panel's NC alarm contact is a different physical output from the fire panel than FIRE-DI-1 (which the BMS reads). Both derive from the same panel-internal event (confirmed alarm state), but they are separate terminal pairs wired to separate loads. This is standard Ansul panel practice — their clean-agent panels provide multiple independent alarm output contacts.
 
-Two Novec abort stations, one at each ECP (key-switch type, per INT-001 §17). Abort is only effective during the 30-second pre-discharge hold (T = 2 to T = 32). After T = 32, agent has been released — abort has no effect on discharge.
+### 9.2 ELEC-001 ventilation interlock
 
-Abort does NOT restore rack power automatically. Rack power restoration requires separate manual authorization at the ELEC ECP main disconnect.
+If the ELEC-001 design includes any ventilation fan inside the Cassette envelope other than Munters (e.g., an electrical-room exhaust fan for the ECP area in higher-power variants), that fan **must** be killed on fire panel confirmed alarm.
 
----
+**Interface to ELEC-001 (requirement stated here; ELEC-001 implements):** the fire panel provides a separate NC dry contact ("480 VAC VENTILATION KILL" output) that ELEC-001 wires in series with any internal ventilation fan's contactor coil. ELEC-001 acknowledges this interface and wires accordingly.
 
-## §10  POST-DISCHARGE VENTILATION
+In the base Rev 1.2 Cassette design, the only airflow device is Munters DSS Pro, which is handled by §9.1. If a future variant adds a forced-air electrical-room fan or any other envelope ventilation, this §9.2 interface is already budgeted at the fire panel.
 
-After the 10-minute hold period and personnel approach with monitoring equipment:
+### 9.3 MIV closure via BMS safe-state
 
-1. Confirm exterior atmosphere at ECP is safe before opening any panel (Novec 1230 can still be at high concentration inside)
-2. Open CDU ECP Munters ducts (external) as exhaust path
-3. Open Munters process air supply — cross-ventilate pod for minimum 15 minutes
-4. Measure interior with FTIR or Novec-specific analyzer before entry
-5. Remove Cassette access panels only after confirmed safe atmosphere
-6. Recharge or replace cylinders before re-commissioning
+MIV closure is BMS-mediated, not directly commanded by the fire panel. The path is:
 
-**Cassette cannot return to service until:**
-- Cylinder bank recharged or replaced
-- VESDA system inspected and reset
-- Fire cause identified and remediated
-- Post-fire BMS log reviewed for sequence anomalies
+1. Fire panel enters CONFIRMED ALARM
+2. FIRE-DI-1 asserts — BMS sees FIRE-TRIGGERED CRITICAL
+3. BMS safe-state (CTRL-001 §6.3) executes: MIV-S and MIV-R close via Belimo spring-return (COOL-001 §8)
+4. CDU pumps stopped via Modbus to CDU skid PLC (CTRL-001 §8.3)
+5. Workload-enable relay de-energized — platform-side workload drains
 
----
+If the BMS is for any reason not processing the FIRE-DI (Jetson crash, BMS cable cut), the hardware watchdog (CTRL-001 §2.2) independently opens the safe-state relay within 5 s of heartbeat loss and drives MIV-S / MIV-R closed via de-energization of their respective DOs. The BMS is the ordinary path; the watchdog is the backup.
 
-## §11  OFFSHORE VARIANT — MARINE ADDITIONS
+The fire panel does not have a direct wire to the MIV actuators and does not need one — the BMS and the watchdog provide dual, independent paths to MIV closure.
 
-Per INT-001 §17 and §25:
+### 9.4 Workload-enable de-energization
 
-| Item | Requirement |
-|------|-------------|
-| Cylinder brackets | USCG-approved, marine-rated, shock-tested to DNV |
-| Cylinder hydrostatic test interval | 10 years (vs 12 years onshore) |
-| Novec control panel power | Dual-powered: main 24 V DC + dedicated offshore battery backup |
-| SOLAS compliance | Chapter II-2 gas-flooding system requirements |
-| ABS/DNV certification | Required for fixed cylinder installation on classified vessel |
-| Pre-discharge abort | Key-switch abort stations remain accessible on exterior ECP (not interior — unmanned) |
-| Fire Department Connection (FDC) | At CDU ECP — DN65 (2.5") connection for platform firefighting augmentation |
-| Post-discharge drain | MARPOL-compliant routing — Novec is classified non-persistent but must be contained per local authority |
+Via CTRL-001 §6.3 step 4 — same BMS path as §9.3. Workload drains when the BMS drops the workload-enable DO on entering safe-state for FIRE-TRIGGERED. Platform NOC is responsible for translating loss-of-enable into GPU workload drain on the compute side; the BMS does not wait for ack before going to safe-state.
+
+### 9.5 480 V AC shunt trip — explicit position
+
+The fire panel does **not** command ELEC-001 shunt-trip in Rev 1.2. Reason: shunt-tripping 480 V AC removes power from the Munters interlock circuit (§9.1 depends on 24 VDC loop interrogation which is on UPS, but the Munters run circuit itself is 480 VAC — it goes dead when 480 VAC drops, which accomplishes the same result), removes power from all computing equipment (desirable, but workload drain via §9.4 is cleaner), and removes power from the CDU skid pumps (addressed by the Modbus stop command in §9.3).
+
+Current posture: 480 V AC is **not** shunt-tripped on fire. It is dropped only via ELEC-001 §6 E-stop (either the panel E-stop button or the platform-OPC-UA E-stop-request). Fire event relies on workload drain (§9.4) and Munters interlock (§9.1). If a future revision concludes that fire should also shunt-trip 480 VAC, **FIRE-09** covers adding that interface; not base Rev 1.2.
 
 ---
 
-## §12  KEY FINDINGS & BOM CORRECTIONS
+## 10. Cylinder and agent storage
 
-### Finding 1 — Current BOM Cylinders Are 4× Oversized
+### 10.1 Location and mounting
 
-**Required: 72 kg of Novec 1230** (at 0°C minimum design temperature, worst case).
-**BOM specifies: 2 × 180 L cylinders = 297.8 kg available.**
-This is a 4.14× over-specification. The over-design adds ~230 kg of unnecessary weight and unnecessary recurring cost at each discharge event.
+- Cylinder mounted inside the Cassette at the ELEC end (opposite the personnel door), chain-braced to the interior sidewall
+- Vertical orientation, valve upward, per Ansul installation manual
+- Minimum 150 mm clearance from walls for inspection access
+- Not within the direct splash envelope of any coolant header (per COOL-001 piping routing — coolant runs down the opposite wall)
+- Pressure relief device (disc) on cylinder is oriented upward and outward, not toward equipment or personnel access path
 
-**BOM Correction:** Replace BOM §7 "Ansul Novec 1230 cylinder, 180 L, 25 bar, 190 kg" with:
-> Ansul Novec 1230 cylinder, 200 lb fill (90.7 kg), standard Ansul supercharge. Cylinder tare ~10 kg. Total unit weight ~35 kg. (×2)
+### 10.2 Pressure monitoring
 
-**Both cylinders discharge simultaneously** — not a staged backup system. This still provides 181.4 kg of agent (2.52× requirement), delivering 16.0% v/v concentration — adequate margin for any seal degradation scenario over the service life.
+| Device | Purpose | Interface |
+|---|---|---|
+| **Cylinder pressure switch** | Continuous supervisory monitoring — any pressure drop below ~20 bar at 20 °C asserts cylinder-trouble | Wired to Ansul panel supervisory loop — FIRE-DI-3 asserts |
+| **Pressure gauge** | Local visual inspection aid | No electrical output |
+| **Load cell / weight monitoring** | Agent mass supervision — load cell under cylinder mount, continuous weight measurement; weight loss beyond a threshold asserts supervisory trouble | Wired to Ansul panel supervisory loop — FIRE-DI-3 asserts |
 
-### Finding 2 — Enclosure Is Extremely Tight
+Both pressure and weight are supervised — the pressure switch detects gas-space leaks, the load cell detects slow agent loss that pressure alone would not reveal until near-empty. Belt-and-suspenders supervision is specified by Ansul on recent Sapphire installations and is adopted here.
 
-Pressure decay tests (≤ 100 Pa / 5 min onshore) confirm the enclosure will hold Novec concentration above 5.85% for the full 10-minute hold period with less than 0.01% decay. No additional agent overcharge is required for leakage compensation.
+### 10.3 Temperature limits
 
-### Finding 3 — Over-Pressure Vent Is Correctly Sized
+- Storage range: 0 °C to 54 °C (NFPA 2001)
+- Cassette ECP area conditioned by Munters DSS Pro to 15–30 °C typical
+- No direct solar exposure (cylinder is interior)
+- Thermal monitoring: the cylinder area is covered by the interior T/RH sensors per CTRL-001 §3.2 (TT-INT-01 is on the ECP-end side); if TT-INT-01 reports > 45 °C, the BMS raises a WARN under the INT-T-HI-W threshold
 
-250 × 250 mm vent produces 0.78 kPa peak internal pressure with the recommended cylinder sizing. Structurally safe. Vent must open before discharge — sequence confirmed in §9.
+### 10.4 Visual inspection access
 
-### Finding 4 — Damper Must Open Before Cylinders Release
+- Cylinder valve, pressure gauge, load cell, and label visible from the ECP-end aisle without moving racks or panels
+- NFPA 2001 monthly visual inspection completes in < 2 min per Cassette
 
-The interlock sequence must confirm vent damper open before releasing cylinders. Failure to sequence correctly risks internal over-pressure during discharge. This is a BMS control logic requirement, not just hardware.
+### 10.5 Cylinder replacement procedure
 
-### BOM Summary — Items to Change
+Cylinder replacement is an **Ansul-authorized service provider** task, not a site tech task. Steps summarized:
 
-**RESOLUTION (Rev 1.1):** All three corrections below have been adopted. Table preserved as audit trail.
+1. Schedule maintenance window; coordinate with platform NOC
+2. BMS energizes DO-FIRE-ARM — panel in INHIBIT state (fire panel FIRE-DI-2 opens, BMS verifies)
+3. Service tech key-disconnects pilot pressure line to cylinder valve
+4. Service tech removes discharge piping flange at cylinder valve outlet
+5. Service tech de-chains cylinder, removes via the personnel door (cylinder on wheeled cart)
+6. Replacement cylinder installed, chained, connected
+7. Supervisory pressure and weight verified at panel
+8. BMS de-energizes DO-FIRE-ARM — panel re-armed (FIRE-DI-2 closes, BMS verifies)
+9. Service record filed
 
-| Section | Current | Corrected | Action | Status |
-|---------|---------|-----------|--------|--------|
-| BOM §7 — Cylinders | 2 × 180 L, 25 bar, ~190 kg each | 2 × 200 lb fill Ansul Novec 1230, ~35 kg each | **BOM Rev 2.0/2.1** | ✓ Adopted |
-| INT-001 §17 — Cylinder weight | "~190 kg each" | "~35 kg each" | **INT-001 Rev 2.1** | ✓ Adopted |
-| INT-001 §17 — Cylinder bank location | "ELEC end" | Unchanged — 2 small cylinders still fit at ELEC end | No change | ✓ |
-| MASS-001 §8 — Fire suppression | 455 kg | ~180 kg (2 × 35 kg cylinders + VESDA + piping + misc) | **MASS-001 Rev 2.0** | ✓ Adopted |
-
-**MASS-001 impact:** The cylinder right-sizing removed ~275 kg from the cassette. Adopted in MASS-001 Rev 2.0 §8. Combined with other Rev 2.0 corrections (electrical +95 kg, manifolds +30 kg), net −150 kg. Cassette operating mass under A-02 baseline: 29,935 kg with 545 kg margin to ISO 30,480 kg limit.
-
----
-
-## §13  OPEN ITEMS
-
-| ID | Item | Priority | Blocks |
-|----|------|----------|--------|
-| F-01 | Ansul hydraulic calculation: confirm nozzle orifice size for 2 × 200 lb cylinders, 8 nozzles, 10-second discharge requirement | P-0 | Final cylinder + nozzle spec |
-| F-02 | Confirm end zone coverage (ELEC and CDU zones, 1,200 mm and 1,500 mm each) — add end nozzles if required by hydraulic calc | P-1 | Nozzle count finalization |
-| F-03 | Xtralis VESDA sampling pipe hydraulic verification (18 sampling points, pipe network layout) | P-1 | VESDA commissioning |
-| F-04 | Confirm Novec 1230 cylinder size availability: 200 lb fill = standard Ansul SKU in current catalog | P-1 | BOM finalization |
-| F-05 | Update BOM Rev 2.0 and INT-001 Rev 2.0 to reflect corrected cylinder specification | P-1 | Document control |
-| F-06 | MARPOL drain routing design for offshore variant (post-discharge Novec recovery path) | P-2 | Offshore ABS/DNV review |
+Empty or near-empty cylinders are returned to Ansul under the service agreement. Novec 1230 is not disposed as waste; it is recovered and reused.
 
 ---
 
-**Cassette — Fire Suppression Engineering · Cassette-FIRE-001 · Rev 1.2 · 2026-04-20**
-**Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
-**CONFIDENTIAL**
+## 11. Personnel safety
+
+### 11.1 Pre-discharge alarm and egress
+
+From the moment FIRE-DI-1 asserts (start of 30 s countdown):
+
+- Audible horn: continuous > 90 dBA inside Cassette at the aisle, per NFPA 72
+- Visual: strobe ≥ 110 cd inside Cassette
+- Remote annunciator at exterior door shows PRE-ALARM (amber flashing) then DISCHARGED (red steady) when agent released
+- **Egress requirement: occupant clears the Cassette within 30 s from first audible alarm.** The personnel door is within 6 m of any interior position; 30 s is comfortable for an unimpaired adult. A person inside at the moment of alarm either (a) exits and closes the door, or (b) hits the Abort-1 button on the way out if a responder needs time to assess
+
+### 11.2 Novec 1230 decomposition products
+
+Novec 1230 decomposes at temperatures > ~500 °C. The primary decomposition product of concern is **hydrogen fluoride (HF)**, which forms when agent vapor contacts a high-temperature surface during or after discharge.
+
+**Detection and response:**
+
+- The interior CO₂ sensor (CTRL-001 §3.2 CO2-INT-01) is not HF-specific, but HF is a combustion/decomposition marker alongside CO₂ buildup; a spike in CO₂ after discharge is an indicator that decomposition has occurred
+- Post-discharge protocol (§11.3) requires a minimum hold-and-vent time before re-entry, during which any HF would be vented
+- A dedicated HF sensor is considered as an upgrade (**FIRE-11**) but not base Rev 1.2 — the NFPA 2001 posture and hold-time protocol are sufficient at SL-equivalent facility risk
+
+### 11.3 Re-entry protocol
+
+After a confirmed discharge:
+
+1. **Hold: 10 min minimum** — NFPA 2001 required retention time at design concentration. No entry.
+2. **Vent: open personnel door from exterior; open opposite-end access hatch if provided; run portable forced ventilation (not Munters — Munters is interlocked off per §9.1) for a minimum of 20 min or until portable air-quality meters show <1 ppm HF and normal O₂**
+3. **Survey: authorized responder in full PPE (SCBA, chemical-resistant coverall) enters and surveys**
+4. **Decontaminate as needed**, repair, reset panel with service key
+5. **Platform post-incident report filed within 24 h**
+
+Re-entry before step 3 is prohibited. On-site signage at the personnel door states this.
+
+### 11.4 MSDS reference
+
+Novec 1230 MSDS / SDS supplied by 3M (manufacturer). Platform-side MSDS library carries current revision. Hard copy in waterproof sleeve mounted adjacent to the fire panel, updated on agent refill.
+
+### 11.5 Oxygen depletion — explicitly not a concern
+
+At the 5.85 % design concentration, Novec 1230 occupies ~5.85 % of the enclosure volume and the remaining ~94.15 % is normal atmosphere. Oxygen partial pressure is therefore 20.9 % × 94.15 % = **~19.7 % O₂ in the enclosure during agent hold** — above the 19.5 % OSHA oxygen-deficient threshold and nowhere near an asphyxiation hazard.
+
+This is the fundamental difference between Novec 1230 (a heat-absorbing agent that interrupts combustion chemistry at low concentration) and CO₂ or inert-gas systems (which suppress by oxygen displacement at 34 %+ concentrations and are lethal to occupants). It is the physical reason Novec 1230 is rated for occupied spaces. State this explicitly for the record.
+
+---
+
+## 12. Commissioning checklist
+
+### 12.1 Factory acceptance (panel + cylinder assembly before Cassette integration)
+
+| Step | Description | Pass criterion |
+|---|---|---|
+| FP-01 | Ansul panel power-on; panel posts to normal-ready state | Green POWER + ARMED LEDs; no active trouble |
+| FP-02 | Battery discharge test — disconnect 120 VAC, verify battery holds supervisory load ≥ 24 h | Measured hold time ≥ 24 h at spec battery load |
+| FP-03 | Each smoke detector alarm-inject with canned smoke; verify per-zone annunciation | Each detector triggers only its assigned zone; no cross-talk |
+| FP-04 | Cross-zone logic verified — alarm zone A alone does not advance past PRE-ALARM; alarm zone A + zone B advances to CONFIRMED ALARM with 30 s countdown | Countdown begins only on confirmed cross-zone |
+| FP-05 | Pre-alarm audible + visual verified | Horn > 90 dBA at aisle position; strobe fires |
+| FP-06 | Abort-1 and Abort-2 functional test — assert during countdown, verify countdown inhibited while held | Countdown pauses; resumes on release; does not fire while held |
+| FP-07 | Manual release station functional test | Activates CONFIRMED ALARM + countdown immediately, bypasses cross-zone |
+| FP-08 | Cylinder supervisory — drop cylinder pressure (test valve); verify FIRE-DI-3 / panel trouble asserts; remove load cell — verify trouble asserts | Both supervisory paths trigger FAULT |
+| FP-09 | BMS interface DI handshake — assert each of FIRE-DI-1, FIRE-DI-2, FIRE-DI-3 via panel test mode; verify BMS sees each, alarm level matches §8 | All three DIs correctly read, correctly fail-safe on loop-open |
+| FP-10 | BMS interface DO handshake — BMS energizes DO-FIRE-ARM; verify FIRE-DI-2 opens (panel reports INHIBIT); BMS de-energizes; verify FIRE-DI-2 closes | Round-trip < 1 s each direction |
+| FP-11 | DO-FIRE-RELEASE blocked by gate — attempt to assert in BMS test mode without all four conditions of §8.6 satisfied; verify BMS refuses to drive the DO | Gate logic enforces all four conditions |
+| FP-12 | Munters interlock — loop the fire panel NC contact through a dummy Munters coil; assert panel confirmed alarm; verify coil drops within 2 s | Coil drop time ≤ 2 s |
+| FP-13 | Panel reset procedure with service key — verify key-only reset after latched alarm | Reset succeeds only with key; annunciators clear |
+| FP-14 | Nozzle pressure-test (no agent) — pressurize pipe network with nitrogen to 25 bar; verify no leaks at joints | No pressure decay over 30 min |
+| FP-15 | As-built documentation — hydraulic calc, nozzle locations, cylinder label, panel program | Documentation file complete |
+
+Signed by Ansul-authorized service provider + Scott Tomsu before Cassette ships to integration.
+
+### 12.2 Site commissioning (expands CTRL-001 §10.1 S-08)
+
+| Step | Description | Pass criterion |
+|---|---|---|
+| SP-01 | Enclosure integrity test (door-fan) per NFPA 2001 Annex C | Equivalent leakage area ≤ 0.4 % floor area; predicted 10-min retention ≥ design concentration |
+| SP-02 | AHJ walk-through and witness test — Lafayette Parish fire marshal | AHJ signs acceptance form |
+| SP-03 | Panel 120 VAC primary power confirmed from ELEC-001 dedicated breaker | Panel shows normal-ready; trouble log clear |
+| SP-04 | 24 VDC BMS interface loop energized from F10 (CTRL-001 §2.5) | Loop current ~12 mA measured at panel terminals |
+| SP-05 | Live DI assertion test — smoke-inject zone A detector in the installed Cassette; verify panel PRE-ALARM; add zone B smoke; verify CONFIRMED ALARM | Cross-zone still works in installed environment with Munters airflow active |
+| SP-06 | **BMS FIRE-TRIGGERED CRITICAL verification** — at SP-05 cross-zone confirm, simultaneously verify BMS alarm log shows FIRE-TRIGGERED CRITICAL within 1 s and BMS executes safe-state | FIRE-TRIGGERED logged; MIV-S and MIV-R reach closed limit within 10 s; CDU skid reports pumps stopped; workload-enable DO de-energized |
+| SP-07 | **Munters interlock confirmed off on simulated alarm** — at the same moment as SP-05, verify Munters DSS Pro run status goes from RUNNING to STOPPED within 2 s; verify Munters did not restart for the duration of the alarm | Munters stops; does not restart without manual re-arm after panel reset |
+| SP-08 | **Pre-discharge abort test** — simulate cross-zone alarm, press Abort-1 during countdown, hold for 35 s, release | Countdown does not reach zero while held; resumes on release; does not discharge (verify via test-mode interlock that solenoid circuit was armed but inhibited) |
+| SP-09 | **MIV closure confirmed on fire trigger via BMS safe-state** — verified in SP-06 alongside; document close times | MIV-S and MIV-R both reach closed limit in < 10 s of FIRE-TRIGGERED |
+| SP-10 | Platform NOC integration — FIRE-TRIGGERED event visible on NOC within 3 s; NOC can issue fire-remote-release-request (verified without actual release by isolating solenoid) | NOC receives event; remote-release command reaches BMS; all four gate conditions required, tested |
+| SP-11 | Remote annunciator at exterior door verified — all five LED indicators cycle correctly | All LEDs function |
+| SP-12 | Panel service key + reset procedure walked through with site operator | Reset succeeds; site operator signs training log |
+| SP-13 | MSDS and signage posted — personnel door interior and exterior | Correctly posted |
+| SP-14 | 7-day soak — no fire panel troubles, no nuisance alarms, no BMS-side FIRE-FAULT | Soak log clean |
+
+Signed by Ansul-authorized service provider + Scott Tomsu + platform NOC lead before Cassette enters production.
+
+---
+
+## 13. Inspection and maintenance cadence — NFPA 2001 Chapter 7
+
+| Cadence | Activity | Responsibility |
+|---|---|---|
+| **Monthly** | Visual inspection: cylinder pressure gauge in green band; panel normal-ready; no obvious physical damage; detector LEDs; remote annunciator; no active supervisory troubles; abort station accessibility | Site tech |
+| **Monthly** | Log review: any WARN or FIRE-FAULT events in the past 30 days from BMS historian; root cause if present | Site tech + platform NOC |
+| **Semi-annual** | Detector cleaning / sensitivity test per UL 268 and manufacturer; verify cross-zone logic still functions without forcing | Ansul-authorized service |
+| **Semi-annual** | Agent quantity verification: cylinder weight measured and compared to nameplate; cylinder pressure measured at 20 °C and compared to nameplate; deviations > 5 % of agent mass trigger refill | Ansul-authorized service |
+| **Annual** | Full system inspection per NFPA 2001 Chapter 7: discharge piping inspection, nozzle inspection, manual stations tested, abort stations tested, BMS interface handshake re-verified (repeat FP-09 through FP-12 in-place), panel battery replaced if near end of service life | Ansul-authorized service |
+| **Annual** | BMS interface end-to-end test: assert each DI, verify BMS response; toggle each DO, verify panel response; confirm documentation matches as-installed | Ansul-authorized service + site tech |
+| **Every 5 years** | Comprehensive evaluation — hydraulic calc re-verified; enclosure integrity re-tested if any Cassette penetrations have been modified | Ansul-authorized designer |
+| **Every 6 years** | Cylinder internal inspection per DOT / CGA C-6 — cylinder removed, emptied, inspected, refilled | Ansul-authorized service (at 3M or authorized cylinder facility) |
+| **Every 12 years** | Hydrostatic test of cylinder per DOT / CGA C-6 — or at **500 discharges**, whichever comes first | Ansul-authorized service |
+
+All inspection records filed with the platform maintenance database. Any non-conforming condition is reported within 24 h and corrective action scheduled.
+
+---
+
+## 14. Open items
+
+IDs use the **FIRE-xx** series to avoid collision with CTRL-001 **CL-xx**, COOL-001 **C-xx**, COOL2-001 **CX-xx**, and CYBER-001 **CY-xx**.
+
+| ID | Priority | Description | Blocks |
+|---|---|---|---|
+| FIRE-01 | C1 | Final agent quantity, nozzle count, and hydraulic calc — sealed by Ansul-authorized clean-agent designer (NICET III min); targets 66–76 kg Novec 1230 at 5.85–6.7 % design concentration; confirms discharge time ≤ 10 s at installed pipe length | System PO; FP-14 nozzle pressure test; site commissioning |
+| FIRE-02 | C1 | Enclosure integrity — door-fan test vendor, acceptance criteria confirmation (≤ 0.4 % ELA, ≥ 10 min retention at design concentration) | SP-01; AHJ acceptance |
+| FIRE-03 | C1 | Design concentration margin — final selection 5.85 % vs 6.25 % vs 6.7 %; Ansul designer recommendation with rationale | FIRE-01 close |
+| FIRE-04 | C2 | Reserve cylinder architecture — pre-wired provisions for a future second-cylinder addition without system redesign; Rev 1.2 ships without reserve | Future platform-side SL or AHJ requirement |
+| FIRE-05 | C2 | VESDA aspirating smoke detection upgrade — evaluate in-rack aspirating detection for earlier warning; pricing and bench test before decision | Optimization, not gating |
+| FIRE-06 | C3 | Sub-floor detection if raised-floor variant is adopted | Future Cassette variant only |
+| FIRE-07 | C2 | Additional BMS DIs — (a) FIRE-PRE-ALARM to capture single-zone state, (b) FIRE-DISCHARGED to capture actual discharge moment separate from confirmed alarm; Rev 1.2 ships with 3 DI only, per CTRL-001 | Optimization, event reconstruction granularity |
+| FIRE-08 | C1 | AHJ acceptance of DO-FIRE-RELEASE four-condition gate as "protected against inadvertent operation" per NFPA 2001 §4.3.3 | Production release with remote release capability; if AHJ rejects, DO-FIRE-RELEASE is disabled at BMS (FIRE-TRIGGERED + workload drain + Munters interlock are sufficient) |
+| FIRE-09 | C2 | 480 V AC shunt-trip on fire — evaluate; Rev 1.2 posture is no shunt-trip on fire, but revisit if AHJ or platform ops requires | Platform ops decision |
+| FIRE-10 | C2 | Substitution procedure for non-Ansul UL 2166 clean-agent systems (e.g., Kidde, Fike) — technical acceptance criteria and interface compatibility matrix | Procurement flexibility |
+| FIRE-11 | C2 | Dedicated HF sensor post-discharge — evaluate; Rev 1.2 relies on hold-and-vent protocol + CO₂ sensor as combustion marker | Enhanced post-discharge safety |
+| FIRE-12 | C1 | AHJ submittal package — sealed drawings, hydraulic calc, agent selection justification, device data sheets, battery calc, enclosure integrity report | AHJ acceptance; production rollout |
+| FIRE-13 | C2 | Offshore / marine variant — hazardous-area (IECEx / ATEX) listed detectors and manual stations; marine-grade panel enclosure; separate submittal to classification society | Offshore deployment only |
+
+---
+
+## Document control
+
+**Cassette-FIRE-001 — Rev 1.2 — CONFIDENTIAL**
+**Prepared by:** Scott Tomsu · CEO / Chief Engineer · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
+**Companion to:** Cassette-CTRL-001 · Cassette-ELEC-001 · Cassette-BOM-001 · Cassette-COOL-001
+**Supersedes:** Cassette-FIRE-001 Rev 1.1 (deleted)
+**Authority scope:** agent selection, design concentration, detection, control panel, BMS interface (3 DI + 2 DO terminal-level definition), interlocks (Munters hardwired, ELEC-001 ventilation, MIV closure), cylinder storage, personnel safety, commissioning, and inspection cadence.
+
+This document is the source of truth for fire suppression and its BMS interface. CTRL-001 §3.2 FIRE-DI × 3, CTRL-001 §3.2 DO outputs for fire arm and fire release, CTRL-001 §6.3 step 6 fire-arm behavior, CTRL-001 §7.2 fire-panel MIV trigger, and CTRL-001 §10.1 S-08 all resolve against the definitions in this document. Any change to the interface requires a revision of this document **and** of CTRL-001 in parallel.
+
+**End of Cassette-FIRE-001 Rev 1.2.**

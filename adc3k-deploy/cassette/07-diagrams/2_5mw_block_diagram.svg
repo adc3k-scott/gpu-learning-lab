@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" viewBox="0 0 1120 1330" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Marlie 2.5 MW block &#x2014; Rev 3</title>
+<desc>Rev 3 updates: engine-tier N+1 (3x Cat G3520K, 2 running + 1 standby); in-row rack N+1 (5x Delta 660 kW = 3.3 MW capacity); per-engine emissions package (SCR + oxidation catalyst + CEMS); Munters MX3 air treatment restored; resolved air architecture (internal recirc AHU with FW coil + separate small makeup DOAS); gas supply chain shown; utility/startup tap and adjacent-block tie on the Porch; cooling aux BBU for ride-through; widened FW delta-T (15F); non-crossing FW supply/return routing; block power and heat balance table.</desc>
+
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- TITLE -->
+<text x="560" y="20" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="15" font-weight="700" fill="#141413">Marlie 2.5 MW block &#x2014; Rev 3</text>
+<text x="560" y="36" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#666663">Engine N+1 &#xB7; 3,300 kW installed &#xB7; per-engine emissions &#xB7; recirc air + makeup DOAS &#xB7; adiabatic cooler &#xB7; Munters DSS Pro</text>
+
+<!-- GAS SUPPLY CHAIN -->
+<text x="30" y="58" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">Fuel gas supply</text>
+
+<rect x="30" y="64" width="96" height="36" rx="4" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="78" y="80" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">NG service</text>
+<text x="78" y="94" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#8B6220">~60 psi</text>
+
+<line x1="126" y1="82" x2="148" y2="82" stroke="#C48A2E" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="148" y="64" width="80" height="36" rx="4" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="188" y="80" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">PRV</text>
+<text x="188" y="94" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#8B6220">55&#x2192;5 psi</text>
+
+<line x1="228" y1="82" x2="250" y2="82" stroke="#C48A2E" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="250" y="64" width="108" height="36" rx="4" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="304" y="80" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">Filter-separator</text>
+<text x="304" y="94" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#8B6220">liquids/solids</text>
+
+<line x1="358" y1="82" x2="380" y2="82" stroke="#C48A2E" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="380" y="64" width="96" height="36" rx="4" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="428" y="80" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">Custody meter</text>
+<text x="428" y="94" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#8B6220">scfh + GC</text>
+
+<line x1="476" y1="82" x2="498" y2="82" stroke="#C48A2E" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="498" y="64" width="590" height="36" rx="4" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="793" y="80" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#5A3D10">Fuel train manifold &#xB7; per-engine SSOV + leak test + ESD + trim regulator</text>
+<text x="793" y="94" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#8B6220">Peak demand ~57,000 scfh &#xB7; 3 engines &#xD7; ~19,000 scfh</text>
+
+<!-- Gas drops to engines -->
+<path d="M 220 100 L 220 114 L 150 114 L 150 175" fill="none" stroke="#C48A2E" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow)"/>
+<path d="M 560 100 L 560 114 L 490 114 L 490 175" fill="none" stroke="#C48A2E" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow)"/>
+<path d="M 900 100 L 900 114 L 830 114 L 830 175" fill="none" stroke="#C48A2E" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow)"/>
+<text x="108" y="128" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#8B6220">NG &#xB7; 19k scfh</text>
+<text x="448" y="128" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#8B6220">NG &#xB7; 19k scfh</text>
+<text x="788" y="128" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#8B6220">NG &#xB7; 19k scfh</text>
+
+<!-- EMISSIONS PACKAGES -->
+<rect x="160" y="116" width="120" height="54" rx="6" fill="#E8E6E1" stroke="#5A5A54" stroke-width="0.8"/>
+<text x="220" y="130" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#5A5A54">&#x2191; discharge stack</text>
+<text x="220" y="146" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Emissions pkg</text>
+<text x="220" y="161" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#5A5A54">SCR &#xB7; ox cat &#xB7; CEMS</text>
+
+<rect x="500" y="116" width="120" height="54" rx="6" fill="#E8E6E1" stroke="#5A5A54" stroke-width="0.8"/>
+<text x="560" y="130" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#5A5A54">&#x2191; discharge stack</text>
+<text x="560" y="146" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Emissions pkg</text>
+<text x="560" y="161" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#5A5A54">SCR &#xB7; ox cat &#xB7; CEMS</text>
+
+<rect x="840" y="116" width="120" height="54" rx="6" fill="#E8E6E1" stroke="#5A5A54" stroke-width="0.8"/>
+<text x="900" y="130" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#5A5A54">&#x2191; discharge stack</text>
+<text x="900" y="146" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Emissions pkg</text>
+<text x="900" y="161" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#5A5A54">SCR &#xB7; ox cat &#xB7; CEMS</text>
+
+<line x1="220" y1="170" x2="220" y2="175" stroke="#444441" stroke-width="2"/>
+<line x1="560" y1="170" x2="560" y2="175" stroke="#444441" stroke-width="2"/>
+<line x1="900" y1="170" x2="900" y2="175" stroke="#444441" stroke-width="2"/>
+
+<rect x="990" y="116" width="100" height="54" rx="6" fill="#EFE9DD" stroke="#8B6220" stroke-width="0.6" stroke-dasharray="2 2"/>
+<text x="1040" y="135" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-weight="600" fill="#5A3D10">Urea/DEF</text>
+<text x="1040" y="150" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#8B6220">shared skid</text>
+<text x="1040" y="163" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#8B6220">3-SCR feed</text>
+
+<!-- GENSETS -->
+<rect x="120" y="175" width="200" height="90" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="220" y="198" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="500" fill="#633806">Cat G3520K #1</text>
+<text x="220" y="217" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#854F0B">2 MW prime &#xB7; NG &#xB7; lean-burn</text>
+<text x="220" y="233" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#854F0B">RUNNING</text>
+<text x="220" y="251" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#A06A20">~69% load at block steady-state</text>
+
+<rect x="460" y="175" width="200" height="90" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="560" y="198" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="500" fill="#633806">Cat G3520K #2</text>
+<text x="560" y="217" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#854F0B">2 MW prime &#xB7; NG &#xB7; lean-burn</text>
+<text x="560" y="233" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#854F0B">RUNNING</text>
+<text x="560" y="251" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#A06A20">~69% load at block steady-state</text>
+
+<rect x="800" y="175" width="200" height="90" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5" stroke-dasharray="3 2"/>
+<text x="900" y="198" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="500" fill="#633806">Cat G3520K #3</text>
+<text x="900" y="217" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#854F0B">2 MW prime &#xB7; NG &#xB7; lean-burn</text>
+<text x="900" y="233" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#854F0B">STANDBY (N+1)</text>
+<text x="900" y="251" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#A06A20">hot standby &#xB7; ATS &lt;10 s</text>
+
+<!-- Genset to Porch feeders -->
+<line x1="220" y1="265" x2="220" y2="313" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="560" y1="265" x2="560" y2="313" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="900" y1="265" x2="900" y2="313" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="228" y="293" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">480V AC</text>
+<text x="568" y="293" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">480V AC</text>
+<text x="908" y="293" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">480V AC</text>
+
+<!-- THE PORCH -->
+<rect x="80" y="315" width="960" height="70" rx="8" fill="#FFF4E4" stroke="#C47A1F" stroke-width="1.5"/>
+<text x="560" y="337" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="600" fill="#7A4A0C">THE PORCH &#x2014; outdoor switchgear enclosure</text>
+<text x="560" y="355" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#9A5F14">AC paralleling &#xB7; sync check &#xB7; protection relays &#xB7; main breakers &#xB7; metering &#xB7; ATS (utility&#x2014;gen) &#xB7; block tie-breaker</text>
+<text x="560" y="373" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#9A5F14">Block aux distribution (480V AC): tower feed &#xB7; BMS power &#xB7; service panels &#xB7; critical-aux BBU bus</text>
+
+<rect x="20" y="325" width="55" height="50" rx="6" fill="#FFE6B8" stroke="#C47A1F" stroke-width="1.2"/>
+<text x="47.5" y="343" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-weight="600" fill="#7A4A0C">Utility</text>
+<text x="47.5" y="356" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-weight="600" fill="#7A4A0C">startup</text>
+<text x="47.5" y="369" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#9A5F14">(commiss.)</text>
+<line x1="75" y1="350" x2="80" y2="350" stroke="#444441" stroke-width="1.5"/>
+
+<rect x="1045" y="325" width="55" height="50" rx="6" fill="#FFE6B8" stroke="#C47A1F" stroke-width="1.2"/>
+<text x="1072.5" y="343" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-weight="600" fill="#7A4A0C">Block</text>
+<text x="1072.5" y="356" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-weight="600" fill="#7A4A0C">tie</text>
+<text x="1072.5" y="369" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#9A5F14">(N-O)</text>
+<line x1="1040" y1="350" x2="1045" y2="350" stroke="#444441" stroke-width="1.5"/>
+
+<!-- Porch to cassette feeds -->
+<path d="M 250 385 L 250 438" fill="none" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="258" y="422" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">480V AC &#xB7; IT feed</text>
+<path d="M 860 385 L 860 438" fill="none" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="722" y="402" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">480V AC &#xB7; critical aux (BBU-backed)</text>
+
+<!-- COMPUTE CASSETTE -->
+<rect x="40" y="440" width="500" height="460" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="290" y="462" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="500" fill="#3C3489">Compute cassette &#x2014; 40 ft HC</text>
+<text x="290" y="480" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#534AB7">3,300 kW installed &#xB7; 9 compute racks &#xB7; factory-built &#xB7; sealed IP54 envelope</text>
+
+<rect x="58" y="498" width="464" height="78" rx="6" fill="#DAD5FB" stroke="#534AB7" stroke-width="0.8" stroke-dasharray="2 2"/>
+<text x="290" y="514" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#3C3489">In-row power rack &#x2014; 5&#xD7; Delta 660 kW = 3,300 kW installed</text>
+<text x="290" y="530" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#3C3489">All 5 active &#xB7; parallel load-sharing &#xB7; 2,400 kW embedded BBU</text>
+<text x="290" y="547" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">480V AC &#x2192; 800V DC &#xB7; BBU + supercap &#xB7; sub-100 ms GPU load smoothing</text>
+<text x="290" y="563" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">Per-rack: 6&#xD7; 110 kW shelves &#xB7; 98% efficiency</text>
+
+<text x="60" y="585" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; 9&#xD7; NVL72 compute racks + 1 control rack (IB + mgmt)</text>
+<text x="60" y="604" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; 800V DC laminated busway to racks</text>
+<text x="60" y="623" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Delta 800V&#x2192;50V DC/DC shelves in compute racks</text>
+<text x="60" y="642" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; PG25 DN125 primary manifolds &#xB7; ~830 gpm</text>
+<text x="60" y="661" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; PG25 sealed loop &#x2192; St&#xe4;ubli QD ECP &#x2192; external CDU skid</text>
+<text x="60" y="680" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; 45&#xB0;C / 113&#xB0;F supply &#xB7; 58&#xB0;C / 136&#xB0;F return (&#x394;T 13&#xB0;C)</text>
+<text x="60" y="699" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Recirc air loop to cooling cassette (~14% of IT to air)</text>
+<text x="60" y="718" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Makeup air from DOAS for positive pressure only</text>
+<text x="60" y="737" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Novec 1230 + VESDA fire detection</text>
+<text x="60" y="756" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Jetson Orin cassette controller</text>
+<text x="60" y="775" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; NVIDIA Mission Control &#xB7; rack leak detect</text>
+<text x="60" y="794" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Sealed envelope &#xB7; IP54 &#xB7; controlled air ports only</text>
+<text x="60" y="813" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; ECP: PG25 &#xB7; recirc air &#xB7; makeup air &#xB7; signals</text>
+<text x="60" y="832" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Structured cable tray top &#xB7; ISO corner lifting</text>
+<text x="60" y="851" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; Commissioning to L5 factory burn-in pre-ship</text>
+<text x="60" y="870" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#534AB7">&#x2022; DMX-24 OPC UA out to cooling cassette</text>
+<text x="60" y="889" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-style="italic" fill="#7A72C9">PUE target &#x2264; 1.08 at block level</text>
+
+<!-- COOLING CASSETTE -->
+<rect x="580" y="440" width="500" height="460" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="830" y="462" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="500" fill="#0B503F">Cooling cassette &#x2014; 40 ft HC</text>
+<text x="830" y="480" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#0F6E56">Heat exchange &#xB7; air recirc + makeup &#xB7; controls &#xB7; aux BBU</text>
+
+<!-- Recirc AHU band — MUNTERS DSS Pro, 350 kW, 14% -->
+<rect x="598" y="498" width="464" height="70" rx="6" fill="#C5EBDC" stroke="#0F6E56" stroke-width="0.8" stroke-dasharray="2 2"/>
+<text x="830" y="517" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#0B503F">Recirc AHU (Munters DSS Pro) &#x2014; air-to-FW coil (sealed compute envelope)</text>
+<text x="830" y="534" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">IN: ~35&#xB0;C warm return air from compute &#xB7; OUT: 20&#xB0;C / 45% RH supply</text>
+<text x="830" y="551" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">350 kW (~14% of IT) &#xB7; MERV-13 &#xB7; dehumid trim &#xB7; regen: CHP jacket water (TBD)</text>
+
+<!-- Plate HX band -->
+<rect x="598" y="578" width="464" height="60" rx="6" fill="#C5EBDC" stroke="#0F6E56" stroke-width="0.8" stroke-dasharray="2 2"/>
+<text x="830" y="596" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#0B503F">PG25 &#x2014; FW plate-frame HX &#xB7; ~2.6 MW duty &#xB7; LMTD ~12 K</text>
+<text x="830" y="613" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">FW (primary): 95&#xB0;F supply / 110&#xB0;F return &#xB7; &#x394;T 15&#xB0;F &#xB7; ~1,100 gpm</text>
+<text x="830" y="630" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">PG25 (secondary): 113&#xB0;F supply / 136&#xB0;F return &#xB7; &#x394;T 23&#xB0;F &#xB7; ~830 gpm</text>
+
+<!-- Makeup DOAS band -->
+<rect x="598" y="648" width="224" height="72" rx="6" fill="#C5EBDC" stroke="#0F6E56" stroke-width="0.8" stroke-dasharray="2 2"/>
+<text x="710" y="666" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#0B503F">Makeup DOAS (small)</text>
+<text x="710" y="682" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">OA 95&#xB0;F DB / 80&#xB0;F WB</text>
+<text x="710" y="696" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">&#x2192; 75&#xB0;F / 45% RH supply</text>
+<text x="710" y="710" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">~125 kW &#xB7; pos. press. only</text>
+
+<!-- Controls and Aux BBU band -->
+<rect x="838" y="648" width="224" height="72" rx="6" fill="#C5EBDC" stroke="#0F6E56" stroke-width="0.8" stroke-dasharray="2 2"/>
+<text x="950" y="666" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#0B503F">Controls + Aux BBU</text>
+<text x="950" y="682" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">Siemens S7-1500 + OPC UA</text>
+<text x="950" y="696" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">30 s BBU ride-through for</text>
+<text x="950" y="710" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#0F6E56">pumps + fans on gen trip</text>
+
+<!-- Cooling cassette bullets -->
+<text x="600" y="745" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; PG25 + FW pumps (N+1 each) &#xB7; VFD-driven &#xB7; loops rated above 350 kW demand</text>
+<text x="600" y="764" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; 2.5 m&#xB3; PG25 buffer tank &#xB7; expansion + glycol feeder</text>
+<text x="600" y="783" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; 40 &#x3BC;m bag filtration &#xB7; air separator &#xB7; instruments</text>
+<text x="600" y="802" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; FM-200 fire &#xB7; IP44 outdoor-rated</text>
+<text x="600" y="821" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; Leak detect + auto-isolate on all loops</text>
+<text x="600" y="840" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; Side-mount service access &#xB7; 4 ECP interfaces</text>
+<text x="600" y="859" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; Commissioning to L4 pre-ship &#xB7; field trim to compute</text>
+<text x="600" y="878" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#0F6E56">&#x2022; Drops to FW supply/return headers via flanged tap</text>
+<text x="600" y="894" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" font-style="italic" fill="#3A8672">Duty target: 2.6 MW rejection + 350 kW air + 125 kW OA</text>
+
+<!-- INTER-CASSETTE LINKS -->
+<line x1="540" y1="525" x2="598" y2="525" stroke="#1D9E75" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="569" y="517" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#3D3D3A">recirc air</text>
+<text x="569" y="542" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#0F6E56">(35&#x2192;20&#xB0;C)</text>
+
+<line x1="540" y1="608" x2="598" y2="608" stroke="#1D9E75" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="569" y="600" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10" fill="#3D3D3A">PG25 loop</text>
+<text x="569" y="625" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#0F6E56">(113&#x2192;136&#xB0;F)</text>
+
+<path d="M 598 684 L 568 684 L 568 440" fill="none" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arrow)"/>
+<text x="562" y="678" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="9" fill="#0F6E56" text-anchor="end">makeup OA &#x2192;</text>
+
+<!-- FW PIPING -->
+<path d="M 980 900 L 980 915 L 790 915 L 790 930" fill="none" stroke="#1D9E75" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="820" y="910" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">FW return &#xB7; 110&#xB0;F &#xB7; ~1,100 gpm</text>
+
+<path d="M 330 930 L 330 915 L 660 915 L 660 900" fill="none" stroke="#1D9E75" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="370" y="910" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">FW supply &#xB7; 95&#xB0;F &#xB7; ~1,100 gpm</text>
+<text x="370" y="925" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="8.5" font-style="italic" fill="#3D3D3A">gen. power only &#x2014; no CHP thermal recovery</text>
+
+<!-- ADIABATIC COOLER -->
+<rect x="260" y="930" width="600" height="110" rx="8" fill="#D4EBFA" stroke="#1E6FA8" stroke-width="1"/>
+<text x="560" y="954" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="14" font-weight="600" fill="#113E62">Adiabatic fluid cooler &#x2014; 1 unit &#xB7; ~750 RT rejection</text>
+<text x="560" y="974" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#1E6FA8">EVAPCO EAW-DA / BAC Trillium / SPX OlympusMAX / G&#xFC;ntner VARIO</text>
+<text x="560" y="992" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#1E6FA8">2.6 MW duty &#xB7; 110&#xB0;F FW return &#x2192; 95&#xB0;F FW supply &#xB7; 15&#xB0;F approach @ 80&#xB0;F WB</text>
+<text x="560" y="1010" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#1E6FA8">Dry most of year &#xB7; adiabatic wet mode above 78&#xB0;F WB &#xB7; VFD EC fans</text>
+<text x="560" y="1028" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" fill="#1E6FA8">~90 kW electrical (fans + spray pumps) &#xB7; outdoor pad &#xB7; BBU-backed</text>
+
+<!-- BLOCK BALANCE TABLE -->
+<rect x="40" y="1060" width="1040" height="178" rx="6" fill="#FAFAF5" stroke="#88887F" stroke-width="0.8"/>
+<text x="560" y="1080" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2E2E2A">Block power &amp; heat balance &#x2014; 2.5 MW IT, 2 gensets running + 1 standby (N+1)</text>
+
+<line x1="60" y1="1092" x2="1060" y2="1092" stroke="#88887F" stroke-width="0.5"/>
+<text x="70" y="1105" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Line item</text>
+<text x="510" y="1105" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Elec (kW)</text>
+<text x="620" y="1105" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Heat (kW)</text>
+<text x="640" y="1105" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Notes</text>
+<line x1="60" y1="1110" x2="1060" y2="1110" stroke="#88887F" stroke-width="0.5"/>
+
+<text x="70" y="1124" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">IT load (9&#xD7; Vera Rubin NVL72 compute + 1 control rack)</text>
+<text x="510" y="1124" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">2,500</text>
+<text x="620" y="1124" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">2,500</text>
+<text x="640" y="1124" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Primary design load &#xB7; W45 DLC + residual air</text>
+
+<text x="70" y="1139" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">In-row power rack losses (98% eff, 5 units)</text>
+<text x="510" y="1139" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">66</text>
+<text x="620" y="1139" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">66</text>
+<text x="640" y="1139" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Captured by PG25 loop via cold-plate-style heatsinks</text>
+
+<text x="70" y="1154" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">PG25 pumps (~830 gpm @ 80 ft TDH)</text>
+<text x="510" y="1154" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">35</text>
+<text x="620" y="1154" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">20</text>
+<text x="640" y="1154" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Motor heat to fluid &#xB7; pump eff ~80%</text>
+
+<text x="70" y="1169" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">FW pumps (~1,100 gpm @ 60 ft TDH)</text>
+<text x="510" y="1169" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">38</text>
+<text x="620" y="1169" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">25</text>
+<text x="640" y="1169" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">VFD-driven &#xB7; N+1</text>
+
+<text x="70" y="1184" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Recirc AHU fans + FW coil (Munters DSS Pro)</text>
+<text x="510" y="1184" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">25</text>
+<text x="620" y="1184" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">25</text>
+<text x="640" y="1184" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">~14% of IT via plate HX &#xB7; regen heat: CHP jacket water (TBD)</text>
+
+<text x="70" y="1199" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Makeup DOAS (desiccant wheel + fan + regen)</text>
+<text x="510" y="1199" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">15</text>
+<text x="620" y="1199" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">&#x2014;</text>
+<text x="640" y="1199" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Positive-pressure OA only &#xB7; not in main heat path</text>
+
+<text x="70" y="1214" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Adiabatic cooler (EC fans + spray pumps)</text>
+<text x="510" y="1214" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">90</text>
+<text x="620" y="1214" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">&#x2014;</text>
+<text x="640" y="1214" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Rejects to atmosphere &#xB7; BBU-backed</text>
+
+<text x="70" y="1229" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Porch aux &#xB7; BMS &#xB7; lighting &#xB7; controls &#xB7; SCR urea pump</text>
+<text x="510" y="1229" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">20</text>
+<text x="620" y="1229" text-anchor="end" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">&#x2014;</text>
+<text x="640" y="1229" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="10.5" fill="#2E2E2A">Miscellaneous block services</text>
+
+<line x1="60" y1="1234" x2="1060" y2="1234" stroke="#88887F" stroke-width="0.5"/>
+
+<!-- Footer totals -->
+<text x="70" y="1256" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Block draw: ~2,789 kW</text>
+<text x="280" y="1256" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Heat to adiabatic: ~2,636 kW (~750 RT)</text>
+<text x="620" y="1256" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#2E2E2A">Genset loading: 2 &#xD7; 2 MW = 4 MW, ~69% &#xB7; #3 standby = N+1</text>
+
+<!-- CHP thermal path: running gensets jacket water / exhaust → Munters MX3 regen (TBD) -->
+<path d="M 660 270 L 1095 270 L 1095 533 L 1062 533" fill="none" stroke="#B05A00" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+<text x="1107" y="402" text-anchor="middle" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="8" fill="#B05A00" transform="rotate(-90, 1107, 402)">CHP heat &#x2192; Munters regen (TBD)</text>
+
+<!-- LEGEND -->
+<text x="40" y="1288" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="12" font-weight="500" fill="#141413">Legend</text>
+
+<rect x="40" y="1298" width="12" height="12" rx="3" fill="#F5E6C7" stroke="#8B6220" stroke-width="0.8"/>
+<text x="58" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Gas supply</text>
+
+<rect x="140" y="1298" width="12" height="12" rx="3" fill="#E8E6E1" stroke="#5A5A54" stroke-width="0.8"/>
+<text x="158" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Emissions pkg</text>
+
+<rect x="250" y="1298" width="12" height="12" rx="3" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+<text x="268" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Prime mover</text>
+
+<rect x="350" y="1298" width="12" height="12" rx="3" fill="#FFDCA8" stroke="#C47A1F" stroke-width="1"/>
+<text x="368" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Porch (switchgear)</text>
+
+<rect x="480" y="1298" width="12" height="12" rx="3" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
+<text x="498" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Compute cassette</text>
+
+<rect x="610" y="1298" width="12" height="12" rx="3" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="628" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Cooling cassette</text>
+
+<rect x="735" y="1298" width="12" height="12" rx="3" fill="#A8D4F2" stroke="#1E6FA8" stroke-width="0.8"/>
+<text x="753" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Heat rejection</text>
+
+<line x1="855" y1="1304" x2="875" y2="1304" stroke="#444441" stroke-width="1.5"/>
+<text x="881" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Electrical</text>
+
+<line x1="945" y1="1304" x2="965" y2="1304" stroke="#1D9E75" stroke-width="2"/>
+<text x="971" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">Fluid / air</text>
+
+<line x1="1035" y1="1304" x2="1055" y2="1304" stroke="#C48A2E" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="1061" y="1308" font-family="'Anthropic Sans', -apple-system, sans-serif" font-size="11" fill="#3D3D3A">NG</text>
+
+</svg>
