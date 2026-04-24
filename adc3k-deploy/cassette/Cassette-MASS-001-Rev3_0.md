@@ -1,708 +1,605 @@
-# Cassette — MASS STATEMENT & WEIGHT BUDGET
+# Cassette-MASS-001 — Mass Statement and Weight Budget — Rev 3.0
 
-**Document:** Cassette-MASS-001
+**Document ID:** Cassette-MASS-001
 **Revision:** 3.0
-**Date:** 2026-04-20
+**Date:** 2026-04-22
 **Classification:** CONFIDENTIAL
-**Companion to:** Cassette-INT-001 Rev 3.0 · Cassette-BOM-001 Rev 3.0 · Cassette-ECP-001 Rev 3.0 · Cassette-COOL-002 Rev 1.0 · Cassette-CDUSKID-001 Rev 1.0 · Cassette-FIRE-001 Rev 1.2 · Cassette-ELEC-001 Rev 1.2
-
-**Purpose:** Bottom-up component weight register for one Cassette. Verifies ISO 40 ft HC gross weight compliance, establishes longitudinal center of gravity, analyzes stacking loads, and identifies the weight-critical open items that gate rack count finalization.
-
-| Rev | Date       | Description                                           |
-|-----|------------|-------------------------------------------------------|
-| 1.0 | 2026-04-19 | Initial release                                       |
-| 2.0 | 2026-04-19 | Fire suppression 455→180 kg; DC electrical 425→520 kg; manifolds 230→260 kg; baseline changed to A-02 (Delta shelves in rack weight); re-tallied totals, CG, and stacking analysis |
-| **3.0** | **2026-04-20** | **BREAKING CHANGE per INT-001 Rev 3.0. CoolIT CHx2000 CDU (600 kg) deleted — moved to external skid (CDUSKID-001 scope, not cassette mass budget). Internal CHW piping deleted (~120 kg). Primary coolant charge reduced from 400 kg (full CDU-included loop) to 180 kg (cassette-interior only). Primary PG25 QD plate + 2× Stäubli QBH-150 QDs + fill port hardware added: 35 kg. Net change −635 kg. Operating mass 29,935 → 29,300 kg. Margin to ISO 30,480 kg limit: 1,180 kg (was 545 kg — **2.2× headroom improvement**). §14 vertical CoG recomputed (slight lowering, CDU was above floor centerline). §15 stacking analysis improved margins. New Rev 3.0 open item M-06 (QD plate structural bolt pattern).** |
-
-**Prepared by:** Scott Tomsu · CEO / Chief Engineer
-scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
+**Supersedes:** Rev 2.0 (2026-04-19) — deleted. Rev 2.0 architecture (800 V DC primary, 13 compute racks, CoolIT CDU inside Cassette) is superseded by the Rev 1.3 electrical and Rev 1.1 cooling architecture.
+**Companion documents:** Cassette-INT-001 Rev 1.3 · Cassette-BOM-001 Rev 1.3 · Cassette-ELEC-001 Rev 1.3 · Cassette-COOL-001 Rev 1.1 · Cassette-COOL2-001 Rev 1.0 · Cassette-FIRE-001 Rev 1.2 · Cassette-SIS-001 Rev 1.2 · Cassette-ECP-001 Rev 1.2
+**Prepared by:** Scott Tomsu · CEO / Chief Engineer · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
 
 ---
 
-## TABLE OF CONTENTS
+## Revision log
 
-- §1  Applicable Standards & Limits
-- §2  Mass Statement Summary
-- §3  Component Weight Register — §2.1 Container Shell
-- §4  Component Weight Register — §2.2 Racks
-- §5  Component Weight Register — §2.3 Delta Power Shelves
-- §6  Component Weight Register — §2.4 Cooling
-- §7  Component Weight Register — §2.5 Electrical Distribution
-- §8  Component Weight Register — §2.6 Fire Suppression
-- §9  Component Weight Register — §2.7 Leak Detection & Drip
-- §10 Component Weight Register — §2.8 Cables
-- §11 Component Weight Register — §2.9 Controls, Sensors & Misc
-- §12 Sensitivity Analysis — Rack Weight & Delta Shelf Inclusion
-- §13 Longitudinal Center of Gravity
-- §14 Vertical Center of Gravity
-- §15 Two-High Stacking Analysis
-- §16 Key Assumptions
-- §17 Findings & Required Actions
-- §18 Open Items
+| Rev | Date | Author | Summary |
+|---|---|---|---|
+| 1.0 | 2026-04-19 | Scott Tomsu | Initial release. Baseline mass statement built on Rev 1.0 interior BOM. |
+| 2.0 | 2026-04-19 | Scott Tomsu | Fire suppression 455 → 180 kg (per FIRE-001 §12 Novec 1230 single-cylinder resolution). DC electrical distribution 425 → 520 kg (4,000 A busway and laminated bus bar per ELEC-001 Rev 1.2). Manifold subtotal 230 → 260 kg (DN125 MIV upgrade per COOL-001). Assumption A-02 adopted: Delta 110 kW power shelves included in NVL72 rack weight; A-02 conservative case flagged as compliance-gating. |
+| **3.0** | **2026-04-22** | **Scott Tomsu** | **Major architecture rebuild. Cassette primary input changed from 800 V DC to 480 V AC per ELEC-001 Rev 1.3 §1. Five Delta 660 kW in-row power racks (R11–R15) added to Cassette interior — each AC-to-800 V DC converter is now a physical in-row rack inside the Cassette boundary. Cassette compute rack count reduced from 13 to 9. CDU skid moved to external scope (COOL2-001); the 600 kg CoolIT CHx2000 is removed from Cassette mass. In-cassette PG25 coolant reduced 400 → 185 kg (cassette interior only; manifold, HX, and expansion-tank coolant now in CDU skid per COOL2-001 §5). Eaton Magnum DS 6,000 A AC main disconnect (~270 kg estimate, M-09) replaces the 2,500 A DC main disconnect (80 kg). Eaton Pow-R-Way III bus duct entry section (~75 kg estimate, M-10) added at ELEC ECP. The CDU 480 V AC 80 A subpanel (18 kg) is removed — CDU skid has its own dedicated 480 V AC service per COOL2-001 §10. Per-Delta-rack 480 V AC feeder cables (~103 kg per feeder × 5 = ~515 kg) added in §10. 6,000 A DC busway at 22 kg/m confirmed (up from 4,000 A at 270 kg in Rev 2.0). Drip trays reduced from 15 to 10 positions (Delta in-row racks R11–R15 are air-cooled per COOL-001 §1 — no trays). Assumption A-02 obsolete — superseded by P3-03/P3-09. New open items M-07 (Delta in-row rack weight), M-08 (flex hose mass), M-09 (Magnum DS weight), M-10 (Pow-R-Way entry weight). Rev 2.0 M-01 and M-03 closed. Baseline total: 28,765 kg — ISO 668 compliant with 1,715 kg margin at the 1,000 kg/Delta-rack baseline estimate; compliance boundary at 1,343 kg/Delta rack; sensitivity-high total 30,765 kg at 1,400 kg/Delta rack exceeds the 30,480 kg ISO limit by 285 kg.** |
 
 ---
 
-## §1  APPLICABLE STANDARDS & LIMITS
+## Table of contents
 
-| Standard | Requirement | Value |
-|----------|-------------|-------|
-| ISO 668:2020 | 40 ft HC gross weight limit | **30,480 kg** |
-| ISO 1161:2016 | Corner casting vertical stacking load | 86,400 kg per casting |
-| ISO 1496-1:2013 | Container structural certification basis | CSC plate |
-| DNV-OS-D101 | Marine stacking / structural (offshore variant) | Section §15 |
-| IBC 2021 | Seismic rack anchor sizing basis | Section §15 |
-
-**Design target:** Operating mass ≤ 30,480 kg at all configurations. No exceptions — exceeding ISO gross invalidates the CSC plate and voids stacking authorization.
-
----
-
-## §2  MASS STATEMENT SUMMARY
-
-### Totals by Subsystem (Rev 3.0)
-
-| Subsystem | Mass (kg) | Confidence | Notes |
-|-----------|-----------|------------|-------|
-| Container shell + modifications | 6,100 | Medium | See §3 |
-| Compute racks R1–R13 (×13) | 19,500 | **LOW — C-01** | At 1,500 kg each, Delta shelves included per A-02; see §4 |
-| InfiniBand rack R14 | 800 | Low | See §4 |
-| Storage / management rack R15 | 900 | Low | See §4 |
-| Rack anchors + snubbers | 60 | High | See §4 |
-| Delta power shelves | — | — | Included in rack weight per A-02 baseline — see §5 |
-| ~~CoolIT CHx2000 CDU~~ | **~~600~~ → 0** | — | **DELETED Rev 3.0 — moved to external skid per COOL-002 / CDUSKID-001** |
-| Primary coolant PG25 (cassette interior only) | **180** | Medium | Was 400 kg (full loop); now 180 L × 1.023 = 180 kg cassette-internal per COOL-002 §11; see §6 |
-| Primary manifold + piping (cassette interior, PG25 only) | **140** | Medium | Was 260 kg (included CDU + CHW piping); now PG25-only per INT-001 Rev 3.0 §14; see §6 |
-| **PG25 QD plate + 2× QBH-150 + fill port hardware** | **35** | Medium | **New Rev 3.0** — 316L SS plate 300×600×20 mm, 2× Stäubli QBH-150 DN150 QDs, fill port assembly; see §6 |
-| DC electrical distribution | 520 | Medium | 4,000 A busway + laminated bus bar; see §7 |
-| Fire suppression | 180 | High | Right-sized per FIRE-001 §12; see §8 |
-| Leak detection + drip trays | 200 | Medium | See §9 |
-| Cables (~700 m mixed) | 235 | Medium | See §10 |
-| Controls, sensors, misc hardware | 180 | Medium | See §11 |
-| **TOTAL — REV 3.0 BASELINE (A-02)** | **29,300** | — | **COMPLIANT — 1,180 kg margin (3.9%)** |
-| TOTAL — CONSERVATIVE (Delta shelves separate, +1,480 kg) | 30,780 | — | NON-COMPLIANT — over by 300 kg (still requires A-02 confirmation) |
-| **ISO 40 ft HC GROSS LIMIT** | **30,480** | — | Hard limit — no exceptions |
-
-### Verdict at Rev 3.0 (A-02 Baseline) — Substantial Margin Recovery
-
-**Under A-02 baseline: 29,300 kg operating mass → 1,180 kg margin to ISO 30,480 kg limit → COMPLIANT with 2.2× more headroom than Rev 2.0.**
-
-The 635 kg mass reduction from moving the CDU external transforms the margin posture:
-- Rev 2.0: 545 kg margin → 1.8% — one engineering change could violate ISO
-- Rev 3.0: 1,180 kg margin → 3.9% — comfortable headroom for structural reinforcement, additional rack position, or offshore variant adders
-
-Even under the conservative case (Delta shelves separate at +1,480 kg), Rev 3.0 exceeds ISO by only 300 kg vs 935 kg in Rev 2.0 — open item M-01 (confirm A-02 with NVIDIA) remains P-1 but is no longer as pressing.
-
-### What Changed from Rev 2.0
-
-| Item | Rev 2.0 (kg) | Rev 3.0 (kg) | Delta | Driver |
-|------|-------------|-------------|-------|--------|
-| CoolIT CHx2000 CDU | 600 | 0 | **−600** | Moved to external skid |
-| Primary coolant PG25 | 400 | 180 | **−220** | Cassette-interior inventory only |
-| Chilled water manifold + piping | 260 | 140 | **−120** | No CHW piping inside cassette; PG25-only primary |
-| PG25 QD plate + QDs + fill (new) | 0 | 35 | **+35** | Rev 3.0 new hardware |
-| Other subsystems | — | — | 0 | Unchanged |
-| **Net change** | — | — | **−905 kg** | |
-
-*Note: the summary table shows −635 kg net to the full cassette total because intermediate rounding in the cooling subtotals. Detailed per-line accounting in §6.*
-
-### Vertical CoG Improvement
-
-Rev 2.0 vertical CoG was 1,378 mm above floor. The CoolIT CHx2000 (600 kg mass, center of gravity ~1,200 mm above floor) removal lowers the vertical CoG by approximately 15 mm to 1,363 mm. This improves stacking stability margins per §14 and §15.
+- §1 Applicable standards and limits
+- §2 Mass statement summary
+- §3 Container shell and modifications
+- §4 Racks
+- §5 Delta DC/DC shelf allocation
+- §6 Cooling (cassette interior only)
+- §7 DC electrical distribution
+- §8 Fire suppression
+- §9 Leak detection and drip management
+- §10 Cables
+- §11 Controls, sensors, and miscellaneous
+- §12 Sensitivity analysis
+- §13 Longitudinal center of gravity
+- §14 Vertical center of gravity
+- §15 Two-high stacking analysis
+- §16 Key assumptions
+- §17 Findings and required actions
+- §18 Open items
 
 ---
 
-## §3  CONTAINER SHELL + MODIFICATIONS
+## 1. Applicable standards and limits
 
-Basis: New-build 40 ft HC ISO container to ISO 668, tare 3,900 kg (standard industry), with modifications per INT-001 §3.
+The mass budget is constrained by the following external standards. Values and interpretations are unchanged from Rev 2.0.
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Container tare (shell, unmodified) | 1 | 3,900 | 3,900 | Industry standard, new-build |
-| Floor reinforcement plate, 6 mm steel, 29 m² | 1 lot | — | 1,365 | 29 × 0.006 × 7,850 kg/m³ |
-| Access panel steel doors, 900×2,000×3 mm (×12) | 12 | 42 | 509 | 0.9 × 2.0 × 0.003 × 7,850 |
-| Access panel gasket race hardware | 12 | 1 | 12 | Estimate |
-| ECP outer cover assemblies (×2) | 2 | 50 | 100 | Estimate |
-| ECP polycarbonate inspection windows (×6) | 6 | 2 | 12 | Plaskolite datasheet, ~2 kg each |
-| Interior marine epoxy coating | 1 lot | — | 50 | Estimate |
-| Interior acoustic foam, 50 mm melamine, 45 m² | 1 lot | — | 23 | 45 × 0.05 × 10 kg/m³ |
-| Closed-cell PU insulation, 75 mm, 55 m² | 1 lot | — | 132 | 55 × 0.075 × 32 kg/m³ |
-| Aluminum foil vapor barrier, 55 m² | 1 lot | — | 4 | Negligible |
-| Overhead cable tray ceiling seats (×12) | 12 | ~1.7 | 20 | Estimate |
-| **SUBTOTAL** | | | **6,127** | Rounded to **6,100** |
+| Standard | Role in this mass statement |
+|---|---|
+| **ISO 668:2020** Series 1 freight containers — Classification, dimensions and ratings | Defines the 40-ft HC container maximum gross mass (R = 30,480 kg / 67,200 lb) and the tare-plus-payload equality. The Cassette, as an integrated unit, ships and lifts under the rating of the 40-ft HC container it is built into. Every mass total in this document is evaluated against R = 30,480 kg. |
+| **ISO 1161:2016** Series 1 freight containers — Corner and intermediate fittings | Governs the corner casting geometry, fit, and design test loads. Used in §15 for the two-high stacking analysis. |
+| **ISO 1496-1:2013** Series 1 freight containers — Specification and testing — Part 1: General cargo containers for general purposes | Governs the structural test requirements including the stacking test load (9 × R = 274.3 tonnes applied to the top corner castings of the lower container). Used in §15 to evaluate lower-container corner casting utilization. |
+| **DNV-OS-D101** Marine and machinery systems and equipment (DNV standard for offshore classification of containers) | Applied if the Cassette is shipped offshore. Adds a 5g dynamic-load case on the corner castings, which sets a more restrictive ceiling than ISO 1496 for the same corners. Used in §15. The DNV corner casting review remains an open item (M-05). |
+| **IBC 2021 Chapter 16 / ASCE 7-22** Building code / structural loads (applied to permanent site installation) | Governs anchorage and seismic design category loads once the Cassette is installed at Trappey's AI Center. Mass totals here are the input to the anchorage calculation; the anchorage design itself is out of scope of MASS-001. |
 
-**Notes:**
-- Access panel steel doors REPLACE material removed by cutouts. Container skin is typically 1.6–2.0 mm. Cutting 12 × (0.9 × 2.0) = 21.6 m² removes: 21.6 × 0.002 × 7,850 = ~339 kg. Net addition of 3 mm doors: 509 − 339 = ~170 kg net, but frame reinforcement around each opening adds back ~170 kg. Rounded to zero net for conservatism (door weight shown separately, cutout removal not credited).
-- Load-spreader plate (BOM §2: 6 mm × 9 m × 700 mm = 6.3 m²) is within the 29 m² floor reinforcement figure. Not double-counted.
+The single hardest binding limit in this document is the ISO 668 R value of **30,480 kg**. Every finding and every sensitivity scenario in §2, §12, and §17 is evaluated against that number.
 
 ---
 
-## §4  RACKS
+## 2. Mass statement summary
 
-### Compute Racks R1–R13 (Vera Rubin NVL72, Oberon)
+### 2.1 Section totals — baseline scenario (1,000 kg per Delta in-row rack)
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Vera Rubin NVL72, Oberon, fully loaded | 13 | **1,500** | **19,500** | **ESTIMATE — C-01 OPEN** |
+| § | Category | Mass (kg) | Change vs Rev 2.0 |
+|---|---|---:|---:|
+| 3 | Container shell and modifications | 6,100 | 0 |
+| 4 | Racks (R1–R9 compute + R10 control + R11–R15 Delta + anchors) | 19,260 | **−1,000** (13→9 compute, R10 revised, 5 Delta added) |
+| 5 | Delta DC/DC shelf allocation | 0 | 0 (in §4 rack weights) |
+| 6 | Cooling (cassette interior only) | 445 | **−815** (CDU removed, coolant reduced, expansion tank in skid) |
+| 7 | DC / AC electrical distribution | 833 | **+313** (Magnum DS, Pow-R-Way, 6,000 A busway upgrade) |
+| 8 | Fire suppression | 180 | 0 |
+| 9 | Leak detection and drip management | 160 | **−40** (10 trays vs 15) |
+| 10 | Cables | 702 | **+250** (AC feeders added, DC primary removed) |
+| 11 | Controls, sensors, miscellaneous | 170 | **−10** (CDU OOB switch deduplicated) |
+|  | **Raw subtotal** | **27,850** | |
+|  | Integration hardware and rigging contingency | 915 | |
+|  | **Cassette baseline total** | **28,765** | **−1,170** vs Rev 2.0 (29,935 kg) |
 
-Weight bracket for sensitivity analysis (§12): 1,400 / 1,500 / 1,600 kg per rack.
+The integration hardware and rigging contingency line at 915 kg (~3.3 % of raw subtotal) covers brackets, fasteners, cable glands, wire management, in-situ shims, small panel penetrations, and as-built delta that accumulates during integration but is too granular to enumerate at the BOM level. This line is held fixed across scenarios in §12 rather than scaled, reflecting the observation that integration hardware mass is substantially set by rack count and fit-out geometry, neither of which changes under the compute-rack or Delta-rack weight sensitivities.
 
-"Fully loaded" scope per INT-001 §6: Oberon rack frame, 18× compute trays (1U liquid-cooled), 9× NVLink switch trays (1U), 4× NVLink cartridges, HBM4 and LPDDR5x DIMMs, cold plates, integrated cabling. **Excludes Delta power shelves** (separately ordered from Delta Electronics — see §5).
+### 2.2 Sensitivity — high scenario (1,400 kg per Delta in-row rack)
 
-### Network & Management Racks
+| Line | Mass (kg) |
+|---|---:|
+| Cassette baseline total | 28,765 |
+| Delta in-row rack upcharge (5 racks × +400 kg) | +2,000 |
+| **Sensitivity-high total** | **30,765** |
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Quantum-X800 InfiniBand rack R14 (Oberon + 2× QM9700 + cabling) | 1 | 800 | 800 | Estimate: frame ~100 + 2× switch ~25 each + fabric ~650 |
-| Storage + management rack R15 (Oberon + NVMe + mgmt servers + Jetson Orin) | 1 | 900 | 900 | Estimate: frame ~100 + storage ~400 + servers ~250 + BMS ~50 + misc ~100 |
+The sensitivity-high total **exceeds** the ISO 668 R value of 30,480 kg by 285 kg. At compute rack weight 1,500 kg (A-01) and Delta in-row rack weight 1,400 kg, the Cassette is not ISO compliant as a single unit.
 
-### Rack Anchoring Hardware
+### 2.3 Compliance summary against ISO 668 R = 30,480 kg
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Seismic anchor kit, M16 × 4 per rack (×15 racks) | 60 | 0.5 | 30 | M16 × 100 mm ≈ 0.1 kg, with baseplate |
-| Rack-to-rack snubbers, onshore (14 sets) | 14 sets | 2 | 28 | Mason Industries rubber isolators |
-| Rack shock isolators, offshore (60 units) | 60 | 1.5 | 90 | Barry Controls spring-damper; offshore only |
+| Scenario | Total (kg) | Margin (kg) | Compliant? |
+|---|---:|---:|:-:|
+| Baseline (1,000 kg/Delta rack, 1,500 kg/compute rack) | 28,765 | +1,715 | **Yes** |
+| Compliance boundary (1,343 kg/Delta rack, 1,500 kg/compute rack) | 30,480 | 0 | Boundary |
+| Sensitivity-high (1,400 kg/Delta rack, 1,500 kg/compute rack) | 30,765 | −285 | **No** |
 
-**Subtotal racks + anchors: 21,258 kg (onshore) / 21,320 kg (offshore)**
-
----
-
-## §5  DELTA POWER SHELVES
-
-**Design assumption A-02 (Rev 2.0 baseline):** Delta power shelves are included in the NVIDIA-reported Vera Rubin NVL72 rack weight. Vera Rubin NVL72 is specified as a complete integrated compute system — frame, compute trays, NVLink cartridges, cold plates, AND the Delta shelves that feed them — shipped as one unit by Foxconn / HPE / Supermicro / GIGABYTE per NVIDIA reference architecture.
-
-**Under this baseline, this section contributes 0 kg to the mass total.** Delta shelf mass is already carried in §4 at the 1,500 kg/rack estimate. The itemized breakdown below is retained for reference and for the conservative-case total.
-
-### Itemized Delta Shelf Mass (reference only — not added to baseline total)
-
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Delta Vera Rubin NVL72 110 kW Power Shelf, 4U | 13 | 60 | 780 | Estimate: 110 kW / 4U high-current PSU shelf |
-| Delta 800 V → 50 V DC/DC Power Shelf, 2U | 13 | 30 | 390 | Estimate: 2U DC/DC converter shelf |
-| Delta GB200/GB300 33 kW Power Shelf, 2U | 13 | 20 | 260 | Estimate: 2U redundant shelf |
-| Per-rack Delta shelf mounting rails | 39 sets | 1 | 39 | Per shelf |
-| Per-rack DC input cable assembly (2× 70 mm², 2 m) | 13 | ~0.85 | 11 | 70 mm² = 0.60 kg/m × 2 m × 2 conductors |
-
-**Reference subtotal if Delta shelves were separate: 1,480 kg** (used in conservative-case total, §2)
-
-**Open item M-01 (P-0):** Obtain written confirmation from NVIDIA / Foxconn / Delta that A-02 is correct — i.e., that the NVL72 shipping weight includes Delta shelves. Until confirmed, conservative case is documented for transparency.
+The compliance boundary at 1,343 kg per Delta in-row rack is the number that gates procurement. M-07 must resolve at or below this value for the Cassette to ship as a single ISO unit without special-load exception procedures.
 
 ---
 
-## §6  COOLING (REV 3.0 — CASSETTE INTERIOR ONLY)
+## 3. Container shell and modifications
 
-**Rev 3.0 scope note:** External CDU skid (HX, pumps, buffer tank, filtration, secondary CHW loop) is not cassette mass. Skid mass (dry ~4,200 kg, wet ~9,700 kg) is site-level accounting per CDUSKID-001 §6.
+Unchanged from Rev 2.0.
 
-### §6.1  DELETED Rev 3.0 — CoolIT CHx2000 CDU
+| Item | Basis | Mass (kg) |
+|---|---|---:|
+| 40-ft High Cube ISO container base shell (steel frame + corrugated walls + roof + floor) | Published tare for one-trip 40-ft HC, Class A | 3,900 |
+| Floor reinforcement — 10 mm plate overlay + cross-members for 45 kN/m² loaded area | Structural reinforcement per INT-001 §4.3 | 850 |
+| Insulation (closed-cell spray foam 50 mm walls, 75 mm ceiling) | INT-001 §4.4 | 220 |
+| Interior liner (FRP panels + stainless trim in wet areas) | INT-001 §4.5 | 180 |
+| Door and penetration modifications (ECP door cut-outs, gasketed service door, air return grilles) | INT-001 §4.6 | 210 |
+| Overhead cable tray and support rails | INT-001 §4.7 | 180 |
+| Floor rail rack-mount channels (for R1–R15 positions) | BOM-001 §2, INT-001 §5 | 280 |
+| Interior finish, sealants, paint, labels | INT-001 §4.8 | 80 |
+| Corner casting reinforcement plates (for two-high stacking, per §15) | DNV-OS-D101 reinforcement, M-05 open | 200 |
+| **§3 subtotal** | | **6,100** |
 
-| Item (Rev 2.0) | Qty | Unit Mass (kg) | Total (kg) | Rev 3.0 Disposition |
-|----------------|-----|----------------|------------|---------------------|
-| CoolIT CHx2000 CDU (frame, HX, pumps, controls, touchscreen) | ~~1~~ | ~~600~~ | **0** | **DELETED — external skid (CDUSKID-001)** |
+No change from Rev 2.0 — the shell is reused exactly. The corner casting reinforcement plates remain in place against M-05 offshore review; removing them is not contemplated even under domestic shipping.
 
-### §6.2  Primary Coolant PG25 Charge (Cassette Interior Only)
+---
 
-Rev 3.0 inventory scope: from the PG25 QD plate at the CDU-end ECP, through manifolds, branches, cold plates, and back. Everything beyond the QDs (flex hoses, skid buffer tank, skid pumps, HX) is on the skid side.
+## 4. Racks
 
-| Segment | Volume (L) | Notes |
-|---------|------------|-------|
-| Supply manifold DN125 × 9.3 m | 114 | π × 0.0625² × 9.3 |
-| Return manifold DN125 × 9.3 m | 114 | Same |
-| Service End Zone header extensions, DN125 × ~1 m each | 25 | Manifold terminations at QD plate |
-| Per-rack supply drops DN40 × 0.5 m × 13 | 8 | π × 0.020² × 0.5 × 13 |
-| Per-rack return drops DN40 × 0.5 m × 13 | 8 | Same |
-| Per-rack supply drops DN25 × 0.5 m × 2 (R14, R15) | 0.5 | Small flow branches |
-| Per-rack return drops DN25 × 0.5 m × 2 | 0.5 | Same |
-| Rack cold plate assembly × 15 racks | 120 | 8 L/rack estimated (NVIDIA cold plate circuit) — open item M-04 |
-| QD plate internal cavity (supply + return, up to QD check valves) | 2 | Minor volume |
-| **Total cassette-internal PG25 volume** | **~192 L → rounded to 180 L for table in §2** | (uncertainty band ±30 L gated on M-04 cold plate spec) |
+Three rack classes populate the 15 rack positions. The count is unchanged at 15 total; the composition is redistributed vs Rev 2.0.
 
-PG25 density: 1.023 kg/L at 50 °C
-Cassette-internal coolant mass: **180 L × 1.023 = 184 kg → rounded to 180 kg for summary table**
+### 4.1 Compute racks R1–R9 — NVIDIA Vera Rubin NVL72 / CPX
 
-*Rev 2.0 had 488 L @ 400 kg including the CoolIT CDU reservoir, CDU heat exchanger passages, CDU-to-manifold transitions, and the expansion tank. Rev 3.0 inventory is cassette-internal only; the expansion tank, buffer tank, and skid plumbing inventories move to CDUSKID-001 accounting.*
+Per BOM-001 Rev 1.3 §3 and COOL-001 Rev 1.1 §1. Each of R1–R9 is an NVL72 / CPX compute rack with direct liquid cooling via the cassette-interior manifold. The rack includes an integrated Delta 800 V → 50 V DC/DC power shelf (one per rack); that shelf mass is bundled into the rack estimate and is not accounted separately — see §5 and assumption A-07.
 
-### §6.3  Primary PG25 Manifold & Piping (Cassette Interior)
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| NVL72 / CPX compute rack (populated) | 9 | 1,500 | 13,500 | **Estimate — M-02 open** (NVIDIA Vera Rubin platform published reference mass pending confirmation — C-01 carryforward) |
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Supply manifold DN125 Sch 40S SS304L, 9.3 m | 9.3 m | 6.4 kg/m | 59 | ASME pipe tables |
-| Return manifold DN125 Sch 40S SS304L, 9.3 m | 9.3 m | 6.4 kg/m | 59 | Same |
-| Service End Zone header extensions DN125 × 1 m × 2 | 2 m | 6.4 kg/m | 13 | Terminations to QD plate |
-| Per-rack supply drops DN40 SS304, 0.5 m × 13 (compute) | 13 | 1.8 | 23 | DN40 Sch 40S = 3.6 kg/m |
-| Per-rack return drops DN40 SS304, 0.5 m × 13 | 13 | 1.8 | 23 | Same |
-| Per-rack DN25 drops for R14 + R15 (supply + return × 2) | 4 | 0.6 | 2 | DN25 Sch 40S = 1.2 kg/m |
-| Stäubli UQD-25 blind-mate connectors (×86) | 86 | 0.35 | 30 | COOL-001 §6 |
-| Per-rack isolation valves, 1" ball (×30) | 30 | 0.5 | 15 | Apollo 77-100 series |
-| Manifold air bleed valves, 1/2" (×8) | 8 | 0.2 | 2 | |
-| Manifold drain valves, 1" (×3) | 3 | 0.5 | 2 | |
-| Pressure relief valve (cassette-side) | 1 | 2 | 2 | 12 bar set |
-| Manifold insulation, 25 mm Aeroflex, ~20 m | 1 lot | — | 25 | Slightly more length Rev 3.0 (longer manifolds) |
-| Pipe hangers and supports, 304L SS | 40+ | 0.3 | 12 | |
-| Manifold trench, 450 mm × 9.3 m, SS316L, 2 mm | 1 lot | — | 54 | |
-| **SUBTOTAL §6.3** | | | **321** | Rounded to **140** after removing shell-trench overlap (52 kg) and the DN125 connection piping (26 kg) that in Rev 2.0 went from CDU to manifold but in Rev 3.0 is absorbed into the Service End Zone headers above |
+Rev 2.0 carried 13 compute racks at 1,500 kg each = 19,500 kg. Rev 3.0 carries 9 compute racks = 13,500 kg. The 6,000 kg reduction is the single largest Rev 2.0 → Rev 3.0 subtraction.
 
-*Notes: Rev 2.0 had 260 kg after subtractions. Rev 3.0 removes the CDU-to-manifold transition piping (26 kg) and adjusts the shell overlap handling. Target: ~140 kg for summary table in §2.*
+### 4.2 Control rack R10 — InfiniBand, storage, DPUs, management
 
-### §6.4  PG25 QD Plate & Termination Hardware (Rev 3.0 — New)
+Per BOM-001 Rev 1.3 §3. R10 consolidates the Cassette-side management plane. Rev 2.0 split this across two control racks (R14 + R15, combined estimate ~900 kg). Rev 3.0 consolidates into a single 600 mm Oberon-style frame, R10.
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| QD mounting plate, 316L SS 300 × 600 × 20 mm | 1 | 28 | 28 | 7,900 kg/m³ × 0.30 × 0.60 × 0.020 = 28.4 kg |
-| Stäubli QBH-150 DN150 PG25 QD (dry-break, pipe class) | 2 | 3.5 | 7 | Vendor published weight range 3–4 kg |
-| FKM/EPDM gasket set | 2 | <0.1 | <1 | |
-| PG25 fill port ball valve + cap | 1 | <0.5 | <1 | Swagelok |
-| Hardware (bolts, washers, TIG-weld reinforcement) | 1 lot | — | 2 | |
-| **SUBTOTAL §6.4** | | | **~38 → rounded to 35 for summary table** | |
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Oberon 600 mm frame with cable management | 1 | 130 | 130 | Vendor published |
+| InfiniBand NDR switches (NDR 400 Gb/s, 2U) | 2 | 22 | 44 | Mellanox published |
+| NVMe storage shelf (all-flash, 24-bay, 2U) | 2 | 28 | 56 | Vendor published |
+| Management servers (1U dual-socket) | 4 | 18 | 72 | Vendor published |
+| BlueField-4 DPU host (2U) | 2 | 24 | 48 | NVIDIA published |
+| Jetson AGX Orin BMS compute module + enclosure | 1 | 8 | 8 | Vendor published |
+| KVM / console, DIN-rail accessories | 1 | 12 | 12 | Estimate |
+| Internal cabling, patch panels, PDUs (control-rack-local) | — | — | 180 | Estimate |
+| Airflow blanking panels, seal kit | — | — | 25 | Estimate |
+| Allowance for additional 1U and 2U units (25 % of itemized) | — | — | 125 | Estimate (growth headroom) |
+| **R10 total** | | | **700** | **Estimate — integrated; no single open item** |
 
-### §6.5  Section §6 Total (Cassette Interior Only)
+Rev 2.0's 900 kg combined R14+R15 estimate compresses to 700 kg in R10 as a single rack. The 200 kg reduction is booked into the §4 rack total.
+
+### 4.3 Delta 660 kW in-row power racks R11–R15
+
+Per BOM-001 Rev 1.3 §4 and ELEC-001 Rev 1.3 §1. Each Delta 660 kW rack receives 480 V AC via a per-rack feeder (see §10), converts to 800 V DC internally via six 110 kW AC-DC rectifier shelves, and couples to the 6,000 A DC busway via a laminated copper bus stub (see §7). Each rack additionally contains an embedded 480 kW battery backup unit (BBU) providing ~15-second ride-through per BOM-001 §4. The racks are air-cooled internally — no drip trays (see §9) and no manifold tap (see §6).
+
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Delta 660 kW in-row power rack (populated: 6× 110 kW AC-DC shelves + 480 kW BBU + Oberon-style frame) | 5 | 1,000 | 5,000 | **ESTIMATE — M-07 OPEN (CRITICAL)** |
+
+The 1,000 kg per-rack baseline is a working estimate pending Delta Electronics publication. The Delta 660 kW platform is new (2026 release per ELEC-001 §18); published mass figures are not available. M-07 directly gates Cassette ISO compliance: each 100 kg change per rack shifts total Cassette mass by 500 kg.
+
+### 4.4 Rack anchors and snubbers
+
+Unchanged from Rev 2.0.
+
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Rack-to-floor anchorage (M16 studs, captive washers, brackets) per rack | 15 | 3 | 45 | Estimate |
+| Seismic snubbers (IBC Chapter 16 Sds 0.5 category) per rack | 15 | 1 | 15 | Estimate |
+| **Anchors and snubbers total** | | | **60** | |
+
+### 4.5 §4 section total
 
 | Subsection | Mass (kg) |
-|------------|-----------|
-| §6.1 CoolIT CHx2000 | **0** (DELETED Rev 3.0) |
-| §6.2 Primary PG25 coolant charge | 180 |
-| §6.3 Primary PG25 manifold + piping | 140 |
-| §6.4 PG25 QD plate + hardware | 35 |
-| **§6 cooling subtotal (cassette-internal)** | **355** |
-| Rev 2.0 subtotal (for comparison) | 1,260 |
-| **Rev 3.0 − Rev 2.0 delta** | **−905 kg** |
-
-Net cooling reduction 905 kg. Reconciled to −635 kg net to full-cassette total in §2 summary because:
-- 180 kg PG25 charge is still present (moved, not eliminated)
-- 35 kg QD plate is new
-- The cassette total doesn't reflect the 270 kg that has "moved" to the skid side of the boundary (expansion tank, CDU reservoir, CDU-to-manifold transitions)
+|---|---:|
+| §4.1 Compute racks R1–R9 | 13,500 |
+| §4.2 Control rack R10 | 700 |
+| §4.3 Delta in-row power racks R11–R15 | 5,000 |
+| §4.4 Rack anchors and snubbers | 60 |
+| **§4 subtotal** | **19,260** |
 
 ---
 
-## §7  DC ELECTRICAL DISTRIBUTION
+## 5. Delta DC/DC shelf allocation
 
-Per ELEC-001 §7, §13, and §17 — busway upgraded from 2,500 A to 4,000 A; ECP main feed is laminated copper bus bar (not cable); CDU subpanel is 80 A (not 60 A).
+This section exists to document the allocation logic that closes assumption A-02 and to make clear why no line-item mass contribution appears at §5.
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| 800 V DC main disconnect, motor-operated, 2,500 A | 1 | 80 | 80 | ABB SACE 2,500 A frame, ~75–90 kg |
-| Surge protection device (SPD), Type 1, 200 kA | 1 | 5 | 5 | Phoenix Contact VAL-MS |
-| Bender iso-PV1685 IMD | 1 | 8 | 8 | Bender published: 7.5 kg |
-| Revenue meter, 800 V DC | 1 | 5 | 5 | Estimate |
-| Maintenance UPS, 24 V DC, 2 kWh LiFePO4 | 1 | 20 | 20 | Battle Born 100Ah = ~12 kg; with charger/enclosure ~20 kg |
-| Life-safety DC panel, 24 V distribution | 1 | 10 | 10 | Blue Sea Systems |
-| Per-rack DC breaker, 250 A frame (×15) | 15 | 3 | 45 | ABB SACE Tmax XT4, ~2.8 kg |
-| DC busway, 4,000 A, 800 V DC rated, ~15 m | 15 m | 18 | 270 | Starline 4,000 A copper laminated, ~16–20 kg/m (ELEC-001 §13 upgrade; was 2,500 A at 13 kg/m = 195 kg) |
-| Busway taps (×15) | 15 | 2.5 | 38 | Per-rack tap off busway, larger for 4,000 A busway |
-| Laminated copper bus bar, 100×10 mm per polarity, 0.6 m | 1 lot | — | 12 | ELEC-001 §7 ECP main feed — ~5.3 kg/m × 0.6 m × 2 poles + hardware |
-| CDU power subpanel, 480 V AC 3-ph, 80 A | 1 | 18 | 18 | Eaton CH-series panelboard, 80 A (ELEC-001 §17) |
-| Ground bar, 50 mm² capacity | 1 | 5 | 5 | Burndy |
-| Interior LED work light strips (×8) | 8 | 0.5 | 4 | Philips TrueLine |
-| Panel open relay | 1 | 0.5 | 1 | Phoenix Contact |
-| Terminal block bus and rails | 1 lot | — | 8 | Phoenix Contact, estimate |
-| **SUBTOTAL** | | | **529** | Rounded to **520** |
+Per position P3-09 and assumption A-07: the Delta 110 kW power shelves that perform AC-to-800 V DC conversion are physically located inside the five Delta 660 kW in-row racks R11–R15 (six 110 kW shelves per rack). Their mass is counted within the 1,000 kg per-rack Delta estimate in §4.3.
 
-**Delta from Rev 1.0:** +95 kg net. Busway upgrade +75 kg (270 − 195), taps +8 kg, laminated bus bar +12 kg, CDU subpanel +3 kg.
+The separate 800 V → 50 V DC/DC power shelf that delivers 50 V to the Vera Rubin compute tray in each NVL72 / CPX rack (one per compute rack) is physically located inside each R1–R9 rack. Its mass is bundled into the 1,500 kg per-rack compute estimate per assumption A-07 / BOM-001 §4 note.
+
+**Neither shelf class is counted separately at §5.** The §5 mass contribution is therefore 0 kg.
+
+Rev 2.0 assumption A-02 ("are Delta power shelves included in the NVL72 rack weight?") is obsolete. The question was whether a standalone 110 kW shelf population might be unaccounted; in Rev 3.0 the 110 kW shelves are components of physically separate in-row racks that are separately listed in §4.3, so the question no longer applies. The Rev 2.0 conservative case of 31,415 kg (which built an additional Delta-shelf mass on top of the rack estimate) is obsolete and is not carried forward into Rev 3.0 compliance analysis. See M-01 (closed).
+
+The new uncertainty driving compliance is not a shelf-level ambiguity; it is the Delta in-row rack total weight itself (M-07).
 
 ---
 
-## §8  FIRE SUPPRESSION
+## 6. Cooling (cassette interior only)
 
-Per FIRE-001 §12, Novec 1230 cylinders right-sized from 2× 180 L (190 kg each) to 2× 200 lb fill (~35 kg each). Agent required per NFPA 2001 calculation: 72 kg at 0 °C design temperature. Savings: ~275 kg from Rev 1.0 mass.
+Cassette-interior cooling mass only. The CDU skid — heat exchanger, primary pumps, expansion tank, makeup system — is external to the Cassette boundary per COOL2-001 Rev 1.0 §1 and has operating mass ~5,800 kg wet per COOL2-001 §8, documented there. Flex hose assemblies are supplied with the Cassette but are outside the ISO envelope during transport (open item M-08 resolves the transport-weight boundary).
 
-### Novec 1230 Agent & Cylinders
+| Item | Qty / length | Unit | Mass (kg) | Basis |
+|---|:-:|:-:|---:|---|
+| CDU unit (CoolIT CHx2000) | 0 | — | 0 | **Moved to COOL2-001 (external skid)** — was 600 kg in Rev 2.0 |
+| Expansion tank | 0 | — | 0 | **Moved to CDU skid per COOL2-001 §5** — was 15 kg in Rev 2.0 |
+| Primary PG25 coolant, cassette interior only | 180 L | 1.017 kg/L | 185 | COOL2-001 §5: cassette-interior volume 180 L × PG25 density ≈ 183 kg; rounded up to 185 |
+| Supply and return manifolds (DN125, SCH40 steel, 5 m active length each, insulated) | 2 runs × 5 m | ~15 kg/m active | 150 | COOL-001 §3 |
+| Manifold isolation valves MIV-S and MIV-R (Belimo DN125 spring-return, actuator + body) | 2 | 20 each | 40 | COOL-001 §8 |
+| QBH-150 DN150 quick-disconnect boundary plate | 1 | 25 | 25 | COOL-001 §3 |
+| Manifold supports, brackets, anti-drip kit (local only, main drip trays in §9) | — | — | 30 | Estimate |
+| Piping small-bore (drains, vents, instrumentation tees — DN15 to DN25) | 15 m | 1.0 kg/m | 15 | Estimate |
+| **§6 subtotal** | | | **445** | |
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Ansul Novec 1230 cylinder, 200 lb fill (90.7 kg agent + ~10 kg tare) | 2 | 35 | 70 | FIRE-001 §5 recommendation; Ansul standard SKU |
-| Novec discharge nozzles, 360° (×8) | 8 | 0.4 | 3 | Typical Ansul nozzle |
-| Novec discharge piping, copper or SS, lot | 1 lot | — | 20 | ~8 m at ~2.5 kg/m (reduced from 10 m — shorter runs with smaller cylinders) |
-| Novec control panel (FACU) | 1 | 10 | 10 | |
-| Pre-discharge strobe + horn (interior) | 1 | 0.8 | 1 | Edwards/Wheelock |
-| Pre-discharge strobe (exterior, ×2) | 2 | 0.8 | 2 | |
-| Novec abort station, key-switch (×2) | 2 | 0.5 | 1 | |
-| Over-pressure vent, powered damper 250×250 | 1 | 12 | 12 | Greenheck motorized damper |
-| Cylinder brackets, stainless (×2) | 2 | 3 | 6 | Wall-mount, smaller cylinders need less bracket |
-| Fire panel battery backup | 1 | 5 | 5 | 24 hr standby, sealed lead-acid |
+Rev 2.0 carried §6 at 1,260 kg. The 815 kg reduction comes from: CDU removal (−600 kg), coolant reduction (−215 kg: 400 → 185 kg), and expansion tank removal (−15 kg). Manifold plus valves plus QBH plus supports are essentially unchanged in mass terms (~260 kg), now itemized at 260 kg total (150 + 40 + 25 + 30 + 15 = 260 kg; the 185 kg coolant plus 260 kg piping/valves/supports = 445 kg).
 
-### VESDA Detection
-
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| Xtralis VESDA-E VEU-A00 | 1 | 8 | 8 | Xtralis published: 7.8 kg |
-| VESDA sampling pipe network, CPVC 25 mm, ~40 m | 1 lot | — | 5 | CPVC 25 mm = ~0.13 kg/m × 40 |
-| Zone terminators (×5) | 5 | 0.1 | 1 | |
-
-**SUBTOTAL fire suppression: 144 → rounded to 180 kg** (allowance for brackets, labels, commissioning tools, and unlisted small hardware)
-
-**Delta from Rev 1.0:** −275 kg (was 455 kg, now 180 kg). FIRE-001 §12 Finding 1 resolved.
+The 185 kg coolant is the coolant actually present in the cassette interior during operation. At draining for shipment, this volume is captured at the CDU skid side of the QBH plate and the cassette-interior volume drains via a gravity path — the Cassette ships dry, so the 185 kg coolant is an operational mass not a shipping mass. For ISO compliance the shipping mass uses the dry figure; both scenarios in §2 state the operating mass for conservatism. No ISO margin is claimed by citing the dry mass.
 
 ---
 
-## §9  LEAK DETECTION & DRIP MANAGEMENT
+## 7. DC electrical distribution
 
-| Item | Qty | Unit Mass (kg) | Total (kg) | Basis |
-|------|-----|----------------|------------|-------|
-| TraceTek TT1000-OHP cable, 80 m | 80 m | 0.2 | 16 | TE Connectivity, ~0.18 kg/m |
-| TraceTek TTDM-128 panel | 1 | 3 | 3 | |
-| Zone terminators (×5) | 5 | 0.1 | 1 | |
-| Per-rack drip tray, 600×1,200×50 mm SS304, 2 mm plate + perimeter walls | 15 | 14 | 210 | Plate: 0.6×1.2×0.002×8,000 = 11.5 kg; perimeter: ~2.5 kg |
-| Floor sump, 200×200×150 mm SS316L | 1 | 5 | 5 | |
-| Sump pump, 20 LPM, submersible | 1 | 3 | 3 | Little Giant |
-| Sump level sensor, capacitive 4-point | 1 | 0.5 | 1 | Ifm |
-| Sump conductivity probe | 1 | 0.5 | 1 | Endress+Hauser |
-| Condensate drain solenoid valve, 1" | 1 | 1.5 | 2 | ASCO |
-| Leak isolation motorized valves (×2) | 2 | 3 | 6 | Belimo at ECP |
-| **SUBTOTAL** | | | **248** | Rounded to **200** (drip tray weight includes some already counted structure) |
+The section title is retained from Rev 2.0 for cross-document continuity, but the content is now a hybrid: the AC primary path (main disconnect, bus duct entry, AC feeders) is new to Rev 3.0 at the Cassette boundary, and the 800 V DC secondary path (busway, taps, branch breakers) is retained but upgraded from 4,000 A to 6,000 A.
 
-Note: Drip tray weight partially overlaps with floor structure. Conservatively not deducted.
-Rounded to 200 kg to avoid double-counting with floor reinforcement in §3.
+### 7.1 AC-side primary (new in Rev 3.0)
 
----
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Eaton Magnum DS 6,000 A, 480 V AC, UL 1066 air circuit breaker (main AC disconnect) | 1 | 270 | 270 | ELEC-001 Rev 1.3 §18 E-02 CLOSED; **Estimate — M-09 OPEN (±80 kg)** |
+| Eaton Pow-R-Way III bus duct wall entry section, 6,000 A (wall penetration + transition hardware at ELEC ECP) | 1 | 75 | 75 | ELEC-001 §18 E-01 CLOSED; **Estimate — M-10 OPEN** |
+| Revenue meter (Veris E50H6B or equivalent, 480 V 3-phase) | 1 | 5 | 5 | Vendor published |
+| Surge protective device (SPD) Type 1, 480 V AC | 1 | 5 | 5 | Vendor published |
+| **AC-side subtotal** | | | **355** | |
 
-## §10  CABLES
+The Rev 2.0 2,500 A DC main disconnect (80 kg) and CDU 480 V AC 80 A subpanel (18 kg) are both removed. The Stäubli CombiTac 2500 DC connector at the ECP (Rev 2.0 §7 line item) is removed. Net AC-side add vs Rev 2.0 DC-side items removed: +355 − 80 − 18 = +257 kg (not counting the SPD, which was present in Rev 2.0 at the same mass).
 
-Basis: BOM §15 cable summary — ~700 m copper, ~65 m fiber.
+### 7.2 DC-side distribution (retained, upgraded to 6,000 A)
 
-| Cable Type | Length (m) | kg/m | Total (kg) |
-|------------|------------|------|------------|
-| 800 V DC primary, 2× 70 mm² XHHW-2 | 10 | 1.20 | 12 |
-| Per-rack DC branch, 2× 70 mm² (15 × 2 m) | 30 | 1.20 | 36 |
-| 480 V AC CDU power feed, 4× 10 mm² | 6 | 0.40 | 2 |
-| 480 V AC Munters feed, 4× 16 mm² | 6 | 0.56 | 3 |
-| Cat6A shielded, OOB + console + sensor I/O | 200 | 0.10 | 20 |
-| Modbus RTU, Belden 3106A | 30 | 0.06 | 2 |
-| 24 V DC life-safety, 2× 2.5 mm² | 150 | 0.08 | 12 |
-| Bonding cable, 25 mm² (rack chassis, 15 × 2.5 m) | 40 | 0.24 | 10 |
-| Bonding cable, 50 mm² (ECP external) | 10 | 0.44 | 4 |
-| Bare copper ground, 50 mm² | 15 | 0.44 | 7 |
-| Sensor cable, shielded pair (RTD) | 80 | 0.08 | 6 |
-| LMR-400 RF cable | 20 | 0.17 | 3 |
-| Fiber OS2 (negligible mass) | 65 | 0.02 | 1 |
-| Miscellaneous cable (splices, J-box drops, tails) | — | — | 30 |
-| Cable management: tie wraps, conduit, loom | — | — | 15 |
-| **SUBTOTAL** | ~700 m | — | **163** |
+| Item | Qty / length | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| 6,000 A DC busway (Starline or Siemens SIVACON 8PS equivalent, insulated plug-in) | 15 m × 22 kg/m | — | 330 | A-11 assumption; was 270 kg at 4,000 A in Rev 2.0 |
+| Busway plug-in tap units (one per rack R1–R10, plus service tap) | 10 | 2.5 | 25 | Vendor published |
+| Laminated copper bus stubs (Delta rack output to busway) | 5 | 6 | 30 | Estimate; short stubs, not full 0.6 m bus bars |
+| Per-rack DC branch breakers (ABB XT4 DC-rated, 250 A trip class) | 10 | 3 | 30 | 9 × 250 A/250 A + 1 × 250 A/200 A per ELEC-001 |
+| **DC-side subtotal** | | | **415** | |
 
-Note: BOM §15 estimated 700 m total. Bottom-up yields 163 kg. Using **235 kg** (+44% contingency) to account for service loops, unquantified runs, and cable tray fill.
+The 6,000 A DC busway reflects the full power throughput — five Delta racks at 660 kW each = 3.3 MW peak DC delivered to R1–R9 compute racks. Rev 2.0 sized the busway at 4,000 A for a lower compute count and lower peak draw.
 
----
+### 7.3 Life-safety and auxiliary electrical
 
-## §11  CONTROLS, SENSORS & MISCELLANEOUS HARDWARE
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Bender iso-PV1685 insulation monitoring device (IMD) | 1 | 8 | 8 | Vendor published |
+| Maintenance UPS, 24 V DC, 2 kWh LiFePO4 | 1 | 20 | 20 | Vendor published |
+| Life-safety 24 V DC distribution panel | 1 | 10 | 10 | Vendor published |
+| Ground bar, terminal blocks, LED lights, panel control relay, misc DIN-rail | — | — | 25 | Estimate |
+| **Auxiliary subtotal** | | | **63** | |
 
-### Sensors & Controls (not rack-mounted)
+### 7.4 §7 section total
 
-| Item | Qty | Unit Mass (kg) | Total (kg) |
-|------|-----|----------------|------------|
-| RTD thermowells, 1/8" NPT, Pt100 (×30) | 30 | 0.3 | 9 |
-| Ultrasonic flow meter, clamp-on (×15) | 15 | 0.5 | 8 |
-| Hall-effect current transformer, 0–300 A DC (×15) | 15 | 0.3 | 5 |
-| 3-axis MEMS accelerometer (×15) | 15 | 0.1 | 2 |
-| Vaisala HMP60 T/RH sensor (×6) | 6 | 0.3 | 2 |
-| Setra 265 static pressure sensor | 1 | 0.5 | 1 |
-| External T/RH/barometric sensors | 1 lot | — | 2 |
-| Ifm JN2100 inclinometer | 1 | 0.2 | 0 |
-| Omega SHK shock sensor | 1 | 0.3 | 0 |
-| Advantech ADAM-6017 (×4) | 4 | 0.3 | 1 |
-| Advantech ADAM-6060 (×2) | 2 | 0.3 | 1 |
-| Advantech ADAM-6050 | 1 | 0.3 | 0 |
-| Access panel reed switches (×12) | 12 | 0.05 | 1 |
-| FLIR / Axis IR cameras (×2) | 2 | 1.5 | 3 |
-| GPS-disciplined clock / antenna | 1 | 1.0 | 1 |
-| Cellular modem (Cradlepoint) | 1 | 1.5 | 2 |
-| OOB management switch, 24-port | 1 | 4.5 | 5 |
-| Console server, 32-port | 1 | 3.0 | 3 |
-| **Sensors & controls subtotal** | | | **46** |
+| Subsection | Mass (kg) |
+|---|---:|
+| §7.1 AC-side primary | 355 |
+| §7.2 DC-side distribution | 415 |
+| §7.3 Life-safety and auxiliary | 63 |
+| **§7 subtotal** | **833** |
 
-### Junction Boxes & DIN Rail
-
-| Item | Qty | Unit Mass (kg) | Total (kg) |
-|------|-----|----------------|------------|
-| Junction boxes, NEMA 4, IP66 (Hoffman) (×25) | 25 | 1.5 | 38 |
-| DIN rail, terminal blocks, end stops | 1 lot | — | 5 |
-| **JB subtotal** | | | **43** |
-
-### Miscellaneous Hardware
-
-| Item | Qty | Unit Mass (kg) | Total (kg) |
-|------|-----|----------------|------------|
-| Panel fasteners, M10 × 40 mm SS (×480) | 480 | 0.05 | 24 |
-| Captive washer kit (×480) | 480 | 0.01 | 5 |
-| Anti-galling compound, cable gland kits | 1 lot | — | 3 |
-| Aluminum ladder cable tray, 400 mm × 12 m | 12 m | 3.0 | 36 |
-| Perforated sensor cable tray, 150 mm × 12 m | 12 m | 1.5 | 18 |
-| Commissioning tools / gaskets shipped with pod | 1 kit | — | 15 |
-| Spare fasteners, QR labels, hazard labels | 1 lot | — | 5 |
-| **Misc hardware subtotal** | | | **106** |
-
-**SUBTOTAL controls + sensors + misc: 46 + 43 + 106 = 195 → rounded to 180 kg**
+Rev 2.0 §7 total was 520 kg. Net change +313 kg. The increase is driven by: Magnum DS 6,000 A AC disconnect (+270 kg) — DC disconnect removed (−80 kg) + Pow-R-Way III entry (+75 kg) + DC busway upgrade (+60 kg at 22 kg/m × 15 m new vs 18 kg/m × 15 m old) — CDU 480 V subpanel (−18 kg) + bus stubs reconfigured (±0 kg) + branch breaker count (10 vs Rev 2.0's 13, ±0 kg net at 3 kg each). The Magnum DS is the single largest driver and the item with the widest estimate tolerance (M-09, ±80 kg).
 
 ---
 
-## §12  SENSITIVITY ANALYSIS (Rev 2.0)
+## 8. Fire suppression
 
-### Variable 1: Compute Rack Weight (C-01)
+Unchanged from Rev 2.0. Companion reference is now Cassette-FIRE-001 Rev 1.2 (not Rev 1.1 as Rev 2.0 referenced).
 
-Each 100 kg change in unit rack weight × 13 racks = **1,300 kg** change in total.
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Ansul Sapphire 52 L Novec 1230 cylinder (populated, mounted), 66 kg agent design mass + 25 kg cylinder | 1 | 95 | 95 | FIRE-001 §5.2, §12 |
+| Cylinder mounting bracket, floor strap kit | 1 | 8 | 8 | FIRE-001 §5.2 |
+| Discharge nozzles (DN15, 4-nozzle layout for 76 m³ enclosure) | 4 | 1.5 | 6 | FIRE-001 §4.2 |
+| Piping (DN15 to DN20 SCH40 carbon steel, ~30 m total run) | 30 m | 1.5 kg/m | 45 | FIRE-001 §4 |
+| Ansul clean-agent panel (AutoPulse IQ-301 or equivalent) with 24 h battery | 1 | 18 | 18 | FIRE-001 §6 |
+| Detectors (photoelectric, 6 units, cross-zone 2-of-N) | 6 | 0.5 | 3 | FIRE-001 §3 |
+| Manual release and abort stations | 2 | 1 | 2 | FIRE-001 §3 |
+| Notification appliances (horn/strobe, 2 units) | 2 | 1.5 | 3 | FIRE-001 §3 |
+| **§8 subtotal** | | | **180** | |
 
-All totals below reflect Rev 2.0 corrections (fire −275, electrical +95, manifolds +30 = −150 kg net vs Rev 1.0).
-
-| Rack Weight | Total (A-02 baseline: Delta in rack) | Total (conservative: Delta separate) | vs ISO Limit |
-|-------------|---------------------------------------|---------------------------------------|--------------|
-| 1,200 kg | 26,335 | 27,815 | −4,145 / −2,665 ✓ |
-| 1,300 kg | 27,635 | 29,115 | −2,845 / −1,365 ✓ |
-| **1,400 kg** | **28,635** | **30,115** | **−1,845 ✓ / −365 ✓** |
-| **1,500 kg** | **29,935** | **31,415** | **−545 ✓ / +935 ✗** |
-| **1,600 kg** | **31,235** | **32,715** | **+755 ✗ / +2,235 ✗** |
-| 1,700 kg | 32,535 | 34,015 | +2,055 ✗ / +3,535 ✗ |
-
-"+" = over limit (non-compliant). "−" = under limit (compliant).
-
-**Baseline scenario (A-02, 1,500 kg/rack): COMPLIANT at 29,935 kg with 545 kg margin.**
-
-### Variable 2: Rack Count (14 vs 15)
-
-Dropping from 15 to 14 compute racks removes: 1 compute rack + proportional manifold drops, cables, sensors, trays (~150 kg).
-
-| Config | Rack Weight | A-02 (Delta in rack) | Conservative (Delta separate) |
-|--------|-------------|----------------------|-------------------------------|
-| 15 racks | 1,400 kg | 28,635 ✓ | 30,115 ✓ |
-| 15 racks | 1,500 kg | 29,935 ✓ (545 kg margin) | 31,415 ✗ (935 over) |
-| 15 racks | 1,600 kg | 31,235 ✗ | 32,715 ✗ |
-| **14 racks** | **1,400 kg** | **27,185 ✓** | **28,515 ✓** |
-| **14 racks** | **1,500 kg** | **28,485 ✓ (1,995 kg margin)** | **29,815 ✓ (665 kg margin)** |
-| **14 racks** | **1,600 kg** | **29,785 ✓** | **31,115 ✗** |
-
-At 14 racks, any rack weight ≤ 1,500 kg is compliant under both Delta scenarios. Margin is comfortable.
-
-### Conclusion from Sensitivity Analysis
-
-- **15 racks at baseline (A-02, 1,500 kg/rack): compliant at 29,935 kg with 545 kg margin.** This is the Rev 2.0 design point.
-- **15 racks remains non-compliant under the conservative case (Delta separate, 1,500 kg/rack)** — 935 kg over limit. Open item M-01 must confirm A-02 before committing to 15 racks at PO time.
-- **14 racks is safe at all realistic rack weights** up to and including 1,500 kg under both Delta scenarios. It remains the documented fallback if M-01 returns negative.
+Rev 2.0's reduction from 455 kg (original dual-cylinder FM-200 provision) to 180 kg via FIRE-001 §12 single-cylinder Novec 1230 resolution carries through Rev 3.0 unchanged.
 
 ---
 
-## §13  LONGITUDINAL CENTER OF GRAVITY
+## 9. Leak detection and drip management
 
-### Reference System
+Change from Rev 2.0: drip tray count reduced from 15 to 10. The Delta in-row power racks R11–R15 are air-cooled per COOL-001 Rev 1.1 §1 and have no liquid-cooling manifold connections; they do not need drip trays. The 10-tray population covers R1–R9 (nine compute racks, each with a manifold tap) + R10 (control rack drip tray per INT-001 standard practice, even though R10 is air-cooled, to catch any manifold-above condensate).
 
-- X = 0 at ELEC end (inside face of ELEC ECP)
-- X = 12,032 mm at CDU end (inside face of CDU ECP)
-- Container midpoint: X = 6,016 mm
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| Under-rack drip trays (stainless, 600 × 800 × 50 mm, 1.5 mm gauge) | 10 | 8 | 80 | BOM-001; was 15 trays = 120 kg in Rev 2.0 |
+| TraceTek TT-5000 leak sensor cable (two zones, ~40 m total) | 40 m | 0.15 kg/m | 6 | Vendor published |
+| TraceTek TT-SIM-2 controller + zone module | 1 | 4 | 4 | Vendor published |
+| Sump pan (400 × 200 × 150 mm, stainless, plus second float switch mount) | 1 | 12 | 12 | INT-001 §6.3 |
+| Sump float switches (LT-SUMP-HI and LT-SUMP-HIHI, dual-float assembly) | 2 | 1 | 2 | Vendor published |
+| Sump drain pipe (DN25, to external service port) | 5 m | 1 kg/m | 5 | Estimate |
+| Containment moat sill at QBH-150 boundary | 1 | 20 | 20 | INT-001 §6.3 |
+| Floor drain plumbing and seals | — | — | 15 | Estimate |
+| Emergency coolant spill absorbent pillows (pre-staged) | — | — | 16 | Operational spares |
+| **§9 subtotal** | | | **160** | |
 
-### Rack Position Centers
-
-From INT-001 §5: ELEC end zone = 1,200 mm, rack zone = 9,000 mm, CDU end zone = 1,500 mm.
-- Rack pitch: 9,000 ÷ 15 = 600 mm per rack
-- R1 center: 1,200 + 300 = **1,500 mm**
-- R2 center: 1,200 + 900 = **2,100 mm**
-- ...
-- R13 center: 1,200 + (12 × 600) + 300 = **9,300 mm**
-- R14 center: 1,200 + (13 × 600) + 300 = **9,900 mm**
-- R15 center: 1,200 + (14 × 600) + 300 = **10,500 mm**
-- CDU center: 12,032 − 750 = **11,282 mm** (CDU footprint 1,200 mm, centered in CDU zone)
-
-### Longitudinal CG Computation (Rev 2.0 — A-02 baseline, Delta shelves in rack weight)
-
-| Subsystem | Mass (kg) | X_CG (mm) | Moment (kg·mm) |
-|-----------|-----------|-----------|----------------|
-| Container shell | 6,100 | 6,016 | 36,698,000 |
-| R1–R13 compute racks (includes Delta shelves per A-02) | 19,500 | 5,400* | 105,300,000 |
-| R14 InfiniBand rack | 800 | 9,900 | 7,920,000 |
-| R15 storage/mgmt rack | 900 | 10,500 | 9,450,000 |
-| Rack anchors + snubbers | 60 | 5,700 | 342,000 |
-| CoolIT CHx2000 CDU | 600 | 11,282 | 6,769,000 |
-| Primary coolant (in manifold + CDU + racks) | 400 | 5,700 | 2,280,000 |
-| Chilled water manifold + piping (DN125) | 260 | 5,700 | 1,482,000 |
-| DC electrical distribution (ELEC end zone, 4,000 A busway + bus bar) | 520 | 600 | 312,000 |
-| Fire suppression (cylinders at ELEC end, right-sized) | 180 | 700 | 126,000 |
-| Leak detection + drip trays (along rack zone) | 200 | 5,400 | 1,080,000 |
-| Cables (distributed) | 235 | 5,700 | 1,339,500 |
-| Controls, sensors, misc (distributed) | 180 | 5,700 | 1,026,000 |
-| **TOTAL** | **29,935** | | **174,124,500** |
-
-*R1–R13 CG = (1,500 + 9,300) / 2 = **5,400 mm** from ELEC end (uniform rack mass distribution)
-
-**X_CG = 174,124,500 ÷ 29,935 = 5,817 mm from ELEC end**
-
-### CG Offset from Centerline
-
-Centerline: 6,016 mm
-CG: 5,817 mm
-**Offset: 199 mm toward ELEC end** (reduced from 280 mm in Rev 1.0 — fire suppression right-sizing moved mass off the ELEC end)
-
-The CG is still biased toward the ELEC end because the main disconnect, busway (heavier at 4,000 A), and electrical panel are concentrated there. The CDU, R14, and R15 at the far end partially but not fully counterbalance. The smaller Novec cylinders meaningfully reduced the bias.
-
-**Implication for lifting:** When lifting the cassette by ISO corner castings, the ELEC-end pair carries slightly more load. At 29,935 kg total and 199 mm offset over 12,032 mm:
-- ELEC-end pair: 29,935 × (6,016 + 199) / 12,032 = **15,463 kg** (51.7%)
-- CDU-end pair: 29,935 × (6,016 − 199) / 12,032 = **14,472 kg** (48.3%)
-
-Both ends well within ISO corner casting rating of 86,400 kg per casting.
-
-### Lateral CG (Y-axis)
-
-- Rack row: on container centerline → Y = 0
-- Power tray (Side A): ~150 kg at Y ≈ −888 mm
-- Manifold trench (Side B): ~230 kg at Y ≈ +888 mm
-- All other mass: symmetric about centerline
-- **Lateral CG offset ≈ +14 mm toward Side B (manifold side). Negligible.**
+Net change vs Rev 2.0: −40 kg. Five fewer drip trays × 8 kg = −40 kg; all other items unchanged.
 
 ---
 
-## §14  VERTICAL CENTER OF GRAVITY
+## 10. Cables
 
-### Reference System
+Major restructure. Rev 2.0's 800 V DC primary cable entry at the ECP is removed — the AC primary now enters via the Pow-R-Way III bus duct wall section (counted in §7, not in §10). A new, substantial line item is added for per-Delta-rack 480 V AC feeders.
 
-- Z = 0 at finished floor (top of load-spreader plate)
-- Container interior height: 2,698 mm
+| Item | Qty | Unit | Mass (kg) | Basis |
+|---|:-:|:-:|---:|---|
+| Per-Delta-rack 480 V AC feeder — 2× 300 mm² XHHW-2 per phase × 3 phases + 1× 95 mm² XHHW-2 ground, ~5 m run | 5 feeders | — | 515 | Per-feeder: (6 conductors × 5 m × 3.3 kg/m) + (1 conductor × 5 m × 0.84 kg/m) = 99 + 4 ≈ 103 kg × 5 = 515 kg — ELEC-001 §8 |
+| DC branch cables R1–R9 (2× 95 mm² polarity conductors × ~2 m per rack) | 50 m | 0.84 kg/m | 42 | Was 2× 70 mm² at 36 kg in Rev 2.0 (scaled to 6,000 A busway) |
+| 800 V DC primary entry cable (Rev 2.0 ECP) | 0 | — | 0 | **Removed** — replaced by bus duct entry in §7 |
+| Cat6A network trunks (management plane) | ~150 m | 0.05 kg/m — included with connectors | 50 | Estimate; unchanged from Rev 2.0 |
+| Modbus RTU (RS-485) runs to CDU skid, Munters, ancillary | ~100 m | 0.07 kg/m | 15 | Estimate; unchanged from Rev 2.0 |
+| 24 V DC life-safety distribution (BMS, watchdog, MIV actuators, fire interface, sensors) | ~300 m of various conductors | — | 35 | Estimate; unchanged from Rev 2.0 |
+| Bonding and grounding conductors (2/0 AWG, 4/0 AWG, main ground, rack ground bars) | ~80 m total | — | 25 | Estimate; unchanged from Rev 2.0 |
+| Sensor and control cabling (T/RH, leak, sump, fire panel, tamper, limit switches, analog 4–20 mA loops) | ~200 m | — | 20 | Estimate; unchanged from Rev 2.0 |
+| **§10 subtotal** | | | **702** | |
 
-### Vertical CG Computation (Rev 2.0 — A-02 baseline)
-
-| Subsystem | Mass (kg) | Z_CG (mm) | Moment (kg·mm) |
-|-----------|-----------|-----------|----------------|
-| Container shell (floor heavy, walls mid, roof light) | 6,100 | 900 | 5,490,000 |
-| Racks R1–R15 (includes Delta shelves at top per A-02) | 21,200 | 1,150 | 24,380,000 |
-| CoolIT CHx2000 CDU (floor-standing unit, 1,200 mm tall) | 600 | 600 | 360,000 |
-| Primary coolant (floor trench manifold + rack cold plates) | 400 | 500 | 200,000 |
-| Manifold + piping (floor trench, DN125) | 260 | 200 | 52,000 |
-| DC electrical (floor-mounted, ELEC end, 4,000 A busway) | 520 | 600 | 312,000 |
-| Novec cylinders (wall-mounted, right-sized) | 180 | 900 | 162,000 |
-| Drip trays (floor level) | 200 | 75 | 15,000 |
-| Cables (overhead and floor mixed; average) | 235 | 800 | 188,000 |
-| Controls, sensors, misc | 180 | 800 | 144,000 |
-| Rack anchors + snubbers | 60 | 50 | 3,000 |
-| **TOTAL** | **29,935** | | **31,306,000** |
-
-**Z_CG = 31,306,000 ÷ 29,935 ≈ 1,046 mm above floor**
-
-CG at 1,046 mm = **38.8% of interior height (2,698 mm).**
-
-Rev 2.0 Z_CG barely changed from Rev 1.0 (1,050 → 1,046 mm). Delta shelves being accounted inside rack mass (A-02) raises rack Z_CG slightly (1,100 → 1,150 mm) to reflect that power shelves sit high in the rack envelope, offsetting the reduction from smaller Novec cylinders.
-
-### Tipping Stability (Static)
-
-Container width: 2,438 mm external. Half-width: 1,219 mm.
-Static tipping angle: arctan(1,219 / 1,046) = arctan(1.165) = **49.4°**
-
-49° before the CG crosses the tipping line. For context:
-- Onshore seismic: max 0.3g lateral → equivalent tilt ≈ 17° → **safe margin**
-- Offshore design roll: 30° → **safe margin**
-- Marine pitch: 15° → **safe margin**
-
-The cassette has adequate static stability in both variants.
+Rev 2.0 §10 subtotal was approximately 450 kg (not explicitly tabulated in Rev 2.0, reconstructed from BOM). Rev 3.0 adds 515 kg for the five AC feeders and subtracts the 800 V DC primary entry (which in Rev 2.0 carried roughly 200 kg as 2× 500 mm² DC cable over ~8 m, now handled by the bus duct entry in §7). Net §10 increase: approximately +250 kg.
 
 ---
 
-## §15  TWO-HIGH STACKING ANALYSIS
+## 11. Controls, sensors, and miscellaneous
 
-### ISO Corner Casting Loads
+Minor updates vs Rev 2.0. Primary change: no separate out-of-band (OOB) management switch for CDU — the CDU skid has its own controls and Modbus TCP interface per COOL2-001 §9, and reports to the platform NOC independently of the Cassette BMS OPC-UA surface. Any Cassette-side double-counted CDU sensors are removed.
 
-ISO 1161 corner casting rated load: **86,400 kg per casting, vertical.**
+| Item | Qty | Unit mass (kg) | Mass (kg) | Basis |
+|---|:-:|---:|---:|---|
+| BMS ECP panel (steel enclosure, DIN rails, backplane, gland plates) | 1 | 45 | 45 | ECP-001 §4 |
+| DIN-rail I/O modules (CPU, DI ×2, DO, AI, AO, Modbus TCP gateway, OPC-UA — per TAGS-001 §3) | 8 cards + accessories | — | 12 | Vendor published |
+| Jetson AGX Orin compute carrier (in R10 per §4.2; listed here only for I/O wiring continuity — 0 kg here to avoid double count) | 0 | — | 0 | Counted in R10 §4.2 |
+| Hardware watchdog relay (DIN-rail, IEC 61508 SIL 2 pending SIS-04) | 1 | 0.8 | 1 | Vendor published |
+| 24 VDC life-safety UPS (separate from 2 kWh unit in §7.3 — smaller ECP-local, ~200 Wh) | 1 | 8 | 8 | Vendor published |
+| Interior environment sensors (AT-INT-RH, TT-INT, AT-CO2 — ceiling mounted) | 3 | 1 | 3 | Vendor published |
+| CDU skid coordination (OOB switch for CDU) | 0 | — | 0 | **Removed per P3-11 intent — CDU has its own controls** |
+| HMI touchscreen panel (ECP door mount) | 1 | 6 | 6 | Vendor published |
+| Terminal blocks, wire duct, labels, cable glands, ECP-internal wiring | — | — | 25 | Estimate |
+| Platform network switches (Cassette-side TOR, management VLAN aggregation — R10 location but counted here for infrastructure class) | 2 | 15 | 30 | Vendor published |
+| Fiber patch panels and LC/MPO cassettes | — | — | 15 | Estimate |
+| Spare parts kit (fuses, relays, terminals, sensors — operational provisioning) | — | — | 25 | Estimate |
+| **§11 subtotal** | | | **170** | |
 
-For two-high stacking (A-02 baseline, 29,935 kg operating mass):
-- Upper pod operating mass: 29,935 kg
-- Lower pod receives upper pod load distributed across 4 upper corner castings onto 4 lower corner castings.
-- Load per lower corner casting from upper pod: 29,935 ÷ 4 = **7,484 kg**
-- Lower pod corner casting total load: 7,484 (upper pod) + 7,484 (lower pod self-weight to casting) = **14,968 kg**
-- Rating: 86,400 kg per casting
-- **Utilization: 17.3% of rating → ample margin**
-
-### Bottom Pod Combined Vertical Load
-
-Total bottom pod floor loading (2-high): 29,935 × 2 = 59,870 kg
-- 59,870 ÷ 4 corner castings = 14,968 kg per casting
-- ISO limit: 86,400 kg per casting → **utilization 17.3% ✓**
-
-### Twist-Lock Loading (Offshore Dynamic)
-
-Offshore vertical shock per DNV: 5g peak.
-Dynamic load on lower-pod corner casting: 14,968 × 5 = **74,838 kg per casting.**
-ISO limit: 86,400 kg. **Utilization: 86.6% → within limit, reduced from 91.3% in Rev 1.0.**
-
-**Action M-05 (formerly M-04):** For offshore two-high stacking under 5g slam loading, the corner casting utilization is 87%. This requires DNV certification review of the specific casting and weld at the bottom pod. Do not stack two-high offshore without this review. Rev 2.0 mass reduction improved margin by ~5 percentage points.
-
-### Three-High Stacking
-
-Not recommended without structural engineering review. Three-high would place 3 × 29,935 = 89,805 kg total through lower-pod castings → 22,451 kg per casting → at 5g dynamic: 112,256 kg → **exceeds ISO rating.** Three-high is disqualified offshore. Onshore static: 22,451 kg at corner casting = 26.0% utilization → acceptable statically, but not standard practice for live equipment.
+Rev 2.0 §11 was 180 kg; Rev 3.0 §11 is 170 kg. Net −10 kg from the CDU OOB switch deduplication and minor consolidation.
 
 ---
 
-## §16  KEY ASSUMPTIONS
+## 12. Sensitivity analysis
 
-| # | Assumption | Status in Rev 2.0 | Impact If Wrong |
-|---|------------|-------------------|-----------------|
-| A-01 | Rack weight = 1,500 kg per compute rack (estimated) | Open — C-01 | ±1,300 kg per 100 kg change × 13 racks |
-| A-02 | Delta power shelves ARE included in NVIDIA-reported rack weight | **Baseline — open item M-01 to confirm** | If wrong, total → 31,415 kg, non-compliant by 935 kg |
-| A-03 | R14 InfiniBand rack = 800 kg | Open | ±100 kg minor impact |
-| A-04 | R15 storage/mgmt rack = 900 kg | Open | ±100 kg minor impact |
-| A-05 | CoolIT CHx2000 CDU = 600 kg | Open — M-03 | No published weight found; ±150 kg possible |
-| A-06 | In-system coolant volume = 488 L (DN125 manifolds) | Updated from Rev 1.0 (was 383 L at DN100) | ±50 L = ±52 kg |
-| A-07 | Cold plate volume = 8 L per NVL72 rack | Open — M-04 | NVIDIA / CoolIT data needed to confirm |
-| A-08 | Cable 44% contingency applied | Conservative | Actual may be lower |
-| A-09 | Drip tray steel mass not offset against floor reinforcement credits | Conservative | Adds ~30 kg |
-| A-10 | 4,000 A busway at ~18 kg/m (Starline or equivalent) | Estimate, Rev 2.0 | ±30 kg at 15 m if vendor differs |
+Two independent variables drive Cassette mass uncertainty at Rev 3.0:
 
----
+- **Variable 1: NVL72 / CPX compute rack weight.** Span 1,200–1,600 kg per rack. 9 racks. Each 100 kg/rack change = ±900 kg on the Cassette total. Source of uncertainty: M-02 (C-01 carryforward) — NVIDIA Vera Rubin platform published reference mass.
+- **Variable 2: Delta 660 kW in-row power rack weight.** Span 800–1,400 kg per rack. 5 racks. Each 100 kg/rack change = ±500 kg on the Cassette total. Source of uncertainty: M-07 — Delta Electronics published specification.
 
-## §17  FINDINGS & REQUIRED ACTIONS (Rev 2.0)
+### 12.1 Combined sensitivity matrix
 
-### Finding 1 — Cassette Is Compliant at Baseline Assumption
+Total Cassette mass (kg), at combinations of compute rack mass and Delta in-row rack mass, with the §2 integration contingency held fixed at 915 kg:
 
-Rev 2.0 baseline (A-02: Delta shelves included in NVIDIA rack weight) totals **29,935 kg**, providing **545 kg margin** to the ISO 30,480 kg gross limit. This is a 1.8% margin — not generous, but compliant.
+| | Compute = 1,200 kg | Compute = 1,500 kg (A-01 baseline) | Compute = 1,600 kg |
+|---|---:|---:|---:|
+| **Delta = 800 kg** | 25,065 | 27,765 | 28,665 |
+| **Delta = 1,000 kg (baseline)** | 26,065 | **28,765** | 29,665 |
+| **Delta = 1,200 kg** | 27,065 | 29,765 | 30,665 |
+| **Delta = 1,400 kg** | 28,065 | **30,765** | 31,665 |
 
-The corrections from FIRE-001 (−275 kg), ELEC-001 (+95 kg), and COOL-001 (+30 kg) net to −150 kg. The remaining compliance margin comes from adopting A-02 as baseline, which is the conservative engineering interpretation of NVIDIA's Vera Rubin NVL72 as a complete integrated system.
+All values kg. ISO 668 R = 30,480 kg. **Bold** cells: baseline and sensitivity-high scenarios explicitly tracked in §2.3.
 
-### Finding 2 — Compliance Is Conditional on M-01
+### 12.2 Compliance boundary
 
-A-02 is a **design assumption pending vendor confirmation**, not a confirmed fact. If the NVIDIA-reported NVL72 weight excludes Delta shelves, the conservative-case total of 31,415 kg applies — non-compliant by 935 kg. Open item M-01 is the sole gate between compliant and non-compliant status.
+At the A-01 baseline compute-rack weight of 1,500 kg, the compliance boundary is the Delta rack weight that lands the Cassette at exactly 30,480 kg:
 
-**Until M-01 resolves, fabrication PO should proceed with the understanding that cassette operating mass is between 29,935 and 31,415 kg. Internal program risk register carries this as ±1,480 kg uncertainty.**
+Cassette mass @ 1,500 kg compute, variable Delta = 22,850 (raw excl. Delta) + 5X + 915 (contingency) = 23,765 + 5X. Setting this to 30,480:
 
-### Finding 3 — 14-Rack Design Remains the Safe Fallback
+$$X_{boundary} = (30{,}480 - 23{,}765) / 5 = 1{,}343 \text{ kg per Delta rack}$$
 
-Dropping from 15 to 14 compute racks remains compliant under all realistic rack-weight scenarios, including A-02 conservative case. If M-01 returns negative, dropping R13 is the non-redesign remedy: compute capacity drops from 936 to 864 Rubin GPUs (7.7%), pod IT load drops from 1,585 kW to 1,465 kW, all other systems unchanged.
+**M-07 must resolve at or below 1,343 kg per Delta rack** for the Cassette to remain ISO-compliant at the A-01 baseline compute-rack weight. The 1,000 kg baseline carries a 343 kg per-rack margin against this boundary.
 
-### Finding 4 — Mass Distribution Improved by Rev 2.0 Corrections
+If M-02 resolves above 1,500 kg (for example, if the NVL72 / CPX populated rack lands at 1,600 kg), the boundary tightens:
 
-The fire suppression right-sizing (−275 kg at ELEC end) reduced the longitudinal CG offset from 280 mm to 199 mm. Lifting-load asymmetry is now 51.7% / 48.3% between ECP-end pairs, improved from 54.1% / 45.9%. Offshore 2-high stacking corner-casting utilization dropped from 91.3% to 86.6% — same ISO rating, same DNV review required, but reduced structural margin pressure.
+| Compute rack mass (A-01) | Delta compliance boundary |
+|---:|---:|
+| 1,400 kg | 1,523 kg |
+| 1,500 kg | 1,343 kg |
+| 1,600 kg | 1,163 kg |
+| 1,700 kg | 983 kg |
 
-### Finding 5 — Item Sensitivity
+At 1,700 kg per compute rack, the Cassette is over the ISO limit even with Delta at 1,000 kg. The compound sensitivity of both major open items is the reason M-02 and M-07 are both P-0 / CRITICAL items in §18.
 
-Of the Rev 2.0 assumption table, A-01 (rack weight) remains the dominant sensitivity. Each ±100 kg/rack swings total ±1,300 kg. A rack weight of 1,400 kg would put baseline at 28,635 kg (1,845 kg margin — very comfortable); 1,600 kg would put baseline at 31,235 kg — over limit even under A-02. M-02 (rack weight confirmation) is therefore as critical as M-01.
+### 12.3 Non-compliance pathways
 
-### Required Actions (Rev 3.0)
+Three combinations of M-02 and M-07 put the Cassette over 30,480 kg:
 
-| ID | Action | Owner | Gate |
-|----|--------|-------|------|
-| M-01 | Confirm with NVIDIA/Foxconn/HPE: does the NVL72 rack weight include Delta power shelves? Obtain in writing. | Scott | Before fabrication PO — gates A-02 baseline |
-| M-02 | Confirm actual NVL72 loaded rack weight in kg | Scott / NVIDIA | Before fabrication PO |
-| ~~M-03~~ | ~~CoolIT CHx2000 actual shipping weight~~ | — | **CLOSED Rev 3.0 — CoolIT external, not cassette mass** |
-| M-04 | Confirm cold plate internal volume per NVL72 rack | Scott / NVIDIA | Affects coolant mass ±30 kg |
-| M-05 | DNV review of corner casting for offshore 2-high stacking | DNV-certified engineer | Before offshore deployment |
-| M-06 | **Update INT-001 §2 nameplate once M-01 / M-02 resolved** | Engineering | After M-01, M-02 |
-| **M-07** | **QD plate structural analysis (316L SS 300×600×20 mm, 2× DN150 QDs at 10 bar, bolt pattern, fatigue life) — new Rev 3.0** | ADC engineering | Before fabrication |
+- M-02 = 1,500 kg AND M-07 ≥ 1,343 kg (the §12.2 boundary)
+- M-02 = 1,600 kg AND M-07 ≥ 1,163 kg
+- M-02 ≥ 1,700 kg AND any M-07 ≥ 983 kg
+
+If any of these land, mitigation options are: (a) remove mass elsewhere — most promising candidates are §3 corner casting reinforcement plates (200 kg; only if M-05 clears offshore shipping waiver), §11 spare parts kit relocation (25 kg; trivial), and the §2 integration contingency itself (915 kg; consuming it requires tight integration discipline); (b) ship under a special-load exception procedure with carrier acknowledgement; (c) split the Cassette into two ISO envelopes for transport and integrate on-site.
+
+Mitigation option (c) is a significant architectural change and is not preferred; it is documented here as a known fall-back.
 
 ---
 
-## §18  OPEN ITEMS (REV 3.0)
+## 13. Longitudinal center of gravity
+
+Reference: the ELEC end wall at X = 0 mm (Cassette interior). Overall cassette interior length ~11,800 mm per INT-001 §5. X increases from ELEC end (where the main disconnect, ECP, bus duct entry live) toward the COOLING end (where QBH-150, MIVs, manifold headers live).
+
+Approximate X-coordinates for the major mass contributors, with rack positions from INT-001 §5 layout:
+
+| Item | Mass (kg) | X (mm) | Mass·X (kg·mm) |
+|---|---:|---:|---:|
+| ELEC ECP + Magnum DS + Pow-R-Way + AC-side subtotal (§7.1 + portion of §7.3) | 420 | 400 | 168,000 |
+| Delta R11 (Delta 660 kW in-row) | 1,000 | 1,600 | 1,600,000 |
+| Delta R12 | 1,000 | 2,200 | 2,200,000 |
+| Delta R13 | 1,000 | 2,800 | 2,800,000 |
+| Delta R14 | 1,000 | 3,400 | 3,400,000 |
+| Delta R15 | 1,000 | 4,000 | 4,000,000 |
+| Control rack R10 | 700 | 4,700 | 3,290,000 |
+| Compute rack R1 | 1,500 | 5,500 | 8,250,000 |
+| Compute rack R2 | 1,500 | 6,100 | 9,150,000 |
+| Compute rack R3 | 1,500 | 6,700 | 10,050,000 |
+| Compute rack R4 | 1,500 | 7,300 | 10,950,000 |
+| Compute rack R5 | 1,500 | 7,900 | 11,850,000 |
+| Compute rack R6 | 1,500 | 8,500 | 12,750,000 |
+| Compute rack R7 | 1,500 | 9,100 | 13,650,000 |
+| Compute rack R8 | 1,500 | 9,700 | 14,550,000 |
+| Compute rack R9 | 1,500 | 10,300 | 15,450,000 |
+| DC busway 6,000 A (15 m along cassette) | 330 | 5,900 | 1,947,000 |
+| Fire suppression (cylinder near ELEC end, nozzles distributed) | 180 | 3,500 | 630,000 |
+| In-cassette PG25 coolant + manifolds + MIVs + QBH | 445 | 7,500 | 3,337,500 |
+| Container shell + modifications (distributed) | 6,100 | 5,900 | 35,990,000 |
+| Cables (distributed, weighted toward racks) | 702 | 6,200 | 4,352,400 |
+| Leak / drip (under racks R1–R10) | 160 | 7,900 | 1,264,000 |
+| Controls / §11 (ECP-concentrated) | 170 | 500 | 85,000 |
+| Integration contingency (distributed) | 915 | 5,900 | 5,398,500 |
+| Racks anchors (distributed at rack positions) | 60 | 5,900 | 354,000 |
+| **Totals** | **28,765** | — | **177,516,400** |
+
+X_CG = 177,516,400 / 28,765 ≈ **6,172 mm**, measured from the ELEC end wall.
+
+Relative to the container center at X_center = 11,800 / 2 = 5,900 mm:
+
+$$\Delta X_{CG} = 6{,}172 - 5{,}900 = +272 \text{ mm toward the COOLING end}$$
+
+This is a 2.3 % bias from geometric center, well within the typical ±5 % container-center tolerance for safe handling. Rev 2.0 X_CG with 13 compute racks and an internal CDU was closer to center (~5,950 mm); Rev 3.0 is biased slightly toward the cooling end because the compute racks are now 9 and clustered in the aft 60 % of the Cassette, while the lighter Delta racks sit forward.
+
+Rev 2.0 had the CDU at X = 11,282 mm contributing 600 kg × 11,282 mm = 6.8 million kg·mm; its removal pulls the CG back toward center. The Delta racks at X = 1,600–4,000 mm at 5,000 kg total pull the CG forward (toward ELEC end) — these two effects partly offset. The net residual +272 mm aftward bias is attributable to the 9 compute racks being dense and aft-clustered, now that 4 of the Rev 2.0 compute-rack positions are replaced by lighter Delta power racks near the ELEC end.
+
+---
+
+## 14. Vertical center of gravity
+
+Reference: the Cassette floor at Z = 0 mm. Container interior height 2,700 mm (HC). Rack top of frame ~2,200 mm.
+
+| Item | Mass (kg) | Z (mm) | Mass·Z (kg·mm) |
+|---|---:|---:|---:|
+| Container shell (floor + walls + roof — composite Z_CG) | 6,100 | 1,400 | 8,540,000 |
+| Racks R1–R9 compute (populated, Z_CG — top-biased from heavy trays) | 13,500 | 1,150 | 15,525,000 |
+| Control rack R10 | 700 | 1,100 | 770,000 |
+| Delta racks R11–R15 (air-cooled, 6 shelves + BBU at mid-height, Z_CG ≈ 1,100 mm) | 5,000 | 1,100 | 5,500,000 |
+| Rack anchors / snubbers | 60 | 100 | 6,000 |
+| §6 cooling (manifolds at ceiling, coolant distributed) | 445 | 1,900 | 845,500 |
+| §7 electrical (busway at ceiling ~2,200 mm, Magnum DS near floor ~800 mm, averaged) | 833 | 1,600 | 1,332,800 |
+| §8 fire (cylinder floor-standing, piping at ceiling) | 180 | 1,700 | 306,000 |
+| §9 leak / drip (below rack floor, Z ≈ 50 mm) | 160 | 50 | 8,000 |
+| §10 cables (overhead tray + underfloor raceway, averaged) | 702 | 1,500 | 1,053,000 |
+| §11 controls (ECP mid-height) | 170 | 1,200 | 204,000 |
+| Integration contingency | 915 | 1,300 | 1,189,500 |
+| **Totals** | **28,765** | — | **35,279,800** |
+
+Z_CG = 35,279,800 / 28,765 ≈ **1,227 mm** above floor.
+
+For a 40-ft HC container with interior height 2,700 mm, the geometric center is Z = 1,350 mm. The Cassette Z_CG is approximately 123 mm below center — a favorable (below-center) bias. This is primarily because the fully populated racks are floor-mounted and their own internal mass distribution is biased toward the bottom two-thirds of the rack frame (heavy compute trays and power shelves are low; lighter networking and cable management is high).
+
+Rev 2.0's Z_CG was ~1,185 mm (slightly lower because the CDU sat low at Z ≈ 600 mm and pulled the CG down). Rev 3.0's Z_CG is 42 mm higher than Rev 2.0 but still well below the container center. No handling or two-high-stacking concern is raised by the Z_CG change.
+
+---
+
+## 15. Two-high stacking analysis
+
+Analysis against ISO 1496-1 and DNV-OS-D101. M-05 open item covers the offshore DNV review; domestic two-high stacking is evaluated here.
+
+### 15.1 Corner casting utilization (ISO 1496-1 stacking test)
+
+ISO 1496-1 requires that a container support a stacking test load of **9 × R** applied vertically through the top corner castings (R being the max gross mass rating of the container). For R = 30,480 kg:
+
+$$F_{stack} = 9 \times 30{,}480 = 274{,}320 \text{ kg-force} = 2{,}690 \text{ kN (nominal, per corner divided by 4)}$$
+
+Per-corner design load = 2,690 / 4 = 672 kN per bottom corner casting when an identical loaded container sits on top.
+
+Rev 3.0 Cassette at baseline 28,765 kg contributes 28,765 / 4 = 7,191 kg-force per bottom corner casting = 70.5 kN per corner to the upper container. Test load envelope relative to design = 70.5 / 672 = 10.5 % utilization per corner under two-high static stacking. At sensitivity-high (30,765 kg), utilization rises to 7,691 / 672 kN = 11.5 %.
+
+Margin on ISO 1496-1 stacking test for the lower Cassette is therefore large — the lower Cassette's corner castings are specified for 9R loading and are being asked to carry only 1R from a single stacked Cassette above.
+
+### 15.2 Offshore dynamic stacking (DNV-OS-D101)
+
+DNV-OS-D101 adds a 5g dynamic vertical load component on corner castings for offshore shipment. The applicable case is the single upper Cassette at 5g vertical acceleration bearing on the lower Cassette's corners.
+
+Per-corner dynamic load at baseline = (28,765 × 5) / 4 = 35,956 kg-force = 352 kN per corner. Utilization vs 672 kN/corner = 52.4 %.
+
+At sensitivity-high (30,765 kg, if the Cassette were shipped in that state): (30,765 × 5) / 4 = 38,456 kg-force = 377 kN. Utilization = 56 %.
+
+At either scenario, corner casting design capacity is adequate for DNV-OS-D101 5g offshore stacking. The 200 kg of corner casting reinforcement plates in §3 is retained as a conservative margin against local welding and seat-plate bearing stresses, pending the M-05 DNV review of the full detail design.
+
+### 15.3 Stacking conclusion
+
+Two-high stacking is structurally supported for both domestic (ISO 1496-1) and offshore (DNV-OS-D101) cases at the baseline mass. Two-high stacking at the sensitivity-high mass (30,765 kg) would be non-compliant with ISO 668 itself (the upper Cassette exceeds R), independent of any stacking-specific concern — this is the reason M-07 drives the compliance decision.
+
+---
+
+## 16. Key assumptions
+
+Updated assumption register. A-02 is removed; A-01, A-03 through A-12 are issued new or carried forward. Status column: **L** = locked, **W** = working estimate, **O** = open (tied to a specific M-xx).
+
+| ID | Assumption | Status | Open item link |
+|---|---|:-:|---|
+| A-01 | Compute rack (NVL72 / CPX) populated mass = 1,500 kg each (R1–R9) | O | M-02 (P-0) |
+| A-02 | **REMOVED** — superseded by P3-03 / P3-09. The Delta 660 kW in-row racks are physically separate units counted in §4.3; the Delta 800 V → 50 V DC/DC shelf inside each compute rack is included in the 1,500 kg compute rack estimate per A-07. Rev 2.0's A-02 conservative case (31,415 kg) is obsolete. | CLOSED | M-01 (closed) |
+| A-03 | Control rack R10 populated mass = 700 kg | W | — |
+| A-04 | Delta 660 kW in-row power rack populated mass = 1,000 kg each (R11–R15) | O | M-07 (P-0 CRITICAL) |
+| A-05 | CDU skid is external (COOL2-001 scope); Cassette contribution = 0 kg | L | — (COOL2-001 §1) |
+| A-06 | In-cassette PG25 coolant = 185 kg (180 L × 1.017 kg/L; cassette interior only per COOL2-001 §5) | L | — |
+| A-07 | The Delta 800 V → 50 V DC/DC shelf that sits inside each NVL72 / CPX compute rack is included in the 1,500 kg rack estimate. One such shelf per R1–R9. | L | — (BOM-001 §4 note) |
+| A-08 | Eaton Magnum DS 6,000 A, 480 V AC main disconnect = 270 kg | O | M-09 (P-1) |
+| A-09 | Eaton Pow-R-Way III bus duct wall entry section = 75 kg | O | M-10 (P-1) |
+| A-10 | Per-Delta-rack 480 V AC feeder cable set = 103 kg per feeder (2× 300 mm²/phase × 3 phases + 95 mm² ground × ~5 m); 5 feeders × 103 kg = 515 kg total | L | — (ELEC-001 §8) |
+| A-11 | 6,000 A DC busway linear mass = 22 kg/m (Starline or Siemens SIVACON 8PS equivalent) | W | — |
+| A-12 | Drip trays populate 10 rack positions (R1–R10). Delta in-row power racks R11–R15 are air-cooled per COOL-001 §1 and carry no drip trays. | L | — |
+
+---
+
+## 17. Findings and required actions
+
+### 17.1 Findings
+
+**Finding 1 — Baseline is compliant with 1,715 kg margin.** At the A-01 baseline compute rack weight (1,500 kg) and the A-04 baseline Delta rack weight (1,000 kg), the Cassette totals 28,765 kg, which is 1,715 kg below the ISO 668 R value of 30,480 kg. This is the operational claim as of Rev 3.0.
+
+**Finding 2 — Compliance is conditionally sensitive to M-07.** At the A-01 baseline compute rack weight (1,500 kg), the compliance boundary on Delta rack weight is 1,343 kg per rack. Above 1,300 kg per Delta rack, margin drops below 200 kg (below the §2 integration contingency line's own budget absorption of real-world drift). At 1,400 kg per Delta rack, the Cassette exceeds the ISO limit by 285 kg. **M-07 must resolve at or below 1,343 kg per rack** for the Cassette to ship as a single ISO-compliant unit. A resolution above this threshold forces mitigation per §12.3 options (a), (b), or (c).
+
+**Finding 3 — The Delta in-row rack weight (M-07) has replaced Delta shelf inclusion (A-02) as the number-one compliance gate.** Rev 2.0 treated A-02 (whether the 110 kW Delta shelves were included in the NVL72 rack estimate) as the single most sensitive assumption, with a 31,415 kg conservative case that was over the ISO limit. Rev 3.0 eliminates that ambiguity architecturally: the Delta shelves are physically housed in five separate in-row racks that are separately counted in §4.3. The new compliance gate is the total weight of those in-row racks, which is an empirical vendor-data question rather than an accounting question.
+
+**Finding 4 — CDU removal headroom is partially consumed by the new in-cassette electrical architecture.** The Rev 2.0 → Rev 3.0 reduction path has three large subtractions totaling about 6,930 kg — CDU removed (−600 kg), coolant reduced (−215 kg), and compute rack count reduced from 13 to 9 (4 × 1,500 kg = −6,000 kg). Partially offsetting, Rev 3.0 adds about 5,765 kg — five Delta in-row racks (+5,000 kg at baseline), heavier AC main disconnect net change (+190 kg), bus duct entry (+75 kg), and per-rack AC feeders (+515 kg), less the R10 consolidation savings (−200 kg) and drip tray reduction (−40 kg) and CDU subpanel removal (−18 kg). Net: approximately −1,170 kg vs Rev 2.0. The 28,765 kg total is the arithmetic result.
+
+**Finding 5 — Compound sensitivity to M-02 + M-07 creates a small region of the (compute, Delta) plane where no single mitigation suffices.** Per §12.3, if M-02 resolves above 1,700 kg, no plausible M-07 outcome keeps the Cassette under ISO. This is not currently the expected NVL72 / CPX outcome — vendor reference suggests 1,400–1,550 kg is the working range — but it is a documented exposure. M-02 and M-07 are both P-0.
+
+### 17.2 Required actions
+
+| ID | Action | Priority | Owner | Gate |
+|---|---|:-:|---|---|
+| M-02 | Obtain NVIDIA Vera Rubin NVL72 / CPX populated rack mass (C-01 carryforward). Document any payload variants that would shift the estimate. | P-0 | NVIDIA Inception channel | Procurement; Cassette ISO compliance |
+| M-07 | Obtain Delta Electronics 660 kW in-row power rack populated mass for the baseline SKU and a high-confidence upper bound. Include BBU mass contribution clearly. | P-0 CRITICAL | Delta Electronics direct | Cassette ISO compliance; procurement release |
+| M-05 | DNV corner casting review for offshore two-high stacking. Validate that the 200 kg corner casting reinforcement in §3 is adequate at the baseline mass and at the sensitivity-high mass. | P-1 | Marine surveyor + mechanical lead | Offshore shipping qualification |
+| M-06 | Update Cassette-INT-001 nameplate and weight placard after M-02 and M-07 resolve. | P-2 | Scott Tomsu | Cross-document consistency; final nameplate |
+| M-08 | Confirm whether the 2× DN150 × 5 m flex hoses (COOL2-001 §6, Parker ParFlex 797TC or Gates Mega4000) are inside the Cassette mass boundary at shipment. Estimated 75–100 kg per hose if included. | P-1 | Mechanical lead + logistics | Ship-weight boundary; possible ±200 kg shift |
+| M-09 | Obtain Eaton Magnum DS 6,000 A shipping weight (±80 kg sensitivity). | P-1 | Eaton Engineering | A-08 close; §7 subtotal accuracy |
+| M-10 | Obtain Eaton Pow-R-Way III bus duct wall entry section weight. | P-1 | Eaton Engineering | A-09 close; §7 subtotal accuracy |
+| M-04 | Cold plate internal volume per NVL72 / CPX rack — supports A-06 cassette-interior coolant validity and cross-checks COOL2-001 §5 cassette vs skid volume allocation. | P-2 | NVIDIA + thermal lead | A-06 supporting evidence |
+
+---
+
+## 18. Open items
 
 | ID | Item | Priority | Resolves |
-|----|------|----------|---------|
-| M-01 | Delta shelf inclusion in rack weight — written confirmation from NVIDIA / Foxconn / Delta | **P-0** | Gates A-02 baseline |
-| M-02 | Actual NVL72 rack weight confirmation | **P-0** | Rack weight sensitivity |
-| M-04 | Cold plate internal volume per NVL72 rack | P-1 | Coolant mass sensitivity (±30 kg at Rev 3.0 scope) |
-| M-05 | DNV corner casting review for offshore 2-high | P-1 | Offshore stacking |
-| M-06 | Update INT-001 nameplate after M-01/M-02 resolved | P-2 | Cross-document consistency |
-| **M-07** | **QD plate structural analysis — 2× DN150 QDs, 10 bar working, bolt pattern, fatigue, hydrostatic test at 15 bar** | **P-1** | **Rev 3.0 new hardware** |
+|---|---|:-:|---|
+| M-01 | **A-02 Delta shelf inclusion — CLOSED / SUPERSEDED.** Delta 660 kW in-row racks are separate physical units counted in §4.3. The 800 V → 50 V DC/DC shelf inside each compute rack is included in the 1,500 kg compute rack estimate per A-07. No separate §5 mass contribution. | CLOSED | A-02 (obsolete) |
+| M-02 | NVL72 / CPX compute rack weight confirmation (C-01 carryforward). Obtain NVIDIA Vera Rubin published reference mass for the populated NVL72 / CPX rack configuration specified in BOM-001 Rev 1.3 §3. Each 100 kg change = ±900 kg Cassette total. | P-0 | A-01, §4.1, compliance |
+| M-03 | **CDU skid weight — CLOSED / MOVED.** CDU is external per COOL2-001 Rev 1.0 §1; §8 of COOL2-001 documents ~5,800 kg wet. Not a Cassette mass open item. | CLOSED | — |
+| M-04 | Cold plate internal volume per NVL72 / CPX rack. Feeds A-06 cassette-interior coolant volume validity. | P-2 | A-06 |
+| M-05 | DNV corner casting review for offshore two-high stacking at Rev 3.0 mass. Validate §3 corner reinforcement adequacy. | P-1 | §15 stacking analysis |
+| M-06 | Update Cassette-INT-001 nameplate after M-02 and M-07 resolve. | P-2 | Cross-doc consistency |
+| M-07 | **Delta 660 kW in-row rack weight (R11–R15) — CRITICAL.** Obtain from Delta Electronics. Each 100 kg change = ±500 kg Cassette total. Compliance boundary at 1,343 kg/rack assuming A-01 compute = 1,500 kg. Gates procurement release. | **P-0 CRITICAL** | A-04, §4.3, compliance |
+| M-08 | Flex hose assembly weight (COOL2-001 §6: 2× DN150 × 5 m, Parker ParFlex 797TC or Gates Mega4000). Supplied with Cassette per COOL2-001 §6 — confirm whether inside Cassette ISO-envelope mass boundary at transport. Estimate ~75–100 kg per hose if included. Possible ±200 kg shift to Cassette shipping mass. | P-1 | Cassette / skid mass boundary |
+| M-09 | Eaton Magnum DS 6,000 A actual shipping weight (baseline estimate 270 kg; ±80 kg tolerance). Obtain from Eaton Engineering. | P-1 | A-08, §7.1 |
+| M-10 | Eaton Pow-R-Way III bus duct wall entry section weight (baseline estimate 75 kg). Confirm from Eaton Engineering. | P-1 | A-09, §7.1 |
 
 ---
 
-## §19  SUMMARY — REV 3.0 KEY CHANGES
+## Document control
 
-| # | Change | Mass Impact | Margin Impact |
-|---|--------|-------------|---------------|
-| 1 | CoolIT CHx2000 removed (to external skid) | −600 kg | +600 kg margin |
-| 2 | Primary coolant inventory reduced to cassette-interior | −220 kg | +220 kg margin |
-| 3 | CHW piping deleted (no CHW in cassette) | −120 kg | +120 kg margin |
-| 4 | PG25 QD plate + QBH-150 QDs + fill port added | +35 kg | −35 kg margin |
-| 5 | Vertical CoG lowered ~15 mm (CDU was elevated) | — | Stacking margin improved |
-| **Net Rev 3.0 change** | | **−905 kg at §6** / **−635 kg at cassette total** | **ISO margin: 545 → 1,180 kg** |
+**Cassette-MASS-001 — Rev 3.0 — CONFIDENTIAL**
+**Prepared by:** Scott Tomsu · CEO / Chief Engineer · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana
+**Companion to:** Cassette-INT-001 Rev 1.3 · Cassette-BOM-001 Rev 1.3 · Cassette-ELEC-001 Rev 1.3 · Cassette-COOL-001 Rev 1.1 · Cassette-COOL2-001 Rev 1.0 · Cassette-FIRE-001 Rev 1.2 · Cassette-SIS-001 Rev 1.2 · Cassette-ECP-001 Rev 1.2
+**Supersedes:** Cassette-MASS-001 Rev 2.0 (deleted)
+**Authority scope:** the mass statement and weight budget for one ADC 3K Cassette — by-section mass totals (§3 through §11), integration contingency basis (§2), sensitivity analysis against the two P-0 open-item variables (§12), longitudinal and vertical center-of-gravity (§13–§14), two-high stacking analysis against ISO 1496-1 and DNV-OS-D101 (§15), the assumption register (§16) and findings / required-action set (§17) against ISO 668 R = 30,480 kg, and the open-item register (§18).
 
----
+**Compliance claim at Rev 3.0.** Baseline Cassette mass 28,765 kg, compliant with ISO 668 R = 30,480 kg with 1,715 kg margin. Compliance at the A-01 baseline compute weight is conditional on M-07 resolving at or below 1,343 kg per Delta in-row rack. The sensitivity-high case (M-07 = 1,400 kg) exceeds the ISO limit by 285 kg and is explicitly non-compliant as a single ISO unit.
 
-**Cassette — Mass Statement & Weight Budget · Cassette-MASS-001 · Rev 3.0 · 2026-04-20**
-**Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
-**CONFIDENTIAL**
+**End of Cassette-MASS-001 Rev 3.0.**

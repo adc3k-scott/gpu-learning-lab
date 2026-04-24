@@ -1,9 +1,9 @@
-# Trappey's Compute Campass — Engineering Document Index
+# Trappey's AI Center — Engineering Document Index
 
-**Project:** Trappey's 200MW Solar-Natural Gas Compute Campus, Lafayette, Louisiana
+**Project:** Trappey's AI Center — 91.1 MW Stage 1 / 182.2 MW Full Build AI Compute Facility, Lafayette, Louisiana
 **Site:** 22-acre historic cannery, Vermilion River
 **Owner:** Scott Tomsu
-**Index Revision:** 1.0 — 2026-04-18
+**Index Revision:** 1.7 — 2026-04-23 (cassette architecture reconciled per BOD Rev 0.6; 480 VAC block bus confirmed; IT load rebased to 91.1 MW / 44 × 2,070 kW; BESS and solar updated to AC-coupled on 480 VAC block bus)
 **Status:** Working draft — engineering package in active development
 
 ---
@@ -14,13 +14,13 @@
 |---|---|---|
 | Site | 22-acre Trappey's Cannery, Vermilion River, Lafayette, LA | L |
 | Historic structures | 12 nationally registered | L |
-| Stage 1 IT load | 101.2 MW (44 cassettes × 2,300 kW) | L |
-| Full Build IT load | 202.4 MW (88 cassettes) | L |
-| Stage 1 GPUs | 31,680 NVIDIA Vera Rubin (44 × 720) | W |
-| Power architecture | Behind-the-meter permanent island, 800 VDC bus | L |
+| Stage 1 IT load | 91.1 MW (44 cassettes × 2,070 kW) | L |
+| Full Build IT load | 182.2 MW (88 × 2,070 kW) | L |
+| Stage 1 GPUs | 28,512 NVIDIA Vera Rubin (44 × 648) | W |
+| Power architecture | Behind-the-meter permanent island, 480 VAC block bus (cassette-internal 800 VDC only) | L |
 | Primary generation | Cat CG260-16 natural gas gensets, 13.8 kV, N+1 per block | W |
-| Solar | 1,500 VDC → DC-DC buck → 800 VDC bus | W |
-| BESS | DC-coupled LFP, block-level stabilizer, always active | W |
+| Solar | 1,500 VDC → inverter → 480 VAC block bus | W |
+| BESS | AC-coupled LFP via Hitachi AMPS PCS on 480 VAC block bus, always active | W |
 | Revenue model | Colocation only, base case | L |
 
 L = Locked · W = Working · O = Open
@@ -33,7 +33,7 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-MASTER-ENG-001 | [ST-TRAP-MASTER-ENG-001_Rev0.1.md](ST-TRAP-MASTER-ENG-001_Rev0.1.md) | 0.1 | 2026-04-18 | **Master Engineering Package** — single consolidated summary of the full project engineering state. Executive summary, site/project basis (BOD ledger), power architecture, BESS, solar, thermal, CHP cascade (heat balance table), cooling tower field, master open items list (C1/C2), full document register, and 22-milestone critical path to construction package. Internal use only. | Working draft |
+| ST-TRAP-MASTER-ENG-001 | [TRAP-MASTER-ENG-001_Rev0.4.md](TRAP-MASTER-ENG-001_Rev0.4.md) | **0.4** | **2026-04-23** | **Master Engineering Package** — single consolidated summary of the full project engineering state. Executive summary, site/project basis (BOD ledger), power architecture, BESS, solar, thermal, CHP cascade (heat balance table), cooling tower field (GPU warm water via PHX-001), master open items list (C1/C2), full document register, and 22-milestone critical path to construction package. Cassette architecture reconciled 2026-04-23: 480 VAC block bus, 91.1 MW IT load, AC-coupled BESS/solar, CoolIT CHx2000 CDU, 72.9 MW tower duty. Internal use only. | Working draft |
 
 ---
 
@@ -41,8 +41,8 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-BOD-001 | [ST-TRAP-BOD-001_Rev0.4.md](00-Basis/ST-TRAP-BOD-001_Rev0.4.md) | 0.4 | 2026-04-17 | **Basis of Design** — single source of truth for all design parameters. Contains the Decision Ledger (P, R, E, T, B, S, A, N sections) with Locked / Working / Open tags. Downstream documents cite this; all value changes flow through here. | Working draft |
-| ST-TRAP-THERMAL-BASIS | [ST-TRAP-THERMAL-BASIS_Rev0.4.md](00-Basis/ST-TRAP-THERMAL-BASIS_Rev0.4.md) | 0.4 | 2026-04-18 | **Thermal Architecture Basis** — cold sink architecture and CHP cascade framework. Option A (single-stage chiller) eliminated; architecture proceeds on Option B (double-effect hot-water) or C (multi-energy/exhaust-driven) pending chiller RFQ. LDEQ/LPDES regulatory framework, Vermilion River thermal limits, Munters 5.5 MW deduction. | Working draft |
+| ST-TRAP-BOD-001 | [TRAP-BOD-001_Rev0.6.md](TRAP-BOD-001_Rev0.6.md) | **0.6** | **2026-04-23** | **Basis of Design** — single source of truth for all design parameters. Contains the Decision Ledger (P, R, E, T, B, S, A, N sections) with Locked / Working / Open tags. Cassette architecture reconciled 2026-04-23: 480 VAC block bus, cassette-internal 800 VDC only, IT load 91.1 MW (44 × 2,070 kW), BESS/solar AC-coupled at 480 VAC bus. Downstream documents cite this; all value changes flow through here. | Working draft |
+| ST-TRAP-THERMAL-BASIS | [ST-TRAP-THERMAL-BASIS_Rev0.5.md](ST-TRAP-THERMAL-BASIS_Rev0.5.md) | **0.5** | **2026-04-22** | **Thermal Architecture Basis** — cold sink architecture and CHP cascade framework. Absorption chiller eliminated. Cooling towers serve GPU warm water via plate HX. Munters exhaust recovery 5.5 MW only. Vermilion River eliminated. Rev 0.6 rebase to 72.9 MW tower duty in progress. | Working draft |
 
 ---
 
@@ -50,7 +50,7 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-ELEC-001 | [ST-TRAP-ELEC-001_Rev1.2.md](01-Electrical/ST-TRAP-ELEC-001_Rev1.2.md) | 1.2 | 2026-04-17 | **Electrical Architecture** — N replicated Marlie-pattern blocks. Each block: 4 × Cat CG260-16 at 13.8 kV → step-down transformer → 480 VAC switchboard → 16 × Delta 660 kW in-row power racks → 800 VDC common busway with DC-coupled BESS and solar. Five feeder categories, cassette umbilical topology, AMCL five-tier control architecture. Visual companion: ARCHDIAG-001 Rev 0.1. | Working draft |
+| ST-TRAP-ELEC-001 | [Trap-ELEC-001_Rev1.3.md](Trap-ELEC-001_Rev1.3.md) | **1.3** | **2026-04-23** | **Electrical Architecture** — N replicated Marlie-pattern blocks. Each block: 4 × Cat CG260-16 at 13.8 kV → step-down transformer → 480 VAC switchboard → 4 × cassette 480 VAC primary feeds. Cassette-internal 5 × Delta 660 kW in-row racks (R11–R15) convert 480 VAC → 800 VDC internally. BESS and solar AC-coupled to block 480 VAC bus via Hitachi AMPS PCS and PV inverter respectively. Five feeder categories, AMCL five-tier control architecture. Visual companion: ARCHDIAG-001 Rev 0.1. | Working draft |
 
 ---
 
@@ -58,9 +58,9 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-BESS-001 | [ST-TRAP-BESS-001_Rev0.1.md](02-Bess/ST-TRAP-BESS-001_Rev0.1.md) | 0.1 | 2026-04-17 | **BESS Architecture Basis** — LFP chemistry, DC-coupled to 800 VDC bus, always active as block-level stabilizer (not backup). Four operating functions: transient buffering, peak shaving, dispatch optimization, contingency reserve. Vendor shortlist, AMCL integration, RFQ anchor. | Working draft |
-| ST-TRAP-BESS-ARCHDIAG-001 | [ST-TRAP-BESS-ARCHDIAG-001_Rev0.1.md](02-Bess/ST-TRAP-BESS-ARCHDIAG-001_Rev0.1.md) | 0.1 | 2026-04-17 | **BESS Architecture Diagram Package** — five Mermaid diagrams: 800 VDC bus overview (block scope), BESS DC stack zoom, AMCL dispatch hierarchy, contingency decision tree, rear slab physical layout. Renders in VS Code / GitHub / Notion. | Working draft |
-| ST-TRAP-BESS-RFQ-001 | [ST-TRAP-BESS-RFQ-001_Rev0.1.md](02-Bess/ST-TRAP-BESS-RFQ-001_Rev0.1.md) | 0.1 | 2026-04-18 | **BESS Vendor RFQ Package** — procurement-ready. LFP DC-coupled, 11 × 3.6 MWh working (3/4/5 MWh tiers quoted), 2 MW continuous / 4 MW peak per block, 800 VDC bus, island-mode required. SiC bidirectional DC-DC spec, NFPA 855 / UL 9540A compliance requirements, AMCL communications interface. Vendor sequence: Fluence (preferred) → LG ES Vertech → Saft → Hitachi AMPS. Portfolio context (~100+ containers across ADC sites). Evaluation criteria with disqualifying conditions. | Working draft — ready for vendor distribution |
+| ST-TRAP-BESS-001 | [TRAP-BESS-001_Rev0.1.md](TRAP-BESS-001_Rev0.1.md) | ~~0.1~~ | 2026-04-17 | **BESS Architecture Basis** — ~~Rev 0.1 superseded by BOD Rev 0.6. DC-coupled 800 VDC architecture no longer current. Rev 0.2 rewrite for AC-coupled 480 VAC block bus topology in progress.~~ | **Superseded — Rev 0.2 in progress** |
+| ST-TRAP-BESS-ARCHDIAG-001 | [TRAP-BESS-ARCHDIAG-001_Rev0.1.md](TRAP-BESS-ARCHDIAG-001_Rev0.1.md) | ~~0.1~~ | 2026-04-17 | **BESS Architecture Diagram Package** — ~~Rev 0.1 superseded by BOD Rev 0.6. Five Mermaid diagram rebuild for AC-coupled 480 VAC topology in progress.~~ | **Superseded — Rev 0.2 in progress** |
+| ST-TRAP-BESS-RFQ-001 | [ST-TRAP-BESS-RFQ-001_Rev0.1.md](ST-TRAP-BESS-RFQ-001_Rev0.1.md) | ~~0.1~~ | 2026-04-18 | **BESS Vendor RFQ Package** — ~~**DO NOT DISTRIBUTE Rev 0.1.** Specifies DC-coupled 800 VDC bus topology, superseded by BOD Rev 0.6. Rev 0.2 rewrite required before vendor distribution.~~ | **Superseded — do not distribute** |
 
 ---
 
@@ -78,7 +78,7 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-SOLAR-001 | [ST-TRAP-SOLAR-001_Rev0.1.md](09-Solar/ST-TRAP-SOLAR-001_Rev0.1.md) | 0.1 | 2026-04-18 | **Solar Array Integration — Architecture and Specification Basis** — First Solar FS-7550A-TR1, 3,731 panels, 2.05 MW DC, B1/B2 rooftops. 5-panel strings at 952V MPP → DC-DC buck → 800 VDC bus. String voltage analysis confirms >800V MPP across full Louisiana temperature range (891V summer / 1,013V winter), <1,500V Voc in all conditions. DC-DC buck spec: 800–1,500V input MPPT, 800V regulated output, ≥97%, 4-unit preferred (one per roof section). ITC: 30% base, +10% domestic content adder (First Solar US-manufactured). E-22 open (DC-DC vendor RFQ). AMCL L1/L3 dispatch integration. | Working draft |
+| ST-TRAP-SOLAR-001 | [ST-TRAP-SOLAR-001_Rev0.1.md](ST-TRAP-SOLAR-001_Rev0.1.md) | ~~0.1~~ | 2026-04-18 | **Solar Array Integration — Architecture and Specification Basis** — First Solar FS-7550A-TR1, 3,731 panels, 2.05 MW DC, B1/B2 rooftops. String voltage analysis (§1–§5) valid and unchanged. ~~§6 DC-DC buck spec superseded by BOD Rev 0.6: 1,500 VDC strings → PV inverter → 480 VAC block bus. Rev 0.2 rewrite of §6–§7 in progress.~~ | **§6–§7 superseded — Rev 0.2 in progress** |
 
 ---
 
@@ -112,8 +112,8 @@ L = Locked · W = Working · O = Open
 
 | Doc # | File | Rev | Date | Description | Status |
 |---|---|---|---|---|---|
-| ST-TRAP-CHP-SCHEMATIC-001 | [ST-TRAP-CHP-SCHEMATIC-001_Rev0.1.md](07-Thermal/ST-TRAP-CHP-SCHEMATIC-001_Rev0.1.md) | 0.1 | 2026-04-18 | **CHP Cascade Schematic Package** — three Mermaid diagrams: (1) end-to-end cascade overview genset → HRU → Broad BH → cooling towers → atmosphere, (2) Option B vs C exhaust path branch at TB-5 decision point, (3) two isolated cooling water loops (condenser circuit + Boyd CDU GPU warm water). Heat balance summary table. Option B working basis throughout; TB-5 noted as open. Visual companion to THERMAL-BASIS and COOLING-TOWER-001. | Working draft |
-| ST-TRAP-COOLING-TOWER-001 | [ST-TRAP-COOLING-TOWER-001_Rev0.1.md](07-Thermal/ST-TRAP-COOLING-TOWER-001_Rev0.1.md) | 0.1 | 2026-04-18 | **Cooling Tower Field — Vendor Specification Basis** — system boundary (absorption chiller condenser/absorber circuit; Boyd CDU GPU warm water to separate dry cooler), maximum duty 241.4 MW / 68,640 RT, nominal staged duty 183.9 MW / 52,310 RT, design wet-bulb 28°C ASHRAE 0.4%, condenser water 37°C return / ≤31°C supply (3°C approach), COND-WB open item, tower type analysis (wet preferred), water consumption ~2,476 GPM makeup at design day, cooling MCC ~4,800 kW, AMCL L0–L3 integration, SPX/Marley + BAC + Evapco shortlist, RFQ anchor conditions. Siting flag: 28,000 sq ft yard may be tight for full field — siting study C2. | Working draft |
+| ST-TRAP-CHP-SCHEMATIC-001 | [ST-TRAP-CHP-SCHEMATIC-001_Rev0.2.md](07-Thermal/ST-TRAP-CHP-SCHEMATIC-001_Rev0.2.md) | **0.2** | **2026-04-22** | **CHP Cascade Schematic Package** — three Mermaid diagrams revised: (1) end-to-end cascade genset → Munters (5,500 kW) + stack; JW → radiators; Boyd CDU → PHX-001 → towers, (2) exhaust split, (3) isolated cooling circuits (CDU + tower via PHX). Absorption chiller and HRU eliminated. Heat balance summary table updated. | Working draft |
+| ST-TRAP-COOLING-TOWER-001 | [ST-TRAP-COOLING-TOWER-001_Rev0.2.md](07-Thermal/ST-TRAP-COOLING-TOWER-001_Rev0.2.md) | **0.2** | **2026-04-22** | **Cooling Tower Field — Vendor Specification Basis** — GPU warm water is sole tower load (80.96 MW Stage 1 / 161.9 MW Full Build). Plate HX PHX-001 as facility boundary between CDU circuit and tower circuit. Design WB 28°C; tower supply ≤34°C; flow ~30,700 GPM; 3 cells (~23,020 RT); makeup ~830 GPM; cooling MCC ~1,500 kW total. SPX/Marley + BAC + Evapco shortlist. Chiller-specific items cancelled. | Working draft |
 
 ---
 
@@ -157,43 +157,45 @@ L = Locked · W = Working · O = Open
 ## Document Dependency Map
 
 ```
-BOD-001 Rev 0.4  ──────────────────────────────────────────┐
+BOD-001 Rev 0.6  ──────────────────────────────────────────┐
 │                                                           │
-├── THERMAL-BASIS Rev 0.4  (T-xx ledger)                   │
-│   ├── COOLING-TOWER-001 Rev 0.1  (07-Thermal/)           │
+├── THERMAL-BASIS Rev 0.5  (T-xx ledger)                   │
+│   ├── CHP-SCHEMATIC-001 Rev 0.2  (07-Thermal/)           │
+│   ├── COOLING-TOWER-001 Rev 0.2  (07-Thermal/)           │
 │   └── [RIVER-001 cancelled — Vermilion River eliminated]  │
 │                                                           │
-├── ELEC-001 Rev 1.2  (E-xx ledger)  ◄── eng-pack-5MW      │
+├── ELEC-001 Rev 1.3  (E-xx ledger)  ◄── eng-pack-5MW      │
 │   ├── ARCHDIAG-001 Rev 0.1  (visual companion)           │
 │   │   ├── [pending] ST-TRAP-SLD-001                      │
 │   │   └── [pending] ST-TRAP-PROT-001                     │
 │   ├── BESS-001 Rev 0.1  (E-10 to E-13)                   │
 │   │   ├── BESS-ARCHDIAG-001 Rev 0.1  (visual companion)  │
-│   │   └── [pending] ST-TRAP-BESS-RFQ-001                 │
-│   └── [pending] ST-TRAP-SOLAR-001                        │
+│   │   └── ST-TRAP-BESS-RFQ-001 Rev 0.1  (02-Bess/) ✓     │
+│   └── ST-TRAP-SOLAR-001 Rev 0.1  (09-Solar/) ✓          │
 │                                                           │
-└── [pending] ST-TRAP-SOLAR-001, ST-TRAP-SLD-001,          │
-    ST-TRAP-PROT-001, ST-TRAP-BESS-RFQ-001                 │
+└── [pending] ST-TRAP-SLD-001, ST-TRAP-PROT-001            │
 ```
 
 ---
 
-## Open Engineering Items (as of 2026-04-18)
+## Open Engineering Items (as of 2026-04-22)
 
 | ID | Item | Blocking |
 |---|---|---|
-| TB-5 | Absorption chiller RFQ — Option B or C selection | THERMAL-BASIS →  architecture lock |
-| T-11 | Boyd CDU confirmation — CHW supply 7–12°C compatibility call | Cooling loop design |
-| Cat CSA | CG260-16 part-load exhaust temp / mass-flow curves | THERMAL-BASIS Option C |
-| E-14 | Bus interconnect topology between blocks | ELEC-001 §9 |
+| PHX-001 | Plate HX sizing + vendor RFQ (Alfa Laval / GEA / API) — ~72.9 MW Stage 1 | COOLING-TOWER-001 CW temp confirmation; tower RFQ |
+| Cat CSA | CG260-16 part-load exhaust temp / mass-flow / JW curves; N-1 governor; CO emissions | T-08 heat balance; JW-RAD sizing; E-31 CO baseline |
+| T-05 | Cooling tower type selection (wet / hybrid / adiabatic) — GPU warm water basis | Tower RFQ |
+| JW-RAD | Jacket water radiator vendor + sizing RFQ (~58,212 kW) | CHP cascade JW path |
+| E-31 | CO oxidation catalyst — control strategy for Title V major-source path | LDEQ Title V pre-app |
+| E-23 | Inter-block tie — 11 independent vs. tied at aux point | ELEC-001 §15 |
 | SHPO R-05/R-06 | Historic Tax Credit Part 1 / Part 2 filing | HTC financing |
 | SLD-001 | Formal single-line — not yet drafted | Construction package |
 | PROT-001 | Protection coordination study — not yet drafted | Construction package |
-| SOLAR-001 | Solar integration document — not yet drafted | DC-DC buck spec |
-| BESS-RFQ-001 | ~~Issued~~ — ST-TRAP-BESS-RFQ-001 Rev 0.1 in 02-Bess/ | — |
-| COND-WB | Broad chiller condenser water inlet at 30–31°C — derating confirmation | Cooling tower CW supply spec |
-| T-05 | Cooling tower type selection (wet / hybrid / adiabatic) | Tower RFQ |
-| SITING-001 | Cooling tower field siting study — 28,000 sq ft yard vs full field footprint | Tower vendor RFQ |
+| ~~SOLAR-001~~ | ~~Issued~~ — ST-TRAP-SOLAR-001 Rev 0.1 in 09-Solar/ | — |
+| ~~BESS-RFQ-001~~ | ~~Issued~~ — ST-TRAP-BESS-RFQ-001 Rev 0.1 in 02-Bess/ | — |
+| ~~TB-5~~ | ~~Absorption chiller RFQ~~ | **CANCELLED 2026-04-22** |
+| ~~T-11~~ | ~~Boyd CDU CHW compatibility~~ | **CANCELLED 2026-04-22** |
+| ~~COND-WB~~ | ~~Broad chiller condenser water inlet~~ | **CANCELLED 2026-04-22** |
 
 ---
 
@@ -214,10 +216,12 @@ BOD-001 Rev 0.4  ─────────────────────
 |---|---|---|---|
 | 1.0 | 2026-04-18 | Scott Tomsu | Initial index created. Folder restructured from flat `blueprints/` + `md files/` layout to numbered folders 00–06. Old SVG drawings archived to `04-Drawings/old/`. Six engineering documents at current rev levels indexed. Open items and pending document list populated. |
 | 1.1 | 2026-04-18 | Scott Tomsu | ST-TRAP-THERMAL-BASIS_Rev0.4.md drafted and added to 00-Basis. First issue of thermal architecture basis — CHP cascade framework, Option B vs C analysis, Broad/Cat data, Munters accounting. Vermilion River eliminated as heat sink (tidal reversal + Gulf Coast ambient temps); dry cooling tower confirmed as sole rejection path. RIVER-001 cancelled; LPDES item removed. TB-5 and T-11 remain open. |
-| 1.5 | 2026-04-18 | Scott Tomsu | ST-TRAP-SOLAR-001_Rev0.1.md drafted and added to new 09-Solar/ folder. First Solar FS-7550A-TR1, 3,731 panels, 2.05 MW. String voltage analysis complete — 5-panel strings confirmed >800V MPP across full Louisiana temperature range. DC-DC buck spec issued (E-22). ITC basis documented. SOLAR-001 removed from pending documents. |
-| 1.4 | 2026-04-18 | Scott Tomsu | ST-TRAP-BESS-RFQ-001_Rev0.1.md drafted and added to 02-Bess/. Procurement-ready vendor RFQ — LFP DC-coupled, 11 × 3.6 MWh working (3/4/5 MWh tiers), 2 MW continuous / 4 MW peak, 800 VDC island-mode. SiC DC-DC spec, NFPA 855/UL 9540A requirements, AMCL comms interface, evaluation criteria, Fluence-first vendor sequence. Portfolio context (~100+ containers ADC sites). BESS-RFQ-001 removed from pending documents. |
-| 1.3 | 2026-04-18 | Scott Tomsu | ST-TRAP-CHP-SCHEMATIC-001_Rev0.1.md drafted and added to 07-Thermal/. Three Mermaid diagrams: full cascade overview, Option B/C exhaust branch, isolated cooling water loops. Heat balance summary table. Visual companion to THERMAL-BASIS and COOLING-TOWER-001. |
 | 1.2 | 2026-04-18 | Scott Tomsu | ST-TRAP-COOLING-TOWER-001_Rev0.1.md drafted and added to new 07-Thermal/ folder. First issue of cooling tower field spec — maximum duty 241.4 MW / 68,640 RT, nominal staged 183.9 MW. System boundary established (absorption chiller condenser only; Boyd CDU GPU warm water to separate dry cooler). Tower type analysis complete (wet mechanical draft recommended). COND-WB approach temperature gap documented (31°C practical vs 29°C Broad rated). Water consumption ~2,476 GPM makeup at design day. Infrastructure yard siting flag raised. COOLING-TOWER-001 removed from pending documents; dependency map updated. |
+| 1.3 | 2026-04-18 | Scott Tomsu | ST-TRAP-CHP-SCHEMATIC-001_Rev0.1.md drafted and added to 07-Thermal/. Three Mermaid diagrams: full cascade overview, Option B/C exhaust branch, isolated cooling water loops. Heat balance summary table. Visual companion to THERMAL-BASIS and COOLING-TOWER-001. |
+| 1.4 | 2026-04-18 | Scott Tomsu | ST-TRAP-BESS-RFQ-001_Rev0.1.md drafted and added to 02-Bess/. Procurement-ready vendor RFQ — LFP DC-coupled, 11 × 3.6 MWh working (3/4/5 MWh tiers), 2 MW continuous / 4 MW peak, 800 VDC island-mode. SiC DC-DC spec, NFPA 855/UL 9540A requirements, AMCL comms interface, evaluation criteria, Fluence-first vendor sequence. Portfolio context (~100+ containers ADC sites). BESS-RFQ-001 removed from pending documents. |
+| 1.5 | 2026-04-18 | Scott Tomsu | ST-TRAP-SOLAR-001_Rev0.1.md drafted and added to new 09-Solar/ folder. First Solar FS-7550A-TR1, 3,731 panels, 2.05 MW. String voltage analysis complete — 5-panel strings confirmed >800V MPP across full Louisiana temperature range. DC-DC buck spec issued (E-22). ITC basis documented. SOLAR-001 removed from pending documents. |
+| 1.6 | 2026-04-22 | Scott Tomsu | Absorption chiller eliminated; thermal architecture revised to cooling-tower-primary with CHP serving Munters only. BOD Rev 0.5, MASTER-ENG Rev 0.3, CHP-SCHEMATIC Rev 0.2, COOLING-TOWER Rev 0.2, THERMAL-BASIS Rev 0.5 all issued. Document register updated. |
+| 1.7 | 2026-04-23 | Scott Tomsu | Cassette architecture reconciled — 480 VAC block bus confirmed per BOD Rev 0.6 and ELEC-001 Rev 1.3. IT load rebased to 91.1 MW (44 × 2,070 kW). GPU count updated to 28,512 (44 × 648). BESS updated to AC-coupled via Hitachi AMPS PCS on 480 VAC block bus. Solar updated to PV inverter coupling. CoolIT CHx2000 replaces Boyd CDU reference. Tower duty rebased to ~72.9 MW. BESS-001, BESS-ARCHDIAG, BESS-RFQ, SOLAR-001 Rev 0.1 all marked superseded pending Rev 0.2 rewrites. |
 
 ---
 

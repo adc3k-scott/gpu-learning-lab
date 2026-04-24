@@ -66,7 +66,7 @@ The Cassette is a sealed, unmanned, stackable AI compute module. It accepts defi
 - Not a data center in a box. There is no cold aisle, no hot aisle, no CRAC.
 - Not human-occupiable. There is no safe method to work inside while energized.
 - Not grid-dependent. The pod accepts 480 V AC 3-phase at the ELEC ECP; Delta in-row racks (R11–R15) convert to 800 V DC internally. The cassette has no utility-side awareness and is optimized for natural gas gensets or DC-native generation upstream of the external switchgear.
-- Not a CDU. Heat rejection requires the external CDU skid per Cassette-CDUSKID-001. The cassette is a primary-coolant endpoint only.
+- Not a CDU. Heat rejection requires the external CDU skid per Cassette-COOL2-001. The cassette is a primary-coolant endpoint only.
 - Not a rack enclosure. It is a platform for 9 Vera Rubin NVL72 compute racks, 1 control rack, and 5 Delta in-row power racks that operate as a single InfiniBand-scaled cluster.
 
 ### Sealed Pressure-Vessel Posture
@@ -100,7 +100,7 @@ The Cassette operates under sealed pressure-vessel discipline. All PG25 plumbing
 | DC internal bus                      | 800 V DC, 6,000 A rated busway           |
 | Cold plate supply/return             | 45 °C / 55–60 °C (PG25)                 |
 | Primary PG25 interface               | 2× Stäubli QBH-150 QDs at CDU-end ECP   |
-| External CDU skid requirement        | Yes — per Cassette-CDUSKID-001           |
+| External CDU skid requirement        | Yes — per Cassette-COOL2-001             |
 | PUE (cassette level)                 | ≤ 1.06 (PUE including external skid ~1.10–1.12) |
 | Operating weight                     | 29,085 kg (preliminary — C-01 open)      |
 | ISO 40-ft HC gross limit             | 30,480 kg                                |
@@ -203,7 +203,7 @@ No rotating equipment, no air conditioning, no fluid pumps inside the Service En
 | Network                    | Quantum-X800 InfiniBand at R10 (control rack) |
 | Storage + BMS              | DPU + NVMe servers + Jetson Orin at R10  |
 
-See COOL-002 §4 for heat load derivation; see ELEC-001 for rack power architecture.
+See COOL2-001 §3 for heat load derivation; see ELEC-001 for rack power architecture.
 
 ---
 
@@ -363,7 +363,7 @@ Manifold headers tie to the termination headers in the Service End Zone which th
 
 ### Scope
 
-This section covers the primary PG25 manifold system entirely inside the Cassette, from the rack branches through the trenched headers to the PG25 QDs at the CDU-end ECP. The intermediate loop, skid HX, and secondary water circuit are all external — see COOL-002.
+This section covers the primary PG25 manifold system entirely inside the Cassette, from the rack branches through the trenched headers to the PG25 QDs at the CDU-end ECP. The intermediate loop, skid HX, and secondary water circuit are all external — see COOL2-001.
 
 ### Primary Supply and Return Headers
 
@@ -406,7 +406,7 @@ QDs pass through to the ECP outer recess where the flexible hoses from the skid 
 
 ### Hydraulics
 
-See COOL-001 §4–§5 for pressure drop budget, flow allocation per rack, and velocity analysis. This section only captures what's inside the Cassette; everything from the QD outward is in COOL-002.
+See COOL-001 §4–§5 for pressure drop budget, flow allocation per rack, and velocity analysis. This section only captures what's inside the Cassette; everything from the QD outward is in COOL2-001.
 
 ---
 
@@ -677,6 +677,6 @@ Margin allocation:
 
 ---
 
-**Cassette-INT-001 — Interior Design Specification · Rev 1.2 · 2026-04-22**
+**Cassette-INT-001 — Interior Design Specification · Rev 1.3 · 2026-04-22**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**

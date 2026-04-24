@@ -63,7 +63,7 @@ This separation is deliberate — electrical and fluid services enter from oppos
 
 ### Architecture Note — No Internal CDU
 
-The Cassette contains no internal CDU unit. It is a sealed PG25 appliance. PG25 propylene glycol 25% v/v primary coolant circulates through the pod, absorbs heat at the rack cold plates (R1–R9) and control rack heat exchanger (R10), then exits at the CDU ECP for external rejection. Heat rejection to the intermediate loop is performed by the external CDU skid (CDUSKID-001, procured separately).
+The Cassette contains no internal CDU unit. It is a sealed PG25 appliance. PG25 propylene glycol 25% v/v primary coolant circulates through the pod, absorbs heat at the rack cold plates (R1–R9) and control rack heat exchanger (R10), then exits at the CDU ECP for external rejection. Heat rejection to the intermediate loop is performed by the external CDU skid (COOL2-001, procured separately).
 
 ### Architecture Note — 480 V AC at the Boundary
 
@@ -268,7 +268,7 @@ Cam-Lok ports are capped during normal operation. They are activated only under 
 
 ### Architecture Note
 
-The Cassette contains no internal CDU unit. It is a sealed PG25 appliance. PG25 propylene glycol 25% v/v primary coolant circulates inside the pod, absorbs heat at the rack cold plates (R1–R9) and at the control rack heat exchanger (R10), and exits at the CDU ECP for external rejection. Heat rejection to the intermediate loop is performed by the external CDU skid (CDUSKID-001, procured separately). The Cassette is the primary-coolant endpoint only.
+The Cassette contains no internal CDU unit. It is a sealed PG25 appliance. PG25 propylene glycol 25% v/v primary coolant circulates inside the pod, absorbs heat at the rack cold plates (R1–R9) and at the control rack heat exchanger (R10), and exits at the CDU ECP for external rejection. Heat rejection to the intermediate loop is performed by the external CDU skid (COOL2-001, procured separately). The Cassette is the primary-coolant endpoint only.
 
 ### Specification
 
@@ -780,6 +780,6 @@ Changes to this ICD require written agreement between pod vendor and platform ow
 ---
 
 **Cassette — External Connection Panel Interface Control Document**
-**Cassette-ECP-001 · Rev 1.1 · 2026-04-22**
+**Cassette-ECP-001 · Rev 1.2 · 2026-04-22**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**

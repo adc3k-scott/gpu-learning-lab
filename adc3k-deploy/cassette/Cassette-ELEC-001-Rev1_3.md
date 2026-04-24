@@ -694,6 +694,6 @@ Summary of key findings and decisions that drove the final specifications.
 ---
 
 **Cassette — Electrical Single-Line Diagram & Distribution Specification**
-**Cassette-ELEC-001 · Rev 1.2 · 2026-04-22**
+**Cassette-ELEC-001 · Rev 1.3 · 2026-04-22**
 **Scott Tomsu · scott@adc3k.com · (337) 780-1535 · Lafayette, Louisiana**
 **CONFIDENTIAL**
