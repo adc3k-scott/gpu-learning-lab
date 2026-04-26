@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappey's Cannery — First Responder Drone Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#CE181E;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,11,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-size:18px;font-weight:800;color:var(--bright)}
+.nav-brand span{color:var(--solar);font-weight:600}
+.nav-links{display:flex;gap:20px;flex-wrap:wrap}
+.nav-links a{font-size:13px;font-weight:600;color:var(--dim);transition:color 0.2s}
+.nav-links a:hover{color:var(--bright);text-decoration:none}
+.nav-links a.active{color:var(--red)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 60px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(239,68,68,0.08) 0%,transparent 70%);pointer-events:none}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--bright);line-height:1.1;max-width:800px;margin:0 auto}
+.header h1 span{color:var(--red)}
+.header .sub{font-size:16px;color:var(--dim);max-width:720px;margin:20px auto 0;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:60px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:32px;max-width:700px}
+.section-border{border-top:1px solid var(--border)}
+
+/* KLFT HUB */
+.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:32px}
+.hub-grid img{width:100%;border-radius:10px;border:1px solid var(--border)}
+.hub-details{display:flex;flex-direction:column;gap:16px}
+.hub-detail{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:14px;color:var(--text);line-height:1.6;position:relative;padding-left:20px;border-left:3px solid var(--red)}
+.hub-detail strong{color:var(--bright)}
+.hub-callout{margin-top:24px;padding:20px 24px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;text-align:center;font-size:15px;font-weight:700;color:var(--bright)}
+
+/* MISSION CARDS */
+.missions{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:32px}
+.mission{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative;overflow:hidden}
+.mission::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mission-hurricane::before{background:linear-gradient(90deg,var(--red),var(--amber))}
+.mission-pipeline::before{background:linear-gradient(90deg,var(--amber),var(--solar))}
+.mission-sar::before{background:linear-gradient(90deg,var(--red),var(--purple))}
+.mission-dfr::before{background:linear-gradient(90deg,var(--amber),var(--red))}
+.mission-airan::before{background:linear-gradient(90deg,var(--red),var(--cyan))}
+.mission .m-title{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.mission .m-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.mission p{font-size:13px;color:var(--dim);line-height:1.7}
+.mission .m-stat{margin-top:14px;padding:10px 12px;background:var(--surface);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);line-height:1.7}
+
+/* NVIDIA PLATFORM */
+.nv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:32px}
+.nv-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.nv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.nv-metropolis::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.nv-omniverse::before{background:linear-gradient(90deg,var(--purple),var(--blue))}
+.nv-jetson::before{background:linear-gradient(90deg,var(--solar),var(--green))}
+.nv-convergence::before{background:linear-gradient(90deg,var(--red),var(--amber))}
+.nv-card .nv-name{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.nv-card .nv-type{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;color:var(--dim)}
+.nv-card p{font-size:13px;color:var(--dim);line-height:1.7}
+.nv-card .nv-deploy{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);background:var(--surface);padding:8px 12px;border-radius:6px;line-height:1.6}
+
+/* WORKFORCE */
+.workforce{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.workforce img{width:100%;border-radius:10px;border:1px solid var(--border)}
+.workforce-text h3{font-size:22px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.workforce-text p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px}
+.workforce-text .wf-highlight{padding:16px 20px;background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.25);border-radius:8px;font-size:14px;font-weight:600;color:var(--amber)}
+
+/* THE ASK */
+.ask-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:32px}
+.ask-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;border-left:3px solid var(--amber)}
+.ask-item .ask-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);font-weight:600;letter-spacing:1px;margin-bottom:6px}
+.ask-item h3{font-size:16px;font-weight:700;color:var(--bright);margin-bottom:10px}
+.ask-item p{font-size:13px;color:var(--dim);line-height:1.7}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.footer-links a{font-size:14px;font-weight:600;color:var(--dim)}
+.footer-links a:hover{color:var(--bright)}
+.footer .contact{font-size:13px;color:var(--dim);margin-bottom:8px}
+.footer .contact a{color:var(--blue)}
+.footer .brand{font-size:12px;color:var(--dim);margin-top:8px}
+.footer .brand strong{color:var(--bright)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-inner{flex-direction:column;gap:10px}
+  .nav-links{justify-content:center}
+  .hub-grid,.workforce{grid-template-columns:1fr}
+  .missions{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand" style="text-decoration:none">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-gallery">Gallery</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints">Blueprints</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Emergency Operations</div>
+  <h1>First Responder <span>Drone Operations</span></h1>
+  <p class="sub">Hurricane response. Pipeline inspection. Search and rescue. Drone-as-first-responder. Connected to KLFT autonomous drone hub at Lafayette Regional Airport.</p>
+</div>
+
+<!-- KLFT 1.1 -->
+<div class="section section-border">
+  <div class="section-label">Lafayette Regional Airport</div>
+  <h2>KLFT 1.1 — Gulf Coast Emergency Drone Hub</h2>
+  <p class="sub">The only autonomous drone operations center for first responders between Houston and Atlanta.</p>
+
+  <div class="hub-grid">
+    <img src="vendors/skydio/photos/p1_img1.png" alt="KLFT drone operations hub">
+    <div class="hub-details">
+      <div class="hub-detail"><strong>Autonomous drone operations center</strong> purpose-built for first responder agencies across Acadiana and the Gulf Coast.</div>
+      <div class="hub-detail"><strong>Skydio X10 drones</strong> — American-made, NDAA compliant. Powered by NVIDIA Jetson Orin edge compute for real-time AI inference on the aircraft.</div>
+      <div class="hub-detail"><strong>Compact docking stations</strong> — 2x2 ft footprint, 70 lbs. No shipping containers, no hangars. Deploy on any rooftop or parking pad.</div>
+      <div class="hub-detail"><strong>NVIDIA Metropolis video AI</strong> + Omniverse digital twin for airfield simulation, flight path planning, and emergency scenario modeling.</div>
+    </div>
+  </div>
+
+  <div class="hub-callout">The only facility of its kind between Houston and Atlanta</div>
+</div>
+
+<!-- MISSION PROFILES -->
+<div class="section section-border">
+  <div class="section-label">Operational Capability</div>
+  <h2>Mission Profiles</h2>
+  <p class="sub">Five core missions covering the full spectrum of emergency and infrastructure operations.</p>
+
+  <div class="missions">
+    <div class="mission mission-hurricane">
+      <div class="m-type">Hurricane Response</div>
+      <div class="m-title">Hurricane Damage Assessment</div>
+      <p>Skydio X10 launches within minutes of storm clearing. AI vision identifies downed power lines, structural damage, flooded roads, and stranded residents. Real-time results fed directly to OEP and GOHSEP for coordinated response.</p>
+      <div class="m-stat">Autonomous launch &gt; AI triage &gt; OEP/GOHSEP feed in minutes, not hours</div>
+    </div>
+
+    <div class="mission mission-pipeline">
+      <div class="m-type">Energy Infrastructure</div>
+      <div class="m-title">Pipeline and Refinery Inspection</div>
+      <p>Automated flyovers of critical energy infrastructure across southern Louisiana. Thermal imaging detects leaks, corrosion, and anomalies that human eyes miss. Continuous monitoring replaces periodic manual inspection.</p>
+      <div class="m-stat">5x faster than manual inspection. Zero personnel in hazardous zones.</div>
+    </div>
+
+    <div class="mission mission-sar">
+      <div class="m-type">Life Safety</div>
+      <div class="m-title">Search and Rescue</div>
+      <p>Thermal and visual AI identifies heat signatures in flooded terrain, dense vegetation, and low-visibility conditions. Autonomous flight paths cover more ground at a fraction of the cost of manned aircraft.</p>
+      <div class="m-stat">Thermal + visual AI. Autonomous coverage. Day or night.</div>
+    </div>
+
+    <div class="mission mission-dfr">
+      <div class="m-type">Law Enforcement / Fire</div>
+      <div class="m-title">Drone-as-First-Responder (DFR)</div>
+      <p>Drone arrives on scene in under 2 minutes versus 8+ minute patrol car average. Live video streams to dispatch for real-time situational awareness before officers arrive. Over 30 US departments already operating DFR programs.</p>
+      <div class="m-stat">2 min response vs 8+ min patrol car. 30+ US departments active.</div>
+    </div>
+
+    <div class="mission mission-airan">
+      <div class="m-type">Next-Gen Connectivity</div>
+      <div class="m-title">NVIDIA AI-RAN</div>
+      <p>$1B NVIDIA + Nokia investment. ISAC (Integrated Sensing and Communications) turns cell towers into radar and connectivity simultaneously. Drone tracking, threat detection, and C2 links over existing telecom infrastructure.</p>
+      <div class="m-stat">$1B NVIDIA + Nokia. Cell towers become radar + comms. ISAC dual-use.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION IMAGERY -->
+<div class="section section-border">
+  <div class="hub-grid">
+    <img src="vendors/skydio/photos/p6_img1.jpeg" alt="Skydio drone in field operations">
+    <img src="vendors/skydio/photos/p8_img1.jpeg" alt="Drone emergency response">
+  </div>
+</div>
+
+<!-- NVIDIA SMART CITY PLATFORM -->
+<div class="section section-border">
+  <div class="section-label">NVIDIA Ecosystem</div>
+  <h2>NVIDIA Smart City Platform</h2>
+  <p class="sub">Three NVIDIA ecosystems converging at one small airport. No other facility in the Gulf South has this.</p>
+
+  <div class="nv-grid">
+    <div class="nv-card nv-metropolis">
+      <div class="nv-name">Metropolis</div>
+      <div class="nv-type">Video AI Agents</div>
+      <p>AI agents on existing cameras. 30-100x faster than real-time video analysis. Already deployed at Bengaluru Airport (500+ cameras), Toronto Pearson, and Heathrow.</p>
+      <div class="nv-deploy">Production-proven at the world's busiest airports</div>
+    </div>
+
+    <div class="nv-card nv-omniverse">
+      <div class="nv-name">Omniverse</div>
+      <div class="nv-type">3D Digital Twin</div>
+      <p>Full 3D digital twin simulation of the airfield, flight paths, and emergency scenarios. Test operations virtually before deploying in the real world. Train AI models on synthetic data.</p>
+      <div class="nv-deploy">Simulate before you fly</div>
+    </div>
+
+    <div class="nv-card nv-jetson">
+      <div class="nv-name">Jetson Orin</div>
+      <div class="nv-type">Edge AI Compute</div>
+      <p>AI processing at the drone, not in the cloud. Orin delivers 10x the processing power of previous generation. Real-time inference with zero latency to a remote server.</p>
+      <div class="nv-deploy">275 TOPS on-device. No cloud dependency.</div>
+    </div>
+
+    <div class="nv-card nv-convergence">
+      <div class="nv-name">Three-Ecosystem Convergence</div>
+      <div class="nv-type">KLFT Advantage</div>
+      <p>KLFT sits at the intersection of Metropolis (video AI), Omniverse (digital twin), and Jetson (edge compute). No other small airport in America operates at this convergence point. That is the NVIDIA Smart City reference site opportunity.</p>
+      <div class="nv-deploy">Metropolis + Omniverse + Jetson = KLFT</div>
+    </div>
+  </div>
+</div>
+
+<!-- WORKFORCE -->
+<div class="section section-border">
+  <div class="section-label">Acadiana Advantage</div>
+  <h2>Why Lafayette's Workforce</h2>
+  <p class="sub">40+ years of remote operations expertise that no other city in America can match.</p>
+
+  <div class="workforce">
+    <img src="vendors/skydio/photos/p3_img1.jpeg" alt="ROV operations — remote systems expertise">
+    <div class="workforce-text">
+      <h3>ROV Industry Built This City</h3>
+      <p>Lafayette's ROV industry trained remote operations specialists for over 40 years. Managing complex robotic systems in extreme environments from control rooms hundreds of miles away. Deepwater, West Africa, worldwide.</p>
+      <p>That is EXACTLY what drone operations centers need. Pilots who understand remote vehicle control, real-time telemetry, autonomous systems, and high-stakes decision making from a screen.</p>
+      <div class="wf-highlight">No other city in America has this workforce. Lafayette does not need to train drone operators — it has been training them for four decades.</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE ASK -->
+<div class="section section-border">
+  <div class="section-label">Next Steps</div>
+  <h2>The Ask</h2>
+  <p class="sub">Three actions to stand up the Gulf Coast's first autonomous drone operations hub.</p>
+
+  <div class="ask-items">
+    <div class="ask-item">
+      <div class="ask-num">01</div>
+      <h3>Airport Authority Agreement</h3>
+      <p>Designate an operational zone at Lafayette Regional Airport for KLFT drone operations. Defined airspace, ground infrastructure footprint, and coordination protocols with existing airport operations.</p>
+    </div>
+
+    <div class="ask-item">
+      <div class="ask-num">02</div>
+      <h3>First Responder Coordination</h3>
+      <p>Formal coordination framework with Lafayette Fire Department, Police Department, and Office of Emergency Preparedness. Define dispatch integration, communication protocols, and chain of command.</p>
+    </div>
+
+    <div class="ask-item">
+      <div class="ask-num">03</div>
+      <h3>Pilot Program — One Department</h3>
+      <p>Start with a single department to prove the model. One agency, one use case, measurable results. Expand from proven success, not from promises. The data will speak for itself.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-links">
+    <a href="/trappeys">Trappey's Overview</a>
+    <a href="/trappeys-investors">Investors</a>
+    <a href="/lafayette">Lafayette AI Initiative</a>
+    <a href="/">Trappey's Compute Center</a>
+  </div>
+  <div class="contact"><a href="mailto:scott@trappeyscompute.com">scott@trappeyscompute.com</a> &nbsp;|&nbsp; <a href="https://trappeyscompute.com">trappeyscompute.com</a></div>
+  <div class="brand"><strong>Scott Tomsu</strong> &nbsp; Lafayette, Louisiana</div>
+</div>
+
+</body>
+</html>

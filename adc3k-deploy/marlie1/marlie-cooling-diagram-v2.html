@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MARLIE I — Cooling Architecture v2</title>
+<style>
+  body { background: #0a0a0a; margin: 0; padding: 20px; display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<svg width="1100" height="810" viewBox="0 0 1100 810" xmlns="http://www.w3.org/2000/svg" style="font-family:'Courier New',monospace">
+<defs>
+  <marker id="ab" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#42A5F5"/></marker>
+  <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#EF5350"/></marker>
+  <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#555"/></marker>
+  <marker id="ac" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#B87333"/></marker>
+  <marker id="aw" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#aaa"/></marker>
+</defs>
+
+<rect width="1100" height="810" fill="#0a0a0a"/>
+
+<!-- TITLE -->
+<text x="550" y="32" text-anchor="middle" fill="#fff" font-size="17" font-weight="bold">MARLIE I — COOLING ARCHITECTURE v2</text>
+<text x="550" y="52" text-anchor="middle" fill="#555" font-size="11">VERA RUBIN NVL72 · BACK-OF-RACK VIEW · SOURCE OF TRUTH 2026-04-25</text>
+
+<!-- ================================================================ -->
+<!-- RACK ENCLOSURE                                                    -->
+<!-- ================================================================ -->
+<text x="337" y="68" text-anchor="middle" fill="#555" font-size="10">BACK OF RACK — PLUMBING SIDE</text>
+<rect x="75" y="72" width="524" height="638" rx="4" fill="#141414" stroke="#444" stroke-width="2.5"/>
+
+<!-- ================================================================ -->
+<!-- LEFT — COLD SUPPLY UQD08 RACK MANIFOLD                          -->
+<!-- ================================================================ -->
+<rect x="83" y="92" width="24" height="572" rx="3" fill="#0D47A1" stroke="#42A5F5" stroke-width="1.5"/>
+<!-- flow arrow up -->
+<line x1="95" y1="420" x2="95" y2="270" stroke="#42A5F5" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#ab)"/>
+
+<!-- ================================================================ -->
+<!-- RIGHT — HOT RETURN UQD08 RACK MANIFOLD                          -->
+<!-- ================================================================ -->
+<rect x="567" y="92" width="24" height="572" rx="3" fill="#7B0000" stroke="#EF5350" stroke-width="1.5"/>
+<!-- flow arrow down -->
+<line x1="579" y1="270" x2="579" y2="420" stroke="#EF5350" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#ar)"/>
+
+<!-- ================================================================ -->
+<!-- CENTER — 5000A LIQUID-COOLED BUSBAR (ELECTRICAL)                 -->
+<!-- ================================================================ -->
+<rect x="326" y="94" width="22" height="566" rx="3" fill="#1e0f00" stroke="#B87333" stroke-width="1.5"/>
+<text x="337" y="692" text-anchor="middle" fill="#B87333" font-size="8">5000A</text>
+<text x="337" y="701" text-anchor="middle" fill="#B87333" font-size="8">BUSBAR</text>
+<text x="337" y="710" text-anchor="middle" fill="#6a4010" font-size="7">ELECTRICAL</text>
+
+<!-- ================================================================ -->
+<!-- TOP LOOP (cold-to-hot crossover at top of rack)                  -->
+<!-- ================================================================ -->
+<path d="M 95 92 C 95 46, 579 46, 579 92" stroke="#ccc" fill="none" stroke-width="5" stroke-linecap="round"/>
+<text x="337" y="42" text-anchor="middle" fill="#666" font-size="10">LOOP AT TOP — COLD → HOT CROSSOVER · NO EXTERNAL CONNECTION</text>
+
+<!-- ================================================================ -->
+<!-- UQD08 QD PORTS — COLD MANIFOLD (36 ports, right edge cx=107)    -->
+<!-- cy = 100 + i*15.89                                               -->
+<!-- ================================================================ -->
+<!-- Tray-connected ports (highlighted, r=5.5): i=3,10,17,24,31      -->
+<!-- Regular ports (r=3.5): all others                                -->
+
+<!-- i=0 --> <circle cx="107" cy="100" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=1 --> <circle cx="107" cy="116" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=2 --> <circle cx="107" cy="132" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=3 TRAY --> <circle cx="107" cy="148" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<!-- i=4 --> <circle cx="107" cy="164" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=5 --> <circle cx="107" cy="180" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=6 --> <circle cx="107" cy="195" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=7 --> <circle cx="107" cy="211" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=8 --> <circle cx="107" cy="227" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=9 --> <circle cx="107" cy="243" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=10 TRAY --> <circle cx="107" cy="259" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<!-- i=11 --> <circle cx="107" cy="275" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=12 --> <circle cx="107" cy="291" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=13 --> <circle cx="107" cy="307" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=14 --> <circle cx="107" cy="323" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=15 --> <circle cx="107" cy="338" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=16 --> <circle cx="107" cy="354" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=17 TRAY --> <circle cx="107" cy="370" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<!-- i=18 --> <circle cx="107" cy="386" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=19 --> <circle cx="107" cy="402" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=20 --> <circle cx="107" cy="418" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=21 --> <circle cx="107" cy="434" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=22 --> <circle cx="107" cy="449" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=23 --> <circle cx="107" cy="465" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=24 TRAY --> <circle cx="107" cy="481" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<!-- i=25 --> <circle cx="107" cy="497" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=26 --> <circle cx="107" cy="513" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=27 --> <circle cx="107" cy="529" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=28 --> <circle cx="107" cy="544" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=29 --> <circle cx="107" cy="560" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=30 --> <circle cx="107" cy="576" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=31 TRAY --> <circle cx="107" cy="592" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<!-- i=32 --> <circle cx="107" cy="608" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=33 --> <circle cx="107" cy="624" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=34 --> <circle cx="107" cy="640" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<!-- i=35 --> <circle cx="107" cy="656" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+
+<!-- ================================================================ -->
+<!-- UQD08 QD PORTS — HOT MANIFOLD (36 ports, left edge cx=567)      -->
+<!-- ================================================================ -->
+<!-- i=0 --> <circle cx="567" cy="100" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=1 --> <circle cx="567" cy="116" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=2 --> <circle cx="567" cy="132" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=3 TRAY --> <circle cx="567" cy="148" r="5.5" fill="#E53935" stroke="#FFCDD2" stroke-width="1.5"/>
+<!-- i=4 --> <circle cx="567" cy="164" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=5 --> <circle cx="567" cy="180" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=6 --> <circle cx="567" cy="195" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=7 --> <circle cx="567" cy="211" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=8 --> <circle cx="567" cy="227" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=9 --> <circle cx="567" cy="243" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=10 TRAY --> <circle cx="567" cy="259" r="5.5" fill="#E53935" stroke="#FFCDD2" stroke-width="1.5"/>
+<!-- i=11 --> <circle cx="567" cy="275" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=12 --> <circle cx="567" cy="291" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=13 --> <circle cx="567" cy="307" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=14 --> <circle cx="567" cy="323" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=15 --> <circle cx="567" cy="338" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=16 --> <circle cx="567" cy="354" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=17 TRAY --> <circle cx="567" cy="370" r="5.5" fill="#E53935" stroke="#FFCDD2" stroke-width="1.5"/>
+<!-- i=18 --> <circle cx="567" cy="386" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=19 --> <circle cx="567" cy="402" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=20 --> <circle cx="567" cy="418" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=21 --> <circle cx="567" cy="434" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=22 --> <circle cx="567" cy="449" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=23 --> <circle cx="567" cy="465" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=24 TRAY --> <circle cx="567" cy="481" r="5.5" fill="#E53935" stroke="#FFCDD2" stroke-width="1.5"/>
+<!-- i=25 --> <circle cx="567" cy="497" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=26 --> <circle cx="567" cy="513" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=27 --> <circle cx="567" cy="529" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=28 --> <circle cx="567" cy="544" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=29 --> <circle cx="567" cy="560" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=30 --> <circle cx="567" cy="576" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=31 TRAY --> <circle cx="567" cy="592" r="5.5" fill="#E53935" stroke="#FFCDD2" stroke-width="1.5"/>
+<!-- i=32 --> <circle cx="567" cy="608" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=33 --> <circle cx="567" cy="624" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=34 --> <circle cx="567" cy="640" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<!-- i=35 --> <circle cx="567" cy="656" r="3.5" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+
+<!-- ================================================================ -->
+<!-- 5 REPRESENTATIVE COMPUTE TRAYS                                   -->
+<!-- (5 of 36 shown — remaining 31 indicated by QD ports on manifold) -->
+<!-- ================================================================ -->
+
+<!-- Tray at y=148 -->
+<rect x="113" y="141" width="448" height="14" rx="1" fill="#1a2236" stroke="#2d3a50" stroke-width="1"/>
+<text x="337" y="152" text-anchor="middle" fill="#4a6080" font-size="9">COMPUTE TRAY — GPU COLD PLATES — INNER MANIFOLD</text>
+<!-- flex hose left --> <line x1="107" y1="148" x2="113" y2="148" stroke="#42A5F5" stroke-width="2" stroke-dasharray="2,1"/>
+<!-- flex hose right --> <line x1="561" y1="148" x2="567" y2="148" stroke="#EF5350" stroke-width="2" stroke-dasharray="2,1"/>
+
+<!-- Tray at y=259 -->
+<rect x="113" y="252" width="448" height="14" rx="1" fill="#1a2236" stroke="#2d3a50" stroke-width="1"/>
+<text x="337" y="263" text-anchor="middle" fill="#4a6080" font-size="9">COMPUTE TRAY — GPU COLD PLATES — INNER MANIFOLD</text>
+<line x1="107" y1="259" x2="113" y2="259" stroke="#42A5F5" stroke-width="2" stroke-dasharray="2,1"/>
+<line x1="561" y1="259" x2="567" y2="259" stroke="#EF5350" stroke-width="2" stroke-dasharray="2,1"/>
+
+<!-- Tray at y=370 -->
+<rect x="113" y="363" width="448" height="14" rx="1" fill="#1a2236" stroke="#2d3a50" stroke-width="1"/>
+<text x="337" y="374" text-anchor="middle" fill="#4a6080" font-size="9">COMPUTE TRAY — GPU COLD PLATES — INNER MANIFOLD</text>
+<line x1="107" y1="370" x2="113" y2="370" stroke="#42A5F5" stroke-width="2" stroke-dasharray="2,1"/>
+<line x1="561" y1="370" x2="567" y2="370" stroke="#EF5350" stroke-width="2" stroke-dasharray="2,1"/>
+
+<!-- Tray at y=481 -->
+<rect x="113" y="474" width="448" height="14" rx="1" fill="#1a2236" stroke="#2d3a50" stroke-width="1"/>
+<text x="337" y="485" text-anchor="middle" fill="#4a6080" font-size="9">COMPUTE TRAY — GPU COLD PLATES — INNER MANIFOLD</text>
+<line x1="107" y1="481" x2="113" y2="481" stroke="#42A5F5" stroke-width="2" stroke-dasharray="2,1"/>
+<line x1="561" y1="481" x2="567" y2="481" stroke="#EF5350" stroke-width="2" stroke-dasharray="2,1"/>
+
+<!-- Tray at y=592 -->
+<rect x="113" y="585" width="448" height="14" rx="1" fill="#1a2236" stroke="#2d3a50" stroke-width="1"/>
+<text x="337" y="596" text-anchor="middle" fill="#4a6080" font-size="9">COMPUTE TRAY — GPU COLD PLATES — INNER MANIFOLD</text>
+<line x1="107" y1="592" x2="113" y2="592" stroke="#42A5F5" stroke-width="2" stroke-dasharray="2,1"/>
+<line x1="561" y1="592" x2="567" y2="592" stroke="#EF5350" stroke-width="2" stroke-dasharray="2,1"/>
+
+<!-- ================================================================ -->
+<!-- FIRE HOSE FITTINGS (bottom of manifold bars)                    -->
+<!-- ================================================================ -->
+<rect x="87" y="664" width="16" height="30" rx="3" fill="#030d2a" stroke="#42A5F5" stroke-width="2" stroke-dasharray="5,3"/>
+<rect x="571" y="664" width="16" height="30" rx="3" fill="#1a0000" stroke="#EF5350" stroke-width="2" stroke-dasharray="5,3"/>
+
+<!-- DRIP TRAY -->
+<rect x="75" y="696" width="524" height="10" rx="1" fill="#252525" stroke="#444" stroke-width="1.5"/>
+<text x="337" y="690" text-anchor="middle" fill="#3a3a3a" font-size="9">DRIP TRAY · FULL RACK WIDTH · FLOOR LEVEL</text>
+
+<!-- FLOOR MANIFOLD -->
+<rect x="55" y="710" width="564" height="12" rx="3" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<rect x="55" y="724" width="564" height="12" rx="3" fill="#7B0000" stroke="#EF5350" stroke-width="1"/>
+<text x="300" y="719" text-anchor="middle" fill="#42A5F5" font-size="10" font-weight="bold">SUPPLY MANIFOLD</text>
+<text x="300" y="733" text-anchor="middle" fill="#EF5350" font-size="10" font-weight="bold">RETURN MANIFOLD</text>
+<!-- To CDU arrows -->
+<line x1="619" y1="716" x2="648" y2="716" stroke="#42A5F5" stroke-width="2" marker-end="url(#ab)"/>
+<line x1="619" y1="730" x2="648" y2="730" stroke="#EF5350" stroke-width="2" marker-end="url(#ar)"/>
+<text x="652" y="719" fill="#666" font-size="10">TO CDU</text>
+<text x="652" y="733" fill="#666" font-size="10">(OUTSIDE)</text>
+
+<!-- ================================================================ -->
+<!-- SIDE LABELS                                                      -->
+<!-- ================================================================ -->
+
+<!-- Left — cold manifold -->
+<text x="72" y="282" text-anchor="end" fill="#42A5F5" font-size="12" font-weight="bold">COLD</text>
+<text x="72" y="297" text-anchor="end" fill="#42A5F5" font-size="12" font-weight="bold">SUPPLY</text>
+<text x="72" y="316" text-anchor="end" fill="#42A5F5" font-size="10">UQD08 RACK</text>
+<text x="72" y="329" text-anchor="end" fill="#42A5F5" font-size="10">MANIFOLD</text>
+<text x="72" y="345" text-anchor="end" fill="#2a5a7a" font-size="9">36 QD PORTS</text>
+<line x1="73" y1="340" x2="82" y2="340" stroke="#42A5F5" stroke-width="1" marker-end="url(#ab)"/>
+
+<!-- Right — hot manifold -->
+<text x="602" y="282" fill="#EF5350" font-size="12" font-weight="bold">HOT</text>
+<text x="602" y="297" fill="#EF5350" font-size="12" font-weight="bold">RETURN</text>
+<text x="602" y="316" fill="#EF5350" font-size="10">UQD08 RACK</text>
+<text x="602" y="329" fill="#EF5350" font-size="10">MANIFOLD</text>
+<text x="602" y="345" fill="#7a2a2a" font-size="9">36 QD PORTS</text>
+<line x1="599" y1="340" x2="591" y2="340" stroke="#EF5350" stroke-width="1" marker-end="url(#ar)"/>
+
+<!-- QD port count annotation (bracket along manifold) -->
+<line x1="70" y1="100" x2="70" y2="656" stroke="#333" stroke-width="1"/>
+<line x1="70" y1="100" x2="76" y2="100" stroke="#333" stroke-width="1"/>
+<line x1="70" y1="656" x2="76" y2="656" stroke="#333" stroke-width="1"/>
+<text x="68" y="382" text-anchor="end" fill="#333" font-size="9" writing-mode="tb" transform="rotate(180,68,382)">36 × UQD08</text>
+
+<!-- Bus bar label (pointer from center bottom) -->
+<line x1="337" y1="670" x2="337" y2="664" stroke="#B87333" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- Fire hose callout -->
+<line x1="55" y1="694" x2="86" y2="676" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#aw)"/>
+<text x="53" y="685" text-anchor="end" fill="#666" font-size="9">FIRE HOSE FITTING</text>
+<text x="53" y="696" text-anchor="end" fill="#666" font-size="9">~3" ID · HARD PLUMBED</text>
+
+<!-- QD flex-hose callout (pointing to tray at 259) -->
+<line x1="55" y1="255" x2="106" y2="259" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#aw)"/>
+<text x="53" y="248" text-anchor="end" fill="#ccc" font-size="9">QD ≈ ¾" ID</text>
+<text x="53" y="260" text-anchor="end" fill="#ccc" font-size="9">FLEX HOSE</text>
+<text x="53" y="272" text-anchor="end" fill="#ccc" font-size="9">→ INNER MANIFOLD</text>
+
+<!-- ================================================================ -->
+<!-- FLOOR PLAN INSET (top-right)                                     -->
+<!-- ================================================================ -->
+<rect x="680" y="72" width="405" height="242" rx="4" fill="#0e0e0e" stroke="#333" stroke-width="1.5"/>
+<text x="882" y="91" text-anchor="middle" fill="#777" font-size="11" font-weight="bold">FLOOR PLAN — 40 FT × 24 FT SLAB</text>
+<text x="882" y="105" text-anchor="middle" fill="#3a3a3a" font-size="10">TOP-DOWN · 40 RACKS INSIDE BUILDING · 3 ROWS</text>
+
+<!-- Room border -->
+<rect x="694" y="113" width="378" height="185" rx="3" fill="#0b0b0b" stroke="#3a3a3a" stroke-width="1.5"/>
+
+<!--
+  Row A: 15 racks  x=700, each rack 23px wide + 2px gap = 25px/rack
+  15 racks: 14*25+23 = 373px. Start x=700. End=1073 (room right=1072 OK).
+  Row B: 15 racks — same
+  Row C: 10 racks — 9*25+23=248px. Center: margin=(373-248)/2=62.5. Start x=762.
+
+  Rows from top (back wall) to bottom (front):
+  Row A: y=120, h=24 → bottom y=144. Manifold: y=145, h=10. Bottom y=155.
+  Aisle: 18px. Row B: y=173, h=24 → bottom y=197. Manifold y=198, h=10. Bottom y=208.
+  Aisle: 18px. Row C: y=226, h=24 → bottom y=250. Manifold y=251, h=10. Bottom y=261.
+  Room bottom at y=298.
+-->
+
+<!-- ROW A — 15 racks -->
+<text x="697" y="132" text-anchor="end" fill="#555" font-size="9">A · 15</text>
+<!-- racks: each rack shows outer-edge manifold bars and center bus bar -->
+<!-- Just draw as simple rectangles for top-down clarity -->
+<rect x="700" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="725" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="750" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="775" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="800" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="825" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="850" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="875" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="900" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="925" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="950" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="975" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1000" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1025" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1050" y="120" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<!-- Row A manifold pipes -->
+<rect x="700" y="145" width="373" height="5" fill="#0D47A1" rx="1"/>
+<rect x="700" y="151" width="373" height="5" fill="#7B0000" rx="1"/>
+
+<!-- ROW B — 15 racks -->
+<text x="697" y="186" text-anchor="end" fill="#555" font-size="9">B · 15</text>
+<rect x="700" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="725" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="750" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="775" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="800" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="825" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="850" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="875" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="900" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="925" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="950" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="975" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1000" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1025" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="1050" y="173" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<!-- Row B manifold -->
+<rect x="700" y="198" width="373" height="5" fill="#0D47A1" rx="1"/>
+<rect x="700" y="204" width="373" height="5" fill="#7B0000" rx="1"/>
+
+<!-- ROW C — 10 racks (centered, start x=762) -->
+<text x="697" y="240" text-anchor="end" fill="#555" font-size="9">C · 10</text>
+<rect x="762" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="787" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="812" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="837" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="862" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="887" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="912" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="937" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="962" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<rect x="987" y="226" width="23" height="24" fill="#1a2236" stroke="#2d3748" stroke-width="1" rx="1"/>
+<!-- Row C manifold -->
+<rect x="762" y="251" width="248" height="5" fill="#0D47A1" rx="1"/>
+<rect x="762" y="257" width="248" height="5" fill="#7B0000" rx="1"/>
+
+<!-- Floor plan dimensions -->
+<line x1="700" y1="280" x2="1073" y2="280" stroke="#2a2a2a" stroke-width="1" marker-end="url(#ag)"/>
+<line x1="700" y1="276" x2="700" y2="284" stroke="#2a2a2a" stroke-width="1"/>
+<text x="886" y="277" text-anchor="middle" fill="#444" font-size="10">40 FT</text>
+<line x1="1081" y1="120" x2="1081" y2="261" stroke="#2a2a2a" stroke-width="1" marker-end="url(#ag)"/>
+<line x1="1077" y1="120" x2="1085" y2="120" stroke="#2a2a2a" stroke-width="1"/>
+<text x="1086" y="196" fill="#444" font-size="9">24 FT</text>
+
+<text x="882" y="298" text-anchor="middle" fill="#444" font-size="9">■ SUPPLY  ■ RETURN MANIFOLD RUNS ALONG CONNECTION EDGE OF EACH ROW</text>
+
+<!-- ================================================================ -->
+<!-- LEGEND (bottom-right)                                            -->
+<!-- ================================================================ -->
+<rect x="680" y="328" width="405" height="220" rx="4" fill="#0e0e0e" stroke="#333" stroke-width="1.5"/>
+<text x="882" y="347" text-anchor="middle" fill="#666" font-size="11" font-weight="bold">VERA RUBIN NVL72 — COMPONENT LEGEND</text>
+
+<rect x="700" y="356" width="26" height="12" fill="#0D47A1" stroke="#42A5F5" stroke-width="1" rx="2"/>
+<text x="732" y="367" fill="#aaa" font-size="10">COLD SUPPLY — Vera Rubin UQD08 Rack Manifold · outer edge · 36 QD ports</text>
+
+<rect x="700" y="375" width="26" height="12" fill="#7B0000" stroke="#EF5350" stroke-width="1" rx="2"/>
+<text x="732" y="386" fill="#aaa" font-size="10">HOT RETURN — Vera Rubin UQD08 Rack Manifold · outer edge · 36 QD ports</text>
+
+<rect x="700" y="394" width="26" height="12" fill="#1e0f00" stroke="#B87333" stroke-width="1" rx="2"/>
+<text x="732" y="405" fill="#aaa" font-size="10">Vera Rubin 5000A Liquid-Cooled Busbar — ELECTRICAL · runs rack center</text>
+
+<circle cx="713" cy="420" r="5.5" fill="#2196F3" stroke="#90CAF9" stroke-width="1.5"/>
+<text x="732" y="424" fill="#aaa" font-size="10">UQD08 QD Port (active/connected) — ≈¾" ID · braided flex hose to tray</text>
+
+<circle cx="713" cy="440" r="3.5" fill="#0D47A1" stroke="#42A5F5" stroke-width="1"/>
+<text x="732" y="444" fill="#aaa" font-size="10">UQD08 QD Port (unconnected tray position) — 36 per manifold bar</text>
+
+<rect x="700" y="453" width="26" height="12" fill="#030d2a" stroke="#42A5F5" stroke-width="2" stroke-dasharray="4,2" rx="2"/>
+<text x="732" y="464" fill="#aaa" font-size="10">Fire Hose Fitting — ~3" ID push+twist · hard plumbed · bottom of each bar</text>
+
+<rect x="700" y="472" width="26" height="8" fill="#252525" stroke="#444" stroke-width="1" rx="1"/>
+<text x="732" y="481" fill="#aaa" font-size="10">Drip Tray — full rack width · floor level · leak detection + splash protection</text>
+
+<text x="700" y="500" fill="#555" font-size="9">FLOW: cold supply enters BOTTOM of manifold → distributed UP to 36 tray QDs → hot return FALLS by gravity → exits BOTTOM</text>
+<text x="700" y="513" fill="#555" font-size="9">WIRING: ceiling-mounted junction boxes · no whips · no solid rack connections</text>
+<text x="700" y="526" fill="#555" font-size="9">ALL EQUIPMENT EXCEPT RACKS (power · cooling · CDU · generator): OUTSIDE BUILDING</text>
+<text x="700" y="541" fill="#444" font-size="9">MARLIE I · 1201 SE EVANGELINE THRUWAY · LAFAYETTE LA · 30.21975N 92.00645W</text>
+
+<!-- BOTTOM NOTES (under main rack) -->
+<text x="337" y="750" text-anchor="middle" fill="#3a3a3a" font-size="10">36 COMPUTE TRAYS PER RACK · 5 SHOWN FOR ILLUSTRATION · ALL 36 QD PORTS SHOWN ON EACH MANIFOLD BAR</text>
+<text x="337" y="766" text-anchor="middle" fill="#3a3a3a" font-size="10">VENDORS: CoolIT · Boyd · Foxconn · Delta · AVC · Auras · Readore · LiteOn (per GTC wall display)</text>
+<text x="337" y="782" text-anchor="middle" fill="#2a2a2a" font-size="10">SOURCE: GTC 2025 NVL72 PRODUCT DISPLAY — CONFIRMED WITH SCOTT TOMSU 2026-04-25</text>
+
+</svg>
+</body>
+</html>

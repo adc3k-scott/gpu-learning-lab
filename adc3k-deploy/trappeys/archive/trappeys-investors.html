@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Ragin' Cajun Compute Campus — Louisiana's AI Factory Infrastructure Initiative. Trappeys Cannery, Lafayette LA. 112,500 sq ft, 2.26 MW solar, Full DC microgrid, Bloom SOFC, Vermilion River cooling. NVIDIA DSX reference design.">
+<title>Louisiana's AI Infrastructure Initiative — Ragin' Cajun Compute Campus</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV BAR */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 60px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(206,24,30,0.06) 0%,transparent 100%)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.header h1{font-size:clamp(28px,4.5vw,52px);font-weight:900;color:var(--bright);line-height:1.1;margin-bottom:20px}
+.header h1 span{color:var(--cyan)}
+.header .sub{font-size:clamp(14px,1.5vw,17px);color:var(--dim);max-width:780px;margin:0 auto;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--bright);margin-bottom:8px;line-height:1.2}
+.section .sub{font-size:15px;color:var(--dim);margin-bottom:36px;max-width:700px;line-height:1.7}
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:32px 0 0}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center}
+.stat-box .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--cyan)}
+.stat-box .lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+
+/* INCENTIVE TABLE */
+.incentive-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:13px}
+.incentive-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);padding:12px 16px;border-bottom:2px solid var(--border);font-weight:600}
+.incentive-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.incentive-table tr:last-child td{border-bottom:none}
+.incentive-table .program{font-weight:700;color:var(--bright);white-space:nowrap}
+.incentive-table .benefit{font-family:'IBM Plex Mono',monospace;color:var(--cyan);font-weight:600}
+.incentive-table .note{color:var(--dim);font-size:12px}
+.incentive-table .critical{color:var(--red);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+
+/* ECON GRID */
+.econ-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:28px}
+.econ-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px}
+.econ-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:16px}
+.econ-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border)}
+.econ-row:last-child{border-bottom:none}
+.econ-label{font-size:13px;color:var(--dim)}
+.econ-value{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--cyan)}
+.econ-value.highlight{color:var(--green);font-size:16px;font-weight:800}
+
+/* COMPETITOR CARDS */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.comp-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.comp-card .comp-name{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.comp-card .comp-val{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cyan);margin-bottom:12px}
+.comp-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* GAP CALLOUT */
+.gap-callout{background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:28px;margin-top:24px;text-align:center}
+.gap-callout .gap-text{font-size:18px;font-weight:800;color:var(--cyan);margin-bottom:8px}
+.gap-callout p{font-size:14px;color:var(--dim)}
+
+/* SCARCITY */
+.scarcity-box{background:var(--card);border:1px solid var(--red);border-radius:10px;padding:32px;margin-top:28px}
+.scarcity-box .scarcity-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+.scarcity-box h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.scarcity-box p{font-size:14px;color:var(--dim);line-height:1.7}
+.scarcity-box .mono{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red);font-weight:600}
+
+/* PHASE CARDS */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:28px}
+.phase{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative}
+.phase .phase-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.phase h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:6px}
+.phase .phase-ebitda{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:800;color:var(--green);margin-bottom:14px}
+.phase ul{list-style:none;font-size:13px;color:var(--dim);line-height:1.8}
+.phase ul li{padding-left:16px;position:relative}
+.phase ul li::before{content:'>';position:absolute;left:0;color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-weight:700}
+
+/* QUALIFICATIONS */
+.qual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.qual-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.qual-card h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:10px}
+.qual-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.qual-card .qual-highlight{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cyan);font-weight:600;margin-top:8px}
+
+/* FOOTER */
+footer{text-align:center;padding:60px 24px;border-top:1px solid var(--border)}
+footer .footer-brand{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:8px}
+footer .footer-brand span{color:var(--cyan)}
+footer .footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:16px 0 24px}
+footer .footer-links a{font-size:13px;color:var(--dim);transition:color 0.2s}
+footer .footer-links a:hover{color:var(--cyan);text-decoration:none}
+footer .footer-contact{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);line-height:1.8}
+footer .footer-contact a{color:var(--cyan)}
+footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* TABS */
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:52px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-inner{max-width:1200px;margin:0 auto;display:flex;gap:0;min-width:max-content}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--dim);padding:14px 16px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px}
+.tab-btn:hover{color:var(--bright)}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* GAP COMPARISON responsive */
+.gap-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+
+@media(max-width:768px){
+  .nav-links{gap:4px}
+  .nav-links a{font-size:11px;padding:5px 8px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .econ-grid{grid-template-columns:1fr}
+  .comp-grid{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr}
+  .qual-grid{grid-template-columns:1fr}
+  .incentive-table{font-size:12px}
+  .incentive-table th,.incentive-table td{padding:10px 10px}
+  .tab-btn{font-size:10px;padding:12px 10px}
+  .gap-compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Louisiana's <span>AI Infrastructure Initiative</span></div>
+    <div class="nav-links">
+      <a href="/trappeys-power">DC Microgrid Architecture</a>
+      <a href="/trappeys-gallery">Photos</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints">Blueprints</a>
+      
+      
+      <a href="/learn">Learn</a>
+      <a href="/alumni-investors" style="color:#fbbf24">Alumni & Investors</a>
+      <a href="/join" style="color:#00e87a">Join the Team</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Louisiana's AI Factory Infrastructure Initiative</div>
+  <h1>Ragin' Cajun <span>Compute Campus</span></h1>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--dim);margin-top:8px;letter-spacing:1px">// Trappeys Cannery &mdash; Lafayette, Louisiana</p>
+  <p class="sub">100 MW AI Factory — Bloom SOFC DC-direct generation, no AC conversion, no grid dependency. Phase 1: 10 MW / 50 NVL72 racks. Full buildout: 100 MW / 500 racks. 112,500 sq ft across 4 buildings on the Vermilion River. NVIDIA DSX reference design. Built to OCP Stage 1d.</p>
+  <div class="stat-row" style="max-width:800px;margin:28px auto 0">
+    <div class="stat-box"><div class="val">100 MW</div><div class="lbl">Full Buildout Goal</div></div>
+    <div class="stat-box"><div class="val">10 MW</div><div class="lbl">Phase 1 IT Load</div></div>
+    <div class="stat-box"><div class="val">500</div><div class="lbl">NVL72 Racks at Scale</div></div>
+    <div class="stat-box"><div class="val">800V DC</div><div class="lbl">OCP Stage 1d</div></div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-inner">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="site">The Site</button>
+    <button class="tab-btn" data-tab="technology">Technology</button>
+    <button class="tab-btn" data-tab="education">Education</button>
+    <button class="tab-btn" data-tab="energy">Energy</button>
+  </div>
+</div>
+
+<!-- SITE ACQUISITION -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Site Acquisition</div>
+  <h2>112,500 Sq Ft &mdash; 4 Buildings &mdash; Vermilion River &mdash; The Moat</h2>
+  <p class="sub">A once-in-a-generation site. Four historic industrial buildings, water tower, river frontage, natural gas on-site, 2.26 MW First Solar rooftop across 170,000 sq ft. Full DC microgrid: Bloom SOFC generation + 1500V solar collection + 800V distribution + Vermilion River free cooling. Nobody else has this stack.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="val">112.5K</div>
+      <div class="lbl">Sq Ft Rooftop</div>
+    </div>
+    <div class="stat-box">
+      <div class="val">2.26 MW</div>
+      <div class="lbl">Solar Capacity</div>
+    </div>
+    <div class="stat-box">
+      <div class="val">170K</div>
+      <div class="lbl">Sq Ft Solar Rooftop</div>
+    </div>
+    <div class="stat-box">
+      <div class="val">10 MW</div>
+      <div class="lbl">Phase 1 IT Power</div>
+    </div>
+    <div class="stat-box">
+      <div class="val">800V</div>
+      <div class="lbl">DC Native Power</div>
+    </div>
+  </div>
+
+  <div class="econ-grid" style="margin-top:24px">
+    <div class="econ-card">
+      <h3>Physical Assets (Site Walked 2026-03-21)</h3>
+      <div class="econ-row"><span class="econ-label">Compute space (3 buildings)</span><span class="econ-value">90,000 sq ft</span></div>
+      <div class="econ-row"><span class="econ-label">Partner hub (front building)</span><span class="econ-value">22,500 sq ft</span></div>
+      <div class="econ-row"><span class="econ-label">Total rooftop (solar)</span><span class="econ-value">112,500 sq ft</span></div>
+      <div class="econ-row"><span class="econ-label">Solar capacity</span><span class="econ-value">2.26 MW (~4,100 panels)</span></div>
+      <div class="econ-row"><span class="econ-label">Water tower</span><span class="econ-value">Cooling + branding</span></div>
+      <div class="econ-row"><span class="econ-label">Infrastructure yard</span><span class="econ-value">28,000 sq ft concrete pad</span></div>
+      <div class="econ-row"><span class="econ-label">Gas on-site</span><span class="econ-value">Trunk line confirmed</span></div>
+      <div class="econ-row"><span class="econ-label">River frontage</span><span class="econ-value">Vermilion River</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Strategic Advantages</h3>
+      <div class="econ-row"><span class="econ-label">National Register</span><span class="econ-value highlight">Approved (45&ndash;55% tax credits)</span></div>
+      <div class="econ-row"><span class="econ-label">Zoning</span><span class="econ-value">M2 Industrial (in place)</span></div>
+      <div class="econ-row"><span class="econ-label">River cooling</span><span class="econ-value">Vermilion River (free cooling)</span></div>
+      <div class="econ-row"><span class="econ-label">Distance to First Solar</span><span class="econ-value">30 mi (New Iberia)</span></div>
+      <div class="econ-row"><span class="econ-label">Distance to Louisiana Cat</span><span class="econ-value">30 mi (New Iberia)</span></div>
+      <div class="econ-row"><span class="econ-label">LUS substation</span><span class="econ-value">Next door</span></div>
+      <div class="econ-row"><span class="econ-label">KLFT airport</span><span class="econ-value">Visible from site</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- THE GAP -->
+<div class="section" data-tab="overview">
+  <div class="section-label">The Gap</div>
+  <h2>Florida Invested $180M. Louisiana Invested $0.</h2>
+  <p class="sub">One state built the #3 supercomputer in the world. The other built nothing.</p>
+
+  <div class="gap-compare">
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:4px">University of Florida</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--cyan);line-height:1;margin-bottom:4px">504</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Blackwell GPUs (DGX B200 SuperPOD)</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">Total investment</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">$180M+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">World ranking</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">#3 speed</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">Active users</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">7,000</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">AI courses</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">230</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(6,182,212,0.15)"><span style="font-size:13px;color:var(--dim)">AI faculty hired</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">100+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0"><span style="font-size:13px;color:var(--dim)">Universities served</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">12</span></div>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:4px">UL Lafayette (today)</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--red);line-height:1;margin-bottom:4px">0</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Modern GPUs on campus</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">Total investment</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Sub-$1M (LONI shared)</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">World ranking</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Not ranked</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">Computing faculty</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">30 — zero compute</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.15)"><span style="font-size:13px;color:var(--dim)">First AI degree</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--red)">Launching, no infra</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0"><span style="font-size:13px;color:var(--dim)">STEM grads stay in LA</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">71% (better than LSU)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">This initiative fills this gap &mdash; in Lafayette, for Louisiana</div>
+    <p>No donation needed. Energy-first business model funds itself. UL Lafayette gets compute access. Every Louisiana university benefits.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SITE HISTORY -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Site History</div>
+  <h2>Trappeys Cannery &mdash; Since 1929</h2>
+  <p class="sub">A cannery that fed soldiers in World War II becomes the AI factory that powers Louisiana's future.</p>
+
+  <div class="comp-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+    <div class="comp-card">
+      <div class="comp-name">1920s</div>
+      <div class="comp-val">Origins</div>
+      <p>Texas Company leased the 8-acre tract to Baldwin Lumber and Star Salt. Industrial use from the beginning &mdash; heavy structures, rail access, river frontage.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1929</div>
+      <div class="comp-val">B.F. Trappey's Sons Purchased the Tract</div>
+      <p>The Trappey family acquired the property and began building the cannery complex that still stands today. Four industrial buildings, water tower, infrastructure yard.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1930&ndash;1981</div>
+      <div class="comp-val">Cannery Operations &middot; WWII Production</div>
+      <p>Operated as a full-scale cannery for over 50 years. During World War II, the facility produced 12 million pounds of candied yams for Allied forces. Peak employment in the hundreds.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1950</div>
+      <div class="comp-val">Water Tower Constructed</div>
+      <p>The iconic water tower was built for industrial cooling and fire suppression. 75 years later, it becomes the cooling backbone for an AI factory &mdash; same tower, new mission.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">1991</div>
+      <div class="comp-val">Plant Closed</div>
+      <p>The cannery shut down after six decades of operation. The buildings sat empty for 30+ years. The structures endured &mdash; steel frame, concrete, industrial-grade construction.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">2026</div>
+      <div class="comp-val">Proposed AI Factory</div>
+      <p>Same buildings. Same water tower. New mission. The initiative proposes converting the historic cannery into Louisiana's first solar-powered AI factory. National Register of Historic Places approved &mdash; 9 contributing buildings, 45&ndash;55% historic tax credits.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- TAX INCENTIVE STACK -->
+<div class="section" data-tab="investors">
+  <div class="section-label">Why Louisiana. Why Now. Why Us.</div>
+  <h2>The Best Investment in AI Infrastructure in the Country</h2>
+
+  <div class="gap-callout" style="margin-bottom:28px;text-align:left;background:rgba(206,24,30,0.06);border-color:rgba(206,24,30,0.2)">
+    <div class="gap-text" style="color:var(--cyan);text-align:center;font-size:20px">Every layer is in place. Nothing is missing.</div>
+    <p style="margin-top:16px;font-size:14px;line-height:1.8">
+      <strong style="color:var(--bright)">Cheapest power in the country.</strong> Forty miles from Henry Hub &mdash; the national benchmark for natural gas pricing. Behind-the-meter generation at $0.04&ndash;0.058/kWh while Virginia pays $0.12 and California pays $0.27.<br><br>
+      <strong style="color:var(--bright)">Solar panels manufactured in our backyard.</strong> First Solar's $1.1 billion factory is 30 miles away in New Iberia. American-made. Louisiana jobs. Louisiana supply chain.<br><br>
+      <strong style="color:var(--bright)">The strongest incentive stack in the nation.</strong> 45&ndash;55% historic tax credits. 80% property tax abatement for 10 years. 20-year sales tax exemption. 30% federal solar ITC. FREE workforce training. $28&ndash;55M+ in university grant eligibility. No other state comes close.<br><br>
+      <strong style="color:var(--bright)">Federal government backing.</strong> 100% bonus depreciation permanent. Opportunity Zones with tax-free gains. $1.355 billion in broadband funding to Louisiana. CHIPS Act. The Big Beautiful Bill put America first &mdash; and Louisiana is leading the way.<br><br>
+      <strong style="color:var(--bright)">State government backing.</strong> LED FastStart &mdash; ranked #1 workforce training 13 years running. Act 730 for AI infrastructure. Quality Jobs rebates. Enterprise Zone credits. The governor's office, the legislature, the universities &mdash; everybody wants this.<br><br>
+      <strong style="color:var(--bright)">The equipment vendors are ready.</strong> Bloom Energy has the SOFC generation. ATMOS has the gas. First Solar is 30 miles away. Delta has the rack power systems. LUS has the fiber. The entire supply chain is within 30 miles. They want to be on this team because they see the revolution.<br><br>
+      <strong style="color:var(--bright)">Full DC microgrid from day one.</strong> Bloom SOFC → DC direct (no rectifier). 1500V solar collection → 800V distribution bus (no inverter). Vermilion River free cooling. 97% solar-to-rack efficiency. 45% less copper. Zero rack PSUs. The most efficient AI factory architecture on the planet — built to NVIDIA's DSX reference design.<br><br>
+      <strong style="color:var(--bright)">This is Louisiana first.</strong> Louisiana power. Louisiana panels. Louisiana workers. Louisiana universities. Louisiana incentives. Louisiana's kids learning on Louisiana's AI infrastructure. This is an investment in your state, your city, your future. And the numbers back it up.
+    </p>
+  </div>
+
+  <p class="sub">Below: the specific federal and state programs that make this possible.</p>
+
+  <table class="incentive-table">
+    <thead>
+      <tr>
+        <th>Program</th>
+        <th>Benefit</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="program">ITEP</td>
+        <td class="benefit">80% property tax abatement, 10 years</td>
+        <td>
+          <span class="note">Must file BEFORE groundbreaking. Pre-qualify with LED as "emerging industry" under NAICS code. Estimated savings: $8&ndash;16M.</span><br>
+          <span class="critical">Most time-sensitive item</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="program">Federal Historic Tax Credit</td>
+        <td class="benefit">20% of qualified rehab expenditures</td>
+        <td class="note">Trappeys Cannery qualifies for the National Register. Applies to certified rehabilitation of historic structures.</td>
+      </tr>
+      <tr>
+        <td class="program">Louisiana Historic Tax Credit</td>
+        <td class="benefit">25% state credit</td>
+        <td class="note">Stacks with federal for 45&ndash;55% combined. Louisiana's state credit is among the most generous in the nation.</td>
+      </tr>
+      <tr>
+        <td class="program">HB 827</td>
+        <td class="benefit">Sales tax exemption on equipment</td>
+        <td class="note">Covers GPU racks, cooling infrastructure, power distribution, networking equipment.</td>
+      </tr>
+      <tr>
+        <td class="program">R&D Tax Credit</td>
+        <td class="benefit">Qualified research expenditures</td>
+        <td class="note">AI model development, inference optimization, Dynamo performance tuning all qualify.</td>
+      </tr>
+      <tr>
+        <td class="program">Quality Jobs Program</td>
+        <td class="benefit">Cash rebate on new payroll</td>
+        <td class="note">Direct cash rebate for each qualifying job created. Applies to engineering, operations, and technical staff.</td>
+      </tr>
+      <tr>
+        <td class="program">Enterprise Zone</td>
+        <td class="benefit">Hiring credits</td>
+        <td class="note">Per-hire tax credits for qualifying employees. Stackable with Quality Jobs.</td>
+      </tr>
+      <tr>
+        <td class="program">Act 730</td>
+        <td class="benefit">20-year sales tax exemption</td>
+        <td class="note">Separate from HB 827. Requires $200M+ capital investment and 50+ jobs. Long-term operational savings exceeding $200M.</td>
+      </tr>
+      <tr>
+        <td class="program">LED FastStart</td>
+        <td class="benefit">FREE customized workforce training</td>
+        <td class="note">Louisiana's #1 ranked workforce program. Custom-designed training for AI compute technicians, paid for by the state. Zero cost to the initiative.</td>
+      </tr>
+      <tr>
+        <td class="program">NSF MRI Grant</td>
+        <td class="benefit">Up to $4M</td>
+        <td class="note">Major Research Instrumentation grant through UL Lafayette partnership. Funds GPU compute infrastructure for university research.</td>
+      </tr>
+      <tr>
+        <td class="program">NSF EPSCoR</td>
+        <td class="benefit">Up to $10M</td>
+        <td class="note">Established Program to Stimulate Competitive Research. Louisiana qualifies. Multi-year research infrastructure funding.</td>
+      </tr>
+      <tr>
+        <td class="program">DOE Grid Modernization</td>
+        <td class="benefit">$5&ndash;20M</td>
+        <td class="note">800V DC microgrid + solar-direct architecture qualifies for grid modernization and decarbonization grants.</td>
+      </tr>
+      <tr>
+        <td class="program">30% Federal Solar ITC</td>
+        <td class="benefit">30% of solar installation cost</td>
+        <td class="note">Applies to all ~4,100 First Solar TR1 panels across 170,000 sq ft of rooftop. 2.26 MW system. Direct tax credit.</td>
+      </tr>
+      <tr>
+        <td class="program">UL Lafayette Partnership</td>
+        <td class="benefit">$28&ndash;55M+ grant pipeline</td>
+        <td class="note">10+ federal and state programs accessible through university research partnership. R1 university, CS PhD president, zero GPU infrastructure &mdash; This initiative fills that gap.</td>
+      </tr>
+      <tr>
+        <td class="program">100% Bonus Depreciation</td>
+        <td class="benefit">Full immediate expensing &mdash; permanent</td>
+        <td class="note">OBBBA (signed July 4, 2025). All GPU servers, networking hardware, cooling systems. No application required. Retroactive to Jan 19, 2025. First time Congress made this permanent.</td>
+      </tr>
+      <tr>
+        <td class="program">Opportunity Zones 2.0</td>
+        <td class="benefit">Tax-free capital gains (10+ years)</td>
+        <td class="note">Capital gains invested through Qualified Opportunity Funds are tax-deferred. Gains on OZ investments held 10+ years are tax-free. OBBBA made permanent with 30% rural step-up bonus.</td>
+      </tr>
+      <tr>
+        <td class="program">New Markets Tax Credits</td>
+        <td class="benefit">39% credit over 7 years</td>
+        <td class="note">Equity investments in low-income census tracts. OBBBA permanently extended with 20% increase in rural allocations. OZ tracts overlap &mdash; double-stack eligible.</td>
+      </tr>
+      <tr>
+        <td class="program">CHIPS Act</td>
+        <td class="benefit">$50B domestic AI infrastructure</td>
+        <td class="note">100% US hardware supply chain positions the initiative for FEOC-clean federal procurement channels and EDA Tech Hub designation.</td>
+      </tr>
+      <tr>
+        <td class="program">BEAD Broadband</td>
+        <td class="benefit">$1.355B to Louisiana</td>
+        <td class="note">8th largest allocation in the nation. First state approved (Nov 2025). Anchor fiber customer strengthens broadband expansion case.</td>
+      </tr>
+      <tr>
+        <td class="program">Angel Investor Tax Credit</td>
+        <td class="benefit">25&ndash;35% credit on investment</td>
+        <td class="note">25% on investments in LED-certified Louisiana businesses. 35% in qualifying parishes. Up to $720K/business/year. <span class="critical">Expires June 30, 2026 &mdash; first-come, first-served.</span></td>
+      </tr>
+      <tr>
+        <td class="program">R&amp;D Tax Credit (State)</td>
+        <td class="benefit">Up to 30% on R&amp;D spend</td>
+        <td class="note">30% for companies with &lt;50 employees. Also 30% on SBIR/STTR grants. $12M annual statewide cap. Next allocation opens July 1, 2026.</td>
+      </tr>
+      <tr>
+        <td class="program">PILOT Agreements</td>
+        <td class="benefit">10&ndash;40 year property tax reduction</td>
+        <td class="note">Payment-in-lieu-of-taxes through parish Industrial Development Boards. Precedent: Hut 8 / West Feliciana &mdash; 30-year PILOT, $2.5B facility, $90M/year parish revenue.</td>
+      </tr>
+      <tr>
+        <td class="program">IDB Revenue Bonds</td>
+        <td class="benefit">Tax-exempt financing</td>
+        <td class="note">Tax-exempt revenue bonds through parish IDB. Louisiana Public Facilities Authority has issued $12.65B+ in private activity bonds. 90&ndash;120 day process.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text" style="color:var(--cyan)">These programs stack.</div>
+    <p>An AI factory in a Louisiana Opportunity Zone can simultaneously access 100% bonus depreciation, OZ tax-free gains, New Markets Tax Credits, Quality Jobs rebates, PILOT property tax reduction, and IDB tax-exempt financing &mdash; all on the same project. No other state offers this combination at this cost of power.</p>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">Total Incentive Stack: $25&ndash;53M+ in Government Value</div>
+    <p>Federal + state + university programs combined could return more than the total 5-year CapEx. Louisiana's incentive environment for AI infrastructure is unmatched in the United States.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ENERGY EFFICIENCY -->
+<div class="section" data-tab="energy">
+  <div class="section-label">Energy Architecture</div>
+  <h2>Full DC Microgrid &mdash; The Moat Nobody Can Replicate</h2>
+  <p class="sub">Bloom SOFC DC generation + 1500V solar collection + 800V bus + Vermilion River free cooling + Run:ai full factory control. Traditional facilities lose 12&ndash;17% of energy before it reaches the GPU. We lose 4%. That efficiency compounds every hour of every day. And nobody else has this specific combination of site, river, gas, and solar.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Traditional AC Facility</h3>
+      <div class="econ-row"><span class="econ-label">Conversion stages</span><span class="econ-value" style="color:var(--red)">6 stages</span></div>
+      <div class="econ-row"><span class="econ-label">Energy lost before GPU</span><span class="econ-value" style="color:var(--red)">12&ndash;17%</span></div>
+      <div class="econ-row"><span class="econ-label">PUE</span><span class="econ-value" style="color:var(--red)">1.4&ndash;1.6</span></div>
+      <div class="econ-row"><span class="econ-label">Copper per MW rack</span><span class="econ-value" style="color:var(--red)">200 kg busbar</span></div>
+      <div class="econ-row"><span class="econ-label">Rack PSUs</span><span class="econ-value" style="color:var(--red)">8 per rack (fans, heat, space)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>800V DC Native Architecture</h3>
+      <div class="econ-row"><span class="econ-label">Conversion stages</span><span class="econ-value highlight">2 stages</span></div>
+      <div class="econ-row"><span class="econ-label">Energy lost before GPU</span><span class="econ-value highlight">4%</span></div>
+      <div class="econ-row"><span class="econ-label">PUE target</span><span class="econ-value highlight">1.03&ndash;1.10</span></div>
+      <div class="econ-row"><span class="econ-label">Copper reduction</span><span class="econ-value highlight">45% less</span></div>
+      <div class="econ-row"><span class="econ-label">Rack PSUs</span><span class="econ-value highlight">Zero (800V direct to rack)</span></div>
+    </div>
+  </div>
+
+  <div class="econ-grid" style="margin-top:16px">
+    <div class="econ-card">
+      <h3>Self-Generated Power</h3>
+      <div class="econ-row"><span class="econ-label">Generation</span><span class="econ-value">Bloom SOFC — natural gas → DC direct</span></div>
+      <div class="econ-row"><span class="econ-label">Solar offset (Phase 1)</span><span class="econ-value">2.05 MW — Building 3 roof</span></div>
+      <div class="econ-row"><span class="econ-label">Total rooftop potential</span><span class="econ-value">170,000 sq ft across 4 buildings</span></div>
+      <div class="econ-row"><span class="econ-label">Grid dependency</span><span class="econ-value highlight">Zero</span></div>
+      <div class="econ-row"><span class="econ-label">Grid sell-back</span><span class="econ-value">Excess generation to LUS</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why This Architecture Wins</h3>
+      <div class="econ-row"><span class="econ-label">Tokens per watt</span><span class="econ-value highlight">7&ndash;35x vs legacy</span></div>
+      <div class="econ-row"><span class="econ-label">Energy efficiency vs grid</span><span class="econ-value">2&ndash;3x advantage</span></div>
+      <div class="econ-row"><span class="econ-label">Henry Hub proximity</span><span class="econ-value">40 miles — national gas benchmark</span></div>
+      <div class="econ-row"><span class="econ-label">Moat</span><span class="econ-value highlight">Power + site + river + permits</span></div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px;background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.2)">
+    <div class="gap-text" style="color:var(--green)">Energy efficiency is the structural advantage</div>
+    <p>Token prices deflate 3&ndash;5x per year. The facilities that survive are the ones with the lowest cost per token. The energy-first model &mdash; Bloom SOFC at Henry Hub pricing, full DC microgrid delivery, Vermilion River free cooling, water tower thermal buffer, solar offset &mdash; creates a structural cost advantage that compounds over time. Every efficiency gain goes straight to throughput. This is an energy engineering play. And energy is what we know.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- TOKEN ECONOMICS -->
+<div class="section" data-tab="technology">
+  <div class="section-label">Compute Architecture</div>
+  <h2>Tokens, Not GPU Hours</h2>
+  <p class="sub">The facility sells optimized AI inference tokens &mdash; the output of GPU compute, not raw hardware rental. NVIDIA Dynamo multiplies output per watt. 800V DC architecture cuts delivery losses to 4%. The energy-first model keeps compute costs below any grid-dependent competitor.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Performance Multipliers</h3>
+      <div class="econ-row"><span class="econ-label">NVIDIA Dynamo 1.0</span><span class="econ-value">7x on same hardware</span></div>
+      <div class="econ-row"><span class="econ-label">Groq 3 LPX decode</span><span class="econ-value">5&ndash;10x output per MW</span></div>
+      <div class="econ-row"><span class="econ-label">800V DC delivery</span><span class="econ-value">96% efficient (vs 83% AC)</span></div>
+      <div class="econ-row"><span class="econ-label">PUE target</span><span class="econ-value">1.03&ndash;1.10</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why Tokens Matter</h3>
+      <div class="econ-row"><span class="econ-label">Model</span><span class="econ-value">Managed inference</span></div>
+      <div class="econ-row"><span class="econ-label">Output</span><span class="econ-value">AI tokens (the new commodity)</span></div>
+      <div class="econ-row"><span class="econ-label">Power advantage</span><span class="econ-value">Henry Hub pricing</span></div>
+      <div class="econ-row"><span class="econ-label">Efficiency advantage</span><span class="econ-value">800V DC + water tower cooling</span></div>
+    </div>
+  </div>
+</div>
+
+
+
+<hr class="section-divider">
+
+<!-- NVIDIA TECHNOLOGY -->
+<div class="section" data-tab="technology investors">
+  <div class="section-label">The Technology</div>
+  <h2>NVIDIA Vera Rubin &mdash; The Most Powerful AI Platform Ever Built</h2>
+  <p class="sub">This is not a traditional server room. This is purpose-built AI infrastructure running the latest NVIDIA platform &mdash; the same technology powering the world's largest AI labs, national defense systems, and Fortune 10 research.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="vendors/nvidia/photos/nv-vera-rubin.jpg" alt="NVIDIA Vera Rubin GPU" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Vera Rubin GPU &mdash; next-generation AI accelerator</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="vendors/nvidia/photos/nv-gb200-nvl72.jpg" alt="NVIDIA NVL72 Rack" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA NVL72 Rack &mdash; 72 GPUs per rack, liquid cooled, 130 kW</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 24px">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="vendors/nvidia/photos/nv-rubin-platform.jpg" alt="NVIDIA Rubin Platform" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Rubin Platform &mdash; complete AI factory architecture</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <img src="vendors/nvidia/photos/nv-blackwell.jpg" alt="NVIDIA Blackwell" style="width:100%;display:block">
+      <div style="background:var(--card);padding:10px 14px;font-size:11px;color:var(--dim)">NVIDIA Blackwell Architecture &mdash; the foundation for Vera Rubin</div>
+    </div>
+  </div>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>NVIDIA DSX Reference Design</h3>
+      <div class="econ-row"><span class="econ-label">GPU platform</span><span class="econ-value highlight">Vera Rubin NVL72</span></div>
+      <div class="econ-row"><span class="econ-label">GPUs per rack</span><span class="econ-value">72</span></div>
+      <div class="econ-row"><span class="econ-label">Power per rack</span><span class="econ-value">130 kW (liquid cooled)</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling</span><span class="econ-value">Direct-to-chip liquid (45&deg;C)</span></div>
+      <div class="econ-row"><span class="econ-label">Networking</span><span class="econ-value">NVIDIA Quantum InfiniBand</span></div>
+      <div class="econ-row"><span class="econ-label">Software</span><span class="econ-value">NVIDIA Dynamo 1.0 (7x boost)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why This Is Not a &ldquo;Data Center&rdquo;</h3>
+      <div class="econ-row"><span class="econ-label">Old facilities</span><span class="econ-value" style="color:var(--red)">CPU servers, air cooled, grid power</span></div>
+      <div class="econ-row"><span class="econ-label">Trappeys AI Factory</span><span class="econ-value highlight">GPU compute, liquid cooled, self-powered</span></div>
+      <div class="econ-row"><span class="econ-label">Power delivery</span><span class="econ-value highlight">800V DC native (96% efficient)</span></div>
+      <div class="econ-row"><span class="econ-label">Energy wasted (old way)</span><span class="econ-value" style="color:var(--red)">12&ndash;17% lost before GPU</span></div>
+      <div class="econ-row"><span class="econ-label">Energy wasted (our way)</span><span class="econ-value highlight">4% lost before GPU</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling system</span><span class="econ-value highlight">Water tower + waste heat recovery</span></div>
+    </div>
+  </div>
+</div>
+
+
+
+<hr class="section-divider">
+
+<!-- MISSION CRITICAL -->
+<div class="section" data-tab="energy">
+  <div class="section-label">Mission Critical Infrastructure</div>
+  <h2>Four Layers of Power. Zero Single Points of Failure.</h2>
+  <p class="sub">Enterprise AI workloads require 99.99%+ uptime. The power architecture eliminates grid dependency entirely and provides multiple independent backup layers. This facility does not go dark.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Power Redundancy Stack</h3>
+      <div class="econ-row"><span class="econ-label">Layer 1: Solar (2.05 MW)</span><span class="econ-value">Primary offset</span></div>
+      <div class="econ-row"><span class="econ-label">Layer 2: Natural Gas (N+1)</span><span class="econ-value highlight">Backbone 24/7</span></div>
+      <div class="econ-row"><span class="econ-label">Layer 3: Diesel genset</span><span class="econ-value">Emergency backup</span></div>
+      <div class="econ-row"><span class="econ-label">Layer 4: Grid (LUS)</span><span class="econ-value">Sell-back only</span></div>
+      <div class="econ-row"><span class="econ-label">Grid dependency</span><span class="econ-value highlight">ZERO</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Continuity Systems</h3>
+      <div class="econ-row"><span class="econ-label">LFP battery (500 kWh+)</span><span class="econ-value">1-hour ride-through</span></div>
+      <div class="econ-row"><span class="econ-label">Supercapacitors</span><span class="econ-value">Millisecond GPU spikes</span></div>
+      <div class="econ-row"><span class="econ-label">Water tower thermal mass</span><span class="econ-value">15-min cooling backup</span></div>
+      <div class="econ-row"><span class="econ-label">N+1 genset config</span><span class="econ-value">Maintain during service</span></div>
+      <div class="econ-row"><span class="econ-label">Novec 1230 + VESDA</span><span class="econ-value">Fire suppression + early detect</span></div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">Grid-independent from day one</div>
+    <p>The facility generates its own power, stores its own energy, cools with its own water tower, and sells excess back to the grid. No waiting 3&ndash;5 years for utility interconnect. No rate hikes. No brownouts. The facility operates as a self-contained power plant that happens to run AI workloads. This is the model the entire industry is moving toward &mdash; We're building it now.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- COMPETITIVE LANDSCAPE -->
+<div class="section" data-tab="overview investors">
+  <div class="section-label">Competitive Landscape</div>
+  <h2>Validated by the Largest Players in AI Infrastructure</h2>
+  <p class="sub">The biggest names in AI compute are building in the Gulf South &mdash; for the same reasons we chose Louisiana. The difference: we're restoring a historic campus while competitors build from scratch on greenfield sites.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Hut 8 / River Bend</div>
+      <div class="comp-val">$10B &middot; 611 acres &middot; 245 MW</div>
+      <p>Google backstop. Located 45 minutes north of Trappeys. They chose Louisiana for the same energy, tax, and permitting advantages.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">CoreWeave</div>
+      <div class="comp-val">$71B valuation</div>
+      <p>NVIDIA's largest neocloud partner. Proves the GPU-as-a-service model at massive scale.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Crusoe Energy</div>
+      <div class="comp-val">$10B+ valuation</div>
+      <p>Energy-first model &mdash; same approach as this initiative. Revenue grew from $152M to $2B. NVIDIA Preferred Partner.</p>
+    </div>
+  </div>
+
+  <div class="gap-callout">
+    <div class="gap-text">No NVIDIA-Certified Neocloud Serving University Research &mdash; Houston to Atlanta</div>
+    <p>The entire Gulf Coast corridor &mdash; the fastest-growing AI infrastructure region in the country &mdash; has no NVIDIA-certified neocloud provider serving university research. $37B+ in AI compute being built in Louisiana (Meta $27B, Hut 8 $10B, Amazon $12B) &mdash; none of it serving universities. This initiative fills that gap.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- GPU SCARCITY -->
+<div class="section" data-tab="overview investors">
+  <div class="section-label">Market Demand</div>
+  <h2>Structural Supply Shortage</h2>
+  <p class="sub">Demand for GPU compute is not theoretical. It is measurable, persistent, and accelerating.</p>
+
+  <div class="scarcity-box">
+    <div class="scarcity-tag">Market Snapshot &mdash; March 20, 2026</div>
+    <h3>Every GPU on RunPod: Sold Out</h3>
+    <p>RunPod is the world's largest cloud GPU marketplace. On March 20, 2026, We attempted to rent a single GPU &mdash; any GPU type, any region, any cloud tier. <span class="mono">Every configuration returned: SOLD OUT.</span></p>
+    <p style="margin-top:12px">This is not a snapshot of a busy weekend. It is structural evidence that global GPU demand exceeds supply across every available platform. The market is not waiting for more AI factories &mdash; it needed them yesterday.</p>
+  </div>
+</div>
+
+
+<hr class="section-divider">
+
+<!-- OPERATOR QUALIFICATIONS -->
+<div class="section" data-tab="overview investors">
+  <div class="section-label">Operator Qualifications</div>
+  <h2>25 Years of Systems That Cannot Fail</h2>
+  <p class="sub">This initiative is led by an infrastructure operator with 25 years of mission-critical robotics experience &mdash; who holds every construction, NVIDIA, and aviation credential needed to take a site from bare land to live compute.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Cross-Domain Stack</h3>
+      <div class="econ-row"><span class="econ-label">Deepwater Robotics</span><span class="econ-value">25+ years ROV ops</span></div>
+      <div class="econ-row"><span class="econ-label">Aviation</span><span class="econ-value">FAA Pilot + Part 107 UAS</span></div>
+      <div class="econ-row"><span class="econ-label">Construction</span><span class="econ-value">Licensed GC &mdash; medical center, 80+ houses, commercial</span></div>
+      <div class="econ-row"><span class="econ-label">NVIDIA</span><span class="econ-value">8 certs + NCA-AIIO</span></div>
+      <div class="econ-row"><span class="econ-label">AI Software</span><span class="econ-value">Built Mission Control (10 agents)</span></div>
+      <div class="econ-row"><span class="econ-label">Site Ops Partner</span><span class="econ-value">Josh Tomsu &mdash; real estate, vendor mgmt, build coordination</span></div>
+      <div class="econ-row"><span class="econ-label">Facility</span><span class="econ-value">Built it. Owns it. 20 years standing.</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Why This Transfers to AI</h3>
+      <div class="econ-row"><span class="econ-label">480V to 5V power chains</span><span class="econ-value">Same as AI factory</span></div>
+      <div class="econ-row"><span class="econ-label">3,000m fiber optic umbilicals</span><span class="econ-value">Same as InfiniBand fabric</span></div>
+      <div class="econ-row"><span class="econ-label">Real-time telemetry</span><span class="econ-value">Same as GPU monitoring</span></div>
+      <div class="econ-row"><span class="econ-label">24/7 zero-downtime ops</span><span class="econ-value">Same as compute SLA</span></div>
+      <div class="econ-row"><span class="econ-label">Hostile environment</span><span class="econ-value">Hurricane-rated facility</span></div>
+    </div>
+  </div>
+
+  <div class="econ-card" style="margin-top:20px;border-left:3px solid var(--green)">
+    <h3>This Is Personal</h3>
+    <p style="font-size:13px;color:var(--text);line-height:1.7">Scott's daughter graduated from David Thibodaux STEM Magnet Academy in Lafayette &mdash; the same school ADC is now working to equip with AI compute. Scott, Josh, and his daughter are all in Lafayette. This is home. ADC was born here.</p>
+  </div>
+
+  <div class="gap-callout" style="margin-top:20px">
+    <div class="gap-text" style="color:var(--cyan)">Full leadership profile and track record</div>
+    <p><a href="/leadership" style="color:var(--cyan);font-weight:700;text-decoration:none">View complete operator qualifications, certifications, and project history &rarr;</a></p>
+  </div>
+</div>
+
+<!-- ACTIVATION REQUIREMENTS -->
+<hr class="section-divider">
+
+<div class="section" data-tab="investors">
+  <div class="section-label">Activation Requirements</div>
+  <h2>Clear Go / No-Go Triggers</h2>
+  <p class="sub">Trappeys does not begin until four conditions are met. No speculative spend. No permitting risk without committed capital.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Pre-Activation Checklist</h3>
+      <div class="econ-row"><span class="econ-label">Capital commitment confirmed</span><span class="econ-value">Gate 1</span></div>
+      <div class="econ-row"><span class="econ-label">Site LOI / lease signed</span><span class="econ-value">Gate 2</span></div>
+      <div class="econ-row"><span class="econ-label">Electrical permit (480V 3-phase)</span><span class="econ-value">Gate 3</span></div>
+      <div class="econ-row"><span class="econ-label">ITEP filing with LED</span><span class="econ-value">Gate 4</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Operations Model</h3>
+      <div class="econ-row"><span class="econ-label">On-site staff required</span><span class="econ-value">Near zero</span></div>
+      <div class="econ-row"><span class="econ-label">NOC / fleet management</span><span class="econ-value">MARLIE 1 (0.5 mi)</span></div>
+      <div class="econ-row"><span class="econ-label">Workload routing</span><span class="econ-value">Mission Control AI</span></div>
+      <div class="econ-row"><span class="econ-label">Incident response</span><span class="econ-value">Remote + on-call</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPANSION PATH -->
+<hr class="section-divider">
+
+<div class="section" data-tab="investors">
+  <div class="section-label">Expansion Path</div>
+  <h2>Trappeys Is the Template</h2>
+  <p class="sub">Every process, permit, and deployment playbook built at Trappeys becomes the replicable template for the next site. This is not a one-off project &mdash; it is the proof of concept for a multi-site AI factory network across the Gulf South.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Site 1: Trappeys</div>
+      <div class="comp-val">Lafayette &middot; 22 acres &middot; Proof of Concept</div>
+      <p>Establishes the deployment playbook, tax incentive framework, NVIDIA certification path, and operations model. Every dollar of learning here reduces cost at the next site.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Site 2+: Gulf South Network</div>
+      <div class="comp-val">Replicate &middot; Scale &middot; Repeat</div>
+      <p>Same DSX reference design. Same power hierarchy. Same Mission Control management stack. Different site, same playbook. Each deployment gets faster and cheaper.</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- GET YOUR SCHOOL IN -->
+<div class="cta-block" style="background:linear-gradient(180deg,var(--surface) 0%,rgba(206,24,30,0.08) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
+  <div style="max-width:700px;margin:0 auto">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Get Your School In</div>
+    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Is Your School <span style="color:var(--cyan)">Eligible?</span></h2>
+
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">Any Louisiana college or university can participate.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">If your institution needs GPU compute for research, AI curriculum, or student training — we can help. Louisiana's AI Infrastructure Initiative connects schools to compute resources, grant funding, workforce programs, and NVIDIA technology. We handle the infrastructure. You focus on education and research.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What you're eligible for:</strong> NSF MRI grants (up to $4M), NSF EPSCoR ($10M), DOE grid modernization ($5-20M), LED FastStart (FREE workforce training), state R&amp;D tax credits, LEQSF research funding, and more.</p>
+      <p style="font-size:13px;color:var(--cyan);font-weight:700">Technology is changing fast. This is mission critical. Don't be last in line.</p>
+    </div>
+
+    <form action="https://formsubmit.co/scott@adc3k.com" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
+      <input type="hidden" name="_subject" value="Trappeys AI Factory Inquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="text" name="organization" placeholder="Organization (university, company, school, etc.)" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <select name="interest" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-size:15px;font-family:'Inter',sans-serif;appearance:auto">
+        <option value="" disabled selected>I'm interested in...</option>
+        <option value="research">Research Partnership (University)</option>
+        <option value="investor">Investment Opportunity</option>
+        <option value="vendor">Vendor / Supplier Partnership</option>
+        <option value="employment">Employment / Careers</option>
+        <option value="student">Student / Internship</option>
+        <option value="k12">K-12 Education Partnership</option>
+        <option value="media">Media / Press Inquiry</option>
+        <option value="government">Government / Economic Development</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Tell us how you want to be involved (optional)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
+      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--cyan);color:#0a0b0f;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px">Join Louisiana's AI Infrastructure Initiative</button>
+    </form>
+
+    <div style="margin-top:24px;font-size:13px;color:var(--dim)">
+      <p><strong style="color:var(--bright)">info@louisianaai.net</strong> &nbsp;|&nbsp; <strong style="color:var(--bright)">louisianaai.net</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Louisiana's <span>AI Infrastructure Initiative</span></div>
+  <div class="footer-links">
+    <a href="/willow-glen">Tiger Compute (LSU)</a>
+    <a href="/trappeys-gallery">Photo Gallery</a>
+    <a href="/trappeys-power">800V DC Architecture</a>
+    <a href="/">Home</a>
+  </div>
+  <div class="footer-contact">
+    <a href="mailto:info@louisianaai.net">info@louisianaai.net</a><br>
+    <a href="https://louisianaai.net">louisianaai.net</a>
+  </div>
+  <div class="footer-legal">American-made. Louisiana-powered.</div>
+</footer>
+
+<script>
+function showTab(tab) {
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  var activeBtn = document.querySelector('.tab-btn[data-tab="' + tab + '"]');
+  if (activeBtn) activeBtn.classList.add('active');
+
+  var allSections = document.querySelectorAll('.section[data-tab]');
+  var allDividers = document.querySelectorAll('hr.section-divider');
+  var ctaBlock = document.querySelector('.cta-block');
+  var i;
+
+  for (i = 0; i < allSections.length; i++) allSections[i].style.display = '';
+  for (i = 0; i < allDividers.length; i++) allDividers[i].style.display = '';
+  if (ctaBlock) ctaBlock.style.display = '';
+
+  if (tab === 'all') {
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  for (i = 0; i < allDividers.length; i++) allDividers[i].style.display = 'none';
+
+  for (i = 0; i < allSections.length; i++) {
+    var sectionTabs = (allSections[i].getAttribute('data-tab') || '').split(' ');
+    if (sectionTabs.indexOf(tab) === -1) {
+      allSections[i].style.display = 'none';
+    }
+  }
+
+  if (ctaBlock && tab !== 'schools') ctaBlock.style.display = 'none';
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+var tabBtns = document.querySelectorAll('.tab-btn');
+for (var i = 0; i < tabBtns.length; i++) {
+  (function(btn) {
+    btn.addEventListener('click', function() { showTab(btn.getAttribute('data-tab')); });
+  })(tabBtns[i]);
+}
+</script>
+
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    var data = {};
+    var fields = new FormData(form);
+    fields.forEach(function(value, key) {
+      if (!key.startsWith('_')) data[key] = value;
+    });
+    data.pipeline = 'schools';
+    data.source = 'adc3k.com/trappeys';
+    fetch('https://louisianaai.net/api/brevo-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function() {});
+  });
+});
+</script>
+
+</body>
+</html>

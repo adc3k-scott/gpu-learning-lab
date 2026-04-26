@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappey's Compute Center &mdash; Engineering Blueprints</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--cyan:#CE181E;--solar:#CE181E;--blue:#3b9eff;--amber:#ffa500;--purple:#a855f7;--green:#00e87a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:20px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1{text-align:center;font-size:clamp(22px,3vw,34px);font-weight:900;color:var(--bright);margin:10px 0 6px;letter-spacing:-0.5px}
+h1 span{color:var(--cyan)}
+.sub{text-align:center;color:var(--dim);font-size:0.82rem;margin-bottom:30px;max-width:740px;margin-left:auto;margin-right:auto;line-height:1.7}
+.back-link{padding:8px 0 16px}
+.back-link a{font-size:13px;color:var(--cyan);text-decoration:none;font-weight:700}
+.back-link a:hover{text-decoration:underline}
+.sheet{max-width:1400px;margin:0 auto 40px;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.sheet-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.sheet-header h2{font-size:1.05rem;font-weight:800;color:var(--bright)}
+.sheet-header .tag{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;padding:4px 10px;border-radius:4px;color:var(--cyan);background:rgba(206,24,30,0.1);border:1px solid rgba(206,24,30,0.25)}
+.sheet .sheet-body{padding:0}
+.sheet .desc{padding:16px 24px;font-size:0.85rem;color:var(--text);line-height:1.7;border-top:1px solid var(--border)}
+.sheet .desc strong{color:var(--bright)}
+.placeholder{display:flex;align-items:center;justify-content:center;min-height:320px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px;text-align:center;color:var(--dim);font-size:0.85rem;line-height:1.7}
+.placeholder .p-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:1.5px;color:var(--cyan);text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.placeholder .p-title{font-size:1rem;font-weight:700;color:var(--bright);margin-bottom:6px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);font-weight:700;margin:40px 0 16px;text-align:center}
+.footer{text-align:center;padding:36px 0 20px;border-top:1px solid var(--border);margin-top:40px;color:var(--dim);font-size:0.75rem;line-height:1.7}
+.footer strong{color:var(--bright)}
+.footer-legal{font-size:0.68rem;color:var(--dim);max-width:700px;margin:14px auto 0;line-height:1.7;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="back-link"><a href="/trappeys">&larr; Back to Trappey's Compute Center</a></div>
+
+<h1>Engineering <span>Blueprints</span></h1>
+<div class="sub">Trappey's Cannery &mdash; Lafayette, Louisiana &middot; 5-Sheet Design Intent Package &middot; Working drawings traceable to BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6 &middot; NOT FOR CONSTRUCTION</div>
+
+<div class="section-label">Electrical</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>E-001: Electrical Single-Line Diagram (Per Block)</h2>
+    <span class="tag">480 VAC Block Bus</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/electrical-sld.svg" alt="Electrical Single-Line Diagram" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">E-001 Single-Line Diagram (Per Block)</div>
+        <div>Expected path: <code>trappeys/blueprints/electrical-sld.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Per-block single-line.</strong> Fuel: ATMOS natural gas on-site. Generation: 4 &times; Cat CG260-16 natural gas gensets at 4,000 ekW each (N+1, design anchor 61.5% loading), paralleled at 13.8 kV via Cat ECS isochronous sharing. MV bus: arc-resistant switchgear with 87B bus differential and three-stage UFLS. Transformer: 13.8 kV &Delta; &rarr; 480 Y/277 V, ~15 MVA, dry-type or cast-resin, 87T overall differential. LV: 480 VAC switchboard with LSIG main trip unit and 50G residual ground sensing. DER: block-level LFP BESS (~3.6 MWh working per block) AC-coupled through a Hitachi AMPS PCS SiC bidirectional inverter, and the 2.05 MW First Solar rooftop array (B1/B2) AC-coupled through a grid-forming PV inverter. Cassette feeds: four 480 VAC feeds per block to an Eaton Magnum DS 6,000 A disconnect at each cassette ECP. <strong>The 800 VDC rail exists only inside each cassette</strong>, where five Delta 660 kW in-row power racks rectify to a cassette-internal 800 VDC busway that feeds nine compute racks plus one control rack. No campus MV ring. No inter-block tie day one. No LUS grid interconnect day one.
+  </div>
+</div>
+
+<div class="section-label">Architectural</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>A-001: Site Plan &mdash; 22 Acres, Stage 1 Building Allocation</h2>
+    <span class="tag">Stage 1 &middot; 44 Cassettes</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/floor-plan.svg" alt="Site Plan / Stage 1 Allocation" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">A-001 Site Plan &mdash; Stage 1</div>
+        <div>Expected path: <code>trappeys/blueprints/floor-plan.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>22-acre historic cannery site, Vermilion River frontage.</strong> 12 nationally registered structures. Building allocation at Stage 1: <strong>B1 and B2</strong> are historic structures, restored for NOC / partner hub / rooftop solar (2.05 MW First Solar, 3,731 panels total across both rooftops). <strong>B3</strong> is compute hall holding 20 cassettes. <strong>B4</strong> is compute hall holding 24 cassettes. Total Stage 1 = 44 cassettes across B3 and B4. <strong>Rear slab</strong> (42,000 sq ft): genset installation (44 Cat CG260-16 gensets in 11 block groupings), block transformers, block 480 VAC switchboards, block BESS enclosures, jacket-water air radiators. <strong>Infrastructure yard</strong> (28,000 sq ft): cooling tower field, SCR units, facility pumps, make-up water treatment. Vermilion River frontage preserved as site amenity (rebuilt seawall, public riverwalk); historic water tower preserved as site landmark only &mdash; no thermal role. Full Build (Stage 2) doubles cassette count to 88 on the same site; rear slab and infrastructure yard sized for full build from day one.
+  </div>
+</div>
+
+<div class="section-label">Cooling</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>C-001: Cooling Flow Schematic (GPU &amp; CHP)</h2>
+    <span class="tag">Two Independent Paths</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/cooling-schematic.svg" alt="Cooling Flow Schematic" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">C-001 Cooling Flow Schematic</div>
+        <div>Expected path: <code>trappeys/blueprints/cooling-schematic.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Two independent heat paths.</strong> <strong>GPU path (per cassette):</strong> NVIDIA NVL72/CPX compute rack liquid cold-plates deliver heat to a CoolIT CHx2000 external CDU skid mounted adjacent to the cassette; the CDU closes a PG25 internal loop and exchanges heat through a facility plate heat exchanger (PHX-001) at the cassette boundary. Staubli UQD-25 quick-disconnects at the rack interface; GPU supply &le;45&deg;C, return ~50&ndash;55&deg;C. Facility warm-water header (open, raw water) routes through PHX-001 to the cooling tower field in the infrastructure yard &mdash; wet mechanical draft working basis, sized for Lafayette's 28&deg;C ASHRAE 0.4% design wet-bulb. Stage 1 total GPU heat rejection ~72.9 MW (~145.7 MW Full Build). <strong>CHP path (genset waste heat, independent):</strong> Cat CG260-16 exhaust is split &mdash; a 125 kW slip-stream per cassette drives Munters DSS Pro desiccant regeneration (5.5 MW Stage 1 desiccant duty, 11 MW Full Build), remainder to stack. Jacket water (~58 MW Stage 1) rejects through dedicated air-cooled radiators on the rear slab. No heat recovery unit. No absorption chiller. No chilled-water plant. The Vermilion River is not a thermal sink.
+  </div>
+</div>
+
+<div class="section-label">Power Distribution</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>P-001: Power Distribution &mdash; 11 Blocks, Stage 1</h2>
+    <span class="tag">Behind-the-Meter Permanent Island</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/power-distribution.svg" alt="Power Distribution Schematic" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">P-001 Power Distribution</div>
+        <div>Expected path: <code>trappeys/blueprints/power-distribution.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Stage 1 campus distribution: 11 replicated blocks, behind-the-meter permanent island.</strong> Each block is electrically self-contained. Per block: 4 &times; Cat CG260-16 gensets paralleled at 13.8 kV &rarr; ~15 MVA step-down transformer &rarr; 480 VAC switchboard (single convergence point for generation, storage, solar, cooling, cassette feeds) &rarr; 4 cassette primary feeds. Stage 1 total generation capacity at 61.5% anchor loading: 108.24 MW &mdash; positive margin of ~2 to 4 MW over total campus load (~104&ndash;106 MW working estimate). BESS (LFP chemistry, ~3.6 MWh working per block, 39.6 MWh Stage 1 total) AC-coupled through Hitachi AMPS PCS SiC bidirectional inverter &mdash; always active as stabilizer, not standby. Solar (2.05 MW First Solar Series 7 CdTe on B1/B2 rooftops) AC-coupled through grid-forming PV inverter. Protection coordinates inside each block: 87G generator differential per unit; 87B bus differential on the 13.8 kV MV bus; 87T transformer differential; LSIG 480 VAC main trip unit; three-stage UFLS at the MV inlet shedding cassette lanes in priority order. No campus-level MV ring, no inter-block tie day one; each block's blast radius is contained. LUS Pinhook Substation is spatially allocated as future optionality only; day-one operation is permanent island mode. Sub-100 ms GPU transients are handled inside the cassette by rack-integrated BBU and Power Capacitance Shelf.
+  </div>
+</div>
+
+<div class="section-label">Solar</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>L-001: Solar Rooftop Layout (B1 + B2)</h2>
+    <span class="tag">2.05 MW &middot; 3,731 Panels</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/solar-layout.svg" alt="Solar Rooftop Layout" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">L-001 Solar Rooftop Layout</div>
+        <div>Expected path: <code>trappeys/blueprints/solar-layout.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>First Solar Series 7 CdTe thin-film rooftop array across Buildings B1 and B2 (the two historic NOC / partner hub buildings).</strong> 3,731 &times; FS-7550A-TR1 panels, 550 W each, 2.05 MW DC nameplate. 5-panel strings at 1,500 VDC (NEC LVDC ceiling); MPP ranges ~891 V (summer high-cell-temp) to ~1,013 V (winter cool-cell), within standard 1,500 VDC-rated PV inverter MPPT range. 746 complete strings with disconnects per combiner. Grid-forming PV inverter ties to block 480 VAC bus (B1/B2 tied to nearest block switchboard); anti-islanding protection intentionally disabled because the facility is the electrical island. First Solar domestic content qualifies the array for the 40% Federal Solar ITC (30% base + 10% domestic content adder) &mdash; First Solar manufactures in Perrysburg, Ohio and New Iberia, Louisiana (30 miles from site). Array at design basis provides ~2% of Stage 1 campus load under peak irradiance; dispatched via AMCL L3 as solar recapture against BESS charge state.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Trappey's Compute Center</strong><br>
+  91.1 MW AI Compute Facility &mdash; Lafayette, Louisiana<br>
+  Working drawings &mdash; cited from BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6
+  <div class="footer-legal">All drawings are Design Intent working drafts that require PE-stamped engineering review before construction. Vendor selections shown reflect current engineering working basis; BESS pack, PV inverter, cooling tower model, and AI dispatch vendor are open items pending RFQ / validation. This document does not constitute an offer to sell or solicitation of an offer to buy any security or service.</div>
+</div>
+
+</body>
+</html>

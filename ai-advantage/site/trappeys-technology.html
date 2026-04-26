@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Trappey's Compute Center Technology Stack — NVIDIA Vera Rubin NVL72, 11 replicated blocks, Cat CG260-16 gensets, 480 VAC block bus with cassette-internal 800 VDC, CoolIT CHx2000 direct-to-chip liquid cooling, Munters DSS Pro desiccant regen.">
+<title>Technology Stack &mdash; Trappey's Compute Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV BAR */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--solar)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 60px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--bright);line-height:1.1;margin-bottom:12px}
+.header h1 span{color:var(--cyan)}
+.header .sub{font-size:16px;color:var(--dim);max-width:760px;margin:0 auto;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--bright);margin-bottom:8px;line-height:1.2}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:36px;max-width:740px;line-height:1.7}
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* PILLAR CARDS */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px}
+.pillar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pillar-flex::before{background:linear-gradient(90deg,var(--solar),var(--amber))}
+.pillar-boost::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.pillar-exchange::before{background:linear-gradient(90deg,var(--blue),var(--purple))}
+.pillar .p-name{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.pillar .p-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+.p-type-solar{color:var(--solar)}
+.p-type-green{color:var(--green)}
+.p-type-blue{color:var(--blue)}
+.pillar p{font-size:13px;color:var(--dim);line-height:1.7}
+.pillar .p-spec{margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 14px;border-radius:6px;line-height:1.8}
+
+/* BLOCK TOPOLOGY (replaces power-stack) */
+.block-stack{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.block-layer{display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;position:relative;overflow:hidden}
+.block-layer::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.layer-gen::before{background:var(--amber)}
+.layer-mv::before{background:var(--red)}
+.layer-lv::before{background:var(--blue)}
+.layer-der::before{background:var(--green)}
+.layer-cassette::before{background:var(--purple)}
+.block-layer .layer-badge{text-align:center}
+.block-layer .layer-num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.layer-gen .layer-num{color:var(--amber)}
+.layer-mv .layer-num{color:var(--red)}
+.layer-lv .layer-num{color:var(--blue)}
+.layer-der .layer-num{color:var(--green)}
+.layer-cassette .layer-num{color:var(--purple)}
+.block-layer .layer-name{font-size:15px;font-weight:800;color:var(--bright)}
+.block-layer .layer-role{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;margin-top:2px}
+.layer-gen .layer-role{color:var(--amber)}
+.layer-mv .layer-role{color:var(--red)}
+.layer-lv .layer-role{color:var(--blue)}
+.layer-der .layer-role{color:var(--green)}
+.layer-cassette .layer-role{color:var(--purple)}
+.block-layer .layer-desc{font-size:13px;color:var(--dim);line-height:1.7}
+.block-layer .layer-desc strong{color:var(--text)}
+
+/* HARDWARE CARDS */
+.hw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.hw-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.hw-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.hw-card .hw-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);margin-bottom:12px}
+.hw-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.hw-card .hw-spec{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 12px;border-radius:6px;line-height:1.8}
+
+/* SOFTWARE STACK */
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.sw-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.sw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan))}
+.sw-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.sw-card .sw-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);margin-bottom:12px}
+.sw-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.sw-card .sw-highlight{margin-top:12px;padding:10px 14px;background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.15);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);font-weight:600}
+
+/* THERMAL FLOW */
+.thermal-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px;margin-top:24px}
+.thermal-section h3{font-size:22px;font-weight:800;color:var(--bright);margin-bottom:16px}
+.thermal-section p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:12px}
+.thermal-section p:last-child{margin-bottom:0}
+.thermal-section strong{color:var(--text)}
+.thermal-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:28px 0;padding:20px;background:var(--surface);border-radius:8px}
+.thermal-step{text-align:center;padding:12px 16px;min-width:130px}
+.thermal-step .ts-name{font-size:13px;font-weight:700;color:var(--bright)}
+.thermal-step .ts-detail{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);margin-top:2px}
+.thermal-arrow{color:var(--dim);font-size:20px;font-weight:700;padding:0 6px}
+
+/* CHP SPLIT */
+.chp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
+.chp-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px}
+.chp-card .chp-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);margin-bottom:6px}
+.chp-card .chp-path{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.chp-card .chp-detail{font-size:12px;color:var(--dim);line-height:1.6}
+
+/* SUPPLY CHAIN */
+.supply-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:24px}
+.supply-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column}
+.supply-card .sc-company{font-size:15px;font-weight:800;color:var(--bright);margin-bottom:2px}
+.supply-card .sc-location{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--solar);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.supply-card p{font-size:13px;color:var(--dim);line-height:1.5}
+
+/* CALLOUT */
+.callout{padding:20px 24px;border-radius:8px;margin:24px 0;font-size:13px;line-height:1.7}
+.callout-green{background:rgba(0,232,122,0.06);border-left:3px solid var(--green)}
+.callout-blue{background:rgba(59,158,255,0.06);border-left:3px solid var(--blue)}
+.callout-amber{background:rgba(245,158,11,0.06);border-left:3px solid var(--solar)}
+.callout strong{color:var(--bright)}
+
+/* FOOTER */
+.footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border)}
+.footer .f-name{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.footer .f-title{font-size:12px;color:var(--dim);margin-bottom:16px}
+.footer a{color:var(--solar);font-weight:600}
+.footer .f-links{margin-top:16px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.footer .f-links a{font-size:12px;color:var(--dim);font-weight:600;padding:8px 16px;border:1px solid var(--border);border-radius:6px;transition:all 0.2s;text-decoration:none}
+.footer .f-links a:hover{border-color:var(--solar);color:var(--solar)}
+.footer .f-contact{margin-top:16px;font-size:11px;color:var(--dim)}
+.footer .f-legal{font-size:10px;color:var(--dim);max-width:700px;margin:16px auto 0;line-height:1.6}
+
+@media(max-width:768px){
+  .block-layer{grid-template-columns:1fr;gap:8px}
+  .hw-grid{grid-template-columns:1fr}
+  .sw-grid{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .supply-grid{grid-template-columns:1fr}
+  .chp-grid{grid-template-columns:1fr}
+  .thermal-flow{flex-direction:column}
+  .thermal-arrow{transform:rotate(90deg)}
+  .nav-links{gap:4px}
+  .nav-links a{font-size:11px;padding:4px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand" style="text-decoration:none">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology" class="active">Technology</a>
+      <a href="/trappeys-power">Power</a>
+      <a href="/trappeys-gallery">Gallery</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints">Blueprints</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Full Stack // Technology</div>
+  <h1>Replicated-Block<br><span>Architecture</span></h1>
+  <p class="sub">Trappey's Compute Center is 11 electrically independent blocks on a 480 VAC bus, each feeding four cassettes that host NVIDIA Vera Rubin NVL72/CPX compute. The cassette is the product IP. Everything outside it is vendor-neutral infrastructure. Behind-the-meter permanent island, day one.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- CAMPUS TOPOLOGY -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Campus Topology</div>
+  <h2>11 Replicated Blocks &mdash; Same Pattern, Different Instances</h2>
+  <p class="sub">Stage 1 is 11 identical blocks. Each block is electrically self-contained &mdash; four gensets, one step-down transformer, one 480 VAC switchboard, four cassette feeds. No campus MV ring. No inter-block tie on day one. Contained blast radius and standardized procurement.</p>
+
+  <div class="pillars">
+    <div class="pillar pillar-flex">
+      <div class="p-name">Per Block</div>
+      <div class="p-type p-type-solar">Replicated Unit</div>
+      <p>4 &times; Cat CG260-16 gensets paralleled at 13.8 kV, one ~15 MVA step-down transformer, one 480 VAC block switchboard, four cassette primary feeds. AC-coupled BESS and AC-coupled solar on the same 480 VAC bus. One block looks like the next.</p>
+      <div class="p-spec">4 gensets &times; 4,000 ekW (N+1)<br>13.8 kV MV bus<br>15 MVA block transformer<br>480 VAC block switchboard<br>4 cassette feeds</div>
+    </div>
+    <div class="pillar pillar-boost">
+      <div class="p-name">Stage 1</div>
+      <div class="p-type p-type-green">Current Scale</div>
+      <p>11 blocks &times; 4 cassettes = 44 cassettes, 91.1 MW IT load, 28,512 NVIDIA Vera Rubin GPUs. Block 1 can energize before Blocks 2&ndash;11 are complete &mdash; the facility starts generating tokens as GPUs arrive, not after the last transformer is commissioned.</p>
+      <div class="p-spec">11 blocks<br>44 cassettes<br>44 Cat CG260-16 gensets<br>28,512 Vera Rubin GPUs<br>91.1 MW IT load</div>
+    </div>
+    <div class="pillar pillar-exchange">
+      <div class="p-name">Full Build</div>
+      <div class="p-type p-type-blue">Same Site</div>
+      <p>22 blocks &times; 4 cassettes = 88 cassettes, 182.2 MW IT load, 57,024 GPUs. Full Build fits on the same 22-acre site. The rear slab (42,000 sq ft) and infrastructure yard (28,000 sq ft) were sized for it from the beginning.</p>
+      <div class="p-spec">22 blocks<br>88 cassettes<br>88 gensets<br>57,024 Vera Rubin GPUs<br>182.2 MW IT load</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- NVIDIA DSX ALIGNMENT (sidebar) -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">NVIDIA DSX Alignment</div>
+  <h2>Mapped to NVIDIA's Three-Pillar Framework</h2>
+  <p class="sub">NVIDIA's DSX (Data Center Scale eXcellence) framework organizes AI-factory operations into three integrated pillars. Trappey's replicated-block architecture maps directly to all three. The block topology is how we deliver on them, not a substitute for them.</p>
+
+  <div class="pillars">
+    <div class="pillar pillar-flex">
+      <div class="p-name">DSX Flex</div>
+      <div class="p-type p-type-solar">Power Management</div>
+      <p>Grid collaboration and power optimization. In our case: AMCL orchestrates genset dispatch (55&ndash;75% loading envelope), BESS charge/discharge, solar recapture, and thermal auxiliary loads across 11 blocks. No external grid to collaborate with on day one &mdash; the optimization is internal across the block fleet.</p>
+      <div class="p-spec">11-block genset dispatch<br>BESS state coordination<br>Solar recapture logic<br>Thermal auxiliary VFDs</div>
+    </div>
+    <div class="pillar pillar-boost">
+      <div class="p-name">DSX Boost</div>
+      <div class="p-type p-type-green">Performance Optimization</div>
+      <p>Workload-aware GPU power management. Boost is a firmware-level NVL72 capability &mdash; it ships with the compute rack. We configure and enable it through the standard NVIDIA software stack. No additional hardware purchase; it is a property of the Vera Rubin platform.</p>
+      <div class="p-spec">GPU firmware-level<br>Ships with NVL72<br>Configured via NVIDIA stack<br>No additional hardware</div>
+    </div>
+    <div class="pillar pillar-exchange">
+      <div class="p-name">DSX Exchange</div>
+      <div class="p-type p-type-blue">Operations Integration</div>
+      <p>IT/OT integration and operational dashboard. This is where AMCL L2 (plant SCADA) and L4 (HMI + IEC 62443 cybersecurity) land. The cassette BMS aggregates 148 channels &times; 44 cassettes = ~6,500 cassette points into OPC-UA, feeding the single operational view across generation, thermal, storage, and compute.</p>
+      <div class="p-spec">AMCL L2 &mdash; plant SCADA<br>AMCL L4 &mdash; HMI + security<br>6,500 cassette sensor points<br>OPC-UA backbone</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:24px">
+    <strong>Where DSX stops and AMCL takes over:</strong> DSX is NVIDIA's framework for describing what an AI factory needs to do. AMCL is our implementation &mdash; the five-tier control architecture (L0 field &rarr; L1 block PLC &rarr; L2 SCADA &rarr; L3 AI dispatch &rarr; L4 HMI + cybersecurity) that delivers Flex / Boost / Exchange on top of the replicated-block generation and cooling plant. See the Control Architecture section below.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- ELECTRICAL ARCHITECTURE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Electrical Architecture</div>
+  <h2>480 VAC Block Bus, 800 VDC Cassette-Internal</h2>
+  <p class="sub">Gensets parallel at 13.8 kV, step down to 480 VAC at the block switchboard, and feed four cassettes at 480 VAC. The 800 VDC rail exists only inside each cassette &mdash; where five Delta 660 kW in-row power racks do the rectification right next to the GPUs. BESS and solar are AC-coupled to the same 480 VAC bus. Standard low-voltage protection gear campus-wide.</p>
+
+  <div class="block-stack">
+    <div class="block-layer layer-gen">
+      <div class="layer-badge">
+        <div class="layer-num">Layer 1</div>
+        <div class="layer-name">Generation</div>
+        <div class="layer-role">Per block: 4 gensets</div>
+      </div>
+      <div class="layer-desc">
+        <strong>4 &times; Cat CG260-16 natural gas gensets</strong> paralleled at 13.8 kV via Cat ECS isochronous sharing. 4,000 ekW continuous per genset. 43.8% electrical efficiency. Design anchor 61.5% loading &mdash; three gensets cover the block; the fourth is N+1 for maintenance. &lt;250 mg/Nm&sup3; NOx at 5% O&sub2;. Hydrogen blending to 25% as future optionality.
+      </div>
+    </div>
+    <div class="block-layer layer-mv">
+      <div class="layer-badge">
+        <div class="layer-num">Layer 2</div>
+        <div class="layer-name">Step-down</div>
+        <div class="layer-role">13.8 kV &rarr; 480 VAC</div>
+      </div>
+      <div class="layer-desc">
+        <strong>One block transformer per block</strong> &mdash; 13.8 kV &Delta; &rarr; 480 Y/277 V, ~15 MVA continuous, dry-type or cast-resin (no oil, lower fire load), Z &asymp; 6%. Dedicated to the block with no cross-block sharing. 87T overall differential protection on the transformer. This is the one topology element that differs from the 5 MW Marlie reference design, whose G3520K generates 480 VAC directly without a step-down.
+      </div>
+    </div>
+    <div class="block-layer layer-lv">
+      <div class="layer-badge">
+        <div class="layer-num">Layer 3</div>
+        <div class="layer-name">Block Bus</div>
+        <div class="layer-role">480 VAC switchboard</div>
+      </div>
+      <div class="layer-desc">
+        <strong>One 480 VAC switchboard per block</strong> &mdash; solidly grounded wye secondary, 50G residual ground sensing, LSIG main trip unit. This is the single convergence point for everything in the block: four cassette primary feeds, BESS inverter, solar PV inverter, cooling tower MCC, facility ancillary. Bus and main breaker sized to 17,000 A minimum to accommodate simultaneous BESS peak injection and solar.
+      </div>
+    </div>
+    <div class="block-layer layer-der">
+      <div class="layer-badge">
+        <div class="layer-num">Layer 4</div>
+        <div class="layer-name">Storage + Solar</div>
+        <div class="layer-role">AC-coupled at 480 VAC</div>
+      </div>
+      <div class="layer-desc">
+        <strong>BESS and solar live on the same 480 VAC bus.</strong> BESS (LFP, ~3.6 MWh per block, 39.6 MWh Stage 1) couples through a Hitachi AMPS PCS SiC bidirectional inverter &mdash; always active as a stabilizer, not standby. Solar (2.05 MW First Solar Series 7 CdTe on B1/B2 rooftops) couples through a grid-forming PV inverter. Sub-cycle transient response via SiC; block-wide sub-100 ms GPU events are absorbed inside each cassette.
+      </div>
+    </div>
+    <div class="block-layer layer-cassette">
+      <div class="layer-badge">
+        <div class="layer-num">Layer 5</div>
+        <div class="layer-name">Cassette</div>
+        <div class="layer-role">800 VDC internal</div>
+      </div>
+      <div class="layer-desc">
+        <strong>Inside each cassette</strong> &mdash; 480 VAC feed enters through an Eaton Magnum DS 6,000 A main disconnect. Five Delta 660 kW in-row power racks rectify to an 800 VDC cassette-internal busway. That bus feeds nine Vera Rubin NVL72/CPX compute racks and one control rack. Rack-integrated BBU and Power Capacitance Shelf handle sub-100 ms GPU load transients. The 800 VDC rail never leaves the cassette envelope.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>Why 480 VAC at block level:</strong> standard LV distribution and protection gear is mature, well-supplied, and vendor-competitive. Routing 800 VDC across the campus is not required &mdash; the GPUs benefit from 800 VDC inside the cassette where the conversion-distance advantage applies. This keeps procurement simple outside, performance tight inside.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- CASSETTE PLATFORM -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">The Cassette</div>
+  <h2>The Product Is the Cassette</h2>
+  <p class="sub">A 40-foot high-cube ISO container, factory-integrated. The cassette ships on a flatbed, drops on a pad, connects through a single panel with five connections. Everything outside is vendor-neutral facility infrastructure; everything inside is the IP.</p>
+
+  <div class="hw-grid">
+    <div class="hw-card">
+      <h3>Compute</h3>
+      <div class="hw-type">NVIDIA Vera Rubin NVL72</div>
+      <p>Nine NVL72/CPX compute racks + one control rack. 72 GPUs per compute rack, 648 GPUs per cassette. Direct-to-chip liquid cooled, &le;45&deg;C supply.</p>
+      <div class="hw-spec">9 compute racks (R1&ndash;R9)<br>1 control rack (R10)<br>648 Vera Rubin GPUs<br>186.3 TB HBM4 memory<br>2,070 kW IT load</div>
+    </div>
+    <div class="hw-card">
+      <h3>Power</h3>
+      <div class="hw-type">Delta 660 kW In-Row Racks</div>
+      <p>Five Delta 660 kW in-row power racks (R11&ndash;R15) rectify 480 VAC to 800 VDC on a cassette-internal busway. 6 &times; 110 kW PSU shelves each, 480 kW aggregate BBU, Power Capacitance Shelf for sub-100 ms transients.</p>
+      <div class="hw-spec">5 &times; Delta 660 kW racks<br>6 &times; 110 kW PSU shelves<br>98% AC-DC efficiency<br>Sub-100 ms transient caps<br>Integrated rack BBU</div>
+    </div>
+    <div class="hw-card">
+      <h3>Cooling</h3>
+      <div class="hw-type">CoolIT CHx2000 External CDU</div>
+      <p>One CoolIT CHx2000 external CDU skid per cassette. Direct-to-chip warm water through the cassette, returns through a plate HX at the facility boundary. PG25 internal loop. Staubli UQD quick-disconnects.</p>
+      <div class="hw-spec">1 CoolIT CHx2000 per cassette<br>&le;45&deg;C supply to GPU<br>~50&ndash;55&deg;C return<br>PG25 internal loop<br>Staubli UQD couplers</div>
+    </div>
+    <div class="hw-card">
+      <h3>Safety &amp; BMS</h3>
+      <div class="hw-type">Novec 1230 + Jetson Orin</div>
+      <p>Novec 1230 + VESDA fire suppression to NFPA 2001. Munters DSS Pro desiccant dehumidification. NVIDIA Jetson AGX Orin BMS with 148 sensor channels. Independent hardware watchdog for safe-state.</p>
+      <div class="hw-spec">Novec 1230 &mdash; NFPA 2001<br>Munters DSS Pro (RH &le;50%)<br>Jetson AGX Orin BMS<br>148 sensor channels<br>SIL 2 hardware watchdog</div>
+    </div>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:32px">
+    <strong>Cassette-to-facility interface:</strong> a single panel with five connections &mdash; 480 VAC primary feed, coolant supply and return (CDU boundary), fiber (data + control), BMS sensor aggregation, and an exhaust slip-stream to Munters. Nothing else crosses the cassette envelope. This is what makes cassettes factory-integrated and field-deployable.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- THERMAL ARCHITECTURE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Thermal Architecture</div>
+  <h2>Two Independent Heat Paths</h2>
+  <p class="sub">GPU heat takes one path: direct-to-chip liquid from the CoolIT CHx2000 skid through a plate heat exchanger to a cooling tower field. Genset waste heat takes an independent path: exhaust slip-stream to Munters desiccant regeneration, remainder to stack; jacket water to dedicated air-cooled radiators. The Vermilion River is a site amenity, not a thermal loop.</p>
+
+  <div class="thermal-section">
+    <h3>GPU Heat Path &mdash; Cassette to Cooling Tower</h3>
+    <p>NVIDIA ships every NVL72/CPX compute rack with a direct-to-chip liquid loop at the die. The CoolIT CHx2000 external CDU skid loops that warm water through the cassette and returns it to the facility at ~50&ndash;55&deg;C. A plate heat exchanger (PHX-001) sits at the facility boundary, isolating the closed CDU circuit from the open cooling tower circuit. Cooling towers in the 28,000 sq ft infrastructure yard reject ~72.9 MW at Stage 1 (~145.7 MW at Full Build) to atmosphere. Wet mechanical draft is the working basis &mdash; Lafayette's 28&deg;C ASHRAE 0.4% design wet-bulb gives a tower supply around 31&deg;C at a 3&deg;C approach, comfortably within the &le;45&deg;C GPU supply requirement.</p>
+
+    <div class="thermal-flow">
+      <div class="thermal-step">
+        <div class="ts-name">GPU Cold Plate</div>
+        <div class="ts-detail">Die-direct liquid</div>
+      </div>
+      <div class="thermal-arrow">&rarr;</div>
+      <div class="thermal-step">
+        <div class="ts-name">CoolIT CHx2000</div>
+        <div class="ts-detail">External CDU skid</div>
+      </div>
+      <div class="thermal-arrow">&rarr;</div>
+      <div class="thermal-step">
+        <div class="ts-name">Facility Header</div>
+        <div class="ts-detail">~50&ndash;55&deg;C return</div>
+      </div>
+      <div class="thermal-arrow">&rarr;</div>
+      <div class="thermal-step">
+        <div class="ts-name">Plate HX (PHX-001)</div>
+        <div class="ts-detail">Facility boundary</div>
+      </div>
+      <div class="thermal-arrow">&rarr;</div>
+      <div class="thermal-step">
+        <div class="ts-name">Cooling Tower Field</div>
+        <div class="ts-detail">Wet mech draft</div>
+      </div>
+      <div class="thermal-arrow">&rarr;</div>
+      <div class="thermal-step">
+        <div class="ts-name">Atmosphere</div>
+        <div class="ts-detail">~72.9 MW Stage 1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thermal-section" style="margin-top:24px">
+    <h3>Genset Waste Heat &mdash; Independent Path</h3>
+    <p>Genset waste heat never mixes with the GPU cooling loop. The Cat CG260-16 exhaust is split two ways: a 125 kW slip-stream per cassette drives the Munters DSS Pro desiccant regeneration (5.5 MW Stage 1, 11 MW Full Build), and the remainder vents through the stack. All jacket water (~58 MW at Stage 1, 61.5% load) rejects through dedicated air-cooled radiators on the rear slab. No heat recovery unit. No absorption chiller. No chilled-water plant. The architecture was deliberately simplified in April 2026 to eliminate the LiBr absorption chiller and its supporting systems.</p>
+
+    <div class="chp-grid">
+      <div class="chp-card">
+        <div class="chp-label">Exhaust &mdash; Munters</div>
+        <div class="chp-path">5.5 MW &rarr; Desiccant Regen</div>
+        <div class="chp-detail">125 kW slip-stream per cassette. Lafayette's 75&ndash;80% annual RH makes desiccant dehumidification an architectural requirement, not an optional feature.</div>
+      </div>
+      <div class="chp-card">
+        <div class="chp-label">Exhaust &mdash; Stack</div>
+        <div class="chp-path">~42.4 MW &rarr; Atmosphere</div>
+        <div class="chp-detail">Remainder of genset exhaust enthalpy vents through the stack. No heat recovery unit on this path in the current architecture.</div>
+      </div>
+      <div class="chp-card">
+        <div class="chp-label">Jacket Water</div>
+        <div class="chp-path">~58 MW &rarr; Radiators</div>
+        <div class="chp-detail">Dedicated air-cooled radiators on the rear slab reject jacket-water heat directly to atmosphere. No coupling to the GPU cooling loop.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber" style="margin-top:24px">
+    <strong>The Vermilion River is not a thermal sink.</strong> Gulf Coast surface water peaks at 30&ndash;33&deg;C in summer and the river is tidally influenced at Lafayette. The river remains a site amenity &mdash; rebuilt seawall, riverwalk, the defining photograph of the campus &mdash; but it carries no process heat. The historic water tower is preserved as a site landmark; it has no role in the cooling system.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- COMPUTE HARDWARE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Compute Hardware</div>
+  <h2>NVIDIA Vera Rubin NVL72</h2>
+  <p class="sub">NVIDIA ships NVL72/CPX compute racks complete and liquid-cooled. Drop into the cassette, connect to the 800 VDC internal bus, connect to the CoolIT loop. Reference-design hardware, installed to reference-design spec.</p>
+
+  <div class="hw-grid">
+    <div class="hw-card">
+      <h3>Vera Rubin NVL72</h3>
+      <div class="hw-type">Compute Rack</div>
+      <p>72 GPUs per rack, liquid cooled, direct-to-chip. 230 kW per rack in the current cassette design. Nine compute racks per cassette at Trappey's.</p>
+      <div class="hw-spec">72 GPUs per rack<br>230 kW per rack<br>9 racks per cassette<br>648 GPUs per cassette<br>2,070 kW IT per cassette</div>
+    </div>
+    <div class="hw-card">
+      <h3>Quantum InfiniBand</h3>
+      <div class="hw-type">Network Fabric</div>
+      <p>NVIDIA Quantum / NVLink networking for the compute fabric. Non-blocking topology within the cassette; fabric extends across the campus for distributed training workloads.</p>
+      <div class="hw-spec">NVIDIA Quantum switching<br>Non-blocking fat-tree<br>Sub-microsecond latency<br>In-cassette + campus fabric</div>
+    </div>
+    <div class="hw-card">
+      <h3>HBM4 Memory</h3>
+      <div class="hw-type">High-Bandwidth Memory</div>
+      <p>Vera Rubin carries HBM4 memory at scale. 20.7 TB per rack, 186.3 TB per cassette across the nine compute racks.</p>
+      <div class="hw-spec">HBM4 memory<br>288 GB per GPU<br>20.7 TB per rack<br>186.3 TB per cassette</div>
+    </div>
+    <div class="hw-card">
+      <h3>Deployment</h3>
+      <div class="hw-type">Staged by Block</div>
+      <p>Stage 1 ramps cassette-by-cassette as NVIDIA allocation arrives. Block 1 can energize with 4 cassettes while Blocks 2&ndash;11 are in staged construction. Revenue starts at Block 1, not at Block 11.</p>
+      <div class="hw-spec">Stage 1: 44 cassettes (11 blocks)<br>Full Build: 88 cassettes (22 blocks)<br>Block 1 first<br>Cassette-level ramp<br>Same 22-acre site</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- CONTROL ARCHITECTURE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Control Architecture</div>
+  <h2>AMCL &mdash; Five-Tier AI Mission Control Layer</h2>
+  <p class="sub">AI dispatch is the operating model, not a decoration. The AMCL stack is five tiers with strict separation: protection is deterministic and local; the AI sits above the protection layer and orchestrates generation, thermal, and storage within the protection envelope &mdash; it cannot override it.</p>
+
+  <div class="sw-grid">
+    <div class="sw-card">
+      <h3>L0 &mdash; Field Devices</h3>
+      <div class="sw-type">Sensor and Actuator Layer</div>
+      <p>Cat ECS governors, generator protection IEDs, VFDs on all thermal auxiliaries, Jetson AGX Orin cassette BMS (148 channels per cassette), RTDs, CTs/PTs, cooling-tower instrumentation, BESS BMS.</p>
+    </div>
+    <div class="sw-card">
+      <h3>L1 &mdash; Block PLC</h3>
+      <div class="sw-type">Deterministic, Local</div>
+      <p>Genset paralleling, three-stage UFLS, BESS PCS setpoints, MPPT coordination, protection trip schemes, safety interlocks. Cannot be overridden from higher tiers.</p>
+      <div class="sw-highlight">Deterministic &mdash; cannot be overridden</div>
+    </div>
+    <div class="sw-card">
+      <h3>L2 &mdash; Plant SCADA</h3>
+      <div class="sw-type">Data and Historian</div>
+      <p>OPC-UA backbone. Alarm management. Cassette BMS aggregation: 148 channels &times; 44 cassettes = ~6,500 cassette points plus facility points. Stage 1 scale, scales directly to Full Build.</p>
+    </div>
+    <div class="sw-card">
+      <h3>L3 &mdash; AMCL AI Dispatch</h3>
+      <div class="sw-type">Optimization Layer</div>
+      <p>Cross-block optimization against IT load, thermal profile, BESS state, solar production, and gas supply. Runs the 55&ndash;75% genset loading envelope. Orchestrates BESS across four operating functions. Does not override protection.</p>
+      <div class="sw-highlight">Generation &middot; thermal &middot; storage &middot; solar</div>
+    </div>
+    <div class="sw-card">
+      <h3>L4 &mdash; HMI + Cybersecurity</h3>
+      <div class="sw-type">Operator + IEC 62443</div>
+      <p>Operator override, HMI, IEC 62443 SL 2 segmentation, OT/IT isolation (important for colocation customers), incident response, admin plane hardening, supply-chain integrity for control equipment and model weights.</p>
+    </div>
+    <div class="sw-card">
+      <h3>AI Failure Mode</h3>
+      <div class="sw-type">Last-Known-Good</div>
+      <p>If the AI dispatch layer fails or is isolated, the facility reverts to last-known-good deterministic control. Gensets hold setpoint, BESS PCS holds mode, VFDs hold speed, governors and protection run autonomously. Operations takes manual dispatch until AI is restored.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:32px">
+    <strong>AI vendor selection is open.</strong> AMCL is the architectural pattern; the implementing vendor for the L3 layer (model provider, dispatch engine, orchestration platform) is not yet selected. The L0&ndash;L2 field / PLC / SCADA layers operate autonomously regardless of L3 vendor choice.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SUPPLY CHAIN -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Supply Chain</div>
+  <h2>Louisiana-Sourced Where Possible</h2>
+  <p class="sub">First Solar is 30 miles away in New Iberia. ATMOS has gas infrastructure on-site. Cat has regional service. Lafayette has a 40-year ROV workforce that already runs complex remote operations. The supply chain for a lights-out AI facility already exists in Acadiana.</p>
+
+  <div class="supply-grid">
+    <div class="supply-card">
+      <div class="sc-company">NVIDIA</div>
+      <div class="sc-location">Santa Clara, CA</div>
+      <p>Vera Rubin NVL72/CPX compute racks, Quantum InfiniBand networking, NVLink switches, Jetson AGX Orin BMS controllers, the reference software stack.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">First Solar</div>
+      <div class="sc-location">New Iberia, LA &mdash; 30 mi</div>
+      <p>Series 7 CdTe thin-film panels (FS-7550A-TR1). 3,731 panels at 2.05 MW DC across B1 and B2 rooftops. US-manufactured &mdash; Perrysburg OH and New Iberia LA &mdash; enables the 40% Solar ITC stack (30% base + 10% domestic content).</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Caterpillar</div>
+      <div class="sc-location">Regional service</div>
+      <p>44 &times; CG260-16 natural gas gensets at 4,000 ekW each. Cat CSA engagement is the most important external validation for the project &mdash; governor response, part-load exhaust curves, and emissions data feed directly into the protection coordination and thermal sizing.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Delta Electronics</div>
+      <div class="sc-location">Plano, TX</div>
+      <p>660 kW In-Row Power Rack &mdash; five per cassette, 220 racks at Stage 1. The primary 800 VDC rectification inside the cassette. 6 &times; 110 kW PSU shelves per rack, 480 kW aggregate BBU, Power Capacitance Shelf for sub-100 ms GPU transients.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">CoolIT Systems</div>
+      <div class="sc-location">Calgary, AB</div>
+      <p>CHx2000 external CDU skid &mdash; one per cassette. Direct-to-chip liquid cooling for the NVL72/CPX compute racks. NVIDIA RVL/AVL listed.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Munters</div>
+      <div class="sc-location">Gulf South distribution</div>
+      <p>DSS Pro desiccant dehumidification unit per cassette. Exhaust slip-stream from the Cat genset drives the desiccant regeneration. Louisiana's 75&ndash;80% annual RH makes this an architectural requirement.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Hitachi Energy</div>
+      <div class="sc-location">US operations</div>
+      <p>AMPS PCS &mdash; SiC bidirectional inverter on the block 480 VAC bus. Sub-cycle transient response. The BESS pack vendor is evaluated in parallel (Fluence, LG Energy Solution Vertech, Saft) with Hitachi engaged on the PCS layer regardless of pack selection.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">ATMOS Energy</div>
+      <div class="sc-location">On-site infrastructure</div>
+      <p>Natural gas infrastructure on site. Firm-supply pipeline lock is a Stage 1 gating item before Block 1 energization.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:24px">
+    <strong>Why this matters:</strong> the supply chain is domestic, regionally concentrated, and tariff-insulated. No transoceanic shipping for the critical path. No single overseas dependency. The First Solar domestic-content story alone lifts Solar ITC from 30% to 40%. Cat regional service means governor-validation feedback loops are measured in days, not months.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- KEY NUMBERS -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Key Numbers</div>
+  <h2>Canonical Stage 1 Specs</h2>
+  <p class="sub">These are the locked or working engineering figures for Stage 1 at 91.1 MW IT. Full Build doubles to 182.2 MW on the same 22-acre site. Any number on this page traces to internal engineering documents (BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6).</p>
+
+  <div class="hw-grid">
+    <div class="hw-card">
+      <h3>Scale</h3>
+      <div class="hw-type">Stage 1 &rarr; Full Build</div>
+      <div class="hw-spec">91.1 MW &rarr; 182.2 MW IT<br>44 &rarr; 88 cassettes<br>11 &rarr; 22 blocks<br>28,512 &rarr; 57,024 Vera Rubin GPUs<br>396 &rarr; 792 compute racks</div>
+    </div>
+    <div class="hw-card">
+      <h3>Per Block</h3>
+      <div class="hw-type">Replicated Unit</div>
+      <div class="hw-spec">4 &times; Cat CG260-16 (N+1)<br>13.8 kV MV bus<br>~15 MVA block transformer<br>480 VAC block switchboard<br>4 cassette feeds<br>~3.6 MWh BESS</div>
+    </div>
+    <div class="hw-card">
+      <h3>Per Cassette</h3>
+      <div class="hw-type">Product IP</div>
+      <div class="hw-spec">9 compute + 1 control + 5 power racks<br>648 Vera Rubin GPUs<br>186.3 TB HBM4<br>2,070 kW IT load<br>~2,295 kW facility load<br>40-ft HC ISO container</div>
+    </div>
+    <div class="hw-card">
+      <h3>Thermal</h3>
+      <div class="hw-type">Stage 1 Duty</div>
+      <div class="hw-spec">~72.9 MW cooling tower duty<br>5.5 MW Munters desiccant regen<br>~58 MW jacket-water radiators<br>~42 MW stack<br>28&deg;C design wet-bulb<br>&le;45&deg;C GPU supply</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-name">Trappey's Compute Center</div>
+  <div class="f-title">91.1 MW AI Compute Facility &mdash; Lafayette, Louisiana</div>
+  <div class="f-links">
+    <a href="/trappeys">Overview</a>
+    <a href="/trappeys-campus">Campus</a>
+    <a href="/trappeys-power">Power</a>
+    <a href="/trappeys-investors">Investors</a>
+  </div>
+  <div class="f-contact">
+    Working draft &mdash; internal engineering cited (BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6)
+  </div>
+  <div class="f-legal">
+    All operating and scale values cited are working engineering figures pending external validation (Cat CSA, LDEQ, SHPO, NVIDIA allocation, firm gas supply). Vendor selections shown are either locked (Cat CG260-16, NVIDIA Vera Rubin, First Solar, Delta in-row racks, CoolIT CHx2000, Munters DSS Pro) or working shortlists (BESS pack, PV inverter, cooling tower, AI dispatch). This page does not constitute an offer to sell or solicitation of an offer to buy any security or service.
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campus Tour &mdash; Trappey's Compute Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}
+
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+.header{text-align:center;padding:60px 24px 40px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--bright)}
+.header .sub{font-size:15px;color:var(--dim);max-width:740px;margin:16px auto 0;line-height:1.7}
+
+.section{padding:60px 24px;max-width:1200px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:32px;max-width:740px;line-height:1.7}
+
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.photo-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.photo-card img{width:100%;height:260px;object-fit:cover;transition:transform 0.3s}
+.photo-card:hover img{transform:scale(1.03)}
+.photo-card .caption{padding:16px;font-size:13px;color:var(--dim);line-height:1.6}
+.photo-card .caption strong{color:var(--bright);display:block;margin-bottom:4px;font-size:14px}
+
+.full-width{margin:40px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.full-width img{width:100%;height:400px;object-fit:cover;display:block}
+
+.area-tag{display:inline-block;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.at-compute{background:rgba(206,24,30,0.15);color:var(--cyan)}
+.at-solar{background:rgba(255,165,0,0.15);color:var(--amber)}
+.at-ops{background:rgba(0,232,122,0.15);color:var(--green)}
+.at-landmark{background:rgba(168,85,247,0.15);color:var(--purple)}
+.at-power{background:rgba(239,68,68,0.15);color:var(--red)}
+.at-river{background:rgba(59,158,255,0.15);color:var(--blue)}
+
+.footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);line-height:1.7}
+.footer a{color:var(--cyan)}
+.footer-legal{font-size:10px;color:var(--dim);max-width:700px;margin:12px auto 0;font-style:italic}
+
+@media(max-width:768px){
+  .photo-grid{grid-template-columns:1fr}
+  .full-width img{height:250px}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand" style="text-decoration:none">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus" class="active">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-power">Power</a>
+      <a href="/trappeys-gallery">Gallery</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints">Blueprints</a>
+    </div>
+  </div>
+</nav>
+
+<div class="header">
+  <div class="tag">22 Acres &middot; 12 Registered Structures &middot; Vermilion River</div>
+  <h1>Walk the Campus</h1>
+  <div class="sub">The Trappey's Cannery site on the Vermilion River in Lafayette. 22 acres, 12 nationally registered structures, operating as a cannery from 1930 into the 1990s. Being restored and repurposed as Trappey's Compute Center &mdash; Louisiana's anchor AI compute facility at 91.1 MW Stage 1 IT load.</div>
+</div>
+
+<!-- AERIAL / WIDE VIEW -->
+<div class="section">
+  <div class="section-label">Overview</div>
+  <h2>The Full Campus</h2>
+  <div class="sub">22 acres on the Vermilion River between SE Evangeline Thruway and Guidry Street. 12 contributing structures from the original cannery operations (1930&ndash;1990s). Rear slab (42,000 sq ft) receives the 44 Cat CG260-16 gensets and block BESS. Infrastructure yard (28,000 sq ft) receives the cooling tower field. Existing industrial zoning.</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_02.jpg" alt="Campus wide view">
+      <div class="caption"><strong>Campus Wide View</strong>Historic brick buildings (B1 and B2) at the north edge with the iconic water tower behind. Compute halls B3 and B4 occupy the metal-warehouse footprint. Rear slab and infrastructure yard visible in the foreground &mdash; this is where generation and cooling scale.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_03.jpg" alt="Campus from southeast">
+      <div class="caption"><strong>Southeast Approach</strong>Main brick cannery structures (center), metal warehouse (left &mdash; future B3 compute hall). The concrete pad extends across the entire foreground &mdash; the 42,000 sq ft rear slab, sized to hold 44 Cat CG260-16 gensets, 11 block transformers, 11 block switchboards, and 39.6 MWh of block BESS.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_12.jpg" alt="Metal warehouse and loading docks">
+      <div class="caption"><strong>Metal Warehouse + Loading Docks</strong>Metal-warehouse footprint (left &mdash; future compute hall), brick loading dock building (center &mdash; B1 partner hub), water tower behind. Fire hydrant and existing water infrastructure on-site.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WATER TOWER -->
+<div class="section">
+  <div class="section-label">Landmark</div>
+  <h2>The Water Tower</h2>
+  <div class="sub">The iconic Trappey's water tower &mdash; visible from Evangeline Thruway. National Register contributing structure. Preserved as a site landmark under restoration consideration. The water tower has no role in the thermal system; GPU heat rejection is handled by the cooling tower field in the infrastructure yard.</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_01.jpg" alt="Water tower hero shot">
+      <div class="caption"><span class="area-tag at-landmark">Landmark</span><strong>Water Tower + Main Building</strong>The defining image of the campus. Brick cannery building with the water tower behind. 90+ years of Louisiana industrial history meets the AI compute mission.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_11.jpg" alt="Water tower from loading docks">
+      <div class="caption"><span class="area-tag at-landmark">Landmark</span><strong>Water Tower from Loading Docks</strong>View from the brick loading dock building looking toward the water tower. These loading docks become partner office entries for B1.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/photos/WT1.jpg" alt="Water tower close-up">
+      <div class="caption"><span class="area-tag at-landmark">Landmark</span><strong>Water Tower Close-Up</strong>Elevated steel water tank, ~60&ndash;80 ft tall. Restoration plan: sandblast, prime with industrial zinc, repaint in Trappey's heritage livery. No thermal role in the cooling system.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WAREHOUSE INTERIORS -->
+<div class="section">
+  <div class="section-label">Compute Halls &mdash; B3 &amp; B4</h2>
+  <h2>Open-Span Industrial Envelope</h2>
+  <div class="sub">The metal warehouse interiors become compute halls B3 and B4 &mdash; exactly what cassette-based compute needs: open floor plates with steel column structure, high ceilings for overhead cable and piping, industrial-grade concrete slab floors rated for cassette deployment. Cassettes arrive on flatbed trucks, drop on pre-poured pads inside the envelope, and connect through a single panel interface to the block switchboard.</div>
+
+  <div class="full-width">
+    <img src="trappeys/slides/slide_05.jpg" alt="Warehouse interior panorama">
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_07.jpg" alt="Interior - wide angle">
+      <div class="caption"><span class="area-tag at-compute">Compute Hall</span><strong>B3 &mdash; 20 Cassettes</strong>Steel column grid on concrete slab. High ceiling accommodates overhead cassette cable trays and CoolIT CHx2000 CDU piping. 20 cassettes arranged in 5 blocks of 4 = 41,400 kW IT load.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_09.jpg" alt="Interior - second angle">
+      <div class="caption"><span class="area-tag at-compute">Compute Hall</span><strong>B4 &mdash; 24 Cassettes</strong>Larger footprint accommodates 24 cassettes in 6 blocks of 4 = 49,680 kW IT load. Combined Stage 1 IT load across B3 + B4 = 91.1 MW.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BRICK BUILDINGS -->
+<div class="section">
+  <div class="section-label">B1 &amp; B2 &mdash; Partner Hub + NOC</div>
+  <h2>The Historic Brick Buildings</h2>
+  <div class="sub">Buildings 1 and 2 are the original brick cannery structures &mdash; nationally registered, restored under Historic Tax Credit standards. They become the Network Operations Center (NOC), partner hub offices, community space, riverwalk access, and the campus welcome center. Rooftops carry the 2.05 MW First Solar array (3,731 panels total across both buildings). The 45% combined HTC stack (20% Federal + 25% Louisiana) applies to certified rehabilitation of these structures.</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_10.jpg" alt="Loading dock building">
+      <div class="caption"><span class="area-tag at-ops">B1 &mdash; Partner Hub</span><strong>Front Loading Dock Building</strong>Original brick with arched bays and roll-up doors. Restored as B1 partner hub and main campus entry. Rooftop carries ~1.0 MW of First Solar Series 7 CdTe.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_13.jpg" alt="Rear brick building">
+      <div class="caption"><span class="area-tag at-ops">B2 &mdash; NOC</span><strong>Cannery Processing Building</strong>The main brick cannery structure, restored as B2 Network Operations Center. Historic character preserved under National Register rehabilitation standards. 20% Federal + 25% Louisiana HTC qualified.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_04.jpg" alt="Metal warehouse exterior">
+      <div class="caption"><span class="area-tag at-ops">Site Character</span><strong>Metal Warehouse Exterior</strong>Existing site character preserved. Metal siding is functional &mdash; easy to maintain, easy to insulate for thermal performance in the compute halls.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POWER INFRASTRUCTURE -->
+<div class="section">
+  <div class="section-label">Rear Slab &mdash; Generation + Storage</div>
+  <h2>42,000 Sq Ft, Sized for Full Build</h2>
+  <div class="sub">The rear slab was sized from day one for the Full Build scenario (88 gensets at 182.2 MW). Stage 1 deploys 44 Cat CG260-16 natural gas gensets grouped by 11 blocks, 11 block transformers (13.8 kV &rarr; 480 VAC), 11 block switchboards, and 39.6 MWh of block-level LFP BESS. Jacket-water radiators reject ~58 MW of genset cooling to atmosphere on the same slab. LUS Pinhook Substation is adjacent &mdash; spatial allocation only, future optionality, not day-one dependency.</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_14.jpg" alt="Power infrastructure">
+      <div class="caption"><span class="area-tag at-power">Rear Slab</span><strong>Existing Utility Corridor</strong>Existing utility poles serving the cannery. The site's industrial service is retained for facility ancillary loads; primary generation is behind-the-meter from the 44 Cat CG260-16 gensets.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_15.jpg" alt="Power and street infrastructure">
+      <div class="caption"><span class="area-tag at-power">Generation</span><strong>Rear Slab Area</strong>The 42,000 sq ft rear slab. 44 Cat CG260-16 gensets (4,000 ekW each) deploy here in 11 block groupings. Block transformers, block switchboards, jacket-water radiators, and block-level BESS share the footprint.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/photos/Power1.jpg" alt="Power detail">
+      <div class="caption"><span class="area-tag at-power">Electrical Service</span><strong>Existing Service Entrance</strong>Existing 3-phase utility service retained for facility ancillary and construction loads. Primary campus power comes from on-site generation: behind-the-meter permanent electrical island from day one.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INFRASTRUCTURE YARD -->
+<div class="section">
+  <div class="section-label">Infrastructure Yard &mdash; Cooling</div>
+  <h2>28,000 Sq Ft &mdash; Cooling Tower Field</h2>
+  <div class="sub">The infrastructure yard holds the cooling tower field that rejects GPU heat to atmosphere &mdash; ~72.9 MW at Stage 1, doubling to ~145.7 MW at Full Build. Wet mechanical draft cooling towers are the working basis, sized for Lafayette's 28&deg;C ASHRAE 0.4% design wet-bulb. The SCR emissions-control units, facility circulation pumps, and make-up water treatment equipment share the yard. CoolIT CHx2000 CDU skids live adjacent to their respective cassettes in the compute halls, not in the yard.</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/photos/WT2.jpg" alt="Water tower / yard view">
+      <div class="caption"><span class="area-tag at-power">Infrastructure Yard</span><strong>28,000 Sq Ft Concrete Pad</strong>The existing concrete pad that becomes the infrastructure yard. 6 wet mechanical draft cooling tower cells, SCR units, facility pumps, make-up water treatment.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/photos/WT3.jpg" alt="Yard area">
+      <div class="caption"><span class="area-tag at-power">Cooling Plant</span><strong>Cooling Tower Location</strong>Cooling tower field reject heat from the plate heat exchanger (PHX-001), which isolates the open raw-water side from the closed cassette CDU loops. Wet mechanical draft working basis pending final vendor selection.</div>
+    </div>
+  </div>
+</div>
+
+<!-- VERMILION RIVER -->
+<div class="section">
+  <div class="section-label">Site Amenity</div>
+  <h2>Vermilion River Frontage</h2>
+  <div class="sub">The campus sits directly on the Vermilion River. The river is a site amenity: rebuilt seawall, public riverwalk, the defining photograph of the campus. It is <strong>not</strong> a thermal sink &mdash; Gulf Coast surface water peaks at 30&ndash;33&deg;C in summer and the Vermilion is tidally influenced at Lafayette, so river cooling was eliminated from the engineering architecture. Heat rejection lives in the cooling tower field, not in the river.</div>
+
+  <div class="full-width">
+    <img src="trappeys/slides/slide_20.jpg" alt="Full building frontage from river">
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_17.jpg" alt="River view - buildings from water">
+      <div class="caption"><span class="area-tag at-river">River Amenity</span><strong>From the Vermilion</strong>The cannery buildings viewed from the river. Old dock pilings visible. The riverwalk plan connects this frontage to adjacent Bayou Vermilion District parks.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_18.jpg" alt="River view - campus from across">
+      <div class="caption"><span class="area-tag at-river">River Amenity</span><strong>Looking Across</strong>The campus from across the Vermilion. Water tower barely visible through the trees. The river is a site amenity and restoration feature &mdash; no thermal role.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_19.jpg" alt="River view - brick building">
+      <div class="caption"><span class="area-tag at-river">River Amenity</span><strong>Brick Building from Riverbank</strong>The main brick structure from the riverbank. Historic preservation, public waterfront access, and community amenity.</div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORIC EQUIPMENT -->
+<div class="section">
+  <div class="section-label">History</div>
+  <h2>Industrial Heritage</h2>
+  <div class="sub">Six decades of canning operations at Trappey's. The cannery closed in the early 1990s and the buildings sat empty for 30+ years &mdash; the industrial envelope survived. 12 contributing structures, all National Register eligible. Restoration qualifies for the 45% HTC stack (20% Federal + 25% Louisiana).</div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_06.jpg" alt="Old industrial equipment">
+      <div class="caption"><span class="area-tag at-landmark">Heritage</span><strong>Original Equipment</strong>Industrial equipment from the canning era. Remnants like this inform the restoration scope &mdash; what stays, what goes, what gets interpretive signage on the restored campus.</div>
+    </div>
+    <div class="photo-card">
+      <img src="trappeys/slides/slide_16.jpg" alt="Brick building detail from riverbank">
+      <div class="caption"><span class="area-tag at-landmark">Heritage</span><strong>Brick Detail &mdash; River Side</strong>Multi-story brick construction from the original 1930 build. Window openings, industrial character. National Register period of significance.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="/trappeys">&larr; Back to Overview</a> &nbsp;&bull;&nbsp;
+  <a href="/trappeys-technology">Technology &rarr;</a><br><br>
+  <strong>Trappey's Compute Center</strong> &mdash; Lafayette, Louisiana<br>
+  22-acre historic cannery site &middot; Vermilion River frontage &middot; 12 nationally registered structures
+  <div class="footer-legal">Working draft. Restoration plan pending SHPO Part 1 / Part 2 approval. Cassette deployment schedule gated on Cat CSA validation, firm gas supply, and NVIDIA Vera Rubin allocation.</div>
+</div>
+
+</body>
+</html>

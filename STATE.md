@@ -8,10 +8,10 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 ### Key Decisions
 
 **Pure DC AI Factory Cassette — CONCEPT LOCKED**
-- 1 cassette = 1 ADC 3K cassette = 10 NVL72 racks = 1.3 MW IT load
-- Factory-built at Fibrebond (Eaton), Minden LA — 90 min from Lafayette
-- Site interface: 800V DC bus + cooling loop + fiber. Nothing else.
-- No AC conversion inside cassette. No inverters. No rectifiers. No air conditioning.
+- 1 cassette = 1 800vdc Edge Cassette = 10 NVL72 racks = 2.3 MW IT load
+- Factory-built at Fibrebond (Eaton), Minden LA — 3 hours from Lafayette
+- Site interface: before meter + 800V DC bus + cooling loop + fiber. Nothing else.
+- No Air Conditioners inside cassette.
 - Munters desiccant dehumidification — waste heat regenerated
 - Boyd CDU (Eaton) — 2,000 kW, N+1 pumps, factory-integrated
 - Eaton ORV3 sidecars — factory-mounted, ±400V DC to each rack
@@ -24,7 +24,6 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 - Fibrebond can do steel modular AND concrete — both options available
 - MARLIE 1 = field-built proof of concept (GTI Fabrication container, manual assembly)
 - Locked spec handed to Fibrebond → factory production at scale in Minden
-- ADC = Fibrebond's first Pure DC AI Factory reference customer in Louisiana
 
 **MARLIE I → MARLIE 1 — GLOBAL CORRECTION**
 - 101 active files corrected via global sed replacement
@@ -40,11 +39,7 @@ Last updated: 2026-04-08 (Fibrebond cassette spec, vendor folder cleanup, MARLIE
 - `adc3k-deploy/vendors/container-fabricators.md` — DELETED (promoted to individual folders)
 
 ### Open Items
-1. Fibrebond site visit — Scott driving to Minden to make contact
-2. JP Buzzell (Eaton VP, Global Data Center) — not responding, use Fibrebond direct visit as entry point
-3. GTI Fabrication RFQ — 40-ft HC for MARLIE 1 proof of concept
-4. Confirm Fibrebond: ISO corner castings + 1500V DC insulation rating + Boyd CDU factory-integrated?
-5. Contact form submitted to Fibrebond this session
+1.
 
 ---
 

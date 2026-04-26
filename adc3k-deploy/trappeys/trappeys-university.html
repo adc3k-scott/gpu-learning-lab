@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappey's Compute Center &mdash; UL Lafayette Partnership</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#CE181E;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+a{color:var(--purple);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,11,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-brand{font-weight:800;font-size:16px;color:var(--bright)}
+.nav-brand span{color:var(--solar);font-weight:600}
+.nav-links{display:flex;gap:8px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--dim);padding:6px 12px;border-radius:6px;transition:color 0.2s,background 0.2s;text-decoration:none}
+.nav-links a:hover{color:var(--bright);background:rgba(255,255,255,0.05)}
+.nav-links a.active{color:var(--purple);background:rgba(168,85,247,0.12)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 48px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--bright);line-height:1.1}
+.header h1 span{color:var(--purple)}
+.header .sub{font-size:16px;color:var(--dim);max-width:720px;margin:20px auto 0;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:56px 24px;max-width:1100px;margin:0 auto}
+.section + .section{border-top:1px solid var(--border)}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:28px;font-weight:800;color:var(--bright);margin-bottom:8px}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:28px;max-width:700px}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:8px}
+.card p{font-size:13px;color:var(--dim);line-height:1.7}
+.card .card-accent{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--purple);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+
+/* GRANT TABLE */
+.grant-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.grant-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);padding:10px 14px;border-bottom:2px solid var(--border);font-weight:600}
+.grant-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.grant-table tr:last-child td{border-bottom:none}
+.grant-table .program{font-weight:600;color:var(--bright);white-space:nowrap}
+.grant-table .amount{font-family:'IBM Plex Mono',monospace;color:var(--purple);font-weight:600}
+.grant-table .note{color:var(--dim);max-width:360px}
+.grant-table .total-row td{border-top:2px solid var(--purple);font-weight:700;color:var(--purple)}
+
+/* PIPELINE DIAGRAM */
+.pipeline{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:32px 0;padding:24px}
+.pipeline-step{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 24px;text-align:center;min-width:140px}
+.pipeline-step .step-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.pipeline-step .step-name{font-size:15px;font-weight:700;color:var(--bright)}
+.pipeline-step .step-detail{font-size:11px;color:var(--dim);margin-top:4px}
+.pipeline-arrow{font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--purple);padding:0 8px;font-weight:700}
+
+/* CALLOUT */
+.callout{padding:20px 24px;border-radius:8px;margin:24px 0;font-size:13px;line-height:1.7}
+.callout-purple{background:rgba(168,85,247,0.08);border-left:3px solid var(--purple)}
+.callout-amber{background:rgba(255,165,0,0.08);border-left:3px solid var(--amber)}
+.callout strong{color:var(--bright)}
+
+/* STAT ROW */
+.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0}
+.stat-block{flex:1;min-width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.stat-block .stat-num{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;color:var(--purple)}
+.stat-block .stat-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* LIST */
+.detail-list{list-style:none;margin-top:16px}
+.detail-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;display:flex;align-items:flex-start;gap:10px;color:var(--text)}
+.detail-list li:last-child{border-bottom:none}
+.detail-list .marker{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--purple);flex-shrink:0;width:18px}
+
+/* STATES LIST */
+.states-grid{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.state-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.25);color:var(--purple);font-weight:600}
+.state-tag.missing{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--red)}
+
+/* FOOTER */
+footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border);font-size:12px;color:var(--dim)}
+footer a{color:var(--purple)}
+footer .footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:16px;flex-wrap:wrap}
+footer .footer-links a{font-size:13px;font-weight:600}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .cards{grid-template-columns:1fr}
+  .pipeline{flex-direction:column}
+  .pipeline-arrow{transform:rotate(90deg)}
+  .stat-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand" style="text-decoration:none">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-university" class="active">University</a>
+      <a href="/trappeys-responders">First Responders</a>
+      <a href="/trappeys-investors">Investors</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">University Partnership // trappeyscompute.com/trappeys-university</div>
+  <h1>UL Lafayette <span>Partnership</span></h1>
+  <p class="sub">Research compute half a mile from campus. $28&ndash;55M in grants. NVIDIA's 50-State Plan. The Florida model, adapted for Louisiana.</p>
+</div>
+
+<!-- WHY UL LAFAYETTE -->
+<div class="section">
+  <div class="section-label">The Opportunity</div>
+  <h2>Why UL Lafayette</h2>
+  <p class="sub">A new president. Zero GPU infrastructure. Research dollars leaving the state. Trappey's changes the equation.</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-accent">New Leadership</div>
+      <h3>Dr. Ramesh Kolluru</h3>
+      <p>New UL Lafayette president. Computer Science PhD. Career spent building R1 research institutions. Understands what GPU infrastructure means for research competitiveness and federal grant eligibility.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">Zero GPU Infra</div>
+      <h3>No On-Campus Compute</h3>
+      <p>UL Lafayette has no NVIDIA GPU cluster. Researchers currently pay AWS, Azure, and Google Cloud for GPU hours &mdash; money that leaves Louisiana entirely. Every grant cycle, they compete against universities with dedicated supercomputers.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">Walking Distance</div>
+      <h3>Half a Mile from Campus</h3>
+      <p>Trappey's sits 0.5 miles from UL Lafayette. NVIDIA research compute within walking distance. No network latency debates. No remote access friction. Students and faculty can physically work at the facility.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NVIDIA 50-STATE PLAN -->
+<div class="section">
+  <div class="section-label">GTC 2026</div>
+  <h2>NVIDIA 50-State Plan</h2>
+  <p class="sub">Chris Malachowsky called on every state to replicate what NVIDIA built in Florida. Louisiana is not on the list yet.</p>
+
+  <div class="callout callout-purple">
+    <strong>The Florida Model:</strong> $180M invested. HiPerGator SuperPOD at University of Florida. All 12 state universities connected. K-12 AI curriculum statewide. $50M NVIDIA GPU donation. Chris Malachowsky is a UF alumnus &mdash; he built the blueprint, then told every state to copy it.
+  </div>
+
+  <p style="font-size:14px;margin:20px 0 12px;color:var(--bright);font-weight:700">Trappey's Compute Center + UL Lafayette = Louisiana's version. Same outcome, fraction of the cost.</p>
+  <p style="font-size:13px;color:var(--dim);margin-bottom:24px">Trappey's provides the compute. UL Lafayette provides the research demand, students, and federal grant eligibility. Together they form the anchor that NVIDIA needs to check Louisiana off the map.</p>
+
+  <p style="font-size:13px;color:var(--dim);margin-bottom:12px;font-weight:600">States already moving:</p>
+  <div class="states-grid">
+    <span class="state-tag">Utah</span>
+    <span class="state-tag">California</span>
+    <span class="state-tag">Mississippi</span>
+    <span class="state-tag">Oregon</span>
+    <span class="state-tag">Alabama</span>
+    <span class="state-tag">Tennessee</span>
+    <span class="state-tag">Pennsylvania</span>
+  </div>
+
+  <div style="margin-top:16px">
+    <span class="state-tag missing">Louisiana &mdash; NOT YET</span>
+  </div>
+</div>
+
+<!-- GRANT PIPELINE -->
+<div class="section">
+  <div class="section-label">Funding</div>
+  <h2>Grant Pipeline</h2>
+  <p class="sub">$28&ndash;55M+ in federal, state, and historic programs. Only available with a university partner.</p>
+
+  <table class="grant-table">
+    <thead>
+      <tr>
+        <th>Program</th>
+        <th>Amount</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="program">NSF MRI</td>
+        <td class="amount">$4M</td>
+        <td class="note">Major Research Instrumentation. Funds GPU clusters, networking, storage for university-led research.</td>
+      </tr>
+      <tr>
+        <td class="program">EPSCoR</td>
+        <td class="amount">$10M</td>
+        <td class="note">Established Program to Stimulate Competitive Research. Louisiana qualifies as an emerging research state. Multi-year awards.</td>
+      </tr>
+      <tr>
+        <td class="program">LED FastStart</td>
+        <td class="amount">$0 cost</td>
+        <td class="note">100% state-funded workforce training. Custom curriculum development, recruitment, screening &mdash; all free. Louisiana's top-ranked incentive.</td>
+      </tr>
+      <tr>
+        <td class="program">Historic Tax Credits</td>
+        <td class="amount">45%</td>
+        <td class="note">20% federal + 25% Louisiana. Trappey's qualifies as a historic structure. Credits apply to qualified rehabilitation expenditures.</td>
+      </tr>
+      <tr>
+        <td class="program">Louisiana Growth Fund</td>
+        <td class="amount">Varies</td>
+        <td class="note">State economic development fund for projects creating jobs in target industries. AI compute qualifies.</td>
+      </tr>
+      <tr>
+        <td class="program">DOE Programs</td>
+        <td class="amount">$10M+</td>
+        <td class="note">Department of Energy research infrastructure, clean energy integration, and workforce development grants.</td>
+      </tr>
+      <tr class="total-row">
+        <td>Combined Potential</td>
+        <td class="amount">$28&ndash;55M+</td>
+        <td>Requires university partnership to unlock majority of programs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-amber" style="margin-top:24px">
+    <strong>Critical dependency:</strong> NSF MRI, EPSCoR, and most DOE programs require a university as lead applicant or co-PI. Without UL Lafayette at the table, the largest funding sources are inaccessible.
+  </div>
+</div>
+
+<!-- K-12 PIPELINE -->
+<div class="section">
+  <div class="section-label">Workforce</div>
+  <h2>K-12 AI Education Pipeline</h2>
+  <p class="sub">The Florida model starts in high school. Lafayette has the students, the STEM programs, and the state funding to build the same pipeline.</p>
+
+  <div class="cards" style="margin-bottom:28px">
+    <div class="card">
+      <div class="card-accent">Florida's Blueprint</div>
+      <h3>4-Course AI Curriculum</h3>
+      <p>AI in the World &gt; Applications of AI &gt; AI Programming &gt; Machine Learning. Rolled out across all Florida public high schools. Students arrive at university AI-literate on Day 1.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">Lafayette Parish Public</div>
+      <h3>31,000 Students / 44 Schools</h3>
+      <p>Includes David Thibodaux STEM Magnet Academy &mdash; already positioned for AI curriculum integration. Largest school district in Acadiana. <strong style="color:var(--bright)">Trappey's Compute Center founder Scott Tomsu's daughter graduated from David Thibodaux STEM Magnet.</strong> This isn't abstract &mdash; it's a father building the infrastructure his daughter's generation needs.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">Lafayette Private &amp; Catholic</div>
+      <h3>10,165 Students / 23 Schools</h3>
+      <p>Strong STEM programs across private and Catholic school networks. Combined with public schools: 41,000+ students in the Lafayette metro pipeline.</p>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--bright);font-weight:700;margin-bottom:20px">Full Pipeline: K-12 to Career</p>
+
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-label">Grades K-12</div>
+      <div class="step-name">AI Curriculum</div>
+      <div class="step-detail">41,000+ students</div>
+    </div>
+    <div class="pipeline-arrow">&gt;</div>
+    <div class="pipeline-step">
+      <div class="step-label">University</div>
+      <div class="step-name">UL Lafayette</div>
+      <div class="step-detail">Research + Degrees</div>
+    </div>
+    <div class="pipeline-arrow">&gt;</div>
+    <div class="pipeline-step">
+      <div class="step-label">Compute</div>
+      <div class="step-name">Trappey's</div>
+      <div class="step-detail">Co-ops + Internships</div>
+    </div>
+    <div class="pipeline-arrow">&gt;</div>
+    <div class="pipeline-step">
+      <div class="step-label">Career</div>
+      <div class="step-name">Trappey's Compute Center + Industry</div>
+      <div class="step-detail">Direct Employment</div>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-accent">LED FastStart</div>
+      <h3>$0 Cost Workforce Training</h3>
+      <p>Louisiana Economic Development covers 100% of custom workforce training. Curriculum design, instructor costs, facility setup &mdash; all state-funded. Ranked the #1 workforce program in the U.S.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">NVIDIA DLI</div>
+      <h3>Deep Learning Institute</h3>
+      <p>NVIDIA's official training courses for students and professionals. GPU computing, deep learning, inference optimization, robotics. Certifications that carry weight in the industry. Available through university partnerships.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT UL GETS -->
+<div class="section">
+  <div class="section-label">Value Proposition</div>
+  <h2>What UL Lafayette Gets</h2>
+  <p class="sub">This is not a one-sided ask. UL Lafayette gains a competitive research advantage that would cost $50M+ to build independently.</p>
+
+  <ul class="detail-list">
+    <li>
+      <span class="marker">&gt;</span>
+      <span><strong style="color:var(--bright)">Anchor Tenant Revenue.</strong> Built-in research compute demand from Day 1. Stable, predictable revenue stream for Trappey's. UL gets below-market GPU access in return.</span>
+    </li>
+    <li>
+      <span class="marker">&gt;</span>
+      <span><strong style="color:var(--bright)">Federal Grant Competitiveness.</strong> NSF and DOE reviewers check for dedicated compute facilities. A GPU cluster half a mile from campus is a differentiator that most competing universities cannot match.</span>
+    </li>
+    <li>
+      <span class="marker">&gt;</span>
+      <span><strong style="color:var(--bright)">Workforce Pipeline.</strong> Co-ops, internships, and direct employment pathways for CS, EE, and data science students. Real GPU operations experience, not classroom simulations.</span>
+    </li>
+    <li>
+      <span class="marker">&gt;</span>
+      <span><strong style="color:var(--bright)">Historic Preservation Programs.</strong> Architecture and historic preservation students gain a real-world adaptive reuse project. Trappey's Cannery is a Louisiana landmark &mdash; documenting and contributing to its transformation is publishable academic work.</span>
+    </li>
+    <li>
+      <span class="marker">&gt;</span>
+      <span><strong style="color:var(--bright)">City Credibility.</strong> Every stakeholder in this project &mdash; city council, LEDA, NVIDIA, investors &mdash; moves faster when the university is at the table. UL Lafayette's involvement signals institutional validation that no amount of marketing can replicate.</span>
+    </li>
+  </ul>
+</div>
+
+<!-- THE ASK -->
+<div class="section">
+  <div class="section-label">Next Step</div>
+  <h2>The Ask</h2>
+  <p class="sub">One introduction compresses the timeline by 18 months.</p>
+
+  <div class="callout callout-purple">
+    <strong>We need a facilitated connection to university leadership.</strong> One relationship &mdash; president, provost, or research computing director &mdash; compresses the project timeline from 3 years to approximately 18 months. Everything else is ready. The compute plan is ready. The grants are identified. The site is half a mile away. The missing piece is the handshake.
+  </div>
+
+  <div class="stat-row" style="margin-top:28px">
+    <div class="stat-block">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Introduction Needed</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">18mo</div>
+      <div class="stat-label">Compressed Timeline</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">$55M+</div>
+      <div class="stat-label">Grants Unlocked</div>
+    </div>
+  </div>
+
+  <div class="cards" style="margin-top:24px">
+    <div class="card">
+      <div class="card-accent">Primary Target</div>
+      <h3>Dr. Ramesh Kolluru</h3>
+      <p>President, University of Louisiana at Lafayette. CS background. R1 builder. Best reached through LEDA (Lafayette Economic Development Authority) warm introduction.</p>
+    </div>
+    <div class="card">
+      <div class="card-accent">Alternative Paths</div>
+      <h3>Provost or Research Computing</h3>
+      <p>Provost controls academic partnerships and resource allocation. Research computing director understands the GPU gap firsthand. Either path leads to the same outcome.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="/trappeys">&larr; Trappey's Overview</a>
+    <a href="/trappeys-responders">First Responders &rarr;</a>
+  </div>
+  <p style="margin-bottom:8px"><a href="mailto:scott@trappeyscompute.com">scott@trappeyscompute.com</a> &nbsp;|&nbsp; <a href="https://trappeyscompute.com">trappeyscompute.com</a></p>
+  <p>Scott Tomsu &nbsp;|&nbsp; Lafayette, Louisiana</p>
+</footer>
+
+</body>
+</html>

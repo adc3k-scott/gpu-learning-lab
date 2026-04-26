@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trappey's Compute Center &mdash; Engineering Blueprints</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--cyan:#CE181E;--solar:#CE181E;--blue:#3b9eff;--amber:#ffa500;--purple:#a855f7;--green:#00e87a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;padding:20px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1{text-align:center;font-size:clamp(22px,3vw,34px);font-weight:900;color:var(--bright);margin:10px 0 6px;letter-spacing:-0.5px}
+h1 span{color:var(--cyan)}
+.sub{text-align:center;color:var(--dim);font-size:0.82rem;margin-bottom:30px;max-width:740px;margin-left:auto;margin-right:auto;line-height:1.7}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.nav-brand{font-size:14px;font-weight:900;color:var(--bright);white-space:nowrap;text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:11px;font-weight:600;color:var(--dim);padding:5px 10px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+.back-link{padding:16px 0 16px}
+.back-link a{font-size:13px;color:var(--cyan);text-decoration:none;font-weight:700}
+.back-link a:hover{text-decoration:underline}
+.sheet{max-width:1400px;margin:0 auto 40px;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.sheet-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.sheet-header h2{font-size:1.05rem;font-weight:800;color:var(--bright)}
+.sheet-header .tag{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;padding:4px 10px;border-radius:4px;color:var(--cyan);background:rgba(206,24,30,0.1);border:1px solid rgba(206,24,30,0.25)}
+.sheet .sheet-body{padding:0}
+.sheet .desc{padding:16px 24px;font-size:0.85rem;color:var(--text);line-height:1.7;border-top:1px solid var(--border)}
+.sheet .desc strong{color:var(--bright)}
+.placeholder{display:flex;align-items:center;justify-content:center;min-height:320px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px;text-align:center;color:var(--dim);font-size:0.85rem;line-height:1.7}
+.placeholder .p-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:1.5px;color:var(--cyan);text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.placeholder .p-title{font-size:1rem;font-weight:700;color:var(--bright);margin-bottom:6px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);font-weight:700;margin:40px 0 16px;text-align:center}
+.footer{text-align:center;padding:36px 0 20px;border-top:1px solid var(--border);margin-top:40px;color:var(--dim);font-size:0.75rem;line-height:1.7}
+.footer strong{color:var(--bright)}
+.footer-legal{font-size:0.68rem;color:var(--dim);max-width:700px;margin:14px auto 0;line-height:1.7;font-style:italic}
+.fp-stats{display:flex;justify-content:center;gap:32px;margin:20px 20px 0;flex-wrap:wrap}
+.fp-stat{text-align:center}
+.fp-stat .n{font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:900;color:var(--cyan);line-height:1}
+.fp-stat .l{font-size:0.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.fp-legend{display:flex;justify-content:center;gap:22px;margin:14px 20px;flex-wrap:wrap;font-size:0.72rem;color:var(--text)}
+.fp-leg{display:flex;align-items:center;gap:6px}
+.sw{width:22px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,0.18)}
+.fp-note{margin:10px 20px 16px;font-size:0.72rem;color:var(--dim);line-height:1.7;text-align:center}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-power">Power</a>
+      <a href="/trappeys-gallery">Gallery</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints" class="active">Blueprints</a>
+    </div>
+  </div>
+</nav>
+
+<div class="back-link"><a href="/trappeys">&larr; Back to Trappey's Compute Center</a></div>
+
+<h1>Engineering <span>Blueprints</span></h1>
+<div class="sub">Trappey's Cannery &mdash; Lafayette, Louisiana &middot; 5-Sheet Design Intent Package &middot; Working drawings traceable to BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6 &middot; NOT FOR CONSTRUCTION</div>
+
+<div class="section-label">Electrical</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>E-001: Electrical Single-Line Diagram (Per Block)</h2>
+    <span class="tag">480 VAC Block Bus</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/electrical-sld.svg" alt="Electrical Single-Line Diagram" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">E-001 Single-Line Diagram (Per Block)</div>
+        <div>Expected path: <code>trappeys/blueprints/electrical-sld.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Per-block single-line.</strong> Fuel: ATMOS natural gas on-site. Generation: 4 &times; Cat CG260-16 natural gas gensets at 4,000 ekW each (N+1, design anchor 61.5% loading), paralleled at 13.8 kV via Cat ECS isochronous sharing. MV bus: arc-resistant switchgear with 87B bus differential and three-stage UFLS. Transformer: 13.8 kV &Delta; &rarr; 480 Y/277 V, ~15 MVA, dry-type or cast-resin, 87T overall differential. LV: 480 VAC switchboard with LSIG main trip unit and 50G residual ground sensing. DER: block-level LFP BESS (~3.6 MWh working per block) AC-coupled through a Hitachi AMPS PCS SiC bidirectional inverter, and the 2.05 MW First Solar rooftop array (B1/B2) AC-coupled through a grid-forming PV inverter. Cassette feeds: four 480 VAC feeds per block to an Eaton Magnum DS 6,000 A disconnect at each cassette ECP. <strong>The 800 VDC rail exists only inside each cassette</strong>, where five Delta 660 kW in-row power racks rectify to a cassette-internal 800 VDC busway that feeds nine compute racks plus one control rack. No campus MV ring. No inter-block tie day one. No LUS grid interconnect day one.
+  </div>
+</div>
+
+<div class="section-label">Architectural</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>A-001: Stage 1 Campus Floor Plan</h2>
+    <span class="tag">91.1 MW &middot; 44 Cassettes &middot; 11 Blocks</span>
+  </div>
+  <div class="sheet-body">
+    <svg viewBox="0 0 1200 640" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:78vh;display:block;background:#0a0a0a;border-radius:0;overflow:visible">
+      <defs>
+        <pattern id="cassetteGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+          <rect width="4" height="4" fill="rgba(206,24,30,0.08)"/>
+          <line x1="0" y1="0" x2="4" y2="0" stroke="rgba(206,24,30,0.3)" stroke-width="0.25"/>
+        </pattern>
+        <pattern id="expansionHatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect x="20" y="20" width="1160" height="600" fill="#0e0e10" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+      <text x="30" y="38" fill="rgba(255,255,255,0.4)" font-size="9" font-weight="600" letter-spacing="1">SITE BOUNDARY &mdash; 22 ACRES &middot; VERMILION RIVER FRONTAGE</text>
+      <path d="M 20 580 Q 300 595 600 585 T 1180 580 L 1180 620 L 20 620 Z" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.3)" stroke-width="0.75"/>
+      <text x="600" y="607" fill="rgba(59,158,255,0.65)" font-size="9" text-anchor="middle" font-weight="600" letter-spacing="1.5">VERMILION RIVER (site amenity &mdash; not thermal sink)</text>
+      <g>
+        <rect x="60" y="60" width="220" height="110" fill="rgba(255,165,0,0.1)" stroke="rgba(255,165,0,0.5)" stroke-width="1.25"/>
+        <text x="170" y="82" fill="#ffa500" font-size="11" text-anchor="middle" font-weight="800">B1 &mdash; Historic</text>
+        <text x="170" y="98" fill="rgba(255,165,0,0.65)" font-size="8" text-anchor="middle" font-weight="600">NOC / Partner Hub</text>
+        <text x="170" y="112" fill="rgba(255,165,0,0.55)" font-size="7.5" text-anchor="middle">First Solar rooftop array</text>
+        <text x="170" y="124" fill="rgba(255,165,0,0.55)" font-size="7.5" text-anchor="middle">~1.0 MW / ~1,820 panels</text>
+        <text x="170" y="152" fill="rgba(255,165,0,0.45)" font-size="7" text-anchor="middle" font-style="italic">National Register contributing structure</text>
+        <rect x="300" y="60" width="220" height="110" fill="rgba(255,165,0,0.1)" stroke="rgba(255,165,0,0.5)" stroke-width="1.25"/>
+        <text x="410" y="82" fill="#ffa500" font-size="11" text-anchor="middle" font-weight="800">B2 &mdash; Historic</text>
+        <text x="410" y="98" fill="rgba(255,165,0,0.65)" font-size="8" text-anchor="middle" font-weight="600">NOC / Partner Hub</text>
+        <text x="410" y="112" fill="rgba(255,165,0,0.55)" font-size="7.5" text-anchor="middle">First Solar rooftop array</text>
+        <text x="410" y="124" fill="rgba(255,165,0,0.55)" font-size="7.5" text-anchor="middle">~1.05 MW / ~1,911 panels</text>
+        <text x="410" y="152" fill="rgba(255,165,0,0.45)" font-size="7" text-anchor="middle" font-style="italic">National Register contributing structure</text>
+      </g>
+      <g>
+        <circle cx="580" cy="95" r="22" fill="rgba(168,85,247,0.08)" stroke="rgba(168,85,247,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="580" y="92" fill="rgba(168,85,247,0.75)" font-size="7.5" text-anchor="middle" font-weight="700">WATER</text>
+        <text x="580" y="102" fill="rgba(168,85,247,0.75)" font-size="7.5" text-anchor="middle" font-weight="700">TOWER</text>
+        <text x="580" y="135" fill="rgba(168,85,247,0.55)" font-size="7" text-anchor="middle" font-style="italic">Historic landmark &mdash; no thermal role</text>
+      </g>
+      <g>
+        <rect x="60" y="200" width="460" height="170" fill="rgba(206,24,30,0.05)" stroke="rgba(206,24,30,0.45)" stroke-width="1.25"/>
+        <text x="70" y="220" fill="#CE181E" font-size="12" font-weight="800">B3 &mdash; Compute Hall</text>
+        <text x="70" y="234" fill="rgba(206,24,30,0.75)" font-size="9" font-weight="600">20 cassettes / 5 blocks</text>
+        <g>
+          <rect x="75" y="250" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="117" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-01 &middot; B1</text>
+          <rect x="165" y="250" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="207" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-02 &middot; B1</text>
+          <rect x="255" y="250" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="297" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-03 &middot; B1</text>
+          <rect x="345" y="250" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="387" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-04 &middot; B1</text>
+          <rect x="435" y="250" width="75" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="472" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-05 &middot; B2</text>
+          <rect x="75" y="280" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="117" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-06 &middot; B2</text>
+          <rect x="165" y="280" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="207" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-07 &middot; B2</text>
+          <rect x="255" y="280" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="297" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-08 &middot; B2</text>
+          <rect x="345" y="280" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="387" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-09 &middot; B3</text>
+          <rect x="435" y="280" width="75" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="472" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-10 &middot; B3</text>
+          <rect x="75" y="310" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="117" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-11 &middot; B3</text>
+          <rect x="165" y="310" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="207" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-12 &middot; B3</text>
+          <rect x="255" y="310" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="297" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-13 &middot; B4</text>
+          <rect x="345" y="310" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="387" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-14 &middot; B4</text>
+          <rect x="435" y="310" width="75" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="472" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-15 &middot; B4</text>
+          <rect x="75" y="340" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="117" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-16 &middot; B4</text>
+          <rect x="165" y="340" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="207" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-17 &middot; B5</text>
+          <rect x="255" y="340" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="297" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-18 &middot; B5</text>
+          <rect x="345" y="340" width="85" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="387" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-19 &middot; B5</text>
+          <rect x="435" y="340" width="75" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="472" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-20 &middot; B5</text>
+        </g>
+      </g>
+      <g>
+        <rect x="540" y="200" width="600" height="170" fill="rgba(206,24,30,0.05)" stroke="rgba(206,24,30,0.45)" stroke-width="1.25"/>
+        <text x="550" y="220" fill="#CE181E" font-size="12" font-weight="800">B4 &mdash; Compute Hall</text>
+        <text x="550" y="234" fill="rgba(206,24,30,0.75)" font-size="9" font-weight="600">24 cassettes / 6 blocks</text>
+        <g>
+          <rect x="555" y="250" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="601" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-21 &middot; B6</text>
+          <rect x="653" y="250" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="699" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-22 &middot; B6</text>
+          <rect x="751" y="250" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="797" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-23 &middot; B6</text>
+          <rect x="849" y="250" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="895" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-24 &middot; B6</text>
+          <rect x="947" y="250" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="993" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-25 &middot; B7</text>
+          <rect x="1045" y="250" width="88" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="1089" y="267" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-26 &middot; B7</text>
+          <rect x="555" y="280" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="601" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-27 &middot; B7</text>
+          <rect x="653" y="280" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="699" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-28 &middot; B7</text>
+          <rect x="751" y="280" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="797" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-29 &middot; B8</text>
+          <rect x="849" y="280" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="895" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-30 &middot; B8</text>
+          <rect x="947" y="280" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="993" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-31 &middot; B8</text>
+          <rect x="1045" y="280" width="88" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="1089" y="297" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-32 &middot; B8</text>
+          <rect x="555" y="310" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="601" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-33 &middot; B9</text>
+          <rect x="653" y="310" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="699" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-34 &middot; B9</text>
+          <rect x="751" y="310" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="797" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-35 &middot; B9</text>
+          <rect x="849" y="310" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="895" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-36 &middot; B9</text>
+          <rect x="947" y="310" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="993" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-37 &middot; B10</text>
+          <rect x="1045" y="310" width="88" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="1089" y="327" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-38 &middot; B10</text>
+          <rect x="555" y="340" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="601" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-39 &middot; B10</text>
+          <rect x="653" y="340" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="699" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-40 &middot; B10</text>
+          <rect x="751" y="340" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="797" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-41 &middot; B11</text>
+          <rect x="849" y="340" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="895" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-42 &middot; B11</text>
+          <rect x="947" y="340" width="93" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="993" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-43 &middot; B11</text>
+          <rect x="1045" y="340" width="88" height="26" fill="url(#cassetteGrid)" stroke="#CE181E" stroke-width="0.75"/><text x="1089" y="357" fill="#f5f0f0" font-size="8" text-anchor="middle" font-weight="700">C-44 &middot; B11</text>
+        </g>
+      </g>
+      <g>
+        <rect x="60" y="400" width="560" height="130" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.45)" stroke-width="1.25"/>
+        <text x="70" y="420" fill="#ef4444" font-size="11" font-weight="800">REAR SLAB &mdash; 42,000 sq ft</text>
+        <text x="70" y="434" fill="rgba(239,68,68,0.75)" font-size="8" font-weight="600">44 Cat CG260-16 gensets &middot; 11 block transformers &middot; 11 block switchboards &middot; 39.6 MWh BESS</text>
+        <g>
+          <rect x="75" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="98" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B1</text><text x="98" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="98" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="125" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="148" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B2</text><text x="148" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="148" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="175" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="198" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B3</text><text x="198" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="198" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="225" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="248" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B4</text><text x="248" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="248" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="275" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="298" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B5</text><text x="298" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="298" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="325" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="348" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B6</text><text x="348" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="348" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="375" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="398" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B7</text><text x="398" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="398" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="425" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="448" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B8</text><text x="448" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="448" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="475" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="498" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B9</text><text x="498" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="498" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="525" y="450" width="46" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="548" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B10</text><text x="548" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gensets</text><text x="548" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+          <rect x="575" y="450" width="36" height="60" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.5)" stroke-width="0.75"/><text x="593" y="473" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="700">B11</text><text x="593" y="488" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">4 gen</text><text x="593" y="500" fill="rgba(239,68,68,0.6)" font-size="6" text-anchor="middle">BESS</text>
+        </g>
+      </g>
+      <g>
+        <rect x="640" y="400" width="500" height="130" fill="rgba(59,158,255,0.05)" stroke="rgba(59,158,255,0.45)" stroke-width="1.25"/>
+        <text x="650" y="420" fill="#3b9eff" font-size="11" font-weight="800">INFRASTRUCTURE YARD &mdash; 28,000 sq ft</text>
+        <text x="650" y="434" fill="rgba(59,158,255,0.75)" font-size="8" font-weight="600">Cooling tower field (~72.9 MW rejection) &middot; SCR units &middot; jacket-water radiators &middot; make-up water treatment</text>
+        <g>
+          <rect x="660" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="690" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-01</text><text x="690" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="690" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="725" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="755" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-02</text><text x="755" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="755" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="790" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="820" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-03</text><text x="820" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="820" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="855" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="885" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-04</text><text x="885" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="885" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="920" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="950" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-05</text><text x="950" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="950" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="985" y="450" width="60" height="60" fill="rgba(59,158,255,0.12)" stroke="rgba(59,158,255,0.5)" stroke-width="0.75" rx="4"/><text x="1015" y="478" fill="#3b9eff" font-size="8" text-anchor="middle" font-weight="700">CT-06</text><text x="1015" y="492" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">Wet mech</text><text x="1015" y="502" fill="rgba(59,158,255,0.6)" font-size="6" text-anchor="middle">draft</text>
+          <rect x="1055" y="450" width="75" height="60" fill="rgba(255,165,0,0.1)" stroke="rgba(255,165,0,0.45)" stroke-width="0.75"/><text x="1092" y="473" fill="#ffa500" font-size="8" text-anchor="middle" font-weight="700">SCR</text><text x="1092" y="488" fill="rgba(255,165,0,0.6)" font-size="6" text-anchor="middle">Emissions</text><text x="1092" y="500" fill="rgba(255,165,0,0.6)" font-size="6" text-anchor="middle">control</text>
+        </g>
+      </g>
+      <g>
+        <rect x="1060" y="60" width="100" height="70" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.4)" stroke-width="0.75" stroke-dasharray="5,3"/>
+        <text x="1110" y="84" fill="rgba(168,85,247,0.85)" font-size="9" text-anchor="middle" font-weight="800">LUS</text>
+        <text x="1110" y="97" fill="rgba(168,85,247,0.75)" font-size="8" text-anchor="middle" font-weight="600">Pinhook Substation</text>
+        <text x="1110" y="112" fill="rgba(168,85,247,0.55)" font-size="7" text-anchor="middle">Adjacent</text>
+        <text x="1110" y="122" fill="rgba(168,85,247,0.55)" font-size="7" text-anchor="middle" font-style="italic">Future only</text>
+      </g>
+      <g>
+        <rect x="60" y="540" width="160" height="40" fill="rgba(255,165,0,0.08)" stroke="rgba(255,165,0,0.4)" stroke-width="0.75"/>
+        <text x="140" y="558" fill="#ffa500" font-size="9" text-anchor="middle" font-weight="700">ATMOS GAS SERVICE</text>
+        <text x="140" y="572" fill="rgba(255,165,0,0.65)" font-size="7" text-anchor="middle">Firm-supply lock (Stage 1 gating)</text>
+      </g>
+      <rect x="240" y="540" width="900" height="40" fill="url(#expansionHatch)" stroke="rgba(255,255,255,0.18)" stroke-width="0.75" stroke-dasharray="5,3"/>
+      <text x="690" y="558" fill="rgba(255,255,255,0.35)" font-size="9" text-anchor="middle" font-weight="600" letter-spacing="1">FULL BUILD STAGE 2 &mdash; DOUBLE TO 88 CASSETTES / 182.2 MW ON SAME SITE</text>
+      <text x="690" y="572" fill="rgba(255,255,255,0.25)" font-size="7" text-anchor="middle" font-style="italic">Rear slab and infrastructure yard sized for full build from day one</text>
+    </svg>
+    <div class="fp-stats">
+      <div class="fp-stat"><div class="n">44</div><div class="l">Cassettes (Stage 1)</div></div>
+      <div class="fp-stat"><div class="n">11</div><div class="l">Blocks (Marlie pattern)</div></div>
+      <div class="fp-stat"><div class="n">28,512</div><div class="l">Vera Rubin GPUs</div></div>
+      <div class="fp-stat"><div class="n">91.1 MW</div><div class="l">Stage 1 IT load</div></div>
+      <div class="fp-stat"><div class="n">22 ac</div><div class="l">Site area</div></div>
+    </div>
+    <div class="fp-legend">
+      <div class="fp-leg"><div class="sw" style="background:rgba(255,165,0,0.1);border-color:rgba(255,165,0,0.5)"></div>B1 / B2 historic (rooftop solar)</div>
+      <div class="fp-leg"><div class="sw" style="background:rgba(206,24,30,0.08);border-color:rgba(206,24,30,0.45)"></div>B3 / B4 compute halls (44 cassettes)</div>
+      <div class="fp-leg"><div class="sw" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.5)"></div>Rear slab (gensets + BESS)</div>
+      <div class="fp-leg"><div class="sw" style="background:rgba(59,158,255,0.12);border-color:rgba(59,158,255,0.5)"></div>Infrastructure yard (cooling towers)</div>
+      <div class="fp-leg"><div class="sw" style="background:rgba(168,85,247,0.08);border-color:rgba(168,85,247,0.4)"></div>Historic landmark / future optionality</div>
+    </div>
+    <div class="fp-note">Schematic site plan, not to scale. Stage 1 operational layout: 44 cassettes across B3 (20) and B4 (24), 11 blocks of 4 cassettes each, 44 Cat CG260-16 gensets grouped by block on the rear slab, cooling tower field in the infrastructure yard, 2.05 MW First Solar rooftop solar on B1/B2, behind-the-meter permanent electrical island. Full Build (Stage 2) doubles to 88 cassettes / 22 blocks / 182.2 MW on the same site. Historic water tower and Vermilion River frontage are site amenities with no thermal role in the cooling plant.</div>
+  </div>
+  <div class="desc">
+    <strong>22-acre historic cannery site, Vermilion River frontage.</strong> 12 nationally registered structures. Building allocation at Stage 1: <strong>B1 and B2</strong> are historic structures, restored for NOC / partner hub / rooftop solar (2.05 MW First Solar, 3,731 panels total across both rooftops). <strong>B3</strong> is compute hall holding 20 cassettes. <strong>B4</strong> is compute hall holding 24 cassettes. Total Stage 1 = 44 cassettes across B3 and B4. <strong>Rear slab</strong> (42,000 sq ft): genset installation (44 Cat CG260-16 gensets in 11 block groupings), block transformers, block 480 VAC switchboards, block BESS enclosures, jacket-water air radiators. <strong>Infrastructure yard</strong> (28,000 sq ft): cooling tower field, SCR units, facility pumps, make-up water treatment. Vermilion River frontage preserved as site amenity (rebuilt seawall, public riverwalk); historic water tower preserved as site landmark only &mdash; no thermal role. Full Build (Stage 2) doubles cassette count to 88 on the same site; rear slab and infrastructure yard sized for full build from day one.
+  </div>
+</div>
+
+<div class="section-label">Cooling</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>C-001: Cooling Flow Schematic (GPU &amp; CHP)</h2>
+    <span class="tag">Two Independent Paths</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/cooling-schematic.svg" alt="Cooling Flow Schematic" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">C-001 Cooling Flow Schematic</div>
+        <div>Expected path: <code>trappeys/blueprints/cooling-schematic.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Two independent heat paths.</strong> <strong>GPU path (per cassette):</strong> NVIDIA NVL72/CPX compute rack liquid cold-plates deliver heat to a CoolIT CHx2000 external CDU skid mounted adjacent to the cassette; the CDU closes a PG25 internal loop and exchanges heat through a facility plate heat exchanger (PHX-001) at the cassette boundary. Staubli UQD-25 quick-disconnects at the rack interface; GPU supply &le;45&deg;C, return ~50&ndash;55&deg;C. Facility warm-water header (open, raw water) routes through PHX-001 to the cooling tower field in the infrastructure yard &mdash; wet mechanical draft working basis, sized for Lafayette's 28&deg;C ASHRAE 0.4% design wet-bulb. Stage 1 total GPU heat rejection ~72.9 MW (~145.7 MW Full Build). <strong>CHP path (genset waste heat, independent):</strong> Cat CG260-16 exhaust is split &mdash; a 125 kW slip-stream per cassette drives Munters DSS Pro desiccant regeneration (5.5 MW Stage 1 desiccant duty, 11 MW Full Build), remainder to stack. Jacket water (~58 MW Stage 1) rejects through dedicated air-cooled radiators on the rear slab. No heat recovery unit. No absorption chiller. No chilled-water plant. The Vermilion River is not a thermal sink.
+  </div>
+</div>
+
+<div class="section-label">Power Distribution</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>P-001: Power Distribution &mdash; 11 Blocks, Stage 1</h2>
+    <span class="tag">Behind-the-Meter Permanent Island</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/power-distribution.svg" alt="Power Distribution Schematic" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">P-001 Power Distribution</div>
+        <div>Expected path: <code>trappeys/blueprints/power-distribution.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>Stage 1 campus distribution: 11 replicated blocks, behind-the-meter permanent island.</strong> Each block is electrically self-contained. Per block: 4 &times; Cat CG260-16 gensets paralleled at 13.8 kV &rarr; ~15 MVA step-down transformer &rarr; 480 VAC switchboard (single convergence point for generation, storage, solar, cooling, cassette feeds) &rarr; 4 cassette primary feeds. Stage 1 total generation capacity at 61.5% anchor loading: 108.24 MW &mdash; positive margin of ~2 to 4 MW over total campus load (~104&ndash;106 MW working estimate). BESS (LFP chemistry, ~3.6 MWh working per block, 39.6 MWh Stage 1 total) AC-coupled through Hitachi AMPS PCS SiC bidirectional inverter &mdash; always active as stabilizer, not standby. Solar (2.05 MW First Solar Series 7 CdTe on B1/B2 rooftops) AC-coupled through grid-forming PV inverter. Protection coordinates inside each block: 87G generator differential per unit; 87B bus differential on the 13.8 kV MV bus; 87T transformer differential; LSIG 480 VAC main trip unit; three-stage UFLS at the MV inlet shedding cassette lanes in priority order. No campus-level MV ring, no inter-block tie day one; each block's blast radius is contained. LUS Pinhook Substation is spatially allocated as future optionality only; day-one operation is permanent island mode. Sub-100 ms GPU transients are handled inside the cassette by rack-integrated BBU and Power Capacitance Shelf.
+  </div>
+</div>
+
+<div class="section-label">Solar</div>
+
+<div class="sheet">
+  <div class="sheet-header">
+    <h2>L-001: Solar Rooftop Layout (B1 + B2)</h2>
+    <span class="tag">2.05 MW &middot; 3,731 Panels</span>
+  </div>
+  <div class="sheet-body">
+    <img src="trappeys/blueprints/solar-layout.svg" alt="Solar Rooftop Layout" style="width:100%;display:block;background:var(--surface);padding:10px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="placeholder" style="display:none">
+      <div>
+        <div class="p-label">SVG Not Loaded</div>
+        <div class="p-title">L-001 Solar Rooftop Layout</div>
+        <div>Expected path: <code>trappeys/blueprints/solar-layout.svg</code></div>
+      </div>
+    </div>
+  </div>
+  <div class="desc">
+    <strong>First Solar Series 7 CdTe thin-film rooftop array across Buildings B1 and B2 (the two historic NOC / partner hub buildings).</strong> 3,731 &times; FS-7550A-TR1 panels, 550 W each, 2.05 MW DC nameplate. 5-panel strings at 1,500 VDC (NEC LVDC ceiling); MPP ranges ~891 V (summer high-cell-temp) to ~1,013 V (winter cool-cell), within standard 1,500 VDC-rated PV inverter MPPT range. 746 complete strings with disconnects per combiner. Grid-forming PV inverter ties to block 480 VAC bus (B1/B2 tied to nearest block switchboard); anti-islanding protection intentionally disabled because the facility is the electrical island. First Solar domestic content qualifies the array for the 40% Federal Solar ITC (30% base + 10% domestic content adder) &mdash; First Solar manufactures in Perrysburg, Ohio and New Iberia, Louisiana (30 miles from site). Array at design basis provides ~2% of Stage 1 campus load under peak irradiance; dispatched via AMCL L3 as solar recapture against BESS charge state.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Trappey's Compute Center</strong><br>
+  91.1 MW AI Compute Facility &mdash; Lafayette, Louisiana<br>
+  Working drawings &mdash; cited from BOD-001 Rev 0.6, ELEC-001 Rev 1.3, THERMAL-BASIS Rev 0.6
+  <div class="footer-legal">All drawings are Design Intent working drafts that require PE-stamped engineering review before construction. Vendor selections shown reflect current engineering working basis; BESS pack, PV inverter, cooling tower model, and AI dispatch vendor are open items pending RFQ / validation. This document does not constitute an offer to sell or solicitation of an offer to buy any security or service.</div>
+</div>
+
+</body>
+</html>
