@@ -1,0 +1,39 @@
+name: Power Intel Refresh
+
+on:
+  schedule:
+    # Every Sunday at 11 PM CT (Monday 05:00 UTC) — ready for Monday morning
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic duckduckgo-search
+
+      - name: Run intel refresh
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/power_intel_refresh.py
+
+      - name: Commit updated feed
+        run: |
+          git config user.name "Power Intel Bot"
+          git config user.email "bot@adc3k.com"
+          git add adc3k-deploy/power-tracker/feed.json
+          git diff --staged --quiet || git commit -m "power intel refresh $(date -u +%Y-%m-%d)"
+          git push
