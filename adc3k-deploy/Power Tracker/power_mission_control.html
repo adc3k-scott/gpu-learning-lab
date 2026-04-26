@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POWER MISSION CONTROL — Trappey's / ADC-3K</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-0: #0a0a0a;
+    --bg-1: #111111;
+    --bg-2: #161616;
+    --bg-3: #1c1c1c;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-2: rgba(255, 255, 255, 0.16);
+    --text-0: #f5f5f0;
+    --text-1: #b8b8b0;
+    --text-2: #6e6e68;
+    --text-3: #4a4a44;
+    --gold: #d4a437;
+    --gold-dim: #8a6a1f;
+    --green: #4ade80;
+    --green-dim: #1a4d2e;
+    --amber: #fbbf24;
+    --amber-dim: #4d3a0d;
+    --red: #ef4444;
+    --red-dim: #4d1818;
+    --blue: #3b82f6;
+    --blue-dim: #1a2d4d;
+    --purple: #a78bfa;
+    --display: 'Oswald', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --body: 'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg-0);
+    color: var(--text-0);
+    font-family: var(--body);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ==================== TOP BAR ==================== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-1);
+    border-bottom: 1px solid var(--line-2);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    backdrop-filter: blur(8px);
+  }
+
+  .topbar-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .brand-mark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  .brand-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 16px;
+    background: var(--gold);
+    margin-left: 4px;
+    animation: blink 1.1s steps(2) infinite;
+    vertical-align: -2px;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .brand-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: 0.05em;
+  }
+
+  .topbar-status {
+    margin-left: auto;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .status-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .status-cell-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .status-cell-value {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-0);
+  }
+
+  .status-cell-value.gold { color: var(--gold); }
+  .status-cell-value.green { color: var(--green); }
+  .status-cell-value.amber { color: var(--amber); }
+
+  .live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 6px;
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ==================== LAYOUT ==================== */
+  .container {
+    position: relative;
+    z-index: 1;
+    padding: 24px 28px 80px;
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+
+  /* ==================== TAB NAV ==================== */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-2);
+    padding: 14px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab:hover { color: var(--text-0); }
+
+  .tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .tab-count {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 6px;
+    background: var(--bg-2);
+    border-radius: 10px;
+    font-size: 10px;
+    color: var(--text-1);
+  }
+
+  .tab.active .tab-count {
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ==================== KPI ROW ==================== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 28px;
+    border: 1px solid var(--line);
+    background: var(--bg-1);
+  }
+
+  .kpi {
+    padding: 18px 20px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+
+  .kpi:last-child { border-right: none; }
+
+  .kpi-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-0);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .kpi-value .unit {
+    font-size: 13px;
+    color: var(--text-2);
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  .kpi-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-2);
+    margin-top: 6px;
+  }
+
+  .kpi-value.gold { color: var(--gold); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.amber { color: var(--amber); }
+
+  /* ==================== TOOLBAR ==================== */
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    background: var(--bg-2);
+    color: var(--text-0);
+    border: 1px solid var(--line-2);
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .btn:hover {
+    background: var(--bg-3);
+    border-color: var(--text-3);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg-0);
+    border-color: var(--gold);
+  }
+
+  .btn-primary:hover {
+    background: #e8b94a;
+  }
+
+  .search-input {
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    color: var(--text-0);
+    padding: 8px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    min-width: 280px;
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .filter-chip {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .filter-chip:hover { border-color: var(--text-3); color: var(--text-0); }
+  .filter-chip.active {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ==================== TABLE ==================== */
+  .table-wrap {
+    border: 1px solid var(--line);
+    background: var(--bg-1);
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  th {
+    text-align: left;
+    background: var(--bg-2);
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--line-2);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  th:hover { color: var(--text-0); }
+
+  th.sorted-asc::after { content: ' ▲'; color: var(--gold); font-size: 8px; }
+  th.sorted-desc::after { content: ' ▼'; color: var(--gold); font-size: 8px; }
+
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    font-size: 12px;
+  }
+
+  tbody tr {
+    transition: background 0.1s;
+    cursor: pointer;
+  }
+
+  tbody tr:hover { background: var(--bg-2); }
+
+  td.col-name { font-weight: 500; color: var(--text-0); min-width: 180px; }
+  td.col-model { font-family: var(--mono); font-size: 11px; color: var(--text-1); }
+  td.col-mw { font-family: var(--mono); font-weight: 600; color: var(--gold); text-align: right; }
+  td.col-numeric { font-family: var(--mono); text-align: right; }
+  td.col-notes { color: var(--text-1); font-size: 11px; max-width: 280px; }
+
+  /* ==================== STATUS PILLS ==================== */
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .pill-new { background: var(--blue-dim); color: var(--blue); border-color: var(--blue); }
+  .pill-rfi { background: var(--amber-dim); color: var(--amber); border-color: var(--amber); }
+  .pill-quoted { background: var(--purple); color: #fff; opacity: 0.85; }
+  .pill-negotiating { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
+  .pill-ordered { background: var(--green-dim); color: var(--green); border-color: var(--green); }
+  .pill-delivered { background: var(--green); color: var(--bg-0); }
+  .pill-passed { background: var(--bg-3); color: var(--text-2); border-color: var(--line-2); }
+  .pill-lost { background: var(--red-dim); color: var(--red); border-color: var(--red); }
+
+  .pill-tier-1 { background: var(--green-dim); color: var(--green); }
+  .pill-tier-2 { background: var(--amber-dim); color: var(--amber); }
+  .pill-tier-3 { background: var(--bg-3); color: var(--text-1); }
+
+  .pill-cond-new { background: var(--green-dim); color: var(--green); }
+  .pill-cond-refurb { background: var(--blue-dim); color: var(--blue); }
+  .pill-cond-used { background: var(--amber-dim); color: var(--amber); }
+  .pill-cond-engine { background: var(--gold-dim); color: var(--gold); }
+
+  /* ==================== MODAL ==================== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow-y: auto;
+  }
+
+  .modal-backdrop.active { display: flex; }
+
+  .modal {
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    width: 100%;
+    max-width: 720px;
+    padding: 28px 32px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .modal-title {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-2);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .modal-close:hover { color: var(--text-0); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-grid .full { grid-column: 1 / -1; }
+
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-field label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    color: var(--text-0);
+    padding: 8px 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .form-field textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-family: var(--body);
+    font-size: 12px;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ==================== CONTACTS GRID ==================== */
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+
+  .contact-card {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    transition: all 0.12s;
+  }
+
+  .contact-card:hover {
+    border-color: var(--text-3);
+  }
+
+  .contact-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .contact-card-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    color: var(--text-0);
+  }
+
+  .contact-card-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-2);
+    margin-top: 4px;
+  }
+
+  .contact-card-pitch {
+    font-size: 11px;
+    color: var(--text-1);
+    line-height: 1.55;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-card-rows {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 4px 10px;
+    font-size: 11px;
+  }
+
+  .contact-card-rows .lbl {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .contact-card-rows .val {
+    font-family: var(--mono);
+    color: var(--text-0);
+    word-break: break-word;
+  }
+
+  .contact-card-rows .val a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .contact-card-rows .val a:hover { text-decoration: underline; }
+
+  /* ==================== SOURCES (DAILY SCRAPE) ==================== */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+  }
+
+  .source-card {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+  }
+
+  .source-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .source-card-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .source-card-cat {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .source-card-desc {
+    font-size: 11px;
+    color: var(--text-1);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .source-card-link {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-2);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .source-card-link:hover { color: var(--gold); }
+
+  /* ==================== DAILY BRIEF ==================== */
+  .brief-section {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .brief-section-head {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brief-template {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text-1);
+    white-space: pre-wrap;
+    margin-top: 12px;
+  }
+
+  /* ==================== HEADER SECTION ==================== */
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+
+  .panel-title {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-0);
+  }
+
+  .panel-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+  }
+
+  /* Detail panel for opportunity */
+  .detail-section {
+    margin-bottom: 20px;
+  }
+
+  .detail-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .detail-value {
+    font-size: 13px;
+    color: var(--text-0);
+    line-height: 1.6;
+  }
+
+  .detail-value.mono { font-family: var(--mono); font-size: 12px; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Empty state */
+  .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-2);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Tag system */
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 6px;
+    background: var(--bg-3);
+    color: var(--text-1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-1); }
+  ::-webkit-scrollbar-thumb { background: var(--bg-3); border: 2px solid var(--bg-1); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+</style>
+</head>
+<body>
+
+<!-- ==================== TOP BAR ==================== -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-mark">POWER MISSION CONTROL<span class="brand-cursor"></span></div>
+    <div class="brand-sub">v1.0 · TRAPPEY'S COMPUTE CENTER · ADC-3K · LAFAYETTE, LA</div>
+  </div>
+  <div class="topbar-status">
+    <div class="status-cell">
+      <div class="status-cell-label">Pipeline</div>
+      <div class="status-cell-value gold" id="kpi-pipeline-mw">— MW</div>
+    </div>
+    <div class="status-cell">
+      <div class="status-cell-label">Active RFIs</div>
+      <div class="status-cell-value" id="kpi-active-rfi">—</div>
+    </div>
+    <div class="status-cell">
+      <div class="status-cell-label">Live</div>
+      <div class="status-cell-value green"><span class="live-dot"></span><span id="clock">00:00:00</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== TABS ==================== -->
+  <div class="tabs">
+    <button class="tab active" data-tab="dashboard">Dashboard</button>
+    <button class="tab" data-tab="opportunities">Opportunities <span class="tab-count" id="tab-count-opps">0</span></button>
+    <button class="tab" data-tab="oems">OEM Directory <span class="tab-count" id="tab-count-oems">0</span></button>
+    <button class="tab" data-tab="sources">Daily Sources <span class="tab-count" id="tab-count-sources">0</span></button>
+    <button class="tab" data-tab="rfi">RFI Templates</button>
+    <button class="tab" data-tab="brief">Daily Brief</button>
+  </div>
+
+  <!-- ==================== DASHBOARD PANEL ==================== -->
+  <div class="panel active" id="panel-dashboard">
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Target Capacity</div>
+        <div class="kpi-value gold" id="kpi-target">100<span class="unit">MW</span></div>
+        <div class="kpi-sub">Trappey's Phase 1</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pipeline Total</div>
+        <div class="kpi-value" id="kpi-pipeline">0<span class="unit">MW</span></div>
+        <div class="kpi-sub">All opportunities</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Quoted</div>
+        <div class="kpi-value amber" id="kpi-quoted">0<span class="unit">MW</span></div>
+        <div class="kpi-sub">Active negotiations</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Ordered / Locked</div>
+        <div class="kpi-value green" id="kpi-ordered">0<span class="unit">MW</span></div>
+        <div class="kpi-sub">PO placed or signed</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Earliest Power</div>
+        <div class="kpi-value" id="kpi-earliest">—</div>
+        <div class="kpi-sub">First available delivery</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">OEMs in Play</div>
+        <div class="kpi-value" id="kpi-oems-active">0</div>
+        <div class="kpi-sub">Multi-source strategy</div>
+      </div>
+    </div>
+
+    <div class="panel-head">
+      <div class="panel-title">RECENT ACTIVITY</div>
+      <div class="panel-sub" id="last-activity">—</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>OEM / Source</th>
+            <th>Model</th>
+            <th>MW</th>
+            <th>Condition</th>
+            <th>Tier</th>
+            <th>Lead Time</th>
+            <th>$/kW</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody id="recent-tbody">
+          <tr><td colspan="9" class="empty">No activity yet — add your first opportunity</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== OPPORTUNITIES PANEL ==================== -->
+  <div class="panel" id="panel-opportunities">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">POWER OPPORTUNITIES</div>
+        <div class="panel-sub">Every quote, every lead, every available unit — single source of truth</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn btn-primary" onclick="openOpportunityModal()">+ New Opportunity</button>
+      <input type="text" class="search-input" id="opp-search" placeholder="Search by OEM, model, broker, location..." oninput="renderOpps()">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter('all')">All</button>
+      <button class="filter-chip" data-filter="tier-1" onclick="setFilter('tier-1')">Tier 1 (≤90d)</button>
+      <button class="filter-chip" data-filter="tier-2" onclick="setFilter('tier-2')">Tier 2 (≤18mo)</button>
+      <button class="filter-chip" data-filter="tier-3" onclick="setFilter('tier-3')">Tier 3 (>18mo)</button>
+      <button class="filter-chip" data-filter="active" onclick="setFilter('active')">Active</button>
+      <button class="filter-chip" data-filter="ordered" onclick="setFilter('ordered')">Ordered</button>
+      <button class="btn" onclick="exportData()">Export JSON</button>
+      <button class="btn" onclick="document.getElementById('import-input').click()">Import JSON</button>
+      <input type="file" id="import-input" style="display:none" accept=".json" onchange="importData(event)">
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="status">Status</th>
+            <th data-sort="oem">OEM / Source</th>
+            <th data-sort="model">Model</th>
+            <th data-sort="mw">MW</th>
+            <th data-sort="condition">Condition</th>
+            <th data-sort="tier">Tier</th>
+            <th data-sort="lead_weeks">Lead Time</th>
+            <th data-sort="price_per_kw">$/kW</th>
+            <th data-sort="contact">Contact</th>
+            <th data-sort="updated">Updated</th>
+          </tr>
+        </thead>
+        <tbody id="opps-tbody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== OEM DIRECTORY PANEL ==================== -->
+  <div class="panel" id="panel-oems">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">OEM & VENDOR DIRECTORY</div>
+        <div class="panel-sub">Every manufacturer, packager, broker, and rebuilder — pre-loaded contact list</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" class="search-input" id="oem-search" placeholder="Search OEMs by name, model, region..." oninput="renderOEMs()">
+      <button class="filter-chip active" data-oem-filter="all" onclick="setOEMFilter('all')">All</button>
+      <button class="filter-chip" data-oem-filter="reciprocating" onclick="setOEMFilter('reciprocating')">Reciprocating</button>
+      <button class="filter-chip" data-oem-filter="turbine" onclick="setOEMFilter('turbine')">Turbines</button>
+      <button class="filter-chip" data-oem-filter="aero" onclick="setOEMFilter('aero')">Aero-derivative</button>
+      <button class="filter-chip" data-oem-filter="rental" onclick="setOEMFilter('rental')">Rental / PPA</button>
+      <button class="filter-chip" data-oem-filter="used" onclick="setOEMFilter('used')">Used / Surplus</button>
+      <button class="filter-chip" data-oem-filter="rebuild" onclick="setOEMFilter('rebuild')">Rebuild Houses</button>
+    </div>
+
+    <div class="contacts-grid" id="oems-grid"></div>
+  </div>
+
+  <!-- ==================== DAILY SOURCES PANEL ==================== -->
+  <div class="panel" id="panel-sources">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">DAILY INTELLIGENCE SOURCES</div>
+        <div class="panel-sub">Listing platforms, brokers, news feeds — your daily scout's run-list</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="filter-chip active" data-src-filter="all" onclick="setSrcFilter('all')">All Sources</button>
+      <button class="filter-chip" data-src-filter="auction" onclick="setSrcFilter('auction')">Auctions</button>
+      <button class="filter-chip" data-src-filter="broker" onclick="setSrcFilter('broker')">Brokers</button>
+      <button class="filter-chip" data-src-filter="aero" onclick="setSrcFilter('aero')">Aero Engines</button>
+      <button class="filter-chip" data-src-filter="news" onclick="setSrcFilter('news')">News Feeds</button>
+      <button class="filter-chip" data-src-filter="govt" onclick="setSrcFilter('govt')">Govt / Surplus</button>
+    </div>
+
+    <div class="sources-grid" id="sources-grid"></div>
+  </div>
+
+  <!-- ==================== RFI TEMPLATES PANEL ==================== -->
+  <div class="panel" id="panel-rfi">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">RFI TEMPLATES</div>
+        <div class="panel-sub">Pre-drafted outreach for OEMs, brokers, and surplus channels — copy & customize</div>
+      </div>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">Site Specs (auto-included in every RFI)</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Site Name</label>
+          <input type="text" id="site-name" value="Trappey's Compute Center">
+        </div>
+        <div class="form-field">
+          <label>Location</label>
+          <input type="text" id="site-location" value="Lafayette Parish, Louisiana (Vermilion River corridor)">
+        </div>
+        <div class="form-field">
+          <label>Target MW</label>
+          <input type="text" id="site-mw" value="100 MW Phase 1, expandable to 250+ MW">
+        </div>
+        <div class="form-field">
+          <label>Power Architecture</label>
+          <input type="text" id="site-arch" value="800 VDC common bus, in-row power racks, DC-coupled BESS">
+        </div>
+        <div class="form-field">
+          <label>Ambient Conditions</label>
+          <input type="text" id="site-ambient" value="32–98°F, 60–95% RH, FEMA Zone X (no flood)">
+        </div>
+        <div class="form-field">
+          <label>Gas Supply</label>
+          <input type="text" id="site-gas" value="Behind-the-meter natural gas, pipeline-connected, $2.50–3.50/MMBtu">
+        </div>
+        <div class="form-field">
+          <label>Schedule</label>
+          <input type="text" id="site-schedule" value="First power Q3-Q4 2027, full Phase 1 by Q2 2028">
+        </div>
+        <div class="form-field">
+          <label>Buyer Profile</label>
+          <input type="text" id="site-buyer" value="Scott Tomsu, contractor's license LA, self-perform install">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="saveSiteSpecs()">Save Site Specs</button>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">RFI Template — OEM (New Equipment)</div>
+      <div class="brief-template" id="rfi-oem"></div>
+      <button class="btn" style="margin-top:12px" onclick="copyTemplate('rfi-oem')">Copy to Clipboard</button>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">RFI Template — Broker / Surplus / Used</div>
+      <div class="brief-template" id="rfi-broker"></div>
+      <button class="btn" style="margin-top:12px" onclick="copyTemplate('rfi-broker')">Copy to Clipboard</button>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">RFI Template — PPA / Rental / Bridge Power</div>
+      <div class="brief-template" id="rfi-ppa"></div>
+      <button class="btn" style="margin-top:12px" onclick="copyTemplate('rfi-ppa')">Copy to Clipboard</button>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">RFI Template — Engine-Only / Rebuilder / Aero Core</div>
+      <div class="brief-template" id="rfi-engine"></div>
+      <button class="btn" style="margin-top:12px" onclick="copyTemplate('rfi-engine')">Copy to Clipboard</button>
+    </div>
+  </div>
+
+  <!-- ==================== DAILY BRIEF PANEL ==================== -->
+  <div class="panel" id="panel-brief">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">DAILY SCOUT BRIEF</div>
+        <div class="panel-sub">Morning intelligence routine — what to check, who to call, what to chase</div>
+      </div>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">Morning Routine — 30 Minutes Over Coffee</div>
+      <div class="brief-template">[ 06:00 ] CHECK OVERNIGHT LISTINGS
+   • IronPlanet / Ritchie Bros — gas gensets ≥1 MW
+   • Surplus Record — power generation
+   • Machinio — "natural gas engine" + "MW"
+   • Power Plants Online — new arrivals
+
+[ 06:15 ] SCAN NEWS FEEDS
+   • Data Center Dynamics — cancelled projects
+   • POWER Magazine — decommissioning notices
+   • DCD — "for sale" / "divest"
+   • Reuters Energy — utility plant retirements
+
+[ 06:25 ] GOOGLE ALERTS REVIEW
+   • "gas turbine surplus"
+   • "power plant decommission"
+   • "data center cancelled"
+   • "[OEM model] for sale"
+   • "behind the meter" + "Louisiana"
+
+[ 06:35 ] LINKEDIN PULSE CHECK
+   • Saved searches: "decommissioning manager"
+   • Connections from oil & gas operators
+   • New posts from tracked brokers
+
+[ 06:45 ] LOG & TRIAGE
+   • Add new opportunities to tracker
+   • Mark for follow-up if MW > 1, lead time < 18mo
+   • Tag for outreach by EOD if Tier 1
+</div>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">Weekly Cadence</div>
+      <div class="brief-template">MONDAY    Outbound to brokers — "what came in this week?"
+TUESDAY   OEM rep check-ins (rotate 4-5 per week, full list every 3 weeks)
+WEDNESDAY Aero engine teardown announcements (AerSale, FTAI quarterly news)
+THURSDAY  Oil & gas decommissioning (Permian, Bakken, Eagle Ford operators)
+FRIDAY    Industry events scan (PowerGen, Data Center World, OTC)
+WEEKEND   Aggregator deep-scan + opportunity scoring review
+</div>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">Monthly Strategic Review</div>
+      <div class="brief-template">• Pipeline by tier — are we balanced across speed and ownership?
+• Cancellation log — which OEMs/brokers underdelivered?
+• Win/loss analysis — what we passed on, what we secured
+• Update Mission Control quotes (re-RFI stale prices >60 days)
+• Re-rank vendors on $/kW × lead time × reliability
+• Review competitive intel — who else is buying in our space?
+</div>
+    </div>
+
+    <div class="brief-section">
+      <div class="brief-section-head">Decision Rules — When to Pull the Trigger</div>
+      <div class="brief-template">PASS                                    Used unit, no logbook, > $400/kW
+PASS                                    OEM lead time > 36 months, no slot lock available
+PASS                                    Engine-only, no qualified packager identified
+
+CHASE (24h follow-up)                   Tier 1 unit, > 5 MW, in good condition
+CHASE                                   OEM cancellation slot opening (any size, < 18mo)
+CHASE                                   Aero core in liquid market (CF6, PW4000)
+
+PURSUE TO PO                            $/kW < $250 OR lead time < 90 days
+PURSUE TO PO                            Strategic OEM relationship-builder
+PURSUE TO PO                            Fits site architecture (800 VDC compatible)
+</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== OPPORTUNITY MODAL ==================== -->
+<div class="modal-backdrop" id="opp-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="opp-modal-title">NEW OPPORTUNITY</div>
+      <button class="modal-close" onclick="closeOpportunityModal()">×</button>
+    </div>
+    <form id="opp-form" onsubmit="saveOpportunity(event)">
+      <input type="hidden" id="opp-id" value="">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>OEM / Source</label>
+          <input type="text" id="opp-oem" required placeholder="Wärtsilä, VoltaGrid, IronPlanet, etc.">
+        </div>
+        <div class="form-field">
+          <label>Model / Description</label>
+          <input type="text" id="opp-model" required placeholder="50SG, J920, CG260-16, PE6000...">
+        </div>
+        <div class="form-field">
+          <label>MW (per unit)</label>
+          <input type="number" step="0.1" id="opp-mw-unit" placeholder="2.5">
+        </div>
+        <div class="form-field">
+          <label>Quantity</label>
+          <input type="number" id="opp-qty" value="1" min="1">
+        </div>
+        <div class="form-field">
+          <label>Total MW</label>
+          <input type="number" step="0.1" id="opp-mw" required placeholder="auto-calculated">
+        </div>
+        <div class="form-field">
+          <label>Condition</label>
+          <select id="opp-condition" required>
+            <option value="new">New</option>
+            <option value="refurb">Refurbished</option>
+            <option value="used">Used (as-is)</option>
+            <option value="engine-only">Engine Only (skid required)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Status</label>
+          <select id="opp-status" required>
+            <option value="new">New Lead</option>
+            <option value="rfi">RFI Sent</option>
+            <option value="quoted">Quoted</option>
+            <option value="negotiating">Negotiating</option>
+            <option value="ordered">Ordered / Locked</option>
+            <option value="delivered">Delivered</option>
+            <option value="passed">Passed</option>
+            <option value="lost">Lost</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Tier</label>
+          <select id="opp-tier" required>
+            <option value="1">Tier 1 — ≤90 days</option>
+            <option value="2">Tier 2 — 3–18 months</option>
+            <option value="3">Tier 3 — 18+ months</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Lead Time (weeks)</label>
+          <input type="number" id="opp-lead" placeholder="weeks until delivery">
+        </div>
+        <div class="form-field">
+          <label>Price ($ per kW)</label>
+          <input type="number" id="opp-price" placeholder="e.g. 800">
+        </div>
+        <div class="form-field full">
+          <label>Contact (Name / Email / Phone)</label>
+          <input type="text" id="opp-contact" placeholder="Risto Paldanius / risto.paldanius@wartsila.com / +1 281 233 6200">
+        </div>
+        <div class="form-field full">
+          <label>Location / Source URL</label>
+          <input type="text" id="opp-location" placeholder="Houston TX / https://...">
+        </div>
+        <div class="form-field full">
+          <label>Notes</label>
+          <textarea id="opp-notes" placeholder="Logbook info, hours, location, condition details, deal terms..."></textarea>
+        </div>
+        <div class="form-field full">
+          <label>Tags (comma-separated)</label>
+          <input type="text" id="opp-tags" placeholder="hot-ambient, fast-start, delta-cassette-fit, BTM-ready">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn" onclick="closeOpportunityModal()">Cancel</button>
+        <button type="button" class="btn" id="delete-btn" onclick="deleteOpportunity()" style="color:var(--red); display:none">Delete</button>
+        <button type="submit" class="btn btn-primary">Save Opportunity</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ==================== STATE ====================
+const STORAGE_KEY = 'pmc_v1';
+const SITE_KEY = 'pmc_site_v1';
+let opportunities = [];
+let currentFilter = 'all';
+let currentOEMFilter = 'all';
+let currentSrcFilter = 'all';
+let sortField = 'updated';
+let sortAsc = false;
+let siteSpecs = {
+  name: "Trappey's Compute Center",
+  location: "Lafayette Parish, Louisiana (Vermilion River corridor)",
+  mw: "100 MW Phase 1, expandable to 250+ MW",
+  arch: "800 VDC common bus, in-row power racks, DC-coupled BESS",
+  ambient: "32–98°F, 60–95% RH, FEMA Zone X (no flood)",
+  gas: "Behind-the-meter natural gas, pipeline-connected, $2.50–3.50/MMBtu",
+  schedule: "First power Q3-Q4 2027, full Phase 1 by Q2 2028",
+  buyer: "Scott Tomsu, contractor's license LA, self-perform install"
+};
+
+// ==================== OEM DIRECTORY ====================
+const OEM_DIRECTORY = [
+  // RECIPROCATING — TIER 1 OEMs
+  { name: "Wärtsilä North America", category: "reciprocating", region: "Houston, TX",
+    pitch: "50SG (18.3 MW), 31SG (4.2-8.8 MW), 34SG (10.3 MW). Lead-time leader for data centers. Houston Logistics Center 2025. Full power at 100°F+.",
+    rows: { Phone: "+1 281 233 6200", Address: "11710 N. Gessner Rd Suite A, Houston TX 77064",
+      "VP Americas": "Risto Paldanius (Ft. Lauderdale)", Parts: "+1 954 289 5892",
+      Web: "wartsila.com/usa", Lead: "12-18mo PO to first power" } },
+
+  { name: "INNIO Jenbacher North America", category: "reciprocating", region: "Waukesha, WI",
+    pitch: "J920 FleXtra (10.6 MW, 48.7% efficiency, 2-min start), J624, J620. Hot-ambient to 122°F. 2.3 GW VoltaGrid deal Feb 2026.",
+    rows: { Email: "contact.en@innio.com", Web: "jenbacher.us",
+      "NA HQ": "Waukesha, WI", Lead: "12-24mo (tightening)" } },
+
+  { name: "Caterpillar / Louisiana Cat", category: "reciprocating", region: "Reserve, LA",
+    pitch: "G3520K (2.5 MW), CG260-16 (~4.5 MW), CG170-20. Backlog $51B, sold out through 2027. Lock 2028+ slots now.",
+    rows: { Web: "louisianacat.com", "Sr VP E&T": "Melissa Busen",
+      "LA Dealer": "Louisiana Cat", Lead: "24-30mo PO to delivery" } },
+
+  { name: "MTU / Rolls-Royce Power Systems", category: "reciprocating", region: "Novi, MI",
+    pitch: "Series 4000 gas (2.5 MW), Series 8000 (10 MW class). Strong CHP heritage. Used and refurb market exists.",
+    rows: { Phone: "+1 248 560 8000", Web: "mtu-solutions.com",
+      "NA HQ": "Novi, MI", Lead: "12-20mo" } },
+
+  { name: "MWM / Caterpillar Mannheim", category: "reciprocating", region: "Mannheim, Germany",
+    pitch: "TCG 3020 (2.5 MW), TCG 2032 (4.3 MW). Same family as CG260 but separate sales channel. EU-built, US imports via Cat dealers.",
+    rows: { Web: "mwm.net", Channel: "Via Cat dealers or direct EU",
+      Lead: "16-22mo" } },
+
+  { name: "Mitsubishi Power", category: "reciprocating", region: "Lake Mary, FL",
+    pitch: "KU30GA gas engines (5.5 MW), KU38G (7.8 MW). Lower visibility in US market, may have shorter queue.",
+    rows: { Phone: "+1 407 688 6100", Web: "power.mhi.com",
+      "Americas HQ": "Lake Mary, FL", Lead: "14-18mo (less queued than Cat/Wärtsilä)" } },
+
+  { name: "Hyundai Heavy Industries", category: "reciprocating", region: "Ulsan, S. Korea",
+    pitch: "HiMSEN H35DF (3.4 MW), H40 (5.4 MW), H46 (7.7 MW). Marine and stationary. Cost-competitive, longer ship.",
+    rows: { Web: "english.hd.co.kr", Channel: "US rep network",
+      Lead: "18-24mo + ocean freight" } },
+
+  { name: "Kawasaki Heavy Industries", category: "reciprocating", region: "Tokyo, Japan",
+    pitch: "KG-18 / KG-T series (5-7 MW). Strong CHP installations in Asia, expanding US footprint.",
+    rows: { Web: "khi.co.jp/energy", "US Office": "Houston TX",
+      Lead: "20-28mo" } },
+
+  { name: "Niigata Power Systems", category: "reciprocating", region: "Niigata, Japan",
+    pitch: "28AHX-DF (5 MW dual-fuel), 32FX (6 MW). Marine origin, gas-ready conversions.",
+    rows: { Web: "nps.niigata-power.com", Channel: "Limited US presence — direct import",
+      Lead: "18-24mo + freight" } },
+
+  { name: "Yanmar Energy Systems", category: "reciprocating", region: "Adairsville, GA",
+    pitch: "EY26 (1.4 MW), EY35 (2 MW). Smaller class but good for Marlie-block sizing.",
+    rows: { Web: "yanmar.com/us", "US HQ": "Adairsville, GA",
+      Lead: "10-14mo" } },
+
+  // TURBINES — Frame and Aeroderivative
+  { name: "GE Vernova", category: "turbine", region: "Cambridge, MA",
+    pitch: "LM2500 (~22 MW), LM6000 (40-50 MW), 7HA frames. Lead times stretched 3-5 years. Watch for cancellation slots.",
+    rows: { Web: "gevernova.com", Channel: "Direct sales + Baker Hughes",
+      Lead: "36-60mo (severely backlogged)" } },
+
+  { name: "Siemens Energy", category: "turbine", region: "Orlando, FL",
+    pitch: "SGT-A35 (32 MW), SGT-A65 (60+ MW), SGT-800. Aeroderivatives short-list for data centers.",
+    rows: { Phone: "+1 407 736 2000", Web: "siemens-energy.com",
+      "Americas HQ": "Orlando, FL", Lead: "30-48mo" } },
+
+  { name: "Solar Turbines (Cat subsidiary)", category: "turbine", region: "San Diego, CA",
+    pitch: "Centaur 40 (3.5 MW), Centaur 50 (4.6 MW), Taurus 60 (5.7 MW), Mars 100 (10 MW). Liquid used market.",
+    rows: { Phone: "+1 619 544 5000", Web: "solarturbines.com",
+      "HQ": "San Diego, CA", Lead: "16-24mo new, faster used" } },
+
+  { name: "Mitsubishi Power Aero", category: "turbine", region: "Glastonbury, CT",
+    pitch: "PW Power Systems acquisition. FT4000 (60-70 MW), FT8 (25 MW). Aero-derivative pedigree.",
+    rows: { Web: "power.mhi.com", "US HQ": "Glastonbury, CT",
+      Lead: "24-36mo" } },
+
+  { name: "Capstone Green Energy", category: "turbine", region: "Van Nuys, CA",
+    pitch: "Microturbines 30 kW to 1 MW. Smaller scale but hyper-fast deploy, used market deep.",
+    rows: { Phone: "+1 818 734 5300", Web: "capstonegreenenergy.com",
+      Lead: "3-12mo" } },
+
+  // AERO-DERIVATIVE PE6000-CLASS
+  { name: "ProEnergy", category: "aero", region: "Sedalia, MO",
+    pitch: "PE6000 — refurbished GE CF6-80C2 (Boeing 747) cores rebuilt as 48 MW aero turbines. Trailer-mounted, on-site & running in 30 days.",
+    rows: { Web: "proenergyservices.com", "VP Comm Ops": "Landon Tessmer",
+      CEO: "Jeff Canon", Lead: "30 days deploy, 2027 new builds" } },
+
+  { name: "FTAI Aviation", category: "aero", region: "New York, NY",
+    pitch: "Aircraft engine lessor pivoting to data center power. Massive CF6/PW4000 core inventory. Vertical integration play.",
+    rows: { Ticker: "NASDAQ:FTAI", Web: "ftaiaviation.com",
+      Lead: "Emerging — 2026-2027 first deliveries" } },
+
+  { name: "AerSale", category: "aero", region: "Coral Gables, FL",
+    pitch: "Aircraft and engine teardown specialist. CF6, PW4000 cores available. Possible direct sale or partnership.",
+    rows: { Web: "aersale.com", Lead: "Cores ready, conversion 6-12mo" } },
+
+  // RENTAL / PPA / BRIDGE POWER
+  { name: "VoltaGrid", category: "rental", region: "Houston, TX",
+    pitch: "Trailerized 2.5 MW Jenbacher gensets. xAI deployed in 122 days. 1.5 GW INNIO order Feb 2026. PPA model — they own iron.",
+    rows: { Web: "voltagrid.com", CEO: "Nathan Ough",
+      "VP DC Dev": "David Bell", "HQ": "Houston, TX",
+      Lead: "30-90 days first power" } },
+
+  { name: "Aggreko", category: "rental", region: "Houston, TX",
+    pitch: "Mobile gas turbines and gensets, prime power and bridge. 1-100 MW rental fleets. Industry benchmark for emergency power.",
+    rows: { Phone: "+1 800 244 7735", Web: "aggreko.com/en-us",
+      "US HQ": "Houston, TX", Lead: "7-30 days for rental" } },
+
+  { name: "United Rentals — Power & HVAC", category: "rental", region: "Stamford, CT",
+    pitch: "Gas, diesel, dual-fuel rentals. Smaller MW (1-5 MW) class but fast delivery, nationwide footprint.",
+    rows: { Phone: "+1 800 877 3687", Web: "unitedrentals.com",
+      Lead: "3-14 days" } },
+
+  { name: "Sunbelt Rentals", category: "rental", region: "Fort Mill, SC",
+    pitch: "Power generation rentals 25 kW to 2 MW. Strong Louisiana/Gulf Coast presence.",
+    rows: { Phone: "+1 800 667 9328", Web: "sunbeltrentals.com",
+      Lead: "1-7 days" } },
+
+  { name: "Caterpillar Rental Power", category: "rental", region: "Peoria, IL",
+    pitch: "Cat dealer rental fleet — diesel and gas gensets, mobile substations. Local: Louisiana Cat.",
+    rows: { Web: "cat.com/en_US/by-industry/electric-power/rentals.html",
+      "LA Dealer": "Louisiana Cat", Lead: "1-30 days" } },
+
+  // USED / SURPLUS / BROKERS
+  { name: "Power Plants Online", category: "used", region: "Online broker",
+    pitch: "Specialist surplus power equipment broker. Gensets, turbines, transformers, CHP systems. New listings weekly.",
+    rows: { Web: "powerplantsonline.com",
+      Tip: "Subscribe to weekly listings email" } },
+
+  { name: "IronPlanet / Ritchie Bros", category: "used", region: "Online auction",
+    pitch: "Industrial equipment auctions. Gensets ≥1 MW appear regularly. Set saved searches.",
+    rows: { Web: "ironplanet.com", Tip: "Filter: Power Generation > 1000 kW" } },
+
+  { name: "Surplus Record", category: "used", region: "Chicago, IL",
+    pitch: "Old-school but deep industrial used equipment listings. Owned by family since 1924.",
+    rows: { Web: "surplusrecord.com", Lead: "30-90 days typical close" } },
+
+  { name: "Machinio", category: "used", region: "Chicago, IL",
+    pitch: "Aggregator of global used industrial listings. Searchable by model, MW, location.",
+    rows: { Web: "machinio.com", Tip: "Set alerts for natural gas engine + MW range" } },
+
+  { name: "GovPlanet (Federal Surplus)", category: "used", region: "Online",
+    pitch: "Military and federal divestiture. Gensets from base closures, decommissioned facilities.",
+    rows: { Web: "govplanet.com", Tip: "Also check GSA Auctions" } },
+
+  { name: "Sulzer Turbo Services", category: "rebuild", region: "Houston, TX",
+    pitch: "Major turbine rebuilder. Aero and frame turbines, full overhauls. Source of refurb units.",
+    rows: { Web: "sulzer.com", Lead: "6-12mo overhaul" } },
+
+  { name: "MTU Maintenance / TurbineAero", category: "rebuild", region: "Hannover/global",
+    pitch: "Aero engine overhaul shops. Full disassembly, inspection, certified rebuild. Source for cores.",
+    rows: { Web: "mtu.de / turbineaero.com",
+      Tip: "Ask about retired CF6 / PW4000 cores" } },
+
+  { name: "Chromalloy", category: "rebuild", region: "Palm Beach, FL",
+    pitch: "Aero turbine hot section parts and overhaul. Long heritage, deep parts inventory.",
+    rows: { Web: "chromalloy.com", Lead: "Consult on engine availability" } },
+
+  { name: "Wabtec — Locomotive Engines", category: "rebuild", region: "Pittsburgh, PA",
+    pitch: "EMD 16-710 / 20-710 (3-4 MW) gas conversions. Surplus rail engines, well-understood platform.",
+    rows: { Web: "wabteccorp.com", Channel: "Via rebuilders or direct" } },
+
+  { name: "Cleveland Diesel", category: "rebuild", region: "Cleveland, OH",
+    pitch: "Marine and stationary engine rebuilder. MAN, Wärtsilä, MTU cores. Decades of experience.",
+    rows: { Web: "clevelandiesel.com", Lead: "6-9mo overhaul" } },
+
+  { name: "Diesel Services of America", category: "rebuild", region: "Fort Lauderdale, FL",
+    pitch: "Marine engine remanufacturer. Source for converted MAN B&W and Wärtsilä cores.",
+    rows: { Web: "dieselservices.com" } },
+
+  // OIL & GAS DECOMMISSIONING (your ROV/offshore advantage)
+  { name: "Permian Basin Operators", category: "used", region: "Midland, TX",
+    pitch: "Diamondback, Pioneer, ExxonMobil. CHP packages being dumped as electrification advances. Watch quarterly disposals.",
+    rows: { Channel: "Direct outreach to facility managers",
+      Tip: "OTC Houston May, attend industrial sessions" } },
+
+  { name: "Gulf of Mexico Decommissioning", category: "used", region: "Gulf Coast",
+    pitch: "Offshore platform decommissioning ramping up. Marine gensets, gas turbines coming to market via shipbreakers.",
+    rows: { Channel: "Brownsville TX, Mobile AL shipbreakers",
+      Tip: "Your ROV background = direct credibility" } },
+
+  { name: "AerCap (Aircraft Lessor)", category: "aero", region: "Dublin, Ireland",
+    pitch: "World's largest aircraft lessor. CF6, PW4000, V2500 cores in retiring fleet. Direct sale possible.",
+    rows: { Ticker: "NYSE:AER", Web: "aercap.com",
+      Channel: "B2B fleet retirement desk" } },
+];
+
+// ==================== DAILY SOURCES ====================
+const DAILY_SOURCES = [
+  { name: "IronPlanet", category: "auction", url: "ironplanet.com",
+    desc: "Ritchie Bros industrial auction platform. Gensets, switchgear, transformers ≥1 MW. Saved-search-driven." },
+  { name: "Ritchie Bros", category: "auction", url: "rbauction.com",
+    desc: "Parent of IronPlanet — heavy industrial auctions. Quarterly events with surplus power equipment." },
+  { name: "Surplus Record", category: "broker", url: "surplusrecord.com",
+    desc: "Family-owned industrial equipment listing service since 1924. Power generation category." },
+  { name: "Machinio", category: "broker", url: "machinio.com",
+    desc: "Global used industrial listings aggregator. Best for engine-only and unusual MW classes." },
+  { name: "Power Plants Online", category: "broker", url: "powerplantsonline.com",
+    desc: "Specialist surplus power equipment broker. New listings emailed weekly to subscribers." },
+  { name: "GovPlanet", category: "govt", url: "govplanet.com",
+    desc: "Federal/military surplus auctions. Base closures yield gensets, fuel systems, switchgear." },
+  { name: "GSA Auctions", category: "govt", url: "gsaauctions.gov",
+    desc: "Federal General Services Administration auctions. Civilian agency disposal." },
+  { name: "Liquidity Services / GovDeals", category: "govt", url: "govdeals.com",
+    desc: "State and local government surplus auctions. Municipalities and utilities periodically dump gensets." },
+  { name: "Data Center Dynamics (DCD)", category: "news", url: "datacenterdynamics.com",
+    desc: "Industry publication. Tracks cancelled projects, decommissioning, OEM announcements." },
+  { name: "POWER Magazine", category: "news", url: "powermag.com",
+    desc: "Trade publication. Plant retirements, repower projects, equipment availability stories." },
+  { name: "Reuters Energy", category: "news", url: "reuters.com/business/energy",
+    desc: "Breaking news on utility plant retirements, gas plant divestitures, market shifts." },
+  { name: "S&P Global Commodity Insights", category: "news", url: "spglobal.com/commodityinsights",
+    desc: "Energy market intelligence. Plant retirements, capacity additions, OEM market share." },
+  { name: "Microgrid Knowledge", category: "news", url: "microgridknowledge.com",
+    desc: "Behind-the-meter and microgrid news. VoltaGrid, ProEnergy, gas-to-DC stories." },
+  { name: "AerSale", category: "aero", url: "aersale.com",
+    desc: "Aircraft and engine teardown house. CF6, PW4000 cores. Quarterly inventory updates." },
+  { name: "FTAI Aviation Investor Relations", category: "aero", url: "ftaiaviation.com",
+    desc: "Aero engine lessor pivoting to data center power. Quarterly calls reveal core inventory." },
+  { name: "Aircraft Bluebook", category: "aero", url: "aircraftbluebook.com",
+    desc: "Used aircraft pricing — leading indicator for retirement waves and core availability." },
+  { name: "ATSG / Cargo airline retirements", category: "aero", url: "atsginc.com",
+    desc: "Air Transport Services Group — 767/757 cargo fleet ages out, CF6/PW4000 cores released." },
+  { name: "LinkedIn — Decommissioning Searches", category: "broker", url: "linkedin.com/search",
+    desc: "Saved search: 'decommissioning manager' + 'power plant'. Reveals brokers and projects in flight." },
+  { name: "Google Alerts — Custom", category: "news", url: "google.com/alerts",
+    desc: "Set: 'gas turbine surplus', 'power plant decommission', 'data center cancelled', '[OEM] for sale'." },
+  { name: "OTC Houston (May annually)", category: "broker", url: "otcnet.org",
+    desc: "Offshore Technology Conference. Network with operators decommissioning Gulf platforms." },
+  { name: "PowerGen International", category: "broker", url: "powergen.com",
+    desc: "Major power industry trade show. OEMs, packagers, brokers all under one roof. Annual." },
+  { name: "Data Center World", category: "news", url: "datacenterworld.com",
+    desc: "Bi-annual conference. Power-focused track. ProEnergy, VoltaGrid, Wärtsilä all exhibit." },
+  { name: "BizBuySell — Industrial", category: "broker", url: "bizbuysell.com",
+    desc: "Whole-business sales — sometimes includes operating power plants for sale with equipment." },
+  { name: "eBay Industrial", category: "auction", url: "ebay.com/b/Industrial",
+    desc: "Surprisingly active for 1-3 MW gensets and components. Set saved search alerts." },
+];
+
+// ==================== UTILITIES ====================
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+}
+
+function formatRelative(iso) {
+  if (!iso) return '—';
+  const ms = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(ms / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d ago`;
+  if (hrs > 0) return `${hrs}h ago`;
+  if (mins > 0) return `${mins}m ago`;
+  return 'just now';
+}
+
+function formatLeadTime(weeks) {
+  if (!weeks) return '—';
+  if (weeks < 4) return `${weeks}w`;
+  const months = Math.round(weeks / 4.33);
+  return `${months}mo`;
+}
+
+function formatPrice(perKw) {
+  if (!perKw) return '—';
+  return `$${Math.round(perKw)}`;
+}
+
+// ==================== CLOCK ====================
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ==================== STORAGE ====================
+function loadData() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) opportunities = JSON.parse(stored);
+  } catch(e) { console.error('Load failed', e); opportunities = []; }
+  try {
+    const site = localStorage.getItem(SITE_KEY);
+    if (site) siteSpecs = JSON.parse(site);
+  } catch(e) {}
+  applySiteSpecsToForm();
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(opportunities));
+  } catch(e) { alert('Save failed: ' + e.message); }
+}
+
+function applySiteSpecsToForm() {
+  document.getElementById('site-name').value = siteSpecs.name;
+  document.getElementById('site-location').value = siteSpecs.location;
+  document.getElementById('site-mw').value = siteSpecs.mw;
+  document.getElementById('site-arch').value = siteSpecs.arch;
+  document.getElementById('site-ambient').value = siteSpecs.ambient;
+  document.getElementById('site-gas').value = siteSpecs.gas;
+  document.getElementById('site-schedule').value = siteSpecs.schedule;
+  document.getElementById('site-buyer').value = siteSpecs.buyer;
+}
+
+function saveSiteSpecs() {
+  siteSpecs = {
+    name: document.getElementById('site-name').value,
+    location: document.getElementById('site-location').value,
+    mw: document.getElementById('site-mw').value,
+    arch: document.getElementById('site-arch').value,
+    ambient: document.getElementById('site-ambient').value,
+    gas: document.getElementById('site-gas').value,
+    schedule: document.getElementById('site-schedule').value,
+    buyer: document.getElementById('site-buyer').value
+  };
+  localStorage.setItem(SITE_KEY, JSON.stringify(siteSpecs));
+  renderRFITemplates();
+  alert('Site specs saved. RFI templates updated.');
+}
+
+// ==================== TABS ====================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ==================== OPPORTUNITY MODAL ====================
+function openOpportunityModal(id = null) {
+  const modal = document.getElementById('opp-modal');
+  const title = document.getElementById('opp-modal-title');
+  const deleteBtn = document.getElementById('delete-btn');
+  document.getElementById('opp-form').reset();
+  document.getElementById('opp-id').value = '';
+  document.getElementById('opp-qty').value = 1;
+
+  if (id) {
+    const opp = opportunities.find(o => o.id === id);
+    if (opp) {
+      title.textContent = 'EDIT OPPORTUNITY';
+      document.getElementById('opp-id').value = opp.id;
+      document.getElementById('opp-oem').value = opp.oem || '';
+      document.getElementById('opp-model').value = opp.model || '';
+      document.getElementById('opp-mw-unit').value = opp.mw_unit || '';
+      document.getElementById('opp-qty').value = opp.qty || 1;
+      document.getElementById('opp-mw').value = opp.mw || '';
+      document.getElementById('opp-condition').value = opp.condition || 'new';
+      document.getElementById('opp-status').value = opp.status || 'new';
+      document.getElementById('opp-tier').value = opp.tier || '2';
+      document.getElementById('opp-lead').value = opp.lead_weeks || '';
+      document.getElementById('opp-price').value = opp.price_per_kw || '';
+      document.getElementById('opp-contact').value = opp.contact || '';
+      document.getElementById('opp-location').value = opp.location || '';
+      document.getElementById('opp-notes').value = opp.notes || '';
+      document.getElementById('opp-tags').value = (opp.tags || []).join(', ');
+      deleteBtn.style.display = 'inline-block';
+    }
+  } else {
+    title.textContent = 'NEW OPPORTUNITY';
+    deleteBtn.style.display = 'none';
+  }
+  modal.classList.add('active');
+}
+
+function closeOpportunityModal() {
+  document.getElementById('opp-modal').classList.remove('active');
+}
+
+// auto-calc total MW
+['opp-mw-unit', 'opp-qty'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    const unit = parseFloat(document.getElementById('opp-mw-unit').value) || 0;
+    const qty = parseInt(document.getElementById('opp-qty').value) || 1;
+    if (unit > 0) {
+      document.getElementById('opp-mw').value = (unit * qty).toFixed(1);
+    }
+  });
+});
+
+function saveOpportunity(e) {
+  e.preventDefault();
+  const id = document.getElementById('opp-id').value || ('opp_' + Date.now());
+  const data = {
+    id,
+    oem: document.getElementById('opp-oem').value,
+    model: document.getElementById('opp-model').value,
+    mw_unit: parseFloat(document.getElementById('opp-mw-unit').value) || null,
+    qty: parseInt(document.getElementById('opp-qty').value) || 1,
+    mw: parseFloat(document.getElementById('opp-mw').value) || 0,
+    condition: document.getElementById('opp-condition').value,
+    status: document.getElementById('opp-status').value,
+    tier: document.getElementById('opp-tier').value,
+    lead_weeks: parseInt(document.getElementById('opp-lead').value) || null,
+    price_per_kw: parseFloat(document.getElementById('opp-price').value) || null,
+    contact: document.getElementById('opp-contact').value,
+    location: document.getElementById('opp-location').value,
+    notes: document.getElementById('opp-notes').value,
+    tags: document.getElementById('opp-tags').value.split(',').map(t => t.trim()).filter(t => t),
+    updated: new Date().toISOString(),
+    created: opportunities.find(o => o.id === id)?.created || new Date().toISOString()
+  };
+  const idx = opportunities.findIndex(o => o.id === id);
+  if (idx >= 0) opportunities[idx] = data;
+  else opportunities.push(data);
+  saveData();
+  closeOpportunityModal();
+  renderAll();
+}
+
+function deleteOpportunity() {
+  const id = document.getElementById('opp-id').value;
+  if (!id) return;
+  if (!confirm('Delete this opportunity? This cannot be undone.')) return;
+  opportunities = opportunities.filter(o => o.id !== id);
+  saveData();
+  closeOpportunityModal();
+  renderAll();
+}
+
+// ==================== RENDER OPPORTUNITIES ====================
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('[data-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  renderOpps();
+}
+
+function getFilteredOpps() {
+  const search = (document.getElementById('opp-search')?.value || '').toLowerCase();
+  return opportunities.filter(o => {
+    if (currentFilter === 'tier-1' && o.tier !== '1') return false;
+    if (currentFilter === 'tier-2' && o.tier !== '2') return false;
+    if (currentFilter === 'tier-3' && o.tier !== '3') return false;
+    if (currentFilter === 'active' && ['passed', 'lost', 'delivered'].includes(o.status)) return false;
+    if (currentFilter === 'ordered' && !['ordered', 'delivered'].includes(o.status)) return false;
+    if (search) {
+      const hay = [o.oem, o.model, o.contact, o.location, o.notes, ...(o.tags || [])].join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+}
+
+function statusPill(status) {
+  const map = {
+    new: ['NEW', 'pill-new'], rfi: ['RFI', 'pill-rfi'],
+    quoted: ['QUOTED', 'pill-quoted'], negotiating: ['NEGOTIATING', 'pill-negotiating'],
+    ordered: ['ORDERED', 'pill-ordered'], delivered: ['DELIVERED', 'pill-delivered'],
+    passed: ['PASSED', 'pill-passed'], lost: ['LOST', 'pill-lost']
+  };
+  const [text, cls] = map[status] || ['—', 'pill-passed'];
+  return `<span class="pill ${cls}">${text}</span>`;
+}
+
+function tierPill(tier) {
+  const map = { '1': 'T1 ≤90d', '2': 'T2 3-18mo', '3': 'T3 18mo+' };
+  return `<span class="pill pill-tier-${tier}">${map[tier] || '—'}</span>`;
+}
+
+function condPill(cond) {
+  const map = {
+    'new': ['NEW', 'pill-cond-new'], 'refurb': ['REFURB', 'pill-cond-refurb'],
+    'used': ['USED', 'pill-cond-used'], 'engine-only': ['ENGINE', 'pill-cond-engine']
+  };
+  const [text, cls] = map[cond] || ['—', 'pill-cond-used'];
+  return `<span class="pill ${cls}">${text}</span>`;
+}
+
+function renderOpps() {
+  const tbody = document.getElementById('opps-tbody');
+  const opps = getFilteredOpps();
+  opps.sort((a, b) => {
+    let av = a[sortField], bv = b[sortField];
+    if (sortField === 'updated' || sortField === 'created') {
+      av = new Date(av || 0).getTime(); bv = new Date(bv || 0).getTime();
+    }
+    if (typeof av === 'string') av = av.toLowerCase();
+    if (typeof bv === 'string') bv = bv.toLowerCase();
+    if (av == null) av = sortAsc ? Infinity : -Infinity;
+    if (bv == null) bv = sortAsc ? Infinity : -Infinity;
+    if (av < bv) return sortAsc ? -1 : 1;
+    if (av > bv) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  if (opps.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="10" class="empty">No opportunities ${currentFilter !== 'all' ? 'match filter' : 'yet — click + New Opportunity'}</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = opps.map(o => `
+    <tr onclick="openOpportunityModal('${o.id}')">
+      <td>${statusPill(o.status)}</td>
+      <td class="col-name">${escapeHtml(o.oem)}</td>
+      <td class="col-model">${escapeHtml(o.model)}</td>
+      <td class="col-mw">${o.mw ? o.mw.toFixed(1) : '—'}</td>
+      <td>${condPill(o.condition)}</td>
+      <td>${tierPill(o.tier)}</td>
+      <td class="col-numeric">${formatLeadTime(o.lead_weeks)}</td>
+      <td class="col-numeric">${formatPrice(o.price_per_kw)}</td>
+      <td class="col-notes">${escapeHtml((o.contact || '').slice(0, 40))}${(o.contact || '').length > 40 ? '…' : ''}</td>
+      <td class="col-numeric">${formatRelative(o.updated)}</td>
+    </tr>
+  `).join('');
+}
+
+// table sorting
+document.querySelectorAll('#panel-opportunities th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const field = th.dataset.sort;
+    if (sortField === field) sortAsc = !sortAsc;
+    else { sortField = field; sortAsc = false; }
+    document.querySelectorAll('#panel-opportunities th').forEach(t => {
+      t.classList.remove('sorted-asc', 'sorted-desc');
+    });
+    th.classList.add(sortAsc ? 'sorted-asc' : 'sorted-desc');
+    renderOpps();
+  });
+});
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ==================== DASHBOARD KPIs ====================
+function renderDashboard() {
+  const total = opportunities.reduce((s, o) => s + (o.mw || 0), 0);
+  const quoted = opportunities.filter(o => ['quoted', 'negotiating'].includes(o.status)).reduce((s, o) => s + (o.mw || 0), 0);
+  const ordered = opportunities.filter(o => ['ordered', 'delivered'].includes(o.status)).reduce((s, o) => s + (o.mw || 0), 0);
+  const activeRFI = opportunities.filter(o => ['rfi', 'quoted', 'negotiating'].includes(o.status)).length;
+  const oemsActive = new Set(opportunities.filter(o => !['passed', 'lost'].includes(o.status)).map(o => o.oem)).size;
+
+  document.getElementById('kpi-pipeline').innerHTML = `${total.toFixed(0)}<span class="unit">MW</span>`;
+  document.getElementById('kpi-pipeline-mw').textContent = `${total.toFixed(0)} MW`;
+  document.getElementById('kpi-quoted').innerHTML = `${quoted.toFixed(0)}<span class="unit">MW</span>`;
+  document.getElementById('kpi-ordered').innerHTML = `${ordered.toFixed(0)}<span class="unit">MW</span>`;
+  document.getElementById('kpi-active-rfi').textContent = activeRFI;
+  document.getElementById('kpi-oems-active').textContent = oemsActive;
+
+  // earliest power
+  const withLead = opportunities.filter(o => o.lead_weeks && !['passed', 'lost'].includes(o.status));
+  if (withLead.length > 0) {
+    const earliest = Math.min(...withLead.map(o => o.lead_weeks));
+    document.getElementById('kpi-earliest').textContent = formatLeadTime(earliest);
+  } else {
+    document.getElementById('kpi-earliest').textContent = '—';
+  }
+
+  // recent activity table (top 8)
+  const recent = [...opportunities].sort((a, b) =>
+    new Date(b.updated || 0).getTime() - new Date(a.updated || 0).getTime()
+  ).slice(0, 8);
+
+  const tbody = document.getElementById('recent-tbody');
+  if (recent.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No activity yet — add your first opportunity</td></tr>`;
+    document.getElementById('last-activity').textContent = '—';
+  } else {
+    tbody.innerHTML = recent.map(o => `
+      <tr onclick="document.querySelector('[data-tab=opportunities]').click(); setTimeout(() => openOpportunityModal('${o.id}'), 100)">
+        <td>${statusPill(o.status)}</td>
+        <td class="col-name">${escapeHtml(o.oem)}</td>
+        <td class="col-model">${escapeHtml(o.model)}</td>
+        <td class="col-mw">${o.mw ? o.mw.toFixed(1) : '—'}</td>
+        <td>${condPill(o.condition)}</td>
+        <td>${tierPill(o.tier)}</td>
+        <td class="col-numeric">${formatLeadTime(o.lead_weeks)}</td>
+        <td class="col-numeric">${formatPrice(o.price_per_kw)}</td>
+        <td class="col-numeric">${formatRelative(o.updated)}</td>
+      </tr>
+    `).join('');
+    document.getElementById('last-activity').textContent =
+      'Last update: ' + formatRelative(recent[0].updated);
+  }
+
+  document.getElementById('tab-count-opps').textContent = opportunities.length;
+}
+
+// ==================== OEM DIRECTORY ====================
+function setOEMFilter(f) {
+  currentOEMFilter = f;
+  document.querySelectorAll('[data-oem-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.oemFilter === f);
+  });
+  renderOEMs();
+}
+
+function renderOEMs() {
+  const search = (document.getElementById('oem-search')?.value || '').toLowerCase();
+  const grid = document.getElementById('oems-grid');
+  const filtered = OEM_DIRECTORY.filter(o => {
+    if (currentOEMFilter !== 'all' && o.category !== currentOEMFilter) return false;
+    if (search) {
+      const hay = [o.name, o.region, o.pitch, ...Object.values(o.rows || {})].join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty">No OEMs match the filter</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(o => {
+    const rows = Object.entries(o.rows || {}).map(([k, v]) => {
+      // turn URLs into links
+      let val = escapeHtml(v);
+      if (/\.(com|net|org|io|us|de)/.test(v) && !v.includes(' ')) {
+        const url = v.startsWith('http') ? v : 'https://' + v;
+        val = `<a href="${url}" target="_blank">${escapeHtml(v)}</a>`;
+      }
+      return `<span class="lbl">${escapeHtml(k)}</span><span class="val">${val}</span>`;
+    }).join('');
+    return `
+      <div class="contact-card">
+        <div class="contact-card-top">
+          <div>
+            <div class="contact-card-name">${escapeHtml(o.name)}</div>
+            <div class="contact-card-meta">${escapeHtml(o.region)}</div>
+          </div>
+          <span class="pill pill-tier-${o.category === 'rental' ? '1' : (o.category === 'used' || o.category === 'rebuild' ? '2' : '3')}">${o.category.toUpperCase()}</span>
+        </div>
+        <div class="contact-card-pitch">${escapeHtml(o.pitch)}</div>
+        <div class="contact-card-rows">${rows}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('tab-count-oems').textContent = OEM_DIRECTORY.length;
+}
+
+// ==================== DAILY SOURCES ====================
+function setSrcFilter(f) {
+  currentSrcFilter = f;
+  document.querySelectorAll('[data-src-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.srcFilter === f);
+  });
+  renderSources();
+}
+
+function renderSources() {
+  const grid = document.getElementById('sources-grid');
+  const filtered = currentSrcFilter === 'all' ? DAILY_SOURCES : DAILY_SOURCES.filter(s => s.category === currentSrcFilter);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty">No sources match the filter</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s => {
+    const url = s.url.startsWith('http') ? s.url : 'https://' + s.url;
+    return `
+      <div class="source-card">
+        <div class="source-card-head">
+          <div class="source-card-name">${escapeHtml(s.name)}</div>
+          <div class="source-card-cat">${escapeHtml(s.category)}</div>
+        </div>
+        <div class="source-card-desc">${escapeHtml(s.desc)}</div>
+        <a class="source-card-link" href="${url}" target="_blank">${escapeHtml(s.url)}</a>
+      </div>`;
+  }).join('');
+
+  document.getElementById('tab-count-sources').textContent = DAILY_SOURCES.length;
+}
+
+// ==================== RFI TEMPLATES ====================
+function renderRFITemplates() {
+  const oem = `Subject: RFI — ${siteSpecs.mw} Behind-the-Meter Power, Lafayette LA — Earliest Delivery
+
+Dear [Sales Rep],
+
+I'm reaching out on behalf of ${siteSpecs.name}, an AI compute facility under development in ${siteSpecs.location}. We're evaluating natural gas reciprocating engines and aero-derivative turbines for behind-the-meter prime power, and your equipment is on our short list.
+
+SITE PROFILE
+• Location: ${siteSpecs.location}
+• Target capacity: ${siteSpecs.mw}
+• Architecture: ${siteSpecs.arch}
+• Ambient: ${siteSpecs.ambient}
+• Fuel: ${siteSpecs.gas}
+• Schedule: ${siteSpecs.schedule}
+• Buyer: ${siteSpecs.buyer}
+
+REQUEST
+1. Budgetary quote for [QTY x MODEL] FOB Lafayette, LA
+2. Earliest available delivery slot — we are time-sensitive and willing to accept any cancellation slot
+3. O&M agreement options (full-service, parts-only, self-perform)
+4. Hot-ambient performance curve at 95°F / 80% RH
+5. Load step / transient response specs (AI workload requirement)
+6. Lead-time clock — does the clock start at LOI, deposit, or signed PO?
+7. Reference data center installations in the US South
+
+Our project moves quickly — we are a general contractor with self-perform capability and can take engine-only delivery if it accelerates timeline. We would welcome a 30-minute call to discuss.
+
+Thank you,
+Scott Tomsu
+${siteSpecs.name}
+1201 SE Evangeline Thruway, Lafayette LA 70501`;
+
+  const broker = `Subject: Surplus / Used Gas Engine or Genset — 1-20 MW Class — Active Buyer
+
+Hi [Broker],
+
+Active buyer for behind-the-meter natural gas power, Lafayette LA. We are open to:
+
+• Used gensets, 1-20 MW per unit, gas or dual-fuel
+• Refurbished units with documented overhaul (logbook a plus)
+• Engine-only with no skid (we self-perform packaging)
+• Plant-removal opportunities (we'll do the disconnection)
+• Cancelled-project orphaned equipment
+
+PROJECT: ${siteSpecs.name}, ${siteSpecs.location}
+TARGET: ${siteSpecs.mw}
+SCHEDULE: ${siteSpecs.schedule}
+
+Please add me to your weekly listing email and notify me directly on anything ≥1 MW that comes available. We close fast, pay on delivery acceptance, and have no problem traveling for inspection.
+
+Thanks,
+Scott Tomsu
+${siteSpecs.buyer}
+1201 SE Evangeline Thruway, Lafayette LA 70501`;
+
+  const ppa = `Subject: PPA / Bridge Power RFI — ${siteSpecs.name} — Lafayette LA
+
+Hi [Sales Rep],
+
+We're evaluating PPA and bridge-power options for first-power at ${siteSpecs.name}. Behind-the-meter natural gas, ${siteSpecs.mw}.
+
+SITE: ${siteSpecs.location}
+GAS: ${siteSpecs.gas}
+ARCHITECTURE: ${siteSpecs.arch}
+SCHEDULE: ${siteSpecs.schedule}
+
+REQUEST
+1. PPA quote — $/MWh fixed and variable, contract length options (3, 5, 7 yr)
+2. Capacity reservation fee structure
+3. Equipment redeployment / exit clause — when grid or permanent power comes online, what is the pull schedule?
+4. Phase-1 deliverable size (e.g. 30 MW first power, scale-out to 100 MW)
+5. Permitting timeline — are you handling air permits, or do we?
+6. Reference deployments — speed-to-power benchmarks
+7. Heat rate / fuel efficiency on your standard equipment
+
+We're moving in parallel with permanent equipment orders, so the bridge has a hard endpoint of [TARGET DATE]. Equipment must be redeployable.
+
+Best,
+Scott Tomsu
+${siteSpecs.name}`;
+
+  const engine = `Subject: Engine-Only / Core Acquisition — 1-50 MW Class — Self-Perform Packager
+
+Hi [Rebuilder/Lessor],
+
+We are an active buyer for engine-only acquisitions for behind-the-meter power generation in Louisiana.
+
+CONTEXT
+• ${siteSpecs.name}, ${siteSpecs.location}
+• ${siteSpecs.mw}
+• We hold a Louisiana contractor's license and self-perform skid integration, controls, switchgear, and balance-of-plant
+• Background: heavy industrial construction, subsea ROV operations, electronics, robotics, FAA Part 107 + Private Pilot
+
+SOURCING INTEREST
+1. Refurbished gas reciprocating engines, 1-15 MW (any major OEM)
+2. Aero-derivative cores — CF6-80C2, PW4000, V2500 — for stationary power conversion
+3. Marine main engines released from decommissioning (5-25 MW class)
+4. Locomotive engines for gas conversion (EMD 16-710 / 20-710)
+
+REQUEST
+• Core inventory list with logbooks, hours, last overhaul date
+• Pricing per core (delivered or FOB shop)
+• Recommended packagers / skid builders
+• Lead time for overhauled core ready for skid
+• Fuel conversion path (if liquid → gas)
+
+We pay deposits, close quickly, and have engineering capacity to handle conversion in-house. Open to NDA.
+
+Scott Tomsu
+${siteSpecs.buyer}
+1201 SE Evangeline Thruway, Lafayette LA 70501`;
+
+  document.getElementById('rfi-oem').textContent = oem;
+  document.getElementById('rfi-broker').textContent = broker;
+  document.getElementById('rfi-ppa').textContent = ppa;
+  document.getElementById('rfi-engine').textContent = engine;
+}
+
+function copyTemplate(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied to clipboard. Paste into your email client and customize the [bracketed] fields.');
+  }).catch(e => {
+    alert('Copy failed — select the text manually. Error: ' + e.message);
+  });
+}
+
+// ==================== EXPORT / IMPORT ====================
+function exportData() {
+  const blob = new Blob([JSON.stringify({ opportunities, siteSpecs, exported: new Date().toISOString() }, null, 2)],
+    { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `power_mission_control_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!confirm(`Import ${data.opportunities?.length || 0} opportunities? This will OVERWRITE current data.`)) return;
+      if (data.opportunities) opportunities = data.opportunities;
+      if (data.siteSpecs) {
+        siteSpecs = data.siteSpecs;
+        applySiteSpecsToForm();
+      }
+      saveData();
+      localStorage.setItem(SITE_KEY, JSON.stringify(siteSpecs));
+      renderAll();
+      alert('Import complete.');
+    } catch(err) {
+      alert('Import failed: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ==================== INIT ====================
+function renderAll() {
+  renderDashboard();
+  renderOpps();
+  renderOEMs();
+  renderSources();
+  renderRFITemplates();
+}
+
+loadData();
+renderAll();
+
+// close modal on backdrop click
+document.getElementById('opp-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'opp-modal') closeOpportunityModal();
+});
+
+// Esc to close modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeOpportunityModal();
+});
+</script>
+</body>
+</html>
