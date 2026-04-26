@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Trappeys Cannery Technology Stack — NVIDIA DSX reference design, 4-layer power hierarchy, Vera Rubin NVL72, Dynamo inference OS, American-made supply chain.">
+<title>Technology Stack — Trappeys Solar AI Factory | ADC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b0f;--surface:#111318;--card:#161922;--border:#1e2230;--text:#c8cdd8;--dim:#6b7280;--bright:#f0f2f5;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#06b6d4;--solar:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV BAR */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--solar)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 60px;border-bottom:1px solid var(--border)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.header h1{font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--bright);line-height:1.1;margin-bottom:12px}
+.header h1 span{color:var(--green)}
+.header .sub{font-size:16px;color:var(--dim);max-width:700px;margin:0 auto;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--green);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--bright);margin-bottom:8px;line-height:1.2}
+.section .sub{font-size:14px;color:var(--dim);margin-bottom:36px;max-width:700px;line-height:1.7}
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* PILLAR CARDS */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px}
+.pillar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pillar-flex::before{background:linear-gradient(90deg,var(--solar),var(--amber))}
+.pillar-boost::before{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.pillar-exchange::before{background:linear-gradient(90deg,var(--blue),var(--purple))}
+.pillar .p-name{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.pillar .p-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+.p-type-solar{color:var(--solar)}
+.p-type-green{color:var(--green)}
+.p-type-blue{color:var(--blue)}
+.pillar p{font-size:13px;color:var(--dim);line-height:1.7}
+.pillar .p-spec{margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 14px;border-radius:6px;line-height:1.8}
+
+/* POWER HIERARCHY */
+.power-stack{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.power-layer{display:grid;grid-template-columns:140px 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;position:relative;overflow:hidden}
+.power-layer::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.layer-solar::before{background:var(--solar)}
+.layer-gas::before{background:var(--blue)}
+.layer-diesel::before{background:var(--red)}
+.layer-grid::before{background:var(--dim)}
+.power-layer .layer-badge{text-align:center}
+.power-layer .layer-num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.layer-solar .layer-num{color:var(--solar)}
+.layer-gas .layer-num{color:var(--blue)}
+.layer-diesel .layer-num{color:var(--red)}
+.layer-grid .layer-num{color:var(--dim)}
+.power-layer .layer-name{font-size:16px;font-weight:800;color:var(--bright)}
+.power-layer .layer-role{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;margin-top:2px}
+.layer-solar .layer-role{color:var(--solar)}
+.layer-gas .layer-role{color:var(--blue)}
+.layer-diesel .layer-role{color:var(--red)}
+.layer-grid .layer-role{color:var(--dim)}
+.power-layer .layer-desc{font-size:13px;color:var(--dim);line-height:1.7}
+.power-layer .layer-desc strong{color:var(--text)}
+.power-bar{height:8px;border-radius:4px;margin-top:24px;display:flex;overflow:hidden;border:1px solid var(--border)}
+.bar-solar{background:var(--solar);flex:1}
+.bar-gas{background:var(--blue);flex:3}
+.bar-diesel{background:var(--red);flex:0.5}
+.bar-grid{background:var(--dim);flex:0.5}
+.bar-labels{display:flex;margin-top:8px;font-size:10px;font-family:'IBM Plex Mono',monospace}
+.bar-labels span{text-align:center}
+.bar-labels .bl-solar{flex:1;color:var(--solar)}
+.bar-labels .bl-gas{flex:3;color:var(--blue)}
+.bar-labels .bl-diesel{flex:0.5;color:var(--red)}
+.bar-labels .bl-grid{flex:0.5;color:var(--dim)}
+
+/* HARDWARE CARDS */
+.hw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.hw-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.hw-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.hw-card .hw-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:12px}
+.hw-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.hw-card .hw-spec{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);background:var(--surface);padding:10px 12px;border-radius:6px;line-height:1.8}
+
+/* SOFTWARE STACK */
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.sw-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.sw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan))}
+.sw-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:2px}
+.sw-card .sw-type{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);margin-bottom:12px}
+.sw-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.sw-card .sw-highlight{margin-top:12px;padding:10px 14px;background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.15);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);font-weight:600}
+
+/* WATER TOWER */
+.tower-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px;margin-top:24px}
+.tower-section h3{font-size:22px;font-weight:800;color:var(--bright);margin-bottom:16px}
+.tower-section p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:12px}
+.tower-section p:last-child{margin-bottom:0}
+.tower-section strong{color:var(--text)}
+.tower-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:28px 0;padding:20px;background:var(--surface);border-radius:8px}
+.tower-step{text-align:center;padding:12px 20px;min-width:130px}
+.tower-step .ts-name{font-size:13px;font-weight:700;color:var(--bright)}
+.tower-step .ts-detail{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);margin-top:2px}
+.tower-arrow{color:var(--dim);font-size:20px;font-weight:700;padding:0 6px}
+
+/* SUPPLY CHAIN */
+.supply-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:24px}
+.supply-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column}
+.supply-card .sc-company{font-size:15px;font-weight:800;color:var(--bright);margin-bottom:2px}
+.supply-card .sc-location{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--solar);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.supply-card p{font-size:13px;color:var(--dim);line-height:1.5}
+
+/* CALLOUT */
+.callout{padding:20px 24px;border-radius:8px;margin:24px 0;font-size:13px;line-height:1.7}
+.callout-green{background:rgba(0,232,122,0.06);border-left:3px solid var(--green)}
+.callout-blue{background:rgba(59,158,255,0.06);border-left:3px solid var(--blue)}
+.callout strong{color:var(--bright)}
+
+/* FOOTER */
+.footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border)}
+.footer .f-name{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.footer .f-title{font-size:12px;color:var(--dim);margin-bottom:16px}
+.footer a{color:var(--solar);font-weight:600}
+.footer .f-links{margin-top:16px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.footer .f-links a{font-size:12px;color:var(--dim);font-weight:600;padding:8px 16px;border:1px solid var(--border);border-radius:6px;transition:all 0.2s;text-decoration:none}
+.footer .f-links a:hover{border-color:var(--solar);color:var(--solar)}
+.footer .f-contact{margin-top:16px;font-size:11px;color:var(--dim)}
+
+@media(max-width:768px){
+  .power-layer{grid-template-columns:1fr;gap:8px}
+  .hw-grid{grid-template-columns:1fr}
+  .sw-grid{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .supply-grid{grid-template-columns:1fr}
+  .tower-flow{flex-direction:column}
+  .tower-arrow{transform:rotate(90deg)}
+  .nav-links{gap:4px}
+  .nav-links a{font-size:11px;padding:4px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand" style="text-decoration:none">Trappeys <span>AI Factory</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology" class="active">Technology</a>
+      <a href="/trappeys-university">University</a>
+      <a href="/trappeys-responders">First Responders</a>
+      <a href="/trappeys-investors">Investors</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Full Stack // Technology</div>
+  <h1>NVIDIA DSX<br><span>Reference Design</span></h1>
+  <p class="sub">Trappeys is built to NVIDIA's DSX (Data Center Scale eXcellence) specification. Full NVIDIA stack, nothing else. Every component selected, every integration mapped, every power layer defined.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- DSX THREE PILLARS -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">DSX Architecture</div>
+  <h2>Three Pillars of DSX</h2>
+  <p class="sub">NVIDIA's DSX framework organizes AI factory operations into three integrated pillars. Trappeys implements all three from day one.</p>
+
+  <div class="pillars">
+    <div class="pillar pillar-flex">
+      <div class="p-name">DSX Flex</div>
+      <div class="p-type p-type-solar">Power Management</div>
+      <p>Grid collaboration, power optimization, and DC microgrid management. Flex understands that Trappeys runs on a full DC architecture and dynamically adjusts compute load to match available Bloom SOFC output and solar generation in real time.</p>
+      <div class="p-spec">Solar variability &rarr; workload scheduling<br>Bloom SOFC throttle &rarr; fuel optimization<br>Grid sell-back &rarr; revenue dispatch</div>
+    </div>
+    <div class="pillar pillar-boost">
+      <div class="p-name">DSX Boost</div>
+      <div class="p-type p-type-green">Performance Optimization</div>
+      <p>30% more throughput in the same power envelope via workload-aware power management. Boost monitors GPU utilization in real time and redistributes power across racks for maximum tokens per watt.</p>
+      <div class="p-spec">+30% throughput, same power<br>Workload-aware GPU power shifting<br>Real-time rack-level optimization</div>
+    </div>
+    <div class="pillar pillar-exchange">
+      <div class="p-name">DSX Exchange</div>
+      <div class="p-type p-type-blue">Operations Integration</div>
+      <p>IT/OT integration, sensor network, and operational dashboard. Exchange connects the compute fabric to the physical plant &mdash; power meters, coolant flow, ambient temperature, security &mdash; into a single operational view.</p>
+      <div class="p-spec">Sensor network &rarr; single dashboard<br>IT/OT bridge &rarr; unified control plane<br>Alerting &rarr; predictive maintenance</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- 4-LAYER POWER HIERARCHY -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Power Architecture</div>
+  <h2>Full DC Microgrid — No AC Conversion</h2>
+  <p class="sub">Two DC layers. 1500V collection. 800V distribution. Bloom SOFC generates DC directly from natural gas. Solar charges the battery bank at 1500V. Run:ai controls every layer autonomously. No inverters. No AC bus. No grid dependency.</p>
+
+  <div class="power-bar">
+    <div class="bar-solar"></div>
+    <div class="bar-gas"></div>
+    <div class="bar-diesel"></div>
+    <div class="bar-grid"></div>
+  </div>
+  <div class="bar-labels">
+    <span class="bl-solar">1500V SOLAR</span>
+    <span class="bl-gas">BLOOM SOFC</span>
+    <span class="bl-diesel">800V BUS</span>
+    <span class="bl-grid">LUS BACKSTOP</span>
+  </div>
+
+  <div class="power-stack">
+    <div class="power-layer layer-solar">
+      <div class="layer-badge">
+        <div class="layer-num">COLLECTION</div>
+        <div class="layer-name">Solar — 1500V DC</div>
+        <div class="layer-role">170,000 sq ft rooftop</div>
+      </div>
+      <div class="layer-desc">
+        <strong>4,100 First Solar Series 7 TR1 panels</strong> at 1500V DC strings — the NEC LVDC ceiling. Higher voltage = lower current = I&sup2;R losses drop by the square. Smaller wire gauge across 170,000 sq ft of roof. MPPT DC-DC converters charge the battery bank directly. No inverters anywhere. First Solar's factory is 30 miles away in New Iberia.
+      </div>
+    </div>
+    <div class="power-layer layer-gas">
+      <div class="layer-badge">
+        <div class="layer-num">GENERATION</div>
+        <div class="layer-name">Bloom Energy SOFC</div>
+        <div class="layer-role">10 MW Phase 1 → 100 MW, DC Direct</div>
+      </div>
+      <div class="layer-desc">
+        <strong>Natural gas in. DC out. No combustion.</strong> Bloom solid oxide fuel cells convert natural gas electrochemically &mdash; 54% efficiency vs 38-40% for reciprocating engines. No spinning parts, no noise, no NOx emissions. Throttles instantly as solar varies. Run:ai adjusts fuel flow in real time. 9% overbuild achieves 99.9% availability vs 30% overbuild for generators.
+      </div>
+    </div>
+    <div class="power-layer layer-diesel">
+      <div class="layer-badge">
+        <div class="layer-num">DISTRIBUTION</div>
+        <div class="layer-name">800V DC Bus</div>
+        <div class="layer-role">OCP Stage 1d</div>
+      </div>
+      <div class="layer-desc">
+        <strong>OCP LVDC standard, released March 30, 2026.</strong> Bloom SOFC and battery bank both feed the 800V DC bus through DC-DC converters. Supercapacitors absorb AI workload spikes (20%&rarr;150% in milliseconds). Rack PDUs step 800V to 48V internally (OCP ORV3). No separate UPS array required. No AC conversion anywhere in the compute path.
+      </div>
+    </div>
+    <div class="power-layer layer-grid">
+      <div class="layer-badge">
+        <div class="layer-num">BACKSTOP</div>
+        <div class="layer-name">LUS Grid</div>
+        <div class="layer-role">Emergency + Sell-Back</div>
+      </div>
+      <div class="layer-desc">
+        <strong>NOT a power source for operations.</strong> LUS Pin Hook substation (13.8kV) connects via SST to the 800V bus as emergency backstop only. Excess generation sells back to LUS grid for revenue. Trappeys is a net-negative load on the city's grid &mdash; it gives power back, not takes it.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>The Moat:</strong> Bloom SOFC + 170,000 sq ft solar + Vermilion River heat exchanger + water tower thermal mass + Run:ai full factory control. Nobody else has this stack. The site cost $1M. It would cost $50M+ to replicate anywhere near an AI corridor.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- COMPUTE HARDWARE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Compute Hardware</div>
+  <h2>NVIDIA Vera Rubin NVL72</h2>
+  <p class="sub">NVIDIA ships complete, liquid-cooled racks. Two hours from truck to operational. No custom engineering, no proprietary cooling &mdash; reference design hardware, installed to spec.</p>
+
+  <div class="hw-grid">
+    <div class="hw-card">
+      <h3>Vera Rubin NVL72</h3>
+      <div class="hw-type">GPU Racks</div>
+      <p>72 GPUs + 36 CPUs per rack. Liquid-cooled with 45 degrees C hot water loop. Single-rack AI supercomputer.</p>
+      <div class="hw-spec">36-84 racks (phased deployment)<br>Liquid cooled &mdash; 45C hot water<br>2-hour install per rack<br>NVIDIA ships complete</div>
+    </div>
+    <div class="hw-card">
+      <h3>Spectrum-6 Switches</h3>
+      <div class="hw-type">InfiniBand Networking</div>
+      <p>Ultra-low-latency InfiniBand fabric connecting all racks into a unified compute cluster. Non-blocking topology for distributed training at scale.</p>
+      <div class="hw-spec">InfiniBand 400G/800G<br>Non-blocking fat-tree topology<br>SHARP in-network compute<br>Sub-microsecond latency</div>
+    </div>
+    <div class="hw-card">
+      <h3>BlueField-4 DPUs</h3>
+      <div class="hw-type">Data Processing Units</div>
+      <p>Offload storage, security, and networking from the GPU. Zero-trust architecture at the hardware level. Every rack has dedicated DPU acceleration.</p>
+      <div class="hw-spec">Storage acceleration<br>Hardware-level security<br>Network virtualization<br>Zero-trust enforcement</div>
+    </div>
+    <div class="hw-card">
+      <h3>Deployment Scale</h3>
+      <div class="hw-type">Phased Rollout</div>
+      <p>Start at 36 racks, scale to 84 as power and cooling capacity expands through the deployment phases. Network designed for full scale from day one.</p>
+      <div class="hw-spec">Phase 1: 36 racks (proof of concept)<br>Phase 2: 48 racks (production)<br>Phase 3: 72 racks (scale)<br>Phase 4: 84 racks (full capacity)</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SOFTWARE STACK -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Software Stack</div>
+  <h2>From Silicon to Tokens</h2>
+  <p class="sub">The software stack turns raw GPU cycles into optimized inference tokens. Every layer is NVIDIA. The output is tokens &mdash; not GPU hours, not bare metal access.</p>
+
+  <div class="sw-grid">
+    <div class="sw-card">
+      <h3>Dynamo 1.0</h3>
+      <div class="sw-type">Inference OS</div>
+      <p>NVIDIA's open-source inference operating system. 7x performance improvement on the same Blackwell hardware. Intelligent request routing, batching, and GPU memory management.</p>
+      <div class="sw-highlight">7x performance on same hardware</div>
+    </div>
+    <div class="sw-card">
+      <h3>Base Command Manager</h3>
+      <div class="sw-type">Cluster Orchestration</div>
+      <p>Single-pane control for the entire compute cluster. Job scheduling, resource allocation, multi-tenant isolation, and fleet-wide software updates from one interface.</p>
+    </div>
+    <div class="sw-card">
+      <h3>DCGM</h3>
+      <div class="sw-type">GPU Monitoring</div>
+      <p>Data Center GPU Manager. Real-time health monitoring, performance telemetry, and predictive diagnostics for every GPU in the facility. Feeds directly into DSX Exchange dashboards.</p>
+    </div>
+    <div class="sw-card">
+      <h3>Groq LPU Decode</h3>
+      <div class="sw-type">Hybrid Acceleration</div>
+      <p>GPU handles prefill (compute-heavy prompt processing). Groq LPU handles decode (latency-sensitive token generation). The combination delivers 35x tokens per watt compared to GPU-only inference.</p>
+      <div class="sw-highlight">GPU prefill + Groq decode = 35x tokens/watt</div>
+    </div>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:32px">
+    <strong>Token Factory model:</strong> Trappeys sells optimized inference tokens, not raw GPU hours. Dynamo + Groq decode means every watt generates maximum token throughput. Raw cost approximately $0.004 per million tokens. That margin is the business.
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- WATER TOWER COOLING -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Thermal Management</div>
+  <h2>Water Tower Cooling</h2>
+  <p class="sub">The iconic Trappeys water tower becomes thermal infrastructure. Heritage meets function.</p>
+
+  <div class="tower-section">
+    <h3>Liquid-Cooled Racks to Thermal Mass</h3>
+    <p>NVIDIA ships every NVL72 rack with an integrated liquid cooling loop running at 45 degrees C. Hot water exits the rack and enters the facility's Coolant Distribution Unit (CDU). The CDU transfers heat to the external rejection system &mdash; either dry coolers or the water tower's thermal mass.</p>
+    <p>The Trappeys water tower provides <strong>significant thermal buffer capacity</strong>. During peak compute loads, the tower absorbs excess heat. During low-load periods, ambient cooling brings the tower back to baseline. This passive thermal mass smooths temperature spikes without additional energy input.</p>
+    <p>The result: lower cooling energy costs, a repurposed landmark, and a cooling system that leverages physics instead of fighting it.</p>
+
+    <div class="tower-flow">
+      <div class="tower-step">
+        <div class="ts-name">NVL72 Rack</div>
+        <div class="ts-detail">45C hot water out</div>
+      </div>
+      <div class="tower-arrow">&rarr;</div>
+      <div class="tower-step">
+        <div class="ts-name">CDU</div>
+        <div class="ts-detail">Heat transfer</div>
+      </div>
+      <div class="tower-arrow">&rarr;</div>
+      <div class="tower-step">
+        <div class="ts-name">Dry Cooler</div>
+        <div class="ts-detail">Primary rejection</div>
+      </div>
+      <div class="tower-arrow">&rarr;</div>
+      <div class="tower-step">
+        <div class="ts-name">Water Tower</div>
+        <div class="ts-detail">Thermal mass buffer</div>
+      </div>
+      <div class="tower-arrow">&rarr;</div>
+      <div class="tower-step">
+        <div class="ts-name">Return Loop</div>
+        <div class="ts-detail">Cooled water back</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- AMERICAN-MADE SUPPLY CHAIN -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-label">Supply Chain</div>
+  <h2>American-Made</h2>
+  <p class="sub">Every component US-manufactured where possible. No single overseas dependency for critical infrastructure. Several suppliers within driving distance.</p>
+
+  <div class="supply-grid">
+    <div class="supply-card">
+      <div class="sc-company">NVIDIA</div>
+      <div class="sc-location">Santa Clara, CA</div>
+      <p>GPUs, DPUs, InfiniBand networking, NVLink switches, Base Command Manager, DCGM, Dynamo inference OS.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">First Solar</div>
+      <div class="sc-location">New Iberia, LA &mdash; 30 mi</div>
+      <p>Series 7 TR1 panels. $1.1B factory 30 miles from Trappeys. ~4,100 panels at 1500V DC strings across 170,000 sq ft. Shortest solar supply chain in the industry.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Bloom Energy</div>
+      <div class="sc-location">San Jose, CA (NYSE: BE)</div>
+      <p>Solid oxide fuel cells — natural gas to DC direct. No combustion. 54% efficiency. 10 MW Phase 1, scales to 100 MW full buildout. Modular 250 kW units, hot-swap, 90-day delivery. Primary generation source.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Delta Electronics</div>
+      <div class="sc-location">Plano, TX</div>
+      <p>660 kW rack PDU, e-Fuse arc protection, 140 kW in-rack CDU (NVL72 certified). Rack-level power and cooling. Ships now.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Munters</div>
+      <div class="sc-location">Gulf South distributor</div>
+      <p>Desiccant dehumidifiers. NVL72 exhaust heat regenerates the desiccant wheel. Racks pay for their own dehumidification. Offshore/marine proven — perfect for Louisiana 75-80% RH.</p>
+    </div>
+    <div class="supply-card">
+      <div class="sc-company">Siemens Energy</div>
+      <div class="sc-location">Atlanta, GA (US HQ)</div>
+      <p>Omnivise grid control and power management. Generation monitoring, grid sell-back optimization, predictive maintenance.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:24px">
+    <strong>Louisiana advantage:</strong> First Solar is 30 miles away. Bloom Energy ships in 90 days. Delta Electronics is in Plano TX. Every critical component is domestic, most are regional. No transoceanic shipping, no tariff exposure, no geopolitical supply risk.
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:40px 20px">
+<h2 style="text-align:center;margin-bottom:10px">Eaton Beam Rubin DSX — Five-Layer Power Architecture</h2>
+<p style="color:rgba(0,0,0,0.5);max-width:700px;margin:0 auto 30px;text-align:center;font-size:0.9rem">Presented live at NVIDIA GTC 2026 by JP Buzzell, VP &amp; Chief Architect, Eaton Global Data Center Segment.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 1 — Generation &amp; Grid</div><div style="font-weight:700;margin-bottom:6px">Power Generation + Grid Connection</div><div style="color:#555;font-size:0.85rem">Caterpillar G3520C nat gas + First Solar 2.05 MW + diesel emergency backup + LUS grid sell-back.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 2 — Gray Space</div><div style="font-weight:700;margin-bottom:6px">MV Power Conditioning + Stability</div><div style="color:#555;font-size:0.85rem">Solid State Transformers (SST) — scalable, pad-mount or modular. 15–35 kV to 800V DC (compute) and 480V 3-phase (mechanical).</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 3 — White Space</div><div style="font-weight:700;margin-bottom:6px">800V DC Delivery + Distribution</div><div style="color:#555;font-size:0.85rem">Busway Distribution Center + high-capacity bus bars. Plug-and-play rack feeds. DCRPP sidecar with local protection + monitoring.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 4 — Cooling</div><div style="font-weight:700;margin-bottom:6px">Power + Cooling for High-Density Racks</div><div style="color:#555;font-size:0.85rem">Delta 140 kW in-rack CDU + water tower cooling. 45°C hot water loop. 130+ kW per rack supported.</div></div>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:20px"><div style="color:#76b900;font-weight:700;font-size:0.75rem;text-transform:uppercase;margin-bottom:8px">Layer 5 — Software &amp; Services</div><div style="font-weight:700;margin-bottom:6px">Control, Health, Digital Twin</div><div style="color:#555;font-size:0.85rem">Eaton Brightlayer EPMS + Siemens Omnivise + NVIDIA Omniverse DSX digital twin. Predictive maintenance. Autonomous optimization.</div></div>
+</div>
+
+</div>
+
+
+  <h2 style="text-align:center;margin-top:50px;margin-bottom:10px">ABB &mdash; Medium Voltage UPS + Circuit Protection</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Formal NVIDIA R&amp;D partner (Oct 2025). Paolo Catapane (ABB) co-chairs OCP Power Distribution Sub-Project alongside JP Buzzell (Eaton).</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:16px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">MV UPS &mdash; Grid Entry</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB HiPerGuard</div><div style="color:#555;font-size:0.82rem">24 kV. Up to <strong>22.5 MVA</strong>. <strong>98% efficiency</strong>. Grid to HiPerGuard to Eaton to racks. Available now.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Circuit Protection</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB SACE Infinitus</div><div style="color:#555;font-size:0.82rem">1,000 VDC / 2,500 A. <strong>Less than 25 microsecond fault cutoff</strong>. Zero arc flash. IEC-certified. Available now.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">LV Switchgear</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">ABB SACE Emax 3 + MNS</div><div style="color:#555;font-size:0.82rem">IEC 62443 SL2 cybersecurity. Real-time sensing. Predictive maintenance. 800V DC 2027.</div></div>
+  </div>
+  <h2 style="text-align:center;margin-bottom:10px">Delta Electronics &mdash; Rack Power + Cooling</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Most complete 800V DC rack stack available today. NVIDIA MGX co-design. NVL72 certified CDU. Manufactured in Plano, Texas.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:40px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Rack Power</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 660 kW Power Rack</div><div style="color:#555;font-size:0.82rem">6x 110 kW. 800V DC. <strong>480 kW embedded BBU</strong>. e-Fuse SiC under 3 microseconds. Plano TX. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">DC/DC Conversion</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 90 kW DC/DC Shelf</div><div style="color:#555;font-size:0.82rem">1U. 800V to 50V. <strong>98.5% efficiency</strong>. 180% transient. NVIDIA MGX co-design. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">In-Rack Cooling</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 140 kW CDU</div><div style="color:#555;font-size:0.82rem">4RU. <strong>NVIDIA NVL72 certified</strong>. RVL/AVL listed. L2L plate exchanger. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row Cooling</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Delta 2.4 MW CDU</div><div style="color:#555;font-size:0.82rem">2,400 kW. 4C approach. <strong>800 VDC-native pumps</strong>. N+1 redundancy. GTC 2026.</div></div>
+  </div>
+
+  <h2 style="text-align:center;margin-bottom:10px">Liquid Cooling Infrastructure &mdash; GPU Die to Facility Loop</h2>
+  <p style="color:#555;max-width:700px;margin:0 auto 20px;text-align:center;font-size:0.9rem">Every NVL72 rack runs 100% liquid cooling. Boyd cold plates at the GPU die, Staubli quick-disconnects at 450 per rack, CoolIT row-level CDUs at 2 MW each, and Danfoss CoolTrain pre-fabricated piping to the Vermilion River and Trappeys water tower.</p>
+  <div style="background:#f0f0f0;border-radius:8px;padding:16px;margin-bottom:24px;overflow-x:auto">
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;min-width:fit-content">
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">GPU Die</div><div style="font-size:0.9rem;font-weight:800">~700 W</div><div style="font-size:0.6rem;color:#666">per GPU</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">Boyd Cold Plate</div><div style="font-size:0.9rem;font-weight:800">Copper</div><div style="font-size:0.6rem;color:#666">NVIDIA RVL ✓</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#76b900;margin-bottom:3px">Staubli UQD</div><div style="font-size:0.9rem;font-weight:800">450 / rack</div><div style="font-size:0.6rem;color:#666">GB300 NVL72</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#e65100;margin-bottom:3px">Rack Manifold</div><div style="font-size:0.9rem;font-weight:800">Supply/Return</div><div style="font-size:0.6rem;color:#666">CoolIT / Boyd</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#388e3c;margin-bottom:3px">CDU</div><div style="font-size:0.9rem;font-weight:800">2 MW / row</div><div style="font-size:0.6rem;color:#666">CoolIT CHx2000</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#1565c0;margin-bottom:3px">CoolTrain TCS</div><div style="font-size:0.9rem;font-weight:800">Pre-fab</div><div style="font-size:0.6rem;color:#666">Danfoss</div></div>
+  <div style="color:#999;font-size:1.1rem">→</div>
+  <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 14px;text-align:center;min-width:110px"><div style="font-size:0.6rem;text-transform:uppercase;font-weight:700;color:#1565c0;margin-bottom:3px">Heat Rejection</div><div style="font-size:0.9rem;font-weight:800">Vermilion River</div><div style="font-size:0.6rem;color:#666">+ Water Tower</div></div>
+  </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:40px">
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Primary</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">CoolIT CHx2000</div><div style="color:#555;font-size:0.82rem"><strong>2 MW</strong>. 12 NVL72 racks per unit. 750 mm footprint. Hot-swap pumps. <strong>6-nines availability.</strong> NVIDIA RVL/AVL. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Row CDU — Backup</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Vertiv CoolChip CDU 2300</div><div style="color:#555;font-size:0.82rem"><strong>2.3 MW</strong>. Variable speed pumps. Integrated leak detection. <strong>70% GB200 volume share.</strong> SNMP / BACnet. Shipping.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">Per-Rack CDU</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Motivair MCDU-10</div><div style="color:#555;font-size:0.82rem"><strong>210 kW</strong>. 4RU. GB300 NVL72 co-engineered. Schneider EcoStruxure. NVIDIA RVL/AVL.</div></div>
+  <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:8px;padding:18px"><div style="color:#76b900;font-weight:700;font-size:0.7rem;text-transform:uppercase;margin-bottom:6px">TCS Piping</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:5px">Danfoss CoolTrain</div><div style="color:#555;font-size:0.82rem">Pre-fabricated valve train. Factory pre-tested. <strong>Eliminates field pipe fabrication.</strong> Balancing valves, sensors, strainers — bolt-together on site.</div></div>
+  </div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-name">Trappeys Cannery Solar AI Factory</div>
+  <div class="f-title">NVIDIA DSX Reference Design &mdash; Lafayette, Louisiana</div>
+  <div class="f-links">
+    <a href="/trappeys">Overview</a>
+    <a href="/trappeys-campus">Campus</a>
+    <a href="/trappeys-investors">Investors</a>
+    <a href="/">ADC3K.com</a>
+  </div>
+  <div class="f-contact">
+    <a href="mailto:scott@adc3k.com">scott@adc3k.com</a> &nbsp;|&nbsp; <a href="https://adc3k.com">adc3k.com</a>
+  </div>
+</div>
+
+</body>
+</html>

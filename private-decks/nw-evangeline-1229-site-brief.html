@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1229 NW Evangeline Thruway — Lafayette AI Factory Acquisition Brief</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #04080f;
+    --panel: #08111e;
+    --panel2: #0b1827;
+    --border: #0f2035;
+    --border2: #1a3a5c;
+    --green: #00e87a;
+    --gold: #f5a623;
+    --amber: #e8890a;
+    --blue: #3b9eff;
+    --blue2: #00c8ff;
+    --purple: #9b6dff;
+    --red: #ff4d6d;
+    --text: #e8f0fc;
+    --muted: #4a6480;
+    --muted2: #7a9ab8;
+  }
+  html, body { height: 100%; background: #000; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+  #deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    background: var(--bg); padding: 0; overflow: hidden;
+  }
+  .slide.active { display: flex; }
+  .slide::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(59,158,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,158,255,0.012) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none; z-index: 0;
+  }
+
+  .slide-bar {
+    display: flex; align-items: center; gap: 16px; padding: 10px 28px;
+    background: rgba(4,8,15,0.92); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px); z-index: 10; flex-shrink: 0;
+  }
+  .bar-logo { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--blue2); white-space: nowrap; }
+  .bar-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .bar-meta { font-size: 10px; color: var(--muted); font-family: monospace; letter-spacing: 1px; white-space: nowrap; }
+
+  .slide-content { flex: 1; display: flex; align-items: stretch; overflow: hidden; z-index: 1; position: relative; }
+
+  .std-inner { display: grid; gap: 24px; padding: 24px 32px; width: 100%; align-items: start; overflow: hidden; }
+  .std-two { grid-template-columns: 1fr 1fr; }
+  .std-wide { grid-template-columns: 1.3fr 0.7fr; }
+  .std-three { grid-template-columns: 1fr 1fr 1fr; }
+  .std-four { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .full-inner { padding: 20px 32px; width: 100%; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--border2); border-radius: 12px;
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .panel-blue { border-color: rgba(59,158,255,0.35); background: rgba(59,158,255,0.04); }
+  .panel-green { border-color: rgba(0,232,122,0.35); background: rgba(0,232,122,0.04); }
+  .panel-gold { border-color: rgba(245,166,35,0.35); background: rgba(245,166,35,0.04); }
+  .panel-purple { border-color: rgba(155,109,255,0.35); background: rgba(155,109,255,0.04); }
+  .panel-red { border-color: rgba(255,77,109,0.35); background: rgba(255,77,109,0.04); }
+
+  .panel-label {
+    font-family: 'Courier New', monospace; font-size: 9px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 2px;
+  }
+  .panel-label.blue { color: var(--blue2); }
+  .panel-label.green { color: var(--green); }
+  .panel-label.gold { color: var(--gold); }
+  .panel-label.purple { color: var(--purple); }
+  .panel-label.red { color: var(--red); }
+
+  h1 { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1.15; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  h3 { font-size: 14px; font-weight: 700; color: var(--text); }
+  p { font-size: 12.5px; color: var(--muted2); line-height: 1.6; }
+  .accent { color: var(--blue2); }
+  .accent-green { color: var(--green); }
+  .accent-gold { color: var(--gold); }
+  .accent-purple { color: var(--purple); }
+  .accent-red { color: var(--red); }
+
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-val { font-size: 26px; font-weight: 800; color: var(--blue2); line-height: 1; }
+  .stat-val.green { color: var(--green); }
+  .stat-val.gold { color: var(--gold); }
+  .stat-val.purple { color: var(--purple); }
+  .stat-label { font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1px; }
+
+  .kv { display: flex; justify-content: space-between; align-items: baseline;
+    padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .kv:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted2); }
+  .kv-val { color: var(--text); font-weight: 600; text-align: right; }
+  .kv-val.green { color: var(--green); }
+  .kv-val.gold { color: var(--gold); }
+  .kv-val.blue { color: var(--blue2); }
+  .kv-val.purple { color: var(--purple); }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px;
+    font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .tag-blue { background: rgba(59,158,255,0.15); color: var(--blue2); border: 1px solid rgba(59,158,255,0.3); }
+  .tag-green { background: rgba(0,232,122,0.15); color: var(--green); border: 1px solid rgba(0,232,122,0.3); }
+  .tag-gold { background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+  .tag-purple { background: rgba(155,109,255,0.15); color: var(--purple); border: 1px solid rgba(155,109,255,0.3); }
+  .tag-red { background: rgba(255,77,109,0.15); color: var(--red); border: 1px solid rgba(255,77,109,0.3); }
+
+  .phase-row { display: flex; align-items: stretch; gap: 0; }
+  .phase-box {
+    flex: 1; padding: 12px 14px; border: 1px solid var(--border2);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .phase-box:first-child { border-radius: 8px 0 0 8px; }
+  .phase-box:last-child { border-radius: 0 8px 8px 0; }
+  .phase-box + .phase-box { border-left: none; }
+  .phase-num { font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .phase-val { font-size: 15px; font-weight: 800; color: var(--text); }
+  .phase-sub { font-size: 10px; color: var(--muted2); }
+
+  .bus-row { display: flex; align-items: center; gap: 0; margin: 4px 0; }
+  .bus-cell {
+    flex: 1; padding: 8px 10px; border: 1px solid var(--border2);
+    font-size: 11px; font-family: 'Courier New', monospace; color: var(--text);
+  }
+  .bus-cell:first-child { border-radius: 6px 0 0 6px; background: rgba(59,158,255,0.08); color: var(--blue2); font-weight: 700; min-width: 80px; flex: 0 0 80px; }
+  .bus-cell:last-child { border-radius: 0 6px 6px 0; }
+  .bus-cell + .bus-cell { border-left: none; }
+  .bus-cell.primary { background: rgba(0,232,122,0.08); color: var(--green); }
+  .bus-cell.bridge { background: rgba(245,166,35,0.08); color: var(--gold); }
+  .bus-cell.storage { background: rgba(155,109,255,0.08); color: var(--purple); }
+
+  .incentive-row { display: flex; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .incentive-row:last-child { border-bottom: none; }
+  .incentive-name { font-size: 12px; font-weight: 600; color: var(--text); flex: 1; }
+  .incentive-val { font-size: 13px; font-weight: 800; color: var(--green); white-space: nowrap; }
+  .incentive-note { font-size: 10px; color: var(--muted2); flex: 1.2; text-align: right; }
+
+  .deadline-row { display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+    border-radius: 8px; border: 1px solid var(--border2); margin-bottom: 6px; }
+  .deadline-date { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700;
+    color: var(--red); white-space: nowrap; min-width: 110px; }
+  .deadline-action { font-size: 12px; color: var(--text); flex: 1; }
+  .deadline-note { font-size: 10px; color: var(--muted2); }
+
+  /* COVER SLIDE */
+  .cover-inner { padding: 40px 52px; display: flex; flex-direction: column; gap: 24px; justify-content: center; height: 100%; }
+  .cover-eyebrow { font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue2); }
+  .cover-title { font-size: 38px; font-weight: 900; color: var(--text); line-height: 1.1; max-width: 800px; }
+  .cover-title span { color: var(--blue2); }
+  .cover-sub { font-size: 15px; color: var(--muted2); max-width: 600px; line-height: 1.6; }
+  .cover-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cover-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 860px; margin-top: 8px; }
+  .cover-stat { display: flex; flex-direction: column; gap: 4px; }
+  .cover-stat-val { font-size: 22px; font-weight: 800; color: var(--blue2); }
+  .cover-stat-val.green { color: var(--green); }
+  .cover-stat-val.gold { color: var(--gold); }
+  .cover-stat-label { font-size: 9px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1px; }
+  .cover-divider { width: 60px; height: 3px; background: var(--blue2); border-radius: 2px; }
+
+  .nav { position: fixed; bottom: 20px; right: 28px; display: flex; gap: 8px; z-index: 100; }
+  .nav button {
+    background: var(--panel); border: 1px solid var(--border2); color: var(--muted2);
+    width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 14px;
+    transition: all 0.15s;
+  }
+  .nav button:hover { background: var(--border2); color: var(--text); }
+  .slide-counter { position: fixed; bottom: 24px; left: 28px; font-family: 'Courier New', monospace;
+    font-size: 10px; color: var(--muted); z-index: 100; letter-spacing: 1px; }
+
+  .w-full { width: 100%; }
+  .mt-4 { margin-top: 4px; }
+  .gap-6 { gap: 6px; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; gap: 10px; }
+  .flex-1 { flex: 1; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(59,158,255,0.08), rgba(0,200,255,0.04));
+    border: 1px solid rgba(59,158,255,0.25); border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .highlight-text { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  .verdict {
+    background: linear-gradient(135deg, rgba(0,232,122,0.08), rgba(59,158,255,0.05));
+    border: 1px solid rgba(0,232,122,0.3); border-radius: 12px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .verdict-label { font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--green); }
+  .verdict-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide active" id="s1">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">1229 NW Evangeline Thruway — Lafayette AI Factory</span>
+      <span class="bar-meta">ACQUISITION BRIEF · APR 2026</span>
+    </div>
+    <div class="slide-content">
+      <div class="cover-inner">
+        <div class="cover-eyebrow">ADC · Site Acquisition Brief · Confidential</div>
+        <div class="cover-title">1229 NW Evangeline Thruway<br><span>Lafayette AI Factory</span></div>
+        <div class="cover-divider"></div>
+        <div class="cover-sub">Former Walmart Supercenter. 24.26 acres at the I-10 / I-49 interchange. Repurposed as a phased AI factory with DC microgrid, rooftop + canopy solar, and EV charging corridor — backed by a $12–17M incentive stack.</div>
+        <div class="cover-tags">
+          <span class="tag tag-blue">Opportunity Zone</span>
+          <span class="tag tag-gold">Enterprise Zone</span>
+          <span class="tag tag-green">NEVI AFC Eligible</span>
+          <span class="tag tag-purple">New Markets Tax Credit</span>
+          <span class="tag tag-blue">I-10 / I-49 Interchange</span>
+        </div>
+        <div class="cover-stats">
+          <div class="cover-stat">
+            <div class="cover-stat-val">$5.75M</div>
+            <div class="cover-stat-label">Asking Price</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val">228K</div>
+            <div class="cover-stat-label">Sq Ft Building</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val">24.26</div>
+            <div class="cover-stat-label">Acres Total</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val green">40-50 MW</div>
+            <div class="cover-stat-label">Power Ceiling</div>
+          </div>
+          <div class="cover-stat">
+            <div class="cover-stat-val gold">$60M+</div>
+            <div class="cover-stat-label">Stabilized Revenue</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <p style="font-size:11px; color:var(--muted);">Broker: Ryan Pecot / Charles Cornay — Stirling Properties &nbsp;·&nbsp; 337-234-4481 &nbsp;·&nbsp; CONFIDENTIAL — DO NOT DISTRIBUTE</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE OPPORTUNITY -->
+  <div class="slide" id="s2">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">The Opportunity</span>
+      <span class="bar-meta">SLIDE 2 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-wide">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-label blue">Property</div>
+            <div class="kv"><span class="kv-key">Address</span><span class="kv-val">1229 NW Evangeline Thruway, Lafayette LA 70501</span></div>
+            <div class="kv"><span class="kv-key">Former Use</span><span class="kv-val">Walmart Supercenter</span></div>
+            <div class="kv"><span class="kv-key">Building Size</span><span class="kv-val blue">228,569 SF</span></div>
+            <div class="kv"><span class="kv-key">Total Site</span><span class="kv-val blue">24.26 acres</span></div>
+            <div class="kv"><span class="kv-key">Clear Height</span><span class="kv-val">28–32 ft</span></div>
+            <div class="kv"><span class="kv-key">Loading Docks</span><span class="kv-val">Multiple — data center grade for rack delivery</span></div>
+            <div class="kv"><span class="kv-key">Electrical</span><span class="kv-val">Heavy service already roughed in</span></div>
+            <div class="kv"><span class="kv-key">Asking Price</span><span class="kv-val gold">$5.75M ($25.16 / SF)</span></div>
+            <div class="kv"><span class="kv-key">Listing</span><span class="kv-val">Stirling Properties — 337-234-4481</span></div>
+          </div>
+
+          <div class="panel panel-blue">
+            <div class="panel-label blue">Location</div>
+            <div class="kv"><span class="kv-key">Interstate Access</span><span class="kv-val blue">I-10 / I-49 interchange — dual AFC</span></div>
+            <div class="kv"><span class="kv-key">Signalized Ingress</span><span class="kv-val">Hwy 90 frontage</span></div>
+            <div class="kv"><span class="kv-key">Airport</span><span class="kv-val">Lafayette Regional — 1.7 mi</span></div>
+            <div class="kv"><span class="kv-key">Fiber</span><span class="kv-val">All major carriers at this interchange</span></div>
+            <div class="kv"><span class="kv-key">Latency</span><span class="kv-val">New Orleans ~1ms · Houston ~8ms · Dallas ~15ms</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-green">
+            <div class="panel-label green">Why $25/SF Is Underpriced</div>
+            <p>I-10/I-49 interchange land in comparable Sun Belt secondary markets trades at <span class="accent-green">$330,000–$500,000 per acre</span>. At 24.26 acres, land replacement cost alone is $8–12M. The 228,569 SF building comes at negative implied cost relative to the land.</p>
+          </div>
+
+          <div class="panel panel-gold">
+            <div class="panel-label gold">Zone Stack</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="tag tag-blue">Opportunity Zone</span>
+                <span style="font-size:11px;color:var(--muted2);">Census Tract 11 — 41.4% poverty rate. 10-yr cap gains exclusion at exit.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="tag tag-gold">Enterprise Zone</span>
+                <span style="font-size:11px;color:var(--muted2);">1.5% ITC on capital investment + sales tax rebate on equipment.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="tag tag-purple">NMTC Eligible</span>
+                <span style="font-size:11px;color:var(--muted2);">LIC census tract — 39% credit over 7 yrs via CDE.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="tag tag-green">NEVI Eligible</span>
+                <span style="font-size:11px;color:var(--muted2);">I-10/I-49 confirmed AFC — 80% federal EV charging grant.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-text">The building is a free option. The play is the <span class="accent">24-acre interchange parcel</span> inside three overlapping federal incentive zones, on the most fiber-dense node in Acadiana.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: THE VISION -->
+  <div class="slide" id="s3">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">The Vision — Repurposed Walmart as AI Factory</span>
+      <span class="bar-meta">SLIDE 3 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-two">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-label blue">Building Interior — 228,569 SF</div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px;">
+              <div class="kv"><span class="kv-key">Data center zone (rack floor + support)</span><span class="kv-val blue">~80,000 SF</span></div>
+              <div class="kv"><span class="kv-key">1,000–1,200 GPU rack positions</span><span class="kv-val blue">25–30 MW IT load</span></div>
+              <div class="kv"><span class="kv-key">Munters adiabatic skids</span><span class="kv-val">Inside building — weather protected</span></div>
+              <div class="kv"><span class="kv-key">Infrastructure / UPS / cooling</span><span class="kv-val">~50,000 SF</span></div>
+              <div class="kv"><span class="kv-key">NOC / ops / colo sales</span><span class="kv-val">~20,000 SF</span></div>
+              <div class="kv"><span class="kv-key">Flex / future expansion</span><span class="kv-val">~78,000 SF</span></div>
+            </div>
+          </div>
+          <div class="panel panel-blue">
+            <div class="panel-label blue">Parking Lot — ~15 Acres Usable</div>
+            <div class="kv"><span class="kv-key">Solar canopy (rooftop + lot)</span><span class="kv-val green">4–5 MW</span></div>
+            <div class="kv"><span class="kv-key">Bloom SOFC array</span><span class="kv-val green">~160–200 boxes · 40–50 MW N+1</span></div>
+            <div class="kv"><span class="kv-key">LFP BESS containers</span><span class="kv-val purple">4-hr bridge</span></div>
+            <div class="kv"><span class="kv-key">Cat G3520H bridge genset</span><span class="kv-val gold">2.5 MW field power</span></div>
+            <div class="kv"><span class="kv-key">DCFC EV corridor</span><span class="kv-val blue">20 stalls · street-facing</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-green">
+            <div class="panel-label green">Why Inside Munters Beats Trappeys Approach</div>
+            <p style="font-size:12px;">At Trappeys, Munters skids sit outside exposed to weather. At the Walmart, Munters drops inside the building shell directly adjacent to the hot aisle — weather protected, shorter duct runs, cleaner install. The existing 28–32 ft clear span handles airflow management without structural modification. Drop the retail ceiling, expose the clear span, add hot-aisle containment. Done.</p>
+          </div>
+
+          <div class="panel panel-gold">
+            <div class="panel-label gold">How Marlie I Informs This Build</div>
+            <p style="font-size:12px;">MARLIE I proved the sectioned-commissioning model — control the zone you're using, expand as racks come in. The Walmart scales that model by 20×. Start with ~5,000 SF and 50–100 racks. Commission the next section when rack supply arrives. You are never ahead of demand, never behind the building. MARLIE is limited by its walls. <span class="accent-gold">This site has no ceiling.</span></p>
+          </div>
+
+          <div class="verdict">
+            <div class="verdict-label">Strategic Position</div>
+            <div class="verdict-text">The rack installation rate — not the building — is the bottleneck for every AI factory. This site absorbs whatever allocation comes in, in whatever phasing it arrives, without stranding capex. Start with one rack. Scale to 1,200+. The infrastructure grows with the demand.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: PHASED BUILDOUT -->
+  <div class="slide" id="s4">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">Phased Buildout — Sectioned Commissioning</span>
+      <span class="bar-meta">SLIDE 4 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="full-inner">
+        <div class="phase-row">
+          <div class="phase-box" style="background:rgba(59,158,255,0.06);border-color:rgba(59,158,255,0.3);">
+            <div class="phase-num">Phase 1 · Day 1</div>
+            <div class="phase-val" style="color:var(--blue2);">50–100 racks</div>
+            <div class="phase-sub">~5,000 SF sectioned off</div>
+            <div class="phase-sub" style="margin-top:4px;">1.5–2.5 MW IT load</div>
+            <div class="phase-sub">Cat G3520H bridge + solar online</div>
+            <div class="phase-sub">EV charging operational — NEVI funded</div>
+          </div>
+          <div class="phase-box" style="background:rgba(0,232,122,0.04);border-color:rgba(0,232,122,0.2);">
+            <div class="phase-num">Phase 2 · 6–12 Months</div>
+            <div class="phase-val" style="color:var(--green);">300–400 racks</div>
+            <div class="phase-sub">~22,000 SF commissioned</div>
+            <div class="phase-sub" style="margin-top:4px;">7–10 MW IT load</div>
+            <div class="phase-sub">Bloom N+1 partial array live</div>
+            <div class="phase-sub">BESS online · Cat remains N+1</div>
+          </div>
+          <div class="phase-box" style="background:rgba(245,166,35,0.04);border-color:rgba(245,166,35,0.2);">
+            <div class="phase-num">Phase 3 · 12–24 Months</div>
+            <div class="phase-val" style="color:var(--gold);">600–800 racks</div>
+            <div class="phase-sub">~55,000 SF commissioned</div>
+            <div class="phase-sub" style="margin-top:4px;">15–20 MW IT load</div>
+            <div class="phase-sub">Full Bloom boxes + solar</div>
+            <div class="phase-sub">Pure DC microgrid — grid optional</div>
+          </div>
+          <div class="phase-box" style="background:rgba(155,109,255,0.04);border-color:rgba(155,109,255,0.2);">
+            <div class="phase-num">Phase 4 · On Demand</div>
+            <div class="phase-val" style="color:var(--purple);">1,000–1,200 racks</div>
+            <div class="phase-sub">Full 228,569 SF utilized</div>
+            <div class="phase-sub" style="margin-top:4px;">25–30 MW IT · ~39 MW facility</div>
+            <div class="phase-sub">Full Bloom boxes 160–200 · 40–50 MW N+1</div>
+            <div class="phase-sub">Bloom + FCE second platform · Act 730 eligible</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="panel">
+            <div class="panel-label">Each Phase Is Self-Funding</div>
+            <p style="font-size:12px;line-height:1.7;">Solar and EV charging generate revenue from the parking lot independent of rack count. Phase 1 GPU revenue covers Phase 2 infrastructure. The building does not create financial pressure — it creates optionality. Every section opened adds incremental NOI without restating the prior investment.</p>
+          </div>
+          <div class="panel panel-blue">
+            <div class="panel-label blue">What Does Not Change Across Phases</div>
+            <div class="kv"><span class="kv-key">Power architecture</span><span class="kv-val">Same OCP 800V DC bus throughout</span></div>
+            <div class="kv"><span class="kv-key">Cooling approach</span><span class="kv-val">Munters inside — water-cooled racks</span></div>
+            <div class="kv"><span class="kv-key">Security perimeter</span><span class="kv-val">Expand with each section</span></div>
+            <div class="kv"><span class="kv-key">EV / solar</span><span class="kv-val">Online Phase 1, generating throughout</span></div>
+            <div class="kv"><span class="kv-key">Rack form factor</span><span class="kv-val">NVL72 / DSX compatible</span></div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-text">The rack installation bottleneck is real industry-wide. This site removes it as a constraint. You are never limited by building size — only by allocation. MARLIE has hit its ceiling at 40 racks. This site scales to 1,200+ without a structural constraint in sight.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: POWER ARCHITECTURE -->
+  <div class="slide" id="s5">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">Power Architecture — ADC DC Microgrid</span>
+      <span class="bar-meta">SLIDE 5 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-two">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-label blue">Power Stack — Same Architecture, Every ADC Site</div>
+            <div class="bus-row" style="margin-top:8px;">
+              <div class="bus-cell">1500V DC</div>
+              <div class="bus-cell primary">First Solar Canopy · Roof + Lot · 4–5 MW · DC-direct · Louisiana-manufactured</div>
+            </div>
+            <div class="bus-row">
+              <div class="bus-cell">800V DC</div>
+              <div class="bus-cell primary">Bloom SOFC N+1 · ~160–200 boxes · 40–50 MW · DC-native · no inverter · PRIMARY</div>
+            </div>
+            <div class="bus-row">
+              <div class="bus-cell">800V DC</div>
+              <div class="bus-cell storage">LFP BESS · DC-coupled · Hitachi AMPS PCS · 4-hr minimum · BRIDGE</div>
+            </div>
+            <div class="bus-row">
+              <div class="bus-cell">800V DC</div>
+              <div class="bus-cell bridge">Cat G3520H · 2,507 kW · Eaton AC-DC rectifier → 800V DC bus · FIELD BRIDGE</div>
+            </div>
+            <div class="bus-row">
+              <div class="bus-cell">800V DC</div>
+              <div class="bus-cell" style="background:rgba(155,109,255,0.06);color:var(--purple);">OCP Stage 1d Bus · 1500V rated · operating 800V · into building · NO AC ANYWHERE</div>
+            </div>
+          </div>
+
+          <div class="panel panel-gold">
+            <div class="panel-label gold">Cat Bridge — Same as Oilfield Model</div>
+            <p style="font-size:12px;">Cat G3520H genset (2,507 kW continuous) + Eaton AC-DC rectifier skid feeds the 800V DC bus. Bridges Bloom allocation gaps. Operates as N+1 at any phase. Bloom and Cat are not mutually exclusive — Cat covers Phase 1 while Bloom delivery timeline resolves. First revenue-generating rack does not wait for Bloom.</p>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-green">
+            <div class="panel-label green">Why Munters Inside Works Better Here</div>
+            <div class="kv"><span class="kv-key">Trappeys</span><span class="kv-val">Munters outside — exposed to weather</span></div>
+            <div class="kv"><span class="kv-key">Walmart</span><span class="kv-val green">Munters inside building — fully protected</span></div>
+            <div class="kv"><span class="kv-key">Hot aisle run</span><span class="kv-val">Direct adjacency — shorter duct = lower fan load</span></div>
+            <div class="kv"><span class="kv-key">Building insulation</span><span class="kv-val">Retail roof already insulated — lower ambient load</span></div>
+            <div class="kv"><span class="kv-key">28–32 ft clear</span><span class="kv-val">Hot aisle containment requires zero structural work</span></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-label">Site Footprint — 24.26 Acres</div>
+            <div class="kv"><span class="kv-key">Building footprint</span><span class="kv-val">~10–12 acres (data hall + support)</span></div>
+            <div class="kv"><span class="kv-key">Bloom box array</span><span class="kv-val">~7–8 acres for 160–200 SOFC units</span></div>
+            <div class="kv"><span class="kv-key">BESS containers</span><span class="kv-val">~0.5 acres perimeter</span></div>
+            <div class="kv"><span class="kv-key">Solar canopy</span><span class="kv-val">~8 acres parking + rooftop</span></div>
+            <div class="kv"><span class="kv-key">EV corridor</span><span class="kv-val">Street-facing, 20 stalls</span></div>
+            <div class="kv"><span class="kv-key">Overflow / Phase 4 expansion</span><span class="kv-val">Remaining acreage</span></div>
+          </div>
+
+          <div class="panel panel-blue">
+            <div class="panel-label blue">First Solar — 30 Miles Away</div>
+            <p style="font-size:12px;">First Solar manufactures Series 7 panels in Iberia Parish, LA — 30 miles from this site. US-manufactured, solves the FEOC restriction, qualifies for the Domestic Content ITC adder (+10%). The supply chain proximity is a bankable advantage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: REVENUE MODEL -->
+  <div class="slide" id="s6">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">Revenue Model — Three Concurrent Streams</span>
+      <span class="bar-meta">SLIDE 6 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-three">
+
+        <div class="col">
+          <div class="panel panel-blue">
+            <div class="panel-label blue">Stream 1 · GPU Colocation</div>
+            <div class="stat"><div class="stat-val">$28.8M</div><div class="stat-label">Annual gross at full buildout</div></div>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <div class="kv"><span class="kv-key">Full buildout racks</span><span class="kv-val">1,000–1,200 positions</span></div>
+            <div class="kv"><span class="kv-key">Avg lease rate</span><span class="kv-val blue">$4,000 / rack / mo</span></div>
+            <div class="kv"><span class="kv-key">Gross monthly (1,200 racks)</span><span class="kv-val">$4.8M</span></div>
+            <div class="kv"><span class="kv-key">Range</span><span class="kv-val">$3,500–$8,000/rack</span></div>
+            <div style="margin-top:8px;">
+              <p style="font-size:11px;">Managed compute (NVL72 / DSX) commands the upper end. Bare-metal colo at the lower end. The site accommodates both simultaneously across sections.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-green">
+            <div class="panel-label green">Stream 2 · Solar</div>
+            <div class="stat"><div class="stat-val green">$745K</div><div class="stat-label">Annual avoided cost (behind-meter)</div></div>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <div class="kv"><span class="kv-key">System size</span><span class="kv-val">4.3 MW (roof + canopy)</span></div>
+            <div class="kv"><span class="kv-key">Annual generation</span><span class="kv-val">~6,770 MWh</span></div>
+            <div class="kv"><span class="kv-key">Avoided cost</span><span class="kv-val green">$0.11/kWh (Entergy LA)</span></div>
+            <div class="kv"><span class="kv-key">PPA alternative</span><span class="kv-val">$440K/yr at $0.065/kWh</span></div>
+            <div class="kv"><span class="kv-key">O&amp;M cost</span><span class="kv-val">~$65K/yr</span></div>
+            <div style="margin-top:8px;">
+              <p style="font-size:11px;">First Solar panels, 18% capacity factor for Louisiana Class 3–4 solar resource. Net contribution $375–680K depending on structure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-purple">
+            <div class="panel-label purple">Stream 3 · EV Charging</div>
+            <div class="stat"><div class="stat-val purple">$400K</div><div class="stat-label">Annual net (conservative)</div></div>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <div class="kv"><span class="kv-key">Stalls</span><span class="kv-val">20 DCFC ports</span></div>
+            <div class="kv"><span class="kv-key">Sessions / port / mo</span><span class="kv-val">200 avg (I-10/I-49 corridor)</span></div>
+            <div class="kv"><span class="kv-key">Avg session revenue</span><span class="kv-val">$16.80 (40 kWh × $0.42)</span></div>
+            <div class="kv"><span class="kv-key">Gross annual</span><span class="kv-val">~$806K</span></div>
+            <div class="kv"><span class="kv-key">Operating margin</span><span class="kv-val purple">~50%</span></div>
+            <div style="margin-top:8px;">
+              <p style="font-size:11px;">A dual-interstate interchange is above-average utilization. 200 sessions/port/mo is the national average — this location should outperform.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="padding:0 32px 16px;">
+        <div class="panel" style="background:linear-gradient(135deg,rgba(59,158,255,0.07),rgba(0,232,122,0.04));">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+            <div class="stat"><div class="stat-val green">$60M+</div><div class="stat-label">Gross Annual (Full Buildout)</div></div>
+            <div class="stat"><div class="stat-val">18.7%</div><div class="stat-label">Cap Rate on Acquisition Cost</div></div>
+            <div class="stat"><div class="stat-val gold">4.9–8%</div><div class="stat-label">Cap Rate on Total Project</div></div>
+            <div class="stat"><div class="stat-val purple">$15–25M</div><div class="stat-label">Stabilized Asset Value</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: INCENTIVE STACK -->
+  <div class="slide" id="s7">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">Incentive Stack — $12–17M on a $22M Project</span>
+      <span class="bar-meta">SLIDE 7 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-two">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-label green">Federal Incentives</div>
+            <div class="incentive-row">
+              <div class="incentive-name">Solar ITC — Section 48E (40%)</div>
+              <div class="incentive-val">$4.4M</div>
+              <div class="incentive-note">Transferable cash ~$3.96M · First Solar + Energy Community adder</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">NEVI Grant (80% of EV station)</div>
+              <div class="incentive-val">$1.2–1.6M</div>
+              <div class="incentive-note">I-10/I-49 confirmed AFC · 20-stall DCFC installation</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">Section 30C EV Tax Credit (30%)</div>
+              <div class="incentive-val">$450–600K</div>
+              <div class="incentive-note">LIC census tract qualifies · ⚠ deadline June 30, 2026</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">OZ 10-Year Cap Gains Exclusion</div>
+              <div class="incentive-val">$4–6M NPV</div>
+              <div class="incentive-note">All appreciation at exit tax-free · QOF before Dec 31, 2026</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">New Markets Tax Credit (39%)</div>
+              <div class="incentive-val">$1.95–3.9M</div>
+              <div class="incentive-note">Via CDE intermediary · LIC tract qualifies</div>
+            </div>
+          </div>
+
+          <div class="panel panel-gold">
+            <div class="panel-label gold">Louisiana / Local Incentives</div>
+            <div class="incentive-row">
+              <div class="incentive-name">Enterprise Zone (1.5% on $22M)</div>
+              <div class="incentive-val" style="color:var(--gold);">$330K</div>
+              <div class="incentive-note">File advance notification before construction</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">LA Sales Tax Exemption (solar equip)</div>
+              <div class="incentive-val" style="color:var(--gold);">~$990K</div>
+              <div class="incentive-note">9% on ~$11M in panels + hardware</div>
+            </div>
+            <div class="incentive-row">
+              <div class="incentive-name">LED FastStart (workforce training)</div>
+              <div class="incentive-val" style="color:var(--gold);">Free</div>
+              <div class="incentive-note">50+ new permanent jobs · #1 program in US</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-red">
+            <div class="panel-label red">Hard Deadlines — Act Now or Lose</div>
+            <div class="deadline-row" style="border-color:rgba(255,77,109,0.4);background:rgba(255,77,109,0.04);">
+              <div class="deadline-date">June 30, 2026</div>
+              <div class="deadline-action">Section 30C EV credit — equipment placed in service</div>
+            </div>
+            <div class="deadline-row" style="border-color:rgba(255,77,109,0.4);background:rgba(255,77,109,0.04);">
+              <div class="deadline-date">July 4, 2026</div>
+              <div class="deadline-action">Solar ITC — begin construction OR 5% safe harbor spend</div>
+            </div>
+            <div class="deadline-row" style="border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.03);">
+              <div class="deadline-date">Dec 31, 2026</div>
+              <div class="deadline-action">OZ 1.0 — establish QOF, deploy capital</div>
+            </div>
+            <p style="font-size:11px;margin-top:8px;color:var(--muted2);">Nine to ten months on the first two deadlines. The ITC and 30C together represent $5–6M in incentives — both require action before July 2026.</p>
+          </div>
+
+          <div class="panel panel-blue">
+            <div class="panel-label blue">Effective Net Cost After Incentives</div>
+            <div class="kv"><span class="kv-key">Total project cost</span><span class="kv-val">~$22M</span></div>
+            <div class="kv"><span class="kv-key">Total incentive capture</span><span class="kv-val green">$12–17M</span></div>
+            <div class="kv"><span class="kv-key">Effective net cost</span><span class="kv-val blue">~$5–10M</span></div>
+            <div class="kv"><span class="kv-key">Stabilized asset value</span><span class="kv-val">$15–25M</span></div>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <p style="font-size:11px;">The incentive stack turns a $22M project into a $5–10M effective investment with a $15–25M stabilized asset value. The OZ 10-year exclusion adds another $4–6M NPV at exit on top of that.</p>
+          </div>
+
+          <div class="verdict">
+            <div class="verdict-label">Bottom Line</div>
+            <div class="verdict-text">$5.75M buys a 24-acre dual-interstate parcel in three overlapping federal incentive zones. The building is free. The incentive stack covers more than half the development cost. The rack bottleneck never stops you from expanding.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: ACTION ITEMS -->
+  <div class="slide" id="s8">
+    <div class="slide-bar">
+      <span class="bar-logo">ADC · PRIVATE</span>
+      <span class="bar-title">Immediate Action Items</span>
+      <span class="bar-meta">SLIDE 8 / 8</span>
+    </div>
+    <div class="slide-content">
+      <div class="std-inner std-two">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-label blue">Acquisition Track</div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--blue2);min-width:30px;font-size:13px;font-weight:800;">1</div>
+              <div>
+                <div class="deadline-action">Contact Stirling Properties — get tour + full due diligence package</div>
+                <div class="deadline-note">Ryan Pecot: 337-234-4481 · Charles Cornay: 337-572-0234</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--blue2);min-width:30px;font-size:13px;font-weight:800;">2</div>
+              <div>
+                <div class="deadline-action">Run parcel through CDFI Fund CIMS — confirm OZ tract 11</div>
+                <div class="deadline-note">cims.cdfifund.gov · also check energycommunities.gov for Energy Community adder</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--blue2);min-width:30px;font-size:13px;font-weight:800;">3</div>
+              <div>
+                <div class="deadline-action">Phase I environmental — screen for brownfield status</div>
+                <div class="deadline-note">Brownfield designation = +10% ITC Energy Community adder · EPA Region 6</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--blue2);min-width:30px;font-size:13px;font-weight:800;">4</div>
+              <div>
+                <div class="deadline-action">Engage tax attorney — structure QOF before Dec 31, 2026</div>
+                <div class="deadline-note">OZ 1.0 benefits require capital deployment before deadline</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-gold">
+            <div class="panel-label gold">Incentive Track</div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--gold);min-width:30px;font-size:13px;font-weight:800;">5</div>
+              <div>
+                <div class="deadline-action">File Enterprise Zone advance notification</div>
+                <div class="deadline-note">Must file BEFORE construction or hiring — do not miss this</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--gold);min-width:30px;font-size:13px;font-weight:800;">6</div>
+              <div>
+                <div class="deadline-action">Contact Louisiana DOTD — NEVI application cycle status</div>
+                <div class="deadline-note">Office of Multimodal Planning · I-10/I-49 AFC confirmed eligible</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--gold);min-width:30px;font-size:13px;font-weight:800;">7</div>
+              <div>
+                <div class="deadline-action">Engage NMTC CDE — LDC or Greenlight Capital</div>
+                <div class="deadline-note">39% credit over 7 yrs · LIC census tract 11 qualifies</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--gold);min-width:30px;font-size:13px;font-weight:800;">8</div>
+              <div>
+                <div class="deadline-action">Contact Kristin Johnson, LED re: ITEP pre-qualification</div>
+                <div class="deadline-note">225-342-2083 · explore manufacturing use component for eligibility</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel panel-red">
+            <div class="panel-label red">Time-Critical — Cannot Miss</div>
+            <div class="deadline-row" style="border-color:rgba(255,77,109,0.4);background:rgba(255,77,109,0.04);">
+              <div class="deadline-date">June 30, 2026</div>
+              <div>
+                <div class="deadline-action">30C EV credit — equipment placed in service</div>
+                <div class="deadline-note">~$450–600K · 9 months from today</div>
+              </div>
+            </div>
+            <div class="deadline-row" style="border-color:rgba(255,77,109,0.4);background:rgba(255,77,109,0.04);">
+              <div class="deadline-date">July 4, 2026</div>
+              <div>
+                <div class="deadline-action">Solar ITC — 5% safe harbor spend locked in</div>
+                <div class="deadline-note">$4.4M ITC at risk · engage solar EPC now</div>
+              </div>
+            </div>
+            <div class="deadline-row" style="border-color:rgba(245,166,35,0.3);">
+              <div class="deadline-date">Dec 31, 2026</div>
+              <div>
+                <div class="deadline-action">OZ 1.0 fund — QOF deployed</div>
+                <div class="deadline-note">$4–6M NPV at exit · structure now</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-green">
+            <div class="panel-label green">Power / Build Track</div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--green);min-width:30px;font-size:13px;font-weight:800;">9</div>
+              <div>
+                <div class="deadline-action">Engage First Solar (Iberia Parish) — panel supply agreement</div>
+                <div class="deadline-note">30 miles away · US-manufactured · Domestic Content ITC adder</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--green);min-width:30px;font-size:13px;font-weight:800;">10</div>
+              <div>
+                <div class="deadline-action">Bloom Energy — site qualification + delivery timeline</div>
+                <div class="deadline-note">90-day delivery on individual boxes · book Phase 1 allocation</div>
+              </div>
+            </div>
+            <div class="deadline-row">
+              <div class="deadline-date" style="color:var(--green);min-width:30px;font-size:13px;font-weight:800;">11</div>
+              <div>
+                <div class="deadline-action">Confirm fiber availability — verify carrier presence at interchange</div>
+                <div class="deadline-note">AT&T, Lumen, Cox, Zayo all expected at I-10/I-49</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:12px 0 0;">
+            <p style="font-size:10px;color:var(--muted);line-height:1.6;">CONFIDENTIAL — Prepared by ADC · April 2026 · For internal use and qualified investor review only. Not for public distribution. Financial projections are estimates based on market comparables and are not guaranteed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button onclick="prevSlide()">&#8592;</button>
+  <button onclick="nextSlide()">&#8594;</button>
+</div>
+<div class="slide-counter" id="counter">01 / 08</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  function show(n) {
+    slides[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    document.getElementById('counter').textContent =
+      String(cur + 1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+  }
+  function nextSlide() { show(cur + 1); }
+  function prevSlide() { show(cur - 1); }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+  });
+</script>
+</body>
+</html>

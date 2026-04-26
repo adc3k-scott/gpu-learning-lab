@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Trappey's Compute Center — 91.1 MW AI compute facility on a 22-acre historic cannery site in Lafayette, Louisiana. Behind-the-meter permanent island on 44 Cat CG260-16 gensets. 45% historic tax credit stack. Seeking capital alignment.">
+<title>Trappey's Compute Center — Investor Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV BAR */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav-brand{font-weight:800;font-size:15px;color:var(--bright);white-space:nowrap}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:12px;font-weight:600;color:var(--dim);padding:6px 12px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+
+/* HEADER */
+.header{text-align:center;padding:80px 24px 60px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(206,24,30,0.06) 0%,transparent 100%)}
+.header .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.header h1{font-size:clamp(28px,4.5vw,52px);font-weight:900;color:var(--bright);line-height:1.1;margin-bottom:20px}
+.header h1 span{color:var(--cyan)}
+.header .sub{font-size:clamp(14px,1.5vw,17px);color:var(--dim);max-width:780px;margin:0 auto;line-height:1.7}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.section h2{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--bright);margin-bottom:8px;line-height:1.2}
+.section .sub{font-size:15px;color:var(--dim);margin-bottom:36px;max-width:700px;line-height:1.7}
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:32px 0 0}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center}
+.stat-box .val{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--cyan)}
+.stat-box .lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+
+/* INCENTIVE TABLE */
+.incentive-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:13px}
+.incentive-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);padding:12px 16px;border-bottom:2px solid var(--border);font-weight:600}
+.incentive-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.incentive-table tr:last-child td{border-bottom:none}
+.incentive-table .program{font-weight:700;color:var(--bright);white-space:nowrap}
+.incentive-table .benefit{font-family:'IBM Plex Mono',monospace;color:var(--cyan);font-weight:600}
+.incentive-table .note{color:var(--dim);font-size:12px}
+.incentive-table .critical{color:var(--red);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+
+/* ECON GRID */
+.econ-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:28px}
+.econ-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px}
+.econ-card h3{font-size:15px;font-weight:700;color:var(--bright);margin-bottom:16px}
+.econ-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);gap:12px}
+.econ-row:last-child{border-bottom:none}
+.econ-label{font-size:13px;color:var(--dim)}
+.econ-value{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--cyan);text-align:right}
+.econ-value.highlight{color:var(--green);font-size:16px;font-weight:800}
+
+/* COMPETITOR CARDS */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.comp-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.comp-card .comp-name{font-size:16px;font-weight:800;color:var(--bright);margin-bottom:4px}
+.comp-card .comp-val{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cyan);margin-bottom:12px}
+.comp-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* GAP CALLOUT */
+.gap-callout{background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:28px;margin-top:24px;text-align:center}
+.gap-callout .gap-text{font-size:18px;font-weight:800;color:var(--cyan);margin-bottom:8px}
+.gap-callout p{font-size:14px;color:var(--dim);line-height:1.7}
+
+/* SCARCITY */
+.scarcity-box{background:var(--card);border:1px solid var(--red);border-radius:10px;padding:32px;margin-top:28px}
+.scarcity-box .scarcity-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+.scarcity-box h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:12px}
+.scarcity-box p{font-size:14px;color:var(--dim);line-height:1.7}
+.scarcity-box .mono{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red);font-weight:600}
+
+/* PHASE CARDS */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:28px}
+.phase{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative}
+.phase .phase-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.phase h3{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:6px}
+.phase .phase-ebitda{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:800;color:var(--green);margin-bottom:14px}
+.phase ul{list-style:none;font-size:13px;color:var(--dim);line-height:1.8}
+.phase ul li{padding-left:16px;position:relative}
+.phase ul li::before{content:'>';position:absolute;left:0;color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-weight:700}
+
+/* QUALIFICATIONS */
+.qual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.qual-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px}
+.qual-card h3{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:10px}
+.qual-card p{font-size:13px;color:var(--dim);line-height:1.6}
+.qual-card .qual-highlight{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cyan);font-weight:600;margin-top:8px}
+
+/* FOOTER */
+footer{text-align:center;padding:60px 24px;border-top:1px solid var(--border)}
+footer .footer-brand{font-size:18px;font-weight:800;color:var(--bright);margin-bottom:8px}
+footer .footer-brand span{color:var(--cyan)}
+footer .footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:16px 0 24px}
+footer .footer-links a{font-size:13px;color:var(--dim);transition:color 0.2s}
+footer .footer-links a:hover{color:var(--cyan);text-decoration:none}
+footer .footer-contact{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);line-height:1.8}
+footer .footer-contact a{color:var(--cyan)}
+footer .footer-legal{font-size:10px;color:var(--dim);margin-top:20px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* TABS */
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:52px;z-index:99;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-inner{max-width:1200px;margin:0 auto;display:flex;gap:0;min-width:max-content}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--dim);padding:14px 16px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px}
+.tab-btn:hover{color:var(--bright)}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* GAP COMPARISON responsive */
+.gap-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+
+@media(max-width:768px){
+  .nav-links{gap:4px}
+  .nav-links a{font-size:11px;padding:5px 8px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .econ-grid{grid-template-columns:1fr}
+  .comp-grid{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr}
+  .qual-grid{grid-template-columns:1fr}
+  .incentive-table{font-size:12px}
+  .incentive-table th,.incentive-table td{padding:10px 10px}
+  .tab-btn{font-size:10px;padding:12px 10px}
+  .gap-compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Trappey's <span>Compute Center</span></div>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-power">Power</a>
+      <a href="/trappeys-university">University</a>
+      <a href="/trappeys-responders">First Responders</a>
+      <a href="/trappeys-investors" class="active">Investors</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="tag">Investor Brief &mdash; Working Draft</div>
+  <h1>Trappey's <span>Compute Center</span></h1>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--dim);margin-top:8px;letter-spacing:1px">// Trappey's Cannery &mdash; Vermilion River &mdash; Lafayette, Louisiana</p>
+  <p class="sub">A 91.1 MW AI compute facility on a 22-acre historic cannery site on the Vermilion River in Lafayette, Louisiana. Behind-the-meter permanent electrical island generating its own power on-site from 44 Cat CG260-16 natural gas gensets arranged in 11 electrically independent blocks. Path to 182.2 MW at full build on the same site.</p>
+  <div class="stat-row" style="max-width:800px;margin:28px auto 0">
+    <div class="stat-box"><div class="val">91.1 MW</div><div class="lbl">Stage 1 IT</div></div>
+    <div class="stat-box"><div class="val">44</div><div class="lbl">Cassettes</div></div>
+    <div class="stat-box"><div class="val">28,512</div><div class="lbl">Vera Rubin GPUs</div></div>
+    <div class="stat-box"><div class="val">45%</div><div class="lbl">HTC Stack</div></div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-inner">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="site">The Site</button>
+    <button class="tab-btn" data-tab="technology">Architecture</button>
+    <button class="tab-btn" data-tab="incentives">Incentives</button>
+    <button class="tab-btn" data-tab="energy">Energy</button>
+  </div>
+</div>
+
+<!-- THE THESIS -->
+<div class="section" data-tab="overview">
+  <div class="section-label">The Thesis</div>
+  <h2>Energy Sovereignty on a Historic Site with a Louisiana Supply Chain</h2>
+  <p class="sub">Three stacked advantages that don't exist anywhere else together: a behind-the-meter permanent electrical island that removes utility interconnect as a dependency; a 22-acre nationally registered historic site that qualifies for a 45% tax-credit stack; and a 30-mile supply chain that already makes the solar panels, supplies the gas, and trains the workforce.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Story A &mdash; Energy Sovereignty</h3>
+      <div class="econ-row"><span class="econ-label">Generation</span><span class="econ-value">44 &times; Cat CG260-16</span></div>
+      <div class="econ-row"><span class="econ-label">Block topology</span><span class="econ-value">11 independent blocks</span></div>
+      <div class="econ-row"><span class="econ-label">Operating mode</span><span class="econ-value">Permanent island</span></div>
+      <div class="econ-row"><span class="econ-label">Utility interconnect</span><span class="econ-value">Not required day one</span></div>
+      <div class="econ-row"><span class="econ-label">External dependency</span><span class="econ-value">Natural gas (ATMOS on-site)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Story B &mdash; Historic Site</h3>
+      <div class="econ-row"><span class="econ-label">Acreage</span><span class="econ-value">22 acres</span></div>
+      <div class="econ-row"><span class="econ-label">Registered structures</span><span class="econ-value">12 nationally registered</span></div>
+      <div class="econ-row"><span class="econ-label">Period of significance</span><span class="econ-value">1930&ndash;1972</span></div>
+      <div class="econ-row"><span class="econ-label">HTC stack</span><span class="econ-value highlight">45% (20% Fed + 25% LA)</span></div>
+      <div class="econ-row"><span class="econ-label">Existing zoning</span><span class="econ-value">Industrial</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Story C &mdash; Supply Chain</h3>
+      <div class="econ-row"><span class="econ-label">First Solar factory</span><span class="econ-value">30 mi (New Iberia)</span></div>
+      <div class="econ-row"><span class="econ-label">Gas infrastructure</span><span class="econ-value">ATMOS on-site</span></div>
+      <div class="econ-row"><span class="econ-label">LUS Pinhook</span><span class="econ-value">Adjacent (future optionality)</span></div>
+      <div class="econ-row"><span class="econ-label">KLFT airport</span><span class="econ-value">Visible from site</span></div>
+      <div class="econ-row"><span class="econ-label">UL Lafayette</span><span class="econ-value">0.5 mi</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SITE ASSETS -->
+<div class="section" data-tab="site overview">
+  <div class="section-label">Site Assets</div>
+  <h2>22 Acres, 12 Registered Structures, Vermilion River Frontage</h2>
+  <p class="sub">The cannery closed in 1991 and sat empty for 30+ years. The industrial envelope survived. Four principal buildings host the new mission; a 42,000 sq ft rear slab and a 28,000 sq ft infrastructure yard carry the generation and cooling plant. Solar goes on the two restored historic buildings. The water tower stays, as a landmark.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Buildings (Stage 1 allocation)</h3>
+      <div class="econ-row"><span class="econ-label">B1 &mdash; historic restoration</span><span class="econ-value">NOC / partner hub / rooftop solar</span></div>
+      <div class="econ-row"><span class="econ-label">B2 &mdash; historic restoration</span><span class="econ-value">NOC / partner hub / rooftop solar</span></div>
+      <div class="econ-row"><span class="econ-label">B3 &mdash; compute hall</span><span class="econ-value">20 cassettes</span></div>
+      <div class="econ-row"><span class="econ-label">B4 &mdash; compute hall</span><span class="econ-value">24 cassettes</span></div>
+      <div class="econ-row"><span class="econ-label">Rear slab</span><span class="econ-value">42,000 sq ft &mdash; gensets + BESS</span></div>
+      <div class="econ-row"><span class="econ-label">Infrastructure yard</span><span class="econ-value">28,000 sq ft &mdash; cooling + SCR</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Site Infrastructure in Place</h3>
+      <div class="econ-row"><span class="econ-label">Natural gas (ATMOS)</span><span class="econ-value">On-site</span></div>
+      <div class="econ-row"><span class="econ-label">LUS Pinhook Substation</span><span class="econ-value">Adjacent</span></div>
+      <div class="econ-row"><span class="econ-label">Vermilion River frontage</span><span class="econ-value">Direct</span></div>
+      <div class="econ-row"><span class="econ-label">Zoning</span><span class="econ-value">Industrial (in place)</span></div>
+      <div class="econ-row"><span class="econ-label">Historic designation</span><span class="econ-value">National Register</span></div>
+      <div class="econ-row"><span class="econ-label">Distance to First Solar</span><span class="econ-value">30 mi (New Iberia, LA)</span></div>
+      <div class="econ-row"><span class="econ-label">Distance to KLFT airport</span><span class="econ-value">Visible from site</span></div>
+      <div class="econ-row"><span class="econ-label">Distance to UL Lafayette</span><span class="econ-value">0.5 mi</span></div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">The Vermilion River is a site amenity, not a thermal loop</div>
+    <p>Gulf Coast surface water peaks at 30&ndash;33&deg;C in summer and the Vermilion is tidally influenced at Lafayette &mdash; so the river does not serve the cooling system. It does serve the restoration: rebuilt seawall, public riverwalk, and the defining photograph of the campus.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SCALE -->
+<div class="section" data-tab="overview technology">
+  <div class="section-label">Scale</div>
+  <h2>Stage 1 &rarr; Full Build on the Same Site</h2>
+  <p class="sub">Stage 1 is 44 cassettes across Buildings 3 and 4. Full Build doubles to 88 cassettes on the same 22 acres &mdash; the rear slab and infrastructure yard were sized for it. The cassette is the product: a 40-foot ISO container holding 9 NVIDIA Vera Rubin NVL72/CPX compute racks, 1 control rack, and 5 Delta 660 kW in-row power racks.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Stage 1 (current design)</h3>
+      <div class="econ-row"><span class="econ-label">IT load</span><span class="econ-value highlight">91.1 MW</span></div>
+      <div class="econ-row"><span class="econ-label">Cassettes</span><span class="econ-value">44</span></div>
+      <div class="econ-row"><span class="econ-label">Blocks</span><span class="econ-value">11</span></div>
+      <div class="econ-row"><span class="econ-label">Gensets (Cat CG260-16)</span><span class="econ-value">44 &times; 4,000 ekW</span></div>
+      <div class="econ-row"><span class="econ-label">Vera Rubin GPUs</span><span class="econ-value">28,512</span></div>
+      <div class="econ-row"><span class="econ-label">Compute racks</span><span class="econ-value">396 (9 per cassette)</span></div>
+      <div class="econ-row"><span class="econ-label">HBM4 memory per cassette</span><span class="econ-value">186.3 TB</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling tower duty</span><span class="econ-value">~72.9 MW</span></div>
+      <div class="econ-row"><span class="econ-label">BESS (LFP)</span><span class="econ-value">39.6 MWh</span></div>
+      <div class="econ-row"><span class="econ-label">Solar (First Solar CdTe)</span><span class="econ-value">2.05 MW DC / 3,731 panels</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Full Build (same site)</h3>
+      <div class="econ-row"><span class="econ-label">IT load</span><span class="econ-value highlight">182.2 MW</span></div>
+      <div class="econ-row"><span class="econ-label">Cassettes</span><span class="econ-value">88</span></div>
+      <div class="econ-row"><span class="econ-label">Blocks</span><span class="econ-value">22</span></div>
+      <div class="econ-row"><span class="econ-label">Gensets</span><span class="econ-value">88 &times; Cat CG260-16</span></div>
+      <div class="econ-row"><span class="econ-label">Vera Rubin GPUs</span><span class="econ-value">57,024</span></div>
+      <div class="econ-row"><span class="econ-label">Compute racks</span><span class="econ-value">792</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling tower duty</span><span class="econ-value">~145.7 MW</span></div>
+      <div class="econ-row"><span class="econ-label">BESS (LFP)</span><span class="econ-value">79.2 MWh</span></div>
+      <div class="econ-row"><span class="econ-label">Solar</span><span class="econ-value">2.05 MW DC (rooftop)</span></div>
+      <div class="econ-row"><span class="econ-label">Revenue model</span><span class="econ-value">Colocation (base case)</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ARCHITECTURE -->
+<div class="section" data-tab="technology">
+  <div class="section-label">Architecture</div>
+  <h2>11 Replicated Blocks. One Cassette Product. Permanent Island.</h2>
+  <p class="sub">The campus is 11 electrically independent blocks. Each block runs 4 gensets, one step-down transformer, one 480 VAC switchboard, and 4 cassette feeds. Blast radius is contained to one block. BESS and solar tie to the same 480 VAC bus. 800 VDC exists only inside each cassette, where it belongs &mdash; right next to the GPUs.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Power Generation</h3>
+      <div class="econ-row"><span class="econ-label">Prime mover</span><span class="econ-value">Cat CG260-16 natural gas</span></div>
+      <div class="econ-row"><span class="econ-label">Rating per genset</span><span class="econ-value">4,000 ekW continuous</span></div>
+      <div class="econ-row"><span class="econ-label">Design loading</span><span class="econ-value">61.5% anchor</span></div>
+      <div class="econ-row"><span class="econ-label">Per block</span><span class="econ-value">4 gensets (N+1)</span></div>
+      <div class="econ-row"><span class="econ-label">MV bus</span><span class="econ-value">13.8 kV arc-resistant</span></div>
+      <div class="econ-row"><span class="econ-label">Hydrogen blend</span><span class="econ-value">25% capable (future)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Electrical Distribution</h3>
+      <div class="econ-row"><span class="econ-label">Block transformer</span><span class="econ-value">13.8 kV &rarr; 480 VAC, ~15 MVA</span></div>
+      <div class="econ-row"><span class="econ-label">Block bus</span><span class="econ-value">480 VAC switchboard</span></div>
+      <div class="econ-row"><span class="econ-label">Cassette feed</span><span class="econ-value">480 VAC primary</span></div>
+      <div class="econ-row"><span class="econ-label">Cassette-internal rail</span><span class="econ-value">800 VDC (cassette only)</span></div>
+      <div class="econ-row"><span class="econ-label">In-row power racks</span><span class="econ-value">5 &times; Delta 660 kW</span></div>
+      <div class="econ-row"><span class="econ-label">Protection</span><span class="econ-value">Island-only, block-internal</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Storage &amp; Solar</h3>
+      <div class="econ-row"><span class="econ-label">BESS chemistry</span><span class="econ-value">LFP (LiFePO4)</span></div>
+      <div class="econ-row"><span class="econ-label">BESS per block</span><span class="econ-value">~3.6 MWh working</span></div>
+      <div class="econ-row"><span class="econ-label">BESS coupling</span><span class="econ-value">AC via Hitachi AMPS PCS</span></div>
+      <div class="econ-row"><span class="econ-label">BESS role</span><span class="econ-value">Stabilizer (always active)</span></div>
+      <div class="econ-row"><span class="econ-label">Solar</span><span class="econ-value">First Solar Series 7 CdTe</span></div>
+      <div class="econ-row"><span class="econ-label">Solar coupling</span><span class="econ-value">Grid-forming PV inverter</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Thermal Architecture</h3>
+      <div class="econ-row"><span class="econ-label">Cassette CDU</span><span class="econ-value">CoolIT CHx2000 external</span></div>
+      <div class="econ-row"><span class="econ-label">Supply to GPU</span><span class="econ-value">&le;45&deg;C direct-to-chip</span></div>
+      <div class="econ-row"><span class="econ-label">Plate HX</span><span class="econ-value">PHX-001 (facility boundary)</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling tower field</span><span class="econ-value">Wet mech draft (working basis)</span></div>
+      <div class="econ-row"><span class="econ-label">Genset waste heat</span><span class="econ-value">Munters DSS Pro (5.5 MW)</span></div>
+      <div class="econ-row"><span class="econ-label">Jacket water</span><span class="econ-value">Dedicated radiators (~58 MW)</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- CASSETTE -->
+<div class="section" data-tab="technology">
+  <div class="section-label">The Cassette</div>
+  <h2>The Product Is the Cassette</h2>
+  <p class="sub">A 40-foot high-cube ISO container, factory-integrated with power, cooling, safety, fire, and BMS. Ships on a flatbed, drops on a pad, connects through a single panel. Everything outside the cassette is vendor-neutral facility infrastructure. Everything inside is the IP.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Inside One Cassette</h3>
+      <div class="econ-row"><span class="econ-label">Compute racks</span><span class="econ-value">9 &times; NVL72/CPX</span></div>
+      <div class="econ-row"><span class="econ-label">Control rack</span><span class="econ-value">1</span></div>
+      <div class="econ-row"><span class="econ-label">In-row power racks</span><span class="econ-value">5 &times; Delta 660 kW</span></div>
+      <div class="econ-row"><span class="econ-label">GPUs (Vera Rubin)</span><span class="econ-value">648</span></div>
+      <div class="econ-row"><span class="econ-label">IT load</span><span class="econ-value">2,070 kW</span></div>
+      <div class="econ-row"><span class="econ-label">HBM4 memory</span><span class="econ-value">186.3 TB</span></div>
+      <div class="econ-row"><span class="econ-label">Internal bus</span><span class="econ-value">800 VDC (cassette only)</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Cassette Services</h3>
+      <div class="econ-row"><span class="econ-label">Dehumidification</span><span class="econ-value">Munters DSS Pro</span></div>
+      <div class="econ-row"><span class="econ-label">Fire suppression</span><span class="econ-value">Novec 1230 + VESDA</span></div>
+      <div class="econ-row"><span class="econ-label">Fire standard</span><span class="econ-value">NFPA 2001</span></div>
+      <div class="econ-row"><span class="econ-label">BMS controller</span><span class="econ-value">NVIDIA Jetson AGX Orin</span></div>
+      <div class="econ-row"><span class="econ-label">Sensor channels</span><span class="econ-value">148</span></div>
+      <div class="econ-row"><span class="econ-label">Safety watchdog</span><span class="econ-value">Independent hardware</span></div>
+      <div class="econ-row"><span class="econ-label">Facility interface</span><span class="econ-value">Single 5-connection panel</span></div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">Factory integration, field deployment</div>
+    <p>The cassette ships pre-integrated. Install time is measured in days, not months. Site risk drops because the hardest integrations &mdash; fire, cooling, power conversion, sensor fusion &mdash; all happen in a controlled environment before the container ever ships.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- INCENTIVE STACK -->
+<div class="section" data-tab="incentives">
+  <div class="section-label">Incentive Stack</div>
+  <h2>Federal &plus; State &plus; Parish Programs That Actually Apply</h2>
+  <p class="sub">The combination of a nationally registered historic site, Louisiana's incentive environment, and First Solar domestic content creates a stack few projects can match. We list the ones that apply; we don't exaggerate.</p>
+
+  <table class="incentive-table">
+    <thead>
+      <tr>
+        <th>Program</th>
+        <th>Benefit</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="program">Federal Historic Tax Credit</td>
+        <td class="benefit">20% of qualified rehab</td>
+        <td class="note">Applies to certified rehabilitation of historic structures. B1 and B2 are the primary qualifying buildings at Trappey's.</td>
+      </tr>
+      <tr>
+        <td class="program">Louisiana Historic Tax Credit</td>
+        <td class="benefit">25% state credit</td>
+        <td class="note">Stacks with the federal credit for a combined 45% HTC stack (BOD R-07, locked). Louisiana's state HTC is among the most generous in the nation.</td>
+      </tr>
+      <tr>
+        <td class="program">Louisiana ITEP</td>
+        <td class="benefit">80% property tax abatement, 10 years</td>
+        <td>
+          <span class="note">Industrial Tax Exemption Program. Must be filed with LED before any construction / ground disturbance.</span><br>
+          <span class="critical">Most time-sensitive item</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="program">Parish PILOT</td>
+        <td class="benefit">Negotiated property tax structure</td>
+        <td class="note">Payment-in-lieu-of-taxes through the parish Industrial Development Board. Pursued in place of HB 827 (which requires a $200M+ capital-investment threshold Stage 1 alone does not meet).</td>
+      </tr>
+      <tr>
+        <td class="program">Federal Solar ITC</td>
+        <td class="benefit">30% base + 10% domestic content = 40%</td>
+        <td class="note">IRC &sect;48E. Applies to the 2.05 MW First Solar array. Domestic content adder qualifies because First Solar manufactures in Perrysburg, OH and New Iberia, LA. Tax counsel confirmation required.</td>
+      </tr>
+      <tr>
+        <td class="program">100% Bonus Depreciation</td>
+        <td class="benefit">Full immediate expensing</td>
+        <td class="note">OBBBA (2025). Applies to compute, networking, cooling, and power equipment. No application required.</td>
+      </tr>
+      <tr>
+        <td class="program">LED FastStart</td>
+        <td class="benefit">Custom workforce training, no cost</td>
+        <td class="note">Louisiana's workforce training program &mdash; ranked #1 in the nation for 13 consecutive years. Custom curriculum for operations, compute, electrical, and thermal staff.</td>
+      </tr>
+      <tr>
+        <td class="program">Quality Jobs Program</td>
+        <td class="benefit">Cash rebate on new payroll</td>
+        <td class="note">Applies to qualifying engineering, operations, and technical roles.</td>
+      </tr>
+      <tr>
+        <td class="program">R&amp;D Tax Credit (State)</td>
+        <td class="benefit">Up to 30% on qualified R&amp;D</td>
+        <td class="note">Applies to cassette platform engineering and inference-stack development.</td>
+      </tr>
+      <tr>
+        <td class="program">NSF MRI (via UL Lafayette)</td>
+        <td class="benefit">Up to $4M per award</td>
+        <td class="note">Major Research Instrumentation grant accessed through the UL Lafayette research partnership.</td>
+      </tr>
+      <tr>
+        <td class="program">NSF EPSCoR (Louisiana eligible)</td>
+        <td class="benefit">Multi-year research infrastructure</td>
+        <td class="note">Established Program to Stimulate Competitive Research &mdash; Louisiana is an EPSCoR state. Accessed via UL Lafayette.</td>
+      </tr>
+      <tr>
+        <td class="program">LA corporate tax rate</td>
+        <td class="benefit">5.5% (financial model basis)</td>
+        <td class="note">Effective state corporate tax rate used in the financial model (BOD R-10).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">45% historic tax credit stack &plus; 40% solar ITC &plus; ITEP &plus; PILOT</div>
+    <p>These programs stack against different parts of the project. HTC offsets the restoration of B1 and B2. Solar ITC offsets the 2.05 MW rooftop array. ITEP abates property tax on the operating facility for ten years. Parish PILOT structures the remaining property tax obligation. No other state offers this combination for a historic-site AI compute project.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ENERGY SOVEREIGNTY -->
+<div class="section" data-tab="energy">
+  <div class="section-label">Energy Sovereignty</div>
+  <h2>No Grid. No Interconnect Queue. No Transmission Buildout.</h2>
+  <p class="sub">Behind-the-meter permanent island from day one. The facility does not depend on utility capacity to come online. LUS Pinhook Substation sits adjacent to the site and remains a future option at the utility's cost and schedule, not ours. The single external input is natural gas.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Grid-Dependent Facility</h3>
+      <div class="econ-row"><span class="econ-label">Utility interconnect queue</span><span class="econ-value" style="color:var(--red)">Multi-year wait</span></div>
+      <div class="econ-row"><span class="econ-label">Transmission buildout</span><span class="econ-value" style="color:var(--red)">Utility-paced</span></div>
+      <div class="econ-row"><span class="econ-label">Capacity risk</span><span class="econ-value" style="color:var(--red)">Grid-constrained</span></div>
+      <div class="econ-row"><span class="econ-label">Rate exposure</span><span class="econ-value" style="color:var(--red)">Tariff-dependent</span></div>
+      <div class="econ-row"><span class="econ-label">Schedule</span><span class="econ-value" style="color:var(--red)">Gated on utility</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Trappey's Compute Center</h3>
+      <div class="econ-row"><span class="econ-label">On-site generation</span><span class="econ-value highlight">44 &times; Cat CG260-16</span></div>
+      <div class="econ-row"><span class="econ-label">Block topology</span><span class="econ-value highlight">11 independent (N+1)</span></div>
+      <div class="econ-row"><span class="econ-label">Storage</span><span class="econ-value highlight">BESS + in-rack</span></div>
+      <div class="econ-row"><span class="econ-label">Cooling</span><span class="econ-value highlight">Direct-to-chip liquid</span></div>
+      <div class="econ-row"><span class="econ-label">Utility dependency</span><span class="econ-value highlight">None (day one)</span></div>
+    </div>
+  </div>
+
+  <div class="econ-grid" style="margin-top:16px">
+    <div class="econ-card">
+      <h3>Gas Supply</h3>
+      <div class="econ-row"><span class="econ-label">Infrastructure</span><span class="econ-value">ATMOS on-site</span></div>
+      <div class="econ-row"><span class="econ-label">Firm-supply gating</span><span class="econ-value">Block 1 energization</span></div>
+      <div class="econ-row"><span class="econ-label">Full-load contingency</span><span class="econ-value">~40,300 Nm&sup3;/hr (Stage 1)</span></div>
+      <div class="econ-row"><span class="econ-label">Anchor load</span><span class="econ-value">~24,200 Nm&sup3;/hr at 61.5%</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>LUS Pinhook Posture</h3>
+      <div class="econ-row"><span class="econ-label">Day 1</span><span class="econ-value">Spatial allocation only</span></div>
+      <div class="econ-row"><span class="econ-label">Interconnect</span><span class="econ-value">Future optionality</span></div>
+      <div class="econ-row"><span class="econ-label">Cost / schedule</span><span class="econ-value">Utility-paced</span></div>
+      <div class="econ-row"><span class="econ-label">Sell-back</span><span class="econ-value">Excluded from base case</span></div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px;background:rgba(0,232,122,0.06);border-color:rgba(0,232,122,0.2)">
+    <div class="gap-text" style="color:var(--green)">Grid-independent by design, not by failure mode</div>
+    <p>The block topology gives the facility N+1 redundancy at block level without relying on utility backup. The BESS is a stabilizer &mdash; always active, sub-cycle response via Hitachi AMPS PCS SiC inverter &mdash; not a standby system. Sub-100 ms GPU transients are handled inside each cassette by rack-integrated capacitance and BBU. Nothing waits on the grid.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- UL LAFAYETTE -->
+<div class="section" data-tab="overview">
+  <div class="section-label">University Partnership</div>
+  <h2>UL Lafayette &mdash; Half a Mile Away</h2>
+  <p class="sub">Florida invested $180M and built the #3 supercomputer in the world for the University of Florida. Louisiana invested $0 in equivalent infrastructure for UL Lafayette. That gap is the opening. A compute campus within walking distance of a research university, with an R1-building president and a workforce pipeline already in place, is the anchor infrastructure that unlocks NSF MRI, NSF EPSCoR, and DOE funding through the university partnership.</p>
+
+  <div class="gap-compare">
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:4px">University of Florida</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--cyan);line-height:1;margin-bottom:4px">504</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Blackwell GPUs (DGX B200 SuperPOD)</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="econ-row"><span class="econ-label">Total investment</span><span class="econ-value">$180M+</span></div>
+        <div class="econ-row"><span class="econ-label">World ranking</span><span class="econ-value">Top 3 for speed</span></div>
+        <div class="econ-row"><span class="econ-label">Active users</span><span class="econ-value">7,000</span></div>
+        <div class="econ-row"><span class="econ-label">AI courses</span><span class="econ-value">230</span></div>
+        <div class="econ-row"><span class="econ-label">AI faculty</span><span class="econ-value">100+</span></div>
+        <div class="econ-row"><span class="econ-label">Universities served</span><span class="econ-value">12</span></div>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:28px">
+      <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:4px">UL Lafayette (today)</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--red);line-height:1;margin-bottom:4px">0</div>
+      <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px">Modern GPUs on campus</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="econ-row"><span class="econ-label">Total investment</span><span class="econ-value" style="color:var(--red)">Sub-$1M (LONI shared)</span></div>
+        <div class="econ-row"><span class="econ-label">World ranking</span><span class="econ-value" style="color:var(--red)">Not ranked</span></div>
+        <div class="econ-row"><span class="econ-label">Computing faculty</span><span class="econ-value" style="color:var(--red)">30 &mdash; zero dedicated compute</span></div>
+        <div class="econ-row"><span class="econ-label">First AI degree</span><span class="econ-value" style="color:var(--red)">Launching, no infra</span></div>
+        <div class="econ-row"><span class="econ-label">STEM retention</span><span class="econ-value">71% stay in LA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-callout" style="margin-top:24px">
+    <div class="gap-text">Compute within walking distance of the university</div>
+    <p>Trappey's sits 0.5 miles from UL Lafayette. No latency debates. No remote-access friction. Students and faculty can physically work at the facility. The university brings its own federal grant access to the table; the compute campus provides the infrastructure those grants fund. The partnership is the funding pipeline.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- WORKFORCE -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Louisiana Workforce</div>
+  <h2>Lafayette Has Been Training Remote Operators for 40 Years</h2>
+  <p class="sub">A lights-out AI compute facility needs operators who can run complex robotic systems remotely with real-time telemetry, 24/7. Lafayette's ROV industry has trained exactly that workforce for four decades &mdash; deepwater offshore operations, West Africa, worldwide. The workforce already exists. The facility consolidates it.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>What Transfers from ROV to AI Compute</h3>
+      <div class="econ-row"><span class="econ-label">480 V power chains</span><span class="econ-value">Same</span></div>
+      <div class="econ-row"><span class="econ-label">Fiber-optic umbilicals</span><span class="econ-value">Same discipline as IB fabric</span></div>
+      <div class="econ-row"><span class="econ-label">Real-time telemetry</span><span class="econ-value">Same operational posture</span></div>
+      <div class="econ-row"><span class="econ-label">24/7 zero-downtime ops</span><span class="econ-value">Same SLA mindset</span></div>
+      <div class="econ-row"><span class="econ-label">Hostile-environment hardening</span><span class="econ-value">Hurricane-rated facility</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Workforce Programs</h3>
+      <div class="econ-row"><span class="econ-label">LED FastStart</span><span class="econ-value">Custom training, no cost</span></div>
+      <div class="econ-row"><span class="econ-label">UL Lafayette pipeline</span><span class="econ-value">CS / engineering</span></div>
+      <div class="econ-row"><span class="econ-label">STEM retention</span><span class="econ-value">71% Lafayette graduates stay</span></div>
+      <div class="econ-row"><span class="econ-label">Local ROV industry</span><span class="econ-value">Remote-ops experience base</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- COMPETITIVE LANDSCAPE -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Gulf South Context</div>
+  <h2>Validated by Investment Already Flowing</h2>
+  <p class="sub">The largest AI-infrastructure investments in the country are being made in Louisiana and the broader Gulf South. That validates the region but not the university-facing niche. The neocloud and hyperscale builds are not serving university research.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Hut 8 &mdash; River Bend</div>
+      <div class="comp-val">Parish of West Feliciana, LA</div>
+      <p>Large-scale compute facility announced in West Feliciana Parish. Same state, same incentive environment, different customer. Validates the Louisiana thesis at scale.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">CoreWeave</div>
+      <div class="comp-val">NVIDIA neocloud partner</div>
+      <p>Proves the GPU-as-a-service commercial model at scale. The neocloud category is real; what's missing in the region is a university-facing provider.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Crusoe Energy</div>
+      <div class="comp-val">Energy-first AI compute</div>
+      <p>Operator applying an energy-first model to AI compute siting. Conceptually closest analog to the Trappey's thesis, though on greenfield sites rather than a nationally registered historic site.</p>
+    </div>
+  </div>
+
+  <div class="gap-callout">
+    <div class="gap-text">The university-research compute gap is unfilled</div>
+    <p>The Gulf Coast corridor has enormous AI infrastructure investment under way, none of it specifically serving university research. Trappey's sits half a mile from a state R1 university and at 91.1 MW of IT capacity can anchor regional academic research while still operating colocation capacity at commercial scale.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- MARKET DEMAND -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Market Demand</div>
+  <h2>GPU Supply Is the Constraint, Not Demand</h2>
+  <p class="sub">The market signal is structural and persistent &mdash; available GPU inventory across major cloud marketplaces is consistently tight. We don't publish specific quoted capacity or pricing figures that move daily; we can walk through current snapshots in person.</p>
+
+  <div class="scarcity-box">
+    <div class="scarcity-tag">Structural Market Condition</div>
+    <h3>NVIDIA Allocation Is the Gating Input</h3>
+    <p>Vera Rubin GPU allocation from NVIDIA is the gating variable for Stage 1 ramp &mdash; more than financing, more than permitting, more than construction. The site is designed to absorb allocation as it becomes available, cassette by cassette, rather than waiting for a single batched delivery.</p>
+    <p style="margin-top:12px">This is why the replicated-block architecture matters: Block 1 can energize with 4 cassettes while Blocks 2&ndash;11 remain in staged construction. The facility starts generating tokens as GPUs arrive, not as the last generator is commissioned.</p>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- OPERATOR -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Operator</div>
+  <h2>Cross-Domain Infrastructure Background</h2>
+  <p class="sub">Trappey's Compute Center is led by Scott Tomsu, an AI infrastructure startup founder based in Lafayette. Hands-on background in subsea ROV operations and heavy industrial electronics gives the project cross-domain infrastructure credibility; FAA Private Pilot and Part 107 Remote Pilot certificates extend the operational reach. Actively enrolled in Uptime Institute / CNet Training's Certified Data Centre Design Professional program.</p>
+
+  <div class="qual-grid">
+    <div class="qual-card">
+      <h3>Infrastructure Background</h3>
+      <p>25+ years of mission-critical robotic systems operation &mdash; deepwater ROV deployments, real-time telemetry, 24/7 zero-downtime posture, hostile-environment systems engineering.</p>
+      <div class="qual-highlight">Same discipline as AI compute operations</div>
+    </div>
+    <div class="qual-card">
+      <h3>Aviation</h3>
+      <p>FAA Private Pilot certificate. FAA Part 107 Remote Pilot Certificate for commercial UAS operations. Relevant to the adjacent KLFT autonomous drone-hub project.</p>
+      <div class="qual-highlight">Part 107 + PP-ASEL</div>
+    </div>
+    <div class="qual-card">
+      <h3>Electrical &amp; Industrial</h3>
+      <p>Heavy industrial electronics experience, general contractor's license in Louisiana. Louisiana-based, Louisiana-focused.</p>
+      <div class="qual-highlight">Louisiana GC license</div>
+    </div>
+    <div class="qual-card">
+      <h3>Formal Training</h3>
+      <p>Currently enrolled in the Certified Data Centre Design Professional (CDCDP) program through Uptime Institute / CNet Training &mdash; compressing the multi-year data center credential acquisition against the active site schedule.</p>
+      <div class="qual-highlight">CDCDP in progress</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ACTIVATION -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Activation Path</div>
+  <h2>Clear Gates Before Any Ground Disturbance</h2>
+  <p class="sub">The project does not break ground until a specific sequence of external dependencies closes. No speculative capex, no speculative permitting. The gating items are tracked in internal engineering; the public summary is here.</p>
+
+  <div class="econ-grid">
+    <div class="econ-card">
+      <h3>Pre-Construction Gates (C1)</h3>
+      <div class="econ-row"><span class="econ-label">NVIDIA Vera Rubin allocation</span><span class="econ-value">Open</span></div>
+      <div class="econ-row"><span class="econ-label">Cat CSA validation</span><span class="econ-value">Engaged</span></div>
+      <div class="econ-row"><span class="econ-label">Firm gas supply</span><span class="econ-value">Negotiation</span></div>
+      <div class="econ-row"><span class="econ-label">LA ITEP filing</span><span class="econ-value">Pre-construction</span></div>
+      <div class="econ-row"><span class="econ-label">SHPO Part 1</span><span class="econ-value">Prepared, not filed</span></div>
+      <div class="econ-row"><span class="econ-label">LDEQ Title V + LPDES</span><span class="econ-value">Pre-application</span></div>
+    </div>
+    <div class="econ-card">
+      <h3>Stage 1 Staging Logic</h3>
+      <div class="econ-row"><span class="econ-label">Block 1 first</span><span class="econ-value">4 cassettes live</span></div>
+      <div class="econ-row"><span class="econ-label">Block 2&ndash;11 follow</span><span class="econ-value">As allocation arrives</span></div>
+      <div class="econ-row"><span class="econ-label">Revenue onset</span><span class="econ-value">At Block 1 energization</span></div>
+      <div class="econ-row"><span class="econ-label">Full Build path</span><span class="econ-value">Same site, same playbook</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- EXPANSION -->
+<div class="section" data-tab="overview">
+  <div class="section-label">Expansion</div>
+  <h2>Trappey's Is the Template</h2>
+  <p class="sub">The cassette platform, the block topology, the permitting playbook, the thermal architecture &mdash; all replicable. The Stage 1 to Full Build doubling happens on this site. Additional sites replicate the same playbook.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Site 1: Trappey's (this project)</div>
+      <div class="comp-val">22 acres &middot; Lafayette &middot; Anchor</div>
+      <p>Establishes the deployment playbook, the incentive-stack framework, the cassette IP, and the operations model. Every dollar of learning here reduces cost at the next site.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Additional Sites</div>
+      <div class="comp-val">Replicate &middot; Scale &middot; Repeat</div>
+      <p>Same cassette. Same block topology. Same AMCL control architecture. Different site, same playbook. Subsequent deployments get faster.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="cta-block" style="background:linear-gradient(180deg,var(--surface) 0%,rgba(206,24,30,0.08) 100%);padding:72px 24px;text-align:center;border-top:1px solid var(--border)">
+  <div style="max-width:700px;margin:0 auto">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;font-weight:600">Investor Inquiry</div>
+    <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:900;color:var(--bright);margin-bottom:16px;line-height:1.2">Seeking Capital Alignment <span style="color:var(--cyan)">with Regulatory Milestones</span></h2>
+
+    <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:24px;margin-bottom:24px;text-align:left">
+      <p style="font-size:15px;font-weight:700;color:var(--bright);margin-bottom:10px">What we're looking for.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px">Strategic capital aligned with the C1 gate sequence &mdash; NVIDIA allocation, Cat CSA validation, firm gas supply, LA ITEP filing, SHPO Part 1, LDEQ pre-applications. We're happy to walk through the internal engineering package, the Cassette IP, and the incentive stack in a working session.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px"><strong style="color:var(--bright)">What we don't publish.</strong> Specific committed capital, investor lists, IRR / payback numbers, or quoted power costs. Those live in the internal financial model and are walked through under NDA.</p>
+      <p style="font-size:13px;color:var(--cyan);font-weight:700">Contact the operator directly for a working session.</p>
+    </div>
+
+    <form action="#" method="POST" style="display:flex;flex-direction:column;gap:12px;max-width:500px;margin:0 auto">
+      <input type="hidden" name="_subject" value="Trappey's Compute Center &mdash; Investor Inquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="name" placeholder="Your Name" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="email" name="email" placeholder="Email Address" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <input type="text" name="organization" placeholder="Organization" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif">
+      <select name="interest" required style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-size:15px;font-family:'Inter',sans-serif;appearance:auto">
+        <option value="" disabled selected>Interest</option>
+        <option value="investor">Investment opportunity</option>
+        <option value="strategic">Strategic partnership</option>
+        <option value="vendor">Vendor / supplier engagement</option>
+        <option value="research">University research partnership</option>
+        <option value="government">Government / economic development</option>
+        <option value="media">Media inquiry</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message" placeholder="How would you like to engage? (optional)" rows="3" style="padding:14px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--bright);font-size:15px;font-family:'Inter',sans-serif;resize:vertical"></textarea>
+      <button type="submit" style="padding:16px 24px;border-radius:8px;border:none;background:var(--cyan);color:#fff;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.5px">Request a Working Session</button>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Trappey's <span>Compute Center</span></div>
+  <div class="footer-links">
+    <a href="/trappeys">Overview</a>
+    <a href="/trappeys-campus">Campus</a>
+    <a href="/trappeys-technology">Technology</a>
+    <a href="/trappeys-power">Power</a>
+    <a href="/trappeys-university">University</a>
+    <a href="/trappeys-responders">First Responders</a>
+  </div>
+  <div class="footer-contact">
+    Lafayette, Louisiana &middot; Vermilion River<br>
+    Working draft &mdash; internal engineering cited (BOD-001 Rev 0.6, ELEC-001 Rev 1.3)
+  </div>
+  <div class="footer-legal">
+    This document is a working draft describing a project in active engineering development. Nothing here constitutes an offer to sell or solicitation of an offer to buy any security. All operating and scale values cited are working engineering figures pending external validation (Cat CSA, LDEQ, SHPO, NVIDIA allocation, firm gas supply). Specific financial performance figures are not published and are discussed under NDA.
+  </div>
+</footer>
+
+<script>
+function showTab(tab) {
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  var activeBtn = document.querySelector('.tab-btn[data-tab="' + tab + '"]');
+  if (activeBtn) activeBtn.classList.add('active');
+
+  var allSections = document.querySelectorAll('.section[data-tab]');
+  var allDividers = document.querySelectorAll('hr.section-divider');
+  var ctaBlock = document.querySelector('.cta-block');
+  var i;
+
+  for (i = 0; i < allSections.length; i++) allSections[i].style.display = '';
+  for (i = 0; i < allDividers.length; i++) allDividers[i].style.display = '';
+  if (ctaBlock) ctaBlock.style.display = '';
+
+  if (tab === 'all') {
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  for (i = 0; i < allDividers.length; i++) allDividers[i].style.display = 'none';
+
+  for (i = 0; i < allSections.length; i++) {
+    var sectionTabs = (allSections[i].getAttribute('data-tab') || '').split(' ');
+    if (sectionTabs.indexOf(tab) === -1) {
+      allSections[i].style.display = 'none';
+    }
+  }
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+var tabBtns = document.querySelectorAll('.tab-btn');
+for (var i = 0; i < tabBtns.length; i++) {
+  (function(btn) {
+    btn.addEventListener('click', function() { showTab(btn.getAttribute('data-tab')); });
+  })(tabBtns[i]);
+}
+</script>
+
+</body>
+</html>
