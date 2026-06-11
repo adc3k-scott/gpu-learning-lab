@@ -1,3 +1,18 @@
 **/*.zip
 vendors/nvidia/photos/Trappeys Compute Hall/
 whitepapers/
+
+# Raw photo directories — not served from Vercel, referenced via Notion S3 URLs
+**/05-photos/
+
+# Vendor catalogs and engineering package docs — large PDFs, not served
+**/08-Vendors/
+**/04-CHP/
+**/09-Engineering Package/
+**/*.pdf
+
+# Old power tracker folder — replaced by power-tracker/
+Power Tracker/
+
+# Personal files
+scott/

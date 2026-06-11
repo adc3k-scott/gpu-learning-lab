@@ -2,88 +2,58 @@
   "version": 2,
   "buildCommand": null,
   "outputDirectory": ".",
+  "functions": {
+    "api/chat.js": {
+      "memory": 512,
+      "maxDuration": 30,
+      "includeFiles": "lib/**"
+    },
+    "api/phone.js": {
+      "memory": 512,
+      "maxDuration": 30,
+      "includeFiles": "lib/**"
+    },
+    "api/analytics.js": {
+      "maxDuration": 10
+    },
+    "api/stripe-webhook.js": {
+      "maxDuration": 15
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Content-Options", "value": "nosniff" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src 'self' https://www.youtube.com https://youtube.com; object-src 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co;" }
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
       ]
     }
   ],
-  "redirects": [
-    { "source": "/", "destination": "https://ai-advantage.info", "permanent": true }
-  ],
   "rewrites": [
-
-    { "source": "/hub", "destination": "/hub.html" },
-    { "source": "/resume", "destination": "/Scott_Tomsu_Resume.html" },
-
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/resume", "destination": "/resume.html" },
+    { "source": "/investors", "destination": "/investors.html" },
+    { "source": "/chp-prime-mover", "destination": "/chp-prime-mover.html" },
+    { "source": "/chp-block-diagram", "destination": "/chp-block-diagram.html" },
+    { "source": "/learn", "destination": "/learn.html" },
+    { "source": "/louisiana", "destination": "/louisiana.html" },
+    { "source": "/marlie", "destination": "/marlie.html" },
+    { "source": "/nvidia-course", "destination": "/nvidia-course.html" },
     { "source": "/trappeys", "destination": "/trappeys-investors.html" },
-    { "source": "/trappeys-blueprints", "destination": "/trappeys-blueprints.html" },
-    { "source": "/trappeys-renders", "destination": "/trappeys-renders.html" },
-    { "source": "/trappeys-power", "destination": "/trappeys-power.html" },
     { "source": "/trappeys-campus", "destination": "/trappeys-campus.html" },
     { "source": "/trappeys-technology", "destination": "/trappeys-technology.html" },
     { "source": "/trappeys-university", "destination": "/trappeys-university.html" },
     { "source": "/trappeys-responders", "destination": "/trappeys-responders.html" },
     { "source": "/trappeys-investors", "destination": "/trappeys-investors.html" },
-    { "source": "/trappeys-plan", "destination": "/trappeys-plan.html" },
-    { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
-    { "source": "/trappeys-presentation", "destination": "/trappeys-presentation.html" },
+    { "source": "/trappeys-plan", "destination": "/trappeys-91mw-floorplan.html" },
+    { "source": "/trappeys-blueprints", "destination": "/trappeys-blueprints.html" },
+    { "source": "/trappeys-renders", "destination": "/trappeys-renders.html" },
+    { "source": "/trappeys-power", "destination": "/trappeys-power.html" },
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
-    { "source": "/blueprints-trappeys", "destination": "/trappeys-blueprints.html" },
-    { "source": "/renders-trappeys", "destination": "/trappeys-renders.html" },
-
-    { "source": "/marlie", "destination": "/marlie-deck.html" },
-    { "source": "/marlie-blueprints", "destination": "/marlie-blueprints.html" },
-    { "source": "/blueprints-marlie", "destination": "/marlie-blueprints.html" },
-    { "source": "/marlie-fuelcell", "destination": "/marlie-deck-fuelcell-energy.html" },
-
-    { "source": "/willow-glen", "destination": "/willow-glen-investors.html" },
-    { "source": "/willow-glen-investors", "destination": "/willow-glen-investors.html" },
-    { "source": "/willow-glen-power", "destination": "/willow-glen-power.html" },
-    { "source": "/willow-glen-blueprints", "destination": "/willow-glen-blueprints.html" },
-    { "source": "/willow-glen-renders", "destination": "/willow-glen-renders.html" },
-    { "source": "/willow-glen-renders-compare", "destination": "/willow-glen-renders-compare.html" },
-
-    { "source": "/adc3k-pod", "destination": "/adc3k-pod.html" },
-    { "source": "/adc3k-pod-spec", "destination": "/adc3k-pod-spec.html" },
-
-    { "source": "/nvidia-full-stack", "destination": "/nvidia-full-stack.html" },
-    { "source": "/stack", "destination": "/nvidia-full-stack.html" },
-
-    { "source": "/investor", "destination": "/investor-gate.html" },
-    { "source": "/investor-pitch", "destination": "/investor-pitch.html" },
-    { "source": "/investor-neocloud", "destination": "/investor-neocloud.html" },
-
-    { "source": "/learn", "destination": "/learn.html" },
-    { "source": "/lafayette-ai-plan", "destination": "/lafayette-ai-plan.html" },
-    { "source": "/ai-ops", "destination": "/ai-ops.html" },
-    { "source": "/join", "destination": "/join-team.html" },
-    { "source": "/reference", "destination": "/reference-library.html" },
-    { "source": "/leadership", "destination": "/leadership.html" },
-    { "source": "/boot", "destination": "/boot.html" },
-    { "source": "/dsx-renders", "destination": "/dsx-renders.html" },
-    { "source": "/roxy-architecture", "destination": "/roxy-architecture.html" },
-
-    { "source": "/louisiana/natural-gas/henry-hub/pipeline-network", "destination": "/louisiana-natural-gas-pipeline-network.html" },
-    { "source": "/louisiana-natural-gas-pipeline-network", "destination": "/louisiana-natural-gas-pipeline-network.html" },
-
-    { "source": "/ops", "destination": "/operations-center.html" },
-    { "source": "/ops-center", "destination": "/operations-center.html" },
-    { "source": "/operations-center", "destination": "/operations-center.html" },
-
-    { "source": "/card", "destination": "/card.html" },
-    { "source": "/qr", "destination": "/qr.html" },
-
-    { "source": "/cassette", "destination": "/vendors/fibrebond/adc-cassette-engineering-package.html" },
-
-    { "source": "/", "destination": "/adc3k-indexpage.html" },
-    { "source": "/(.*)", "destination": "/adc3k-indexpage.html" }
+    { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

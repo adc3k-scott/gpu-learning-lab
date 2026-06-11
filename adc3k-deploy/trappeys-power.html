@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trappey's Compute Center &mdash; Power Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0a0a;--surface:#181112;--card:#221618;--border:#3a2022;--text:#d8c8ca;--dim:#8a7072;--bright:#f5f0f0;--blue:#3b9eff;--green:#00e87a;--amber:#ffa500;--purple:#a855f7;--red:#ef4444;--cyan:#CE181E;--solar:#CE181E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;max-width:1100px;margin:0 auto;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1{font-size:clamp(26px,3.5vw,40px);font-weight:900;text-align:center;color:var(--bright);margin:18px 0 6px;letter-spacing:-0.5px}
+h1 span{color:var(--cyan)}
+.sub{text-align:center;color:var(--dim);font-size:0.85rem;margin-bottom:25px;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.7}
+h2{font-family:'Inter',sans-serif;font-size:1.35rem;font-weight:800;color:var(--cyan);margin:40px 0 6px;border-bottom:1px solid rgba(206,24,30,0.22);padding-bottom:8px}
+h2 + p{color:var(--dim);font-size:0.85rem;margin-bottom:10px;line-height:1.7}
+p{font-size:0.88rem;color:var(--text);line-height:1.65;margin-bottom:10px}
+strong{color:var(--bright)}
+
+/* NAV */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;position:sticky;top:0;z-index:100;margin:-20px -20px 0}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.nav-brand{font-size:14px;font-weight:900;color:var(--bright);white-space:nowrap;text-decoration:none}
+.nav-brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-links a{font-size:11px;font-weight:600;color:var(--dim);padding:5px 10px;border-radius:6px;transition:all 0.2s;text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:var(--bright);background:var(--card)}
+/* BACK LINK */
+.back-link{padding:16px 0 16px}
+.back-link a{font-size:13px;color:var(--cyan);text-decoration:none;font-weight:700}
+.back-link a:hover{text-decoration:underline}
+
+/* BLOCK DIAGRAMS */
+.diagram{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0;overflow-x:auto}
+.flow{display:flex;align-items:center;gap:0;flex-wrap:nowrap;min-width:fit-content}
+.block{padding:14px 18px;border-radius:8px;text-align:center;min-width:140px;flex-shrink:0}
+.block .label{font-size:0.62rem;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:4px;color:var(--dim)}
+.block .value{font-size:1rem;font-weight:800;color:var(--bright)}
+.block .detail{font-size:0.66rem;color:var(--dim);margin-top:4px;line-height:1.5}
+.block.primary{background:rgba(206,24,30,0.08);border:1px solid rgba(206,24,30,0.35)}
+.block.primary .value{color:var(--cyan)}
+.block.mv{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25)}
+.block.mv .value{color:var(--red)}
+.block.lv{background:rgba(59,158,255,0.06);border:1px solid rgba(59,158,255,0.25)}
+.block.lv .value{color:var(--blue)}
+.block.dc{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.25)}
+.block.dc .value{color:var(--purple)}
+.block.der{background:rgba(0,232,122,0.06);border:1px solid rgba(0,232,122,0.25)}
+.block.der .value{color:var(--green)}
+.block.thermal{background:rgba(255,165,0,0.06);border:1px solid rgba(255,165,0,0.25)}
+.block.thermal .value{color:var(--amber)}
+.block.ghost{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)}
+.arrow{font-size:1.3rem;color:var(--dim);padding:0 8px;flex-shrink:0}
+.arrow.lbl{font-size:0.6rem;color:var(--dim);font-weight:700;display:flex;flex-direction:column;align-items:center;letter-spacing:0.5px}
+.arrow.lbl span{font-size:1.1rem;margin-bottom:2px}
+
+/* COMPARISON TABLE */
+.cmp{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.82rem}
+.cmp th{text-align:left;padding:10px 12px;border-bottom:2px solid rgba(206,24,30,0.35);color:var(--cyan);font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.cmp td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.cmp tr:hover td{background:rgba(255,255,255,0.02)}
+.cmp .highlight{color:var(--cyan);font-weight:700}
+
+/* SPEC CARDS */
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}
+.spec{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
+.spec .num{font-family:'IBM Plex Mono',monospace;font-size:1.55rem;font-weight:900;color:var(--cyan);line-height:1.1}
+.spec .what{font-size:0.78rem;color:var(--bright);margin-top:6px;font-weight:700}
+.spec .why{font-size:0.72rem;color:var(--dim);margin-top:4px;line-height:1.5}
+
+/* CALLOUTS */
+.callout{background:rgba(206,24,30,0.06);border-left:3px solid var(--cyan);border-radius:4px;padding:16px 20px;margin:16px 0;font-size:0.85rem;color:var(--text);line-height:1.7}
+.callout strong{color:var(--bright)}
+.callout.amber{background:rgba(255,165,0,0.06);border-left-color:var(--amber)}
+.callout.blue{background:rgba(59,158,255,0.06);border-left-color:var(--blue)}
+
+.note{font-size:0.78rem;color:var(--dim);margin:8px 0;font-style:italic}
+
+/* STACK LAYERS */
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:16px 0 24px}
+.stack-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;position:relative;overflow:hidden}
+.stack-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cyan)}
+.stack-card .s-label{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.stack-card .s-title{font-size:0.95rem;font-weight:800;color:var(--bright);margin-bottom:6px}
+.stack-card p{font-size:0.82rem;color:var(--dim);line-height:1.6}
+
+/* FOOTER */
+.footer{text-align:center;padding:36px 0 20px;border-top:1px solid var(--border);margin-top:40px;color:var(--dim);font-size:0.75rem;line-height:1.7}
+.footer strong{color:var(--bright)}
+.footer-legal{font-size:0.68rem;color:var(--dim);max-width:700px;margin:14px auto 0;line-height:1.7;font-style:italic}
+
+@media(max-width:900px){
+    .flow{flex-direction:column;align-items:stretch;gap:0}
+    .block{min-width:auto;width:100%}
+    .arrow{transform:rotate(90deg);text-align:center;padding:4px 0}
+    .arrow.lbl{flex-direction:row;gap:6px;justify-content:center;transform:none}
+    .arrow.lbl span{transform:rotate(90deg)}
+    .diagram{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/trappeys" class="nav-brand">Trappey's <span>Compute Center</span></a>
+    <div class="nav-links">
+      <a href="/trappeys">Overview</a>
+      <a href="/trappeys-campus">Campus</a>
+      <a href="/trappeys-technology">Technology</a>
+      <a href="/trappeys-power" class="active">Power</a>
+      <a href="/trappeys-gallery">Gallery</a>
+      <a href="/trappeys-renders">Renderings</a>
+      <a href="/trappeys-blueprints">Blueprints</a>
+    </div>
+  </div>
+</nav>
+
+<div class="back-link"><a href="/trappeys">&larr; Back to Trappey's Compute Center</a></div>
+
+<h1>Power Architecture &mdash; <span>From Gas Supply to GPU</span></h1>
+<div class="sub">Behind-the-meter permanent electrical island, day one. 44 Cat CG260-16 natural gas gensets organized into 11 replicated blocks. Each block converges on a 480 VAC switchboard; 800 VDC exists only inside each cassette, right where the GPUs need it. No grid. No sell-back. No interconnect queue.</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>One Block, End to End</h2>
+<p>A single block: four gensets paralleled at 13.8 kV, one step-down transformer, one 480 VAC switchboard as the convergence point, four cassette feeds, and AC-coupled BESS and solar on the same bus. Inside each cassette, Delta in-row power racks rectify to 800 VDC to feed the compute racks. 11 of these blocks make Stage 1.</p>
+
+<div class="diagram">
+<div class="flow">
+
+<div class="block thermal">
+<div class="label">Fuel Supply</div>
+<div class="value">Natural Gas</div>
+<div class="detail">ATMOS on-site<br>Firm-supply lock<br>(Block 1 gating)</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>gas</div>
+
+<div class="block primary">
+<div class="label">Generation (per block)</div>
+<div class="value">4 &times; Cat CG260-16</div>
+<div class="detail">4,000 ekW each<br>N+1 redundancy<br>61.5% anchor loading</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>13.8 kV AC</div>
+
+<div class="block mv">
+<div class="label">Block MV Bus</div>
+<div class="value">13.8 kV</div>
+<div class="detail">Arc-resistant switchgear<br>87B bus differential<br>3-stage UFLS</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>step-down</div>
+
+<div class="block mv">
+<div class="label">Block Transformer</div>
+<div class="value">~15 MVA</div>
+<div class="detail">13.8 kV &rarr; 480 Y/277 V<br>Dry-type / cast-resin<br>87T overall differential</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>480 VAC</div>
+
+<div class="block lv">
+<div class="label">Block Bus</div>
+<div class="value">480 VAC</div>
+<div class="detail">Block switchboard<br>Solidly-grounded wye<br>LSIG main trip unit</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>cassette feed</div>
+
+<div class="block dc">
+<div class="label">Inside Cassette</div>
+<div class="value">5 &times; Delta 660 kW</div>
+<div class="detail">In-row power racks<br>480 VAC &rarr; 800 VDC<br>98% AC-DC efficient</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>800 VDC</div>
+
+<div class="block primary">
+<div class="label">Compute</div>
+<div class="value">Vera Rubin NVL72</div>
+<div class="detail">9 racks/cassette<br>648 GPUs/cassette<br>230 kW/rack</div>
+</div>
+
+</div>
+</div>
+
+<div class="callout">
+<strong>Key boundary:</strong> the 480 VAC switchboard is the single convergence point for the block. Everything on the campus &mdash; gensets, BESS, solar, cassette feeds, cooling auxiliaries, facility loads &mdash; meets there. The 800 VDC rail exists only inside each cassette. This keeps the campus on standard low-voltage distribution gear while preserving 800 VDC efficiency right where the GPUs consume it.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>BESS and Solar &mdash; AC-Coupled at 480 VAC</h2>
+<p>Block-level BESS and rooftop solar both tie to the same 480 VAC bus as the genset transformer. AC-coupled via SiC inverters for sub-cycle response. Standard low-voltage protection gear applies to all three sources.</p>
+
+<div class="diagram">
+<div class="flow">
+
+<div class="block der">
+<div class="label">BESS (LFP)</div>
+<div class="value">~3.6 MWh/block</div>
+<div class="detail">LiFePO4 chemistry<br>1,100&ndash;1,500 VDC pack<br>Always active, not standby</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>DC</div>
+
+<div class="block dc">
+<div class="label">Hitachi AMPS PCS</div>
+<div class="value">SiC Bidirectional</div>
+<div class="detail">1,100&ndash;1,500 VDC in<br>480 VAC 3-ph out<br>Sub-cycle response</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>AC</div>
+
+<div class="block lv">
+<div class="label">Block 480 VAC Bus</div>
+<div class="value">Convergence Point</div>
+<div class="detail">Same switchboard as genset<br>Standard LV protection<br>AC breaker at tie</div>
+</div>
+
+<div class="arrow lbl"><span>&larr;</span>AC</div>
+
+<div class="block dc">
+<div class="label">PV Inverter</div>
+<div class="value">Grid-Forming</div>
+<div class="detail">1,500 VDC in<br>480 VAC 3-ph out<br>Island-mode capable</div>
+</div>
+
+<div class="arrow lbl"><span>&larr;</span>1,500 VDC</div>
+
+<div class="block thermal">
+<div class="label">Solar Array</div>
+<div class="value">2.05 MW DC</div>
+<div class="detail">First Solar Series 7 CdTe<br>3,731 panels on B1/B2<br>5-panel strings @ 1,500 VDC</div>
+</div>
+
+</div>
+</div>
+
+<div class="callout">
+<strong>Why AC-coupled:</strong> both BESS and solar output land on the same 480 VAC rail as the cassette primary feed. One bus, standard LV protection gear, open vendor competition on the battery pack, the PCS, and the PV inverter. No block-level DC bus to coordinate. The 800 VDC efficiency story plays out inside each cassette where it actually matters.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Inside One Cassette &mdash; the 800 VDC Domain</h2>
+<p>The 480 VAC primary feed enters the cassette through an Eaton Magnum DS 6,000 A disconnect. Five Delta 660 kW in-row power racks rectify to the 800 VDC cassette-internal busway. That busway feeds nine Vera Rubin NVL72/CPX compute racks and one control rack. Rack-integrated capacitance and BBU absorb sub-100 ms GPU transients so the block BESS never has to.</p>
+
+<div class="diagram">
+<div class="flow">
+
+<div class="block lv">
+<div class="label">Cassette ECP</div>
+<div class="value">480 VAC in</div>
+<div class="detail">Eaton Magnum DS<br>6,000 A disconnect<br>Load-break contactor</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>480 VAC</div>
+
+<div class="block dc">
+<div class="label">5 &times; Delta 660 kW</div>
+<div class="value">In-Row Racks</div>
+<div class="detail">6 &times; 110 kW PSU shelves each<br>480 kW aggregate BBU<br>Power Capacitance Shelf</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>800 VDC</div>
+
+<div class="block primary">
+<div class="label">Cassette Busway</div>
+<div class="value">800 VDC (internal)</div>
+<div class="detail">Copper busway<br>SSCB branch protection<br>Touch-safe MGX connectors</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>800 VDC</div>
+
+<div class="block der">
+<div class="label">Compute Racks</div>
+<div class="value">9 &times; NVL72/CPX</div>
+<div class="detail">72 GPUs per rack<br>230 kW per rack<br>Direct-to-chip liquid</div>
+</div>
+
+</div>
+</div>
+
+<div class="specs">
+<div class="spec"><div class="num">5</div><div class="what">Delta 660 kW racks</div><div class="why">Per cassette. Rack-level N+1. 3,300 kW aggregate vs 2,070 kW IT &mdash; 59% headroom.</div></div>
+<div class="spec"><div class="num">480 kW</div><div class="what">BBU aggregate</div><div class="why">Integrated battery backup across the five in-row racks. No separate facility UPS at cassette level.</div></div>
+<div class="spec"><div class="num">&lt;100 ms</div><div class="what">GPU transient handling</div><div class="why">Power Capacitance Shelf (supercaps + aluminum caps) absorbs the sub-100 ms GPU load swings inside the rack.</div></div>
+<div class="spec"><div class="num">98%</div><div class="what">AC-DC efficiency</div><div class="why">Delta in-row racks at rated load. Conversion happens once, inside the cassette, right before the compute.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Eaton 800 VDC Reference Design &mdash; Alignment Map</h2>
+<p>Eaton and NVIDIA co-presented a five-layer data center power architecture at GTC 2026. Our replicated-block deployment maps to all five layers; layers 1&ndash;3 reflect the Trappey's block topology, 4 and 5 cover cooling and software that live in separate documents.</p>
+
+<div class="stack">
+  <div class="stack-card">
+    <div class="s-label">Layer 1 &mdash; Generation &amp; Grid</div>
+    <div class="s-title">On-Site Generation, No Grid</div>
+    <p>44 Cat CG260-16 natural gas gensets (11 blocks &times; 4), First Solar 2.05 MW rooftop array, block-level BESS. LUS grid interconnect is future optionality only &mdash; not a generation layer day one.</p>
+  </div>
+  <div class="stack-card">
+    <div class="s-label">Layer 2 &mdash; Gray Space</div>
+    <div class="s-title">MV &rarr; LV Conditioning</div>
+    <p>Per-block step-down transformer (13.8 kV &rarr; 480 V, ~15 MVA), arc-resistant MV switchgear, 480 VAC main switchboard with solidly-grounded wye secondary and LSIG mains. Standard LV protection gear &mdash; no SSTs, no DCRPP skid.</p>
+  </div>
+  <div class="stack-card">
+    <div class="s-label">Layer 3 &mdash; White Space</div>
+    <div class="s-title">Cassette-Internal 800 VDC</div>
+    <p>480 VAC primary feed enters each cassette, gets rectified by five Delta 660 kW in-row power racks to an 800 VDC cassette-internal busway. The 800 VDC rail never leaves the cassette envelope.</p>
+  </div>
+  <div class="stack-card">
+    <div class="s-label">Layer 4 &mdash; Cooling</div>
+    <div class="s-title">Direct-to-Chip Liquid</div>
+    <p>CoolIT CHx2000 external CDU per cassette, facility plate HX (PHX-001), cooling tower field rejecting ~72.9 MW at Stage 1. Details on the Technology page.</p>
+  </div>
+  <div class="stack-card">
+    <div class="s-label">Layer 5 &mdash; Software &amp; Services</div>
+    <div class="s-title">AMCL Five-Tier Control</div>
+    <p>L0 field devices &rarr; L1 block PLC (deterministic) &rarr; L2 plant SCADA &rarr; L3 AI dispatch &rarr; L4 HMI + IEC 62443 SL 2 cybersecurity. AI vendor selection is open.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Protection Philosophy &mdash; Island-Only, Block-Internal</h2>
+<p>No anti-islanding. No external sync. No grid reverse-power coordination. Protection coordinates inside each block, end of story. The block is the blast-radius boundary.</p>
+
+<table class="cmp">
+<tr><th>Protection Zone</th><th>Function Codes</th><th>Notes</th></tr>
+<tr><td class="highlight">Per genset</td><td>87G, 32, 40, 46, 47, 59/27, 64G, 78, 51V</td><td>Full generator relay set on each CG260-16 circuit breaker</td></tr>
+<tr><td class="highlight">Block MV bus</td><td>87B, 51N</td><td>Bus differential and neutral ground at the 13.8 kV switchgear</td></tr>
+<tr><td class="highlight">Block transformer</td><td>87T, 49T, 63, 51/50 primary and secondary</td><td>Overall differential covering both windings; RTD thermal; pressure/gas</td></tr>
+<tr><td class="highlight">480 VAC main</td><td>LSIG, 50G</td><td>Solidly-grounded wye secondary, residual ground sensing at neutral</td></tr>
+<tr><td class="highlight">UFLS</td><td>Three stages: 59.5 / 59.2 / 58.9 Hz</td><td>At block MV inlet, sheds cassette lanes in priority order</td></tr>
+<tr><td class="highlight">Cassette-internal DC</td><td>SSCB per rack, blocking diodes, rack-level fault protection</td><td>All DC protection lives inside the cassette where the 800 VDC bus lives</td></tr>
+</table>
+
+<div class="callout amber">
+<strong>Biggest single technical risk:</strong> Cat CG260-16 governor response in island-mode 24/7 at variable loading under AI dispatch. Cat CSA engagement is the most important external validation for the project. If governor data returns unfavorable, mitigation is a fifth genset per block (5:4) or larger BESS. Both engineerable. Neither preferred.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Stage 1 Load Envelope</h2>
+<p>Stage 1 operates at 61.5% anchor loading across all 44 gensets &mdash; positive load margin of 2 to 4 MW at the campus level. AI dispatch envelope is 55&ndash;75%; 63&ndash;65% expected average. N-1 contingency at the block level (3 of 4 gensets carrying load) runs around 76% loading per surviving unit.</p>
+
+<table class="cmp">
+<tr><th>Load Class</th><th>Stage 1</th><th>Full Build</th><th>Notes</th></tr>
+<tr><td>Cassette IT</td><td class="highlight">91.1 MW</td><td class="highlight">182.2 MW</td><td>44 &rarr; 88 cassettes &times; 2,070 kW IT each</td></tr>
+<tr><td>Cassette facility</td><td>~101.0 MW</td><td>~201.9 MW</td><td>IT plus cassette-internal auxiliaries (BBU, controls, Munters blowers)</td></tr>
+<tr><td>Cooling MCC</td><td>~1.4 MW</td><td>~2.8 MW</td><td>Tower fans, circulating pumps, makeup/blowdown/dosing, PHX auxiliary</td></tr>
+<tr><td>BESS auxiliary</td><td>~0.9 MW</td><td>~1.8 MW</td><td>Battery HVAC, BMS compute, fire suppression controls across 11 blocks</td></tr>
+<tr><td>Facility ancillary</td><td>~2.2 MW</td><td>~4.4 MW</td><td>NOC, site lighting, fire/life safety, SCADA (~200 kW per block)</td></tr>
+<tr><td><strong>Total campus load</strong></td><td><strong>~104&ndash;106 MW</strong></td><td><strong>~208&ndash;212 MW</strong></td><td>W working; Cat CSA data refines this</td></tr>
+<tr><td>Generation at 61.5% anchor</td><td class="highlight">108.24 MW</td><td class="highlight">216.5 MW</td><td>44 &rarr; 88 gensets &times; 2,460 ekW at 61.5%</td></tr>
+<tr><td><strong>Margin at 61.5%</strong></td><td class="highlight"><strong>+2 to +4 MW</strong></td><td class="highlight"><strong>+4 to +8 MW</strong></td><td>Positive throughout the AI dispatch envelope</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Solar Array &mdash; 2.05 MW First Solar CdTe</h2>
+<p>3,731 First Solar FS-7550A-TR1 CdTe thin-film panels on Buildings 1 and 2 rooftops. 5-panel strings at 1,500 VDC deliver MPP between ~891 V (summer) and ~1,013 V (winter) across the full Louisiana temperature envelope &mdash; within standard 1,500 VDC-rated PV inverter MPPT range. Grid-forming PV inverter ties to the block 480 VAC bus; anti-islanding is disabled because the facility is the island.</p>
+
+<div class="diagram">
+<div class="flow">
+
+<div class="block thermal">
+<div class="label">First Solar Array</div>
+<div class="value">2.05 MW DC</div>
+<div class="detail">3,731 &times; FS-7550A-TR1<br>CdTe thin-film<br>B1/B2 rooftops</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>5-panel strings</div>
+
+<div class="block dc">
+<div class="label">String Combiners</div>
+<div class="value">1,500 VDC</div>
+<div class="detail">746 complete strings<br>Disconnects per combiner<br>MPP 891&ndash;1,013 V range</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>DC</div>
+
+<div class="block dc">
+<div class="label">PV Inverter</div>
+<div class="value">Grid-Forming</div>
+<div class="detail">1,500 VDC in<br>480 VAC out<br>Anti-islanding disabled</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>480 VAC</div>
+
+<div class="block lv">
+<div class="label">Block Bus</div>
+<div class="value">480 VAC</div>
+<div class="detail">Same switchboard as genset<br>AC circuit breaker tie<br>LSIG protection</div>
+</div>
+
+</div>
+</div>
+
+<div class="callout blue">
+<strong>First Solar domestic content:</strong> panels manufactured in Perrysburg, Ohio and New Iberia, Louisiana. Qualifies the array for the 30% Federal Solar ITC base plus the 10% domestic content adder, for a 40% total ITC. New Iberia is 30 miles from Lafayette &mdash; the shortest solar supply chain in the industry.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>BESS &mdash; Stabilizer, Not Standby</h2>
+<p>The BESS is always active on the 480 VAC block bus &mdash; it runs continuously in charge/discharge dispatch under AMCL control, not waiting idle for a fault. LFP chemistry. ~3.6 MWh per block working, ~39.6 MWh Stage 1. Four operating functions in priority order: transient buffer, contingency support, solar clip recapture, and load shifting within the 55&ndash;75% AI dispatch envelope.</p>
+
+<table class="cmp">
+<tr><th>Contingency Scenario</th><th>Per-block Energy</th><th>Duration</th><th>Notes</th></tr>
+<tr><td class="highlight">Single genset trip (N-1)</td><td>~1&ndash;2 MWh</td><td>Seconds to minutes</td><td>Remaining 3 gensets ramp to cover; governor settle and UFLS coordination window</td></tr>
+<tr><td class="highlight">Partial gas curtailment</td><td>~2&ndash;3 MWh</td><td>Minutes</td><td>Graceful IT load ramp-down ordered by AMCL dispatch</td></tr>
+<tr><td class="highlight">Full gas loss</td><td>~3&ndash;4 MWh</td><td>15&ndash;20 min</td><td>GPU checkpoint + cassette cooldown; design anchor for the 3 MWh floor</td></tr>
+</table>
+
+<div class="callout">
+<strong>The BESS is not sized for extended outage.</strong> 15&ndash;20 minutes of graceful shutdown is sufficient for GPU checkpointing and orderly cooldown. The primary reliability path is gas supply continuity; the BESS buys time to shut down cleanly if gas is lost. AC-coupled through a Hitachi AMPS PCS SiC bidirectional inverter. Battery-pack vendor (Fluence, LG Energy Solution Vertech, Saft) selected via RFQ; Hitachi engaged on PCS layer regardless.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Thermal Coupling &mdash; What the Genset Rejects</h2>
+<p>Two independent heat paths. GPU heat and genset waste heat never mix. Covered in detail on the Technology page; summary here.</p>
+
+<div class="diagram">
+<div class="flow">
+
+<div class="block primary">
+<div class="label">Cat CG260-16</div>
+<div class="value">4,000 ekW</div>
+<div class="detail">44 units, 11 blocks<br>43.8% elec efficiency<br>61.5% anchor loading</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>waste heat</div>
+
+<div class="block thermal">
+<div class="label">Exhaust &mdash; Munters</div>
+<div class="value">5.5 MW</div>
+<div class="detail">125 kW/cassette slip<br>DSS Pro desiccant regen<br>RH &le;50% in cassette</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>stack</div>
+
+<div class="block ghost">
+<div class="label">Exhaust &mdash; Stack</div>
+<div class="value">~42.4 MW</div>
+<div class="detail">Remainder to atmosphere<br>No HRU on this path<br>No absorption chiller</div>
+</div>
+
+<div class="arrow lbl"><span>&rarr;</span>radiators</div>
+
+<div class="block thermal">
+<div class="label">Jacket Water</div>
+<div class="value">~58 MW</div>
+<div class="detail">Dedicated air radiators<br>On the rear slab<br>No GPU loop coupling</div>
+</div>
+
+</div>
+</div>
+
+<div class="callout amber">
+<strong>GPU cooling is completely separate.</strong> CoolIT CHx2000 external CDU skid per cassette &rarr; facility warm-water header &rarr; plate HX PHX-001 &rarr; cooling tower field (~72.9 MW at Stage 1). No connection to the genset heat rejection path. No absorption chiller. No chilled-water plant. The architecture was deliberately simplified in April 2026 to eliminate the LiBr absorption chiller.
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<h2>Key Numbers</h2>
+
+<div class="specs">
+<div class="spec"><div class="num">44</div><div class="what">Cat CG260-16 gensets</div><div class="why">11 blocks &times; 4 gensets (N+1). Stage 1. 4,000 ekW continuous each.</div></div>
+<div class="spec"><div class="num">13.8 kV</div><div class="what">Genset bus voltage</div><div class="why">Block MV bus. Arc-resistant switchgear. Feeds one step-down transformer per block.</div></div>
+<div class="spec"><div class="num">~15 MVA</div><div class="what">Block transformer</div><div class="why">13.8 kV &rarr; 480 Y/277 V, dry-type or cast-resin, Z &asymp; 6%. One per block.</div></div>
+<div class="spec"><div class="num">480 VAC</div><div class="what">Block bus voltage</div><div class="why">Convergence point for genset, BESS, solar, cassette feeds, cooling, ancillary. Standard LV gear.</div></div>
+<div class="spec"><div class="num">800 VDC</div><div class="what">Cassette-internal bus</div><div class="why">Lives only inside each cassette envelope. Feeds 9 compute racks + 1 control rack.</div></div>
+<div class="spec"><div class="num">~39.6 MWh</div><div class="what">BESS (Stage 1)</div><div class="why">11 blocks &times; ~3.6 MWh. LFP. AC-coupled. Always active as stabilizer.</div></div>
+<div class="spec"><div class="num">2.05 MW</div><div class="what">First Solar rooftop</div><div class="why">3,731 panels on B1 and B2 rooftops. CdTe thin-film. Grid-forming PV inverter.</div></div>
+<div class="spec"><div class="num">108.24 MW</div><div class="what">Generation at 61.5%</div><div class="why">Stage 1. Exceeds ~104&ndash;106 MW total campus load with 2&ndash;4 MW positive margin.</div></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Trappey's Compute Center</strong><br>
+  91.1 MW AI Compute Facility &mdash; Lafayette, Louisiana<br>
+  Working draft &mdash; internal engineering cited (BOD-001 Rev 0.6, ELEC-001 Rev 1.3)
+  <div class="footer-legal">All operating and scale values cited are working engineering figures pending external validation (Cat CSA, firm gas supply, NVIDIA allocation). BESS pack vendor, PV inverter vendor, cooling tower type, and AI dispatch vendor are open items. This page does not constitute an offer to sell or solicitation of an offer to buy any security or service.</div>
+</div>
+
+</body>
+</html>

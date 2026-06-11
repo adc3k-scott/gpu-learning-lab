@@ -2,12 +2,12 @@
 
 ## Project Purpose
 Multi-agent AI platform for CUDA/GPU computing and RunPod management. FastAPI backend + SSE dashboard.
-Owner: **Scott Tomsu** — ADC3K, MARLIE 1 project lead, 1201 SE Evangeline Thruway, Lafayette LA.
+Owner: **Scott Tomsu** — 1201 SE Evangeline Thruway, Lafayette LA.
 
 ## Project Knowledge Files
 - `memory/projects/marlie_i.md` — MARLIE 1 AI Factory: site, hardware, financials, incentives
 - `memory/projects/adc3k.md` — ADC 3K pod product: specs, open investor items, action list
-- `memory/projects/trappeys.md` — Trappeys Cannery: first ADC 3K deployment site
+- `memory/projects/trappeys.md` — Trappeys Cannery: first deployment site
 - `memory/projects/ground_zero.md` — Ground Zero YouTube: pipeline status, episode format, blockers
 - `memory/projects/klft.md` — KLFT 1.1: Gulf Coast Emergency Drone Deployment Hub, SkyCommand, AIKCC
 - `memory/projects/missioncontrolhd.md` — Mission Control HD: vehicle diagnostics SaaS, missioncontrolhd.com
