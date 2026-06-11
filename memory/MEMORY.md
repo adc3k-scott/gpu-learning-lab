@@ -14,13 +14,12 @@ Owner: **Scott Tomsu** — 1201 SE Evangeline Thruway, Lafayette LA.
 - `memory/projects/nsf_fuel_louisiana.md` — **NSF FUEL (Future Use of Energy in Louisiana)**: $160M NSF Engines grant (largest ever), $45M renewal March 2026, LSU-led, 53+ partners, POC fund, energy innovation. Key contacts: Girard Melancon (partnerships, girardmelancon@lsu.edu), Stephen Loy (commercialization), Michael Mazzola (exec director). ADC fit: 800V DC solar-direct, waste heat, digital twins, workforce.
 
 ## ADC Infrastructure — Core Architecture
-- **MARLIE 1** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
+- **MARLIE Hub** = permanent AI Factory, 1201 SE Evangeline Thruway. GPS: 30.21975N, 92.00645W (corner 16th St). CDU cold plate cooling. NVL72 racks. HQ + NOC.
 - **Autonomous AI Cassette** = manufactured containerized cassette. No HVAC. Deployed remotely, managed from MARLIE 1.
 - **KLFT 1.1** = Gulf Coast Emergency Drone Hub. Lafayette Regional Airport. GPS: 30.21256N, 91.99069W. Skydio X10 + Dock + SkyCommand.
-- **Trappeys Cannery** = first planned ADC 3K pod site. GPS: 30.21356N, 92.00163W. Metal warehouse, Vermilion River frontage. SEPARATE site from MARLIE 1.
+- **Trappeys Cannery** = first planned ADC Solutions Brownfield site. GPS: 30.21356N, 92.00163W. Metal warehouse, Vermilion River frontage. SEPARATE site from MARLIE 1.
 - **New Iberia Solar Factory** = renewable energy partner. GPS: 30.03768N, 91.87524W. Site 2 ADC candidate.
-- **ADC 3K geography**: cassettes follow Louisiana natural gas pipeline map — Henry Hub corridor, Gulf Coast industrial belt.
-- NEVER conflate MARLIE 1 (CDU, permanent building) with ADC 3K (immersion, field pod). Different products.
+- **ADC Solutions geography**:  Louisiana natural gas pipeline map — Henry Hub corridor, Gulf Coast industrial belt.
 
 ## Site Acquisition Pipeline (GPS verified 2026-03-09)
 Notion root: `31e88f09-7e31-8136-9d4f-dbc128f55757`

@@ -1,16 +1,16 @@
 ---
 name: Scott Tomsu
-description: Founder, Advantage Design & Construction — full bio and background
+description: Founder, ADC Solutions Inc — full bio and background
 type: user
 ---
 
-# Scott Tomsu — Founder, Advantage Design & Construction
+# Scott Tomsu — Founder, ADC Solutions Inc
 
 ## Identity
 - **Name**: Scott Tomsu
-- **Company**: Advantage Design & Construction (ADC)
-- **Address**: 1201 SE Evangeline Thruway, Lafayette, Louisiana
-- **Role**: Founder, principal operator, and technical lead across all ADC projects
+- **Company**: ADC Solutions Inc (ADC)
+- **Address**: PO Box 2224, Lafayette, Louisiana 70502
+- **Role**: President, Founder, principal operator, and technical lead across all ADC projects
 
 ## Professional Background
 
@@ -29,8 +29,8 @@ type: user
 
 ### Aviation
 - Certificate: FAA Private Pilot — fixed wing
-- Instrument rating: Written exam passed at 90% — practical checkride pending
-- Relevance: KLFT 1.1 (autonomous airspace hub, Lafayette Regional Airport) is informed by this background
+- Certificate: FAA Drone Pilot — Part 107
+- Relevance: 
 
 ### Motorsports
 - Achievement: Multi-time drag racing champion
@@ -43,19 +43,20 @@ type: user
 - Context: Foundational technical skills that underpin all ADC hardware/systems work
 
 ## ADC — Company Background
-- Founded: 2003 (Advantage Design & Construction, Inc.)
-- ADC-3K division launched: 2025/2026 (use this framing for NVIDIA Inception application — NOT the 2003 founding date)
-- Core business evolution: From construction/design to AI compute infrastructure
-- The ADC 3K cassette product line represents the convergence of Scott's construction, engineering, and compute expertise
+- Founded: 2026 (ADC Solutions, Inc.)
+- Core business evolution: Pivoting From construction/design to AI compute infrastructure
+- The ADC  product line represents the convergence of Scott's construction, engineering, and compute expertise
 
 ## Why This Background Matters for ADC
 - **Offshore AI**: 25 years on rigs and platforms = direct customer relationships and credibility for offshore cassette deployment
-- **Lights-out operations**: ROV ops are remote, unmanned, and mission-critical — same model as ADC 3K cassette NOC
+- **Lights-out operations**: ROV ops are remote, unmanned, and mission-critical systems
 - **Rugged hardware mindset**: Designing for subsea and marine environments = immersion cooling, sealed enclosures, no-HVAC cassettes
 - **Regulatory fluency**: Offshore safety (IMCA, ATEX) and FAA environments = ADC knows how to operate in regulated infrastructure spaces
 - **FuelTech/ECU background**: Embedded systems + real-time data = GPU compute and engine management share the same technical DNA
 
 ## Contact / Identity Points
-- Email domain: adhscott@yahoo.com (Vercel account)
+- Email domain: scott@adc3k.com.com (Google Mail)
+- Vercel domain: adhscott@yahoo.com (Vercel account)
 - Cloudflare account: gofast@stfumotorcycles.com
-- Location: Lafayette, Louisiana (Acadiana region — Cajun country, French cultural heritage)
+- Location: PO Box 2224 Lafayette, Louisiana 70502 
+- Phone: 337-780-1535
