@@ -94,6 +94,7 @@ class OrchestratorAgent(BaseAgent):
         self._jobs: dict[str, Job] = {}                      # in-process job cache
         self._step_lock = asyncio.Lock()
         self._job_waiters: dict[str, list[asyncio.Queue]] = {}  # job_id → SSE queues
+        self._dispatch_tasks: set[asyncio.Task] = set()
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -109,6 +110,13 @@ class OrchestratorAgent(BaseAgent):
             self._cleanup_loop(), name=f"job-cleanup-{self.agent_id}"
         )
         logger.info("[%s] OrchestratorAgent ready", self.agent_id)
+
+    async def _teardown(self) -> None:
+        self._cleanup_task.cancel()
+        for task in list(self._dispatch_tasks):
+            task.cancel()
+        if self._dispatch_tasks:
+            await asyncio.gather(*self._dispatch_tasks, return_exceptions=True)
 
     async def _cleanup_loop(self) -> None:
         """Periodically purge completed/failed jobs from in-memory cache."""
@@ -244,7 +252,9 @@ class OrchestratorAgent(BaseAgent):
             ready = job.ready_steps()
 
         for step in ready:
-            asyncio.create_task(self._dispatch_step(job, step))
+            task = asyncio.create_task(self._dispatch_step(job, step))
+            self._dispatch_tasks.add(task)
+            task.add_done_callback(self._dispatch_tasks.discard)
 
         if not ready and job.is_done():
             await self._finalise_job(job)

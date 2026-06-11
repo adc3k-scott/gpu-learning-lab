@@ -16,6 +16,7 @@ from __future__ import annotations
 import asyncio
 import fnmatch
 import logging
+import re
 import threading
 import time
 from collections import defaultdict, deque
@@ -74,6 +75,7 @@ class EventBus:
         self._redis_url = redis_url
         self._redis: object | None = None
         self._handlers: dict[str, list[Handler]] = defaultdict(list)
+        self._compiled: dict[str, re.Pattern[str]] = {}
         self._queue: asyncio.Queue[Event] = asyncio.Queue()
         self._mode = "memory"
         self._running = False
@@ -121,6 +123,8 @@ class EventBus:
         Supports shell-style wildcards: "job.*", "*.failed", "*".
         """
         self._handlers[pattern].append(handler)
+        if pattern not in self._compiled:
+            self._compiled[pattern] = re.compile(fnmatch.translate(pattern))
         logger.debug("Subscribed handler %s to pattern '%s'", handler.__name__, pattern)
 
     def unsubscribe(self, pattern: str, handler: Handler) -> None:
@@ -172,7 +176,11 @@ class EventBus:
 
     async def _dispatch(self, event: Event) -> None:
         for pattern, handlers in self._handlers.items():
-            if fnmatch.fnmatch(event.event_type, pattern):
+            compiled = self._compiled.get(pattern)
+            if compiled is None:
+                compiled = re.compile(fnmatch.translate(pattern))
+                self._compiled[pattern] = compiled
+            if compiled.match(event.event_type):
                 for handler in handlers:
                     await self._invoke_handler(handler, event)
 

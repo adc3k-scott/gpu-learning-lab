@@ -122,12 +122,22 @@ class StateStore:
 
     async def get_all(self, pattern: str = "*") -> dict[str, Any]:
         """Return a dict of all matching key → deserialized value pairs."""
-        result = {}
-        for key in await self.keys(pattern):
-            val = await self.get(key)
-            if val is not None:
-                result[key] = val
-        return result
+        import fnmatch
+
+        if self._mode == "redis" and self._redis:
+            result = {}
+            for key in await self._redis.keys(pattern):  # type: ignore[attr-defined]
+                val = await self.get(key)
+                if val is not None:
+                    result[key] = val
+            return result
+        async with self._lock:
+            now = time.monotonic()
+            return {
+                k: json.loads(serialised)
+                for k, (serialised, exp) in self._store.items()
+                if (exp is None or now <= exp) and fnmatch.fnmatch(k, pattern)
+            }
 
     @property
     def mode(self) -> str:

@@ -671,9 +671,10 @@ class ConfigRequest(BaseModel):
 async def get_config():
     """Return current runtime configuration (sensitive values masked)."""
     runpod_key_stored = await store.get("config:runpod_api_key") or ""
+    notion_cfg = notion_sync.get_config()
     return {
-        "notion_work_db_id":  notion_sync.get_config()["notion_work_db_id"],
-        "notion_api_key_set": notion_sync.get_config()["notion_api_key_set"],
+        "notion_work_db_id":  notion_cfg["notion_work_db_id"],
+        "notion_api_key_set": notion_cfg["notion_api_key_set"],
         "runpod_api_key_set": "yes" if (runpod_key_stored or os.getenv("RUNPOD_API_KEY")) else "no",
         "model": MODEL,
     }
@@ -688,10 +689,10 @@ async def set_config(req: ConfigRequest):
     store_key = f"config:{req.key}"
     await store.set(store_key, req.value)
 
-    # Persist to .env so the value survives server restarts
+    # Persist to .env so the value survives server restarts (file I/O off the event loop)
     env_var = _ENV_KEY_MAP.get(req.key)
     if env_var:
-        _persist_to_env(env_var, req.value)
+        await asyncio.to_thread(_persist_to_env, env_var, req.value)
 
     # Notify agents so they pick up the change immediately
     await bus.publish(Event(event_type="config.updated", payload={"key": store_key, "value": req.value}, source="api"))

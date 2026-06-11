@@ -43,6 +43,23 @@ logger = logging.getLogger(__name__)
 _MAX_BODY_BYTES = 32 * 1024   # 32 KB — cap response body stored in result
 _DEFAULT_TIMEOUT = 15.0
 
+# Shared connection pool — one client for the process, per-request overrides below.
+_client: httpx.AsyncClient | None = None
+
+
+def _get_client() -> httpx.AsyncClient:
+    global _client
+    if _client is None or _client.is_closed:
+        _client = httpx.AsyncClient(timeout=_DEFAULT_TIMEOUT)
+    return _client
+
+
+async def close_shared_client() -> None:
+    global _client
+    if _client is not None and not _client.is_closed:
+        await _client.aclose()
+    _client = None
+
 
 class HttpClientSkill(BaseSkill):
     name = "http_client"
@@ -102,18 +119,20 @@ class HttpClientSkill(BaseSkill):
     ) -> SkillResult:
         t0 = time.perf_counter()
 
-        async with httpx.AsyncClient(
-            follow_redirects=follow_redirects,
-            timeout=timeout,
-        ) as client:
-            kwargs: dict[str, Any] = {"headers": headers, "params": query}
-            if body is not None:
-                if isinstance(body, (dict, list)):
-                    kwargs["json"] = body
-                else:
-                    kwargs["content"] = str(body).encode()
+        client = _get_client()
+        kwargs: dict[str, Any] = {
+            "headers": headers,
+            "params": query,
+            "timeout": timeout,
+            "follow_redirects": follow_redirects,
+        }
+        if body is not None:
+            if isinstance(body, (dict, list)):
+                kwargs["json"] = body
+            else:
+                kwargs["content"] = str(body).encode()
 
-            response = await client.request(method, url, **kwargs)
+        response = await client.request(method, url, **kwargs)
 
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 

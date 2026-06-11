@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import os
 import time
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import Callable
 
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -42,8 +42,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         self.rpm = requests_per_minute
         self.expensive_rpm = max(requests_per_minute // 3, 5)
-        # ip → list of timestamps
-        self._windows: dict[str, list[float]] = defaultdict(list)
+        # ip → timestamps in window order (oldest left)
+        self._windows: dict[str, deque[float]] = defaultdict(deque)
 
     async def dispatch(self, request: Request, call_next: Callable):
         path = request.url.path
@@ -68,7 +68,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
         # Prune timestamps outside the sliding window
         cutoff = now - _WINDOW_SECONDS
-        self._windows[key] = window = [t for t in window if t > cutoff]
+        while window and window[0] <= cutoff:
+            window.popleft()
 
         if len(window) >= limit:
             retry_after = int(window[0] - cutoff) + 1

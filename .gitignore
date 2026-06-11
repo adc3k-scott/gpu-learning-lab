@@ -249,6 +249,22 @@ adc3k-deploy/shared/stfmotor/
 adc3k-deploy/shared/stfu_2026_backup/
 adc3k-deploy/shared/*.ptb
 
+# Same rules at repo root — shared/ holds the originals
+shared/Tax Docs/
+shared/Taxes/
+shared/Adapt TAX Stuff/
+shared/advdesho/
+shared/stfmotor/
+shared/stfu_2026_backup/
+shared/*.ptb
+shared/MCHD/
+
+# Episode media — too large for git, lives on disk only
+data/episodes/
+
+# Credential exports from Notion backups
+notion-backup/**/*Credentials*
+
 # Temp upload chunks
 data/_chunk_*.txt
 data/_uc_*.txt
