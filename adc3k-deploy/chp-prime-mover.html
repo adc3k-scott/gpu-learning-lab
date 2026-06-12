@@ -627,14 +627,14 @@ body {
     <div class="section-title">Executive <span>Summary</span></div>
 
     <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 15px; line-height: 1.8;">
-      This report evaluates two fundamentally different CHP prime mover technologies for the Pure DC AI Factory platform at a 5 MW electrical output scale. The Cat G3520K is a proven reciprocating natural gas genset; the Bloom Energy Server is a solid oxide fuel cell (SOFC) system. Both are analyzed in full CHP configuration where waste heat drives lithium bromide (LiBr) absorption chillers to cool GPU compute infrastructure.
+      This report evaluates two fundamentally different CHP prime mover technologies for the ADC AI Factory platform at a 5 MW electrical output scale. The Cat G3520K is a proven reciprocating natural gas genset; the Bloom Energy Server is a solid oxide fuel cell (SOFC) system. Both are analyzed in full CHP configuration where waste heat drives lithium bromide (LiBr) absorption chillers to cool GPU compute infrastructure.
     </p>
 
     <!-- CHP EXPLAINER -->
     <div class="chp-explainer">
       <div class="explainer-label">What is CHP — Combined Heat &amp; Power?</div>
       <p>
-        A conventional power plant burns fuel to generate electricity and dumps the leftover heat into the atmosphere — wasting roughly 50–60% of the fuel's energy. <strong>CHP captures that waste heat</strong> and puts it to work. In the Pure DC architecture, hot exhaust gases and engine cooling circuits are routed through heat exchangers into absorption chillers, which use heat — instead of electricity — to produce chilled water that cools the GPU racks. The result: one unit of natural gas simultaneously generates electricity <em>and</em> drives the cooling system, dramatically improving overall fuel utilization. The key metric is <strong>recoverable thermal output</strong> — the more heat a prime mover produces at usable temperatures, the more "free" cooling capacity the platform gains. This is why thermal output outweighs electrical efficiency in the decision matrix.
+        A conventional power plant burns fuel to generate electricity and dumps the leftover heat into the atmosphere — wasting roughly 50–60% of the fuel's energy. <strong>CHP captures that waste heat</strong> and puts it to work. In the CHP-cooled architecture, hot exhaust gases and engine cooling circuits are routed through heat exchangers into absorption chillers, which use heat — instead of electricity — to produce chilled water that cools the GPU racks. The result: one unit of natural gas simultaneously generates electricity <em>and</em> drives the cooling system, dramatically improving overall fuel utilization. The key metric is <strong>recoverable thermal output</strong> — the more heat a prime mover produces at usable temperatures, the more "free" cooling capacity the platform gains. This is why thermal output outweighs electrical efficiency in the decision matrix.
       </p>
     </div>
 
@@ -692,10 +692,10 @@ body {
     <div class="verdict-box">
       <div class="verdict-label">Engineering Recommendation</div>
       <p>
-        For the Pure DC architecture — where waste-heat-driven absorption cooling is the central design thesis — the <strong style="color: var(--cat-yellow);">Cat G3520K</strong> is the recommended prime mover. It delivers 44% more recoverable thermal energy (5,000 kW vs 3,467 kW), translating to approximately 305 additional refrigeration tons of absorption chilling capacity. This thermal advantage directly offsets GPU cooling loads without consuming electrical output for mechanical chillers.
+        For the CHP-cooled architecture — where waste-heat-driven absorption cooling is the central design thesis — the <strong style="color: var(--cat-yellow);">Cat G3520K</strong> is the recommended prime mover. It delivers 44% more recoverable thermal energy (5,000 kW vs 3,467 kW), translating to approximately 305 additional refrigeration tons of absorption chilling capacity. This thermal advantage directly offsets GPU cooling loads without consuming electrical output for mechanical chillers.
       </p>
       <p style="margin-top: 12px;">
-        The Bloom Energy Server offers superior electrical efficiency (54% vs 45.8%) and dramatically lower maintenance burden, but its thermal output deficit undermines the core CHP-cooling integration that makes the Pure DC platform economically viable. At 3–5× the capital cost per kW, the Bloom's fuel savings of $135–272K/year cannot close the $10–21M CAPEX gap within any reasonable payback horizon.
+        The Bloom Energy Server offers superior electrical efficiency (54% vs 45.8%) and dramatically lower maintenance burden, but its thermal output deficit undermines the core CHP-cooling integration that makes the CHP platform economically viable. At 3–5× the capital cost per kW, the Bloom's fuel savings of $135–272K/year cannot close the $10–21M CAPEX gap within any reasonable payback horizon.
       </p>
       <p style="margin-top: 12px;">
         A potential hybrid architecture — Cat for CHP base load with Bloom supplementing electrical capacity — merits further study as a Phase 2 expansion strategy.
@@ -960,7 +960,7 @@ body {
         <div class="pc-item">
           <span class="pc-item-num">05</span>
           <div class="pc-item-title">Mechanical load following</div>
-          <p>Reciprocating engine responds to load transients in seconds. Critical for 800V DC architecture where GPU compute loads vary and power quality must be maintained.</p>
+          <p>Reciprocating engine responds to load transients in seconds. Critical where GPU compute loads vary and power quality must be maintained.</p>
         </div>
       </div>
       <div class="pc-column">
@@ -1019,7 +1019,7 @@ body {
         <div class="pc-item">
           <span class="pc-item-num">04</span>
           <div class="pc-item-title">Modular 325 kW scaling</div>
-          <p>Deploy incrementally — start at 2 MW, add blocks as GPU cassettes come online. Cat forces 2.5 MW increments. Better matched to phased deployment strategy.</p>
+          <p>Deploy incrementally — start at 2 MW, add blocks as GPU clusters come online. Cat forces 2.5 MW increments. Better matched to phased deployment strategy.</p>
         </div>
         <div class="pc-item">
           <span class="pc-item-num">05</span>
@@ -1047,7 +1047,7 @@ body {
         <div class="pc-item">
           <span class="pc-item-num">04</span>
           <div class="pc-item-title">Limited load following</div>
-          <p>SOFCs don't ramp quickly — thermal cycling stresses ceramic cells. Variable GPU compute loads on the 800V DC bus require supplemental energy storage or grid tie for transients.</p>
+          <p>SOFCs don't ramp quickly — thermal cycling stresses ceramic cells. Variable GPU compute loads require supplemental energy storage or grid tie for transients.</p>
         </div>
         <div class="pc-item">
           <span class="pc-item-num">05</span>
@@ -1066,7 +1066,7 @@ body {
     <div class="section-title">Weighted Decision <span>Matrix</span></div>
 
     <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">
-      Scoring weighted for Pure DC AI Factory priorities. Scale: 1 (poor) to 5 (excellent). Weights reflect the criticality of each factor to the CHP-cooled GPU data center use case.
+      Scoring weighted for ADC AI Factory priorities. Scale: 1 (poor) to 5 (excellent). Weights reflect the criticality of each factor to the CHP-cooled GPU data center use case.
     </p>
 
     <table class="comp-table">
@@ -1294,7 +1294,7 @@ body {
       <div class="calc-row"><span class="calc-label">2.</span><span class="calc-value" style="font-size: 12px;">Cat G3500K 60 Hz Generator Sets — CHP Applications — LEHE22853-03 (10/25)</span></div>
       <div class="calc-row"><span class="calc-label">3.</span><span class="calc-value" style="font-size: 12px;">Bloom Energy Server with Heat Capture — Brochure 0624 (June 2024)</span></div>
       <div class="calc-divider"></div>
-      <div class="calc-row"><span class="calc-label">4.</span><span class="calc-value" style="font-size: 12px;">Pure DC AI Factory — 10 MW Validated Configuration (April 2026)</span></div>
+      <div class="calc-row"><span class="calc-label">4.</span><span class="calc-value" style="font-size: 12px;">ADC AI Factory — 10 MW Validated Configuration (April 2026)</span></div>
       <div class="calc-row"><span class="calc-label">5.</span><span class="calc-value" style="font-size: 12px;">Cat LEXE1552-02 — G3520H Application Data (reference for existing config)</span></div>
     </div>
 
