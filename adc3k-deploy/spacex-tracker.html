@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpaceX Ground Truth Tracker | ADC Solutions Inc</title>
+<meta name="description" content="An engineering-grade public tracker of SpaceX assets, land, launches, and the orbital data center buildout. Every claim tiered by confidence. Sources are primary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --space:#06080F;
+  --panel:#0C111C;
+  --panel-2:#10172A;
+  --line:#1E2A45;
+  --steel:#C9CFD8;
+  --steel-dim:#7E8AA0;
+  --plume:#FFA94D;
+  --methalox:#7FB4FF;
+  --confirmed:#46C98B;
+  --onrecord:#FFC857;
+  --rumor:#FF7A6B;
+  --display:'Saira Condensed',sans-serif;
+  --body:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--space);color:var(--steel);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:var(--methalox)}
+::selection{background:var(--plume);color:var(--space)}
+
+/* ---------- failsafe loader ---------- */
+#loader{position:fixed;inset:0;background:var(--space);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}
+#loader.gone{opacity:0;pointer-events:none}
+#loader .ring{width:54px;height:54px;border:2px solid var(--line);border-top-color:var(--plume);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;overflow:hidden}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.moon{position:absolute;top:7%;right:8%;width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle at 35% 32%,#E8EBF0 0%,#B7BFCB 45%,#5C6679 100%);
+  box-shadow:0 0 60px rgba(200,210,225,.18), inset -18px -14px 40px rgba(6,8,15,.55);}
+.moon::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:
+   radial-gradient(circle at 28% 60%,rgba(90,100,120,.5) 0 7%,transparent 8%),
+   radial-gradient(circle at 60% 30%,rgba(90,100,120,.45) 0 5%,transparent 6%),
+   radial-gradient(circle at 70% 68%,rgba(90,100,120,.4) 0 9%,transparent 10%),
+   radial-gradient(circle at 45% 44%,rgba(90,100,120,.35) 0 4%,transparent 5%);}
+.hero-inner{position:relative;z-index:2;max-width:1100px}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--plume)}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.95;
+   font-size:clamp(3rem,9vw,7.5rem);color:#F2F4F8;margin:.4rem 0 1rem}
+h1 .thin{font-weight:500;color:var(--steel-dim)}
+.hero-sub{max-width:640px;color:var(--steel-dim);font-size:1.05rem}
+.statusline{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:2.2rem;font-family:var(--mono);font-size:.82rem}
+.statusline div span{display:block;color:var(--steel-dim);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.15rem}
+.statusline strong{color:#F2F4F8;font-weight:500}
+.scrollcue{position:absolute;bottom:2rem;left:6vw;font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--steel-dim);text-transform:uppercase;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- shared section chrome ---------- */
+section{padding:5.5rem 6vw;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:1.2rem;flex-wrap:wrap;margin-bottom:.7rem}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.7rem,3.4vw,2.6rem);color:#F2F4F8;letter-spacing:.02em}
+.sec-tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--plume)}
+.sec-intro{max-width:720px;color:var(--steel-dim);margin-bottom:2.4rem}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.18rem .55rem;border-radius:3px;border:1px solid;vertical-align:middle}
+.chip.confirmed{color:var(--confirmed);border-color:var(--confirmed)}
+.chip.onrecord{color:var(--onrecord);border-color:var(--onrecord)}
+.chip.rumor{color:var(--rumor);border-color:var(--rumor)}
+.chip.projected{color:var(--methalox);border-color:var(--methalox)}
+
+/* ---------- timeline ---------- */
+#timeline{padding-top:4rem}
+.tl-track-wrap{position:relative;overflow-x:auto;padding:2.5rem 0 1rem;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.tl-track{position:relative;display:flex;align-items:flex-start;min-width:1700px;height:170px}
+.tl-rail{position:absolute;top:84px;left:0;height:2px;background:linear-gradient(90deg,var(--line) 0%,var(--steel-dim) 78%,transparent 78%);width:100%}
+.tl-rail-future{position:absolute;top:84px;left:78%;width:22%;height:0;border-top:2px dashed var(--methalox);opacity:.55}
+.tl-node{position:relative;flex:0 0 auto;width:120px;cursor:pointer;text-align:center;outline:none}
+.tl-node .dot{width:13px;height:13px;border-radius:50%;background:var(--space);border:2px solid var(--steel-dim);margin:78px auto 0;transition:all .2s}
+.tl-node .yr{font-family:var(--mono);font-size:.72rem;color:var(--steel-dim);margin-top:.5rem;transition:color .2s}
+.tl-node .lbl{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.82rem;line-height:1.15;color:var(--steel-dim);position:absolute;top:8px;left:4px;right:4px;transition:color .2s}
+.tl-node:nth-child(even) .lbl{top:auto;bottom:-14px}
+.tl-node:nth-child(even) .yr{position:absolute;top:46px;left:0;right:0;margin:0}
+.tl-node:hover .dot,.tl-node:focus .dot{border-color:var(--plume);transform:scale(1.25)}
+.tl-node.active .dot{background:var(--plume);border-color:var(--plume);box-shadow:0 0 14px rgba(255,169,77,.65)}
+.tl-node.active .lbl,.tl-node.active .yr{color:#F2F4F8}
+.tl-node.future .dot{border-style:dashed;border-color:var(--methalox)}
+.tl-node.future.active .dot{background:var(--methalox);box-shadow:0 0 14px rgba(127,180,255,.6)}
+
+.tl-detail{margin-top:2rem;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:2rem;min-height:190px;
+  display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start}
+.tl-detail h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.5rem;color:#F2F4F8;margin-bottom:.2rem}
+.tl-detail .date{font-family:var(--mono);font-size:.78rem;color:var(--plume);letter-spacing:.1em}
+.tl-detail p{margin-top:.8rem;max-width:680px;color:var(--steel)}
+.tl-detail .media a{display:block;font-family:var(--mono);font-size:.78rem;margin-top:.5rem;text-decoration:none;border:1px solid var(--line);border-radius:5px;padding:.5rem .8rem;color:var(--methalox);transition:border-color .2s}
+.tl-detail .media a:hover{border-color:var(--methalox)}
+.tl-detail .media .mlabel{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--steel-dim)}
+@media(max-width:760px){.tl-detail{grid-template-columns:1fr}}
+
+/* ---------- signature scale graphic ---------- */
+.scale-wrap{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:2.5rem 2rem 1.5rem;overflow-x:auto}
+.scale-wrap svg{display:block;min-width:760px;width:100%;height:auto}
+.scale-note{font-family:var(--mono);font-size:.72rem;color:var(--steel-dim);margin-top:1rem;letter-spacing:.06em}
+
+/* ---------- spec grids ---------- */
+.grid{display:grid;gap:1.2rem}
+.grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.6rem}
+.card h4{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.05rem;color:#F2F4F8;margin-bottom:.6rem;letter-spacing:.03em}
+.card p{font-size:.92rem;color:var(--steel-dim)}
+.bignum{font-family:var(--display);font-weight:800;font-size:2.6rem;color:var(--plume);line-height:1}
+.bignum small{font-size:1.1rem;font-weight:500;color:var(--steel-dim)}
+.unit{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--steel-dim);display:block;margin-top:.3rem}
+table.spec{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:1rem}
+table.spec td{padding:.55rem .2rem;border-bottom:1px solid var(--line)}
+table.spec td:first-child{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel-dim);width:46%}
+table.spec td:last-child{color:#F2F4F8}
+
+/* ---------- cadence calculator ---------- */
+.calc{background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:2.2rem}
+.calc .row{display:grid;grid-template-columns:240px 1fr 110px;gap:1.4rem;align-items:center;margin-bottom:1.4rem}
+.calc label{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel-dim)}
+.calc input[type=range]{width:100%;accent-color:var(--plume);height:4px}
+.calc .val{font-family:var(--mono);font-size:.95rem;color:#F2F4F8;text-align:right}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.2rem;margin-top:1.6rem;padding-top:1.6rem;border-top:1px solid var(--line)}
+.calc-out .bignum{font-size:2.1rem}
+@media(max-width:680px){.calc .row{grid-template-columns:1fr;gap:.4rem}.calc .val{text-align:left}}
+.benchmark{font-family:var(--mono);font-size:.74rem;color:var(--steel-dim);margin-top:1.2rem;line-height:1.7}
+.benchmark b{color:var(--plume);font-weight:500}
+
+/* ---------- media rail ---------- */
+.media-rail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+.media-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.5rem;text-decoration:none;display:block;transition:transform .2s,border-color .2s}
+.media-card:hover{transform:translateY(-3px);border-color:var(--plume)}
+.media-card .mk{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--plume)}
+.media-card h4{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.1rem;color:#F2F4F8;margin:.45rem 0 .4rem}
+.media-card p{font-size:.86rem;color:var(--steel-dim)}
+
+/* ---------- status board ---------- */
+.status-list{display:grid;gap:1rem}
+.status-item{background:var(--panel);border:1px solid var(--line);border-left:3px solid;border-radius:6px;padding:1.2rem 1.4rem;display:grid;grid-template-columns:auto 1fr;gap:1.1rem;align-items:start}
+.status-item.t-confirmed{border-left-color:var(--confirmed)}
+.status-item.t-onrecord{border-left-color:var(--onrecord)}
+.status-item.t-rumor{border-left-color:var(--rumor)}
+.status-item h4{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1rem;color:#F2F4F8}
+.status-item p{font-size:.88rem;color:var(--steel-dim);margin-top:.2rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:3.5rem 6vw;display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-end}
+footer .brand{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.3rem;color:#F2F4F8}
+footer .fine{font-family:var(--mono);font-size:.7rem;color:var(--steel-dim);max-width:640px;line-height:1.8}
+footer .fine a{color:var(--steel-dim)}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="ring"></div></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">A public ground-truth tracker &middot; primary sources only</div>
+    <h1>SpaceX<br><span class="thin">Assets &middot; Acres &middot; Orbits</span></h1>
+    <p class="hero-sub">Every claim on this page is tiered by evidence: <span class="chip confirmed">Confirmed</span> means a filing, deed, license, or launch you can verify. <span class="chip onrecord">On record</span> means a named official said it. <span class="chip projected">Projected</span> means SpaceX says it's coming. We link the primary source for everything.</p>
+    <div class="statusline">
+      <div><span>Ticker</span><strong>SPCX &middot; Nasdaq</strong></div>
+      <div><span>IPO price</span><strong>$135.00 / share</strong></div>
+      <div><span>Raised</span><strong>~$75B &mdash; largest IPO in history</strong></div>
+      <div><span>First trade</span><strong>June 12, 2026</strong></div>
+    </div>
+  </div>
+  <div class="scrollcue">&#9660; Scroll the timeline</div>
+</header>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline">
+  <div class="sec-head"><h2>Mission Timeline</h2><span class="sec-tag">2002 &rarr; today &rarr; projected</span></div>
+  <p class="sec-intro">Tap any node. Solid line is history. Dashed line is the future SpaceX has put on the record &mdash; held to the same sourcing standard, just labeled honestly.</p>
+  <div class="tl-track-wrap">
+    <div class="tl-track" id="tlTrack" role="tablist" aria-label="SpaceX timeline">
+      <div class="tl-rail"></div>
+      <div class="tl-rail-future"></div>
+    </div>
+  </div>
+  <div class="tl-detail" id="tlDetail" role="tabpanel" aria-live="polite"></div>
+</section>
+
+<!-- ============ FLIGHT 12 ============ -->
+<section id="flight12">
+  <div class="sec-head"><h2>The Biggest Rocket Ever Flown</h2><span class="chip confirmed">Confirmed</span></div>
+  <p class="sec-intro">On May 22, 2026, Starship V3 flew for the first time &mdash; Flight 12, from the new Pad 2 at Starbase, Texas. It is the largest, most powerful launch vehicle ever built, and the footage is real and public.</p>
+  <div class="grid cols-3">
+    <div class="card"><div class="bignum">124.4<small> m</small></div><span class="unit">Vehicle height &mdash; taller than a Saturn V</span></div>
+    <div class="card"><div class="bignum">80,800<small> kN</small></div><span class="unit">Liftoff thrust &middot; 33 Raptor 3 engines</span></div>
+    <div class="card"><div class="bignum">100<small> t</small></div><span class="unit">Payload class to low Earth orbit</span></div>
+  </div>
+  <div class="card" style="margin-top:1.2rem">
+    <h4>What actually happened on Flight 12</h4>
+    <p>First flight of the V3 vehicle and the first launch from Starbase Pad 2. The booster's redesigned fuel transfer line feeding its 33 engines is roughly the size of an entire Falcon 9 first stage. The ship deployed 20 mock Starlink satellites and flew an hour-long suborbital arc halfway around the world to the Indian Ocean, splashing down upright before toppling and igniting &mdash; an outcome SpaceX expected for an ocean landing. The booster lost engines on its boostback attempt and crash-landed downrange. Net result: the new vehicle, new engines, new pad, and payload deploy all flew on the first try.</p>
+  </div>
+</section>
+
+<!-- ============ AI1 / ORBITAL DATA CENTER ============ -->
+<section id="ai1">
+  <div class="sec-head"><h2>The Data Center Leaves Earth</h2><span class="chip confirmed">Announced &middot; specs published</span></div>
+  <p class="sec-intro">Days before the IPO, SpaceX published the design of AI1 &mdash; its first orbital data center satellite. The pitch: in orbit you get continuous solar power, no water, no grid interconnect queue, and a vacuum to radiate heat into. The plan is a constellation that could eventually reach terawatt scale.</p>
+
+  <div class="scale-wrap reveal">
+    <svg viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="To-scale comparison: Starship V3 rocket, AI1 satellite, and a human figure">
+      <defs>
+        <linearGradient id="steelg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#9AA3B2"/><stop offset=".5" stop-color="#D7DCE4"/><stop offset="1" stop-color="#8A93A3"/>
+        </linearGradient>
+        <linearGradient id="solarg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1B3A6B"/><stop offset="1" stop-color="#0E2347"/>
+        </linearGradient>
+      </defs>
+      <!-- baseline -->
+      <line x1="30" y1="340" x2="930" y2="340" stroke="#1E2A45" stroke-width="2"/>
+      <!-- Starship V3: 124.4m -> 1m = 2.25px -> ~280px tall -->
+      <g>
+        <!-- booster -->
+        <rect x="150" y="180" width="40" height="160" fill="url(#steelg)" rx="3"/>
+        <!-- grid fins -->
+        <rect x="142" y="190" width="8" height="16" fill="#7E8AA0"/><rect x="190" y="190" width="8" height="16" fill="#7E8AA0"/>
+        <!-- ship -->
+        <rect x="150" y="92" width="40" height="88" fill="url(#steelg)" rx="3"/>
+        <path d="M150 92 Q170 48 190 92 Z" fill="url(#steelg)"/>
+        <!-- flaps -->
+        <path d="M150 100 L132 116 L150 124 Z" fill="#7E8AA0"/><path d="M190 100 L208 116 L190 124 Z" fill="#7E8AA0"/>
+        <path d="M150 158 L136 172 L150 178 Z" fill="#7E8AA0"/><path d="M190 158 L204 172 L190 178 Z" fill="#7E8AA0"/>
+        <!-- engine glow -->
+        <ellipse cx="170" cy="344" rx="18" ry="4" fill="#FFA94D" opacity=".5"/>
+        <text x="170" y="368" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C9CFD8">STARSHIP V3 &middot; 124.4 m</text>
+        <line x1="120" y1="60" x2="120" y2="340" stroke="#FFA94D" stroke-width="1" stroke-dasharray="3 4" opacity=".6"/>
+        <line x1="150" y1="60" x2="190" y2="60" stroke="none"/>
+      </g>
+      <!-- AI1 satellite: 70m wingspan -> 158px wide, 20m tall body -> 45px -->
+      <g>
+        <!-- solar wings -->
+        <rect x="430" y="262" width="160" height="56" fill="url(#solarg)" stroke="#2C4E8C" stroke-width="1"/>
+        <rect x="620" y="262" width="160" height="56" fill="url(#solarg)" stroke="#2C4E8C" stroke-width="1"/>
+        <!-- cell grid lines -->
+        <g stroke="#2C4E8C" stroke-width=".6" opacity=".8">
+          <line x1="470" y1="262" x2="470" y2="318"/><line x1="510" y1="262" x2="510" y2="318"/><line x1="550" y1="262" x2="550" y2="318"/>
+          <line x1="660" y1="262" x2="660" y2="318"/><line x1="700" y1="262" x2="700" y2="318"/><line x1="740" y1="262" x2="740" y2="318"/>
+          <line x1="430" y1="290" x2="590" y2="290"/><line x1="620" y1="290" x2="780" y2="290"/>
+        </g>
+        <!-- compute bus -->
+        <rect x="590" y="252" width="30" height="76" fill="url(#steelg)" rx="4"/>
+        <!-- radiator -->
+        <rect x="596" y="222" width="18" height="28" fill="#5C6679" rx="2"/>
+        <text x="605" y="368" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C9CFD8">AI1 SATELLITE &middot; 70 m WINGSPAN &middot; 20 m TALL</text>
+      </g>
+      <!-- human: 1.8m -> 4px tall at this scale -->
+      <g>
+        <circle cx="880" cy="334.6" r="1.2" fill="#FFA94D"/>
+        <line x1="880" y1="335.8" x2="880" y2="339.4" stroke="#FFA94D" stroke-width="1.4"/>
+        <text x="880" y="368" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#FFA94D">HUMAN &middot; 1.8 m</text>
+        <line x1="880" y1="333" x2="880" y2="350" stroke="none"/>
+      </g>
+      <text x="30" y="36" font-family="Saira Condensed" font-weight="700" font-size="20" fill="#F2F4F8" letter-spacing="1">TO SCALE &mdash; 1 m = 2.25 px</text>
+    </svg>
+    <div class="scale-note">Original illustration drawn to published dimensions. SpaceX's own to-scale graphic shows a planned larger AI satellite variant exceeding 170 m &mdash; longer than Starship V3 is tall.</div>
+  </div>
+
+  <div class="grid cols-3" style="margin-top:1.6rem">
+    <div class="card"><div class="bignum">150<small> kW</small></div><span class="unit">Peak compute power &middot; 120 kW sustained</span></div>
+    <div class="card"><div class="bignum">70<small> kW/t</small></div><span class="unit">Power-to-mass efficiency</span></div>
+    <div class="card"><div class="bignum">~3<small> ms</small></div><span class="unit">Latency from 600&ndash;800 km orbit</span></div>
+  </div>
+
+  <div class="grid cols-3" style="margin-top:1.2rem">
+    <div class="card">
+      <h4>The engineering</h4>
+      <table class="spec">
+        <tr><td>Thermal</td><td>Deployable liquid radiator, redundant pumping loops, micrometeoroid shielding</td></tr>
+        <tr><td>Compute payload</td><td>Interchangeable &mdash; not locked to one chipmaker</td></tr>
+        <tr><td>Solar array</td><td>~250 W per square meter, built in-house</td></tr>
+        <tr><td>Heritage</td><td>Solar, radiators &amp; laser links derived from Starlink V3</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>The factory &mdash; Gigasat, Bastrop TX</h4>
+      <table class="spec">
+        <tr><td>Footprint</td><td>Land held for an 11M+ sq ft building</td></tr>
+        <tr><td>Status</td><td>Solar manufacturing facility under construction</td></tr>
+        <tr><td>Production</td><td>"Reasonable volume" targeted by end of 2027</td></tr>
+        <tr><td>Output goal</td><td>1 GW/yr of space compute, then 10, 100&hellip;</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>The paperwork</h4>
+      <table class="spec">
+        <tr><td>FCC filing</td><td>Up to 1,000,000 orbital data center satellites</td></tr>
+        <tr><td>Anchor deal</td><td>Reported ~$920M/month compute agreement with Google</td></tr>
+        <tr><td>S-1 use of proceeds</td><td>"Expansion of our AI compute infrastructure" listed first</td></tr>
+        <tr><td>Skeptics on record</td><td>Morningstar ($63 fair value); short sellers call it unproven economics</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CADENCE CALCULATOR ============ -->
+<section id="cadence">
+  <div class="sec-head"><h2>The Launch-Every-Hour Math</h2><span class="chip projected">Projected &middot; quoted targets</span></div>
+  <p class="sec-intro">Musk's stated target: Starship flying "more than once per hour down the road," with 20&ndash;30 active vehicles supporting ~10,000 launches a year. A million-satellite constellation with 5-year satellite life needs roughly 200,000 satellites launched annually. Drag the sliders and check the math yourself.</p>
+  <div class="calc">
+    <div class="row">
+      <label for="rLaunch">Starship launches / year</label>
+      <input type="range" id="rLaunch" min="10" max="20000" step="10" value="3300">
+      <div class="val" id="vLaunch">3,300</div>
+    </div>
+    <div class="row">
+      <label for="rSats">AI satellites / launch</label>
+      <input type="range" id="rSats" min="10" max="120" step="5" value="60">
+      <div class="val" id="vSats">60</div>
+    </div>
+    <div class="row">
+      <label for="rPow">Sustained kW / satellite</label>
+      <input type="range" id="rPow" min="50" max="500" step="10" value="120">
+      <div class="val" id="vPow">120</div>
+    </div>
+    <div class="calc-out">
+      <div><div class="bignum" id="oSats">198,000</div><span class="unit">Satellites to orbit / year</span></div>
+      <div><div class="bignum" id="oGW">23.8</div><span class="unit">GW of compute / year</span></div>
+      <div><div class="bignum" id="oHours">2.7</div><span class="unit">Launches per day implied</span></div>
+      <div><div class="bignum" id="oUS">5.0%</div><span class="unit">Of average U.S. electric load (~473 GW)</span></div>
+    </div>
+    <div class="benchmark">
+      Reference points &mdash; <b>1/hr</b> = 8,760 launches/yr (Musk's stated target) &middot; <b>~170/yr</b> = Falcon 9's record 2025-class cadence &middot; Musk claims Starship can ultimately deliver <b>300&ndash;500 GW</b> of solar AI satellites to orbit per year. The constraint he names isn't the rocket &mdash; it's chip production.
+    </div>
+  </div>
+</section>
+
+<!-- ============ REAL FOOTAGE ============ -->
+<section id="footage">
+  <div class="sec-head"><h2>Watch the Real Thing</h2><span class="sec-tag">Official sources &mdash; no recuts</span></div>
+  <p class="sec-intro">Every video and photo set below is published by SpaceX or shot live by accredited spaceflight media. This page links the source rather than rehosting it &mdash; so the footage is always the original.</p>
+  <div class="media-rail">
+    <a class="media-card" href="https://www.spacex.com/launches/" target="_blank" rel="noopener">
+      <span class="mk">Video &middot; Official</span><h4>Flight 12 full replay</h4>
+      <p>SpaceX's complete webcast of Starship V3's first flight &mdash; liftoff, hot-stage, satellite deploy, and Indian Ocean splashdown.</p>
+    </a>
+    <a class="media-card" href="https://x.com/SpaceX" target="_blank" rel="noopener">
+      <span class="mk">Video &middot; Official</span><h4>AI1 reveal &mdash; the 30-minute briefing</h4>
+      <p>Musk and SpaceX engineers walk through the AI1 satellite design and the Gigasat factory plan, posted days before the IPO.</p>
+    </a>
+    <a class="media-card" href="https://www.flickr.com/photos/spacex/" target="_blank" rel="noopener">
+      <span class="mk">Photos &middot; Official</span><h4>SpaceX photo library</h4>
+      <p>SpaceX's own launch photography, released for public use &mdash; the source for the most iconic Starship and Falcon imagery.</p>
+    </a>
+    <a class="media-card" href="https://www.youtube.com/@NASASpaceflight" target="_blank" rel="noopener">
+      <span class="mk">Video &middot; Independent</span><h4>NASASpaceflight live coverage</h4>
+      <p>Independent 24/7 cameras on Starbase &mdash; the replay source of record for Flight 12 and every pad test in between.</p>
+    </a>
+    <a class="media-card" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=S-1&dateb=&owner=include&count=40" target="_blank" rel="noopener">
+      <span class="mk">Filings &middot; Primary</span><h4>SEC EDGAR &mdash; SPCX filings</h4>
+      <p>The S-1, prospectus, and every future 10-Q and 8-K. Now that SpaceX is public, the company must document its assets here.</p>
+    </a>
+    <a class="media-card" href="https://www.faa.gov/space/environmental/nepa_docs" target="_blank" rel="noopener">
+      <span class="mk">Filings &middot; Primary</span><h4>FAA launch-site dockets</h4>
+      <p>New launch sites require FAA environmental review. Any expansion shows up here before it shows up anywhere else.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ============ LAND & SITES STATUS BOARD ============ -->
+<section id="land">
+  <div class="sec-head"><h2>Land &amp; Sites Status Board</h2><span class="sec-tag">Where the assets actually sit</span></div>
+  <p class="sec-intro">SpaceX's footprint, tiered by evidence. When an item changes tier, the date stamps below change with it.</p>
+  <div class="status-list">
+    <div class="status-item t-confirmed"><span class="chip confirmed">Confirmed</span>
+      <div><h4>Starbase, Texas &mdash; launch &amp; build site</h4><p>SpaceX's Starship factory, test stands, and now two orbital launch pads. Flight 12 flew from the new Pad 2 on May 22, 2026. Incorporated as its own Texas city in 2025.</p></div>
+    </div>
+    <div class="status-item t-confirmed"><span class="chip confirmed">Confirmed</span>
+      <div><h4>Bastrop, Texas &mdash; Gigasat factory</h4><p>Existing Starlink terminal plant being expanded for AI satellite production; land held for an 11M+ sq ft building, with the solar manufacturing facility already under construction.</p></div>
+    </div>
+    <div class="status-item t-confirmed"><span class="chip confirmed">Confirmed</span>
+      <div><h4>Florida &amp; California &mdash; orbital launch sites</h4><p>Kennedy Space Center / Cape Canaveral and Vandenberg carry the Falcon 9 cadence that currently dominates global launch counts, plus Starship infrastructure under construction in Florida.</p></div>
+    </div>
+    <div class="status-item t-onrecord"><span class="chip onrecord">On record</span>
+      <div><h4>Gulf Coast expansion &mdash; talks acknowledged</h4><p>A state legislator has confirmed talks over a large coastal land block, and a coordinated state aerospace incentive package was signed in 2026. No company is named in any bill.</p></div>
+    </div>
+    <div class="status-item t-rumor"><span class="chip rumor">Unconfirmed</span>
+      <div><h4>Gulf Coast expansion &mdash; the SpaceX connection</h4><p>No deed, option, FAA docket, or company statement ties SpaceX to any new Gulf Coast site as of June 12, 2026. The tier flips the day a recorded instrument appears &mdash; and we'll link it here.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div>
+    <div class="brand">ADC Solutions Inc</div>
+    <div class="fine" style="margin-top:.4rem">Engineering-grade tracking of the power, compute, and launch buildout.</div>
+  </div>
+  <div class="fine">
+    Last fact review: <span id="stampDate">June 12, 2026</span>. This page is an independent public tracker and is not affiliated with, endorsed by, or sponsored by SpaceX. All trademarks belong to their owners. Figures are drawn from SEC filings, FAA/FCC dockets, SpaceX's published materials, and reporting by PBS, NPR, SpaceNews, CNBC, Light Reading, Tom's Hardware, and Fortune. Projections are quoted targets, not predictions by ADC Solutions Inc. Nothing here is investment advice.
+  </div>
+</footer>
+
+<script>
+/* ============ FAILSAFE LOADER ============
+   Always remove the loader, even if any script below throws or the
+   file arrives truncated past this block. */
+(function(){
+  function go(){var l=document.getElementById('loader');if(l){l.classList.add('gone');setTimeout(function(){l.remove()},600)}}
+  if(document.readyState==='complete'||document.readyState==='interactive'){setTimeout(go,300)}
+  else{document.addEventListener('DOMContentLoaded',function(){setTimeout(go,300)})}
+  setTimeout(go,4000); /* hard failsafe */
+})();
+
+/* ============ STARFIELD ============ */
+(function(){
+  var c=document.getElementById('stars');if(!c)return;
+  var ctx=c.getContext('2d'),stars=[],W,H;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;
+    stars=[];for(var i=0;i<Math.min(220,W/6);i++){stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.2,tw:Math.random()*Math.PI*2,sp:.15+Math.random()*.5})}}
+  function draw(t){ctx.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){var s=stars[i];
+      var a=reduced?.7:.45+.45*Math.sin(t/900*s.sp+s.tw);
+      ctx.globalAlpha=a;ctx.fillStyle='#DDE3EC';
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.283);ctx.fill();}
+    ctx.globalAlpha=1;
+    if(!reduced)requestAnimationFrame(draw);}
+  size();window.addEventListener('resize',size);
+  if(reduced){draw(0)}else{requestAnimationFrame(draw)}
+})();
+
+/* ============ TIMELINE DATA ============
+   To update this page: edit this array only. tier: confirmed | projected */
+var TIMELINE=[
+ {y:'2002',l:'Founded',d:'Mar 2002',t:'confirmed',h:'SpaceX is founded',
+  p:'Elon Musk founds Space Exploration Technologies in El Segundo, California with the stated goal of reducing launch cost enough to make Mars settlement possible.',
+  m:[{k:'Company history',u:'https://www.spacex.com/mission/',n:'spacex.com'}]},
+ {y:'2008',l:'Falcon 1 reaches orbit',d:'Sep 28, 2008',t:'confirmed',h:'First privately developed liquid-fuel rocket to orbit',
+  p:'On its fourth attempt, Falcon 1 reaches orbit &mdash; the first privately developed liquid-fueled rocket to do so. The company was weeks from bankruptcy.',
+  m:[{k:'Official archive',u:'https://www.spacex.com/launches/',n:'spacex.com/launches'}]},
+ {y:'2012',l:'Dragon docks ISS',d:'May 2012',t:'confirmed',h:'First commercial spacecraft to the ISS',
+  p:'Dragon becomes the first commercial spacecraft to berth with the International Space Station, opening NASA cargo contracts that fund the company\u2019s growth.',
+  m:[{k:'Official archive',u:'https://www.spacex.com/vehicles/dragon/',n:'spacex.com/dragon'}]},
+ {y:'2015',l:'First booster landing',d:'Dec 21, 2015',t:'confirmed',h:'Falcon 9 lands back on Earth',
+  p:'A Falcon 9 first stage returns from space and lands upright at Cape Canaveral \u2014 the proof point for reusability that resets launch economics for the whole industry.',
+  m:[{k:'Landing footage',u:'https://www.youtube.com/spacex',n:'SpaceX on YouTube'}]},
+ {y:'2019',l:'Boca Chica land assembly',d:'2019',t:'confirmed',h:'The Starbase land playbook',
+  p:'SpaceX assembles land around its South Texas test site, buying out a residential village to clear room for what becomes Starbase \u2014 the playbook every analyst now references when SpaceX scouts new ground.',
+  m:[{k:'Site today',u:'https://www.spacex.com/vehicles/starship/',n:'spacex.com/starship'}]},
+ {y:'2020',l:'First crew flight',d:'May 30, 2020',t:'confirmed',h:'Demo-2: astronauts fly commercial',
+  p:'Crew Dragon carries NASA astronauts Bob Behnken and Doug Hurley to the ISS \u2014 the first crewed orbital launch from U.S. soil since 2011, and the first ever by a private company.',
+  m:[{k:'Mission page',u:'https://www.spacex.com/vehicles/dragon/',n:'spacex.com'}]},
+ {y:'2023',l:'Starship\u2019s first flight',d:'Apr 20, 2023',t:'confirmed',h:'The integrated stack flies',
+  p:'The full Starship/Super Heavy stack lifts off for the first time. It is destroyed minutes in \u2014 and begins the iterate-by-flying campaign that defines the program.',
+  m:[{k:'Flight archive',u:'https://www.spacex.com/launches/',n:'spacex.com/launches'}]},
+ {y:'2024',l:'The chopstick catch',d:'Oct 13, 2024',t:'confirmed',h:'Tower arms catch a returning booster',
+  p:'A 71-meter Super Heavy booster flies back to the pad and is caught mid-air by the launch tower\u2019s mechanical arms \u2014 the single most important step toward aircraft-like reuse.',
+  m:[{k:'Catch footage',u:'https://x.com/SpaceX',n:'@SpaceX on X'}]},
+ {y:'2026',l:'xAI merger',d:'Feb 2026',t:'confirmed',h:'SpaceX absorbs xAI',
+  p:'SpaceX folds in Musk\u2019s AI company in an all-stock deal, formally fusing the rocket business with an AI compute business \u2014 the corporate logic behind the orbital data center plan.',
+  m:[{k:'S-1 disclosure',u:'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=S-1&dateb=&owner=include&count=40',n:'SEC EDGAR'}]},
+ {y:'2026',l:'Flight 12: V3 debuts',d:'May 22, 2026',t:'confirmed',h:'Biggest rocket ever flown',
+  p:'Starship V3 \u2014 124.4 m tall on 33 Raptor 3 engines \u2014 flies for the first time from Starbase Pad 2, deploying 20 mock Starlink satellites on an hour-long flight to the Indian Ocean.',
+  m:[{k:'Official replay',u:'https://www.spacex.com/launches/',n:'spacex.com/launches'},{k:'Independent replay',u:'https://www.youtube.com/@NASASpaceflight',n:'NASASpaceflight'}]},
+ {y:'2026',l:'AI1 + Gigasat revealed',d:'Jun 8, 2026',t:'confirmed',h:'The orbital data center design goes public',
+  p:'SpaceX publishes the AI1 satellite design \u2014 150 kW peak compute, 70 m solar wingspan, liquid radiator \u2014 and announces the Gigasat factory expansion in Bastrop, Texas with land for an 11M+ sq ft building.',
+  m:[{k:'Reveal video',u:'https://x.com/SpaceX',n:'@SpaceX on X'}]},
+ {y:'2026',l:'SPCX: largest IPO ever',d:'Jun 11\u201312, 2026',t:'confirmed',h:'$75 billion raised at $135/share',
+  p:'SpaceX prices 555,555,555 shares at $135 \u2014 about $75B raised at a ~$1.77T valuation, the largest IPO in history \u2014 and begins trading on Nasdaq as SPCX on June 12.',
+  m:[{k:'Prospectus',u:'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=S-1&dateb=&owner=include&count=40',n:'SEC EDGAR'}]},
+ {y:'2027',l:'AI1 volume production',d:'Target: end of 2027',t:'projected',h:'Gigasat ramps satellite output',
+  p:'Stated target: AI satellite production \u201Cat some reasonable volume\u201D by end of 2027, working toward 1 GW of space compute per year \u2014 then 10, then 100.',
+  m:[{k:'Source briefing',u:'https://x.com/SpaceX',n:'@SpaceX on X'}]},
+ {y:'2028',l:'Crewed Moon landing era',d:'NASA target: 2028',t:'projected',h:'Artemis returns crews to the lunar surface',
+  p:'NASA plans the first crewed lunar landing since 1972 as soon as 2028, using Starship or Blue Moon \u2014 whichever lander is ready and safe first. Starship V3 carries the docking hardware for the rehearsal missions.',
+  m:[{k:'Program',u:'https://www.nasa.gov/humans-in-space/artemis/',n:'nasa.gov/artemis'}]},
+ {y:'~2030',l:'Launch every hour',d:'Stated target',t:'projected',h:'\u201CMore than once per hour down the road\u201D',
+  p:'Musk\u2019s stated ambition: 20\u201330 active Starships supporting ~10,000 launches a year, with build capacity for far more \u2014 the cadence the million-satellite constellation math requires. Treat it as a target on the record, not a schedule.',
+  m:[{k:'The math',u:'#cadence',n:'Run it on this page'}]}
+];
+
+/* ============ TIMELINE RENDER ============ */
+(function(){
+  var track=document.getElementById('tlTrack'),detail=document.getElementById('tlDetail');
+  if(!track||!detail)return;
+  TIMELINE.forEach(function(e,i){
+    var n=document.createElement('div');
+    n.className='tl-node'+(e.t==='projected'?' future':'');
+    n.setAttribute('role','tab');n.setAttribute('tabindex','0');
+    n.innerHTML='<div class="lbl">'+e.l+'</div><div class="dot"></div><div class="yr">'+e.y+'</div>';
+    n.addEventListener('click',function(){select(i)});
+    n.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();select(i)}});
+    track.appendChild(n);
+  });
+  function select(i){
+    var nodes=track.querySelectorAll('.tl-node');
+    nodes.forEach(function(n,j){n.classList.toggle('active',j===i)});
+    var e=TIMELINE[i];
+    var media=e.m.map(function(m){return '<a href="'+m.u+'" '+(m.u.charAt(0)==='#'?'':'target="_blank" rel="noopener"')+'><span class="mlabel">'+m.k+'</span><br>'+m.n+' &rarr;</a>'}).join('');
+    detail.innerHTML='<div><span class="date">'+e.d+'</span> <span class="chip '+(e.t==='projected'?'projected':'confirmed')+'">'+(e.t==='projected'?'Projected':'Confirmed')+'</span>'+
+      '<h3>'+e.h+'</h3><p>'+e.p+'</p></div><div class="media">'+media+'</div>';
+    if(nodes[i]&&nodes[i].scrollIntoView){nodes[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}
+  }
+  select(TIMELINE.length-4); /* land on the IPO node by default */
+})();
+
+/* ============ CADENCE CALCULATOR ============ */
+(function(){
+  var rL=document.getElementById('rLaunch'),rS=document.getElementById('rSats'),rP=document.getElementById('rPow');
+  if(!rL)return;
+  function fmt(n){return n.toLocaleString('en-US',{maximumFractionDigits:1})}
+  function upd(){
+    var L=+rL.value,S=+rS.value,P=+rP.value;
+    document.getElementById('vLaunch').textContent=fmt(L);
+    document.getElementById('vSats').textContent=fmt(S);
+    document.getElementById('vPow').textContent=fmt(P);
+    var sats=L*S, gw=sats*P/1e6, perDay=L/365, usPct=gw/473*100;
+    document.getElementById('oSats').textContent=fmt(sats);
+    document.getElementById('oGW').textContent=fmt(gw);
+    document.getElementById('oHours').textContent=perDay>=24?fmt(perDay/24)+'/hr':fmt(perDay);
+    document.getElementById('oUS').textContent=fmt(usPct)+'%';
+    var hLabel=document.getElementById('oHours').nextElementSibling;
+    if(hLabel)hLabel.textContent=perDay>=24?'Launches per HOUR implied':'Launches per day implied';
+  }
+  [rL,rS,rP].forEach(function(r){r.addEventListener('input',upd)});
+  upd();
+})();
+
+/* ============ SCROLL REVEAL ============ */
+(function(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>

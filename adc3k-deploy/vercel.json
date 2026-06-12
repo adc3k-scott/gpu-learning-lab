@@ -54,6 +54,7 @@
     { "source": "/trappeys-power", "destination": "/trappeys-power.html" },
     { "source": "/trappeys-gallery", "destination": "/trappeys-gallery.html" },
     { "source": "/trappeys-dsx-prep", "destination": "/trappeys-dsx-prep.html" },
+    { "source": "/spacex-tracker", "destination": "/spacex-tracker.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
